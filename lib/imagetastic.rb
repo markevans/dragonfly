@@ -27,10 +27,13 @@ def autoload_files_in_dir(path, namespace)
   end
 end
 
-module Imagetastic; end
 autoload_files_in_dir("#{File.dirname(__FILE__)}/imagetastic", 'Imagetastic')
 
 # Config
+module Imagetastic
+  extend Configurable
+end
+# TODO
 # Imagetastic.configure do |config|    
 #   config.datastore        = Imagetastic::DataStorage::FileDataStore.new
 #   config.format_converter = Imagetastic::ImageProcessing::ImageMagick::FormatConverter.new
