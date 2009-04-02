@@ -1,8 +1,6 @@
 require 'spec'
 
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-
-require 'imagetastic'
+require File.dirname(__FILE__) + '/../lib/imagetastic'
 
 Spec::Runner.configure do |config|
   
