@@ -1,2 +1,0 @@
-module Imagetastic::HelperMethods
-end
