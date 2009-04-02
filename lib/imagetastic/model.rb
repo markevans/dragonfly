@@ -20,7 +20,7 @@ module Imagetastic
     end
 
     module InstanceMethods
-      
+
       def file=(temp_file)
 
         # The file object received is an ActionController::UploadedTempfile object
@@ -39,10 +39,10 @@ module Imagetastic
 
         # Save image itself
         Imagetastic.datastore.store(self, temp_file)
-        
+
       end
-      
+
     end
-    
+
   end
 end
