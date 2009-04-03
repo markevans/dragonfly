@@ -7,8 +7,7 @@ describe Imagetastic::Configurable do
       extend Imagetastic::Configurable
       configurable_attr :colour
       configurable_attr :top_speed, 216
-      def self.other_method; end
-      def self.other_method=; end
+      def self.other_thing=(thing); end
     end    
   end
 
@@ -27,6 +26,14 @@ describe Imagetastic::Configurable do
 
     it "should set the default as nil if not specified" do
       Car.colour.should be_nil
+    end
+    
+    it "should allow specifying configurable attrs as strings" do
+      class Bike
+        extend Imagetastic::Configurable
+        configurable_attr 'colour', 'rude'
+      end
+      Bike.colour.should == 'rude'
     end
   end
 
@@ -47,10 +54,11 @@ describe Imagetastic::Configurable do
     end
     
     it "should not allow you to call other methods on the object via the configuration" do
-      Car.configure do |c|
-        c.should_not respond_to(:other_method)
-        c.should_not respond_to(:other_method=)
-      end
+      lambda{
+        Car.configure do |c|
+          c.other_thing = 5
+        end
+      }.should raise_error(Imagetastic::Configurable::BadConfigAttribute)
     end
   end
   

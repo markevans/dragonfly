@@ -3,12 +3,18 @@ module Imagetastic
     
     # Exceptions
     class NothingToConfigure < StandardError; end
+    class BadConfigAttribute < StandardError; end
     
     def configure(&blk)
       raise NothingToConfigure, "You called configure but there are no configurable attributes" if configuration_hash.empty?
-      struct_class = Struct.new(*configuration_hash.keys)
+      config_attributes = configuration_hash.keys
+      struct_class = Struct.new(*config_attributes)
       struct = struct_class.new(*configuration_hash.values)
-      yield(struct)
+      begin
+        yield(struct)
+      rescue NoMethodError => e
+        raise BadConfigAttribute, "You tried to configure using '#{e.name}',  but the valid config attributes are #{config_attributes.map{|a| %('#{a}') }.sort.join(', ')}"
+      end
       struct.each_pair{|k,v| configuration_hash[k] = v }
     end
     
