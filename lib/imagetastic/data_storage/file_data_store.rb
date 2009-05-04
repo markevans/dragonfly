@@ -2,21 +2,18 @@ module Imagetastic::DataStorage
 
   class FileDataStore < DataStore
 
-    IMAGE_STORE_ROOT = "#{RAILS_ROOT}/tmp/imagetastic"
+    IMAGE_STORE_ROOT = "/tmp/imagetastic"
 
-    def store(image, file)
+    def store(data, name="image")
 
-      storage_dir      = "#{IMAGE_STORE_ROOT}"
-      storage_filename = "#{Time.now.strftime '%Y_%m_%d_%H_%M_%S'}_#{file.original_path}"
-      storage_path     = "#{storage_dir}/#{storage_filename}"
+      storage_path = "#{IMAGE_STORE_ROOT}/#{Time.now.strftime '%Y/%m/%d/%H_%M_%S'}_#{name}"
 
-      FileUtils.mkdir_p(storage_dir)
-      File.open(storage_path, 'w') do |new_file|
-        file.rewind
-        new_file.write(file.read)
+      FileUtils.mkdir_p File.dirname(storage_path)
+      File.open(storage_path, 'w') do |file|
+        file.write(data)
       end
-
-      image.file_path = storage_path
+      
+      storage_path
     end
 
     def retrieve(image)
