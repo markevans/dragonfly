@@ -32,11 +32,9 @@ autoload_files_in_dir("#{File.dirname(__FILE__)}/imagetastic", 'Imagetastic')
 # Config
 module Imagetastic
   extend Configurable
+  
+  configurable_attr :datastore,        DataStorage::FileDataStore.new
+  configurable_attr :format_converter, ImageProcessing::ImageMagick::FormatConverter.new
+  configurable_attr :image_processor,  ImageProcessing::ImageMagick::ImageProcessor.new
+  configurable_attr :image_analyser,   ImageProcessing::ImageMagick::ImageAnalyser.new
 end
-# TODO
-# Imagetastic.configure do |config|    
-#   config.datastore        = Imagetastic::DataStorage::FileDataStore.new
-#   config.format_converter = Imagetastic::ImageProcessing::ImageMagick::FormatConverter.new
-#   config.image_processor  = Imagetastic::ImageProcessing::ImageMagick::ImageProcessor.new
-#   config.image_analyser   = Imagetastic::ImageProcessing::ImageMagick::ImageAnalyser.new
-# end
