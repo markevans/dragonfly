@@ -10,6 +10,9 @@ module Imagetastic::DataStorage
 
       begin
         FileUtils.mkdir_p File.dirname(storage_path)
+        while File.exist?(storage_path)
+          storage_path = increment_storage_path(storage_path)
+        end
         File.open(storage_path, 'w') do |file|
           file.write(data)
         end
@@ -26,6 +29,12 @@ module Imagetastic::DataStorage
       rescue Errno::ENOENT => e
         raise DataNotFound, e.message
       end
+    end
+
+    private
+    
+    def increment_storage_path(storage_path)
+      storage_path.sub(/(_(\d+))?$/){ $1 ? "_#{$2.to_i+1}" : '_2' }
     end
 
   end
