@@ -24,9 +24,27 @@ describe Imagetastic::DataStorage::FileDataStore do
     it "should return the filepath of the stored file" do
       @data_store.store('blah').should =~ /^#{@file_pattern_prefix}_image$/
     end
+    
+    it "should raise an error if it can't create a directory" do
+      FileUtils.should_receive(:mkdir_p).and_raise(Errno::EACCES)
+      lambda{
+        @data_store.store('goo')
+      }.should raise_error(Imagetastic::DataStorage::UnableToStore)
+    end
+    
   end
   
   describe "retrieve" do
+    it "should retrieve the data stored, given the unique id (filepath)" do
+      id = @data_store.store('this is data!')
+      @data_store.retrieve(id).should == 'this is data!'
+    end
+    
+    it "should raise an exception if the data doesn't exist" do
+      lambda{
+        @data_store.retrieve('/tmp/gubbub')
+      }.should raise_error(Imagetastic::DataStorage::DataNotFound)
+    end
   end
   
 end

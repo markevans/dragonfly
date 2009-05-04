@@ -1,10 +1,10 @@
 class Imagetastic::DataStorage::DataStore
 
-  def store(image, file) # Receives an ActionController::UploadedTempFile
+  def store(data, name)
     raise NotImplementedError
   end
 
-  def retrieve(image) # Receives an Imagetastic::Image model
+  def retrieve(id)
     raise NotImplementedError
   end
 
