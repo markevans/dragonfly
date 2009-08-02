@@ -9,6 +9,13 @@ module Imagetastic
       klass.class_eval do
         include Configurable::InstanceMethods
         extend Configurable::ClassMethods
+        
+        # This isn't included in InstanceMethods because we need access to 'klass'
+        define_method :configuration_hash do
+          @configuration_hash ||= klass.default_configuration.dup
+        end
+        private :configuration_hash
+        
       end
     end
     
@@ -28,12 +35,6 @@ module Imagetastic
     
       def configuration
         configuration_hash.dup
-      end
-    
-      private
-    
-      def configuration_hash
-        @configuration_hash ||= self.class.default_configuration.dup
       end
 
     end

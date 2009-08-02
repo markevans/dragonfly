@@ -118,4 +118,16 @@ describe Imagetastic::Configurable do
     end
   end
   
+  describe "using in the singleton class" do
+    it "should work" do
+      class OneOff
+        class << self
+          include Imagetastic::Configurable
+          configurable_attr :food, 'bread'
+        end
+      end
+      OneOff.food.should == 'bread'
+    end
+  end
+  
 end
