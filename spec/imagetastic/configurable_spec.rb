@@ -85,5 +85,37 @@ describe Imagetastic::Configurable do
       car2.configuration.should == {:colour => 'yellow', :top_speed => 216}
     end
   end
-
+  
+  describe "lazy attributes" do
+    before(:each) do
+      cow = @cow = mock('cow')
+      class Lazy; end
+      Lazy.class_eval do
+        include Imagetastic::Configurable
+        configurable_attr(:sound){ cow.moo }
+      end
+      @lazy = Lazy.new
+    end
+    it "should not call the block if the configurable attribute is set to something else" do
+      @cow.should_not_receive(:moo)
+      @lazy.configure{|c| c.sound = 'baa' }
+      @lazy.sound.should == 'baa'
+    end
+    it "should call the block if it's not been changed, once it's accessed" do
+      @cow.should_receive(:moo).and_return('mooo!')
+      @lazy.sound.should == 'mooo!'
+    end
+    it "should not call the block when accessed again" do
+      @cow.should_receive(:moo).exactly(:once).and_return('mooo!')
+      @lazy.sound.should == 'mooo!'
+      @lazy.sound.should == 'mooo!'
+    end
+    it "should also call a block which has been set as part of the configuration" do
+      @cow.should_receive(:fart).exactly(:once).and_return('paaarrp!')
+      @lazy.configure{|c| c.sound = lambda{ @cow.fart }}
+      @lazy.sound.should == 'paaarrp!'
+      @lazy.sound.should == 'paaarrp!'
+    end
+  end
+  
 end

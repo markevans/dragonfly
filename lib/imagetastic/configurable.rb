@@ -46,10 +46,13 @@ module Imagetastic
       
       private
       
-      def configurable_attr attribute, default=nil
-        default_configuration[attribute] = default
+      def configurable_attr attribute, default=nil, &blk
+        default_configuration[attribute] = blk ? blk : default
         # Define the reader method on the instance
         define_method(attribute) do
+          if configuration_hash[attribute].respond_to? :call
+            configuration_hash[attribute] = configuration_hash[attribute].call
+          end
           configuration_hash[attribute]
         end
       end
