@@ -10,16 +10,36 @@ describe Imagetastic::UrlHandler do
   describe "parsing a query string" do
     
     it "should parse a query string into at least a two level nested hash" do
-      @obj.query_to_params('a=b&c[d]=e&c[j]=k&f[g]=h').should == ({
-        'a' => 'b',
-        'c' => {
+      @obj.query_to_params('m=b&opts[d]=e&opts[j]=k&sha=abcd').should == ({
+        'm' => 'b',
+        'opts' => {
           'd' => 'e',
           'j' => 'k'
         },
-        'f' => {
-          'g' => 'h'
-        }
+        'sha' => 'abcd'
       })
+    end
+    
+    it "should return nil for an empty query string" do
+      @obj.query_to_params('').should be_nil
+    end
+    
+    it "should return nil for a nil query string" do
+      @obj.query_to_params(nil).should be_nil
+    end
+    
+    %w{m opts sha}.each do |key|
+      it "should accept #{key} as a param key" do
+        lambda{
+          @obj.query_to_params("#{key}=a")
+        }.should_not raise_error
+      end
+    end
+    
+    it "should reject bad keys" do
+      lambda{
+        @obj.query_to_params("bad_key=a")
+      }.should raise_error(Imagetastic::UrlHandler::BadParams)
     end
     
   end
