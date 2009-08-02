@@ -4,58 +4,58 @@ describe Imagetastic::Configurable do
 
   before(:each) do
     class Car
-      extend Imagetastic::Configurable
+      include Imagetastic::Configurable
       configurable_attr :colour
       configurable_attr :top_speed, 216
       def self.other_thing=(thing); end
-    end    
+    end
+    @car = Car.new
   end
 
   describe "setup" do
     it "should provide attr_readers for configurable attributes" do
-      Car.should respond_to(:colour)
+      @car.should respond_to(:colour)
     end
 
     it "should not provide attr_writers for configurable attributes" do
-      Car.should_not respond_to(:colour=)
+      @car.should_not respond_to(:colour=)
     end
 
     it "should set default values for configurable attributes" do
-      Car.top_speed.should == 216
+      @car.top_speed.should == 216
     end
 
     it "should set the default as nil if not specified" do
-      Car.colour.should be_nil
+      @car.colour.should be_nil
     end
     
     it "should allow specifying configurable attrs as strings" do
       class Bike
-        extend Imagetastic::Configurable
+        include Imagetastic::Configurable
         configurable_attr 'colour', 'rude'
       end
-      Bike.colour.should == 'rude'
+      Bike.new.colour.should == 'rude'
     end
   end
 
-  
   describe "configuring" do
     it "should raise an error if there are no configurable attributes" do
-      class None; extend Imagetastic::Configurable; end
+      class None; include Imagetastic::Configurable; end
       lambda {
-        None.configure{|c|}
+        None.new.configure{|c|}
       }.should raise_error(Imagetastic::Configurable::NothingToConfigure)
     end
     
     it "should allow you to change values" do
-      Car.configure do |c|
+      @car.configure do |c|
         c.colour = 'red'
       end
-      Car.colour.should == 'red'
+      @car.colour.should == 'red'
     end
     
     it "should not allow you to call other methods on the object via the configuration" do
       lambda{
-        Car.configure do |c|
+        @car.configure do |c|
           c.other_thing = 5
         end
       }.should raise_error(Imagetastic::Configurable::BadConfigAttribute)
@@ -64,11 +64,25 @@ describe Imagetastic::Configurable do
   
   describe "getting configuration" do
     it "should return the configuration as a hash" do
-      Car.configuration.should == {:colour => nil, :top_speed => 216}
+      @car.configuration.should == {:colour => nil, :top_speed => 216}
     end
     it "should not allow you to change the configuration via the hash" do
-      Car.configuration[:top_speed] = 555
-      Car.top_speed.should == 216
+      @car.configuration[:top_speed] = 555
+      @car.top_speed.should == 216
+    end
+  end
+  
+  describe "multiple objects" do
+    it "should return the default configuration" do
+      Car.default_configuration.should == {:colour => nil, :top_speed => 216}
+    end
+    it "should allow instances to be configured differently" do
+      car1 = Car.new
+      car1.configure{|c| c.colour = 'green'}
+      car2 = Car.new
+      car2.configure{|c| c.colour = 'yellow'}
+      car1.configuration.should == {:colour => 'green', :top_speed => 216}
+      car2.configuration.should == {:colour => 'yellow', :top_speed => 216}
     end
   end
 
