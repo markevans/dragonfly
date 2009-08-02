@@ -29,6 +29,8 @@ end
 
 autoload_files_in_dir("#{File.dirname(__FILE__)}/imagetastic", 'Imagetastic')
 
+require 'rack'
+
 # Config
 module Imagetastic
   class << self
@@ -37,5 +39,6 @@ module Imagetastic
     configurable_attr(:format_converter){ImageProcessing::ImageMagick::FormatConverter.new}
     configurable_attr(:image_processor){ImageProcessing::ImageMagick::ImageProcessor.new}
     configurable_attr(:image_analyser){ImageProcessing::ImageMagick::ImageAnalyser.new}
+    configurable_attr(:url_handler){UrlHandler.new}
   end
 end

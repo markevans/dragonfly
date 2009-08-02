@@ -1,8 +1,8 @@
 module Imagetastic
-  module UrlHandler
+  class UrlHandler
     
     # Exceptions
-    class UrlHandler::BadParams < RuntimeError; end
+    class BadParams < RuntimeError; end
     
     include Rack::Utils
 
@@ -24,6 +24,6 @@ module Imagetastic
         end
       end
     end
-    
+ 
   end
 end
