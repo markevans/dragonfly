@@ -8,12 +8,12 @@ describe Imagetastic::DataStorage::FileDataStore do
     
     # Set 'now' to a date in the past
     Time.stub!(:now).and_return Time.mktime(1984,"may",4,14,28,1)
-    @file_pattern_prefix = "#{Imagetastic::DataStorage::FileDataStore::IMAGE_STORE_ROOT}/1984/05/04/14_28_01"
+    @file_pattern_prefix = "#{@data_store.root_path}/1984/05/04/14_28_01"
   end
   
   after(:each) do
     # Clean up created files
-    FileUtils.rm_rf("#{Imagetastic::DataStorage::FileDataStore::IMAGE_STORE_ROOT}/1984")
+    FileUtils.rm_rf("#{@data_store.root_path}/1984")
   end
   
   it_should_behave_like 'data_store'
