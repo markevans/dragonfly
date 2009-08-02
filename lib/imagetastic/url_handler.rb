@@ -1,3 +1,5 @@
+require 'digest/sha1'
+
 module Imagetastic
   class UrlHandler
     
@@ -5,6 +7,11 @@ module Imagetastic
     class BadParams < RuntimeError; end
     
     include Rack::Utils
+    include Configurable
+    
+    configurable_attr :protect_from_dos_attacks, true
+    configurable_attr :secret, 'This is a secret!'
+    configurable_attr :sha_length, 16
 
     VALID_PARAM_KEYS = %w{m opts sha}
 
@@ -24,6 +31,12 @@ module Imagetastic
         end
       end
     end
- 
+    
+    private
+    
+    # def TODO
+    #   digest = Digest::SHA1.hexdigest(TODO)
+    # end
+    
   end
 end
