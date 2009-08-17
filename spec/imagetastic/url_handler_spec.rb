@@ -128,4 +128,27 @@ describe Imagetastic::UrlHandler do
     
   end
   
+  describe "forming a query string from params" do
+    before(:each) do
+      @params = {
+        'm' => 'b',
+        'opts' => {
+          'd' => 'e',
+          'j' => 'k'
+        }
+      }
+      @query_string = 'opts[d]=e&opts[j]=k&m=b'
+    end
+    it "should correctly form a query string when DOS protection off" do
+      @url_handler.configure{|c| c.protect_from_dos_attacks = false }
+      @url_handler.params_to_query_string(@params).should == @query_string
+    end
+    it "should correctly form a query string when DOS protection on" do
+      @url_handler.configure{|c| c.protect_from_dos_attacks = true }
+      Digest::SHA1.should_receive(:hexdigest).and_return('thisismysha12345')
+      @url_handler.params_to_query_string(@params).should == @query_string + '&sha=thisismysha12345'
+    end
+    
+  end
+  
 end

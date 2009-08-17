@@ -25,9 +25,15 @@ module Imagetastic
         params
       end
     end
+    
+    def params_to_query_string(params)
+      str = build_query(params)
+      str += "&sha=#{sha_for_params(params)}" if protect_from_dos_attacks
+      str
+    end
 
     private
-    
+
     def validate_params(params)
       # SHA
       if protect_from_dos_attacks
@@ -39,6 +45,24 @@ module Imagetastic
       # Invalid Keys
       invalid_keys = params.keys - VALID_PARAM_KEYS
       raise BadParams, "invalid parameters: #{invalid_keys.join(', ')}" if invalid_keys.any?
+    end
+    
+    # Annoyingly, the 'build_query' in Rack::Utils doesn't seem to work
+    # properly for nested parameters/arrays
+    # Taken from http://github.com/sinatra/sinatra/commit/52658061d1205753a8afd2801845a910a6c01ffd
+    def build_query(value, prefix = nil)
+      case value
+      when Array
+        value.map { |v|
+          build_query(v, "#{prefix}[]")
+        } * "&"
+      when Hash
+        value.map { |k, v|
+          build_query(v, prefix ? "#{prefix}[#{escape(k)}]" : escape(k))
+        } * "&"
+      else
+        "#{prefix}=#{escape(value)}"
+      end
     end
     
     def sha_for_params(params)
