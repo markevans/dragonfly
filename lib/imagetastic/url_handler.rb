@@ -20,27 +20,13 @@ module Imagetastic
 
     def query_to_params(query_string)
       unless blank?(query_string)
-        params = query_string_to_hash(query_string)
+        params = parse_nested_query(query_string)
         validate_params(params)
         params
       end
     end
-    
+
     private
-    
-    def query_string_to_hash(string)
-      parse_query(string).inject({}) do |memo, k_and_v|
-        k,v = k_and_v
-        if k =~ /^(.+)\[(.+)\]$/
-          k, k_2 = $1, $2
-          memo[k] ||= {}
-          memo[k][k_2] = v
-        else
-          memo[k] = v
-        end
-        memo
-      end
-    end
     
     def validate_params(params)
       # SHA
