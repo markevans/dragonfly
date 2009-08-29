@@ -6,48 +6,39 @@ describe Imagetastic::UrlHandler do
     @url_handler = Imagetastic::UrlHandler.new
   end
   
-  describe "parsing a query string" do
+  describe "parsing the query string" do
     
     before(:each) do
+      @path = "/images/some_image.jpg"
+      @query_string = "m=b&o[d]=e&o[j]=k&e[l]=m"
       @url_handler.configure{|c| c.protect_from_dos_attacks = false }
-      @query_string = 'm=b&opts[d]=e&opts[j]=k'
     end
     
-    it "should parse a query string into at least a two level nested hash" do
-      @url_handler.query_to_params(@query_string).should == ({
-        'm' => 'b',
-        'opts' => {
-          'd' => 'e',
-          'j' => 'k'
-        }
-      })
+    it "should form the uid from the basename of the url" do
+      params = @url_handler.url_to_params(@path, @query_string)
+      params[:uid].should == 'images/some_image'
     end
     
-    it "should return nil for an empty query string" do
-      @url_handler.query_to_params('').should be_nil
+    it "should behave the same if there is no beginning slash" do
+      params = @url_handler.url_to_params('images/some_image.jpg', @query_string)
+      params[:uid].should == 'images/some_image'
     end
     
-    it "should return nil for a nil query string" do
-      @url_handler.query_to_params(nil).should be_nil
+    it "should put the encoding from the file extension in the encoding part of the hash" do
+      params = @url_handler.url_to_params('images/some_image.jpg', @query_string)
+      params[:encoding][:mime_type].should == 'image/jpeg'
     end
     
-    %w{m opts}.each do |key|
-      it "should accept #{key} as a param key" do
-        lambda{
-          @url_handler.query_to_params("#{key}=a")
-        }.should_not raise_error
-      end
+    it "should correctly parse method, options and encoding" do
+      params = @url_handler.url_to_params(@path, @query_string)
+      params[:encoding][:l].should == 'm'
+      params[:method].should == 'b'
+      params[:options].should == {:j => 'k', :d => 'e'}
     end
-    
-    it "should not accept the sha key if protection turned off" do
-      lambda{
-        @url_handler.query_to_params("#{@query_to_params}&sha=abcd1234")
-      }.should raise_error(Imagetastic::UrlHandler::BadParams)
-    end
-    
+
     it "should reject bad keys" do
       lambda{
-        @url_handler.query_to_params("bad_key=a")
+        @url_handler.url_to_params(@path, "#{@query_string}&bad_key=a")
       }.should raise_error(Imagetastic::UrlHandler::BadParams)
     end
     
@@ -61,31 +52,41 @@ describe Imagetastic::UrlHandler do
         c.secret     = 'secret'
         c.sha_length = 16
       }
-      @query_string = 'm=b&opts[d]=e&opts[j]=k'
+      @path = "/images/some_image.jpg"
+      @query_string = "m=b&o[d]=e&o[j]=k"
+    end
+    
+    it "should not accept the sha key if protection turned off" do
+      @url_handler.configure{|c| c.protect_from_dos_attacks = false }
+      lambda{
+        @url_handler.url_to_params(@path, "#{@query_string}&s=thisismysha12345")
+      }.should raise_error(Imagetastic::UrlHandler::BadParams)
+    end
+    
+    it "should not include the sha in the params" do
+      Digest::SHA1.should_receive(:hexdigest).and_return("thisismysha12345")
+      params = @url_handler.url_to_params(@path, "#{@query_string}&s=thisismysha12345")
+      params.should_not have_key(:sha)
     end
     
     it "should return the params as normal if the sha is ok" do
       Digest::SHA1.should_receive(:hexdigest).and_return("thisismysha12345")
-      @url_handler.query_to_params("#{@query_string}&sha=thisismysha12345").should == ({
-        'm' => 'b',
-        'opts' => {
-          'd' => 'e',
-          'j' => 'k'
-        },
-        'sha' => 'thisismysha12345'
-      })
+      params = @url_handler.url_to_params(@path, "#{@query_string}&s=thisismysha12345")
+      params.should have_key(:method)
+      params.should have_key(:options)
+      params.should have_key(:encoding)
     end
     
     it "should raise an error if the sha is incorrect" do
       Digest::SHA1.should_receive(:hexdigest).and_return("thisismysha12345")
       lambda{
-        @url_handler.query_to_params("#{@query_string}&sha=heyNOTmysha12345")
+        @url_handler.url_to_params(@path, "#{@query_string}&s=heyNOTmysha12345")
       }.should raise_error(Imagetastic::UrlHandler::IncorrectSHA)
     end
     
     it "should raise an error if the sha isn't given" do
       lambda{
-        @url_handler.query_to_params(@query_string)
+        @url_handler.url_to_params(@path, @query_string)
       }.should raise_error(Imagetastic::UrlHandler::SHANotGiven)
     end
     
@@ -95,26 +96,24 @@ describe Imagetastic::UrlHandler do
         @url_handler.configure{|c|
           c.sha_length = 3
         }
+        Digest::SHA1.should_receive(:hexdigest).and_return("thisismysha12345")
       end
 
       it "should use a SHA of the specified length" do
-          Digest::SHA1.should_receive(:hexdigest).and_return("thisismysha12345")
           lambda{
-            @url_handler.query_to_params("#{@query_string}&sha=thi")
+            @url_handler.url_to_params(@path, "#{@query_string}&s=thi")
           }.should_not raise_error
       end
 
       it "should raise an error if the SHA is correct but too long" do
-          Digest::SHA1.should_receive(:hexdigest).and_return("thisismysha12345")
           lambda{
-            @url_handler.query_to_params("#{@query_string}&sha=this")
+            @url_handler.url_to_params(@path, "#{@query_string}&s=this")
           }.should raise_error(Imagetastic::UrlHandler::IncorrectSHA)
       end
 
       it "should raise an error if the SHA is correct but too short" do
-          Digest::SHA1.should_receive(:hexdigest).and_return("thisismysha12345")
           lambda{
-            @url_handler.query_to_params("#{@query_string}&sha=th")
+            @url_handler.url_to_params(@path, "#{@query_string}&s=th")
           }.should raise_error(Imagetastic::UrlHandler::IncorrectSHA)
       end
       
@@ -123,32 +122,59 @@ describe Imagetastic::UrlHandler do
     it "should use the secret given to create the sha" do
       @url_handler.configure{|c| c.secret = 'digby' }
       Digest::SHA1.should_receive(:hexdigest).with(string_matching(/digby/)).and_return('thisismysha12345')
-      @url_handler.query_to_params("#{@query_string}&sha=thisismysha12345")
+      @url_handler.url_to_params(@path, "#{@query_string}&s=thisismysha12345")
     end
     
   end
   
-  describe "forming a query string from params" do
+  describe "forming a url from params" do
     before(:each) do
       @params = {
-        'm' => 'b',
-        'opts' => {
-          'd' => 'e',
-          'j' => 'k'
-        }
+        :method => 'b',
+        :options => {
+          :d => 'e',
+          :j => 'k'
+        },
+        :encoding => {:x => 'y', :mime_type => 'image/gif'},
+        :uid => 'thisisunique'
       }
-      @query_string = 'opts[d]=e&opts[j]=k&m=b'
+      @url = '/thisisunique.gif?m=b&o[d]=e&o[j]=k&e[x]=y'
     end
     it "should correctly form a query string when DOS protection off" do
       @url_handler.configure{|c| c.protect_from_dos_attacks = false }
-      @url_handler.params_to_query_string(@params).should == @query_string
+      @url_handler.params_to_url(@params).should == @url
     end
     it "should correctly form a query string when DOS protection on" do
       @url_handler.configure{|c| c.protect_from_dos_attacks = true }
       Digest::SHA1.should_receive(:hexdigest).and_return('thisismysha12345')
-      @url_handler.params_to_query_string(@params).should == @query_string + '&sha=thisismysha12345'
+      @url_handler.params_to_url(@params).should == @url + '&s=thisismysha12345'
     end
     
+  end
+  
+  describe "sanity check" do
+    it "params_to_url should exactly reverse map url_to_params" do
+      Digest::SHA1.should_receive(:hexdigest).exactly(:twice).and_return('thisismysha12345')
+      path = "/images/some_image.gif"
+      query_string = "m=b&o[d]=e&o[j]=k&e[l]=m&s=thisismysha12345"
+      params = @url_handler.url_to_params(path, query_string)
+      @url_handler.params_to_url(params).should == "#{path}?#{query_string}"
+    end
+    
+    it "url_to_params should exactly reverse map params_to_url" do
+      params = {
+        :method => 'b',
+        :options => {
+          :d => 'e',
+          :j => 'k'
+        },
+        :encoding => {:x => 'y', :mime_type => 'image/jpeg'},
+        :uid => 'thisisunique'
+      }
+      
+      url = @url_handler.params_to_url(params)
+      @url_handler.url_to_params(*url.split('?')).should == params
+    end
   end
   
 end

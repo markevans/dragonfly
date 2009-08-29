@@ -1,4 +1,5 @@
 require 'digest/sha1'
+require 'mime/types'
 require 'rack'
 
 module Imagetastic
@@ -16,34 +17,49 @@ module Imagetastic
     configurable_attr :secret, 'This is a secret!'
     configurable_attr :sha_length, 16
 
-    VALID_PARAM_KEYS = %w{m opts sha}
-
-    def query_to_params(query_string)
-      unless blank?(query_string)
-        params = parse_nested_query(query_string)
-        validate_params(params)
-        params
-      end
+    MAPPINGS = {
+      'm' => :method,
+      'o' => :options,
+      'e' => :encoding,
+      's' => :sha
+    }
+    REVERSE_MAPPINGS = MAPPINGS.invert
+    
+    def url_to_params(path, query_string)
+      params = parse_nested_query(query_string)
+      map_query_keys(params, MAPPINGS)
+      uid, ext = parse_path(path)
+      params[:encoding] ||= {}
+      params[:encoding][:mime_type] = mime_type_from_extension(ext)
+      params[:uid] = uid
+      validate_params(params, params.delete(:sha))
+      params
     end
     
-    def params_to_query_string(params)
-      str = build_query(params)
-      str += "&sha=#{sha_for_params(params)}" if protect_from_dos_attacks
-      str
+    def params_to_url(params)
+      sha_string = "&#{REVERSE_MAPPINGS[:sha]}=#{sha_for_params(params)}" if protect_from_dos_attacks?
+      hash_for_url = params.dup
+      hash_for_url[:encoding] = params[:encoding].dup
+      uid = hash_for_url.delete(:uid)
+      ext = extension_from_mime_type(hash_for_url[:encoding].delete(:mime_type))
+      map_query_keys(hash_for_url, REVERSE_MAPPINGS)
+      query_string = build_query(hash_for_url)
+      query_string += sha_string if sha_string
+      "/#{uid}.#{ext}?#{query_string}"
     end
 
     private
 
-    def validate_params(params)
+    def validate_params(params, sha=nil)
       # SHA
-      if protect_from_dos_attacks
-        raise SHANotGiven, "You need to give a SHA" if blank?(params['sha'])
-        raise IncorrectSHA, "The SHA parameter you gave is incorrect" if sha_for_params(params) != params['sha']
+      if protect_from_dos_attacks?
+        raise SHANotGiven, "You need to give a SHA" if blank?(sha)
+        raise IncorrectSHA, "The SHA parameter you gave is incorrect" if sha_for_params(params) != sha
       else
-        raise BadParams, "you gave a SHA but DOS protection is switched off" if params['sha']
+        raise BadParams, "you gave a SHA but DOS protection is switched off" if sha
       end
       # Invalid Keys
-      invalid_keys = params.keys - VALID_PARAM_KEYS
+      invalid_keys = params.keys - (MAPPINGS.values + [:uid])
       raise BadParams, "invalid parameters: #{invalid_keys.join(', ')}" if invalid_keys.any?
     end
     
@@ -65,13 +81,43 @@ module Imagetastic
       end
     end
     
+    def map_query_keys(params, mappings)
+      mappings.each do |url_key, params_key|
+        if params[url_key]
+          value = params.delete(url_key)
+          params[params_key] = value
+          # Symbolize the keys of this nested hash if a hash
+          if value.is_a?(Hash)
+            value.each do |k,v|
+              value[k.to_sym] = value.delete(k)
+            end
+          end
+        end
+      end
+    end
+    
+    def parse_path(path)
+      path.sub(/^\//,'').split('.')
+    end
+    
+    def mime_type_from_extension(ext)
+      MIME::Types.type_for(ext).to_s
+    end
+    
+    def extension_from_mime_type(mime_type)
+      MIME::Types[mime_type].first.extensions.first
+    end
+    
     def sha_for_params(params)
-      params_without_sha = params.reject{|k,v| k == 'sha' }
-      Digest::SHA1.hexdigest("#{params_without_sha}#{secret}")[0...sha_length]
+      Digest::SHA1.hexdigest("#{params}#{secret}")[0...sha_length]
     end
     
     def blank?(obj)
       obj.nil? || obj.empty?
+    end
+    
+    def protect_from_dos_attacks?
+      protect_from_dos_attacks
     end
     
   end
