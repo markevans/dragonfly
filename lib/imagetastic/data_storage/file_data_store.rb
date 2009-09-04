@@ -9,13 +9,13 @@ module Imagetastic
 
       def store(data, name="image")
 
-        storage_path = "#{root_path}/#{Time.now.strftime '%Y/%m/%d/%H_%M_%S'}_#{name}"
+        relative_path = "#{Time.now.strftime '%Y/%m/%d/%H_%M_%S'}_#{name}"
 
         begin
-          FileUtils.mkdir_p File.dirname(storage_path)
-          while File.exist?(storage_path)
-            storage_path = increment_storage_path(storage_path)
+          while File.exist?(storage_path = absolute_storage_path(relative_path))
+            relative_path = increment_path(relative_path)
           end
+          FileUtils.mkdir_p File.dirname(storage_path)
           File.open(storage_path, 'w') do |file|
             file.write(data)
           end
@@ -23,12 +23,12 @@ module Imagetastic
           raise UnableToStore, e.message
         end
       
-        storage_path
+        relative_path
       end
 
-      def retrieve(file_path)
+      def retrieve(relative_path)
         begin
-          File.read(file_path)
+          File.read(absolute_storage_path(relative_path))
         rescue Errno::ENOENT => e
           raise DataNotFound, e.message
         end
@@ -36,8 +36,12 @@ module Imagetastic
 
       private
     
-      def increment_storage_path(storage_path)
-        storage_path.sub(/(_(\d+))?$/){ $1 ? "_#{$2.to_i+1}" : '_2' }
+      def increment_path(path)
+        path.sub(/(_(\d+))?$/){ $1 ? "_#{$2.to_i+1}" : '_2' }
+      end
+      
+      def absolute_storage_path(relative_path)
+        File.join(root_path, relative_path)
       end
 
     end
