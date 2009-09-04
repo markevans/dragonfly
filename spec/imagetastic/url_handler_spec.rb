@@ -142,12 +142,12 @@ describe Imagetastic::UrlHandler do
     end
     it "should correctly form a query string when DOS protection off" do
       @url_handler.configure{|c| c.protect_from_dos_attacks = false }
-      @url_handler.params_to_url(@params).should == @url
+      @url_handler.params_to_url(@params).should match_url(@url)
     end
     it "should correctly form a query string when DOS protection on" do
       @url_handler.configure{|c| c.protect_from_dos_attacks = true }
       Digest::SHA1.should_receive(:hexdigest).and_return('thisismysha12345')
-      @url_handler.params_to_url(@params).should == @url + '&s=thisismysha12345'
+      @url_handler.params_to_url(@params).should match_url(@url + '&s=thisismysha12345')
     end
     
   end
@@ -158,7 +158,7 @@ describe Imagetastic::UrlHandler do
       path = "/images/some_image.gif"
       query_string = "m=b&o[d]=e&o[j]=k&e[l]=m&s=thisismysha12345"
       params = @url_handler.url_to_params(path, query_string)
-      @url_handler.params_to_url(params).should == "#{path}?#{query_string}"
+      @url_handler.params_to_url(params).should match_url("#{path}?#{query_string}")
     end
     
     it "url_to_params should exactly reverse map params_to_url" do
