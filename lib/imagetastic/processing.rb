@@ -1,4 +1,4 @@
 module Imagetastic
-  module ImageProcessing
+  module Processing
   end
 end

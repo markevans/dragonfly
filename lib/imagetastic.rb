@@ -34,9 +34,9 @@ module Imagetastic
   class << self
     include Configurable
     configurable_attr(:datastore){DataStorage::FileDataStore.new}
-    configurable_attr(:format_converter){ImageProcessing::ImageMagick::FormatConverter.new}
-    configurable_attr(:image_processor){ImageProcessing::ImageMagick::ImageProcessor.new}
-    configurable_attr(:image_analyser){ImageProcessing::ImageMagick::ImageAnalyser.new}
+    configurable_attr(:analyser){Processing::Ragick::Analyser.new}
+    configurable_attr(:processor){Processing::RMagick::Processor.new}
+    configurable_attr(:encoder){Processing::RMagick::Encoder.new}
     configurable_attr(:url_handler){UrlHandler.new}
   end
 end

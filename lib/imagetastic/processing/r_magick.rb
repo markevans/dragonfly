@@ -1,13 +1,13 @@
 require 'rmagick'
 
 module Imagetastic
-  module ImageProcessing
-    module ImageMagick
+  module Processing
+    module RMagick
 
-      class FormatConverter
+      class Encoder
       end
 
-      class ImageProcessor
+      class Processor < Processor
 
         def resize(image_data, opts={})
           Magick::Image.from_blob(image_data).first.scale(opts[:scale].to_f).to_blob
@@ -15,7 +15,7 @@ module Imagetastic
 
       end
 
-      class ImageAnalyser
+      class Analyser
 
         def get_dimensions(file)
           image = Magick::Image.read(file.local_path).first
