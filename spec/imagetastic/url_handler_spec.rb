@@ -6,42 +6,66 @@ describe Imagetastic::UrlHandler do
     @url_handler = Imagetastic::UrlHandler.new
   end
   
-  describe "parsing the query string" do
+  describe "extracting parameters from the url" do
     
     before(:each) do
+      @url_handler.configure{|c| c.protect_from_dos_attacks = false}
       @path = "/images/some_image.jpg"
       @query_string = "m=b&o[d]=e&o[j]=k&e[l]=m"
-      @url_handler.configure{|c| c.protect_from_dos_attacks = false }
+      @parameters = @url_handler.url_to_parameters(@path, @query_string)
     end
     
-    it "should form the uid from the basename of the url" do
-      parameters = @url_handler.url_to_parameters(@path, @query_string)
-      parameters[:uid].should == 'images/some_image'
+    it "should correctly extract the uid" do
+      @parameters.uid.should == 'images/some_image'
     end
     
     it "should behave the same if there is no beginning slash" do
       parameters = @url_handler.url_to_parameters('images/some_image.jpg', @query_string)
-      parameters[:uid].should == 'images/some_image'
+      parameters.uid.should == 'images/some_image'
     end
     
-    it "should put the encoding from the file extension in the encoding part of the hash" do
-      parameters = @url_handler.url_to_parameters('images/some_image.jpg', @query_string)
-      parameters[:encoding][:mime_type].should == 'image/jpeg'
+    it "should correctly extract the mime type" do
+      @parameters.mime_type.should == 'image/jpeg'
     end
     
-    it "should correctly parse method, options and encoding" do
-      parameters = @url_handler.url_to_parameters(@path, @query_string)
-      parameters[:encoding][:l].should == 'm'
-      parameters[:method].should == 'b'
-      parameters[:options].should == {:j => 'k', :d => 'e'}
-    end
-
-    it "should reject bad keys" do
-      lambda{
-        @url_handler.url_to_parameters(@path, "#{@query_string}&bad_key=a")
-      }.should raise_error(Imagetastic::UrlHandler::BadParams)
+    it "should correctly extract the method" do
+      @parameters.method.should == 'b'
     end
     
+    it "should correctly extract the options" do
+      @parameters.options.should == {:j => 'k', :d => 'e'}
+    end
+    
+    it "should correctly extract the encoding" do
+      @parameters.encoding.should == {:l => 'm'}
+    end
+    
+    it "should have options and encoding as optional" do
+      parameters = @url_handler.url_to_parameters(@path, 'm=b')
+      parameters.options.should == {}
+      parameters.encoding.should == {}
+    end
+    
+  end
+  
+  describe "forming a url from parameters" do
+    before(:each) do
+      @parameters = Imagetastic::Parameters.new
+      @parameters.uid = 'thisisunique'
+      @parameters.method = 'b'
+      @parameters.options = {:d => 'e', :j => 'k'}
+      @parameters.mime_type = 'image/gif'
+      @parameters.encoding = {:x => 'y'}
+    end
+    it "should correctly form a query string when dos protection turned off" do
+      @url_handler.configure{|c| c.protect_from_dos_attacks = false}
+      @url_handler.parameters_to_url(@parameters).should match_url('/thisisunique.gif?m=b&o[d]=e&o[j]=k&e[x]=y')
+    end
+    it "should correctly form a query string when dos protection turned on" do
+      @url_handler.configure{|c| c.protect_from_dos_attacks = true}
+      @parameters.should_receive(:generate_sha).and_return('thisismysha12345')
+      @url_handler.parameters_to_url(@parameters).should match_url('/thisisunique.gif?m=b&o[d]=e&o[j]=k&e[x]=y&s=thisismysha12345')
+    end    
   end
   
   describe "protecting from DOS attacks with SHA" do
@@ -54,31 +78,19 @@ describe Imagetastic::UrlHandler do
       }
       @path = "/images/some_image.jpg"
       @query_string = "m=b&o[d]=e&o[j]=k"
-    end
-    
-    it "should not accept the sha key if protection turned off" do
-      @url_handler.configure{|c| c.protect_from_dos_attacks = false }
-      lambda{
-        @url_handler.url_to_parameters(@path, "#{@query_string}&s=thisismysha12345")
-      }.should raise_error(Imagetastic::UrlHandler::BadParams)
-    end
-    
-    it "should not include the sha in the parameters" do
-      Digest::SHA1.should_receive(:hexdigest).and_return("thisismysha12345")
-      parameters = @url_handler.url_to_parameters(@path, "#{@query_string}&s=thisismysha12345")
-      parameters.should_not have_key(:sha)
+      @parameters = Imagetastic::Parameters.new
+      Imagetastic::Parameters.stub!(:new).and_return(@parameters)
     end
     
     it "should return the parameters as normal if the sha is ok" do
-      Digest::SHA1.should_receive(:hexdigest).and_return("thisismysha12345")
-      parameters = @url_handler.url_to_parameters(@path, "#{@query_string}&s=thisismysha12345")
-      parameters.should have_key(:method)
-      parameters.should have_key(:options)
-      parameters.should have_key(:encoding)
+      @parameters.should_receive(:generate_sha).with('secret', 16).and_return('thisismysha12345')
+      lambda{
+        @url_handler.url_to_parameters(@path, "#{@query_string}&s=thisismysha12345")
+      }.should_not raise_error
     end
     
     it "should raise an error if the sha is incorrect" do
-      Digest::SHA1.should_receive(:hexdigest).and_return("thisismysha12345")
+      @parameters.should_receive(:generate_sha).with('secret', 16).and_return('thisismysha12345')
       lambda{
         @url_handler.url_to_parameters(@path, "#{@query_string}&s=heyNOTmysha12345")
       }.should raise_error(Imagetastic::UrlHandler::IncorrectSHA)
@@ -127,31 +139,6 @@ describe Imagetastic::UrlHandler do
     
   end
   
-  describe "forming a url from parameters" do
-    before(:each) do
-      @parameters = {
-        :method => 'b',
-        :options => {
-          :d => 'e',
-          :j => 'k'
-        },
-        :encoding => {:x => 'y', :mime_type => 'image/gif'},
-        :uid => 'thisisunique'
-      }
-      @url = '/thisisunique.gif?m=b&o[d]=e&o[j]=k&e[x]=y'
-    end
-    it "should correctly form a query string when DOS protection off" do
-      @url_handler.configure{|c| c.protect_from_dos_attacks = false }
-      @url_handler.parameters_to_url(@parameters).should match_url(@url)
-    end
-    it "should correctly form a query string when DOS protection on" do
-      @url_handler.configure{|c| c.protect_from_dos_attacks = true }
-      Digest::SHA1.should_receive(:hexdigest).and_return('thisismysha12345')
-      @url_handler.parameters_to_url(@parameters).should match_url(@url + '&s=thisismysha12345')
-    end
-    
-  end
-  
   describe "sanity check" do
     it "parameters_to_url should exactly reverse map url_to_parameters" do
       Digest::SHA1.should_receive(:hexdigest).exactly(:twice).and_return('thisismysha12345')
@@ -162,15 +149,17 @@ describe Imagetastic::UrlHandler do
     end
     
     it "url_to_parameters should exactly reverse map parameters_to_url" do
-      parameters = {
+      @url_handler.configure{|c| c.protect_from_dos_attacks = true}
+      parameters = Imagetastic::Parameters.new(
         :method => 'b',
         :options => {
           :d => 'e',
           :j => 'k'
         },
-        :encoding => {:x => 'y', :mime_type => 'image/jpeg'},
+        :mime_type => 'image/jpeg',
+        :encoding => {:x => 'y'},
         :uid => 'thisisunique'
-      }
+      )
       
       url = @url_handler.parameters_to_url(parameters)
       @url_handler.url_to_parameters(*url.split('?')).should == parameters
