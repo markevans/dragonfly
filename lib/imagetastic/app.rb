@@ -2,7 +2,7 @@ module Imagetastic
   class App
     
     def call(env)
-      params = Imagetastic.url_handler.url_to_params(env['PATH_INFO'], env['QUERY_STRING'])
+      params = Imagetastic.url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])
       image = Imagetastic.datastore.retrieve(params[:uid])
       image = Imagetastic.processor.process(image, params[:method], params[:options])
       # image = Imagetastic.encoder.encode(image, params[:encoding])

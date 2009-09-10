@@ -25,7 +25,7 @@ module Imagetastic
     }
     REVERSE_MAPPINGS = MAPPINGS.invert
     
-    def url_to_params(path, query_string)
+    def url_to_parameters(path, query_string)
       params = parse_nested_query(query_string)
       map_query_keys(params, MAPPINGS)
       uid, ext = parse_path(path)
@@ -36,7 +36,7 @@ module Imagetastic
       params
     end
     
-    def params_to_url(params)
+    def parameters_to_url(params)
       sha_string = "&#{REVERSE_MAPPINGS[:sha]}=#{sha_for_params(params)}" if protect_from_dos_attacks?
       hash_for_url = params.dup
       hash_for_url[:encoding] = params[:encoding].dup
