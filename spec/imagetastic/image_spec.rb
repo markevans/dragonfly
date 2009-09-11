@@ -102,4 +102,13 @@ describe Imagetastic::Image do
     end
   end
   
+  describe ".from_file" do
+    it "should be the same as initializing from a file object, but using just the path" do
+      path = File.dirname(__FILE__)+'/../../samples/beach.png'
+      image1 = Imagetastic::Image.from_file(path)
+      image2 = Imagetastic::Image.new(File.new(path,'r'))
+      image1.data.should == image2.data
+    end
+  end
+  
 end

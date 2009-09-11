@@ -3,6 +3,10 @@ require 'tempfile'
 module Imagetastic
   class Image
     
+    def self.from_file(path)
+      new(File.new(path, 'r'))
+    end
+    
     def initialize(image)
       case image
       when String

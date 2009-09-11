@@ -26,8 +26,7 @@ module Imagetastic
 
       def retrieve(relative_path)
         begin
-          file = File.new(absolute_storage_path(relative_path), 'r')
-          Imagetastic::Image.new(file)
+          Imagetastic::Image.from_file(absolute_storage_path(relative_path))
         rescue Errno::ENOENT => e
           raise DataNotFound, e.message
         end
