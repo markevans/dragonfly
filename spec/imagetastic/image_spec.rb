@@ -77,6 +77,13 @@ describe Imagetastic::Image do
     end
   end
   
+  describe "path" do
+    it "should return the absolute file path" do
+      image = Imagetastic::Image.new(File.new(File.dirname(__FILE__)+'/../../samples/beach.png','r'))
+      image.path.should == image.file.path
+    end
+  end
+  
   describe "each" do
     before(:each) do
       @file = File.new(File.dirname(__FILE__)+'/../../samples/beach.png','r')

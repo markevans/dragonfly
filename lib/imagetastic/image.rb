@@ -43,6 +43,10 @@ module Imagetastic
     
     alias_method :file, :tempfile
     
+    def path
+      tempfile.path
+    end
+    
     def each(&block)
       tempfile.open
       while part = tempfile.read(8192)
