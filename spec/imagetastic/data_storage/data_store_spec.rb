@@ -6,14 +6,16 @@ describe "data_store", :shared => true do
 
   describe "store" do
     it "should return a unique identifier for each storage" do
-      @data_store.store('eggbert').should_not == @data_store.store('eggbert')
+      image = Imagetastic::Image.new('eggbert')
+      @data_store.store(image).should_not == @data_store.store(image)
     end
   end
   
   describe "retrieve" do
     it "should retrieve the stored data" do
-      id = @data_store.store('gollum')
-      @data_store.retrieve(id).should == 'gollum'
+      image = Imagetastic::Image.new('gollum')
+      id = @data_store.store(image)
+      @data_store.retrieve(id).data.should == image.data
     end
 
     it "should raise an exception if the data doesn't exist" do

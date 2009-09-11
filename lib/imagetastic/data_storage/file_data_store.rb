@@ -7,7 +7,7 @@ module Imagetastic
     
       configurable_attr :root_path, '/var/tmp/imagetastic'
 
-      def store(data)
+      def store(image)
 
         relative_path = "#{Time.now.strftime '%Y/%m/%d/%H_%M_%S'}_image"
 
@@ -15,10 +15,8 @@ module Imagetastic
           while File.exist?(storage_path = absolute_storage_path(relative_path))
             relative_path = increment_path(relative_path)
           end
-          FileUtils.mkdir_p File.dirname(storage_path)
-          File.open(storage_path, 'w') do |file|
-            file.write(data)
-          end
+          FileUtils.mkdir_p File.dirname(storage_path) unless File.exist?(storage_path)
+          FileUtils.cp image.path, storage_path
         rescue Errno::EACCES => e
           raise UnableToStore, e.message
         end
@@ -28,7 +26,8 @@ module Imagetastic
 
       def retrieve(relative_path)
         begin
-          File.read(absolute_storage_path(relative_path))
+          file = File.new(absolute_storage_path(relative_path), 'r')
+          Imagetastic::Image.new(file)
         rescue Errno::ENOENT => e
           raise DataNotFound, e.message
         end
