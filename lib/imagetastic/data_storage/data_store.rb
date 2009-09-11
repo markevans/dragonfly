@@ -1,11 +1,15 @@
-class Imagetastic::DataStorage::DataStore
+module Imagetastic
+  module DataStorage
+    class DataStore
 
-  def store(image)
-    raise NotImplementedError
+      def store(image)
+        raise NotImplementedError
+      end
+
+      def retrieve(id)
+        raise NotImplementedError
+      end
+
+    end
   end
-
-  def retrieve(id)
-    raise NotImplementedError
-  end
-
 end

@@ -2,10 +2,11 @@ module Imagetastic
   class App
     
     def call(env)
-      parameters = Imagetastic.url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])
-      image = Imagetastic.datastore.retrieve(parameters.uid)
-      image = Imagetastic.processor.process(image, parameters.method, parameters.options)
-      image = Imagetastic.encoder.encode(image, parameters.mime_type, parameters.encoding)
+      it = Imagetastic::Instance.new
+      parameters = it.url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])
+      image = it.datastore.retrieve(parameters.uid)
+      image = it.processor.process(image, parameters.method, parameters.options)
+      image = it.encoder.encode(image, parameters.mime_type, parameters.encoding)
       [200, {"Content-Type" => parameters.mime_type}, image]
     rescue UrlHandler::IncorrectSHA, UrlHandler::SHANotGiven => e
       [400, {"Content-Type" => "text/plain"}, [e.message]]

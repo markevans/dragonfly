@@ -28,18 +28,3 @@ def autoload_files_in_dir(path, namespace)
 end
 
 autoload_files_in_dir("#{File.dirname(__FILE__)}/imagetastic", 'Imagetastic')
-
-require 'logger'
-
-# Config
-module Imagetastic
-  class << self
-    include Configurable
-    configurable_attr(:datastore){DataStorage::FileDataStore.new}
-    configurable_attr(:analyser){Processing::Ragick::Analyser.new}
-    configurable_attr(:processor){Processing::RMagick::Processor.new}
-    configurable_attr(:encoder){Processing::RMagick::Encoder.new}
-    configurable_attr(:url_handler){UrlHandler.new}
-    configurable_attr(:log){Logger.new('/var/tmp/imagetastic.log')}
-  end
-end
