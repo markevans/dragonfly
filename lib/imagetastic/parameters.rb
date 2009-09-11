@@ -33,7 +33,7 @@ module Imagetastic
     end
     
     def generate_sha(salt, sha_length)
-      Digest::SHA1.hexdigest("#{self.to_hash}#{salt}")[0...sha_length]
+      Digest::SHA1.hexdigest("#{to_sorted_array}#{salt}")[0...sha_length]
     end
 
     def to_hash
@@ -44,6 +44,12 @@ module Imagetastic
         :mime_type => mime_type,
         :encoding => encoding
       }
+    end
+
+    private
+    
+    def to_sorted_array
+      to_hash.sort{|a,b| a[1].to_s <=> b[1].to_s }
     end
 
   end

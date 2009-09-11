@@ -1,7 +1,7 @@
 class Imagetastic::Processing::Processor
 
-  def process(data, method, options)
-    send(method, data, options)
+  def process(image, method, options)
+    send(method, image, options)
   end
 
 end

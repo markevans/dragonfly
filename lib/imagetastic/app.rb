@@ -5,10 +5,10 @@ module Imagetastic
       parameters = Imagetastic.url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])
       image = Imagetastic.datastore.retrieve(parameters.uid)
       image = Imagetastic.processor.process(image, parameters.method, parameters.options)
-      # image = Imagetastic.encoder.encode(image, params[:encoding])
+      image = Imagetastic.encoder.encode(image, parameters.mime_type, parameters.encoding)
       [200, {"Content-Type" => parameters.mime_type}, image]
     rescue UrlHandler::IncorrectSHA, UrlHandler::SHANotGiven => e
-      [400, {"Content-Type" => "text/plain"}, [e]]
+      [400, {"Content-Type" => "text/plain"}, [e.message]]
     end
 
   end
