@@ -32,11 +32,6 @@ describe Imagetastic::DataStorage::FileDataStore do
       @data_store.store('blah')
     end
 
-    it "should store the file in a folder based on date and use the name passed in if given" do
-      it_should_write_to_file("#{@file_pattern_prefix}_toby", 'blah')
-      @data_store.store('blah', 'toby')
-    end
-
     it "should store the file with a numbered suffix if the filename already exists" do
       File.should_receive(:exist?).with("#{@file_pattern_prefix}_image").and_return(true)
       File.should_receive(:exist?).with("#{@file_pattern_prefix}_image_2").and_return(false)

@@ -1,6 +1,6 @@
 class Imagetastic::DataStorage::DataStore
 
-  def store(data, name)
+  def store(image)
     raise NotImplementedError
   end
 

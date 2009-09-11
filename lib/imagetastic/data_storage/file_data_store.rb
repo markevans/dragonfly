@@ -7,9 +7,9 @@ module Imagetastic
     
       configurable_attr :root_path, '/var/tmp/imagetastic'
 
-      def store(data, name="image")
+      def store(data)
 
-        relative_path = "#{Time.now.strftime '%Y/%m/%d/%H_%M_%S'}_#{name}"
+        relative_path = "#{Time.now.strftime '%Y/%m/%d/%H_%M_%S'}_image"
 
         begin
           while File.exist?(storage_path = absolute_storage_path(relative_path))
