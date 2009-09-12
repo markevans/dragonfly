@@ -28,8 +28,8 @@ describe Imagetastic::UrlHandler do
       @parameters.mime_type.should == 'image/jpeg'
     end
     
-    it "should correctly extract the method" do
-      @parameters.method.should == 'b'
+    it "should correctly extract the processing method" do
+      @parameters.processing_method.should == 'b'
     end
     
     it "should correctly extract the options" do
@@ -52,7 +52,7 @@ describe Imagetastic::UrlHandler do
     before(:each) do
       @parameters = Imagetastic::Parameters.new
       @parameters.uid = 'thisisunique'
-      @parameters.method = 'b'
+      @parameters.processing_method = 'b'
       @parameters.options = {:d => 'e', :j => 'k'}
       @parameters.mime_type = 'image/gif'
       @parameters.encoding = {:x => 'y'}
@@ -151,7 +151,7 @@ describe Imagetastic::UrlHandler do
     it "url_to_parameters should exactly reverse map parameters_to_url" do
       @url_handler.configure{|c| c.protect_from_dos_attacks = true}
       parameters = Imagetastic::Parameters.new(
-        :method => 'b',
+        :processing_method => 'b',
         :options => {
           :d => 'e',
           :j => 'k'

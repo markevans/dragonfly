@@ -3,11 +3,11 @@ require 'rack'
 module Imagetastic
   class Parameters
 
-    attr_accessor :uid, :method, :mime_type
+    attr_accessor :uid, :processing_method, :mime_type
     attr_writer :options, :encoding
 
     def initialize(attributes={})
-      %w(uid method options mime_type encoding).each do |attribute|
+      %w(uid processing_method options mime_type encoding).each do |attribute|
         instance_variable_set("@#{attribute}", attributes[attribute.to_sym])
       end
     end
@@ -39,7 +39,7 @@ module Imagetastic
     def to_hash
       {
         :uid => uid,
-        :method => method,
+        :processing_method => processing_method,
         :options => options,
         :mime_type => mime_type,
         :encoding => encoding

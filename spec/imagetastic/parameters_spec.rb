@@ -19,7 +19,7 @@ describe Imagetastic::Parameters do
     end
     it "should give the accessors the correct defaults" do
       @parameters.uid.should be_nil
-      @parameters.method.should be_nil
+      @parameters.processing_method.should be_nil
       @parameters.mime_type.should be_nil
       @parameters.options.should == {}
       @parameters.encoding.should == {}
@@ -47,7 +47,7 @@ describe Imagetastic::Parameters do
     before(:each) do
       attributes = {
         :uid => 'a',
-        :method => 'b',
+        :processing_method => 'b',
         :mime_type => 'image/gif',
         :options => {:a => 'b'},
         :encoding => {:c => 'd'}
@@ -58,7 +58,7 @@ describe Imagetastic::Parameters do
     it "should return true when two have all the same attributes" do
       @parameters1.should == @parameters2
     end
-    %w(uid method mime_type options encoding).each do |attribute|
+    %w(uid processing_method mime_type options encoding).each do |attribute|
       it "should return false when #{attribute} is different" do
         @parameters2[attribute.to_sym] = 'fish'
         @parameters1.should_not == @parameters2
@@ -70,7 +70,7 @@ describe Imagetastic::Parameters do
     it "should return the attributes as a hash" do
       attributes = {
         :uid => 'a',
-        :method => 'b',
+        :processing_method => 'b',
         :mime_type => 'image/gif',
         :options => {:a => 'b'},
         :encoding => {:c => 'd'}

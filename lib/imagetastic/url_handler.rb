@@ -14,7 +14,7 @@ module Imagetastic
     include Imagetastic::Utils
 
     MAPPINGS = {
-      :method => 'm',
+      :processing_method => 'm',
       :options => 'o',
       :encoding => 'e',
       :sha => 's'
@@ -27,7 +27,7 @@ module Imagetastic
     def url_to_parameters(path, query_string)
       parameters = Parameters.new
       query = parse_nested_query(query_string)
-      %w(uid method options mime_type encoding).each do |attribute|
+      %w(uid processing_method options mime_type encoding).each do |attribute|
         parameters.send("#{attribute}=", send("extract_#{attribute}", path, query))
       end
       validate_parameters(parameters, query)
@@ -35,7 +35,7 @@ module Imagetastic
     end
 
     def parameters_to_url(parameters)
-      query_string = [:method, :options, :encoding].map do |attribute|
+      query_string = [:processing_method, :options, :encoding].map do |attribute|
         build_query(MAPPINGS[attribute] => parameters[attribute])
       end.compact.join('&')
       extension = extension_from_mime_type(parameters.mime_type)
@@ -49,8 +49,8 @@ module Imagetastic
       path.sub(/^\//,'').split('.').first
     end
   
-    def extract_method(path, query)
-      query[MAPPINGS[:method]]
+    def extract_processing_method(path, query)
+      query[MAPPINGS[:processing_method]]
     end
   
     def extract_options(path, query)
