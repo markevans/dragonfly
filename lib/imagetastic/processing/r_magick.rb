@@ -11,7 +11,7 @@ module Imagetastic
         def encode(image, mime_type, encoding={})
           encoded_image = Magick::Image.from_blob(image.data).first
           encoded_image.format = extension_from_mime_type(mime_type)
-          Imagetastic::Image.new(encoded_image.to_blob)
+          Imagetastic::TempObject.new(encoded_image.to_blob)
         end
         
       end
@@ -20,7 +20,7 @@ module Imagetastic
 
         def resize(image, opts={})
           processed_image_data = Magick::Image.from_blob(image.data).first.scale(opts[:scale].to_f).to_blob
-          Imagetastic::Image.new(processed_image_data)
+          Imagetastic::TempObject.new(processed_image_data)
         end
 
       end

@@ -22,45 +22,45 @@ describe Imagetastic::DataStorage::FileDataStore do
   describe "store" do
     
     before(:each) do
-      @image = Imagetastic::Image.new('goobydoo')
+      @temp_object = Imagetastic::TempObject.new('goobydoo')
     end
     
-    def it_should_write_to_file(storage_path, image)
-      FileUtils.should_receive(:cp).with(image.path, storage_path)
+    def it_should_write_to_file(storage_path, temp_object)
+      FileUtils.should_receive(:cp).with(temp_object.path, storage_path)
     end
     
     it "should store the file in a folder based on date, with default filename" do
-      it_should_write_to_file("#{@file_pattern_prefix}_image", @image)
-      @data_store.store(@image)
+      it_should_write_to_file("#{@file_pattern_prefix}_file", @temp_object)
+      @data_store.store(@temp_object)
     end
 
     it "should store the file with a numbered suffix if the filename already exists" do
       FileUtils.mkdir_p(@file_pattern_prefix)
-      FileUtils.touch("#{@file_pattern_prefix}_image")
-      it_should_write_to_file("#{@file_pattern_prefix}_image_2", @image)
-      @data_store.store(@image)
+      FileUtils.touch("#{@file_pattern_prefix}_file")
+      it_should_write_to_file("#{@file_pattern_prefix}_file_2", @temp_object)
+      @data_store.store(@temp_object)
     end
     
     it "should store the file with an incremented number suffix if the filename already exists" do
       FileUtils.mkdir_p(@file_pattern_prefix)
-      FileUtils.touch("#{@file_pattern_prefix}_image")
-      FileUtils.touch("#{@file_pattern_prefix}_image_2")
-      it_should_write_to_file("#{@file_pattern_prefix}_image_3", @image)
-      @data_store.store(@image)
+      FileUtils.touch("#{@file_pattern_prefix}_file")
+      FileUtils.touch("#{@file_pattern_prefix}_file_2")
+      it_should_write_to_file("#{@file_pattern_prefix}_file_3", @temp_object)
+      @data_store.store(@temp_object)
     end
 
     it "should return the filepath without the root of the stored file" do
-      @data_store.store(@image).should == "#{@file_pattern_prefix_without_root}_image"
+      @data_store.store(@temp_object).should == "#{@file_pattern_prefix_without_root}_file"
     end
     
     it "should raise an error if it can't create a directory" do
       FileUtils.should_receive(:mkdir_p).and_raise(Errno::EACCES)
-      lambda{ @data_store.store(@image) }.should raise_error(Imagetastic::DataStorage::UnableToStore)
+      lambda{ @data_store.store(@temp_object) }.should raise_error(Imagetastic::DataStorage::UnableToStore)
     end
     
     it "should raise an error if it can't create a file" do
       FileUtils.should_receive(:cp).and_raise(Errno::EACCES)
-      lambda{ @data_store.store(@image) }.should raise_error(Imagetastic::DataStorage::UnableToStore)
+      lambda{ @data_store.store(@temp_object) }.should raise_error(Imagetastic::DataStorage::UnableToStore)
     end
     
   end

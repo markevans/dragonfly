@@ -2,8 +2,8 @@ module Imagetastic
   module Processing
     class Processor
 
-      def process(image, method, options)
-        send(method, image, options)
+      def process(temp_object, method, options)
+        send(method, temp_object, options)
       end
 
     end

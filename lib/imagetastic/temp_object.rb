@@ -1,22 +1,22 @@
 require 'tempfile'
 
 module Imagetastic
-  class Image
+  class TempObject
     
     def self.from_file(path)
       new(File.new(path, 'r'))
     end
     
-    def initialize(image)
-      case image
+    def initialize(obj)
+      case obj
       when String
-        @data = image
+        @data = obj
       when Tempfile
-        @tempfile = image
+        @tempfile = obj
       when File
-        @file = image
+        @file = obj
       else
-        raise ArgumentError, "Image must be initialized with a String, a File or a Tempfile"
+        raise ArgumentError, "TempObject must be initialized with a String, a File or a Tempfile"
       end
     end
     
@@ -40,7 +40,7 @@ module Imagetastic
         # Get the path for a new tempfile
         tempfile = Tempfile.new('imagetastic')
         tempfile.close
-        FileUtils.cp File.expand_path(@file.path), tempfile.path # Copy the image to the tempfile path
+        FileUtils.cp File.expand_path(@file.path), tempfile.path
         @tempfile = tempfile
       end
     end
