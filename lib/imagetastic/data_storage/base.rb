@@ -1,6 +1,6 @@
 module Imagetastic
   module DataStorage
-    class DataStore
+    class Base
 
       def store(temp_object)
         raise NotImplementedError

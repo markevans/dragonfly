@@ -1,7 +1,7 @@
 module Imagetastic
   module DataStorage
 
-    class FileDataStore < DataStore
+    class FileDataStore < Base
 
       include Configurable
     

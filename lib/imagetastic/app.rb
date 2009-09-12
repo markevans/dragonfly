@@ -7,11 +7,11 @@ module Imagetastic
     
     configurable_attr :datastore do DataStorage::FileDataStore.new end
     
-    configurable_attr :analyser do Processing::Ragick::Analyser.new end
+    configurable_attr :analyser do raise "Not implemented yet!!!" end
     
-    configurable_attr :processor do Processing::RMagick::Processor.new end
+    configurable_attr :processor do RMagick::Processor.new end
     
-    configurable_attr :encoder do Processing::RMagick::Encoder.new end
+    configurable_attr :encoder do RMagick::Encoder.new end
     
     configurable_attr :url_handler do UrlHandler.new end
     
