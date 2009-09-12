@@ -4,16 +4,16 @@ module Imagetastic
   class Parameters
 
     attr_accessor :uid, :processing_method, :mime_type
-    attr_writer :options, :encoding
+    attr_writer :processing_options, :encoding
 
     def initialize(attributes={})
-      %w(uid processing_method options mime_type encoding).each do |attribute|
+      %w(uid processing_method processing_options mime_type encoding).each do |attribute|
         instance_variable_set("@#{attribute}", attributes[attribute.to_sym])
       end
     end
 
-    def options
-      @options ||= {}
+    def processing_options
+      @processing_options ||= {}
     end
     
     def encoding
@@ -40,7 +40,7 @@ module Imagetastic
       {
         :uid => uid,
         :processing_method => processing_method,
-        :options => options,
+        :processing_options => processing_options,
         :mime_type => mime_type,
         :encoding => encoding
       }

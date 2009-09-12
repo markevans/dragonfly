@@ -32,17 +32,17 @@ describe Imagetastic::UrlHandler do
       @parameters.processing_method.should == 'b'
     end
     
-    it "should correctly extract the options" do
-      @parameters.options.should == {:j => 'k', :d => 'e'}
+    it "should correctly extract the processing_options" do
+      @parameters.processing_options.should == {:j => 'k', :d => 'e'}
     end
     
     it "should correctly extract the encoding" do
       @parameters.encoding.should == {:l => 'm'}
     end
     
-    it "should have options and encoding as optional" do
+    it "should have processing_options and encoding as optional" do
       parameters = @url_handler.url_to_parameters(@path, 'm=b')
-      parameters.options.should == {}
+      parameters.processing_options.should == {}
       parameters.encoding.should == {}
     end
     
@@ -53,7 +53,7 @@ describe Imagetastic::UrlHandler do
       @parameters = Imagetastic::Parameters.new
       @parameters.uid = 'thisisunique'
       @parameters.processing_method = 'b'
-      @parameters.options = {:d => 'e', :j => 'k'}
+      @parameters.processing_options = {:d => 'e', :j => 'k'}
       @parameters.mime_type = 'image/gif'
       @parameters.encoding = {:x => 'y'}
     end
@@ -152,7 +152,7 @@ describe Imagetastic::UrlHandler do
       @url_handler.configure{|c| c.protect_from_dos_attacks = true}
       parameters = Imagetastic::Parameters.new(
         :processing_method => 'b',
-        :options => {
+        :processing_options => {
           :d => 'e',
           :j => 'k'
         },

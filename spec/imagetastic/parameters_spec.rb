@@ -21,7 +21,7 @@ describe Imagetastic::Parameters do
       @parameters.uid.should be_nil
       @parameters.processing_method.should be_nil
       @parameters.mime_type.should be_nil
-      @parameters.options.should == {}
+      @parameters.processing_options.should == {}
       @parameters.encoding.should == {}
     end
     it "should provide writers too" do
@@ -49,7 +49,7 @@ describe Imagetastic::Parameters do
         :uid => 'a',
         :processing_method => 'b',
         :mime_type => 'image/gif',
-        :options => {:a => 'b'},
+        :processing_options => {:a => 'b'},
         :encoding => {:c => 'd'}
       }
       @parameters1 = Imagetastic::Parameters.new(attributes)
@@ -58,7 +58,7 @@ describe Imagetastic::Parameters do
     it "should return true when two have all the same attributes" do
       @parameters1.should == @parameters2
     end
-    %w(uid processing_method mime_type options encoding).each do |attribute|
+    %w(uid processing_method mime_type processing_options encoding).each do |attribute|
       it "should return false when #{attribute} is different" do
         @parameters2[attribute.to_sym] = 'fish'
         @parameters1.should_not == @parameters2
@@ -72,7 +72,7 @@ describe Imagetastic::Parameters do
         :uid => 'a',
         :processing_method => 'b',
         :mime_type => 'image/gif',
-        :options => {:a => 'b'},
+        :processing_options => {:a => 'b'},
         :encoding => {:c => 'd'}
       }
       parameters = Imagetastic::Parameters.new(attributes)
