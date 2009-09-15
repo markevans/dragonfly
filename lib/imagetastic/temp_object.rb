@@ -21,11 +21,8 @@ module Imagetastic
     end
     
     def data
-      if @data
-        @data
-      else
-        @data = file.open.read
-      end
+      @data = file.open.read unless data_string_in_memory?
+      @data
     end
 
     def tempfile
@@ -52,11 +49,28 @@ module Imagetastic
     end
     
     def each(&block)
-      tempfile.open
-      while part = tempfile.read(8192)
-        yield part
+      if data_string_in_memory?
+        string_io = StringIO.new(@data)
+        while part = string_io.read(8192)
+          yield part
+        end
+      else
+        tempfile.open
+        while part = tempfile.read(8192)
+          yield part
+        end
+        tempfile.close
       end
-      tempfile.close
+    end
+    
+    private
+    
+    def tempfile_created?
+      !!@tempfile
+    end
+    
+    def data_string_in_memory?
+      !!@data
     end
     
   end

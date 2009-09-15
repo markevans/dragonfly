@@ -2,18 +2,29 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Imagetastic::TempObject do
   
-  before(:each) do
-    @gif_string = "GIF89a\001\000\001\000\360\000\000\377\377\377\000\000\000!\371\004\000\000\000\000\000,\000\000\000\000\001\000\001\000\000\002\002D\001\000;"
-  end
-  
   it "should raise an error if initialized with a non-string/file/tempfile" do
     lambda{
       Imagetastic::TempObject.new(3)
     }.should raise_error(ArgumentError)
   end
   
+  describe "common behaviour for #each", :shared => true do
+    it "should yield a number of bytes each time" do
+      parts = []
+      @temp_object.each do |bytes|
+        parts << bytes
+      end
+      parts.length.should >= 2 # Sanity check to check that the sample file is adequate for this test
+      parts[0...-1].each do |part|
+        part.length.should == 8192
+      end
+      parts.last.length.should <= 8192
+    end
+  end
+  
   describe "initializing from a string" do
     before(:each) do
+      @gif_string = File.new(File.dirname(__FILE__)+'/../../samples/round.gif','r').read
       @temp_object = Imagetastic::TempObject.new(@gif_string)
     end
     describe "data" do
@@ -30,10 +41,18 @@ describe Imagetastic::TempObject do
         @temp_object.file.open.read.should == @gif_string
       end
     end
+    describe "each" do
+      it "should not create a file" do
+        @temp_object.should_not_receive(:tempfile)
+        @temp_object.each{}
+      end
+      it_should_behave_like "common behaviour for #each"
+    end
   end
   
   describe "initializing from a tempfile" do
     before(:each) do
+      @gif_string = File.new(File.dirname(__FILE__)+'/../../samples/round.gif','r').read
       @tempfile = Tempfile.new('test')
       @tempfile.write(@gif_string)
       @tempfile.close
@@ -50,6 +69,13 @@ describe Imagetastic::TempObject do
         @temp_object.file.should be_closed
         @temp_object.file.path.should == @tempfile.path
       end
+    end
+    describe "each" do
+      it "should not create a data string" do
+        @temp_object.should_not_receive(:data)
+        @temp_object.each{}
+      end
+      it_should_behave_like "common behaviour for #each"
     end
   end
   
@@ -75,30 +101,19 @@ describe Imagetastic::TempObject do
         @temp_object.file.open.read.should == @file.read
       end
     end
+    describe "each" do
+      it "should not create a data string" do
+        @temp_object.should_not_receive(:data)
+        @temp_object.each{}
+      end
+      it_should_behave_like "common behaviour for #each"
+    end
   end
   
   describe "path" do
     it "should return the absolute file path" do
       temp_object = Imagetastic::TempObject.new(File.new(File.dirname(__FILE__)+'/../../samples/beach.png','r'))
       temp_object.path.should == temp_object.file.path
-    end
-  end
-  
-  describe "each" do
-    before(:each) do
-      @file = File.new(File.dirname(__FILE__)+'/../../samples/beach.png','r')
-      @temp_object = Imagetastic::TempObject.new(@file)
-    end
-    it "should yield a number of bytes each time" do
-      parts = []
-      @temp_object.each do |bytes|
-        parts << bytes
-      end
-      parts.length.should >= 2 # Sanity check to check that the sample file is adequate for this test
-      parts[0...-1].each do |part|
-        part.length.should == 8192
-      end
-      parts.last.length.should <= 8192
     end
   end
   
