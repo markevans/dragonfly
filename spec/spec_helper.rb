@@ -10,3 +10,7 @@ require 'simple_matchers'
 Spec::Runner.configure do |config|
   
 end
+
+def todo
+  raise "TODO"
+end
