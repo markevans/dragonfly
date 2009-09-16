@@ -80,6 +80,52 @@ describe Item do
         end
 
       end
+      
+      describe "monitoring changes" do
+        
+        before(:each) do
+          pending
+        end
+        
+        it "should correctly return the normal change methods when unchanged" do
+          @item.changed?.should be_false
+          @item.changes.should == {}
+          @item.preview_image_changed?.should be_false
+          @item.preview_image_was.should == @item.preview_image
+          @item.preview_image_change.should be_nil
+        end
+        
+        it "should correctly return the normal change methods when changed" do
+          @item.preview_image = "IMAGESTRING"
+          
+          @item.changed?.should be_true
+          @item.changes.should == {'preview_image' => [nil, @attachment]}
+          @item.preview_image_changed?.should be_true
+          @item.preview_image_was.should be_nil
+          @item.preview_image_change.should == [nil, @attachment]
+        end
+        
+        it "should correctly return the normal change methods when changed after save" do
+          @item.preview_image = "IMAGESTRING"
+          @item.save!
+          
+          @item.changed?.should be_false
+          @item.changes.should == {}
+          @item.preview_image_changed?.should be_false
+          @item.preview_image_was.should == @item.preview_image
+          @item.preview_image_change.should be_nil
+        end
+        
+        it "should correctly respond to the .._will_change! method" do
+          @item.preview_image = "IMAGESTRING"
+          @item.save!
+          
+          @item.preview_image_will_change!
+          @item.preview_image.destroy
+          
+          @item.preview_image_changed?.should be_true
+        end
+      end
     
     end
 
