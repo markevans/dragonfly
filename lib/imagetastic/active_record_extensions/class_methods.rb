@@ -12,7 +12,7 @@ module Imagetastic
             before_destroy :destroy_attached_files unless before_destroy_callback_chain.find(:destroy_attached_files)
       
             # Register the new attribute
-            attachment_app_mappings[attribute] = app
+            registered_imagetastic_apps[attribute] = app
             
             # Define the setter for the attribute
             define_method "#{attribute}=" do |value|
@@ -30,8 +30,8 @@ module Imagetastic
         app
       end
 
-      def attachment_app_mappings
-        @attachment_app_mappings ||= {}
+      def registered_imagetastic_apps
+        @registered_imagetastic_apps ||= {}
       end
 
     end

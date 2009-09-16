@@ -13,7 +13,7 @@ module Imagetastic
       end
       
       def app_for(attribute)
-        self.class.attachment_app_mappings[attribute]
+        self.class.registered_imagetastic_apps[attribute]
       end
       
       def save_attached_files

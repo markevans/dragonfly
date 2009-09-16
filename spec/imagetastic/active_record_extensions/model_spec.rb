@@ -12,7 +12,7 @@ describe Item do
       image_accessor :preview_image
       video_accessor :trailer_video
     end
-    Item.attachment_app_mappings.should == {:preview_image => app1, :trailer_video => app2}
+    Item.registered_imagetastic_apps.should == {:preview_image => app1, :trailer_video => app2}
   end
   
   describe "defining accessors" do
