@@ -14,7 +14,7 @@ describe Imagetastic::ActiveRecordExtensions::Attachment do
     describe "when there is nothing assigned" do
       it "should not try to store anything" do
         @store.should_not_receive(:store)
-        @attachment.save
+        @attachment.save!
       end
     end
     
@@ -28,30 +28,30 @@ describe Imagetastic::ActiveRecordExtensions::Attachment do
       
       it "should store it on save" do
         @store.should_receive(:store).with(@temp_object)
-        @attachment.save
+        @attachment.save!
       end
       
       it "should do nothing if no change" do
-        @attachment.save
+        @attachment.save!
         
         @store.should_not_receive(:store)
         @store.should_not_receive(:destroy)
-        @attachment.save
+        @attachment.save!
       end
       
       it "should not try to destroy any data when nothing previously assigned" do
         @store.should_not_receive(:destroy)
-        @attachment.save
+        @attachment.save!
       end
       
       it "should destroy the old data when previously assigned" do
         @store.should_receive(:store).with(@temp_object).and_return('some_uid')
-        @attachment.save
+        @attachment.save!
         
         Imagetastic::TempObject.stub!(:new)
         @attachment.assign("NEWDATASTRING")
         @store.should_receive(:destroy).with('some_uid')
-        @attachment.save
+        @attachment.save!
       end
     end
     

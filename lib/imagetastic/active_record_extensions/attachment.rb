@@ -13,11 +13,11 @@ module Imagetastic
         value
       end
 
-      def destroy
+      def destroy!
         todo
       end
       
-      def save
+      def save!
         old_uid = uid
         self.uid = app.datastore.store(temp_object) if dirty?
         app.datastore.destroy(old_uid) if old_uid

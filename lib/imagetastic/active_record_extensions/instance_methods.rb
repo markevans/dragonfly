@@ -18,13 +18,13 @@ module Imagetastic
       
       def save_attached_files
         attachments.each do |attribute, attachment|
-          attachment.save
+          attachment.save!
         end
       end
       
       def destroy_attached_files
         attachments.each do |attribute, attachment|
-          attachment.destroy
+          attachment.destroy!
         end
       end
       

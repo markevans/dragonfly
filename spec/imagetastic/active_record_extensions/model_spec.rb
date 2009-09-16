@@ -64,18 +64,18 @@ describe Item do
         end
 
         it "should not call save on the attachment if not saved" do
-          @attachment.should_not_receive(:save)
+          @attachment.should_not_receive(:save!)
           @item.preview_image = "IMAGESTRING"
         end
 
         it "should call save on the attachment when saved" do
           @item.preview_image = "IMAGESTRING"
-          @attachment.should_receive(:save)
+          @attachment.should_receive(:save!)
           @item.save!
         end
         
         it "should not call save on the attachment if not assigned" do
-          @attachment.should_not_receive(:save)
+          @attachment.should_not_receive(:save!)
           @item.save!
         end
 
