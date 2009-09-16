@@ -32,6 +32,12 @@ module Imagetastic
         end
       end
 
+      def destroy(relative_path)
+        FileUtils.rm absolute_storage_path(relative_path)
+      rescue Errno::ENOENT => e
+        raise DataNotFound, e.message
+      end
+
       private
     
       def increment_path(path)

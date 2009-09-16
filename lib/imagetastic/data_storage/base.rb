@@ -6,7 +6,11 @@ module Imagetastic
         raise NotImplementedError
       end
 
-      def retrieve(id)
+      def retrieve(uid)
+        raise NotImplementedError
+      end
+      
+      def destroy(uid)
         raise NotImplementedError
       end
 
