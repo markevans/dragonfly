@@ -3,7 +3,7 @@ class MigrationForTest < ActiveRecord::Migration
   def self.up
     create_table :items, :force => true do |t|
       t.string  :title
-      t.integer :preview_image_uid
+      t.string  :preview_image_uid
       t.timestamps
     end
   end

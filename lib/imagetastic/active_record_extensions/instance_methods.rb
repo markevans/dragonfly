@@ -3,7 +3,7 @@ module Imagetastic
     module InstanceMethods
       
       def attachment_for(attribute)
-        attachments[attribute] ||= Attachment.new(app_for(attribute))
+        attachments[attribute] ||= Attachment.new(app_for(attribute), self, attribute)
       end
       
       private

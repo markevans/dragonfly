@@ -1,15 +1,17 @@
 module Imagetastic
   module ActiveRecordExtensions
+    
+    class PendingUID; def to_s; 'PENDING'; end; end
+    
     class Attachment
       
-      def initialize(app, parent_model)
-        @app = app
-        @parent_model = parent_model
+      def initialize(app, parent_model, attribute_name)
+        @app, @parent_model, @attribute_name = app, parent_model, attribute_name
       end
       
       def assign(value)
         self.temp_object = Imagetastic::TempObject.new(value)
-        @dirty = true
+        set_uid(PendingUID.new)
         value
       end
 
@@ -18,11 +20,10 @@ module Imagetastic
       end
       
       def save!
-        old_uid = uid
-        self.uid = app.datastore.store(temp_object) if dirty?
-        app.datastore.destroy(old_uid) if old_uid
-        @dirty = false
-        true
+        if changed?
+          app.datastore.destroy(previous_uid) if previous_uid
+          set_uid(app.datastore.store(temp_object))
+        end
       end
       
       def to_value
@@ -31,13 +32,21 @@ module Imagetastic
       
       private
       
-      attr_reader :app, :parent_model
-      
-      attr_accessor :uid, :temp_object
-      
-      def dirty?
-        !!@dirty
+      def changed?
+        parent_model.send("#{attribute_name}_uid_changed?")
       end
+      
+      def set_uid(uid)
+        parent_model.send("#{attribute_name}_uid=", uid)
+      end
+      
+      def previous_uid
+        parent_model.send("#{attribute_name}_uid_was")
+      end
+      
+      attr_reader :app, :parent_model, :attribute_name
+      
+      attr_accessor :temp_object
       
     end
   end
