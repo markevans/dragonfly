@@ -10,8 +10,12 @@ module Imagetastic
       end
       
       def assign(value)
-        self.temp_object = Imagetastic::TempObject.new(value)
-        set_uid(PendingUID.new)
+        if value.nil?
+          self.model_uid = nil
+        else
+          self.temp_object = Imagetastic::TempObject.new(value)
+          self.model_uid = PendingUID.new
+        end
         value
       end
 
@@ -22,22 +26,30 @@ module Imagetastic
       def save!
         if changed?
           app.datastore.destroy(previous_uid) if previous_uid
-          set_uid(app.datastore.store(temp_object))
+          self.model_uid = app.datastore.store(temp_object)
         end
       end
       
       def to_value
-        todo
+        self if been_assigned?
       end
       
       private
+      
+      def been_assigned?
+        model_uid
+      end
       
       def changed?
         parent_model.send("#{attribute_name}_uid_changed?")
       end
       
-      def set_uid(uid)
+      def model_uid=(uid)
         parent_model.send("#{attribute_name}_uid=", uid)
+      end
+      
+      def model_uid
+        parent_model.send("#{attribute_name}_uid")
       end
       
       def previous_uid
