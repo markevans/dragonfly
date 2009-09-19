@@ -13,11 +13,15 @@ module Imagetastic
       end
       
       def attachments
-        @attachments ||= {}
-        self.class.registered_imagetastic_apps.map do |attribute, app|
-          @attachments[attribute] ||= touched_attachments[attribute] || Attachment.new(app, self, attribute)
+        if @attachments
+          @attachments
+        else
+          @attachments = {}
+          self.class.registered_imagetastic_apps.each do |attribute, app|
+            @attachments[attribute] = touched_attachments[attribute] || Attachment.new(app, self, attribute)
+          end
+          @attachments
         end
-        @attachments
       end
       
       def app_for(attribute)
