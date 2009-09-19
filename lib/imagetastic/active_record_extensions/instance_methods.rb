@@ -3,7 +3,7 @@ module Imagetastic
     module InstanceMethods
       
       def attachments
-        @attachments ||= self.class.registered_imagetastic_apps.inject({}) do |hash, (attribute, app)|
+        @attachments ||= self.class.imagetastic_apps_for_attributes.inject({}) do |hash, (attribute, app)|
           hash[attribute] = Attachment.new(app, self, attribute)
           hash
         end

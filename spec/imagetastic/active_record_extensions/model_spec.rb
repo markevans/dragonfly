@@ -4,15 +4,22 @@ describe Item do
 
   # See extra setup in models / initializer files
 
-  it "should return the registered imagetastic apps" do
-    app1, app2 = Imagetastic::App.new, Imagetastic::App.new
-    ActiveRecord::Base.register_imagetastic_app(:image, app1)
-    ActiveRecord::Base.register_imagetastic_app(:video, app2)
-    Item.class_eval do
-      image_accessor :preview_image
-      video_accessor :trailer_video
+  describe "registering imagetastic apps" do
+
+    before(:each) do
+      @app1, @app2 = Imagetastic::App.new, Imagetastic::App.new
+      ActiveRecord::Base.register_imagetastic_app(:image, @app1)
+      ActiveRecord::Base.register_imagetastic_app(:video, @app2)
     end
-    Item.registered_imagetastic_apps.should == {:preview_image => app1, :trailer_video => app2}
+
+    it "should return the mapping of apps to attributes" do
+      Item.class_eval do
+        image_accessor :preview_image
+        video_accessor :trailer_video
+      end
+      Item.imagetastic_apps_for_attributes.should == {:preview_image => @app1, :trailer_video => @app2}
+    end
+
   end
   
   describe "defining accessors" do
