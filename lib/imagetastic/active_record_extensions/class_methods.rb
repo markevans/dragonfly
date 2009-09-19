@@ -16,12 +16,12 @@ module Imagetastic
             
             # Define the setter for the attribute
             define_method "#{attribute}=" do |value|
-              attachment_for(attribute).assign(value)
+              attachments[attribute].assign(value)
             end
       
             # Define the getter for the attribute
             define_method attribute do
-              attachment_for(attribute).to_value
+              attachments[attribute].to_value
             end
       
           end

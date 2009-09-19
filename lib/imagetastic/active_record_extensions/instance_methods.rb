@@ -2,34 +2,17 @@ module Imagetastic
   module ActiveRecordExtensions
     module InstanceMethods
       
-      def attachment_for(attribute)
-        touched_attachments[attribute] ||= Attachment.new(app_for(attribute), self, attribute)
-      end
-      
-      private
-      
-      def touched_attachments
-        @touched_attachments ||= {}
-      end
-      
       def attachments
-        if @attachments
-          @attachments
-        else
-          @attachments = {}
-          self.class.registered_imagetastic_apps.each do |attribute, app|
-            @attachments[attribute] = touched_attachments[attribute] || Attachment.new(app, self, attribute)
-          end
-          @attachments
+        @attachments ||= self.class.registered_imagetastic_apps.inject({}) do |hash, (attribute, app)|
+          hash[attribute] = Attachment.new(app, self, attribute)
+          hash
         end
       end
-      
-      def app_for(attribute)
-        self.class.registered_imagetastic_apps[attribute]
-      end
+
+      private
       
       def save_attached_files
-        touched_attachments.each do |attribute, attachment|
+        attachments.each do |attribute, attachment|
           attachment.save!
         end
       end
