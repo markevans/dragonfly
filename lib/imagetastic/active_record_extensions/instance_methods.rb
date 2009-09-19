@@ -3,13 +3,21 @@ module Imagetastic
     module InstanceMethods
       
       def attachment_for(attribute)
-        attachments[attribute] ||= Attachment.new(app_for(attribute), self, attribute)
+        touched_attachments[attribute] ||= Attachment.new(app_for(attribute), self, attribute)
       end
       
       private
       
+      def touched_attachments
+        @touched_attachments ||= {}
+      end
+      
       def attachments
         @attachments ||= {}
+        self.class.registered_imagetastic_apps.map do |attribute, app|
+          @attachments[attribute] ||= touched_attachments[attribute] || Attachment.new(app, self, attribute)
+        end
+        @attachments
       end
       
       def app_for(attribute)
@@ -17,7 +25,7 @@ module Imagetastic
       end
       
       def save_attached_files
-        attachments.each do |attribute, attachment|
+        touched_attachments.each do |attribute, attachment|
           attachment.save!
         end
       end

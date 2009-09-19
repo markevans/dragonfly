@@ -20,7 +20,7 @@ module Imagetastic
       end
 
       def destroy!
-        todo
+        app.datastore.destroy(previous_uid) if previous_uid
       end
       
       def save!

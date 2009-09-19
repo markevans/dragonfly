@@ -59,6 +59,10 @@ describe Item do
           @app.datastore.should_not_receive(:destroy)
           @item.save!
         end
+        it "should not try to destroy anything on destroy" do
+          @app.datastore.should_not_receive(:destroy)
+          @item.destroy
+        end
       end
       
       describe "when there has been some thing assigned but not saved" do
@@ -74,6 +78,10 @@ describe Item do
         it "should store the image when saved" do
           @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING"))
           @item.save!
+        end
+        it "should not try to destroy anything on destroy" do
+          @app.datastore.should_not_receive(:destroy)
+          @item.destroy
         end
       end
       
@@ -98,6 +106,17 @@ describe Item do
           @app.datastore.should_not_receive(:destroy)
           @item.save!
         end
+        
+        it "should destroy the data on destroy" do
+          @app.datastore.should_receive(:destroy).with('some_uid')
+          @item.destroy
+        end
+        
+        it "should destroy the data on destroy even if reloaded" do
+          item = Item.find(@item.id)
+          @app.datastore.should_receive(:destroy).with(item.preview_image_uid)
+          item.destroy
+        end
 
         describe "when something new is assigned" do
           before(:each) do
@@ -116,6 +135,10 @@ describe Item do
             @app.datastore.should_receive(:store).with(a_temp_object_with_data("NEWDATASTRING"))
             @item.save!
           end
+          it "should destroy the old data on destroy" do
+            @app.datastore.should_receive(:destroy).with('some_uid')
+            @item.destroy
+          end
         end
         
         describe "when it is set to nil" do
@@ -131,6 +154,10 @@ describe Item do
           it "should destroy the data on save" do
             @app.datastore.should_receive(:destroy).with('some_uid')
             @item.save!
+          end
+          it "should destroy the old data on destroy" do
+            @app.datastore.should_receive(:destroy).with('some_uid')
+            @item.destroy
           end
         end
 

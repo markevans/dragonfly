@@ -8,7 +8,7 @@ module Imagetastic
           # Defines e.g. 'image_accessor' for any activerecord class body
           define_method "#{name}_accessor" do |attribute|
       
-            after_save :save_attached_files unless after_save_callback_chain.find(:save_attached_files)
+            before_save :save_attached_files unless before_save_callback_chain.find(:save_attached_files)
             before_destroy :destroy_attached_files unless before_destroy_callback_chain.find(:destroy_attached_files)
       
             # Register the new attribute
