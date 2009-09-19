@@ -56,16 +56,24 @@ describe Imagetastic::UrlHandler do
       @parameters.processing_options = {:d => 'e', :j => 'k'}
       @parameters.mime_type = 'image/gif'
       @parameters.encoding = {:x => 'y'}
-    end
-    it "should correctly form a query string when dos protection turned off" do
       @url_handler.configure{|c| c.protect_from_dos_attacks = false}
+    end
+    it "should correctly form a query string" do
       @url_handler.parameters_to_url(@parameters).should match_url('/thisisunique.gif?m=b&o[d]=e&o[j]=k&e[x]=y')
     end
     it "should correctly form a query string when dos protection turned on" do
       @url_handler.configure{|c| c.protect_from_dos_attacks = true}
       @parameters.should_receive(:generate_sha).and_return('thisismysha12345')
       @url_handler.parameters_to_url(@parameters).should match_url('/thisisunique.gif?m=b&o[d]=e&o[j]=k&e[x]=y&s=thisismysha12345')
-    end    
+    end
+    it "should leave out any nil parameters" do
+      @parameters.processing_method = nil
+      @url_handler.parameters_to_url(@parameters).should match_url('/thisisunique.gif?o[d]=e&o[j]=k&e[x]=y')
+    end
+    it "should leave out any empty parameters" do
+      @parameters.processing_options = {}
+      @url_handler.parameters_to_url(@parameters).should match_url('/thisisunique.gif?m=b&e[x]=y')
+    end
   end
   
   describe "protecting from DOS attacks with SHA" do
