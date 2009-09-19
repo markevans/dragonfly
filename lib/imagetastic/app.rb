@@ -3,6 +3,11 @@ require 'logger'
 module Imagetastic
   class App
     
+    def initialize
+      @url_handler = UrlHandler.new
+      @parameters_class = Class.new(Parameters)
+    end
+    
     include Configurable
     
     configurable_attr :datastore do DataStorage::FileDataStore.new end
@@ -13,13 +18,12 @@ module Imagetastic
     
     configurable_attr :encoder do RMagick::Encoder.new end
     
-    configurable_attr :url_handler do UrlHandler.new end
-    
     configurable_attr :log do Logger.new('/var/tmp/imagetastic.log') end
     
+    attr_reader :url_handler, :parameters_class
     
     def call(env)
-      parameters = url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])
+      parameters = url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'], parameters_class)
       temp_object = datastore.retrieve(parameters.uid)
       temp_object = processor.process(temp_object, parameters.processing_method, parameters.processing_options)
       temp_object = encoder.encode(temp_object, parameters.mime_type, parameters.encoding)
