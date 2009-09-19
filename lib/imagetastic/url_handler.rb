@@ -24,12 +24,17 @@ module Imagetastic
     configurable_attr :secret, 'This is a secret!'
     configurable_attr :sha_length, 16
 
-    def url_to_parameters(path, query_string)
-      parameters = Parameters.new
+    def url_to_parameters(path, query_string, parameters_class=nil)
+      parameters_class ||= Parameters
       query = parse_nested_query(query_string)
-      %w(uid processing_method processing_options mime_type encoding).each do |attribute|
-        parameters.send("#{attribute}=", send("extract_#{attribute}", path, query))
-      end
+      attributes = {
+        :uid => extract_uid(path, query),
+        :processing_method => extract_processing_method(path, query),
+        :processing_options => extract_processing_options(path, query),
+        :mime_type => extract_mime_type(path, query),
+        :encoding => extract_encoding(path, query)
+      }.reject{|k,v| v.nil? }
+      parameters = parameters_class.new(attributes)
       validate_parameters(parameters, query)
       parameters
     end

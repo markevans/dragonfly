@@ -3,23 +3,24 @@ require 'rack'
 module Imagetastic
   class Parameters
 
-    attr_accessor :uid, :processing_method, :mime_type
-    attr_writer :processing_options, :encoding
+    class << self
+      include Configurable
+      
+      configurable_attr :default_processing_method
+      configurable_attr :default_processing_options, {}
+      configurable_attr :default_mime_type
+      configurable_attr :default_encoding, {}
+    end
+
+    attr_accessor :uid, :processing_method, :processing_options, :mime_type, :encoding
 
     def initialize(attributes={})
-      %w(uid processing_method processing_options mime_type encoding).each do |attribute|
-        instance_variable_set("@#{attribute}", attributes[attribute.to_sym])
+      %w(processing_method processing_options mime_type encoding).each do |attribute|
+        instance_variable_set "@#{attribute}", (attributes[attribute.to_sym] || self.class.send("default_#{attribute}"))
       end
+      @uid = attributes[:uid]
     end
 
-    def processing_options
-      @processing_options ||= {}
-    end
-    
-    def encoding
-      @encoding ||= {}
-    end
-    
     def [](attribute)
       send(attribute)
     end

@@ -80,4 +80,52 @@ describe Imagetastic::Parameters do
     end
   end
   
+  describe "custom parameters classes" do
+    
+    before(:each) do
+      @parameters_class = Class.new(Imagetastic::Parameters)
+    end
+    
+    describe "when defaults are not set" do
+      it "should return the standard defaults" do
+        parameters = @parameters_class.new
+        parameters.processing_method.should be_nil
+        parameters.processing_options.should == {}
+        parameters.mime_type.should be_nil
+        parameters.encoding.should == {}
+      end
+    end
+    
+    describe "when defaults are set" do
+      before(:each) do
+        @parameters_class.configure do |c|
+          c.default_processing_method = :resize
+          c.default_processing_options = {:scale => '0.5'}
+          c.default_mime_type = 'image/png'
+          c.default_encoding = {:bit_rate => 24}
+        end
+      end
+      it "should return the default if not set on parameters" do
+        parameters = @parameters_class.new
+        parameters.processing_method.should == :resize
+        parameters.processing_options.should == {:scale => '0.5'}
+        parameters.mime_type.should == 'image/png'
+        parameters.encoding.should == {:bit_rate => 24}
+      end
+      it "should return the correct parameter if set" do
+        parameters = @parameters_class.new(
+          :processing_method => :yo,
+          :processing_options => {:a => 'b'},
+          :mime_type => 'text/plain',
+          :encoding => {:ah => :arg}
+        )
+        parameters.processing_method.should == :yo
+        parameters.processing_options.should == {:a => 'b'}
+        parameters.mime_type.should == 'text/plain'
+        parameters.encoding.should == {:ah => :arg}
+      end
+    end
+    
+  end
+  
 end
