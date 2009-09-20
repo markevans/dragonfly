@@ -24,12 +24,17 @@ module Imagetastic
     
     def call(env)
       parameters = url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'], parameters_class)
-      temp_object = datastore.retrieve(parameters.uid)
-      temp_object = processor.process(temp_object, parameters.processing_method, parameters.processing_options)
-      temp_object = encoder.encode(temp_object, parameters.mime_type, parameters.encoding)
+      temp_object = get_processed_object(parameters)
       [200, {"Content-Type" => parameters.mime_type}, temp_object]
     rescue UrlHandler::IncorrectSHA, UrlHandler::SHANotGiven => e
       [400, {"Content-Type" => "text/plain"}, [e.message]]
+    end
+
+    def get_processed_object(parameters)
+      parameters.validate!
+      temp_object = datastore.retrieve(parameters.uid)
+      temp_object = processor.process(temp_object, parameters.processing_method, parameters.processing_options) unless parameters.processing_method.nil?
+      temp_object = encoder.encode(temp_object, parameters.mime_type, parameters.encoding) unless parameters.mime_type.nil?
     end
 
   end
