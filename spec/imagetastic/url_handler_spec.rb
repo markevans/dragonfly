@@ -24,6 +24,12 @@ describe Imagetastic::UrlHandler do
       parameters.uid.should == 'images/some_image'
     end
     
+    it "should take into account the path prefix if there is one" do
+      @url_handler.path_prefix = '/images'
+      parameters = @url_handler.url_to_parameters('/images/2009/some_image.jpg', @query_string)
+      parameters.uid.should == '2009/some_image'
+    end
+    
     it "should correctly extract the mime type" do
       @parameters.mime_type.should == 'image/jpeg'
     end
@@ -73,6 +79,10 @@ describe Imagetastic::UrlHandler do
     it "should leave out any empty parameters" do
       @parameters.processing_options = {}
       @url_handler.parameters_to_url(@parameters).should match_url('/thisisunique.gif?m=b&e[x]=y')
+    end
+    it "should prefix with the path_prefix if there is one" do
+      @url_handler.path_prefix = '/images'
+      @url_handler.parameters_to_url(@parameters).should match_url('/images/thisisunique.gif?m=b&o[d]=e&o[j]=k&e[x]=y')
     end
   end
   

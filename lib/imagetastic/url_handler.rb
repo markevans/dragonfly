@@ -23,6 +23,7 @@ module Imagetastic
     configurable_attr :protect_from_dos_attacks, true
     configurable_attr :secret, 'This is a secret!'
     configurable_attr :sha_length, 16
+    configurable_attr :path_prefix, ''
 
     def url_to_parameters(path, query_string, parameters_class=nil)
       parameters_class ||= Parameters
@@ -45,13 +46,13 @@ module Imagetastic
       end.compact.join('&')
       extension = extension_from_mime_type(parameters.mime_type)
       sha_string = "&#{MAPPINGS[:sha]}=#{sha_from_parameters(parameters)}" if protect_from_dos_attacks?
-      "/#{parameters.uid}.#{extension}?#{query_string}#{sha_string}"
+      "#{path_prefix}/#{parameters.uid}.#{extension}?#{query_string}#{sha_string}"
     end
 
     private
 
     def extract_uid(path, query)
-      path.sub(/^\//,'').split('.').first
+      path.sub(path_prefix, '').sub(/^\//,'').split('.').first
     end
   
     def extract_processing_method(path, query)
@@ -116,7 +117,7 @@ module Imagetastic
     end
     
     def blank?(object)
-      object.nil? || object.empty?
+      object.nil? || (object.respond_to?(:empty?) ? object.empty? : false)
     end
     
   end
