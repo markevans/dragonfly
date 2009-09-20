@@ -15,10 +15,12 @@ module Imagetastic
     attr_accessor :uid, :processing_method, :processing_options, :mime_type, :encoding
 
     def initialize(attributes={})
+      attributes = attributes.dup
       %w(processing_method processing_options mime_type encoding).each do |attribute|
-        instance_variable_set "@#{attribute}", (attributes[attribute.to_sym] || self.class.send("default_#{attribute}"))
+        instance_variable_set "@#{attribute}", (attributes.delete(attribute.to_sym) || self.class.send("default_#{attribute}"))
       end
-      @uid = attributes[:uid]
+      @uid = attributes.delete(:uid)
+      raise ArgumentError, "Parameters doesn't recognise the following parameters: #{attributes.keys.join(', ')}" if attributes.any?
     end
 
     def [](attribute)

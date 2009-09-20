@@ -11,6 +11,11 @@ describe Imagetastic::Parameters do
       parameters = Imagetastic::Parameters.new(:uid => 'b')
       parameters.uid.should == 'b'
     end
+    it "should raise an error if initialized with a bad hash key" do
+      lambda{
+        Imagetastic::Parameters.new(:fridge => 'cold')
+      }.should raise_error(ArgumentError)
+    end
   end
   
   describe "accessors" do
