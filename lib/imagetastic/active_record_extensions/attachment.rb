@@ -34,6 +34,12 @@ module Imagetastic
         self if been_assigned?
       end
       
+      def url(*args)
+        unless model_uid.nil? || model_uid.is_a?(PendingUID)
+          app.url_handler.url_for(model_uid, *args)
+        end
+      end
+      
       private
       
       def been_assigned?
