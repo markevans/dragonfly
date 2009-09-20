@@ -3,7 +3,7 @@ module Imagetastic
     class Base
 
       def process(temp_object, method, options)
-        send(method, temp_object, options)
+        TempObject.new(send(method, temp_object, options))
       end
 
     end

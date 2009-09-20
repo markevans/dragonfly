@@ -5,9 +5,11 @@ module Imagetastic
 
     class Processor < Processing::Base
       
-      def resize(image, opts={})
-        processed_image_data = Magick::Image.from_blob(image.data).first.scale(opts[:scale].to_f).to_blob
-        Imagetastic::TempObject.new(processed_image_data)
+      def resize(temp_object, opts={})
+        image = Magick::Image.from_blob(temp_object.data).first
+        image.change_geometry!(opts[:geometry]) do |cols, rows, img|
+         img.resize!(cols, rows)
+        end.to_blob
       end
 
     end
