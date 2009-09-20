@@ -2,6 +2,9 @@ require 'rack'
 
 module Imagetastic
   class Parameters
+    
+    # Exceptions
+    class InvalidParameters < RuntimeError; end
 
     class << self
       include Configurable
@@ -47,6 +50,10 @@ module Imagetastic
         :mime_type => mime_type,
         :encoding => encoding
       }
+    end
+
+    def validate!
+      raise InvalidParameters, "Parameters requires a uid" if uid.nil?
     end
 
     private

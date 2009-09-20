@@ -2,6 +2,16 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Imagetastic::Parameters do
   
+  def standard_attributes
+    {
+      :uid => 'ahaha',
+      :processing_method => :round,
+      :mime_type => 'image/gif',
+      :processing_options => {:radius => 5},
+      :encoding => {:flumps_per_minute => 56}
+    }
+  end
+  
   describe "initializing" do
     it "should allow initializing without a hash" do
       parameters = Imagetastic::Parameters.new
@@ -50,15 +60,8 @@ describe Imagetastic::Parameters do
   
   describe "comparing" do
     before(:each) do
-      attributes = {
-        :uid => 'a',
-        :processing_method => 'b',
-        :mime_type => 'image/gif',
-        :processing_options => {:a => 'b'},
-        :encoding => {:c => 'd'}
-      }
-      @parameters1 = Imagetastic::Parameters.new(attributes)
-      @parameters2 = Imagetastic::Parameters.new(attributes)      
+      @parameters1 = Imagetastic::Parameters.new(standard_attributes)
+      @parameters2 = Imagetastic::Parameters.new(standard_attributes)      
     end
     it "should return true when two have all the same attributes" do
       @parameters1.should == @parameters2
@@ -73,15 +76,8 @@ describe Imagetastic::Parameters do
   
   describe "to_hash" do
     it "should return the attributes as a hash" do
-      attributes = {
-        :uid => 'a',
-        :processing_method => 'b',
-        :mime_type => 'image/gif',
-        :processing_options => {:a => 'b'},
-        :encoding => {:c => 'd'}
-      }
-      parameters = Imagetastic::Parameters.new(attributes)
-      parameters.to_hash.should == attributes
+      parameters = Imagetastic::Parameters.new(standard_attributes)
+      parameters.to_hash.should == standard_attributes
     end
   end
   
@@ -131,6 +127,25 @@ describe Imagetastic::Parameters do
       end
     end
     
+  end
+  
+  describe "validate!" do
+    before(:each) do
+      @parameters = Imagetastic::Parameters.new(standard_attributes)
+    end
+    it "should not raise an error when parameters are ok" do
+      @parameters.validate!
+    end
+    it "should raise an error when the uid is not set" do
+      @parameters.uid = nil
+      lambda{
+        @parameters.validate!
+      }.should raise_error(Imagetastic::Parameters::InvalidParameters)
+    end
+    it "should not raise an error when other parameters aren't set" do
+      parameters = Imagetastic::Parameters.new(:uid => 'asdf')
+      parameters.validate!
+    end
   end
   
 end
