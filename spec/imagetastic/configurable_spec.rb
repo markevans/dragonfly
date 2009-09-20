@@ -17,8 +17,9 @@ describe Imagetastic::Configurable do
       @car.should respond_to(:colour)
     end
 
-    it "should not provide attr_writers for configurable attributes" do
-      @car.should_not respond_to(:colour=)
+    it "should provide attr_writers for configurable attributes" do
+      @car.colour = 'verde'
+      @car.colour.should == 'verde'
     end
 
     it "should set default values for configurable attributes" do
