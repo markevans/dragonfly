@@ -29,6 +29,17 @@ module Imagetastic
       @parameters_class = parameters_class
     end
 
+    def url_for(uid, *args)
+      if args.length == 1 && args.first.is_a?(Hash)
+        attributes = args.first.merge(:uid => uid)
+        parameters = parameters_class.new(attributes)
+      else
+        parameters = parameters_class.from_shortcut(*args)
+        parameters.uid = uid
+      end
+      parameters_to_url(parameters)
+    end
+
     def url_to_parameters(path, query_string)
       query = parse_nested_query(query_string)
       attributes = {
