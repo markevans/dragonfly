@@ -25,8 +25,11 @@ module Imagetastic
     configurable_attr :sha_length, 16
     configurable_attr :path_prefix, ''
 
-    def url_to_parameters(path, query_string, parameters_class=nil)
-      parameters_class ||= Parameters
+    def initialize(parameters_class = Parameters)
+      @parameters_class = parameters_class
+    end
+
+    def url_to_parameters(path, query_string)
       query = parse_nested_query(query_string)
       attributes = {
         :uid => extract_uid(path, query),
@@ -72,6 +75,8 @@ module Imagetastic
       encoding = query[MAPPINGS[:encoding]]
       symbolize_keys(encoding) if encoding
     end
+
+    attr_reader :parameters_class
 
     def symbolize_keys(hash)
       hash = hash.dup

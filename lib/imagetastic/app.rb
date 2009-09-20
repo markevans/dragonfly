@@ -4,8 +4,8 @@ module Imagetastic
   class App
     
     def initialize
-      @url_handler = UrlHandler.new
       @parameters_class = Class.new(Parameters)
+      @url_handler = UrlHandler.new(@parameters_class)
     end
     
     include Configurable
@@ -23,7 +23,7 @@ module Imagetastic
     attr_reader :url_handler, :parameters_class
     
     def call(env)
-      parameters = url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'], parameters_class)
+      parameters = url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])
       temp_object = get_processed_object(parameters)
       [200, {"Content-Type" => parameters.mime_type}, temp_object]
     rescue UrlHandler::IncorrectSHA, UrlHandler::SHANotGiven => e

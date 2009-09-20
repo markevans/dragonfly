@@ -52,6 +52,14 @@ describe Imagetastic::UrlHandler do
       parameters.encoding.should == {}
     end
     
+    it "should use the parameters class passed in if initialized with one" do
+      parameters_class = mock('parameters_class')
+      url_handler = Imagetastic::UrlHandler.new(parameters_class)
+      url_handler.stub!(:validate_parameters)
+      parameters_class.should_receive(:new)
+      url_handler.url_to_parameters(@path, @query_string)
+    end
+    
   end
   
   describe "forming a url from parameters" do
