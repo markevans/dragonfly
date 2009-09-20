@@ -148,4 +148,56 @@ describe Imagetastic::Parameters do
     end
   end
   
+  describe "shortcuts" do
+    
+    before(:each) do
+      @parameters_class = Class.new(Imagetastic::Parameters)
+    end
+    
+    it "should allow for setting simple shortcuts" do
+      attributes = {
+        :processing_method => :duncan,
+        :processing_options => {:bill => :gates},
+        :mime_type => 'mama/mia',
+        :encoding => {:doogie => :howser}
+      }
+      @parameters_class.add_shortcut(:doobie, attributes)
+      @parameters_class.from_shortcut(:doobie).should == Imagetastic::Parameters.new(attributes)
+    end
+    
+    it "should raise an error if the shortcut doesn't exist" do
+      lambda{
+        @parameters_class.from_shortcut(:idontexist)
+      }.should raise_error(Imagetastic::Parameters::InvalidShortcut)
+    end
+    
+    describe "block shortcuts" do
+      
+      before(:each) do
+        @parameters_class.add_shortcut(/^hello.*$/, String) do |processing_method, mime_type, matches|
+          {:processing_method => processing_method, :mime_type => mime_type}
+        end
+      end
+      
+      it "should allow for more complex shortcuts by using a block and matching args" do
+        parameters = Imagetastic::Parameters.new(:processing_method => 'hellothere', :mime_type => 'image/tiff')
+        @parameters_class.from_shortcut('hellothere', 'image/tiff').should == parameters
+      end
+
+      it "should raise an error if the shortcut doesn't match properly" do
+        lambda{
+          @parameters_class.from_shortcut('hellothere', :'image/tiff')
+        }.should raise_error(Imagetastic::Parameters::InvalidShortcut)
+      end
+      
+      it "should raise an error if the shortcut matches but has the wrong number of args" do
+        lambda{
+          @parameters_class.from_shortcut('hellothere', 'image/tiff', 'YO')
+        }.should raise_error(Imagetastic::Parameters::InvalidShortcut)
+      end
+
+    end
+    
+  end
+  
 end

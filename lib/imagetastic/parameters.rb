@@ -5,15 +5,73 @@ module Imagetastic
     
     # Exceptions
     class InvalidParameters < RuntimeError; end
+    class InvalidShortcut < RuntimeError; end
 
+    # Class methods
     class << self
+      
       include Configurable
       
       configurable_attr :default_processing_method
       configurable_attr :default_processing_options, {}
       configurable_attr :default_mime_type
       configurable_attr :default_encoding, {}
+      
+      def add_shortcut(*args, &block)
+        if block
+          block_shortcuts_of_length(args.length) << [args, block]
+        else
+          shortcut_name, attributes = args
+          simple_shortcuts[shortcut_name] = attributes
+        end
+      end
+      
+      def from_shortcut(*args)
+        if attributes = matching_simple_shortcut(args)
+          new(attributes)
+        elsif attributes = matching_block_shortcut(args)
+          new(attributes)
+        else
+          raise InvalidShortcut, "No shortcut was found matching (#{args.map{|a| a.inspect }.join(', ')})"
+        end
+      end
+      
+      private
+      
+      def simple_shortcuts
+        @simple_shortcuts ||= {}
+      end
+      
+      # block_shortcuts is actually a hash (keyed on the number of
+      # arguments) of arrays (of argument lists)
+      def block_shortcuts
+        @block_shortcuts ||= {}
+      end
+      
+      def block_shortcuts_of_length(arg_length)
+        block_shortcuts[arg_length] ||= []
+      end
+      
+      def matching_simple_shortcut(args)
+        if args.length == 1 && args.first.is_a?(Symbol)
+          simple_shortcuts[args.first]
+        end
+      end
+      
+      def matching_block_shortcut(args)
+        block_shortcuts_of_length(args.length).each do |(args_to_match, block)|
+          return block.call(*args) if all_args_match?(args, args_to_match)
+        end
+        nil
+      end
+      
+      def all_args_match?(args, args_to_match)
+        (0...args.length).inject(true){|current_result, i| current_result &&= args_to_match[i] === args[i] }
+      end
+
     end
+
+    # Instance methods
 
     attr_accessor :uid, :processing_method, :processing_options, :mime_type, :encoding
 
