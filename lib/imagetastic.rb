@@ -28,3 +28,5 @@ def autoload_files_in_dir(path, namespace)
 end
 
 autoload_files_in_dir("#{File.dirname(__FILE__)}/imagetastic", 'Imagetastic')
+
+require 'rubygems'
