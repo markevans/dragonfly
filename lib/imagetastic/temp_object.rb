@@ -10,34 +10,35 @@ module Imagetastic
     def initialize(obj)
       case obj
       when String
-        @data = obj
+        @initialized_data = obj
       when Tempfile
-        @tempfile = obj
+        @initialized_tempfile = obj
       when File
-        @file = obj
+        @initialized_file = obj
       else
         raise ArgumentError, "TempObject must be initialized with a String, a File or a Tempfile"
       end
     end
     
     def data
-      @data = file.open.read unless data_string_in_memory?
-      @data
+      @data ||= initialized_data || file.open.read
     end
 
     def tempfile
       if @tempfile
         @tempfile
-      elsif @data
+      elsif initialized_tempfile
+        @tempfile = initialized_tempfile
+      elsif initialized_data
         tempfile = Tempfile.new('imagetastic')
-        tempfile.write(@data)
+        tempfile.write(initialized_data)
         tempfile.close
         @tempfile = tempfile
-      elsif @file
+      elsif initialized_file
         # Get the path for a new tempfile
         tempfile = Tempfile.new('imagetastic')
         tempfile.close
-        FileUtils.cp File.expand_path(@file.path), tempfile.path
+        FileUtils.cp File.expand_path(initialized_file.path), tempfile.path
         @tempfile = tempfile
       end
     end
@@ -49,8 +50,8 @@ module Imagetastic
     end
     
     def each(&block)
-      if data_string_in_memory?
-        string_io = StringIO.new(@data)
+      if initialized_data
+        string_io = StringIO.new(initialized_data)
         while part = string_io.read(8192)
           yield part
         end
@@ -65,13 +66,7 @@ module Imagetastic
     
     private
     
-    def tempfile_created?
-      !!@tempfile
-    end
-    
-    def data_string_in_memory?
-      !!@data
-    end
+    attr_reader :initialized_data, :initialized_tempfile, :initialized_file
     
   end
 end
