@@ -126,4 +126,17 @@ describe Imagetastic::TempObject do
     end
   end
   
+  describe "modify_self!" do
+    before(:each) do
+      @temp_object = Imagetastic::TempObject.new('DATA_ONE')
+    end
+    it "should modify itself" do
+      @temp_object.modify_self!('DATA_TWO')
+      @temp_object.data.should == 'DATA_TWO'
+    end
+    it "should return itself" do
+      @temp_object.modify_self!('DATA_TWO').should == @temp_object
+    end
+  end
+  
 end

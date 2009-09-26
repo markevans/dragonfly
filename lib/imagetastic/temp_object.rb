@@ -3,21 +3,25 @@ require 'tempfile'
 module Imagetastic
   class TempObject
     
+    include Processing::Processable
+    include Encoding::Encodeable
+    
+    # Class methods
+    
     def self.from_file(path)
       new(File.new(path, 'r'))
     end
     
+    # Instance Methods
+    
     def initialize(obj)
-      case obj
-      when String
-        @initialized_data = obj
-      when Tempfile
-        @initialized_tempfile = obj
-      when File
-        @initialized_file = obj
-      else
-        raise ArgumentError, "TempObject must be initialized with a String, a File or a Tempfile"
-      end
+      initialize_from_object!(obj)
+    end
+    
+    def modify_self!(obj)
+      reset!
+      initialize_from_object!(obj)
+      self
     end
     
     def data
@@ -66,7 +70,24 @@ module Imagetastic
     
     private
     
-    attr_reader :initialized_data, :initialized_tempfile, :initialized_file
+    attr_accessor :initialized_data, :initialized_tempfile, :initialized_file
+    
+    def reset!
+      initialized_data = initialized_file = initialized_tempfile = nil
+    end
+    
+    def initialize_from_object!(obj)
+      case obj
+      when String
+        @initialized_data = obj
+      when Tempfile
+        @initialized_tempfile = obj
+      when File
+        @initialized_file = obj
+      else
+        raise ArgumentError, "#{self.class.name} must be initialized with a String, a File or a Tempfile"
+      end
+    end
     
   end
 end
