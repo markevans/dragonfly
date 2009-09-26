@@ -21,4 +21,6 @@ end
 puts "Loaded stuff from imagetastic irbrc"
 puts "\nAvailable uids:\n"
 puts available_uids
+puts "\nAvailable sample images:\n"
+puts Dir['samples/*']
 puts
