@@ -5,6 +5,7 @@ describe Imagetastic::DataStorage::FileDataStore do
   
   before(:each) do
     @data_store = Imagetastic::DataStorage::FileDataStore.new
+    @data_store.root_path = '/var/tmp/imagetastic_test'
     
     # Set 'now' to a date in the past
     Time.stub!(:now).and_return Time.mktime(1984,"may",4,14,28,1)
@@ -61,6 +62,12 @@ describe Imagetastic::DataStorage::FileDataStore do
     it "should raise an error if it can't create a file" do
       FileUtils.should_receive(:cp).and_raise(Errno::EACCES)
       lambda{ @data_store.store(@temp_object) }.should raise_error(Imagetastic::DataStorage::UnableToStore)
+    end
+    
+    it "should prune empty directories when destroying" do
+      uid = @data_store.store(@temp_object)
+      @data_store.destroy(uid)
+      @data_store.root_path.should be_an_empty_directory
     end
     
   end

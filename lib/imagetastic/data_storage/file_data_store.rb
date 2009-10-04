@@ -26,7 +26,7 @@ module Imagetastic
 
       def retrieve(relative_path)
         begin
-          Imagetastic::TempObject.from_file(absolute_storage_path(relative_path))
+          File.new(absolute_storage_path(relative_path))
         rescue Errno::ENOENT => e
           raise DataNotFound, e.message
         end
@@ -34,6 +34,11 @@ module Imagetastic
 
       def destroy(relative_path)
         FileUtils.rm absolute_storage_path(relative_path)
+        containing_directory = Pathname.new(relative_path).dirname
+        containing_directory.ascend do |relative_dir|
+          dir = absolute_storage_path(relative_dir)
+          FileUtils.rmdir dir if directory_empty?(dir)
+        end
       rescue Errno::ENOENT => e
         raise DataNotFound, e.message
       end
@@ -46,6 +51,10 @@ module Imagetastic
       
       def absolute_storage_path(relative_path)
         File.join(root_path, relative_path)
+      end
+
+      def directory_empty?(path)
+        Dir.entries(path) == ['.','..']
       end
 
     end

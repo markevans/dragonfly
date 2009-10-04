@@ -17,7 +17,7 @@ describe "data_store", :shared => true do
   describe "retrieve" do
     it "should retrieve the stored data" do
       uid = @data_store.store(@temp_object)
-      @data_store.retrieve(uid).data.should == @temp_object.data
+      Imagetastic::TempObject.new(@data_store.retrieve(uid)).data.should == @temp_object.data
     end
 
     it "should raise an exception if the data doesn't exist" do
