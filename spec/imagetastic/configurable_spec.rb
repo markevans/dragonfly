@@ -39,14 +39,7 @@ describe Imagetastic::Configurable do
     end
   end
 
-  describe "configuring" do
-    it "should raise an error if there are no configurable attributes" do
-      class None; include Imagetastic::Configurable; end
-      lambda {
-        None.new.configure{|c|}
-      }.should raise_error(Imagetastic::Configurable::NothingToConfigure)
-    end
-    
+  describe "configuring" do    
     it "should allow you to change values" do
       @car.configure do |c|
         c.colour = 'red'
@@ -129,6 +122,28 @@ describe Imagetastic::Configurable do
       end
       OneOff.food.should == 'bread'
     end
+  end
+  
+  describe "configuration method" do
+    
+    before(:each) do
+      class ClassWithMethod; end
+      ClassWithMethod.class_eval do
+        include Imagetastic::Configurable
+        def add_thing(thing)
+          'poo'
+        end
+        configuration_method :add_thing
+      end
+      @thing = ClassWithMethod.new
+    end
+    
+    it "should allow calling the method through 'configure'" do
+      @thing.configure do |c|
+        c.add_thing('duck')
+      end
+    end
+    
   end
   
 end

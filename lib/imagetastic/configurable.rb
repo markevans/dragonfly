@@ -20,21 +20,22 @@ module Imagetastic
     end
     
     module InstanceMethods
+      
       def configure(&blk)
-        raise NothingToConfigure, "You called configure but there are no configurable attributes" if configuration_hash.empty?
-        config_attributes = configuration_hash.keys
-        struct_class = Struct.new(*config_attributes)
-        struct = struct_class.new(*configuration_hash.values)
-        begin
-          yield(struct)
-        rescue NoMethodError => e
-          raise BadConfigAttribute, "You tried to configure using '#{e.name}',  but the valid config attributes are #{config_attributes.map{|a| %('#{a}') }.sort.join(', ')}"
-        end
-        struct.each_pair{|k,v| configuration_hash[k] = v }
+        raise NothingToConfigure, "You called configure but there are no configurable attributes" if configuration_methods.empty?
+        yield ConfigurationProxy.new(self)
       end
     
       def configuration
         configuration_hash.dup
+      end
+      
+      def configuration_methods
+        self.class.configuration_methods
+      end
+
+      def has_configuration_method?(method_name)
+        configuration_methods.include?(method_name.to_sym)
       end
 
     end
@@ -45,10 +46,14 @@ module Imagetastic
         @default_configuration ||= {}
       end
       
+      def configuration_methods
+        @configuration_methods ||= []
+      end
+      
       private
       
       def configurable_attr attribute, default=nil, &blk
-        default_configuration[attribute] = blk ? blk : default
+        default_configuration[attribute] = blk || default
         
         # Define the reader
         define_method(attribute) do
@@ -63,7 +68,33 @@ module Imagetastic
           configuration_hash[attribute] = value
         end
         
+        configuration_method attribute
+        configuration_method "#{attribute}="
       end
+      
+      def configuration_method(method_name)
+        configuration_methods << method_name.to_sym
+      end
+      
+    end
+    
+    class ConfigurationProxy
+      
+      def initialize(owner)
+        @owner = owner
+      end
+      
+      def method_missing(method_name, *args, &block)
+        if owner.has_configuration_method?(method_name)
+          owner.send(method_name, *args, &block)
+        else
+          raise BadConfigAttribute, "You tried to configure using '#{method_name.inspect}',  but the valid config attributes are #{owner.configuration_methods.map{|a| %('#{a.inspect}') }.sort.join(', ')}"
+        end
+      end
+      
+      private
+      
+      attr_reader :owner
       
     end
     
