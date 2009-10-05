@@ -2,7 +2,6 @@ module Imagetastic
   module Configurable
     
     # Exceptions
-    class NothingToConfigure < StandardError; end
     class BadConfigAttribute < StandardError; end
     
     def self.included(klass)
@@ -22,7 +21,6 @@ module Imagetastic
     module InstanceMethods
       
       def configure(&blk)
-        raise NothingToConfigure, "You called configure but there are no configurable attributes" if configuration_methods.empty?
         yield ConfigurationProxy.new(self)
       end
     
@@ -37,6 +35,10 @@ module Imagetastic
       def has_configuration_method?(method_name)
         configuration_methods.include?(method_name.to_sym)
       end
+      
+      def has_nested_configurable?(method_name)
+        self.class.nested_configurables.include?(method_name.to_sym)
+      end
 
     end
     
@@ -48,6 +50,10 @@ module Imagetastic
       
       def configuration_methods
         @configuration_methods ||= []
+      end
+      
+      def nested_configurables
+        @nested_configurables ||= []
       end
       
       private
@@ -76,6 +82,10 @@ module Imagetastic
         configuration_methods << method_name.to_sym
       end
       
+      def nested_configurable(method_name)
+        nested_configurables << method_name.to_sym
+      end
+      
     end
     
     class ConfigurationProxy
@@ -85,7 +95,9 @@ module Imagetastic
       end
       
       def method_missing(method_name, *args, &block)
-        if owner.has_configuration_method?(method_name)
+        if owner.has_nested_configurable?(method_name)
+          owner.send(method_name).configure(&block)
+        elsif owner.has_configuration_method?(method_name)
           owner.send(method_name, *args, &block)
         else
           raise BadConfigAttribute, "You tried to configure using '#{method_name.inspect}',  but the valid config attributes are #{owner.configuration_methods.map{|a| %('#{a.inspect}') }.sort.join(', ')}"

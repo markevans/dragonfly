@@ -127,8 +127,7 @@ describe Imagetastic::Configurable do
   describe "configuration method" do
     
     before(:each) do
-      class ClassWithMethod; end
-      ClassWithMethod.class_eval do
+      class ClassWithMethod
         include Imagetastic::Configurable
         def add_thing(thing)
           'poo'
@@ -144,6 +143,34 @@ describe Imagetastic::Configurable do
       end
     end
     
+  end
+  
+  describe "nested configurable objects" do
+
+    it "should allow configuring nested configurable objects" do
+
+      class NestedThing
+        include Imagetastic::Configurable
+        configurable_attr :age, 29
+      end
+
+      class Car
+        def nested_thing
+          @nested_thing ||= NestedThing.new
+        end
+        nested_configurable :nested_thing
+      end
+
+      @car.configure do |c|
+        c.nested_thing do |nt|
+          nt.age = 50
+        end
+      end
+
+      @car.nested_thing.age.should == 50
+
+    end
+
   end
   
 end
