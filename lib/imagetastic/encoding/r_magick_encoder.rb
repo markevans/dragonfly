@@ -1,9 +1,9 @@
 require 'rmagick'
 
 module Imagetastic
-  module RMagick
+  module Encoding
     
-    class Encoder < Encoding::Base
+    class RMagickEncoder < Base
       
       include Utils
       include Configurable
@@ -14,7 +14,7 @@ module Imagetastic
         mime_type ||= default_mime_type
         encoded_image = Magick::Image.from_blob(image.data).first
         encoded_image.format = extension_from_mime_type(mime_type)
-        Imagetastic::TempObject.new(encoded_image.to_blob)
+        encoded_image.to_blob
       end
       
     end

@@ -1,9 +1,9 @@
 require 'rmagick'
 
 module Imagetastic
-  module RMagick
+  module Processing
 
-    class Processor < Processing::Base
+    module RMagickProcessor
       
       def resize(temp_object, opts={})
         image = Magick::Image.from_blob(temp_object.data).first

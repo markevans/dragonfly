@@ -4,23 +4,27 @@ module Imagetastic
   class App
     
     def initialize
+      @analyser = Analysis::Analyser.new
+      @processor = Processing::Processor.new
       @parameters_class = Class.new(Parameters)
       @url_handler = UrlHandler.new(@parameters_class)
+      initialize_temp_object_class
     end
+    
+    attr_reader :analyser,
+                :processor,
+                :encoder,
+                :url_handler,
+                :parameters_class,
+                :temp_object_class
     
     include Configurable
     
-    configurable_attr :datastore do DataStorage::FileDataStore.new end
-    
-    configurable_attr :analyser do raise "Not implemented yet!!!" end
-    
-    configurable_attr :processor do RMagick::Processor.new end
-    
-    configurable_attr :encoder do RMagick::Encoder.new end
-    
+    configurable_attr :datastore do DataStorage::Base.new end
+    configurable_attr :encoder do Encoding::Base.new end
     configurable_attr :log do Logger.new('/var/tmp/imagetastic.log') end
-    
-    attr_reader :url_handler, :parameters_class
+    nested_configurable :analyser
+    nested_configurable :processor
     
     def call(env)
       parameters = url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])
@@ -32,9 +36,16 @@ module Imagetastic
 
     def get_processed_object(parameters)
       parameters.validate!
-      temp_object = datastore.retrieve(parameters.uid)
-      temp_object = processor.process(temp_object, parameters.processing_method, parameters.processing_options) unless parameters.processing_method.nil?
-      temp_object = encoder.encode(temp_object, parameters.mime_type, parameters.encoding) unless parameters.mime_type.nil?
+      temp_object = temp_object_class.new(datastore.retrieve(parameters.uid))
+      temp_object.process!(parameters.processing_method, parameters.processing_options) unless parameters.processing_method.nil?
+      temp_object.encode!(parameters.mime_type, parameters.encoding) unless parameters.mime_type.nil?
+    end
+
+    private
+    
+    def initialize_temp_object_class
+      @temp_object_class = Class.new(ExtendedTempObject)
+      @temp_object_class.app = self
     end
 
   end

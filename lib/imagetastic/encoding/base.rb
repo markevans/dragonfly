@@ -3,7 +3,7 @@ module Imagetastic
     
     class Base
       
-      def encode(temp_object, mime_type, encoding={})
+      def encode(temp_object, mime_type, options={})
         raise NotImplementedError
       end
       

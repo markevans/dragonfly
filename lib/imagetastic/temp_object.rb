@@ -2,10 +2,7 @@ require 'tempfile'
 
 module Imagetastic
   class TempObject
-    
-    include Processing::Processable
-    include Encoding::Encodeable
-    
+  
     # Class methods
     
     def self.from_file(path)

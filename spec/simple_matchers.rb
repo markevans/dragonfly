@@ -6,3 +6,9 @@ def match_url(url)
     path == given_path && given_query_string.split('&').sort == query_string.split('&').sort
   end
 end
+
+def be_an_empty_directory
+  simple_matcher("be empty") do |given|
+    Dir.entries(given) == ['.','..']
+  end
+end
