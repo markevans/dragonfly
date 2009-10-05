@@ -39,6 +39,7 @@ module Imagetastic
       temp_object = temp_object_class.new(datastore.retrieve(parameters.uid))
       temp_object.process!(parameters.processing_method, parameters.processing_options) unless parameters.processing_method.nil?
       temp_object.encode!(parameters.mime_type, parameters.encoding) unless parameters.mime_type.nil?
+      temp_object
     end
 
     private

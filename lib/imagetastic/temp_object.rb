@@ -70,7 +70,7 @@ module Imagetastic
     attr_accessor :initialized_data, :initialized_tempfile, :initialized_file
     
     def reset!
-      initialized_data = initialized_file = initialized_tempfile = nil
+      self.initialized_data = self.initialized_file = self.initialized_tempfile = nil
     end
     
     def initialize_from_object!(obj)

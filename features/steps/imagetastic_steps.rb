@@ -6,26 +6,34 @@ Given /^a stored image "(.+?)" with dimensions (\d+)x(\d+)$/ do |name, width, he
   TEMP_IMAGES[name] = uid
 end
 
-def make_image_request(name, parameters = {})
-  request = Rack::MockRequest.new(APP)
-  url = APP.url_handler.url_for(TEMP_IMAGES[name], parameters)
-  @response = request.get(url)
+When /^I go to the url for image "(.+?)", with format '([^']+?)'$/ do |name, ext|
+  make_image_request name, :mime_type => mime_type_from_extension(ext)
 end
 
-When /^I go to the url for image "(.+)", with format '(.+)'$/ do |name, ext|
-  make_image_request name, :mime_type => mime_type_from_extension(ext)
+When /^I go to the url for image "(.+?)", with format '(.+?)' and resize geometry '(.+?)'$/ do |name, ext, geometry|
+  make_image_request(name,
+    :mime_type => mime_type_from_extension(ext),
+    :processing_method => :resize,
+    :processing_options => {:geometry => geometry}
+  )
 end
 
 Then "the response should be OK" do
   @response.status.should == 200
 end
 
-Then "the response should have mime-type '(.+)'" do |mime_type|
+Then "the response should have mime-type '(.+?)'" do |mime_type|
   @response.headers['Content-Type'].should == mime_type
 end
 
-Then "the image should have width '(.+)'" do |width|
-  tempfile = Tempfile.new('image')
-  tempfile.write(@response.body)
-  raise `identify #{tempfile.path}`
-end 
+Then "the image should have width '(.+?)'" do |width|
+  image_properties(@response.body)[:width].should == width
+end
+
+Then "the image should have height '(.+?)'" do |height|
+  image_properties(@response.body)[:height].should == height
+end
+
+Then "the image should have format '(.+?)'" do |format|
+  image_properties(@response.body)[:format].should == format
+end

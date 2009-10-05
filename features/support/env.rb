@@ -3,6 +3,7 @@ require 'imagetastic'
 require 'spec/expectations'
 require 'test/unit/assertions'
 require 'ruby-debug'
+require File.dirname(__FILE__) + '/image_helpers.rb'
 
 # A hash of <name for reference> => <imagetastic uid> pairs
 TEMP_IMAGES = {}
@@ -31,3 +32,4 @@ Before do
 end
 
 World(Imagetastic::Utils)
+World(ImageHelpers)
