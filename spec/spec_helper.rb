@@ -7,7 +7,7 @@ $:.unshift(File.dirname(__FILE__))
 require 'argument_matchers'
 require 'simple_matchers'
 
-SAMPLES_DIR = File.expand_path(File.dirname(__FILE__) + '/../samples')
+SAMPLES_DIR = File.expand_path(File.dirname(__FILE__) + '/../samples') unless defined?(SAMPLES_DIR)
 
 Spec::Runner.configure do |config|
   

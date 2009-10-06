@@ -9,11 +9,22 @@ module Imagetastic
         include Configurable::InstanceMethods
         extend Configurable::ClassMethods
         
-        # This isn't included in InstanceMethods because we need access to 'klass'
+        # These aren't included in InstanceMethods because we need access to 'klass'
+        # We can't just put them into InstanceMethods and use 'self.class' because
+        # this won't always point to the class in which we've included Configurable,
+        # e.g. if we've included it in an eigenclasse
         define_method :configuration_hash do
           @configuration_hash ||= klass.default_configuration.dup
         end
         private :configuration_hash
+        
+        define_method :has_nested_configurable? do |method_name|
+          klass.nested_configurables.include?(method_name.to_sym)
+        end
+        
+        define_method :configuration_methods do
+          klass.configuration_methods
+        end
         
       end
     end
@@ -27,17 +38,9 @@ module Imagetastic
       def configuration
         configuration_hash.dup
       end
-      
-      def configuration_methods
-        self.class.configuration_methods
-      end
 
       def has_configuration_method?(method_name)
         configuration_methods.include?(method_name.to_sym)
-      end
-      
-      def has_nested_configurable?(method_name)
-        self.class.nested_configurables.include?(method_name.to_sym)
       end
 
     end
