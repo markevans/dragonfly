@@ -26,7 +26,7 @@ available_uids = `find #{APP.datastore.root_path} ! -type d`.split("\n").map do 
 end
 
 def new_image
-  APP.create_temp_object(File.new(Dir['samples/*'].first))
+  APP.create_object(File.new(Dir['samples/*'].first))
 end
 
 puts "Loaded stuff from imagetastic irbrc"

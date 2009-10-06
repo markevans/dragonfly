@@ -42,6 +42,10 @@ module Imagetastic
       temp_object
     end
 
+    def create_object(initialization_object)
+      temp_object_class.new(initialization_object)
+    end
+
     private
     
     def initialize_temp_object_class
