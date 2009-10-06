@@ -2,6 +2,13 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Imagetastic::TempObject do
   
+  def new_tempfile(data = File.read(SAMPLES_DIR + '/round.gif'))
+    tempfile = Tempfile.new('test')
+    tempfile.write(data)
+    tempfile.close
+    tempfile
+  end
+  
   it "should raise an error if initialized with a non-string/file/tempfile" do
     lambda{
       Imagetastic::TempObject.new(3)
@@ -24,7 +31,7 @@ describe Imagetastic::TempObject do
   
   describe "initializing from a string" do
     before(:each) do
-      @gif_string = File.new(File.dirname(__FILE__)+'/../../samples/round.gif','r').read
+      @gif_string = File.read(SAMPLES_DIR + '/round.gif')
       @temp_object = Imagetastic::TempObject.new(@gif_string)
     end
     describe "data" do
@@ -52,10 +59,8 @@ describe Imagetastic::TempObject do
   
   describe "initializing from a tempfile" do
     before(:each) do
-      @gif_string = File.new(File.dirname(__FILE__)+'/../../samples/round.gif','r').read
-      @tempfile = Tempfile.new('test')
-      @tempfile.write(@gif_string)
-      @tempfile.close
+      @gif_string = File.read(SAMPLES_DIR + '/round.gif')
+      @tempfile = new_tempfile(@gif_string)
       @temp_object = Imagetastic::TempObject.new(@tempfile)
     end
     describe "data" do
@@ -81,7 +86,7 @@ describe Imagetastic::TempObject do
   
   describe "initializing from a file" do
     before(:each) do
-      @file = File.new(File.dirname(__FILE__)+'/../../samples/beach.png','r')
+      @file = File.new(SAMPLES_DIR + '/beach.png')
       @temp_object = Imagetastic::TempObject.new(@file)
     end
     after(:each) do
@@ -112,14 +117,14 @@ describe Imagetastic::TempObject do
   
   describe "path" do
     it "should return the absolute file path" do
-      temp_object = Imagetastic::TempObject.new(File.new(File.dirname(__FILE__)+'/../../samples/beach.png','r'))
+      temp_object = Imagetastic::TempObject.new(File.new(SAMPLES_DIR + '/beach.png'))
       temp_object.path.should == temp_object.file.path
     end
   end
   
   describe ".from_file" do
     it "should be the same as initializing from a file object, but using just the path" do
-      path = File.dirname(__FILE__)+'/../../samples/beach.png'
+      path = SAMPLES_DIR + '/beach.png'
       image1 = Imagetastic::TempObject.from_file(path)
       image2 = Imagetastic::TempObject.new(File.new(path,'r'))
       image1.data.should == image2.data
@@ -127,15 +132,45 @@ describe Imagetastic::TempObject do
   end
   
   describe "modify_self!" do
-    before(:each) do
-      @temp_object = Imagetastic::TempObject.new('DATA_ONE')
+
+    describe "when initialized with a string" do
+      before(:each) do
+        @temp_object = Imagetastic::TempObject.new('DATA_ONE')
+      end
+      it "should modify itself" do
+        @temp_object.modify_self!('DATA_TWO')
+        @temp_object.data.should == 'DATA_TWO'
+      end
+      it "should return itself" do
+        @temp_object.modify_self!('DATA_TWO').should == @temp_object
+      end
     end
-    it "should modify itself" do
-      @temp_object.modify_self!('DATA_TWO')
-      @temp_object.data.should == 'DATA_TWO'
+
+    describe "when initialized with a file" do
+      before(:each) do
+        @file = File.new(SAMPLES_DIR + '/beach.png')
+        @temp_object = Imagetastic::TempObject.new(@file)
+      end
+      it "should modify itself" do
+        @temp_object.modify_self!('DATA_TWO')
+        @temp_object.data.should == 'DATA_TWO'
+      end
+      it "should return itself" do
+        @temp_object.modify_self!('DATA_TWO').should == @temp_object
+      end
     end
-    it "should return itself" do
-      @temp_object.modify_self!('DATA_TWO').should == @temp_object
+
+    describe "when initialized with a tempfile" do
+      before(:each) do
+        @temp_object = Imagetastic::TempObject.new(new_tempfile)
+      end
+      it "should modify itself" do
+        @temp_object.modify_self!('DATA_TWO')
+        @temp_object.data.should == 'DATA_TWO'
+      end
+      it "should return itself" do
+        @temp_object.modify_self!('DATA_TWO').should == @temp_object
+      end
     end
   end
   
