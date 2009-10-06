@@ -34,5 +34,5 @@ Feature: champion uses imagetastic to process images
     Then the response should be OK
     And the response should have mime-type 'image/png'
     And the image should have width '100'
-    And the image should have height '100'
+    And the image should have height '150'
     And the image should have format 'png'
