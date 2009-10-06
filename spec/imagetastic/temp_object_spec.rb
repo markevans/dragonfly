@@ -133,45 +133,29 @@ describe Imagetastic::TempObject do
   
   describe "modify_self!" do
 
-    describe "when initialized with a string" do
-      before(:each) do
-        @temp_object = Imagetastic::TempObject.new('DATA_ONE')
-      end
-      it "should modify itself" do
-        @temp_object.modify_self!('DATA_TWO')
-        @temp_object.data.should == 'DATA_TWO'
-      end
-      it "should return itself" do
-        @temp_object.modify_self!('DATA_TWO').should == @temp_object
-      end
+    before(:each) do
+      @temp_object = Imagetastic::TempObject.new('DATA_ONE')
+      @temp_object.data # Make sure internal stuff is initialized
+      @temp_object.file #
     end
-
-    describe "when initialized with a file" do
-      before(:each) do
-        @file = File.new(SAMPLES_DIR + '/beach.png')
-        @temp_object = Imagetastic::TempObject.new(@file)
-      end
-      it "should modify itself" do
-        @temp_object.modify_self!('DATA_TWO')
-        @temp_object.data.should == 'DATA_TWO'
-      end
-      it "should return itself" do
-        @temp_object.modify_self!('DATA_TWO').should == @temp_object
-      end
+    it "should modify itself" do
+      @temp_object.modify_self!('DATA_TWO')
+      @temp_object.data.should == 'DATA_TWO'
     end
-
-    describe "when initialized with a tempfile" do
-      before(:each) do
-        @temp_object = Imagetastic::TempObject.new(new_tempfile)
-      end
-      it "should modify itself" do
-        @temp_object.modify_self!('DATA_TWO')
-        @temp_object.data.should == 'DATA_TWO'
-      end
-      it "should return itself" do
-        @temp_object.modify_self!('DATA_TWO').should == @temp_object
-      end
+    it "should return itself" do
+      @temp_object.modify_self!('DATA_TWO').should == @temp_object
     end
+    it "should modify itself when the new object is a file" do
+      @temp_object.modify_self!(File.new(SAMPLES_DIR + '/beach.png'))
+      @temp_object.data.should == File.read(SAMPLES_DIR + '/beach.png')
+    end
+    it "should modify itself when the new object is a tempfile" do
+      tempfile = new_tempfile
+      data = tempfile.open.read
+      @temp_object.modify_self!(tempfile)
+      @temp_object.data.should == data
+    end
+    
   end
   
 end
