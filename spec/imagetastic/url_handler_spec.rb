@@ -174,6 +174,11 @@ describe Imagetastic::UrlHandler do
       @url_handler.stub!(:parameters_to_url).with(@parameters).and_return('some.url')
     end
     
+    it "should treat the arguments as actual parameter values (empty) if one arg" do
+      @parameters_class.should_receive(:new).with({:uid => 'some_uid'}).and_return(@parameters)
+      @url_handler.url_for('some_uid').should == 'some.url'
+    end
+    
     it "should treat the arguments as actual parameter values if two args and the second argument is a hash" do
       @parameters_class.should_receive(:new).with({:processing_method => :resize, :uid => 'some_uid'}).and_return(@parameters)
       @url_handler.url_for('some_uid', {:processing_method => :resize}).should == 'some.url'

@@ -30,7 +30,9 @@ module Imagetastic
     end
 
     def url_for(uid, *args)
-      if args.length == 1 && args.first.is_a?(Hash)
+      if args.empty?
+        parameters = parameters_class.new(:uid => uid)
+      elsif args.length == 1 && args.first.is_a?(Hash)
         attributes = args.first.merge(:uid => uid)
         parameters = parameters_class.new(attributes)
       else
