@@ -132,7 +132,10 @@ describe Imagetastic::Configurable do
         def add_thing(thing)
           'poo'
         end
-        configuration_method :add_thing
+        def remove_thing(thing)
+          'bum'
+        end
+        configuration_method :add_thing, :remove_thing
       end
       @thing = ClassWithMethod.new
     end
@@ -140,6 +143,7 @@ describe Imagetastic::Configurable do
     it "should allow calling the method through 'configure'" do
       @thing.configure do |c|
         c.add_thing('duck')
+        c.remove_thing('dog')
       end
     end
     

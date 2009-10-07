@@ -81,8 +81,8 @@ module Imagetastic
         configuration_method "#{attribute}="
       end
       
-      def configuration_method(method_name)
-        configuration_methods << method_name.to_sym
+      def configuration_method(*method_names)
+        configuration_methods.push(*method_names.map{|n| n.to_sym })
       end
       
       def nested_configurable(method_name)
