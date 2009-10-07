@@ -62,7 +62,9 @@ module Imagetastic
       end.compact.join('&')
       extension = extension_from_mime_type(parameters.mime_type)
       sha_string = "&#{MAPPINGS[:sha]}=#{sha_from_parameters(parameters)}" if protect_from_dos_attacks?
-      "#{path_prefix}/#{parameters.uid}.#{extension}?#{query_string}#{sha_string}"
+      url = "#{path_prefix}/#{parameters.uid}.#{extension}?#{query_string}#{sha_string}"
+      url.sub!(/\?$/,'')
+      url
     end
 
     private
