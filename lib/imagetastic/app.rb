@@ -19,28 +19,14 @@ module Imagetastic
                 :url_handler,
                 :parameters_class,
                 :temp_object_class
+
+    alias parameters parameters_class
     
     include Configurable
     
     configurable_attr :datastore do DataStorage::Base.new end
     configurable_attr :encoder do Encoding::Base.new end
     configurable_attr :log do Logger.new('/var/tmp/imagetastic.log') end
-    nested_configurable :analyser
-    nested_configurable :processor
-    
-    # Allow configuration of some parameters class attributes through the app itself
-    parameters_class_methods = [
-      :default_mime_type,
-      :default_mime_type=,
-      :default_encoding,
-      :default_encoding=,
-      :add_shortcut
-    ]
-    extend Forwardable
-    def_delegators :parameters_class, *parameters_class_methods
-    configuration_method *parameters_class_methods
-    
-    def_delegators :url_handler, :url_for
     
     def call(env)
       parameters = url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])

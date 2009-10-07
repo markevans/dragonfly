@@ -162,7 +162,6 @@ describe Imagetastic::Configurable do
         def nested_thing
           @nested_thing ||= NestedThing.new
         end
-        nested_configurable :nested_thing
       end
 
       @car.configure do |c|

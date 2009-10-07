@@ -25,6 +25,7 @@ module Imagetastic
           simple_shortcuts[shortcut_name] = attributes
         end
       end
+      configuration_method :add_shortcut
       
       def from_shortcut(*args)
         if attributes = matching_simple_shortcut(args)

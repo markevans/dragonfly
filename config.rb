@@ -12,12 +12,16 @@ APP.configure do |c|
     p.register(Imagetastic::Processing::RMagickProcessor)
   end
   c.encoder = Imagetastic::Encoding::RMagickEncoder.new
-  c.default_mime_type = 'image/jpeg'
-  c.add_shortcut(/^\d+x\d+|^\d+x|^x\d+/) do |geometry|
-    {
-      :processing_method => :resize,
-      :processing_options => {:geometry => geometry},
-    }
+  c.parameters do |p|
+    p.default_mime_type = 'image/jpeg'
+    p.add_shortcut(/^\d+x\d+|^\d+x|^x\d+/) do |geometry|
+      {
+        :processing_method => :resize,
+        :processing_options => {:geometry => geometry},
+      }
+    end
+  end
+  c.url_handler do |u|
+    u.protect_from_dos_attacks = false
   end
 end
-APP.url_handler.protect_from_dos_attacks = false

@@ -18,10 +18,6 @@ module Imagetastic
         end
         private :configuration_hash
         
-        define_method :has_nested_configurable? do |method_name|
-          klass.nested_configurables.include?(method_name.to_sym)
-        end
-        
         define_method :configuration_methods do
           klass.configuration_methods
         end
@@ -55,10 +51,6 @@ module Imagetastic
         @configuration_methods ||= []
       end
       
-      def nested_configurables
-        @nested_configurables ||= []
-      end
-      
       private
       
       def configurable_attr attribute, default=nil, &blk
@@ -85,10 +77,6 @@ module Imagetastic
         configuration_methods.push(*method_names.map{|n| n.to_sym })
       end
       
-      def nested_configurable(method_name)
-        nested_configurables << method_name.to_sym
-      end
-      
     end
     
     class ConfigurationProxy
@@ -98,10 +86,10 @@ module Imagetastic
       end
       
       def method_missing(method_name, *args, &block)
-        if owner.has_nested_configurable?(method_name)
-          owner.send(method_name).configure(&block)
-        elsif owner.has_configuration_method?(method_name)
+        if owner.has_configuration_method?(method_name)
           owner.send(method_name, *args, &block)
+        elsif nested_configurable?(method_name, *args)
+          owner.send(method_name, *args).configure(&block)
         else
           raise BadConfigAttribute, "You tried to configure using '#{method_name.inspect}',  but the valid config attributes are #{owner.configuration_methods.map{|a| %('#{a.inspect}') }.sort.join(', ')}"
         end
@@ -110,6 +98,10 @@ module Imagetastic
       private
       
       attr_reader :owner
+      
+      def nested_configurable?(method, *args)
+        owner.respond_to?(method) && owner.send(method, *args).is_a?(Configurable)
+      end
       
     end
     
