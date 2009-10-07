@@ -118,7 +118,13 @@ module Imagetastic
     private
     
     def to_sorted_array
-      to_hash.sort{|a,b| a[1].to_s <=> b[1].to_s }
+      [
+        uid,
+        mime_type,
+        processing_method,
+        processing_options.sort{|a,b| a[1].to_s <=> b[1].to_s },
+        encoding.sort{|a,b| a[1].to_s <=> b[1].to_s }
+      ]
     end
 
   end

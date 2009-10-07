@@ -22,6 +22,6 @@ APP.configure do |c|
     end
   end
   c.url_handler do |u|
-    u.protect_from_dos_attacks = false
+    u.protect_from_dos_attacks = true
   end
 end
