@@ -5,7 +5,7 @@ describe Imagetastic::ActiveRecordExtensions::Attachment do
   describe "url" do
 
     before(:each) do
-      @app = Imagetastic::App.new
+      @app = Imagetastic::App[:images]
       @parent_model = mock('model')
       @attachment = Imagetastic::ActiveRecordExtensions::Attachment.new(@app, @parent_model, :preview_image)
     end

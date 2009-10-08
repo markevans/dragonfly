@@ -8,7 +8,7 @@ require File.dirname(__FILE__) + '/image_helpers.rb'
 # A hash of <name for reference> => <imagetastic uid> pairs
 TEMP_IMAGES = {}
 
-APP = Imagetastic::App.new
+APP = Imagetastic::App[:images]
 APP.configure do |c|
   c.datastore = Imagetastic::DataStorage::FileDataStore.new
   c.analyser do |a|

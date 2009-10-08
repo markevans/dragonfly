@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/lib/imagetastic'
 
 include Imagetastic
 
-APP = Imagetastic::App.new
+APP = Imagetastic::App[:images]
 APP.configure do |c|
   c.datastore = Imagetastic::DataStorage::FileDataStore.new
   c.analyser do |a|

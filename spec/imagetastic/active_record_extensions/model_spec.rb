@@ -7,7 +7,7 @@ describe Item do
   describe "registering imagetastic apps" do
 
     before(:each) do
-      @app1, @app2 = Imagetastic::App.new, Imagetastic::App.new
+      @app1, @app2 = Imagetastic::App[:images], Imagetastic::App[:videos]
       ActiveRecord::Base.register_imagetastic_app(:image, @app1)
       ActiveRecord::Base.register_imagetastic_app(:video, @app2)
     end
@@ -35,7 +35,7 @@ describe Item do
     describe "correctly defined" do
     
       before(:each) do
-        @app = Imagetastic::App.new
+        @app = Imagetastic::App[:images]
         ActiveRecord::Base.register_imagetastic_app(:image, @app)
         Item.class_eval do
           image_accessor :preview_image

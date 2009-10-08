@@ -5,6 +5,24 @@ require 'forwardable'
 module Imagetastic
   class App
     
+    class << self
+      
+      private :new # Hide 'new' - need to use 'instance'
+      
+      def instance(name)
+        apps[name] ||= new
+      end
+      
+      alias [] instance
+      
+      private
+      
+      def apps
+        @apps ||= {}
+      end
+            
+    end
+    
     def initialize
       @analyser = Analysis::Analyser.new
       @processor = Processing::Processor.new
