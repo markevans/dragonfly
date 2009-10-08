@@ -50,6 +50,14 @@ module Imagetastic
       tempfile.path
     end
     
+    def size
+      if initialized_data
+        initialized_data.size
+      else
+        File.size(path)
+      end
+    end
+    
     def each(&block)
       if initialized_data
         string_io = StringIO.new(initialized_data)

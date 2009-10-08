@@ -9,6 +9,13 @@ describe Imagetastic::TempObject do
     tempfile
   end
   
+  def new_file(data = File.read(SAMPLES_DIR + '/round.gif'))
+    File.open('/tmp/test_file', 'w') do |f|
+      f.write(data)
+    end
+    File.new('/tmp/test_file')
+  end
+  
   it "should raise an error if initialized with a non-string/file/tempfile" do
     lambda{
       Imagetastic::TempObject.new(3)
@@ -156,6 +163,23 @@ describe Imagetastic::TempObject do
       @temp_object.data.should == data
     end
     
+  end
+  
+  describe "size" do
+    
+    before(:each) do
+      @gif_string = File.read(SAMPLES_DIR + '/round.gif')
+    end
+    
+    it "should return the size in bytes when initialized with a string" do
+      Imagetastic::TempObject.new(@gif_string).size.should == 61346
+    end
+    it "should return the size in bytes when initialized with a tempfile" do
+      Imagetastic::TempObject.new(new_tempfile(@gif_string)).size.should == 61346
+    end
+    it "should return the size in bytes when initialized with a file" do
+      Imagetastic::TempObject.new(new_file(@gif_string)).size.should == 61346
+    end
   end
   
 end
