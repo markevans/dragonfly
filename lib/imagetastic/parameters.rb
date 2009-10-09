@@ -112,7 +112,7 @@ module Imagetastic
     end
 
     def validate!
-      raise InvalidParameters, "Parameters requires a uid" if uid.nil?
+      raise InvalidParameters, "Parameters requires that at least the uid and the mime_type are set" if uid.nil? || mime_type.nil?
     end
 
     private

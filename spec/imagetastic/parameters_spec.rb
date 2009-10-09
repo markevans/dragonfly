@@ -142,8 +142,14 @@ describe Imagetastic::Parameters do
         @parameters.validate!
       }.should raise_error(Imagetastic::Parameters::InvalidParameters)
     end
+    it "should raise an error when the uid is not set" do
+      @parameters.mime_type = nil
+      lambda{
+        @parameters.validate!
+      }.should raise_error(Imagetastic::Parameters::InvalidParameters)
+    end
     it "should not raise an error when other parameters aren't set" do
-      parameters = Imagetastic::Parameters.new(:uid => 'asdf')
+      parameters = Imagetastic::Parameters.new(:uid => 'asdf', :mime_type => 'image/jpeg')
       parameters.validate!
     end
   end

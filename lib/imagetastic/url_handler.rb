@@ -57,6 +57,7 @@ module Imagetastic
     end
 
     def parameters_to_url(parameters)
+      parameters.validate!
       query_string = [:processing_method, :processing_options, :encoding].map do |attribute|
         build_query(MAPPINGS[attribute] => parameters[attribute]) unless blank?(parameters[attribute])
       end.compact.join('&')

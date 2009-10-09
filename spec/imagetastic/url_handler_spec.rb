@@ -92,6 +92,10 @@ describe Imagetastic::UrlHandler do
       @url_handler.path_prefix = '/images'
       @url_handler.parameters_to_url(@parameters).should match_url('/images/thisisunique.gif?m=b&o[d]=e&o[j]=k&e[x]=y')
     end
+    it "should validate the parameters" do
+      @parameters.should_receive(:validate!)
+      @url_handler.parameters_to_url(@parameters)
+    end
   end
   
   describe "protecting from DOS attacks with SHA" do
