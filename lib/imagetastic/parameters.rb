@@ -100,6 +100,10 @@ module Imagetastic
     def generate_sha(salt, sha_length)
       Digest::SHA1.hexdigest("#{to_sorted_array}#{salt}")[0...sha_length]
     end
+    
+    def unique_signature
+      generate_sha('I like cheese', 10)
+    end
 
     def to_hash
       {

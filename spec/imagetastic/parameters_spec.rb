@@ -206,4 +206,47 @@ describe Imagetastic::Parameters do
     
   end
   
+  describe "unique_signature" do
+    
+    before(:each) do
+      @parameters = Imagetastic::Parameters.new(standard_attributes)
+      @parameters2 = Imagetastic::Parameters.new(standard_attributes)
+    end
+    
+    it "should a unique identifier based on its attributes" do
+      @parameters.unique_signature.should be_a(String)
+      @parameters.unique_signature.length.should > 0
+    end
+    
+    it "should be the same if the attributes are the same" do
+      @parameters.unique_signature.should == @parameters2.unique_signature
+    end
+    
+    it "should be different when the uid is changed" do
+      @parameters2.uid = 'different yo'
+      @parameters.unique_signature.should_not == @parameters2.unique_signature
+    end
+   
+    it "should be different when the mime_type is changed" do
+      @parameters2.mime_type = 'image/tiff'
+      @parameters.unique_signature.should_not == @parameters2.unique_signature
+    end
+    
+    it "should be different when the processing_method is changed" do
+      @parameters2.processing_method = :doogie
+      @parameters.unique_signature.should_not == @parameters2.unique_signature
+    end
+   
+    it "should be different when the processing_options are changed" do
+      @parameters2.processing_options[:slumdog] = 'millionaire'
+      @parameters.unique_signature.should_not == @parameters2.unique_signature
+    end
+    
+    it "should be different when the encoding options are changed" do
+      @parameters2.encoding[:flumps_per_minute] = 50.3
+      @parameters.unique_signature.should_not == @parameters2.unique_signature
+    end
+
+  end
+  
 end
