@@ -34,19 +34,29 @@ describe Imagetastic::ExtendedTempObject do
       end
 
       it "should delegate the analysis to the analyser" do
-        @analyser.should_receive(:respond_to?).with(:width).and_return(true)
-        @analyser.should_receive(:width).and_return(4)
+        @analyser.should_receive(:width).with(@object).and_return(4)
         @object.width.should == 4
       end
       
       it "should cache the result so that it doesn't call it a second time" do
-        @analyser.should_receive(:respond_to?).with(:width).and_return(true)
-        @analyser.should_receive(:width).and_return(4)
+        @analyser.should_receive(:width).with(@object).and_return(4)
         @object.width.should == 4
 
-        @analyser.should_not_receive(:respond_to?).with(:width)
         @analyser.should_not_receive(:width)
         @object.width.should == 4
+      end
+      
+      it "should do the analysis again when it has been modified" do
+        @analyser.should_receive(:width).with(@object).and_return(4)
+        @object.width.should == 4
+        
+        @object.modify_self!('hellothisisnew')
+        
+        @analyser.should_receive(:width).with(@object).and_return(17)
+        @object.width.should == 17
+        
+        @analyser.should_not_receive(:width)
+        @object.width.should == 17
       end
       
     end

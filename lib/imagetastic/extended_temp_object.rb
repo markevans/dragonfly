@@ -32,10 +32,17 @@ module Imagetastic
     
     def method_missing(method, *args, &block)
       if analyser.respond_to?(method)
-        # Cache the result in an attr_reader
-        result = instance_variable_set("@#{method}", analyser.send(method))
-        self.class.class_eval{ attr_reader method }
-        result
+        # Define the method so we don't use method_missing next time
+        instance_var = "@#{method}"
+        self.class.class_eval do
+          define_method method do
+            # Lazy reader, like
+            #   @width ||= analyser.width(self)
+            instance_variable_set(instance_var, instance_variable_get(instance_var) || analyser.send(method, self))
+          end
+        end
+        # Now that it's defined (for next time)
+        send(method)
       else
         super
       end
