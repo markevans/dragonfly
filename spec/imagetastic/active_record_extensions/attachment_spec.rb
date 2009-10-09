@@ -12,7 +12,7 @@ describe Imagetastic::ActiveRecordExtensions::Attachment do
 
     it "should use url_for on the url_handler if model_uid is set" do
       @parent_model.should_receive(:preview_image_uid).at_least(:once).and_return('some_uid')
-      @app.url_handler.should_receive(:url_for).with('some_uid', :arg).and_return('some.url')
+      @app.should_receive(:url_for).with('some_uid', :arg).and_return('some.url')
       @attachment.url(:arg).should == 'some.url'
     end
 
