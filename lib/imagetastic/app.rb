@@ -1,5 +1,4 @@
 require 'logger'
-
 require 'forwardable'
 
 module Imagetastic
@@ -39,6 +38,10 @@ module Imagetastic
                 :temp_object_class
 
     alias parameters parameters_class
+    
+    # Just for convenience so the user doesn't have to use url_handler
+    extend Forwardable
+    def_delegator :url_handler, :url_for
     
     include Configurable
     
