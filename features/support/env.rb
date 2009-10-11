@@ -20,7 +20,6 @@ APP.configure do |c|
   c.encoder = Imagetastic::Encoding::RMagickEncoder.new
 end
 
-
 SAMPLE_IMAGE_PATH = File.dirname(__FILE__)+'/../../samples/beach.png'
 
 Before do
