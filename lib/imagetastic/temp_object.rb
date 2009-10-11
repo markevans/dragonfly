@@ -30,11 +30,7 @@ module Imagetastic
         tempfile.close
         @tempfile = tempfile
       elsif initialized_file
-        # Get the path for a new tempfile
-        tempfile = Tempfile.new('imagetastic')
-        tempfile.close
-        FileUtils.cp File.expand_path(initialized_file.path), tempfile.path
-        @tempfile = tempfile
+        @tempfile = copy_to_tempfile(initialized_file)
       end
     end
     
@@ -67,9 +63,11 @@ module Imagetastic
       end
     end
     
-    private
+    protected
     
     attr_accessor :initialized_data, :initialized_tempfile, :initialized_file
+    
+    private
     
     def reset!
       instance_variables.each do |var|
@@ -79,6 +77,10 @@ module Imagetastic
     
     def initialize_from_object!(obj)
       case obj
+      when TempObject
+        @initialized_data = obj.initialized_data
+        @initialized_tempfile = copy_to_tempfile(obj.initialized_tempfile) if obj.initialized_tempfile
+        @initialized_file = obj.initialized_file
       when String
         @initialized_data = obj
       when Tempfile
@@ -88,6 +90,13 @@ module Imagetastic
       else
         raise ArgumentError, "#{self.class.name} must be initialized with a String, a File or a Tempfile"
       end
+    end
+    
+    def copy_to_tempfile(file)
+      tempfile = Tempfile.new('imagetastic')
+      tempfile.close
+      FileUtils.cp File.expand_path(file.path), tempfile.path
+      tempfile
     end
     
   end

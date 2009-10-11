@@ -122,6 +122,22 @@ describe Imagetastic::TempObject do
     end
   end
   
+  describe "initializing from another temp object" do
+    before(:each) do
+      @temp_object1 = Imagetastic::TempObject.new(new_tempfile('hello'))
+      @temp_object2 = Imagetastic::TempObject.new(@temp_object1)
+    end
+    it "should not be the same object" do
+      @temp_object1.should_not == @temp_object2
+    end
+    it "should have the same data" do
+      @temp_object1.data.should == @temp_object2.data
+    end
+    it "should have a different file path" do
+      @temp_object1.path.should_not == @temp_object2.path
+    end
+  end
+  
   describe "path" do
     it "should return the absolute file path" do
       temp_object = Imagetastic::TempObject.new(File.new(SAMPLES_DIR + '/beach.png'))
