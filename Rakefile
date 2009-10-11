@@ -4,10 +4,10 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
     s.name = "imagetastic"
-    s.summary = %Q{TODO}
+    s.summary = %Q{To do: summary}
     s.email = "mark@new-bamboo.co.uk"
     s.homepage = "http://github.com/markevans/imagetastic"
-    s.description = "TODO"
+    s.description = "To do: description"
     s.authors = ["Mark Evans"]
     s.add_dependency('mime-types')
   end
