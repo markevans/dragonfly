@@ -27,10 +27,6 @@ Imagetastic::App[:<%= app_name %>].configure do |c|
   end
 end
 
-# Register the app with ActiveRecord, so that
-# we have access to generated accessors
-ActiveRecord::Base.register_imagetastic_app(:<%= accessor_prefix %>, Imagetastic::App[:<%= app_name %>])
-
 # The metal class, for running the app
 class <%= metal_name %>
   def self.call(env)

@@ -17,7 +17,8 @@ class ImagetasticAppGenerator < Rails::Generator::NamedBase
           :app_name => app_name,
           :accessor_prefix => accessor_prefix,
           :already_initialized_code => already_initialized_code
-        }
+        },
+        :collision => :force
       )
       
       # The metal file
