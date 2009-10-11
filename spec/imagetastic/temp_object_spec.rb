@@ -129,15 +129,6 @@ describe Imagetastic::TempObject do
     end
   end
   
-  describe ".from_file" do
-    it "should be the same as initializing from a file object, but using just the path" do
-      path = SAMPLES_DIR + '/beach.png'
-      image1 = Imagetastic::TempObject.from_file(path)
-      image2 = Imagetastic::TempObject.new(File.new(path,'r'))
-      image1.data.should == image2.data
-    end
-  end
-  
   describe "modify_self!" do
 
     before(:each) do

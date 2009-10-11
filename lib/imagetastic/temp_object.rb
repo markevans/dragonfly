@@ -3,12 +3,6 @@ require 'tempfile'
 module Imagetastic
   class TempObject
   
-    # Class methods
-    
-    def self.from_file(path)
-      new(File.new(path, 'r'))
-    end
-    
     # Instance Methods
     
     def initialize(obj)
