@@ -27,13 +27,19 @@ Imagetastic::App[:<%= app_name %>].configure do |c|
   end
 end
 
-# The metal class, for running the app
-class <%= metal_name %>
-  def self.call(env)
-    if env["PATH_INFO"] =~ /^\/<%= path_prefix %>/
-      Imagetastic::App[:<%= app_name %>].call(env)
-    else
-      [404, {"Content-Type" => "text/html"}, ["Not Found"]]
-    end
+# The metal, for running the app
+<%= metal_name %> = Rack::Builder.new do
+
+  # UNCOMMENT ME!!!
+  # ... if you want to use super-dooper middleware 'rack-cache'
+  # require 'rack/cache'
+  # use Rack::Cache,
+  #   :verbose     => true,
+  #   :metastore   => 'file:/var/cache/rack/meta',
+  #   :entitystore => 'file:/var/cache/rack/body'
+  
+  map '/<%= path_prefix %>' do
+    run Imagetastic::App[:<%= app_name %>]
   end
+  
 end
