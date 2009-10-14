@@ -23,11 +23,13 @@ Imagetastic::App[:<%= app_name %>].configure do |c|
   end
   c.url_handler do |u|
     u.protect_from_dos_attacks = true
+    u.secret = '<%= random_secret %>'
     u.path_prefix = '/<%= path_prefix %>'
   end
 end
 
 # The metal, for running the app
+app = Imagetastic::App[:<%= app_name %>]
 <%= metal_name %> = Rack::Builder.new do
 
   # UNCOMMENT ME!!!
@@ -38,8 +40,8 @@ end
   #   :metastore   => 'file:/var/cache/rack/meta',
   #   :entitystore => 'file:/var/cache/rack/body'
   
-  map '/<%= path_prefix %>' do
-    run Imagetastic::App[:<%= app_name %>]
+  map app.url_handler.path_prefix do
+    run app
   end
   
 end

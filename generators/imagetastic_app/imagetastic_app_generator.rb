@@ -1,3 +1,5 @@
+require 'digest/sha1'
+
 class ImagetasticAppGenerator < Rails::Generator::NamedBase
  
   def manifest
@@ -30,6 +32,7 @@ class ImagetasticAppGenerator < Rails::Generator::NamedBase
           :app_name => app_name,
           :metal_name => metal_name,
           :path_prefix => path_prefix,
+          :random_secret => Digest::SHA1.hexdigest(Time.now.to_s)
         }
       )
     end
