@@ -189,4 +189,19 @@ describe Imagetastic::TempObject do
     end
   end
   
+  describe "name" do
+    before(:each) do
+      @obj = new_tempfile
+    end
+    it "should set the name if the initial object responds to 'original filename'" do
+      def @obj.original_filename
+        'jimmy.page'
+      end
+      Imagetastic::TempObject.new(@obj).name.should == 'jimmy.page'
+    end
+    it "should not set the name if the initial object doesn't respond to 'original filename'" do
+      Imagetastic::TempObject.new(@obj).name.should be_nil
+    end
+  end
+  
 end

@@ -9,6 +9,8 @@ module Imagetastic
       initialize_from_object!(obj)
     end
     
+    attr_accessor :name
+    
     def modify_self!(obj)
       reset!
       initialize_from_object!(obj)
@@ -90,6 +92,7 @@ module Imagetastic
       else
         raise ArgumentError, "#{self.class.name} must be initialized with a String, a File or a Tempfile"
       end
+      self.name = obj.original_filename if obj.respond_to?(:original_filename)
     end
     
     def copy_to_tempfile(file)
