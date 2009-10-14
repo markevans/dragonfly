@@ -9,7 +9,8 @@ module Imagetastic
 
       def store(temp_object)
 
-        relative_path = "#{Time.now.strftime '%Y/%m/%d/%H_%M_%S'}_file"
+        suffix = temp_object.basename || 'file'
+        relative_path = "#{Time.now.strftime '%Y/%m/%d/%H_%M_%S'}_#{suffix}"
 
         begin
           while File.exist?(storage_path = absolute_storage_path(relative_path))

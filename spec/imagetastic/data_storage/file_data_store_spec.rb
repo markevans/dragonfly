@@ -50,6 +50,12 @@ describe Imagetastic::DataStorage::FileDataStore do
       @data_store.store(@temp_object)
     end
 
+    it "should use the basename of the temp_object name if it exists" do
+      @temp_object.name = 'harry.png'
+      it_should_write_to_file("#{@file_pattern_prefix}_harry", @temp_object)
+      @data_store.store(@temp_object)
+    end
+
     it "should return the filepath without the root of the stored file" do
       @data_store.store(@temp_object).should == "#{@file_pattern_prefix_without_root}_file"
     end
