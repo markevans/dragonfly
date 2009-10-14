@@ -204,4 +204,22 @@ describe Imagetastic::TempObject do
     end
   end
   
+  describe "basename" do
+    before(:each) do
+      @temp_object = Imagetastic::TempObject.new('sadf')
+    end
+    it {
+      @temp_object.name = 'jimmy.jpg'
+      @temp_object.basename.should == 'jimmy'
+    }
+    it {
+      @temp_object.name = 'jimmy'
+      @temp_object.basename.should == 'jimmy'
+    }
+    it {
+      @temp_object.name = nil
+      @temp_object.basename.should be_nil
+    }
+  end
+  
 end
