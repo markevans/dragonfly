@@ -6,7 +6,7 @@ class ImagetasticAppGenerator < Rails::Generator::NamedBase
     app_name = plural_name
     metal_name = plural_name.camelize
     path_prefix = plural_name
-    accessor_prefix = singular_name.singularize
+    singular_name = singular_name.singularize
     
     record do |m|
       # The initializer
@@ -17,7 +17,7 @@ class ImagetasticAppGenerator < Rails::Generator::NamedBase
         'config/initializers/imagetastic.rb',
         :assigns => {
           :app_name => app_name,
-          :accessor_prefix => accessor_prefix,
+          :accessor_prefix => singular_name,
           :already_initialized_code => already_initialized_code
         },
         :collision => :force
@@ -35,6 +35,17 @@ class ImagetasticAppGenerator < Rails::Generator::NamedBase
           :random_secret => Digest::SHA1.hexdigest(Time.now.to_s)
         }
       )
+      
+      # The custom processor
+      m.template(
+        'custom_processing.erb',
+        "lib/custom_#{singular_name}_processing.rb",
+        :assigns => {
+          :module_name => "Custom#{singular_name.camelize}Processing",
+          :temp_object_name => singular_name
+        }
+      )
+      
     end
   end
 
