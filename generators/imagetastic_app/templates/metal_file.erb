@@ -13,6 +13,7 @@ Imagetastic::App[:<%= app_name %>].configure do |c|
   end
   c.processor do |p|
     p.register(Imagetastic::Processing::RMagickProcessor)
+    p.register(<%= custom_processor_name %>)
   end
   c.encoder = Imagetastic::Encoding::RMagickEncoder.new
   c.parameters do |p|
