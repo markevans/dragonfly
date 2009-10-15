@@ -17,7 +17,7 @@ module Imagetastic
         radius = opts[:radius].to_f ||  0.0
         sigma  = opts[:sigma].to_f  || 10.0
 
-        rmagick_image.vignette(x, y, radius, sigma).to_blob
+        rmagick_image(temp_object).vignette(x, y, radius, sigma).to_blob
       end
       
       private
