@@ -2,3 +2,5 @@
 .DS_Store
 coverage
 **.sqlite3
+pkg
+imagetastic.gemspec
