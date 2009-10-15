@@ -6,7 +6,7 @@ require 'imagetastic'
 Imagetastic::App[:<%= app_name %>].configure do |c|
   c.datastore = Imagetastic::DataStorage::FileDataStore.new
   c.datastore.configure do |d|
-    d.root_path = "#{Rails.root}/public/imagetastic/#{Rails.env}"
+    d.root_path = "#{Rails.root}/tmp/imagetastic/#{Rails.env}"
   end
   c.analyser do |a|
     a.register(Imagetastic::Analysis::RMagickAnalyser)
