@@ -84,26 +84,54 @@ describe Dragonfly::Processing::RMagickProcessor do
     end
     
     it "should crop using the offset given" do
-      image = @processor.crop(@image, :x => 7, :y => 12)
+      image = @processor.crop(@image, :x => '7', :y => '12')
       image.should have_width(273)
       image.should have_height(343)
     end
     
     it "should crop using the dimensions given" do
-      image = @processor.crop(@image, :width => 10, :height => 20)
+      image = @processor.crop(@image, :width => '10', :height => '20')
       image.should have_width(10)
       image.should have_height(20)
     end
     
     it "should crop in one dimension if given" do
-      image = @processor.crop(@image, :width => 10)
+      image = @processor.crop(@image, :width => '10')
       image.should have_width(10)
       image.should have_height(355)
     end
     
     it "should take into account the gravity given" do
-      image1 = @processor.crop(@image, :width => 10, :height => 10, :gravity => 'nw')
-      image2 = @processor.crop(@image, :width => 10, :height => 10, :gravity => 'se')
+      image1 = @processor.crop(@image, :width => '10', :height => '10', :gravity => 'nw')
+      image2 = @processor.crop(@image, :width => '10', :height => '10', :gravity => 'se')
+      image1.should_not == image2
+    end
+    
+  end
+  
+  describe "resize_and_crop" do
+    
+    it "should do nothing if no args given" do
+      image = @processor.resize_and_crop(@image)
+      image.should have_width(280)
+      image.should have_height(355)
+    end
+    
+    it "should crop to the correct dimensions" do
+      image = @processor.resize_and_crop(@image, :width => '100', :height => '100')
+      image.should have_width(100)
+      image.should have_height(100)
+    end
+    
+    it "should allow cropping in one dimension" do
+      image = @processor.resize_and_crop(@image, :width => '100')
+      image.should have_width(100)
+      image.should have_height(355)
+    end
+    
+    it "should take into account the gravity given" do
+      image1 = @processor.resize_and_crop(@image, :width => '10', :height => '10', :gravity => 'nw')
+      image2 = @processor.resize_and_crop(@image, :width => '10', :height => '10', :gravity => 'se')
       image1.should_not == image2
     end
     

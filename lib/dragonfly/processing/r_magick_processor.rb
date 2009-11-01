@@ -33,6 +33,16 @@ module Dragonfly
         end.to_blob
       end
 
+      def resize_and_crop(temp_object, opts={})
+        image = rmagick_image(temp_object)
+        
+        width   = opts[:width] ? opts[:width].to_i : image.columns
+        height  = opts[:height] ? opts[:height].to_i : image.rows
+        gravity = GRAVITY_MAPPINGS[opts[:gravity]] || Magick::CenterGravity
+
+        image.resize_to_fill(width, height, gravity).to_blob
+      end
+
       def vignette(temp_object, opts={})
         x      = opts[:x].to_f      || temp_object.width  * 0.1
         y      = opts[:y].to_f      || temp_object.height * 0.1
