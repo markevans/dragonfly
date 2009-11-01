@@ -6,7 +6,7 @@ require 'dragonfly'
 Dragonfly::App[:<%= app_name %>].configure do |c|
   c.datastore = Dragonfly::DataStorage::FileDataStore.new
   c.datastore.configure do |d|
-    d.root_path = "#{Rails.root}/tmp/dragonfly/#{Rails.env}"
+    d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
   end
   c.analyser do |a|
     a.register(Dragonfly::Analysis::RMagickAnalyser)

@@ -1,1 +1,16 @@
-This is the usage yo!!!
+------------------------------------------------------------------------
+
+Example:
+
+    ./script/generate dragonfly_app images
+    
+This will:
+- create a metal file with a dragonfly app routed to '/images'
+- add an initializer to extend activerecord, so you can do things like
+
+    image_accessor :preview_image
+    
+  in your models.
+- create an empty placeholder for putting your own custom processing methods
+
+------------------------------------------------------------------------
