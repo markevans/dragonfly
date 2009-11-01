@@ -4,6 +4,7 @@ require 'spec/expectations'
 require 'test/unit/assertions'
 require 'ruby-debug'
 require File.dirname(__FILE__) + '/image_helpers.rb'
+require File.dirname(__FILE__) + '/../../spec/image_matchers.rb'
 
 # A hash of <name for reference> => <dragonfly uid> pairs
 TEMP_IMAGES = {}

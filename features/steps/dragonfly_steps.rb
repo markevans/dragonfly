@@ -27,13 +27,13 @@ Then "the response should have mime-type '(.+?)'" do |mime_type|
 end
 
 Then "the image should have width '(.+?)'" do |width|
-  image_properties(@response.body)[:width].should == width
+  @response.body.should have_width(width.to_i)
 end
 
 Then "the image should have height '(.+?)'" do |height|
-  image_properties(@response.body)[:height].should == height
+  @response.body.should have_height(height.to_i)
 end
 
 Then "the image should have format '(.+?)'" do |format|
-  image_properties(@response.body)[:format].should == format
+  @response.body.should have_format(format)
 end

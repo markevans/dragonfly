@@ -6,6 +6,7 @@ require File.dirname(__FILE__) + '/../lib/dragonfly'
 $:.unshift(File.dirname(__FILE__))
 require 'argument_matchers'
 require 'simple_matchers'
+require 'image_matchers'
 
 SAMPLES_DIR = File.expand_path(File.dirname(__FILE__) + '/../samples') unless defined?(SAMPLES_DIR)
 
