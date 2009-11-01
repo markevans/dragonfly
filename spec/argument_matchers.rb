@@ -7,7 +7,7 @@ class TempObjectArgumentMatcher
     @data = data
   end
   def ==(actual)
-    actual.instance_of?(Imagetastic::TempObject) && actual.data == @data
+    actual.instance_of?(Dragonfly::TempObject) && actual.data == @data
   end
 end
 

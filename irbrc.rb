@@ -8,7 +8,7 @@ def new_image
   APP.create_object(File.new(Dir['samples/*'].first))
 end
 
-puts "Loaded stuff from imagetastic irbrc"
+puts "Loaded stuff from dragonfly irbrc"
 puts "\nAvailable uids:\n"
 puts available_uids
 puts "\nAvailable sample images:\n"

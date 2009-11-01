@@ -3,4 +3,4 @@
 coverage
 **.sqlite3
 pkg
-imagetastic.gemspec
+dragonfly.gemspec

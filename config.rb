@@ -1,17 +1,17 @@
-require File.dirname(__FILE__) + '/lib/imagetastic'
+require File.dirname(__FILE__) + '/lib/dragonfly'
 
-include Imagetastic
+include Dragonfly
 
-APP = Imagetastic::App[:images]
+APP = Dragonfly::App[:images]
 APP.configure do |c|
-  c.datastore = Imagetastic::DataStorage::FileDataStore.new
+  c.datastore = Dragonfly::DataStorage::FileDataStore.new
   c.analyser do |a|
-    a.register(Imagetastic::Analysis::RMagickAnalyser)
+    a.register(Dragonfly::Analysis::RMagickAnalyser)
   end
   c.processor do |p|
-    p.register(Imagetastic::Processing::RMagickProcessor)
+    p.register(Dragonfly::Processing::RMagickProcessor)
   end
-  c.encoder = Imagetastic::Encoding::RMagickEncoder.new
+  c.encoder = Dragonfly::Encoding::RMagickEncoder.new
   c.parameters do |p|
     p.default_mime_type = 'image/jpeg'
     p.add_shortcut(/^\d+x\d+|^\d+x|^x\d+/) do |geometry|

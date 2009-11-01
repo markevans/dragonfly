@@ -1,0 +1,7 @@
+<%- if already_initialized_code -%>
+<%= already_initialized_code %>
+<%- else -%>
+require 'dragonfly'
+ActiveRecord::Base.extend Dragonfly::ActiveRecordExtensions
+<%- end -%>
+ActiveRecord::Base.register_dragonfly_app(:<%= accessor_prefix %>, Dragonfly::App[:<%= app_name %>])

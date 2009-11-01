@@ -1,0 +1,51 @@
+# Allow the metal piece to run in isolation
+require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Rails)
+require 'dragonfly'
+
+# Configuration of the Dragonfly App
+Dragonfly::App[:<%= app_name %>].configure do |c|
+  c.datastore = Dragonfly::DataStorage::FileDataStore.new
+  c.datastore.configure do |d|
+    d.root_path = "#{Rails.root}/tmp/dragonfly/#{Rails.env}"
+  end
+  c.analyser do |a|
+    a.register(Dragonfly::Analysis::RMagickAnalyser)
+  end
+  c.processor do |p|
+    p.register(Dragonfly::Processing::RMagickProcessor)
+    p.register(<%= custom_processor_name %>)
+  end
+  c.encoder = Dragonfly::Encoding::RMagickEncoder.new
+  c.parameters do |p|
+    p.default_mime_type = 'image/jpeg'
+    p.add_shortcut(/^\d+x\d+|^\d+x|^x\d+/) do |geometry|
+      {
+        :processing_method => :resize,
+        :processing_options => {:geometry => geometry},
+      }
+    end
+  end
+  c.url_handler do |u|
+    u.protect_from_dos_attacks = true
+    u.secret = '<%= random_secret %>'
+    u.path_prefix = '/<%= path_prefix %>'
+  end
+end
+
+# The metal, for running the app
+app = Dragonfly::App[:<%= app_name %>]
+<%= metal_name %> = Rack::Builder.new do
+
+  # UNCOMMENT ME!!!
+  # ... if you want to use super-dooper middleware 'rack-cache'
+  # require 'rack/cache'
+  # use Rack::Cache,
+  #   :verbose     => true,
+  #   :metastore   => 'file:/var/cache/rack/meta',
+  #   :entitystore => 'file:/var/cache/rack/body'
+  
+  map app.url_handler.path_prefix do
+    run app
+  end
+  
+end

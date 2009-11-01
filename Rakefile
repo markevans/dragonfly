@@ -3,10 +3,10 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
-    s.name = "imagetastic"
+    s.name = "dragonfly"
     s.summary = %Q{To do: summary}
     s.email = "mark@new-bamboo.co.uk"
-    s.homepage = "http://github.com/markevans/imagetastic"
+    s.homepage = "http://github.com/markevans/dragonfly"
     s.description = "To do: description"
     s.authors = ["Mark Evans"]
     s.add_dependency('mime-types')
@@ -18,7 +18,7 @@ end
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = 'imagetastic'
+  rdoc.title = 'dragonfly'
   rdoc.options << '--line-numbers' << '--inline-source'
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')

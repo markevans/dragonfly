@@ -1,7 +1,0 @@
-<%- if already_initialized_code -%>
-<%= already_initialized_code %>
-<%- else -%>
-require 'imagetastic'
-ActiveRecord::Base.extend Imagetastic::ActiveRecordExtensions
-<%- end -%>
-ActiveRecord::Base.register_imagetastic_app(:<%= accessor_prefix %>, Imagetastic::App[:<%= app_name %>])

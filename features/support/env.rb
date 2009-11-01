@@ -1,23 +1,23 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
-require 'imagetastic'
+require 'dragonfly'
 require 'spec/expectations'
 require 'test/unit/assertions'
 require 'ruby-debug'
 require File.dirname(__FILE__) + '/image_helpers.rb'
 
-# A hash of <name for reference> => <imagetastic uid> pairs
+# A hash of <name for reference> => <dragonfly uid> pairs
 TEMP_IMAGES = {}
 
-APP = Imagetastic::App[:images]
+APP = Dragonfly::App[:images]
 APP.configure do |c|
-  c.datastore = Imagetastic::DataStorage::FileDataStore.new
+  c.datastore = Dragonfly::DataStorage::FileDataStore.new
   c.analyser do |a|
-    a.register(Imagetastic::Analysis::RMagickAnalyser)
+    a.register(Dragonfly::Analysis::RMagickAnalyser)
   end
   c.processor do |p|
-    p.register(Imagetastic::Processing::RMagickProcessor)
+    p.register(Dragonfly::Processing::RMagickProcessor)
   end
-  c.encoder = Imagetastic::Encoding::RMagickEncoder.new
+  c.encoder = Dragonfly::Encoding::RMagickEncoder.new
 end
 
 SAMPLE_IMAGE_PATH = File.dirname(__FILE__)+'/../../samples/beach.png'
@@ -30,5 +30,5 @@ Before do
   end
 end
 
-World(Imagetastic::Utils)
+World(Dragonfly::Utils)
 World(ImageHelpers)

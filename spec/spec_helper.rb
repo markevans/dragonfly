@@ -2,7 +2,7 @@ require 'spec'
 require 'rubygems'
 require 'ruby-debug'
 
-require File.dirname(__FILE__) + '/../lib/imagetastic'
+require File.dirname(__FILE__) + '/../lib/dragonfly'
 $:.unshift(File.dirname(__FILE__))
 require 'argument_matchers'
 require 'simple_matchers'
