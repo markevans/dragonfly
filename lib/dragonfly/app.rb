@@ -48,6 +48,7 @@ module Dragonfly
     configurable_attr :datastore do DataStorage::Base.new end
     configurable_attr :encoder do Encoding::Base.new end
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
+    configurable_attr :cache_duration, 3000
     
     def call(env)
       parameters = url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])
@@ -56,7 +57,7 @@ module Dragonfly
         "Content-Type" => parameters.mime_type,
         "Content-Length" => temp_object.size.to_s,
         "ETag" => parameters.unique_signature,
-        "Cache-Control" => "public, max-age=3000"
+        "Cache-Control" => "public, max-age=#{cache_duration}"
         }, temp_object]
     rescue UrlHandler::IncorrectSHA, UrlHandler::SHANotGiven => e
       [400, {"Content-Type" => "text/plain"}, [e.message]]
