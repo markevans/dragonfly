@@ -14,10 +14,31 @@ APP.configure do |c|
   c.encoder = Dragonfly::Encoding::RMagickEncoder.new
   c.parameters do |p|
     p.default_mime_type = 'image/jpeg'
-    p.add_shortcut(/^\d+x\d+|^\d+x|^x\d+/) do |geometry|
+    # Standard resizing like '30x40!', etc.
+    p.add_shortcut(/^\d*x\d*[><%^!]?$|^\d+@$/) do |geometry|
       {
         :processing_method => :resize,
-        :processing_options => {:geometry => geometry},
+        :processing_options => {:geometry => geometry}
+      }
+    end
+    # Cropped resizing like '20x50#ne'
+    p.add_shortcut(/^(\d+)x(\d+)#(\w{1,2})?/) do |geometry, match_data|
+      {
+        :processing_method => :resize_and_crop,
+        :processing_options => {:width => match_data[1], :height => match_data[2], :gravity => match_data[3]}
+      }
+    end
+    # Cropping like '30x30+10+10ne'
+    p.add_shortcut(/^(\d+)x(\d+)([+-]\d+)([+-]\d+)(\w{1,2})?/) do |geometry, match_data|
+      {
+        :processing_method => :crop,
+        :processing_options => {
+          :width => match_data[1],
+          :height => match_data[2],
+          :x => match_data[3],
+          :y => match_data[4],
+          :gravity => match_data[5]
+        }
       }
     end
   end
