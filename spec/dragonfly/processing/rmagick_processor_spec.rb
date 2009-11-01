@@ -95,6 +95,12 @@ describe Dragonfly::Processing::RMagickProcessor do
       image.should have_height(20)
     end
     
+    it "should crop in one dimension if given" do
+      image = @processor.crop(@image, :width => 10)
+      image.should have_width(10)
+      image.should have_height(355)
+    end
+    
     it "should take into account the gravity given" do
       image1 = @processor.crop(@image, :width => 10, :height => 10, :gravity => 'nw')
       image2 = @processor.crop(@image, :width => 10, :height => 10, :gravity => 'se')

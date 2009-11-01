@@ -18,8 +18,8 @@ module Dragonfly
       }
       
       def crop(temp_object, opts={})
-        x       = opts[:x]       || 0
-        y       = opts[:y]       || 0
+        x       = opts[:x].to_i
+        y       = opts[:y].to_i
         gravity = GRAVITY_MAPPINGS[opts[:gravity]] || Magick::ForgetGravity
         width   = opts[:width].to_i
         height  = opts[:height].to_i
