@@ -4,6 +4,7 @@ require 'dragonfly'
 
 # Configuration of the Dragonfly App
 Dragonfly::App[:<%= app_name %>].configure do |c|
+  c.log = RAILS_DEFAULT_LOGGER
   c.datastore = Dragonfly::DataStorage::FileDataStore.new
   c.datastore.configure do |d|
     d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
