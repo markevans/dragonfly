@@ -3,6 +3,14 @@ require 'tempfile'
 module Dragonfly
   class TempObject
   
+    # Class configuration
+    class << self
+      
+      include Configurable
+      configurable_attr :block_size, 8192
+      
+    end
+  
     # Instance Methods
     
     def initialize(obj)
@@ -57,12 +65,12 @@ module Dragonfly
     def each(&block)
       if initialized_data
         string_io = StringIO.new(initialized_data)
-        while part = string_io.read(8192)
+        while part = string_io.read(block_size)
           yield part
         end
       else
         tempfile.open
-        while part = tempfile.read(8192)
+        while part = tempfile.read(block_size)
           yield part
         end
         tempfile.close
@@ -104,6 +112,10 @@ module Dragonfly
       tempfile.close
       FileUtils.cp File.expand_path(file.path), tempfile.path
       tempfile
+    end
+    
+    def block_size
+      self.class.block_size
     end
     
   end

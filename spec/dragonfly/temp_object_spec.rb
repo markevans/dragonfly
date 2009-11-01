@@ -2,6 +2,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Dragonfly::TempObject do
   
+  ####### Helper Methods #######
+
   def new_tempfile(data = File.read(SAMPLES_DIR + '/round.gif'))
     tempfile = Tempfile.new('test')
     tempfile.write(data)
@@ -16,6 +18,17 @@ describe Dragonfly::TempObject do
     File.new('/tmp/test_file')
   end
   
+  def get_parts(temp_object)
+    parts = []
+    temp_object.each do |bytes|
+      parts << bytes
+    end
+    parts.length.should >= 2 # Sanity check to check that the sample file is adequate for this test
+    parts
+  end
+  
+  ###############################
+  
   it "should raise an error if initialized with a non-string/file/tempfile" do
     lambda{
       Dragonfly::TempObject.new(3)
@@ -23,17 +36,30 @@ describe Dragonfly::TempObject do
   end
   
   describe "common behaviour for #each", :shared => true do
-    it "should yield a number of bytes each time" do
-      parts = []
-      @temp_object.each do |bytes|
-        parts << bytes
-      end
-      parts.length.should >= 2 # Sanity check to check that the sample file is adequate for this test
+
+    it "should yield 8192 bytes each time" do
+      parts = get_parts(@temp_object)
       parts[0...-1].each do |part|
         part.length.should == 8192
       end
       parts.last.length.should <= 8192
     end
+    
+  end
+  
+  describe "configuring #each" do
+
+    it "should yield the number of bytes specified in the class configuration" do
+      temp_object_class = Class.new(Dragonfly::TempObject)
+      temp_object_class.block_size = 3001
+      temp_object = temp_object_class.new(new_tempfile)
+      parts = get_parts(temp_object)
+      parts[0...-1].each do |part|
+        part.length.should == 3001
+      end
+      parts.last.length.should <= 3001
+    end
+
   end
   
   describe "initializing from a string" do
