@@ -204,6 +204,20 @@ describe Dragonfly::Parameters do
 
     end
     
+    describe "single regexp shortcuts" do
+      
+      it "should yield regexp match data if the args is just one regexp" do
+        @parameters_class.add_shortcut(/^hello(.*)$/) do |arg, match_data|
+          {:processing_options => {:arg => arg, :match_data => match_data}}
+        end
+        processing_options = @parameters_class.from_shortcut('hellothere').processing_options
+        processing_options[:arg].should == 'hellothere'
+        processing_options[:match_data].should be_a(MatchData)
+        processing_options[:match_data][1].should == 'there'
+      end
+      
+    end
+    
   end
   
   describe "unique_signature" do

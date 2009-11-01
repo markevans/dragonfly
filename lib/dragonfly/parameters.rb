@@ -61,7 +61,16 @@ module Dragonfly
       
       def matching_block_shortcut(args)
         block_shortcuts_of_length(args.length).each do |(args_to_match, block)|
-          return block.call(*args) if all_args_match?(args, args_to_match)
+          if all_args_match?(args, args_to_match)
+            # If the block shortcut arg is a single regexp, then also yield the match data
+            if args_to_match.length == 1 && args_to_match.first.is_a?(Regexp)
+              match_data = args_to_match.first.match(args.first)
+              return block.call(args.first, match_data)
+            # ...otherwise just yield the args
+            else
+              return block.call(*args)
+            end
+          end
         end
         nil
       end
