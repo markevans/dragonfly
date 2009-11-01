@@ -5,6 +5,28 @@ module Dragonfly
 
     module RMagickProcessor
       
+      GRAVITY_MAPPINGS = {
+        'nw' => Magick::NorthWestGravity,
+        'n'  => Magick::NorthGravity,
+        'ne' => Magick::NorthEastGravity,
+        'w'  => Magick::WestGravity,
+        'c'  => Magick::CenterGravity,
+        'e'  => Magick::EastGravity,
+        'sw' => Magick::SouthWestGravity,
+        's'  => Magick::SouthGravity,
+        'se' => Magick::SouthEastGravity
+      }
+      
+      def crop(temp_object, opts={})
+        x       = opts[:x]       || 0
+        y       = opts[:y]       || 0
+        gravity = GRAVITY_MAPPINGS[opts[:gravity]] || Magick::ForgetGravity
+        width   = opts[:width].to_i
+        height  = opts[:height].to_i
+
+        rmagick_image(temp_object).crop(gravity, x, y, width, height).to_blob
+      end
+      
       def resize(temp_object, opts={})
         rmagick_image(temp_object).change_geometry!(opts[:geometry]) do |cols, rows, img|
          img.resize!(cols, rows)

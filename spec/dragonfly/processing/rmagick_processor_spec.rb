@@ -75,4 +75,32 @@ describe Dragonfly::Processing::RMagickProcessor do
     
   end
   
+  describe "crop" do # Difficult to test here other than dimensions
+    
+    it "should not crop if no args given" do
+      image = @processor.crop(@image)
+      image.should have_width(280)
+      image.should have_height(355)
+    end
+    
+    it "should crop using the offset given" do
+      image = @processor.crop(@image, :x => 7, :y => 12)
+      image.should have_width(273)
+      image.should have_height(343)
+    end
+    
+    it "should crop using the dimensions given" do
+      image = @processor.crop(@image, :width => 10, :height => 20)
+      image.should have_width(10)
+      image.should have_height(20)
+    end
+    
+    it "should take into account the gravity given" do
+      image1 = @processor.crop(@image, :width => 10, :height => 10, :gravity => 'nw')
+      image2 = @processor.crop(@image, :width => 10, :height => 10, :gravity => 'se')
+      image1.should_not == image2
+    end
+    
+  end
+  
 end
