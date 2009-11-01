@@ -13,7 +13,7 @@ module Dragonfly
         if value.nil?
           self.model_uid = nil
         else
-          self.temp_object = Dragonfly::TempObject.new(value)
+          self.temp_object = TempObject.new(value)
           self.model_uid = PendingUID.new
         end
         value
@@ -21,11 +21,13 @@ module Dragonfly
 
       def destroy!
         app.datastore.destroy(previous_uid) if previous_uid
+      rescue DataStorage::DataNotFound => e
+        app.log.warn("*** WARNING ***: tried to destroy data with uid #{previous_uid}, but got error: #{e}")
       end
       
       def save!
         if changed?
-          app.datastore.destroy(previous_uid) if previous_uid
+          destroy!
           self.model_uid = app.datastore.store(temp_object)
         end
       end
