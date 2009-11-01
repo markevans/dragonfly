@@ -48,26 +48,20 @@ module Dragonfly
       end
     end
     
+    def app
+      self.class.app ? self.class.app : raise(NotConfiguredError, "#{self.class} has no app set")
+    end
+    
     def analyser
-      self.class.app.analyser
-    rescue NoMethodError
-      raise_not_configured
+      app.analyser
     end
     
     def processor
-      self.class.app.processor
-    rescue NoMethodError
-      raise_not_configured
+      app.processor
     end
     
     def encoder
-      self.class.app.encoder
-    rescue NoMethodError
-      raise_not_configured
-    end
-
-    def raise_not_configured
-      raise NotConfiguredError, "#{self.class} has no app set"
+      app.encoder
     end
 
   end
