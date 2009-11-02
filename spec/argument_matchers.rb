@@ -7,7 +7,7 @@ class TempObjectArgumentMatcher
     @data = data
   end
   def ==(actual)
-    actual.instance_of?(Dragonfly::TempObject) && actual.data == @data
+    actual.is_a?(Dragonfly::TempObject) && actual.data == @data
   end
 end
 

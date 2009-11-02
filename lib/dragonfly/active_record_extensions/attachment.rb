@@ -13,7 +13,7 @@ module Dragonfly
         if value.nil?
           self.model_uid = nil
         else
-          self.temp_object = TempObject.new(value)
+          self.temp_object = app.create_object(value)
           self.model_uid = PendingUID.new
         end
         value
@@ -32,6 +32,10 @@ module Dragonfly
         end
       end
       
+      def size
+        temp_object.size
+      end
+      
       def to_value
         self if been_assigned?
       end
@@ -46,6 +50,10 @@ module Dragonfly
       
       def been_assigned?
         model_uid
+      end
+      
+      def been_persisted?
+        model_uid && !model_uid.is_a?(PendingUID)
       end
       
       def changed?
@@ -66,7 +74,15 @@ module Dragonfly
       
       attr_reader :app, :parent_model, :attribute_name
       
-      attr_accessor :temp_object
+      attr_writer :temp_object
+      
+      def temp_object
+        if @temp_object
+          @temp_object
+        elsif been_persisted?
+          @temp_object = app.datastore.retrieve(model_uid)
+        end
+      end
       
     end
   end

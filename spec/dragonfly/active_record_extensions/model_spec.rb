@@ -93,6 +93,9 @@ describe Item do
         it "should return nil for the url" do
           @item.preview_image.url.should be_nil
         end
+        it "should return the size" do
+          @item.preview_image.size.should == 10
+        end
       end
       
       describe "when something has been assigned and saved" do
@@ -121,22 +124,23 @@ describe Item do
           @app.datastore.should_receive(:destroy).with('some_uid')
           @item.destroy
         end
-        
-        it "should destroy the data on destroy even if reloaded" do
-          item = Item.find(@item.id)
-          @app.datastore.should_receive(:destroy).with(item.preview_image_uid)
-          item.destroy
-        end
-
-        it "should log a warning if the data wasn't found on destroy" do
-          @app.datastore.should_receive(:destroy).with('some_uid').and_raise(Dragonfly::DataStorage::DataNotFound)
-          @app.log.should_receive(:warn)
-          @item.destroy
-        end
 
         it "should return the url for the data" do
           @app.should_receive(:url_for).with(@item.preview_image_uid, :arg).and_return('some.url')
           @item.preview_image.url(:arg).should == 'some.url'
+        end
+        
+        describe "when reloaded" do
+          before(:each) do
+            @item.reload
+          end
+          it "should destroy the data on destroy" do
+            @app.datastore.should_receive(:destroy).with(@item.preview_image_uid)
+            @item.destroy
+          end
+          it "should return the size" do
+            @item.preview_image.size.should == 10
+          end
         end
 
         describe "when something new is assigned" do
@@ -160,6 +164,9 @@ describe Item do
             @app.datastore.should_receive(:destroy).with('some_uid')
             @item.destroy
           end
+          it "should return the new size" do
+            @item.preview_image.size.should == 13
+          end
         end
         
         describe "when it is set to nil" do
@@ -182,9 +189,49 @@ describe Item do
           end
         end
 
+        describe "when the data can't be found" do
+          before(:each) do
+            @app.datastore.stub!(:destroy).with('some_uid').and_raise(Dragonfly::DataStorage::DataNotFound)
+            @app.datastore.stub!(:retrieve).with('some_uid').and_raise(Dragonfly::DataStorage::DataNotFound)
+          end
+          it "should log a warning if the data wasn't found on destroy" do
+            @app.log.should_receive(:warn)
+            @item.destroy
+          end 
+        end
+
       end
 
     end
+  end  
+
+  describe "validations" do
+    
+    before(:each) do
+      @app = Dragonfly::App[:images]
+      ActiveRecord::Base.register_dragonfly_app(:image, @app)
+      Item.class_eval do
+        validates_presence_of :preview_image
+        validates_size_of :preview_image, :within => (6..10)
+        image_accessor :preview_image
+      end
+      @item = Item.new(:preview_image => "1234567890")
+    end
+    
+    it "should be valid" do
+      @item.should be_valid
+    end
+
+    it "should be invalid if not set (using validates_presence_of)" do
+      @item.preview_image = nil
+      @item.should_not be_valid
+    end
+    
+    it "should be invalid if too small (using validates_size_of)" do
+      @item.preview_image = "12345"
+      @item.should_not be_valid
+    end
+
   end
 
 end
