@@ -24,6 +24,18 @@ module Dragonfly
       modify_self!(encoder.encode(self, *args))
     end
     
+    def transform(*args)
+      dup.transform!(*args)
+    end
+    
+    def transform!(*args)
+      parameters = parameters_class.from_args(*args)
+      parameters.validate!
+      process!(parameters.processing_method, parameters.processing_options) unless parameters.processing_method.nil?
+      encode!(parameters.mime_type, parameters.encoding) unless parameters.mime_type.nil?
+      self
+    end
+    
     def respond_to?(method)
       super || analyser.respond_to?(method)
     end
@@ -62,6 +74,10 @@ module Dragonfly
     
     def encoder
       app.encoder
+    end
+    
+    def parameters_class
+      app.parameters_class
     end
 
   end
