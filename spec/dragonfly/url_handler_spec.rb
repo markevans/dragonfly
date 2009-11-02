@@ -174,23 +174,21 @@ describe Dragonfly::UrlHandler do
     before(:each) do
       @parameters_class = Class.new(Dragonfly::Parameters)
       @url_handler = Dragonfly::UrlHandler.new(@parameters_class)
-      @parameters = mock('parameters')
-      @url_handler.stub!(:parameters_to_url).with(@parameters).and_return('some.url')
     end
     
     it "should treat the arguments as actual parameter values (empty) if one arg" do
-      @parameters_class.should_receive(:new).with({:uid => 'some_uid'}).and_return(@parameters)
+      @url_handler.should_receive(:parameters_to_url).with(parameters_matching(:uid => 'some_uid')).and_return('some.url')
       @url_handler.url_for('some_uid').should == 'some.url'
     end
     
     it "should treat the arguments as actual parameter values if two args and the second argument is a hash" do
-      @parameters_class.should_receive(:new).with({:processing_method => :resize, :uid => 'some_uid'}).and_return(@parameters)
-      @url_handler.url_for('some_uid', {:processing_method => :resize}).should == 'some.url'
+      @url_handler.should_receive(:parameters_to_url).with(parameters_matching(:uid => 'some_uid', :processing_method => :resize)).and_return('some.url')
+      @url_handler.url_for('some_uid', :processing_method => :resize).should == 'some.url'
     end
     
     it "should treat the arguments as shortcut arguments otherwise" do
-      @parameters_class.should_receive(:from_shortcut).with('innit').and_return(@parameters)
-      @parameters.should_receive(:uid=).with('some_uid')
+      @parameters_class.should_receive(:from_shortcut).with('innit').and_return(@parameters_class.new(:processing_method => :rotate))
+      @url_handler.should_receive(:parameters_to_url).with(parameters_matching(:uid => 'some_uid', :processing_method => :rotate)).and_return('some.url')
       @url_handler.url_for('some_uid', 'innit').should == 'some.url'
     end
     

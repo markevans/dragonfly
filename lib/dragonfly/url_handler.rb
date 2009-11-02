@@ -30,15 +30,15 @@ module Dragonfly
     end
 
     def url_for(uid, *args)
-      if args.empty?
-        parameters = parameters_class.new(:uid => uid)
-      elsif args.length == 1 && args.first.is_a?(Hash)
-        attributes = args.first.merge(:uid => uid)
-        parameters = parameters_class.new(attributes)
+      parameters = case
+      when args.empty?
+        parameters_class.new
+      when args.length == 1 && args.first.is_a?(Hash)
+        parameters_class.new(args.first)
       else
-        parameters = parameters_class.from_shortcut(*args)
-        parameters.uid = uid
+        parameters_class.from_shortcut(*args)
       end
+      parameters.uid = uid
       parameters_to_url(parameters)
     end
 
