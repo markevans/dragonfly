@@ -234,6 +234,11 @@ describe Dragonfly::Parameters do
       @parameters_class.from_args(:uid => 'some_uid', :processing_method => :resize).
         should == @parameters_class.new(:uid => 'some_uid', :processing_method => :resize)
     end
+
+    it "should simply return the same parameters if args is a single parameters object" do
+      @parameters_class.from_args(@parameters_class.new(:uid => 'some_uid', :processing_method => :resize)).
+        should == @parameters_class.new(:uid => 'some_uid', :processing_method => :resize)
+    end
     
     it "should treat the arguments as shortcut arguments otherwise" do
       @parameters_class.should_receive(:from_shortcut).with('innit').and_return(parameters = mock('parameters'))

@@ -40,6 +40,7 @@ module Dragonfly
       def from_args(*args)
         if args.empty? then new
         elsif args.length == 1 && args.first.is_a?(Hash) then new(args.first)
+        elsif args.length == 1 && args.first.is_a?(Parameters) then args.first.dup
         else from_shortcut(*args)
         end
       end
