@@ -90,6 +90,9 @@ describe Item do
           @app.datastore.should_not_receive(:destroy)
           @item.destroy
         end
+        it "should return nil for the url" do
+          @item.preview_image.url.should be_nil
+        end
       end
       
       describe "when something has been assigned and saved" do
@@ -123,6 +126,17 @@ describe Item do
           item = Item.find(@item.id)
           @app.datastore.should_receive(:destroy).with(item.preview_image_uid)
           item.destroy
+        end
+
+        it "should log a warning if the data wasn't found on destroy" do
+          @app.datastore.should_receive(:destroy).with('some_uid').and_raise(Dragonfly::DataStorage::DataNotFound)
+          @app.log.should_receive(:warn)
+          @item.destroy
+        end
+
+        it "should return the url for the data" do
+          @app.should_receive(:url_for).with(@item.preview_image_uid, :arg).and_return('some.url')
+          @item.preview_image.url(:arg).should == 'some.url'
         end
 
         describe "when something new is assigned" do
@@ -171,5 +185,6 @@ describe Item do
       end
 
     end
-  end  
+  end
+
 end
