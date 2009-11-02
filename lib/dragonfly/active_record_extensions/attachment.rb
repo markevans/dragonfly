@@ -25,6 +25,10 @@ module Dragonfly
         app.log.warn("*** WARNING ***: tried to destroy data with uid #{previous_uid}, but got error: #{e}")
       end
       
+      def fetch
+        temp_object
+      end
+      
       def save!
         if changed?
           destroy!

@@ -96,6 +96,11 @@ describe Item do
         it "should return the size" do
           @item.preview_image.size.should == 10
         end
+        it "should return the temp_object" do
+          temp_object = @item.preview_image.fetch
+          temp_object.should be_a(Dragonfly::ExtendedTempObject)
+          temp_object.data.should == 'DATASTRING'
+        end
       end
       
       describe "when something has been assigned and saved" do
@@ -141,6 +146,11 @@ describe Item do
           it "should return the size" do
             @item.preview_image.size.should == 10
           end
+          it "should return the temp_object" do
+            temp_object = @item.preview_image.fetch
+            temp_object.should be_a(Dragonfly::ExtendedTempObject)
+            temp_object.data.should == 'DATASTRING'
+          end
         end
 
         describe "when something new is assigned" do
@@ -166,6 +176,11 @@ describe Item do
           end
           it "should return the new size" do
             @item.preview_image.size.should == 13
+          end
+          it "should return the new temp_object" do
+            temp_object = @item.preview_image.fetch
+            temp_object.should be_a(Dragonfly::ExtendedTempObject)
+            temp_object.data.should == 'NEWDATASTRING'
           end
         end
         
