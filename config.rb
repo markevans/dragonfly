@@ -15,7 +15,7 @@ APP.configure do |c|
   c.parameters do |p|
     p.default_mime_type = 'image/jpeg'
     # Standard resizing like '30x40!', etc.
-    p.add_shortcut(/^\d*x\d*[><%^!]?$|^\d+@$/) do |geometry|
+    p.add_shortcut(/^\d*x\d*[><%^!]?$|^\d+@$/) do |geometry, match_data|
       {
         :processing_method => :resize,
         :processing_options => {:geometry => geometry}
