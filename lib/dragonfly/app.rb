@@ -52,7 +52,7 @@ module Dragonfly
     
     def call(env)
       parameters = url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])
-      temp_object = get_processed_object(parameters)
+      temp_object = fetch(parameters)
       [200, {
         "Content-Type" => parameters.mime_type,
         "Content-Length" => temp_object.size.to_s,
@@ -63,7 +63,8 @@ module Dragonfly
       [400, {"Content-Type" => "text/plain"}, [e.message]]
     end
 
-    def get_processed_object(parameters)
+    def fetch(*args)
+      parameters = parameters_class.from_args(*args)
       parameters.validate!
       temp_object = temp_object_class.new(datastore.retrieve(parameters.uid))
       temp_object.process!(parameters.processing_method, parameters.processing_options) unless parameters.processing_method.nil?
