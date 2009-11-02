@@ -11,10 +11,10 @@ module Dragonfly
       
       def assign(value)
         if value.nil?
-          self.model_uid = nil
+          self.uid = nil
         else
           self.temp_object = app.create_object(value)
-          self.model_uid = PendingUID.new
+          self.uid = PendingUID.new
         end
         value
       end
@@ -28,7 +28,7 @@ module Dragonfly
       def save!
         if changed?
           destroy!
-          self.model_uid = app.datastore.store(temp_object)
+          self.uid = app.datastore.store(temp_object)
         end
       end
       
@@ -41,30 +41,30 @@ module Dragonfly
       end
       
       def url(*args)
-        unless model_uid.nil? || model_uid.is_a?(PendingUID)
-          app.url_for(model_uid, *args)
+        unless uid.nil? || uid.is_a?(PendingUID)
+          app.url_for(uid, *args)
         end
       end
       
       private
       
       def been_assigned?
-        model_uid
+        uid
       end
       
       def been_persisted?
-        model_uid && !model_uid.is_a?(PendingUID)
+        uid && !uid.is_a?(PendingUID)
       end
       
       def changed?
         parent_model.send("#{attribute_name}_uid_changed?")
       end
       
-      def model_uid=(uid)
+      def uid=(uid)
         parent_model.send("#{attribute_name}_uid=", uid)
       end
       
-      def model_uid
+      def uid
         parent_model.send("#{attribute_name}_uid")
       end
       
@@ -80,7 +80,7 @@ module Dragonfly
         if @temp_object
           @temp_object
         elsif been_persisted?
-          @temp_object = app.datastore.retrieve(model_uid)
+          @temp_object = app.datastore.retrieve(uid)
         end
       end
       
