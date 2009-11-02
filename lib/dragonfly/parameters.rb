@@ -37,6 +37,13 @@ module Dragonfly
         end
       end
       
+      def from_args(*args)
+        if args.empty? then new
+        elsif args.length == 1 && args.first.is_a?(Hash) then new(args.first)
+        else from_shortcut(*args)
+        end
+      end
+      
       private
       
       def simple_shortcuts

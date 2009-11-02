@@ -30,14 +30,7 @@ module Dragonfly
     end
 
     def url_for(uid, *args)
-      parameters = case
-      when args.empty?
-        parameters_class.new
-      when args.length == 1 && args.first.is_a?(Hash)
-        parameters_class.new(args.first)
-      else
-        parameters_class.from_shortcut(*args)
-      end
+      parameters = parameters_class.from_args(*args)
       parameters.uid = uid
       parameters_to_url(parameters)
     end

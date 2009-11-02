@@ -171,27 +171,14 @@ describe Dragonfly::UrlHandler do
   
   describe "#url_for" do
     
-    before(:each) do
-      @parameters_class = Class.new(Dragonfly::Parameters)
-      @url_handler = Dragonfly::UrlHandler.new(@parameters_class)
+    it "should pass parameters from Parameter.from_args plus the uid to parameters_to_url" do
+      parameters_class = Class.new(Dragonfly::Parameters)
+      url_handler = Dragonfly::UrlHandler.new(parameters_class)
+      parameters_class.should_receive(:from_args).with(:a, :b, :c).and_return parameters_class.new(:processing_method => :resize)
+      url_handler.should_receive(:parameters_to_url).with(parameters_matching(:processing_method => :resize, :uid => 'some_uid')).and_return 'some.url'
+      url_handler.url_for('some_uid', :a, :b, :c)
     end
-    
-    it "should treat the arguments as actual parameter values (empty) if one arg" do
-      @url_handler.should_receive(:parameters_to_url).with(parameters_matching(:uid => 'some_uid')).and_return('some.url')
-      @url_handler.url_for('some_uid').should == 'some.url'
-    end
-    
-    it "should treat the arguments as actual parameter values if two args and the second argument is a hash" do
-      @url_handler.should_receive(:parameters_to_url).with(parameters_matching(:uid => 'some_uid', :processing_method => :resize)).and_return('some.url')
-      @url_handler.url_for('some_uid', :processing_method => :resize).should == 'some.url'
-    end
-    
-    it "should treat the arguments as shortcut arguments otherwise" do
-      @parameters_class.should_receive(:from_shortcut).with('innit').and_return(@parameters_class.new(:processing_method => :rotate))
-      @url_handler.should_receive(:parameters_to_url).with(parameters_matching(:uid => 'some_uid', :processing_method => :rotate)).and_return('some.url')
-      @url_handler.url_for('some_uid', 'innit').should == 'some.url'
-    end
-    
+        
   end
   
   describe "sanity check" do

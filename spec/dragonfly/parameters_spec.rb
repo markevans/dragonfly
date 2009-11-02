@@ -220,6 +220,28 @@ describe Dragonfly::Parameters do
     
   end
   
+  describe ".from_args" do
+    
+    before(:each) do
+      @parameters_class = Class.new(Dragonfly::Parameters)
+    end
+    
+    it "should be the same as 'new' if empty args" do
+      @parameters_class.from_args.should == @parameters_class.new
+    end
+    
+    it "should treat the arguments as actual parameter values if args is a single hash" do
+      @parameters_class.from_args(:uid => 'some_uid', :processing_method => :resize).
+        should == @parameters_class.new(:uid => 'some_uid', :processing_method => :resize)
+    end
+    
+    it "should treat the arguments as shortcut arguments otherwise" do
+      @parameters_class.should_receive(:from_shortcut).with('innit').and_return(parameters = mock('parameters'))
+      @parameters_class.from_args('innit').should == parameters
+    end
+    
+  end
+  
   describe "unique_signature" do
     
     before(:each) do
