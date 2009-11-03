@@ -249,4 +249,57 @@ describe Item do
 
   end
 
+  describe "magic attributes" do
+    
+    before(:each) do
+      @app = Dragonfly::App[:images]
+      analyser = @app.analyser
+      def analyser.some_analyser_method(temp_object)
+        "abc" + temp_object.data[0..0]
+      end
+      ActiveRecord::Base.register_dragonfly_app(:image, @app)
+      Item.class_eval do
+        image_accessor :preview_image
+      end
+      @item = Item.new
+    end
+    
+    it "should default the magic attribute as nil" do
+      @item.preview_image_some_analyser_method.should be_nil
+    end
+    
+    it "should set the magic attribute when assigned" do
+      @item.preview_image = '123'
+      @item.preview_image_some_analyser_method.should == 'abc1'
+    end
+    
+    it "should not set non-magic attributes with the same prefix when assigned" do
+      @item.preview_image_blah_blah = 'wassup'
+      @item.preview_image = '123'
+      @item.preview_image_blah_blah.should == 'wassup'
+    end
+    
+    it "should update the magic attribute when something else is assigned" do
+      @item.preview_image = '123'
+      @item.preview_image = '456'
+      @item.preview_image_some_analyser_method.should == 'abc4'
+    end
+    
+    it "should reset the magic attribute when set to nil" do
+      @item.preview_image = '123'
+      @item.preview_image = nil
+      @item.preview_image_some_analyser_method.should be_nil
+    end
+    
+    it "should not reset non-magic attributes with the same prefix when set to nil" do
+      @item.preview_image_blah_blah = 'wassup'
+      @item.preview_image = '123'
+      @item.preview_image = nil
+      @item.preview_image_blah_blah.should == 'wassup'
+    end
+    
+    it "should work for size too"
+    
+  end
+
 end

@@ -12,9 +12,11 @@ module Dragonfly
       def assign(value)
         if value.nil?
           self.uid = nil
+          reset_magic_attributes
         else
           self.temp_object = app.create_object(value)
           self.uid = PendingUID.new
+          set_magic_attributes
         end
         value
       end
@@ -80,12 +82,34 @@ module Dragonfly
       
       attr_writer :temp_object
       
+      def analyser
+        app.analyser
+      end
+      
       def temp_object
         if @temp_object
           @temp_object
         elsif been_persisted?
           @temp_object = app.datastore.retrieve(uid)
         end
+      end
+      
+      def magic_attributes
+        parent_model.class.column_names.select { |name|
+          name =~ /^#{attribute_name}_(.+)$/ &&
+            analyser.respond_to?($1)
+        }
+      end
+      
+      def set_magic_attributes
+        magic_attributes.each do |attribute|
+          analyser_method = attribute.sub("#{attribute_name}_", '')
+          parent_model.send("#{attribute}=", analyser.send(analyser_method, temp_object))
+        end
+      end
+      
+      def reset_magic_attributes
+        magic_attributes.each{|attribute| parent_model.send("#{attribute}=", nil) }
       end
       
     end
