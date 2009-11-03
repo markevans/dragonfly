@@ -97,14 +97,14 @@ module Dragonfly
       def magic_attributes
         parent_model.class.column_names.select { |name|
           name =~ /^#{attribute_name}_(.+)$/ &&
-            analyser.respond_to?($1)
+            analyser.respond_to?($1) || $1 == 'size'
         }
       end
       
       def set_magic_attributes
         magic_attributes.each do |attribute|
-          analyser_method = attribute.sub("#{attribute_name}_", '')
-          parent_model.send("#{attribute}=", analyser.send(analyser_method, temp_object))
+          method = attribute.sub("#{attribute_name}_", '')
+          parent_model.send("#{attribute}=", temp_object.send(method))
         end
       end
       

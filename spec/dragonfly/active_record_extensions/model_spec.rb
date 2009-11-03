@@ -298,7 +298,10 @@ describe Item do
       @item.preview_image_blah_blah.should == 'wassup'
     end
     
-    it "should work for size too"
+    it "should work for size too" do
+      @item.preview_image = '123'
+      @item.preview_image_size.should == 3
+    end
     
   end
 
