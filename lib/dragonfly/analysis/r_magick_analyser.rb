@@ -26,6 +26,7 @@ module Dragonfly
       def number_of_colours(image)
         rmagick_image(image).number_colors
       end
+      alias number_of_colors number_of_colours
       
       private
       
