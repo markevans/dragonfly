@@ -9,16 +9,16 @@ module Dragonfly
 
       def mime_type_for(ext)
         ext = normalize_extension(ext)
-        mime_type = custom_mime_types.index(ext) || MIME::Types.type_for(ext).to_s
+        mime_type = custom_mime_types.index(ext) || MIME::Types.type_for(ext).first.to_s
         raise_mime_type_not_found("Couldn't find the mime type for the extension #{ext.inspect}") if mime_type.blank?
         mime_type
       end
     
       def extension_for(mime_type)
-        known_mime_type = custom_mime_types[mime_type] ||
+        ext = custom_mime_types[mime_type] ||
           MIME::Types[mime_type].first && MIME::Types[mime_type].first.extensions.first
-        raise_mime_type_not_found("Couldn't find the mime type #{mime_type.inspect}") if known_mime_type.blank?
-        known_mime_type
+        raise_mime_type_not_found("Couldn't find the mime type #{mime_type.inspect}") if ext.blank?
+        ext
       end
       
       def register(mime_type, file_extension)
