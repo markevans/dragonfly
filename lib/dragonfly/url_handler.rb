@@ -51,7 +51,7 @@ module Dragonfly
     def parameters_to_url(parameters)
       parameters.validate!
       query_string = [:processing_method, :processing_options, :encoding].map do |attribute|
-        build_query(MAPPINGS[attribute] => parameters[attribute]) unless blank?(parameters[attribute])
+        build_query(MAPPINGS[attribute] => parameters[attribute]) unless parameters[attribute].blank?
       end.compact.join('&')
       extension = MimeTypes.extension_for(parameters.mime_type)
       sha_string = "&#{MAPPINGS[:sha]}=#{sha_from_parameters(parameters)}" if protect_from_dos_attacks?
@@ -128,10 +128,6 @@ module Dragonfly
       else
         "#{prefix}=#{escape(value)}"
       end
-    end
-    
-    def blank?(object)
-      object.nil? || (object.respond_to?(:empty?) ? object.empty? : false)
     end
     
   end

@@ -30,3 +30,4 @@ end
 autoload_files_in_dir("#{File.dirname(__FILE__)}/dragonfly", 'Dragonfly')
 
 require 'rubygems'
+require File.dirname(__FILE__) + '/dragonfly/core_ext/object'
