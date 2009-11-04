@@ -6,6 +6,7 @@ module Dragonfly
     class << self
 
       def mime_type_for(ext)
+        ext = ext.to_s.sub(/^\./,'')
         MIME::Types.type_for(ext).to_s
       end
     
