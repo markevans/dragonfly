@@ -97,7 +97,7 @@ describe Item do
           @item.preview_image.size.should == 10
         end
         it "should return the temp_object" do
-          temp_object = @item.preview_image.fetch
+          temp_object = @item.preview_image.temp_object
           temp_object.should be_a(Dragonfly::ExtendedTempObject)
           temp_object.data.should == 'DATASTRING'
         end
@@ -147,7 +147,7 @@ describe Item do
             @item.preview_image.size.should == 10
           end
           it "should return the temp_object" do
-            temp_object = @item.preview_image.fetch
+            temp_object = @item.preview_image.temp_object
             temp_object.should be_a(Dragonfly::ExtendedTempObject)
             temp_object.data.should == 'DATASTRING'
           end
@@ -178,7 +178,7 @@ describe Item do
             @item.preview_image.size.should == 13
           end
           it "should return the new temp_object" do
-            temp_object = @item.preview_image.fetch
+            temp_object = @item.preview_image.temp_object
             temp_object.should be_a(Dragonfly::ExtendedTempObject)
             temp_object.data.should == 'NEWDATASTRING'
           end

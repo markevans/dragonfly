@@ -25,7 +25,7 @@ module Dragonfly
     end
     
     def transform(*args)
-      dup.transform!(*args)
+      args.any? ? dup.transform!(*args) : self
     end
     
     def transform!(*args)

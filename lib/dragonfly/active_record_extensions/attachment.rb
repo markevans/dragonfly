@@ -27,8 +27,8 @@ module Dragonfly
         app.log.warn("*** WARNING ***: tried to destroy data with uid #{previous_uid}, but got error: #{e}")
       end
       
-      def fetch
-        temp_object
+      def fetch(*args)
+        app.fetch(uid, *args)
       end
       
       def save!
@@ -40,6 +40,14 @@ module Dragonfly
       
       def size
         temp_object.size
+      end
+      
+      def temp_object
+        if @temp_object
+          @temp_object
+        elsif been_persisted?
+          @temp_object = fetch
+        end
       end
       
       def to_value
@@ -84,14 +92,6 @@ module Dragonfly
       
       def analyser
         app.analyser
-      end
-      
-      def temp_object
-        if @temp_object
-          @temp_object
-        elsif been_persisted?
-          @temp_object = app.datastore.retrieve(uid)
-        end
       end
       
       def magic_attributes
