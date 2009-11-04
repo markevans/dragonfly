@@ -7,12 +7,12 @@ Given /^a stored image "(.+?)" with dimensions (\d+)x(\d+)$/ do |name, width, he
 end
 
 When /^I go to the url for image "(.+?)", with format '([^']+?)'$/ do |name, ext|
-  make_image_request name, :mime_type => mime_type_from_extension(ext)
+  make_image_request name, :mime_type => Dragonfly::MimeTypes.mime_type_for(ext)
 end
 
 When /^I go to the url for image "(.+?)", with format '(.+?)' and resize geometry '(.+?)'$/ do |name, ext, geometry|
   make_image_request(name,
-    :mime_type => mime_type_from_extension(ext),
+    :mime_type => Dragonfly::MimeTypes.mime_type_for(ext),
     :processing_method => :resize,
     :processing_options => {:geometry => geometry}
   )

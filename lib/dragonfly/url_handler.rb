@@ -11,7 +11,6 @@ module Dragonfly
     
     include Rack::Utils
     include Configurable
-    include Dragonfly::Utils
 
     MAPPINGS = {
       :processing_method => 'm',
@@ -54,7 +53,7 @@ module Dragonfly
       query_string = [:processing_method, :processing_options, :encoding].map do |attribute|
         build_query(MAPPINGS[attribute] => parameters[attribute]) unless blank?(parameters[attribute])
       end.compact.join('&')
-      extension = extension_from_mime_type(parameters.mime_type)
+      extension = MimeTypes.extension_for(parameters.mime_type)
       sha_string = "&#{MAPPINGS[:sha]}=#{sha_from_parameters(parameters)}" if protect_from_dos_attacks?
       url = "#{path_prefix}/#{parameters.uid}.#{extension}?#{query_string}#{sha_string}"
       url.sub!(/\?$/,'')
@@ -77,7 +76,8 @@ module Dragonfly
     end
   
     def extract_mime_type(path, query)
-      mime_type_from_extension(file_extension(path))
+      file_extension = path.sub(/^\//,'').split('.').last
+      MimeTypes.mime_type_for(file_extension)
     end
   
     def extract_encoding(path, query)

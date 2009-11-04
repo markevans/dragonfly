@@ -31,5 +31,4 @@ Before do
   end
 end
 
-World(Dragonfly::Utils)
 World(ImageHelpers)

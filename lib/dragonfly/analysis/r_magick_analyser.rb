@@ -5,8 +5,6 @@ module Dragonfly
     
     module RMagickAnalyser
       
-      include Utils
-      
       def width(image)
         rmagick_image(image).columns
       end
@@ -16,7 +14,7 @@ module Dragonfly
       end
       
       def mime_type(image)
-        mime_type_from_extension(rmagick_image(image).format)
+        MimeTypes.mime_type_for(rmagick_image(image).format)
       end
       
       def depth(image)
