@@ -13,7 +13,7 @@ APP.configure do |c|
   end
   c.encoder = Dragonfly::Encoding::RMagickEncoder.new
   c.parameters do |p|
-    p.default_mime_type = 'image/jpeg'
+    p.default_format = :jpg
     # Standard resizing like '30x40!', etc.
     p.add_shortcut(/^\d*x\d*[><%^!]?$|^\d+@$/) do |geometry, match_data|
       {

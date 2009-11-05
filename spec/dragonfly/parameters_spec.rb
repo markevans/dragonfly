@@ -6,7 +6,7 @@ describe Dragonfly::Parameters do
     {
       :uid => 'ahaha',
       :processing_method => :round,
-      :mime_type => 'image/gif',
+      :format => :gif,
       :processing_options => {:radius => 5},
       :encoding => {:flumps_per_minute => 56}
     }
@@ -35,7 +35,7 @@ describe Dragonfly::Parameters do
     it "should give the accessors the correct defaults" do
       @parameters.uid.should be_nil
       @parameters.processing_method.should be_nil
-      @parameters.mime_type.should be_nil
+      @parameters.format.should be_nil
       @parameters.processing_options.should == {}
       @parameters.encoding.should == {}
     end
@@ -66,7 +66,7 @@ describe Dragonfly::Parameters do
     it "should return true when two have all the same attributes" do
       @parameters1.should == @parameters2
     end
-    %w(uid processing_method mime_type processing_options encoding).each do |attribute|
+    %w(uid processing_method format processing_options encoding).each do |attribute|
       it "should return false when #{attribute} is different" do
         @parameters2[attribute.to_sym] = 'fish'
         @parameters1.should_not == @parameters2
@@ -92,7 +92,7 @@ describe Dragonfly::Parameters do
         parameters = @parameters_class.new
         parameters.processing_method.should be_nil
         parameters.processing_options.should == {}
-        parameters.mime_type.should be_nil
+        parameters.format.should be_nil
         parameters.encoding.should == {}
       end
     end
@@ -102,7 +102,7 @@ describe Dragonfly::Parameters do
         @parameters_class.configure do |c|
           c.default_processing_method = :resize
           c.default_processing_options = {:scale => '0.5'}
-          c.default_mime_type = 'image/png'
+          c.default_format = :png
           c.default_encoding = {:bit_rate => 24}
         end
       end
@@ -110,19 +110,19 @@ describe Dragonfly::Parameters do
         parameters = @parameters_class.new
         parameters.processing_method.should == :resize
         parameters.processing_options.should == {:scale => '0.5'}
-        parameters.mime_type.should == 'image/png'
+        parameters.format.should == :png
         parameters.encoding.should == {:bit_rate => 24}
       end
       it "should return the correct parameter if set" do
         parameters = @parameters_class.new(
           :processing_method => :yo,
           :processing_options => {:a => 'b'},
-          :mime_type => 'text/plain',
+          :format => :txt,
           :encoding => {:ah => :arg}
         )
         parameters.processing_method.should == :yo
         parameters.processing_options.should == {:a => 'b'}
-        parameters.mime_type.should == 'text/plain'
+        parameters.format.should == :txt
         parameters.encoding.should == {:ah => :arg}
       end
     end
@@ -142,14 +142,14 @@ describe Dragonfly::Parameters do
         @parameters.validate!
       }.should raise_error(Dragonfly::Parameters::InvalidParameters)
     end
-    it "should raise an error when the uid is not set" do
-      @parameters.mime_type = nil
+    it "should raise an error when the format is not set" do
+      @parameters.format = nil
       lambda{
         @parameters.validate!
       }.should raise_error(Dragonfly::Parameters::InvalidParameters)
     end
     it "should not raise an error when other parameters aren't set" do
-      parameters = Dragonfly::Parameters.new(:uid => 'asdf', :mime_type => 'image/jpeg')
+      parameters = Dragonfly::Parameters.new(:uid => 'asdf', :format => :jpg)
       parameters.validate!
     end
   end
@@ -164,7 +164,7 @@ describe Dragonfly::Parameters do
       attributes = {
         :processing_method => :duncan,
         :processing_options => {:bill => :gates},
-        :mime_type => 'mama/mia',
+        :format => 'mamamia',
         :encoding => {:doogie => :howser}
       }
       @parameters_class.add_shortcut(:doobie, attributes)
@@ -180,25 +180,25 @@ describe Dragonfly::Parameters do
     describe "block shortcuts" do
       
       before(:each) do
-        @parameters_class.add_shortcut(/^hello.*$/, String) do |processing_method, mime_type, matches|
-          {:processing_method => processing_method, :mime_type => mime_type}
+        @parameters_class.add_shortcut(/^hello.*$/, Symbol) do |processing_method, format, matches|
+          {:processing_method => processing_method, :format => format}
         end
       end
       
       it "should allow for more complex shortcuts by using a block and matching args" do
-        parameters = Dragonfly::Parameters.new(:processing_method => 'hellothere', :mime_type => 'image/tiff')
-        @parameters_class.from_shortcut('hellothere', 'image/tiff').should == parameters
+        parameters = Dragonfly::Parameters.new(:processing_method => 'hellothere', :format => :tif)
+        @parameters_class.from_shortcut('hellothere', :tif).should == parameters
       end
 
       it "should raise an error if the shortcut doesn't match properly" do
         lambda{
-          @parameters_class.from_shortcut('hellothere', :'image/tiff')
+          @parameters_class.from_shortcut('hellothere', 'tif')
         }.should raise_error(Dragonfly::Parameters::InvalidShortcut)
       end
       
       it "should raise an error if the shortcut matches but has the wrong number of args" do
         lambda{
-          @parameters_class.from_shortcut('hellothere', 'image/tiff', 'YO')
+          @parameters_class.from_shortcut('hellothere', :tif, 'YO')
         }.should raise_error(Dragonfly::Parameters::InvalidShortcut)
       end
 
@@ -268,8 +268,8 @@ describe Dragonfly::Parameters do
       @parameters.unique_signature.should_not == @parameters2.unique_signature
     end
    
-    it "should be different when the mime_type is changed" do
-      @parameters2.mime_type = 'image/tiff'
+    it "should be different when the format is changed" do
+      @parameters2.format = :tif
       @parameters.unique_signature.should_not == @parameters2.unique_signature
     end
     

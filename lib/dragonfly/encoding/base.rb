@@ -3,7 +3,7 @@ module Dragonfly
     
     class Base
       
-      def encode(temp_object, mime_type, options={})
+      def encode(temp_object, format, options={})
         raise NotImplementedError
       end
       

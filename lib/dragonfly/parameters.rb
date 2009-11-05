@@ -14,7 +14,7 @@ module Dragonfly
       
       configurable_attr :default_processing_method
       configurable_attr :default_processing_options, {}
-      configurable_attr :default_mime_type
+      configurable_attr :default_format
       configurable_attr :default_encoding, {}
       
       def add_shortcut(*args, &block)
@@ -91,11 +91,11 @@ module Dragonfly
 
     # Instance methods
 
-    attr_accessor :uid, :processing_method, :processing_options, :mime_type, :encoding
+    attr_accessor :uid, :processing_method, :processing_options, :format, :encoding
 
     def initialize(attributes={})
       attributes = attributes.dup
-      %w(processing_method processing_options mime_type encoding).each do |attribute|
+      %w(processing_method processing_options format encoding).each do |attribute|
         instance_variable_set "@#{attribute}", (attributes.delete(attribute.to_sym) || self.class.send("default_#{attribute}"))
       end
       @uid = attributes.delete(:uid)
@@ -127,13 +127,13 @@ module Dragonfly
         :uid => uid,
         :processing_method => processing_method,
         :processing_options => processing_options,
-        :mime_type => mime_type,
+        :format => format,
         :encoding => encoding
       }
     end
 
     def validate!
-      raise InvalidParameters, "Parameters requires that at least the uid and the mime_type are set" if uid.nil? || mime_type.nil?
+      raise InvalidParameters, "Parameters requires that at least the uid and the format are set" if uid.nil? || format.nil?
     end
 
     private
@@ -141,7 +141,7 @@ module Dragonfly
     def to_sorted_array
       [
         uid,
-        mime_type,
+        format,
         processing_method,
         processing_options.sort{|a,b| a[1].to_s <=> b[1].to_s },
         encoding.sort{|a,b| a[1].to_s <=> b[1].to_s }

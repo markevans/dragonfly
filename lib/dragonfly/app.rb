@@ -54,7 +54,7 @@ module Dragonfly
       parameters = url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])
       temp_object = fetch(parameters.uid, parameters)
       [200, {
-        "Content-Type" => parameters.mime_type,
+        "Content-Type" => temp_object.mime_type,
         "Content-Length" => temp_object.size.to_s,
         "ETag" => parameters.unique_signature,
         "Cache-Control" => "public, max-age=#{cache_duration}"

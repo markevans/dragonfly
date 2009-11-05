@@ -1,5 +1,4 @@
 require 'digest/sha1'
-require 'mime/types'
 require 'rack'
 
 module Dragonfly
@@ -40,7 +39,7 @@ module Dragonfly
         :uid => extract_uid(path, query),
         :processing_method => extract_processing_method(path, query),
         :processing_options => extract_processing_options(path, query),
-        :mime_type => extract_mime_type(path, query),
+        :format => extract_format(path, query),
         :encoding => extract_encoding(path, query)
       }.reject{|k,v| v.nil? }
       parameters = parameters_class.new(attributes)
@@ -53,9 +52,8 @@ module Dragonfly
       query_string = [:processing_method, :processing_options, :encoding].map do |attribute|
         build_query(MAPPINGS[attribute] => parameters[attribute]) unless parameters[attribute].blank?
       end.compact.join('&')
-      extension = MimeTypes.extension_for(parameters.mime_type)
       sha_string = "&#{MAPPINGS[:sha]}=#{sha_from_parameters(parameters)}" if protect_from_dos_attacks?
-      url = "#{path_prefix}/#{parameters.uid}.#{extension}?#{query_string}#{sha_string}"
+      url = "#{path_prefix}/#{parameters.uid}.#{parameters.format}?#{query_string}#{sha_string}"
       url.sub!(/\?$/,'')
       url
     end
@@ -75,9 +73,8 @@ module Dragonfly
       symbolize_keys(processing_options) if processing_options
     end
   
-    def extract_mime_type(path, query)
-      file_extension = path.sub(/^\//,'').split('.').last
-      MimeTypes.mime_type_for(file_extension)
+    def extract_format(path, query)
+      path.sub(/^\//,'').split('.').last
     end
   
     def extract_encoding(path, query)

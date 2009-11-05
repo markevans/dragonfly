@@ -30,8 +30,8 @@ describe Dragonfly::UrlHandler do
       parameters.uid.should == '2009/some_image'
     end
     
-    it "should correctly extract the mime type" do
-      @parameters.mime_type.should == 'image/jpeg'
+    it "should correctly extract the format" do
+      @parameters.format.should == 'jpg'
     end
     
     it "should correctly extract the processing method" do
@@ -68,7 +68,7 @@ describe Dragonfly::UrlHandler do
       @parameters.uid = 'thisisunique'
       @parameters.processing_method = 'b'
       @parameters.processing_options = {:d => 'e', :j => 'k'}
-      @parameters.mime_type = 'image/gif'
+      @parameters.format = :gif
       @parameters.encoding = {:x => 'y'}
       @url_handler.configure{|c| c.protect_from_dos_attacks = false}
     end
@@ -198,7 +198,7 @@ describe Dragonfly::UrlHandler do
           :d => 'e',
           :j => 'k'
         },
-        :mime_type => 'image/jpeg',
+        :format => 'jpg',
         :encoding => {:x => 'y'},
         :uid => 'thisisunique'
       )

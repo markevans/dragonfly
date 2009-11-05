@@ -31,7 +31,7 @@ module Dragonfly
     def transform!(*args)
       parameters = parameters_class.from_args(*args)
       process!(parameters.processing_method, parameters.processing_options) unless parameters.processing_method.nil?
-      encode!(parameters.mime_type, parameters.encoding) unless parameters.mime_type.nil?
+      encode!(parameters.format, parameters.encoding) unless parameters.format.nil?
       self
     end
     
