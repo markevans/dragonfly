@@ -221,30 +221,121 @@ describe Item do
   end  
 
   describe "validations" do
-    
-    before(:each) do
+
+    before(:all) do
       @app = Dragonfly::App[:images]
       ActiveRecord::Base.register_dragonfly_app(:image, @app)
-      Item.class_eval do
-        validates_presence_of :preview_image
-        validates_size_of :preview_image, :within => (6..10)
-        image_accessor :preview_image
-      end
-      @item = Item.new(:preview_image => "1234567890")
     end
     
-    it "should be valid" do
-      @item.should be_valid
-    end
+    describe "validates_presence_of" do
 
-    it "should be invalid if not set (using validates_presence_of)" do
-      @item.preview_image = nil
-      @item.should_not be_valid
+      before(:all) do
+        Item.class_eval do
+          image_accessor :preview_image
+          validates_presence_of :preview_image
+        end
+      end
+
+      it "should be valid if set" do
+        Item.new(:preview_image => "1234567890").should be_valid
+      end
+
+      it "should be invalid if not set" do
+        Item.new.should_not be_valid
+      end
+
     end
     
-    it "should be invalid if too small (using validates_size_of)" do
-      @item.preview_image = "12345"
-      @item.should_not be_valid
+    describe "validates_size_of" do
+      
+      before(:all) do
+        Item.class_eval do
+          image_accessor :preview_image
+          validates_size_of :preview_image, :within => (6..10)
+        end
+      end
+
+      it "should be valid if ok" do
+        Item.new(:preview_image => "1234567890").should be_valid
+      end
+
+      it "should be invalid if too small" do
+        Item.new(:preview_image => "12345").should_not be_valid
+      end
+      
+    end
+    
+    describe "validates_mime_type_of" do
+
+      before(:each) do
+        @item = Item.new(:preview_image => "1234567890")
+      end
+
+      before(:all) do
+        custom_analyser = Object.new
+        def custom_analyser.mime_type(temp_object)
+          case temp_object.data
+          when "WRONG TYPE" then 'wrong/type'
+          when "OTHER TYPE" then nil
+          else 'how/special'
+          end
+        end
+        @app.analyser.register(custom_analyser)
+        
+        Item.class_eval do
+          validates_mime_type_of :preview_image, :in => ['how/special', 'how/crazy'], :if => :its_friday
+          validates_mime_type_of :other_image, :yet_another_image, :as => 'how/special'
+
+          image_accessor :preview_image
+          image_accessor :other_image
+          image_accessor :yet_another_image
+
+          def its_friday
+            true
+          end
+
+        end
+      end
+    
+      it "should be valid if nil, if not validated on presence (even with validates_mime_type_of)" do
+        @item.other_image = nil
+        @item.should be_valid
+      end
+    
+      it "should be invalid if the mime_type is unknown" do
+        @item.preview_image = "OTHER TYPE"
+        @item.should_not be_valid
+        @item.errors.on(:preview_image).should == "doesn't have the correct MIME-type. It needs to be one of 'how/special', 'how/crazy', but was 'unknown'"
+      end
+
+      it "should be invalid if the mime_type is wrong" do
+        @item.preview_image = "WRONG TYPE"
+        @item.should_not be_valid
+        @item.errors.on(:preview_image).should == "doesn't have the correct MIME-type. It needs to be one of 'how/special', 'how/crazy', but was 'wrong/type'"
+      end
+
+      it "should validate individually" do
+        @item.other_image = "1234567"
+        @item.yet_another_image = "WRONG TYPE"
+        @item.should_not be_valid
+        @item.errors.on(:other_image).should be_nil
+        @item.errors.on(:yet_another_image).should == "doesn't have the correct MIME-type. It needs to be 'how/special', but was 'wrong/type'"
+      end
+
+      it "should include standard extra options like 'if' on mime type validation" do
+        @item.should_receive(:its_friday).and_return(false)
+        @item.preview_image = "WRONG TYPE"
+        @item.should be_valid
+      end
+    
+      it "should require either :as or :in as an argument" do
+        lambda{
+          Item.class_eval do
+            validates_mime_type_of :preview_image
+          end
+        }.should raise_error(ArgumentError)
+      end
+
     end
 
   end

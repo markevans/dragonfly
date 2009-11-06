@@ -2,6 +2,8 @@ module Dragonfly
   module ActiveRecordExtensions
     module ClassMethods
 
+      include Validations
+
       def register_dragonfly_app(accessor_prefix, app)
         metaclass.class_eval do
     
