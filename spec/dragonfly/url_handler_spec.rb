@@ -96,6 +96,10 @@ describe Dragonfly::UrlHandler do
       @parameters.should_receive(:validate!)
       @url_handler.parameters_to_url(@parameters)
     end
+    it "should escape any non-url friendly characters except for '/'" do
+      parameters = Dragonfly::Parameters.new :uid => 'hello/u"u', :processing_method => 'm"m', :format => 'jpg'
+      @url_handler.parameters_to_url(parameters).should == '/hello/u%22u.jpg?m=m%22m'
+    end
   end
   
   describe "protecting from DOS attacks with SHA" do

@@ -53,7 +53,7 @@ module Dragonfly
         build_query(MAPPINGS[attribute] => parameters[attribute]) unless parameters[attribute].blank?
       end.compact.join('&')
       sha_string = "&#{MAPPINGS[:sha]}=#{sha_from_parameters(parameters)}" if protect_from_dos_attacks?
-      url = "#{path_prefix}/#{parameters.uid}.#{parameters.format}?#{query_string}#{sha_string}"
+      url = "#{path_prefix}/#{escape_except_for_slashes(parameters.uid)}.#{parameters.format}?#{query_string}#{sha_string}"
       url.sub!(/\?$/,'')
       url
     end
@@ -125,6 +125,10 @@ module Dragonfly
       else
         "#{prefix}=#{escape(value)}"
       end
+    end
+    
+    def escape_except_for_slashes(string)
+      string.split('/').map{|s| escape(s) }.join('/')
     end
     
   end
