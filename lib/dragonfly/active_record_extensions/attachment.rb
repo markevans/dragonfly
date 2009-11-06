@@ -97,7 +97,7 @@ module Dragonfly
       def magic_attributes
         parent_model.class.column_names.select { |name|
           name =~ /^#{attribute_name}_(.+)$/ &&
-            analyser.respond_to?($1) || $1 == 'size'
+            analyser.has_analysis_method?($1) || $1 == 'size'
         }
       end
       

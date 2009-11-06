@@ -63,7 +63,7 @@ describe Dragonfly::Analysis::Analyser do
       end
 
       it "should return all the analysis methods" do
-        @analyser.analysis_methods.should == ['pdf_type', 'width']
+        @analyser.analysis_methods.sort.should == ['mime_type', 'pdf_type', 'width']
       end
       
       it "should say if if has an analysis method (as a symbol)" do

@@ -39,11 +39,11 @@ module Dragonfly
     # allows methods from the analyser
     
     def methods(*args)
-      super + analyser.analysis_methods
+      (super + analyser.analysis_methods).uniq
     end
     
     def public_methods(*args)
-      super + analyser.analysis_methods
+      (super + analyser.analysis_methods).uniq
     end
     
     def respond_to?(method)

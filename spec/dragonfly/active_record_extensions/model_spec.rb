@@ -253,10 +253,11 @@ describe Item do
     
     before(:each) do
       @app = Dragonfly::App[:images]
-      analyser = @app.analyser
-      def analyser.some_analyser_method(temp_object)
+      custom_analyser = Object.new
+      def custom_analyser.some_analyser_method(temp_object)
         "abc" + temp_object.data[0..0]
       end
+      @app.analyser.register(custom_analyser)
       ActiveRecord::Base.register_dragonfly_app(:image, @app)
       Item.class_eval do
         image_accessor :preview_image

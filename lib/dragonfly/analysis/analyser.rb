@@ -22,7 +22,7 @@ module Dragonfly
       end
       
       def analysis_methods
-        analysers.map{|a| a.public_methods(false) }.flatten.uniq.reject{|a| a == 'mime_type'}
+        analysers.map{|a| a.public_methods(false) }.flatten.uniq
       end
       
       def has_analysis_method?(method)
