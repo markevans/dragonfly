@@ -21,6 +21,14 @@ module Dragonfly
         nil
       end
       
+      def analysis_methods
+        analysers.map{|a| a.public_methods(false) }.flatten.uniq.reject{|a| a == 'mime_type'}
+      end
+      
+      def has_analysis_method?(method)
+        analysis_methods.include?(method.to_s)
+      end
+      
       private
       
       attr_reader :analysers

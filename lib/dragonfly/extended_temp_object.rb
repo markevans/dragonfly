@@ -35,14 +35,18 @@ module Dragonfly
       self
     end
     
+    def public_methods
+      super + analyser.analysis_methods
+    end
+    
     def respond_to?(method)
-      super || analyser.respond_to?(method)
+      super || analyser.has_analysis_method?(method)
     end
 
     private
     
     def method_missing(method, *args, &block)
-      if analyser.respond_to?(method)
+      if analyser.has_analysis_method?(method)
         # Define the method so we don't use method_missing next time
         instance_var = "@#{method}"
         self.class.class_eval do

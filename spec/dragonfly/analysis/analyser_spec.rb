@@ -2,6 +2,10 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 class ImageAnalyser < Dragonfly::Analysis::Base
 
+  def width(temp_object)
+    4
+  end
+
   def mime_type(temp_object)
     return 'image/fart' if temp_object.data == 'THIS IS AN IMAGE'
     return 'image/pdf' if temp_object.data == 'THIS IS A PDF'
@@ -10,6 +14,10 @@ class ImageAnalyser < Dragonfly::Analysis::Base
 end
 
 class PdfAnalyser < Dragonfly::Analysis::Base
+
+  def pdf_type(temp_object)
+    'egg'
+  end
 
   def mime_type(temp_object)
     'application/pdf' if temp_object.data == 'THIS IS A PDF'
@@ -27,8 +35,16 @@ describe Dragonfly::Analysis::Analyser do
       @pdf = Dragonfly::TempObject.new("THIS IS A PDF")
     end
     
-    it "should return nil when no modules have been registered" do
-      @analyser.mime_type(@image).should be_nil
+    describe "when no analysers have been registered" do
+
+      it "should return nil when no modules have been registered" do
+        @analyser.mime_type(@image).should be_nil
+      end
+
+      it "should should return analysis methods as an empty array" do
+        @analyser.analysis_methods.should == []
+      end
+      
     end
     
     describe "after registering a number of modules" do
@@ -44,6 +60,18 @@ describe Dragonfly::Analysis::Analyser do
     
       it "should override the first registered modules's value with the second, when they both return non-nil" do
         @analyser.mime_type(@pdf).should == 'application/pdf'
+      end
+
+      it "should return all the analysis methods" do
+        @analyser.analysis_methods.should == ['pdf_type', 'width']
+      end
+      
+      it "should say if if has an analysis method (as a symbol)" do
+        @analyser.has_analysis_method?('pdf_type').should be_true
+      end
+
+      it "should say if if has an analysis method (as a string)" do
+        @analyser.has_analysis_method?(:pdf_type).should be_true
       end
 
     end
