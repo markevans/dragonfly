@@ -13,7 +13,7 @@ APP = Dragonfly::App[:images]
 APP.configure do |c|
   c.datastore = Dragonfly::DataStorage::FileDataStore.new
   c.analyser do |a|
-    a.register(Dragonfly::Analysis::RMagickAnalyser)
+    a.register(Dragonfly::Analysis::RMagickAnalyser.new)
   end
   c.processor do |p|
     p.register(Dragonfly::Processing::RMagickProcessor)
