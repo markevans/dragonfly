@@ -33,6 +33,13 @@ module Dragonfly
       
       attr_reader :analysers
 
+      def method_missing(meth, *args)
+        analysers.each do |analyser|
+          return analyser.send(meth, *args) if analyser.respond_to?(meth)
+        end
+        super
+      end
+      
     end
   end
 end

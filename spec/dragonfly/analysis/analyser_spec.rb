@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 class ImageAnalyser < Dragonfly::Analysis::Base
 
   def width(temp_object)
-    4
+    temp_object.data.length
   end
 
   def mime_type(temp_object)
@@ -72,6 +72,10 @@ describe Dragonfly::Analysis::Analyser do
 
       it "should say if if has an analysis method (as a string)" do
         @analyser.has_analysis_method?(:pdf_type).should be_true
+      end
+
+      it "should delegate the call of a method to the registered analysers" do
+        @analyser.width(@image).should == 16
       end
 
     end
