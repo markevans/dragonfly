@@ -7,6 +7,7 @@ module Dragonfly
     # Exceptions
     class IncorrectSHA < RuntimeError; end
     class SHANotGiven < RuntimeError; end
+    class UnknownUrl < RuntimeError; end
     
     include Rack::Utils
     include Configurable
@@ -34,6 +35,7 @@ module Dragonfly
     end
 
     def url_to_parameters(path, query_string)
+      validate_format!(path)
       query = parse_nested_query(query_string)
       attributes = {
         :uid => extract_uid(path, query),
@@ -129,6 +131,10 @@ module Dragonfly
     
     def escape_except_for_slashes(string)
       string.split('/').map{|s| escape(s) }.join('/')
+    end
+    
+    def validate_format!(path)
+      raise UnknownUrl, "path '#{path}' not found" unless path.gsub('/','') =~ /^.+\..+$/
     end
     
   end

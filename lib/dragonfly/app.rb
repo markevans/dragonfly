@@ -61,6 +61,8 @@ module Dragonfly
         }, temp_object]
     rescue UrlHandler::IncorrectSHA, UrlHandler::SHANotGiven => e
       [400, {"Content-Type" => "text/plain"}, [e.message]]
+    rescue UrlHandler::UnknownUrl, DataStorage::DataNotFound => e
+      [404, {"Content-Type" => 'text/plain'}, [e.message]]
     end
 
     def fetch(uid, *args)

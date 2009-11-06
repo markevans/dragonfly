@@ -3,6 +3,10 @@ require 'rack/mock'
 
 describe Dragonfly::App do
 
+  def make_request(app, url)
+    Rack::MockRequest.new(app).get(url)
+  end
+
   describe ".instance" do
     
     it "should create a new instance if it didn't already exist" do
@@ -27,6 +31,39 @@ describe Dragonfly::App do
         Dragonfly::App.new
       }.should raise_error(NoMethodError)
     end
+  end
+  
+  describe "errors" do
+
+    before(:each) do
+      @app = Dragonfly::App[:images]
+    end
+
+    it "should return 400 if UrlHandler::IncorrectSHA is raised" do
+      @app.url_handler.should_receive(:url_to_parameters).and_raise(Dragonfly::UrlHandler::IncorrectSHA)
+      response = make_request(@app, '/some_uid.png?s=sadfas')
+      response.status.should == 400
+    end
+    
+    it "should return 400 if UrlHandler::SHANotGiven is raised" do
+      @app.url_handler.should_receive(:url_to_parameters).and_raise(Dragonfly::UrlHandler::SHANotGiven)
+      response = make_request(@app, '/some_uid.png?s=asdfghsg')
+      response.status.should == 400
+    end
+    
+    it "should return 404 if url handler raises an unknown url exception" do
+      @app.url_handler.should_receive(:url_to_parameters).and_raise(Dragonfly::UrlHandler::UnknownUrl)
+      response = make_request(@app, '/')
+      response.status.should == 404
+    end
+
+    it "should return 404 if the datastore raises data not found" do
+      @app.url_handler.protect_from_dos_attacks = false
+      @app.should_receive(:fetch).and_raise(Dragonfly::DataStorage::DataNotFound)
+      response = make_request(@app, 'hello.png')
+      response.status.should == 404
+    end
+
   end
 
 end

@@ -60,6 +60,24 @@ describe Dragonfly::UrlHandler do
       url_handler.url_to_parameters(@path, @query_string)
     end
     
+    it "should raise a 404 error if the path doesn't have an extension" do
+      lambda{
+        @url_handler.url_to_parameters('hello', @query_string)
+      }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+    end
+
+    it "should raise a 404 error if the path doesn't have a uid bit" do
+      lambda{
+        @url_handler.url_to_parameters('.hello', @query_string)
+      }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+    end
+    
+    it "should raise a 404 error if the path is only slashes" do
+      lambda{
+        @url_handler.url_to_parameters('/./', @query_string)
+      }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+    end
+    
   end
   
   describe "forming a url from parameters" do
