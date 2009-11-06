@@ -1,4 +1,5 @@
 require 'rmagick'
+require 'mime/types'
 
 module Dragonfly
   module Analysis
@@ -14,7 +15,8 @@ module Dragonfly
       end
       
       def mime_type(image)
-        MimeTypes.mime_type_for(rmagick_image(image).format)
+        MIME::Types.type_for(rmagick_image(image).format).first.to_s
+      rescue Magick::ImageMagickError
       end
       
       def depth(image)
@@ -29,7 +31,7 @@ module Dragonfly
       private
       
       def rmagick_image(image)
-        Magick::ImageList.new(image.path).first
+        Magick::Image.from_blob(image.data).first
       end
       
     end
