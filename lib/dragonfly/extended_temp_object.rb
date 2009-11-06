@@ -35,7 +35,14 @@ module Dragonfly
       self
     end
     
-    def public_methods
+    # Modify methods, public_methods and respond_to?, because method_missing
+    # allows methods from the analyser
+    
+    def methods(*args)
+      super + analyser.analysis_methods
+    end
+    
+    def public_methods(*args)
       super + analyser.analysis_methods
     end
     
