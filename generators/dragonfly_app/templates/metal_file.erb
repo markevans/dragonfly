@@ -3,52 +3,13 @@ require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Ra
 require 'dragonfly'
 
 # Configuration of the Dragonfly App
+Dragonfly::App[:<%= app_name %>].configure_with(RMagickConfiguration)
 Dragonfly::App[:<%= app_name %>].configure do |c|
   c.log = RAILS_DEFAULT_LOGGER
-  c.datastore = Dragonfly::DataStorage::FileDataStore.new
   c.datastore.configure do |d|
     d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
   end
-  c.analyser do |a|
-    a.register(Dragonfly::Analysis::RMagickAnalyser)
-  end
-  c.processor do |p|
-    p.register(Dragonfly::Processing::RMagickProcessor)
-    p.register(<%= custom_processor_name %>)
-  end
-  c.encoder = Dragonfly::Encoding::RMagickEncoder.new
-  c.parameters do |p|
-    p.default_format = :jpg
-    # Standard resizing like '30x40!', etc.
-    p.add_shortcut(/^\d*x\d*[><%^!]?$|^\d+@$/) do |geometry|
-      {
-        :processing_method => :resize,
-        :processing_options => {:geometry => geometry}
-      }
-    end
-    # Cropped resizing like '20x50#ne'
-    p.add_shortcut(/^(\d+)x(\d+)#(\w{1,2})?/) do |geometry, match_data|
-      {
-        :processing_method => :resize_and_crop,
-        :processing_options => {:width => match_data[1], :height => match_data[2], :gravity => match_data[3]}
-      }
-    end
-    # Cropping like '30x30+10+10ne'
-    p.add_shortcut(/^(\d+)x(\d+)([+-]\d+)([+-]\d+)(\w{1,2})?/) do |geometry, match_data|
-      {
-        :processing_method => :crop,
-        :processing_options => {
-          :width => match_data[1],
-          :height => match_data[2],
-          :x => match_data[3],
-          :y => match_data[4],
-          :gravity => match_data[5]
-        }
-      }
-    end
-  end
   c.url_handler do |u|
-    u.protect_from_dos_attacks = true
     u.secret = '<%= random_secret %>'
     u.path_prefix = '/<%= path_prefix %>'
   end
