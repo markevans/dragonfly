@@ -10,16 +10,7 @@ require File.dirname(__FILE__) + '/../../spec/image_matchers.rb'
 TEMP_IMAGES = {}
 
 APP = Dragonfly::App[:images]
-APP.configure do |c|
-  c.datastore = Dragonfly::DataStorage::FileDataStore.new
-  c.analyser do |a|
-    a.register(Dragonfly::Analysis::RMagickAnalyser.new)
-  end
-  c.processor do |p|
-    p.register(Dragonfly::Processing::RMagickProcessor)
-  end
-  c.encoder = Dragonfly::Encoding::RMagickEncoder.new
-end
+APP.configure_with(Dragonfly::RMagickConfiguration)
 
 SAMPLE_IMAGE_PATH = File.dirname(__FILE__)+'/../../samples/beach.png'
 

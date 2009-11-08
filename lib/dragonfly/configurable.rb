@@ -31,6 +31,10 @@ module Dragonfly
         yield ConfigurationProxy.new(self)
       end
     
+      def configure_with(configurer)
+        configurer.apply_configuration(self)
+      end
+    
       def configuration
         configuration_hash.dup
       end
