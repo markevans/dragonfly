@@ -30,6 +30,13 @@ describe Dragonfly::UrlHandler do
       parameters.uid.should == '2009/some_image'
     end
     
+    it "should raise an UnknownUrl error if the url doesn't have the path prefix" do
+      @url_handler.path_prefix = '/images'
+      lambda{
+        parameters = @url_handler.url_to_parameters('/wrongprefix/2009/some_image.jpg', @query_string)
+      }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+    end
+    
     it "should correctly extract the format" do
       @parameters.format.should == 'jpg'
     end
@@ -60,22 +67,28 @@ describe Dragonfly::UrlHandler do
       url_handler.url_to_parameters(@path, @query_string)
     end
     
-    it "should raise a 404 error if the path doesn't have an extension" do
+    it "should raise an UnknownUrl error if the path doesn't have an extension" do
       lambda{
         @url_handler.url_to_parameters('hello', @query_string)
       }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
     end
 
-    it "should raise a 404 error if the path doesn't have a uid bit" do
+    it "should raise an UnknownUrl error if the path doesn't have a uid bit" do
       lambda{
         @url_handler.url_to_parameters('.hello', @query_string)
       }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
     end
     
-    it "should raise a 404 error if the path is only slashes" do
+    it "should raise an UnknownUrl error if the path is only slashes" do
       lambda{
         @url_handler.url_to_parameters('/./', @query_string)
       }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+    end
+    
+    it "should set most of the path as the uid if there is more than one dot" do
+      parameters = @url_handler.url_to_parameters('hello.old.bean', @query_string)
+      parameters.uid.should == 'hello.old'
+      parameters.format.should == 'bean'
     end
     
   end

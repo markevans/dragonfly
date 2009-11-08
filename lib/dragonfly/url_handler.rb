@@ -36,6 +36,7 @@ module Dragonfly
 
     def url_to_parameters(path, query_string)
       validate_format!(path)
+      path = remove_path_prefix(path)
       query = parse_nested_query(query_string)
       attributes = {
         :uid => extract_uid(path, query),
@@ -62,8 +63,12 @@ module Dragonfly
 
     private
 
+    def remove_path_prefix(path)
+      path.sub(path_prefix, '')
+    end
+
     def extract_uid(path, query)
-      path.sub(path_prefix, '').sub(/^\//,'').split('.').first
+      path.sub(/^\//,'').sub(/\.[^.]+$/, '')
     end
   
     def extract_processing_method(path, query)
@@ -134,7 +139,9 @@ module Dragonfly
     end
     
     def validate_format!(path)
-      raise UnknownUrl, "path '#{path}' not found" unless path.gsub('/','') =~ /^.+\..+$/
+      if path !~ /^#{path_prefix}/ || path !~ /^.*[^\/].*\..*[^\/].*$/
+        raise UnknownUrl, "path '#{path}' not found" 
+      end
     end
     
   end
