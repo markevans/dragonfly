@@ -50,9 +50,21 @@ describe Dragonfly::DataStorage::FileDataStore do
       @data_store.store(@temp_object)
     end
 
-    it "should use the basename of the temp_object name if it exists" do
-      @temp_object.name = 'harry.png'
-      it_should_write_to_file("#{@file_pattern_prefix}_harry", @temp_object)
+    it "should use the temp_object name if it exists" do
+      @temp_object.name = 'hello'
+      it_should_write_to_file("#{@file_pattern_prefix}_hello", @temp_object)
+      @data_store.store(@temp_object)
+    end
+    
+    it "should use the basename (all but part after last dot) of the temp_object name if it exists" do
+      @temp_object.name = 'hello.you.png'
+      it_should_write_to_file("#{@file_pattern_prefix}_hello.you", @temp_object)
+      @data_store.store(@temp_object)
+    end
+
+    it "should use the default file suffix if the temp_object name is blank" do
+      @temp_object.name = ''
+      it_should_write_to_file("#{@file_pattern_prefix}_file", @temp_object)
       @data_store.store(@temp_object)
     end
 

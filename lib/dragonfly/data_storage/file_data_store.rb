@@ -9,7 +9,11 @@ module Dragonfly
 
       def store(temp_object)
 
-        suffix = temp_object.basename || 'file'
+        suffix = if temp_object.name.blank?
+          'file'
+        else
+          temp_object.name.sub(/\.[^.]*?$/, '')
+        end
         relative_path = relative_storage_path(suffix)
 
         begin
