@@ -9,7 +9,7 @@ begin
     s.homepage = "http://github.com/markevans/dragonfly"
     s.description = "To do: description"
     s.authors = ["Mark Evans"]
-    s.add_dependency('mime-types')
+    s.add_dependency('rack')
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
