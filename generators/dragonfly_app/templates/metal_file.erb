@@ -3,7 +3,7 @@ require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Ra
 require 'dragonfly'
 
 # Configuration of the Dragonfly App
-Dragonfly::App[:<%= app_name %>].configure_with(RMagickConfiguration)
+Dragonfly::App[:<%= app_name %>].configure_with(Dragonfly::RMagickConfiguration)
 Dragonfly::App[:<%= app_name %>].configure do |c|
   c.log = RAILS_DEFAULT_LOGGER
   c.datastore.configure do |d|
@@ -27,8 +27,6 @@ app = Dragonfly::App[:<%= app_name %>]
   #   :metastore   => 'file:/var/cache/rack/meta',
   #   :entitystore => 'file:/var/cache/rack/body'
   
-  map app.url_handler.path_prefix do
-    run app
-  end
+  run app
   
 end
