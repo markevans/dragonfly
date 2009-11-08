@@ -107,6 +107,14 @@ describe Dragonfly::Processing::RMagickProcessor do
       image1.should_not == image2
     end
     
+    it "should clip bits of the image outside of the requested crop area when not nw gravity" do
+      # Rmagick was previously throwing an error when the cropping area was outside the image size, when
+      # using a gravity other than nw
+      image = @processor.crop(@image, :width => '500', :height => '1000', :x => '100', :y => '200', :gravity => 'se')
+      image.should have_width(180)
+      image.should have_height(155)
+    end
+    
   end
   
   describe "resize_and_crop" do

@@ -24,7 +24,14 @@ module Dragonfly
         width   = opts[:width].to_i
         height  = opts[:height].to_i
 
-        rmagick_image(temp_object).crop(gravity, x, y, width, height).to_blob
+        image = rmagick_image(temp_object)
+
+        # RMagick throws an error if the cropping area is bigger than the image,
+        # when the gravity is something other than nw
+        width  = image.columns - x if x + width  > image.columns
+        height = image.rows    - y if y + height > image.rows
+
+        image.crop(gravity, x, y, width, height).to_blob
       end
       
       def resize(temp_object, opts={})
