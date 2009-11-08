@@ -9,7 +9,7 @@ describe Dragonfly::DataStorage::FileDataStore do
     
     # Set 'now' to a date in the past
     Time.stub!(:now).and_return Time.mktime(1984,"may",4,14,28,1)
-    @file_pattern_prefix_without_root = '1984/05/04/14_28_01'
+    @file_pattern_prefix_without_root = '1984/05/04/142801'
     @file_pattern_prefix = "#{@data_store.root_path}/#{@file_pattern_prefix_without_root}"
   end
   

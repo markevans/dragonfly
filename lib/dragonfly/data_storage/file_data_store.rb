@@ -10,7 +10,7 @@ module Dragonfly
       def store(temp_object)
 
         suffix = temp_object.basename || 'file'
-        relative_path = "#{Time.now.strftime '%Y/%m/%d/%H_%M_%S'}_#{suffix}"
+        relative_path = relative_storage_path(suffix)
 
         begin
           while File.exist?(storage_path = absolute_storage_path(relative_path))
@@ -48,6 +48,10 @@ module Dragonfly
     
       def increment_path(path)
         path.sub(/(_(\d+))?$/){ $1 ? "_#{$2.to_i+1}" : '_2' }
+      end
+
+      def relative_storage_path(suffix)
+        "#{Time.now.strftime '%Y/%m/%d/%H%M%S'}_#{suffix}"
       end
       
       def absolute_storage_path(relative_path)
