@@ -1,5 +1,4 @@
 require 'dragonfly'
-require 'rack/cache'
 
 ### The dragonfly app ###
 
@@ -14,20 +13,6 @@ app.configure do |c|
     u.protect_from_dos_attacks = false
     u.path_prefix = '/images'
   end
-end
-
-
-### Put rack-cache in front of it ###
-
-metal = Rack::Builder.new do
-
-  use Rack::Cache,
-    :verbose     => true,
-    :metastore   => 'file:/var/cache/rack/meta',
-    :entitystore => 'file:/var/cache/rack/body'
-  
-  run app
-  
 end
 
 ### Extend active record ###
