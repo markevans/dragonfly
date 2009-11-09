@@ -4,7 +4,6 @@ module Dragonfly
   
   def RMagickConfiguration.apply_configuration(app)
     app.configure do |c|
-      c.datastore = DataStorage::FileDataStore.new
       c.analyser do |a|
         a.register(Analysis::RMagickAnalyser.new)
       end
