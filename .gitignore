@@ -5,3 +5,5 @@ coverage
 pkg
 dragonfly.gemspec
 dragonfly-rails.gemspec
+.yardoc
+doc
