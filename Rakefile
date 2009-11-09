@@ -9,6 +9,7 @@ begin
     s.homepage = "http://github.com/markevans/dragonfly"
     s.description = "To do: description"
     s.authors = ["Mark Evans"]
+    s.add_dependency('rack')
   end
   Jeweler::Tasks.new do |s|
     s.name = "dragonfly-rails"
@@ -22,6 +23,7 @@ begin
     s.extra_rdoc_files = []
     s.add_dependency('dragonfly')
     s.add_dependency('rack')
+    s.add_dependency('rack-cache')
     s.add_dependency('mime-types')
     s.add_dependency('rmagick')
   end
