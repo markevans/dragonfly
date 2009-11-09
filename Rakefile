@@ -4,19 +4,18 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
     s.name = "dragonfly"
-    s.summary = %Q{To do: summary}
+    s.summary = %Q{dragonfly is an on-the-fly processing/encoding framework written as a Rack application.
+    It includes an extension for Ruby on Rails to enable easy image handling}
     s.email = "mark@new-bamboo.co.uk"
     s.homepage = "http://github.com/markevans/dragonfly"
-    s.description = "To do: description"
     s.authors = ["Mark Evans"]
     s.add_dependency('rack')
   end
   Jeweler::Tasks.new do |s|
     s.name = "dragonfly-rails"
-    s.summary = %Q{To do: summary}
+    s.summary = %Q{dragonfly-rails has no code of its own - it simply gathers dependencies for using dragonfly in rails}
     s.email = "mark@new-bamboo.co.uk"
     s.homepage = "http://github.com/markevans/dragonfly"
-    s.description = "To do: description"
     s.authors = ["Mark Evans"]
     s.files = []
     s.test_files = []
