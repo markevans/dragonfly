@@ -1,8 +1,9 @@
 require 'dragonfly'
 require 'rack/cache'
 
-app = Dragonfly::App[:images]
+### The dragonfly app ###
 
+app = Dragonfly::App[:images]
 app.configure_with(Dragonfly::RMagickConfiguration)
 app.configure do |c|
   c.log = RAILS_DEFAULT_LOGGER
@@ -15,6 +16,9 @@ app.configure do |c|
   end
 end
 
+
+### Put rack-cache in front of it ###
+
 metal = Rack::Builder.new do
 
   use Rack::Cache,
@@ -25,3 +29,7 @@ metal = Rack::Builder.new do
   run app
   
 end
+
+### Extend active record ###
+ActiveRecord::Base.extend Dragonfly::ActiveRecordExtensions
+ActiveRecord::Base.register_dragonfly_app(:image, app)
