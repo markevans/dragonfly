@@ -4,3 +4,4 @@ coverage
 **.sqlite3
 pkg
 dragonfly.gemspec
+dragonfly-rails.gemspec

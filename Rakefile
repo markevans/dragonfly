@@ -9,7 +9,21 @@ begin
     s.homepage = "http://github.com/markevans/dragonfly"
     s.description = "To do: description"
     s.authors = ["Mark Evans"]
+  end
+  Jeweler::Tasks.new do |s|
+    s.name = "dragonfly-rails"
+    s.summary = %Q{To do: summary}
+    s.email = "mark@new-bamboo.co.uk"
+    s.homepage = "http://github.com/markevans/dragonfly"
+    s.description = "To do: description"
+    s.authors = ["Mark Evans"]
+    s.files = []
+    s.test_files = []
+    s.extra_rdoc_files = []
+    s.add_dependency('dragonfly')
     s.add_dependency('rack')
+    s.add_dependency('mime-types')
+    s.add_dependency('rmagick')
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
