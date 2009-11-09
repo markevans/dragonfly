@@ -7,7 +7,7 @@ module Dragonfly
       
       def encode(image, format, encoding={})
         encoded_image = Magick::Image.from_blob(image.data).first
-        encoded_image.format = format
+        encoded_image.format = format.to_s
         encoded_image.to_blob
       end
       
