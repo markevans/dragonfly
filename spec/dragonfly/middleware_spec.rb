@@ -8,9 +8,8 @@ describe Dragonfly::Middleware do
   end
   
   before(:each) do
-    @middleware = middleware = Dragonfly::Middleware.new(:images)
     @stack = Rack::Builder.new do
-      use middleware
+      use Dragonfly::Middleware, :images
       run lambda{|env| [200, {"Content-Type" => "text/html"}, ["#{env['PATH_INFO']}, #{env['QUERY_STRING']}"]] }
     end
   end
