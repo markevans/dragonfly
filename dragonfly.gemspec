@@ -23,6 +23,8 @@ Gem::Specification.new do |s|
      "VERSION",
      "config.rb",
      "config.ru",
+     "dragonfly-rails.gemspec",
+     "dragonfly.gemspec",
      "features/dragonfly.feature",
      "features/steps/common_steps.rb",
      "features/steps/dragonfly_steps.rb",
