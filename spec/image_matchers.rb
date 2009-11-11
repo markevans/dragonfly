@@ -1,4 +1,8 @@
-def image_properties(data)
+def image_properties(image)
+  data = case image
+  when Dragonfly::TempObject then image.data
+  when String then image
+  end
   tempfile = Tempfile.new('image')
   tempfile.write(data)
   tempfile.close

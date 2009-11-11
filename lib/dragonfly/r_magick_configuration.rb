@@ -40,6 +40,18 @@ module Dragonfly
             }
           }
         end
+        p.add_shortcut(:rotate, Numeric) do |_, amount|
+          {
+            :processing_method => :rotate,
+            :processing_options => {:amount => amount}
+          }
+        end
+        p.add_shortcut(:rotate, Numeric, Hash) do |_, amount, options|
+          {
+            :processing_method => :rotate,
+            :processing_options => options.merge({:amount => amount})
+          }
+        end
       end
     end
   end

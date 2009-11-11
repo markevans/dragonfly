@@ -145,4 +145,32 @@ describe Dragonfly::Processing::RMagickProcessor do
     
   end
   
+  describe "rotate" do
+    
+    it "should rotate by 90 degrees" do
+      image = @processor.rotate(@image, :amount => '90')
+      image.should have_width(355)
+      image.should have_height(280)
+    end
+    
+    it "should not rotate given a larger height and the '>' qualifier" do
+      image = @processor.rotate(@image, :amount => 90, :qualifier => '>')
+      image.should have_width(280)
+      image.should have_height(355)
+    end
+    
+    it "should rotate given a larger height and the '<' qualifier" do
+      image = @processor.rotate(@image, :amount => 90, :qualifier => '<')
+      image.should have_width(355)
+      image.should have_height(280)
+    end
+    
+    it "should do nothing if no amount given" do
+      image = @processor.rotate(@image)
+      image.should have_width(280)
+      image.should have_height(355)
+    end
+    
+  end
+  
 end
