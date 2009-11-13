@@ -36,6 +36,7 @@ module Dragonfly
           raise InvalidShortcut, "No shortcut was found matching (#{args.map{|a| a.inspect }.join(', ')})"
         end
       end
+      configuration_method :hash_from_shortcut
       
       def from_shortcut(*args)
         new(hash_from_shortcut(*args))
