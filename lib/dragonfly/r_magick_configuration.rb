@@ -14,6 +14,9 @@ module Dragonfly
       c.parameters do |p|
         p.default_format = :jpg
         # Standard resizing like '30x40!', etc.
+        p.add_shortcut(Symbol) do |format|
+          {:format => format}
+        end
         p.add_shortcut(/^\d*x\d*[><%^!]?$|^\d+@$/) do |geometry, match_data|
           {
             :processing_method => :resize,
@@ -40,17 +43,17 @@ module Dragonfly
             }
           }
         end
+        p.add_shortcut(/^\d*x/, Symbol) do |geometry, format|
+          p.hash_from_shortcut(geometry).merge(:format => format)
+        end
         p.add_shortcut(:rotate, Numeric) do |_, amount|
           {
             :processing_method => :rotate,
-            :processing_options => {:amount => amount}
+            :processing_options => {:amount => amount, :background_colour => '#0000'}
           }
         end
-        p.add_shortcut(:rotate, Numeric, Hash) do |_, amount, options|
-          {
-            :processing_method => :rotate,
-            :processing_options => options.merge({:amount => amount})
-          }
+        p.add_shortcut(:rotate, Numeric, Symbol) do |a, b, format|
+          p.hash_from_shortcut(a,b).merge(:format => format)
         end
       end
     end
