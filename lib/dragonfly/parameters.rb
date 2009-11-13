@@ -27,14 +27,18 @@ module Dragonfly
       end
       configuration_method :add_shortcut
       
-      def from_shortcut(*args)
+      def hash_from_shortcut(*args)
         if attributes = matching_simple_shortcut(args)
-          new(attributes)
+          attributes
         elsif attributes = matching_block_shortcut(args)
-          new(attributes)
+          attributes
         else
           raise InvalidShortcut, "No shortcut was found matching (#{args.map{|a| a.inspect }.join(', ')})"
         end
+      end
+      
+      def from_shortcut(*args)
+        new(hash_from_shortcut(*args))
       end
       
       def from_args(*args)

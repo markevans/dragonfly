@@ -168,12 +168,12 @@ describe Dragonfly::Parameters do
         :encoding => {:doogie => :howser}
       }
       @parameters_class.add_shortcut(:doobie, attributes)
-      @parameters_class.from_shortcut(:doobie).should == Dragonfly::Parameters.new(attributes)
+      @parameters_class.hash_from_shortcut(:doobie).should == attributes
     end
     
     it "should raise an error if the shortcut doesn't exist" do
       lambda{
-        @parameters_class.from_shortcut(:idontexist)
+        @parameters_class.hash_from_shortcut(:idontexist)
       }.should raise_error(Dragonfly::Parameters::InvalidShortcut)
     end
     
@@ -186,19 +186,18 @@ describe Dragonfly::Parameters do
       end
       
       it "should allow for more complex shortcuts by using a block and matching args" do
-        parameters = Dragonfly::Parameters.new(:processing_method => 'hellothere', :format => :tif)
-        @parameters_class.from_shortcut('hellothere', :tif).should == parameters
+        @parameters_class.hash_from_shortcut('hellothere', :tif).should == {:processing_method => 'hellothere', :format => :tif}
       end
 
       it "should raise an error if the shortcut doesn't match properly" do
         lambda{
-          @parameters_class.from_shortcut('hellothere', 'tif')
+          @parameters_class.hash_from_shortcut('hellothere', 'tif')
         }.should raise_error(Dragonfly::Parameters::InvalidShortcut)
       end
       
       it "should raise an error if the shortcut matches but has the wrong number of args" do
         lambda{
-          @parameters_class.from_shortcut('hellothere', :tif, 'YO')
+          @parameters_class.hash_from_shortcut('hellothere', :tif, 'YO')
         }.should raise_error(Dragonfly::Parameters::InvalidShortcut)
       end
 
@@ -210,12 +209,21 @@ describe Dragonfly::Parameters do
         @parameters_class.add_shortcut(/^hello(.*)$/) do |arg, match_data|
           {:processing_options => {:arg => arg, :match_data => match_data}}
         end
-        processing_options = @parameters_class.from_shortcut('hellothere').processing_options
+        processing_options = @parameters_class.hash_from_shortcut('hellothere')[:processing_options]
         processing_options[:arg].should == 'hellothere'
         processing_options[:match_data].should be_a(MatchData)
         processing_options[:match_data][1].should == 'there'
       end
       
+    end
+    
+    describe ".from_shortcut" do
+      it "should just be the parameters equivalent of 'hash_from_shortcut'" do
+        @parameters_class.add_shortcut(/^hello.*$/, Symbol) do |processing_method, format, matches|
+          {:processing_method => processing_method, :format => format}
+        end
+        @parameters_class.from_shortcut('hellothere', :tif).should == @parameters_class.new(@parameters_class.hash_from_shortcut('hellothere', :tif))
+      end
     end
     
   end
