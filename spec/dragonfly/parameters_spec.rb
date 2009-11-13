@@ -201,6 +201,13 @@ describe Dragonfly::Parameters do
         }.should raise_error(Dragonfly::Parameters::InvalidShortcut)
       end
 
+      it "should let later shortcuts have priority over earlier ones" do
+        @parameters_class.add_shortcut(/hello/, :tif) do |a, b|
+          {:processing_method => :bumble}
+        end
+        @parameters_class.hash_from_shortcut('hellothere', :tif).should == {:processing_method => :bumble}
+      end
+
     end
     
     describe "single regexp shortcuts" do

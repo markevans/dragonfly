@@ -19,7 +19,7 @@ module Dragonfly
       
       def add_shortcut(*args, &block)
         if block
-          block_shortcuts_of_length(args.length) << [args, block]
+          block_shortcuts_of_length(args.length).unshift([args, block])
         else
           shortcut_name, attributes = args
           simple_shortcuts[shortcut_name] = attributes
