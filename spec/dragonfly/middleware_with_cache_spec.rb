@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/shared_middleware_spec'
 
-describe Dragonfly::Middleware do
+describe Dragonfly::MiddlewareWithCache do
   
   before(:each) do
     @stack = Rack::Builder.new do
-      use Dragonfly::Middleware, :images
+      use Dragonfly::MiddlewareWithCache, :images
       run dummy_rack_app
     end
   end

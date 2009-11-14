@@ -10,9 +10,7 @@ For the lazy rails user
 In environment.rb:
 
     config.gem 'dragonfly-rails', :lib => 'dragonfly/rails/images'
-    config.middleware.use 'Dragonfly::Middleware', :images
-
-IMPORTANT: see 'Caching' below to add caching (recommended!)
+    config.middleware.use 'Dragonfly::MiddlewareWithCache', :images
 
 Migration:
 
@@ -38,6 +36,8 @@ Model:
       validates_mime_type_of :cover_image, :in => %w(image/jpeg image/png image/gif)
       
       image_accessor :cover_image            # This provides the reader/writer for cover_image
+      
+      image_accessor :some_other_image       # have as many as you like - each needs a xxxx_uid column as per migration above
     
     end
 
@@ -53,29 +53,11 @@ View (for uploading via a file field):
 View (to display):
 
     <%= image_tag @album.cover_image.url('400x200') %>
-    <%= image_tag @album.cover_image.url('100x100!') %>
+    <%= image_tag @album.cover_image.url('100x100!', :png) %>
     <%= image_tag @album.cover_image.url('100x100#') %>
-    <%= image_tag @album.cover_image.url('50x50+30+30sw') %>
+    <%= image_tag @album.cover_image.url('50x50+30+30sw', :tif) %>
+    <%= image_tag @album.cover_image.url(:rotate, 15) %>
     ...etc.
-
-
-Caching
--------
-
-All this processing and encoding on the fly is pretty expensive to perform on every page request.
-Thankfully, HTTP caching comes to the rescue.
-You could use any HTTP caching component such as Varnish, Squid, etc., but the quickest and easiest way is to use the excellent Rack::Cache, which should be adequate for most websites.
-
-In that case, rather than the above, your `environment.rb` should contain something like this:
-
-    config.gem 'dragonfly-rails', :lib => 'dragonfly/rails/images'
-    config.gem 'rack-cache', :lib => 'rack/cache'
-    config.middleware.use 'Rack::Cache',
-      :verbose     => true,
-      :metastore   => 'file:/var/cache/rack/meta',
-      :entitystore => 'file:/var/cache/rack/body'
-    config.middleware.use 'Dragonfly::Middleware', :images
-
 
 Using outside of rails, custom storage/processing/encoding/analysis, and more...
 ------------------------------------------------------------------------

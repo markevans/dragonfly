@@ -8,7 +8,7 @@ module Dragonfly
     end
     
     def call(env)
-      response = dragonfly_app.call(env)
+      response = endpoint.call(env)
       if response[0] == 404
         @app.call(env)
       else
@@ -18,7 +18,7 @@ module Dragonfly
     
     private
     
-    def dragonfly_app
+    def endpoint
       App[@dragonfly_app_name]
     end
     
