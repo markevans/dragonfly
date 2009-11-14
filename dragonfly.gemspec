@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2009-11-09}
+  s.date = %q{2009-11-14}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -51,11 +51,14 @@ Gem::Specification.new do |s|
      "lib/dragonfly/core_ext/object.rb",
      "lib/dragonfly/data_storage.rb",
      "lib/dragonfly/data_storage/base.rb",
+     "lib/dragonfly/data_storage/base64_data_store.rb",
      "lib/dragonfly/data_storage/file_data_store.rb",
+     "lib/dragonfly/data_storage/transparent_data_store.rb",
      "lib/dragonfly/encoding/base.rb",
      "lib/dragonfly/encoding/r_magick_encoder.rb",
      "lib/dragonfly/extended_temp_object.rb",
      "lib/dragonfly/middleware.rb",
+     "lib/dragonfly/middleware_with_cache.rb",
      "lib/dragonfly/parameters.rb",
      "lib/dragonfly/processing/processor.rb",
      "lib/dragonfly/processing/r_magick_processor.rb",
@@ -82,8 +85,10 @@ Gem::Specification.new do |s|
      "spec/dragonfly/data_storage/file_data_store_spec.rb",
      "spec/dragonfly/extended_temp_object_spec.rb",
      "spec/dragonfly/middleware_spec.rb",
+     "spec/dragonfly/middleware_with_cache_spec.rb",
      "spec/dragonfly/parameters_spec.rb",
      "spec/dragonfly/processing/rmagick_processor_spec.rb",
+     "spec/dragonfly/shared_middleware_spec.rb",
      "spec/dragonfly/temp_object_spec.rb",
      "spec/dragonfly/url_handler_spec.rb",
      "spec/dragonfly_spec.rb",
@@ -112,8 +117,10 @@ Gem::Specification.new do |s|
      "spec/dragonfly/data_storage/file_data_store_spec.rb",
      "spec/dragonfly/extended_temp_object_spec.rb",
      "spec/dragonfly/middleware_spec.rb",
+     "spec/dragonfly/middleware_with_cache_spec.rb",
      "spec/dragonfly/parameters_spec.rb",
      "spec/dragonfly/processing/rmagick_processor_spec.rb",
+     "spec/dragonfly/shared_middleware_spec.rb",
      "spec/dragonfly/temp_object_spec.rb",
      "spec/dragonfly/url_handler_spec.rb",
      "spec/dragonfly_spec.rb",
