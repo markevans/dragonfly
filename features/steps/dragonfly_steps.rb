@@ -1,7 +1,7 @@
 Given /^a stored image "(.+?)" with dimensions (\d+)x(\d+)$/ do |name, width, height|
   tempfile = Tempfile.new(name)
   `convert -resize #{width}x#{height}! #{SAMPLE_IMAGE_PATH} #{tempfile.path}`
-  temp_object = APP.temp_object_class.new(tempfile)
+  temp_object = APP.create_object(tempfile)
   uid = APP.datastore.store(temp_object)
   TEMP_IMAGES[name] = uid
 end
