@@ -83,8 +83,15 @@ module Dragonfly
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
     configurable_attr :cache_duration, 3600*24*365 # Defaults to 1 year
     
-    # The call method required by Rack to run
-    # see the Rack documentation for more details
+    # The call method required by Rack to run.
+    #
+    # @param env the Rack env hash
+    # @return [Array] a Rack response:
+    #   - 200 status if all ok
+    #   - 400 if url recognised but parameters incorrect
+    #   - 404 if url not recognised / data not found.
+    #
+    # See the Rack documentation for more details
     def call(env)
       parameters = url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])
       temp_object = fetch(parameters.uid, parameters)
