@@ -39,6 +39,12 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
+require 'yard'
+YARD::Rake::YardocTask.new do |t|
+  t.files   = ['lib/**/*.rb']
+  t.options = %w(--no-private)
+end
+
 require 'spec/rake/spectask'
 Spec::Rake::SpecTask.new(:spec) do |t|
   t.libs << 'lib' << 'spec'
