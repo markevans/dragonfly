@@ -66,4 +66,24 @@ describe Dragonfly::App do
 
   end
 
+  describe "mime types" do
+    before(:each) do
+      @app = Dragonfly::App[:images]
+      @app.url_handler.protect_from_dos_attacks = false
+      @app.fallback_mime_type = 'egg/heads'
+      @temp_object = Dragonfly::TempObject.new('GOOG')
+      @app.stub!(:fetch).and_return(@temp_object)
+    end
+    it "should use the temp object mime-type" do
+      @temp_object.should_receive(:mime_type).and_return 'my/type'
+      response = make_request(@app, 'hello.png')
+      response.headers['Content-Type'].should == 'my/type'
+    end
+    it "should use the app's fallback mime-type if the temp_object one isn't known" do
+      @temp_object.should_receive(:mime_type).and_return nil
+      response = make_request(@app, 'hello.png')
+      response.headers['Content-Type'].should == 'egg/heads'
+    end
+  end
+
 end

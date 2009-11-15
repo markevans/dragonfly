@@ -82,6 +82,7 @@ module Dragonfly
     configurable_attr :encoder do Encoding::Base.new end
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
     configurable_attr :cache_duration, 3600*24*365 # Defaults to 1 year
+    configurable_attr :fallback_mime_type, 'application/octet-stream'
     
     # The call method required by Rack to run.
     #
@@ -96,7 +97,7 @@ module Dragonfly
       parameters = url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])
       temp_object = fetch(parameters.uid, parameters)
       [200, {
-        "Content-Type" => temp_object.mime_type,
+        "Content-Type" => temp_object.mime_type || fallback_mime_type,
         "Content-Length" => temp_object.size.to_s,
         "ETag" => parameters.unique_signature,
         "Cache-Control" => "public, max-age=#{cache_duration}"
