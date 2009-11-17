@@ -16,7 +16,7 @@ module Dragonfly
   # Dragonfly::App[:images].parameters.default_format = :jpg
   # Dragonfly::App[:ocr].parameters.default_format = :tif
   #
-  # @example Configurable options:
+  # @example Example configuration options:
   #
   # Dragonfly::App[:images].configure do |c|
   #   c.datastore = MyEC2DataStore.new           # See DataStorage::Base for how to create a custom data store
@@ -25,6 +25,26 @@ module Dragonfly
   #   c.cache_duration = 3000                    # seconds
   # end
   #
+  # @example Configuration including nested items
+  #
+  # Dragonfly::App[:images].configure do |c|
+  #   # ...
+  #   c.datastore.configure do |d|    # configuration depends on which data store you use
+  #     # ...
+  #   end
+  #   c.analyser.configure do |a|     # see Analysis::Analyser
+  #     # ...
+  #   end
+  #   c.processor.configure do |p|    # see Processing::Processor
+  #     # ...
+  #   end
+  #   c.parameters.configure do |p|   # see Parameters (class methods)
+  #     # ...
+  #   end
+  #   c.url_handler.configure do |u|   # see UrlHandler
+  #     # ...
+  #   end
+  # end
   #
   class App
     
@@ -34,6 +54,7 @@ module Dragonfly
       private :new # Hide 'new' - need to use 'instance'
       
       # Get / create a Dragonfly App.
+      #
       # Rather than using 'new', use this method to create / refer to each app.
       #
       # @param [Symbol] name the name of the App
@@ -88,8 +109,11 @@ module Dragonfly
     #
     # @param env the Rack env hash
     # @return [Array] a Rack response:
+    #
     #   - 200 status if all ok
+    #
     #   - 400 if url recognised but parameters incorrect
+    #
     #   - 404 if url not recognised / data not found.
     #
     # See the Rack documentation for more details
@@ -109,6 +133,9 @@ module Dragonfly
     end
 
     # Fetch an object from the database and optionally transform
+    #
+    # Note that the arguments passed in to transform are as defined by the
+    # parameter shortcuts (see Parameter class methods)
     # @param [String] uid the string uid corresponding to the stored data object
     # @param [*args [optional]] shortcut_args the shortcut args for transforming the object 
     # @return [ExtendedTempObject] a temp_object holding the data
@@ -116,6 +143,7 @@ module Dragonfly
     # app = Dragonfly::App[:images]
     # app.fetch('abcd1234')             # returns a temp_object with exactly the data that was originally stored
     # app.fetch('abcd1234', '20x20!')   # returns a transformed temp_object, in this case with image data resized to 20x20
+    # @see Parameters
     def fetch(uid, *args)
       temp_object = temp_object_class.new(datastore.retrieve(uid))
       temp_object.transform(*args)
