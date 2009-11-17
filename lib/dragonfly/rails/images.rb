@@ -11,7 +11,7 @@ app.configure do |c|
   end
   c.url_handler do |u|
     u.protect_from_dos_attacks = false
-    u.path_prefix = '/images'
+    u.path_prefix = '/media'
   end
 end
 
