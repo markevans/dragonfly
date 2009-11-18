@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2009-11-14}
+  s.date = %q{2009-11-18}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
      "VERSION",
      "config.rb",
      "config.ru",
+     "docs.watchr",
      "dragonfly-rails.gemspec",
      "dragonfly.gemspec",
      "features/dragonfly.feature",
@@ -44,9 +45,9 @@ Gem::Specification.new do |s|
      "lib/dragonfly/active_record_extensions/validations.rb",
      "lib/dragonfly/analysis/analyser.rb",
      "lib/dragonfly/analysis/base.rb",
+     "lib/dragonfly/analysis/file_command_analyser.rb",
      "lib/dragonfly/analysis/r_magick_analyser.rb",
      "lib/dragonfly/app.rb",
-     "lib/dragonfly/app_configuration.rb",
      "lib/dragonfly/configurable.rb",
      "lib/dragonfly/core_ext/object.rb",
      "lib/dragonfly/data_storage.rb",
@@ -56,6 +57,7 @@ Gem::Specification.new do |s|
      "lib/dragonfly/data_storage/transparent_data_store.rb",
      "lib/dragonfly/encoding/base.rb",
      "lib/dragonfly/encoding/r_magick_encoder.rb",
+     "lib/dragonfly/encoding/transparent_encoder.rb",
      "lib/dragonfly/extended_temp_object.rb",
      "lib/dragonfly/middleware.rb",
      "lib/dragonfly/middleware_with_cache.rb",
