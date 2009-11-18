@@ -132,6 +132,13 @@ module Dragonfly
       [404, {"Content-Type" => 'text/plain'}, [e.message]]
     end
 
+    # Store an object, using the configured datastore
+    # @param [String, File, Tempfile, TempObject] object the object holding the data
+    # @return [String] the uid assigned to it
+    def store(object)
+      datastore.store(create_object(object))
+    end
+
     # Fetch an object from the database and optionally transform
     #
     # Note that the arguments passed in to transform are as defined by the
