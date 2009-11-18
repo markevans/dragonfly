@@ -35,6 +35,7 @@ module Dragonfly
     end
 
     def url_to_parameters(path, query_string)
+      path = unescape(path)
       validate_format!(path)
       path = remove_path_prefix(path)
       query = parse_nested_query(query_string)

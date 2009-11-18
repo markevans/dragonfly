@@ -91,6 +91,12 @@ describe Dragonfly::UrlHandler do
       parameters.format.should == 'bean'
     end
     
+    it "should unescape any url-escaped characters" do
+      parameters = @url_handler.url_to_parameters('hello%20bean.jpg', 'm=whats%20up')
+      parameters.uid.should == 'hello bean'
+      parameters.processing_method.should == 'whats up'
+    end
+    
   end
   
   describe "forming a url from parameters" do
