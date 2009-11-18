@@ -56,9 +56,9 @@ describe Dragonfly::DataStorage::FileDataStore do
       @data_store.store(@temp_object)
     end
     
-    it "should use the basename (all but part after last dot) of the temp_object name if it exists" do
+    it "should use the entire temp_object name including extension if it exists" do
       @temp_object.name = 'hello.you.png'
-      it_should_write_to_file("#{@file_pattern_prefix}_hello.you", @temp_object)
+      it_should_write_to_file("#{@file_pattern_prefix}_hello.you.png", @temp_object)
       @data_store.store(@temp_object)
     end
 
@@ -68,8 +68,13 @@ describe Dragonfly::DataStorage::FileDataStore do
       @data_store.store(@temp_object)
     end
 
-    it "should return the filepath without the root of the stored file" do
+    it "should return the filepath without the root of the stored file when a file name is not provided" do
       @data_store.store(@temp_object).should == "#{@file_pattern_prefix_without_root}_file"
+    end
+    
+    it "should return the filepath without the root of the stored file when a file name is provided" do
+      @temp_object.name = 'hello.you.png'
+      @data_store.store(@temp_object).should == "#{@file_pattern_prefix_without_root}_hello.you"
     end
     
     it "should raise an error if it can't create a directory" do
@@ -86,6 +91,15 @@ describe Dragonfly::DataStorage::FileDataStore do
       uid = @data_store.store(@temp_object)
       @data_store.destroy(uid)
       @data_store.root_path.should be_an_empty_directory
+    end
+    
+    describe "retrieving" do
+      it "should retrieve the correct file even though the extension isn't given" do
+        @temp_object.name = 'hello.there'
+        uid = @data_store.store(@temp_object)
+        uid.should =~ /_hello$/
+        Dragonfly::TempObject.new(@data_store.retrieve(uid)).data.should == @temp_object.data
+      end
     end
     
   end
