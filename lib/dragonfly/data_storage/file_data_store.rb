@@ -30,8 +30,9 @@ module Dragonfly
       end
 
       def retrieve(uid)
-        entries = Dir[absolute_storage_path(uid) + '*']
-        raise DataNotFound if entries.empty?
+        pattern = "#{absolute_storage_path(uid)}*"
+        entries = Dir[pattern]
+        raise DataNotFound, "Couldn't find any files matching #{pattern}" if entries.empty?
         File.new(entries.first)
       rescue Errno::ENOENT => e
         raise DataNotFound, e.message
