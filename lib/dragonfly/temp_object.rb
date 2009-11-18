@@ -58,6 +58,12 @@ module Dragonfly
       end
     end
     
+    def ext
+      return unless name
+      bits = name.split('.')
+      bits.last if bits.size > 1
+    end
+    
     def each(&block)
       if initialized_data
         string_io = StringIO.new(initialized_data)

@@ -395,6 +395,13 @@ describe Item do
       @item.preview_image_size.should == 3
     end
     
+    it "should store the original file extension if it exists" do
+      data = 'jasdlkf sadjl'
+      data.stub!(:original_filename).and_return('hello.png')
+      @item.preview_image = data
+      @item.preview_image_ext.should == 'png'
+    end
+    
   end
 
 end

@@ -230,4 +230,22 @@ describe Dragonfly::TempObject do
     end
   end
   
+  describe "ext" do
+    before(:each) do
+      @temp_object = Dragonfly::TempObject.new('asfsadf')
+    end
+    it "should use the correct extension from name" do
+      @temp_object.name = 'hello.there.mate'
+      @temp_object.ext.should == 'mate'
+    end
+    it "should be nil if name has none" do
+      @temp_object.name = 'hello'
+      @temp_object.ext.should be_nil
+    end
+    it "should be nil if name is nil" do
+      @temp_object.name = nil
+      @temp_object.ext.should be_nil
+    end
+  end
+  
 end
