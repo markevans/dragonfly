@@ -100,7 +100,7 @@ module Dragonfly
     include Configurable
     
     configurable_attr :datastore do DataStorage::FileDataStore.new end
-    configurable_attr :encoder do Encoding::Base.new end
+    configurable_attr :encoder do Encoding::TransparentEncoder.new end
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
     configurable_attr :cache_duration, 3600*24*365 # Defaults to 1 year
     configurable_attr :fallback_mime_type, 'application/octet-stream'
