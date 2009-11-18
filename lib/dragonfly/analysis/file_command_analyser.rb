@@ -1,6 +1,3 @@
-require 'rmagick'
-require 'mime/types'
-
 module Dragonfly
   module Analysis
     
