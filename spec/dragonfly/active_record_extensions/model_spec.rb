@@ -401,6 +401,13 @@ describe Item do
       @item.preview_image = data
       @item.preview_image_ext.should == 'png'
     end
+
+    it "should store the original file name if it exists" do
+      data = 'jasdlkf sadjl'
+      data.stub!(:original_filename).and_return('hello.png')
+      @item.preview_image = data
+      @item.preview_image_name.should == 'hello.png'
+    end
     
   end
 
