@@ -12,7 +12,7 @@ module Dragonfly
         suffix = if temp_object.name.blank?
           'file'
         else
-          temp_object.name
+          temp_object.name.sub(/\.[^.]*?$/, '')
         end
         relative_path = relative_storage_path(suffix)
 
@@ -20,20 +20,18 @@ module Dragonfly
           while File.exist?(storage_path = absolute_storage_path(relative_path))
             relative_path = increment_path(relative_path)
           end
-          FileUtils.mkdir_p File.dirname(storage_path) unless File.exist?(storage_path)
+          storage_dir = File.dirname(storage_path)
+          FileUtils.mkdir_p(storage_dir) unless File.exist?(storage_dir)
           FileUtils.cp temp_object.path, storage_path
         rescue Errno::EACCES => e
           raise UnableToStore, e.message
         end
       
-        relative_path.sub(/\.[^.]*?$/, '')
+        relative_path
       end
 
-      def retrieve(uid)
-        pattern = "#{absolute_storage_path(uid)}*"
-        entries = Dir[pattern]
-        raise DataNotFound, "Couldn't find any files matching #{pattern}" if entries.empty?
-        File.new(entries.first)
+      def retrieve(relative_path)
+        File.new(absolute_storage_path(relative_path))
       rescue Errno::ENOENT => e
         raise DataNotFound, e.message
       end

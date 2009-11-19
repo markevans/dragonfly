@@ -35,30 +35,15 @@ describe Dragonfly::DataStorage::FileDataStore do
       @data_store.store(@temp_object)
     end
 
-    it "should store the file with a numbered suffix if the filename already exists" do
-      FileUtils.mkdir_p(@file_pattern_prefix)
-      FileUtils.touch("#{@file_pattern_prefix}_file")
-      it_should_write_to_file("#{@file_pattern_prefix}_file_2", @temp_object)
-      @data_store.store(@temp_object)
-    end
-    
-    it "should store the file with an incremented number suffix if the filename already exists" do
-      FileUtils.mkdir_p(@file_pattern_prefix)
-      FileUtils.touch("#{@file_pattern_prefix}_file")
-      FileUtils.touch("#{@file_pattern_prefix}_file_2")
-      it_should_write_to_file("#{@file_pattern_prefix}_file_3", @temp_object)
-      @data_store.store(@temp_object)
-    end
-
     it "should use the temp_object name if it exists" do
       @temp_object.name = 'hello'
       it_should_write_to_file("#{@file_pattern_prefix}_hello", @temp_object)
       @data_store.store(@temp_object)
     end
     
-    it "should use the entire temp_object name including extension if it exists" do
+    it "should strip the extension of the temp_object name" do
       @temp_object.name = 'hello.you.png'
-      it_should_write_to_file("#{@file_pattern_prefix}_hello.you.png", @temp_object)
+      it_should_write_to_file("#{@file_pattern_prefix}_hello.you", @temp_object)
       @data_store.store(@temp_object)
     end
 
@@ -68,15 +53,46 @@ describe Dragonfly::DataStorage::FileDataStore do
       @data_store.store(@temp_object)
     end
 
-    it "should return the filepath without the root of the stored file when a file name is not provided" do
-      @data_store.store(@temp_object).should == "#{@file_pattern_prefix_without_root}_file"
-    end
+    describe "when the filename already exists" do
+
+      it "should store the file with a numbered suffix" do
+        FileUtils.mkdir_p(@file_pattern_prefix)
+        FileUtils.touch("#{@file_pattern_prefix}_file")
+        it_should_write_to_file("#{@file_pattern_prefix}_file_2", @temp_object)
+        @data_store.store(@temp_object)
+      end
     
-    it "should return the filepath without the root of the stored file when a file name is provided" do
-      @temp_object.name = 'hello.you.png'
-      @data_store.store(@temp_object).should == "#{@file_pattern_prefix_without_root}_hello.you"
-    end
+      it "should store the file with a numbered suffix taking into account the name" do
+        @temp_object.name = 'hello.png'
+        FileUtils.mkdir_p(@file_pattern_prefix)
+        FileUtils.touch("#{@file_pattern_prefix}_hello")
+        it_should_write_to_file("#{@file_pattern_prefix}_hello_2", @temp_object)
+        @data_store.store(@temp_object)
+      end
     
+      it "should store the file with an incremented number suffix" do
+        FileUtils.mkdir_p(@file_pattern_prefix)
+        FileUtils.touch("#{@file_pattern_prefix}_file")
+        FileUtils.touch("#{@file_pattern_prefix}_file_2")
+        it_should_write_to_file("#{@file_pattern_prefix}_file_3", @temp_object)
+        @data_store.store(@temp_object)
+      end
+
+    end
+
+    describe "return value" do
+
+      it "should return the filepath without the root of the stored file when a file name is not provided" do
+        @data_store.store(@temp_object).should == "#{@file_pattern_prefix_without_root}_file"
+      end
+    
+      it "should return the filepath without the root of the stored file when a file name is provided" do
+        @temp_object.name = 'hello.you.png'
+        @data_store.store(@temp_object).should == "#{@file_pattern_prefix_without_root}_hello.you"
+      end
+    
+    end
+
   end
   
   describe "errors" do
@@ -102,14 +118,5 @@ describe Dragonfly::DataStorage::FileDataStore do
     end
 
   end
-  
-  describe "retrieving" do
-    it "should retrieve the correct file even though the extension isn't given" do
-      @temp_object.name = 'hello.there'
-      uid = @data_store.store(@temp_object)
-      uid.should =~ /_hello$/
-      Dragonfly::TempObject.new(@data_store.retrieve(uid)).data.should == @temp_object.data
-    end
-  end
-  
+
 end
