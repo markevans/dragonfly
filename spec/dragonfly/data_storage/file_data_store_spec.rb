@@ -20,11 +20,11 @@ describe Dragonfly::DataStorage::FileDataStore do
   
   it_should_behave_like 'data_store'
   
+  before(:each) do
+    @temp_object = Dragonfly::TempObject.new('goobydoo')
+  end
+  
   describe "store" do
-    
-    before(:each) do
-      @temp_object = Dragonfly::TempObject.new('goobydoo')
-    end
     
     def it_should_write_to_file(storage_path, temp_object)
       FileUtils.should_receive(:cp).with(temp_object.path, storage_path)
@@ -77,31 +77,39 @@ describe Dragonfly::DataStorage::FileDataStore do
       @data_store.store(@temp_object).should == "#{@file_pattern_prefix_without_root}_hello.you"
     end
     
+  end
+  
+  describe "errors" do
+
     it "should raise an error if it can't create a directory" do
       FileUtils.should_receive(:mkdir_p).and_raise(Errno::EACCES)
       lambda{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::DataStorage::UnableToStore)
     end
-    
+  
     it "should raise an error if it can't create a file" do
       FileUtils.should_receive(:cp).and_raise(Errno::EACCES)
       lambda{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::DataStorage::UnableToStore)
     end
-    
+
+  end
+  
+  describe "destroying" do
+  
     it "should prune empty directories when destroying" do
       uid = @data_store.store(@temp_object)
       @data_store.destroy(uid)
       @data_store.root_path.should be_an_empty_directory
     end
-    
-    describe "retrieving" do
-      it "should retrieve the correct file even though the extension isn't given" do
-        @temp_object.name = 'hello.there'
-        uid = @data_store.store(@temp_object)
-        uid.should =~ /_hello$/
-        Dragonfly::TempObject.new(@data_store.retrieve(uid)).data.should == @temp_object.data
-      end
+
+  end
+  
+  describe "retrieving" do
+    it "should retrieve the correct file even though the extension isn't given" do
+      @temp_object.name = 'hello.there'
+      uid = @data_store.store(@temp_object)
+      uid.should =~ /_hello$/
+      Dragonfly::TempObject.new(@data_store.retrieve(uid)).data.should == @temp_object.data
     end
-    
   end
   
 end
