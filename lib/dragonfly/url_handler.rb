@@ -52,12 +52,12 @@ module Dragonfly
     end
 
     def parameters_to_url(parameters)
-      parameters.validate!
       query_string = [:processing_method, :processing_options, :encoding].map do |attribute|
         build_query(MAPPINGS[attribute] => parameters[attribute]) unless parameters[attribute].blank?
       end.compact.join('&')
       sha_string = "&#{MAPPINGS[:sha]}=#{sha_from_parameters(parameters)}" if protect_from_dos_attacks?
-      url = "#{path_prefix}/#{escape_except_for_slashes(parameters.uid)}.#{parameters.format}?#{query_string}#{sha_string}"
+      ext = ".#{parameters.format}" if parameters.format
+      url = "#{path_prefix}/#{escape_except_for_slashes(parameters.uid)}#{ext}?#{query_string}#{sha_string}"
       url.sub!(/\?$/,'')
       url
     end
@@ -82,7 +82,8 @@ module Dragonfly
     end
   
     def extract_format(path, query)
-      path.sub(/^\//,'').split('.').last
+      bits = path.sub(/^\//,'').split('.')
+      bits.last if bits.length > 1
     end
   
     def extract_encoding(path, query)
@@ -140,9 +141,7 @@ module Dragonfly
     end
     
     def validate_format!(path)
-      if path !~ /^#{path_prefix}/ || path !~ /^.*[^\/].*\..*[^\/].*$/
-        raise UnknownUrl, "path '#{path}' not found" 
-      end
+      raise UnknownUrl, "path '#{path}' not found" unless path =~ %r(^#{path_prefix}/[^.]+)
     end
     
   end

@@ -60,7 +60,7 @@ describe Dragonfly::App do
     it "should return 404 if the datastore raises data not found" do
       @app.url_handler.protect_from_dos_attacks = false
       @app.should_receive(:fetch).and_raise(Dragonfly::DataStorage::DataNotFound)
-      response = make_request(@app, 'hello.png')
+      response = make_request(@app, '/hello.png')
       response.status.should == 404
     end
 
@@ -76,12 +76,12 @@ describe Dragonfly::App do
     end
     it "should use the temp object mime-type" do
       @temp_object.should_receive(:mime_type).and_return 'my/type'
-      response = make_request(@app, 'hello.png')
+      response = make_request(@app, '/hello.png')
       response.headers['Content-Type'].should == 'my/type'
     end
     it "should use the app's fallback mime-type if the temp_object one isn't known" do
       @temp_object.should_receive(:mime_type).and_return nil
-      response = make_request(@app, 'hello.png')
+      response = make_request(@app, '/hello.png')
       response.headers['Content-Type'].should == 'egg/heads'
     end
   end

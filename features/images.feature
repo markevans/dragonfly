@@ -3,10 +3,11 @@ Feature: champion uses dragonfly to process images
   A user uses dragonfly
 
   Background:
+    Given we are using the app for images
     Given a stored image "beach.png" with dimensions 200x100
 
   Scenario: Go to url for original
-    When I go to the url for image "beach.png", with format 'png'
+    When I go to the url for "beach.png", with format 'png'
     Then the response should be OK
     And the response should have mime-type 'image/png'
     And the image should have width '200'
@@ -14,7 +15,7 @@ Feature: champion uses dragonfly to process images
     And the image should have format 'png'
 
   Scenario: Go to url for changed format version
-    When I go to the url for image "beach.png", with format 'gif'
+    When I go to the url for "beach.png", with format 'gif'
     Then the response should be OK
     And the response should have mime-type 'image/gif'
     And the image should have width '200'
@@ -22,7 +23,7 @@ Feature: champion uses dragonfly to process images
     And the image should have format 'gif'
 
   Scenario: Go to url for soft resized version
-    When I go to the url for image "beach.png", with format 'png' and resize geometry '100x150'
+    When I go to the url for "beach.png", with format 'png' and resize geometry '100x150'
     Then the response should be OK
     And the response should have mime-type 'image/png'
     And the image should have width '100'
@@ -30,7 +31,7 @@ Feature: champion uses dragonfly to process images
     And the image should have format 'png'
 
   Scenario: Go to url for hard resized version
-    When I go to the url for image "beach.png", with format 'png' and resize geometry '100x150!'
+    When I go to the url for "beach.png", with format 'png' and resize geometry '100x150!'
     Then the response should be OK
     And the response should have mime-type 'image/png'
     And the image should have width '100'

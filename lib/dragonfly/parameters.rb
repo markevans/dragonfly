@@ -137,10 +137,6 @@ module Dragonfly
       }
     end
 
-    def validate!
-      raise InvalidParameters, "Parameters requires that at least the uid and the format are set" if uid.nil? || format.nil?
-    end
-
     private
     
     def to_sorted_array

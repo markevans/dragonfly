@@ -19,11 +19,6 @@ describe Dragonfly::UrlHandler do
       @parameters.uid.should == 'images/some_image'
     end
     
-    it "should behave the same if there is no beginning slash" do
-      parameters = @url_handler.url_to_parameters('images/some_image.jpg', @query_string)
-      parameters.uid.should == 'images/some_image'
-    end
-    
     it "should take into account the path prefix if there is one" do
       @url_handler.path_prefix = '/images'
       parameters = @url_handler.url_to_parameters('/images/2009/some_image.jpg', @query_string)
@@ -67,10 +62,10 @@ describe Dragonfly::UrlHandler do
       url_handler.url_to_parameters(@path, @query_string)
     end
     
-    it "should raise an UnknownUrl error if the path doesn't have an extension" do
-      lambda{
-        @url_handler.url_to_parameters('hello', @query_string)
-      }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+    it "should not set the format if the path doesn't have an extension" do
+      parameters = @url_handler.url_to_parameters('/hello', @query_string)
+      parameters.uid.should == 'hello'
+      parameters.format.should be_nil
     end
 
     it "should raise an UnknownUrl error if the path doesn't have a uid bit" do
@@ -86,13 +81,13 @@ describe Dragonfly::UrlHandler do
     end
     
     it "should set most of the path as the uid if there is more than one dot" do
-      parameters = @url_handler.url_to_parameters('hello.old.bean', @query_string)
+      parameters = @url_handler.url_to_parameters('/hello.old.bean', @query_string)
       parameters.uid.should == 'hello.old'
       parameters.format.should == 'bean'
     end
     
     it "should unescape any url-escaped characters" do
-      parameters = @url_handler.url_to_parameters('hello%20bean.jpg', 'm=whats%20up')
+      parameters = @url_handler.url_to_parameters('/hello%20bean.jpg', 'm=whats%20up')
       parameters.uid.should == 'hello bean'
       parameters.processing_method.should == 'whats up'
     end
@@ -121,6 +116,10 @@ describe Dragonfly::UrlHandler do
       @parameters.processing_method = nil
       @url_handler.parameters_to_url(@parameters).should match_url('/thisisunique.gif?o[d]=e&o[j]=k&e[x]=y')
     end
+    it "should leave out the format if there is none" do
+      @parameters.format = nil
+      @url_handler.parameters_to_url(@parameters).should match_url('/thisisunique?m=b&o[d]=e&o[j]=k&e[x]=y')
+    end
     it "should leave out any empty parameters" do
       @parameters.processing_options = {}
       @url_handler.parameters_to_url(@parameters).should match_url('/thisisunique.gif?m=b&e[x]=y')
@@ -128,10 +127,6 @@ describe Dragonfly::UrlHandler do
     it "should prefix with the path_prefix if there is one" do
       @url_handler.path_prefix = '/images'
       @url_handler.parameters_to_url(@parameters).should match_url('/images/thisisunique.gif?m=b&o[d]=e&o[j]=k&e[x]=y')
-    end
-    it "should validate the parameters" do
-      @parameters.should_receive(:validate!)
-      @url_handler.parameters_to_url(@parameters)
     end
     it "should escape any non-url friendly characters except for '/'" do
       parameters = Dragonfly::Parameters.new :uid => 'hello/u"u', :processing_method => 'm"m', :format => 'jpg'

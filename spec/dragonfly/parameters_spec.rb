@@ -129,31 +129,6 @@ describe Dragonfly::Parameters do
     
   end
   
-  describe "validate!" do
-    before(:each) do
-      @parameters = Dragonfly::Parameters.new(standard_attributes)
-    end
-    it "should not raise an error when parameters are ok" do
-      @parameters.validate!
-    end
-    it "should raise an error when the uid is not set" do
-      @parameters.uid = nil
-      lambda{
-        @parameters.validate!
-      }.should raise_error(Dragonfly::Parameters::InvalidParameters)
-    end
-    it "should raise an error when the format is not set" do
-      @parameters.format = nil
-      lambda{
-        @parameters.validate!
-      }.should raise_error(Dragonfly::Parameters::InvalidParameters)
-    end
-    it "should not raise an error when other parameters aren't set" do
-      parameters = Dragonfly::Parameters.new(:uid => 'asdf', :format => :jpg)
-      parameters.validate!
-    end
-  end
-  
   describe "shortcuts" do
     
     before(:each) do
