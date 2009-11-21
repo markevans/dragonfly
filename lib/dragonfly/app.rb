@@ -91,6 +91,8 @@ module Dragonfly
     attr_reader :url_handler
     # @see Parameters
     attr_reader :parameters_class
+    # @see TempObject, and ExtendedTempObject
+    attr_reader :temp_object_class
 
     alias parameters parameters_class
     
@@ -99,11 +101,11 @@ module Dragonfly
     
     include Configurable
     
-    configurable_attr :datastore do DataStorage::FileDataStore.new end
-    configurable_attr :encoder do Encoding::TransparentEncoder.new end
+    configurable_attr :datastore do DataStorage::Base.new end
+    configurable_attr :encoder do Encoding::Base.new end
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
     configurable_attr :cache_duration, 3600*24*365 # Defaults to 1 year
-    configurable_attr :fallback_mime_type, 'application/octet-stream'
+    configurable_attr :fallback_mime_type, 'application/octet-stream'    
     
     # The call method required by Rack to run.
     #
@@ -164,9 +166,6 @@ module Dragonfly
     end
 
     private
-    
-    # @private
-    attr_reader :temp_object_class
     
     def initialize_temp_object_class
       @temp_object_class = Class.new(ExtendedTempObject)

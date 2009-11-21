@@ -3,6 +3,7 @@ require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Ra
 require 'dragonfly'
 
 # Configuration of the Dragonfly App
+Dragonfly::App[:<%= app_name %>].configure_with(Dragonfly::StandardConfiguration)
 Dragonfly::App[:<%= app_name %>].configure_with(Dragonfly::RMagickConfiguration)
 Dragonfly::App[:<%= app_name %>].configure do |c|
   c.log = RAILS_DEFAULT_LOGGER
