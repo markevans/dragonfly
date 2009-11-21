@@ -5,7 +5,7 @@ module Dragonfly
       
       # Does nothing
       def encode(temp_object, format, encoding={})
-        temp_object.file
+        temp_object
       end
       
     end
