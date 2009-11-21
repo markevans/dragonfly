@@ -35,6 +35,12 @@ module Dragonfly
       self
     end
     
+    # As we create customly configured subclasses of this class, the console
+    # gives a confusing output when inspecting, so modify here
+    def inspect
+      super.sub('Class:','Custom Dragonfly::ExtendedTempObject:')
+    end
+    
     # Modify methods, public_methods and respond_to?, because method_missing
     # allows methods from the analyser
     
