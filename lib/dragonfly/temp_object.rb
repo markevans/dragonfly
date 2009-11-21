@@ -79,6 +79,15 @@ module Dragonfly
       end
     end
     
+    def to_file(path)
+      if initialized_data
+        File.open(path, 'w'){|f| f.write(initialized_data) }
+      else
+        FileUtils.cp(self.path, path)
+      end
+      File.new(path)
+    end
+    
     protected
     
     attr_accessor :initialized_data, :initialized_tempfile, :initialized_file

@@ -248,4 +248,46 @@ describe Dragonfly::TempObject do
     end
   end
   
+  describe "to_file" do
+    
+    describe "common behaviour for to_file", :shared => true do
+      before(:each) do
+        @filename = 'eggnog.txt'
+        FileUtils.rm(@filename) if File.exists?(@filename)
+      end
+      after(:each) do
+        FileUtils.rm(@filename) if File.exists?(@filename)
+      end
+      it "should write to a file" do
+        @temp_object.to_file(@filename)
+        File.exists?(@filename).should be_true
+      end
+      it "should write the correct data to the file" do
+        @temp_object.to_file(@filename)
+        File.read(@filename).should == 'HELLO'
+      end
+      it "should return a readable file" do
+        file = @temp_object.to_file(@filename)
+        file.should be_a(File)
+        file.read.should == 'HELLO'
+      end
+    end
+    
+    describe "when initialized with a string" do
+      before(:each){ @temp_object = Dragonfly::TempObject.new('HELLO') }
+      it_should_behave_like "common behaviour for to_file"
+    end
+    
+    describe "when initialized with a file" do
+      before(:each){ @temp_object = Dragonfly::TempObject.new(new_tempfile('HELLO')) }
+      it_should_behave_like "common behaviour for to_file"
+    end
+    
+    describe "when initialized with a tempfile" do
+      before(:each){ @temp_object = Dragonfly::TempObject.new(new_file('HELLO')) }
+      it_should_behave_like "common behaviour for to_file"
+    end
+
+  end
+  
 end
