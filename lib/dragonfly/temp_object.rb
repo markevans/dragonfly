@@ -20,8 +20,10 @@ module Dragonfly
     attr_accessor :name
     
     def modify_self!(obj)
-      reset!
-      initialize_from_object!(obj)
+      unless obj == self
+        reset!
+        initialize_from_object!(obj)
+      end
       self
     end
     

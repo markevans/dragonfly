@@ -195,6 +195,10 @@ describe Dragonfly::TempObject do
       @temp_object.modify_self!(tempfile)
       @temp_object.data.should == data
     end
+    it "should still work when the object is itself" do
+      @temp_object.modify_self!(@temp_object)
+      @temp_object.data.should == 'DATA_ONE'
+    end
     
   end
   
