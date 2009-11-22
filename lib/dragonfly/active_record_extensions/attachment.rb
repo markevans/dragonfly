@@ -91,7 +91,7 @@ module Dragonfly
       attr_writer :temp_object
       
       def analyser
-        app.analyser
+        app.analysers
       end
       
       def magic_attributes

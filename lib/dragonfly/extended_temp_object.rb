@@ -81,7 +81,7 @@ module Dragonfly
     end
     
     def analyser
-      app.analyser
+      app.analysers
     end
     
     def processor

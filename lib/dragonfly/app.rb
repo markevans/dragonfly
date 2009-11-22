@@ -19,10 +19,11 @@ module Dragonfly
   # @example Example configuration options:
   #
   # Dragonfly::App[:images].configure do |c|
-  #   c.datastore = MyEC2DataStore.new           # See DataStorage::Base for how to create a custom data store
-  #   c.encoder = Encoding::RMagickEncoder.new   # See Encoding::Base for how to create a custom encoder
+  #   c.datastore = MyEC2DataStore.new                # See DataStorage::Base for how to create a custom data store
+  #   c.register_analyser(Analysis::RMagickAnalyser)  # See Analysis::Base for how to create a custom analyser
+  #   c.encoder = Encoding::RMagickEncoder.new        # See Encoding::Base for how to create a custom encoder
   #   c.log = Logger.new('/tmp/my.log')          
-  #   c.cache_duration = 3000                    # seconds
+  #   c.cache_duration = 3000                         # seconds
   # end
   #
   # @example Configuration including nested items
@@ -30,9 +31,6 @@ module Dragonfly
   # Dragonfly::App[:images].configure do |c|
   #   # ...
   #   c.datastore.configure do |d|    # configuration depends on which data store you use
-  #     # ...
-  #   end
-  #   c.analyser.configure do |a|     # see Analysis::Analyser
   #     # ...
   #   end
   #   c.processor.configure do |p|    # see Processing::Processor
@@ -74,15 +72,15 @@ module Dragonfly
     end
     
     def initialize
-      @analyser = Analysis::Analyser.new
+      @analysers = Analysis::AnalyserList.new
       @processor = Processing::Processor.new
       @parameters_class = Class.new(Parameters)
       @url_handler = UrlHandler.new(@parameters_class)
       initialize_temp_object_class
     end
     
-    # @see Analysis::Analyser
-    attr_reader :analyser
+    # @see Analysis::AnalyserList
+    attr_reader :analysers
     # @see Processing::Processor
     attr_reader :processor
     # @see Encoding::Base
@@ -164,6 +162,11 @@ module Dragonfly
     def create_object(initialization_object)
       temp_object_class.new(initialization_object)
     end
+
+    def register_analyser(*args, &block)
+      analysers.register(*args, &block)
+    end
+    configuration_method :register_analyser
 
     private
     

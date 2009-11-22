@@ -282,7 +282,7 @@ describe Item do
             end
           end
         end
-        @app.analyser.register(custom_analyser)
+        @app.register_analyser(custom_analyser)
         
         Item.class_eval do
           validates_mime_type_of :preview_image, :in => ['how/special', 'how/crazy'], :if => :its_friday
@@ -352,7 +352,7 @@ describe Item do
           "abc" + temp_object.data[0..0]
         end
       end
-      @app.analyser.register(custom_analyser)
+      @app.register_analyser(custom_analyser)
       ActiveRecord::Base.register_dragonfly_app(:image, @app)
       Item.class_eval do
         image_accessor :preview_image

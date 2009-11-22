@@ -16,7 +16,7 @@ describe Dragonfly::ExtendedTempObject do
       @analyser.stub!(:has_callable_method?).with(:width).and_return(true)
       @processor = mock('processor')
       @encoder = mock('encoder')
-      @app = mock('app', :analyser => @analyser, :processor => @processor, :encoder => @encoder)
+      @app = mock('app', :analysers => @analyser, :processor => @processor, :encoder => @encoder)
       @klass = Class.new(Dragonfly::ExtendedTempObject)
       @klass.app = @app
       @object = @klass.new('asdf')
