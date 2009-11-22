@@ -37,8 +37,7 @@ end
 describe Dragonfly::Delegator do
   
   before(:each) do
-    @delegator = Object.new
-    @delegator.extend(Dragonfly::Delegator)
+    @delegator = Dragonfly::Delegator.new
   end
   
   describe "when no items have been registered" do

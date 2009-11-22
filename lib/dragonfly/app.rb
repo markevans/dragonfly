@@ -70,9 +70,7 @@ module Dragonfly
     end
     
     def initialize
-      @analysers = Analysis::AnalyserList.new
-      @processors = Processing::ProcessorList.new
-      @encoders = Encoding::EncoderList.new
+      @analysers, @processors, @encoders = Delegator.new, Delegator.new, Delegator.new
       @parameters_class = Class.new(Parameters)
       @url_handler = UrlHandler.new(@parameters_class)
       initialize_temp_object_class
