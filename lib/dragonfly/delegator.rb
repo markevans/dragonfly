@@ -24,7 +24,7 @@ module Dragonfly
     end
     
     def callable_methods
-      registered_objects.map{|a| a.class.delegatable_methods }.flatten.uniq
+      registered_objects.map{|a| a.delegatable_methods }.flatten.uniq
     end
     
     def has_callable_method?(method)

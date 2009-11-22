@@ -129,6 +129,5 @@ describe Dragonfly::Delegator do
       @delegator.height.should == 180
     end
   end
-  
-  
+
 end
