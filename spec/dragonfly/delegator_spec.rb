@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 class CarDriver
+  include Dragonfly::Delegatable
+
   def drive(car)
     "Driving car #{car}"
   end
@@ -13,6 +15,8 @@ class CarDriver
 end
 
 class LorryDriver
+  include Dragonfly::Delegatable
+
   def drive(lorry)
     "Driving lorry #{lorry}"
   end
@@ -28,8 +32,11 @@ class LorryDriver
 end
 
 class BusDriver
+  include Dragonfly::Delegatable
   include Dragonfly::Configurable
+
   configurable_attr :height
+
   def initialize(age); @age = age; end
   def age; @age; end
 end

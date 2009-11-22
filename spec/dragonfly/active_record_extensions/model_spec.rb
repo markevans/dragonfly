@@ -272,7 +272,7 @@ describe Item do
       end
 
       before(:all) do
-        custom_analyser = Class.new
+        custom_analyser = Class.new(Dragonfly::Analysis::Base)
         custom_analyser.class_eval do
           def mime_type(temp_object)
             case temp_object.data
@@ -346,7 +346,7 @@ describe Item do
     
     before(:each) do
       @app = Dragonfly::App[:images]
-      custom_analyser = Class.new
+      custom_analyser = Class.new(Dragonfly::Analysis::Base)
       custom_analyser.class_eval do
         def some_analyser_method(temp_object)
           "abc" + temp_object.data[0..0]
