@@ -12,8 +12,8 @@ describe Dragonfly::ExtendedTempObject do
   describe "when configured correctly" do
     
     before(:each) do
-      @analyser = mock('analyser', :has_analysis_method? => false)
-      @analyser.stub!(:has_analysis_method?).with(:width).and_return(true)
+      @analyser = mock('analyser', :has_callable_method? => false)
+      @analyser.stub!(:has_callable_method?).with(:width).and_return(true)
       @processor = mock('processor')
       @encoder = mock('encoder')
       @app = mock('app', :analyser => @analyser, :processor => @processor, :encoder => @encoder)
@@ -25,12 +25,12 @@ describe Dragonfly::ExtendedTempObject do
     describe "analysis" do
       
       it "should respond to something that the analyser responds to" do
-        @analyser.should_receive(:has_analysis_method?).with(:some_method).and_return(true)
+        @analyser.should_receive(:has_callable_method?).with(:some_method).and_return(true)
         @object.should respond_to(:some_method)
       end
       
       it "should not respond to something that the analyser doesn't respond to" do
-        @analyser.should_receive(:has_analysis_method?).with(:some_method).and_return(false)
+        @analyser.should_receive(:has_callable_method?).with(:some_method).and_return(false)
         @object.should_not respond_to(:some_method)
       end
 

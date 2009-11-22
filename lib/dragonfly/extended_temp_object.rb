@@ -45,21 +45,21 @@ module Dragonfly
     # allows methods from the analyser
     
     def methods(*args)
-      (super + analyser.analysis_methods).uniq
+      (super + analyser.callable_methods).uniq
     end
     
     def public_methods(*args)
-      (super + analyser.analysis_methods).uniq
+      (super + analyser.callable_methods).uniq
     end
     
     def respond_to?(method)
-      super || analyser.has_analysis_method?(method)
+      super || analyser.has_callable_method?(method)
     end
 
     private
     
     def method_missing(method, *args, &block)
-      if analyser.has_analysis_method?(method)
+      if analyser.has_callable_method?(method)
         # Define the method so we don't use method_missing next time
         instance_var = "@#{method}"
         self.class.class_eval do

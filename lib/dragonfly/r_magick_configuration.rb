@@ -4,7 +4,7 @@ module Dragonfly
     def self.apply_configuration(app)
       app.configure do |c|
         c.analyser do |a|
-          a.register(Analysis::RMagickAnalyser.new)
+          a.register(Analysis::RMagickAnalyser)
         end
         c.processor do |p|
           p.register(Processing::RMagickProcessor)

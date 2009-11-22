@@ -272,12 +272,14 @@ describe Item do
       end
 
       before(:all) do
-        custom_analyser = Object.new
-        def custom_analyser.mime_type(temp_object)
-          case temp_object.data
-          when "WRONG TYPE" then 'wrong/type'
-          when "OTHER TYPE" then nil
-          else 'how/special'
+        custom_analyser = Class.new
+        custom_analyser.class_eval do
+          def mime_type(temp_object)
+            case temp_object.data
+            when "WRONG TYPE" then 'wrong/type'
+            when "OTHER TYPE" then nil
+            else 'how/special'
+            end
           end
         end
         @app.analyser.register(custom_analyser)
@@ -344,9 +346,11 @@ describe Item do
     
     before(:each) do
       @app = Dragonfly::App[:images]
-      custom_analyser = Object.new
-      def custom_analyser.some_analyser_method(temp_object)
-        "abc" + temp_object.data[0..0]
+      custom_analyser = Class.new
+      custom_analyser.class_eval do
+        def some_analyser_method(temp_object)
+          "abc" + temp_object.data[0..0]
+        end
       end
       @app.analyser.register(custom_analyser)
       ActiveRecord::Base.register_dragonfly_app(:image, @app)

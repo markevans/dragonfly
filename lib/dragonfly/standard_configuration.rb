@@ -6,7 +6,7 @@ module Dragonfly
         c.datastore = DataStorage::FileDataStore.new
         c.encoder = Encoding::TransparentEncoder.new
         c.analyser do |a|
-          a.register(Analysis::FileCommandAnalyser.new)
+          a.register(Analysis::FileCommandAnalyser)
         end
       end
     end
