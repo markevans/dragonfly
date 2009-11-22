@@ -3,7 +3,7 @@ require 'rmagick'
 module Dragonfly
   module Processing
 
-    module RMagickProcessor
+    class RMagickProcessor < Base
       
       GRAVITY_MAPPINGS = {
         'nw' => Magick::NorthWestGravity,

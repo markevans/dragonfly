@@ -85,7 +85,7 @@ module Dragonfly
     end
     
     def processor
-      app.processor
+      app.processors
     end
     
     def encoder

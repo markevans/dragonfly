@@ -4,9 +4,7 @@ module Dragonfly
     def self.apply_configuration(app)
       app.configure do |c|
         c.register_analyser(Analysis::RMagickAnalyser)
-        c.processor do |p|
-          p.register(Processing::RMagickProcessor)
-        end
+        c.register_processor(Processing::RMagickProcessor)
         c.encoder = Encoding::RMagickEncoder.new
         c.parameters do |p|
           p.default_format = :jpg

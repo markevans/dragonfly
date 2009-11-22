@@ -19,11 +19,12 @@ module Dragonfly
   # @example Example configuration options:
   #
   # Dragonfly::App[:images].configure do |c|
-  #   c.datastore = MyEC2DataStore.new                # See DataStorage::Base for how to create a custom data store
-  #   c.register_analyser(Analysis::RMagickAnalyser)  # See Analysis::Base for how to create a custom analyser
-  #   c.encoder = Encoding::RMagickEncoder.new        # See Encoding::Base for how to create a custom encoder
-  #   c.log = Logger.new('/tmp/my.log')          
-  #   c.cache_duration = 3000                         # seconds
+  #   c.datastore = MyEC2DataStore.new                     # See DataStorage::Base for how to create a custom data store
+  #   c.register_analyser(Analysis::RMagickAnalyser)       # See Analysis::Base for how to create a custom analyser
+  #   c.register_processor(Processing::RMagickProcessor)   # See Processing::Base for how to create a custom analyser
+  #   c.encoder = Encoding::RMagickEncoder.new             # See Encoding::Base for how to create a custom encoder
+  #   c.log = Logger.new('/tmp/my.log')
+  #   c.cache_duration = 3000                              # seconds
   # end
   #
   # @example Configuration including nested items
@@ -31,9 +32,6 @@ module Dragonfly
   # Dragonfly::App[:images].configure do |c|
   #   # ...
   #   c.datastore.configure do |d|    # configuration depends on which data store you use
-  #     # ...
-  #   end
-  #   c.processor.configure do |p|    # see Processing::Processor
   #     # ...
   #   end
   #   c.parameters.configure do |p|   # see Parameters (class methods)
@@ -73,7 +71,7 @@ module Dragonfly
     
     def initialize
       @analysers = Analysis::AnalyserList.new
-      @processor = Processing::Processor.new
+      @processors = Processing::ProcessorList.new
       @parameters_class = Class.new(Parameters)
       @url_handler = UrlHandler.new(@parameters_class)
       initialize_temp_object_class
@@ -81,8 +79,8 @@ module Dragonfly
     
     # @see Analysis::AnalyserList
     attr_reader :analysers
-    # @see Processing::Processor
-    attr_reader :processor
+    # @see Processing::ProcessorList
+    attr_reader :processors
     # @see Encoding::Base
     attr_reader :encoder
     # @see UrlHandler
@@ -167,6 +165,11 @@ module Dragonfly
       analysers.register(*args, &block)
     end
     configuration_method :register_analyser
+
+    def register_processor(*args, &block)
+      processors.register(*args, &block)
+    end
+    configuration_method :register_processor
 
     private
     

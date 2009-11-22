@@ -5,8 +5,7 @@ describe Dragonfly::Processing::RMagickProcessor do
   before(:each) do
     sample_file = File.dirname(__FILE__) + '/../../../samples/beach.png' # 280x355
     @image = Dragonfly::TempObject.new(File.new(sample_file))
-    @processor = Object.new
-    @processor.extend Dragonfly::Processing::RMagickProcessor
+    @processor = Dragonfly::Processing::RMagickProcessor.new
   end
   
   describe "#resize" do
