@@ -16,14 +16,6 @@ describe Dragonfly::Analysis::RMagickAnalyser do
     @analyser.height(@beach).should == 355
   end
   
-  it "should return the mime type" do
-    @analyser.mime_type(@beach).should == 'image/png'
-  end
-  
-  it "should return nil if it doesn't know the mime type" do
-    @analyser.mime_type(Dragonfly::TempObject.new('asdf')).should be_nil
-  end
-  
   it "should return the number of colours" do
     @analyser.number_of_colours(@beach).should == 34703
   end

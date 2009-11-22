@@ -23,7 +23,6 @@ begin
     s.add_dependency('dragonfly')
     s.add_dependency('rack')
     s.add_dependency('rack-cache')
-    s.add_dependency('mime-types')
     s.add_dependency('rmagick')
   end
 rescue LoadError
