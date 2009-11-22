@@ -22,7 +22,7 @@ module Dragonfly
   #   c.datastore = MyEC2DataStore.new                     # See DataStorage::Base for how to create a custom data store
   #   c.register_analyser(Analysis::RMagickAnalyser)       # See Analysis::Base for how to create a custom analyser
   #   c.register_processor(Processing::RMagickProcessor)   # See Processing::Base for how to create a custom analyser
-  #   c.encoder = Encoding::RMagickEncoder.new             # See Encoding::Base for how to create a custom encoder
+  #   c.register_encoder(Encoding::RMagickEncoder)         # See Encoding::Base for how to create a custom encoder
   #   c.log = Logger.new('/tmp/my.log')
   #   c.cache_duration = 3000                              # seconds
   # end
@@ -72,6 +72,7 @@ module Dragonfly
     def initialize
       @analysers = Analysis::AnalyserList.new
       @processors = Processing::ProcessorList.new
+      @encoders = Encoding::EncoderList.new
       @parameters_class = Class.new(Parameters)
       @url_handler = UrlHandler.new(@parameters_class)
       initialize_temp_object_class
@@ -81,8 +82,8 @@ module Dragonfly
     attr_reader :analysers
     # @see Processing::ProcessorList
     attr_reader :processors
-    # @see Encoding::Base
-    attr_reader :encoder
+    # @see Encoding::EncoderList
+    attr_reader :encoders
     # @see UrlHandler
     attr_reader :url_handler
     # @see Parameters
@@ -98,7 +99,6 @@ module Dragonfly
     include Configurable
     
     configurable_attr :datastore do DataStorage::Base.new end
-    configurable_attr :encoder do Encoding::Base.new end
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
     configurable_attr :cache_duration, 3600*24*365 # Defaults to 1 year
     configurable_attr :fallback_mime_type, 'application/octet-stream'    
@@ -170,6 +170,11 @@ module Dragonfly
       processors.register(*args, &block)
     end
     configuration_method :register_processor
+
+    def register_encoder(*args, &block)
+      encoders.register(*args, &block)
+    end
+    configuration_method :register_encoder
 
     private
     

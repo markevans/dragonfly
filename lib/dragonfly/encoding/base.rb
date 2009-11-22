@@ -3,8 +3,8 @@ module Dragonfly
     
     class Base
       
-      def encode(temp_object, format, options={})
-        raise NotImplementedError
+      def encode(*args)
+        throw :unable_to_handle
       end
       
     end

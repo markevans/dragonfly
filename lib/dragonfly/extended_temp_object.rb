@@ -89,7 +89,7 @@ module Dragonfly
     end
     
     def encoder
-      app.encoder
+      app.encoders
     end
     
     def parameters_class

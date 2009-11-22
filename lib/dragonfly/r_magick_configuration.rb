@@ -5,7 +5,7 @@ module Dragonfly
       app.configure do |c|
         c.register_analyser(Analysis::RMagickAnalyser)
         c.register_processor(Processing::RMagickProcessor)
-        c.encoder = Encoding::RMagickEncoder.new
+        c.register_encoder(Encoding::RMagickEncoder)
         c.parameters do |p|
           p.default_format = :jpg
           # Standard resizing like '30x40!', etc.
