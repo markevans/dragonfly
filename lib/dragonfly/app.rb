@@ -128,11 +128,11 @@ module Dragonfly
       [404, {"Content-Type" => 'text/plain'}, [e.message]]
     end
 
-    # Store an object, using the configured datastore
-    # @param [String, File, Tempfile, TempObject] object the object holding the data
-    # @return [String] the uid assigned to it
-    def store(object)
-      datastore.store(create_object(object))
+    # Create a temp_object from the object passed in
+    # @param [String, File, Tempfile, TempObject] initialization_object the object holding the data
+    # @return [ExtendedTempObject] a temp_object holding the data
+    def create_object(initialization_object)
+      temp_object_class.new(initialization_object)
     end
 
     # Fetch an object from the database and optionally transform
@@ -152,11 +152,15 @@ module Dragonfly
       temp_object.transform(*args)
     end
 
-    # Create a temp_object from the object passed in
-    # @param [String, File, Tempfile, TempObject] initialization_object the object holding the data
-    # @return [ExtendedTempObject] a temp_object holding the data
-    def create_object(initialization_object)
-      temp_object_class.new(initialization_object)
+    def generate(*args)
+      create_object(processors.generate(*args))
+    end
+
+    # Store an object, using the configured datastore
+    # @param [String, File, Tempfile, TempObject] object the object holding the data
+    # @return [String] the uid assigned to it
+    def store(object)
+      datastore.store(create_object(object))
     end
 
     def register_analyser(*args, &block)

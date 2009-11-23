@@ -34,6 +34,20 @@ module Dragonfly
         image.crop(gravity, x, y, width, height).to_blob
       end
       
+      def generate(width, height)
+        image = Magick::Image.new(width, height)
+        num_points = 7
+        args = []
+        num_points.times do
+          args << rand(width)
+          args << rand(height)
+          args << "rgb(#{rand(256)},#{rand(256)},#{rand(256)})"
+        end
+        image = image.sparse_color(Magick::ShepardsColorInterpolate, *args)
+        image.format = 'png'
+        image.to_blob
+      end
+      
       def resize(temp_object, opts={})
         rmagick_image(temp_object).change_geometry!(opts[:geometry]) do |cols, rows, img|
          img.resize!(cols, rows)
