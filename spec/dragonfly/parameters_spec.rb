@@ -89,7 +89,7 @@ describe Dragonfly::Parameters do
     
     describe "when defaults are not set" do
       it "should return the standard defaults" do
-        parameters = @parameters_class.new
+        parameters = @parameters_class.new_with_defaults
         parameters.processing_method.should be_nil
         parameters.processing_options.should == {}
         parameters.format.should be_nil
@@ -106,15 +106,22 @@ describe Dragonfly::Parameters do
           c.default_encoding = {:bit_rate => 24}
         end
       end
-      it "should return the default if not set on parameters" do
+      it "should not affect .new" do
         parameters = @parameters_class.new
+        parameters.processing_method.should be_nil
+        parameters.processing_options.should == {}
+        parameters.format.should be_nil
+        parameters.encoding.should == {}
+      end
+      it "should return the default if not set on parameters" do
+        parameters = @parameters_class.new_with_defaults
         parameters.processing_method.should == :resize
         parameters.processing_options.should == {:scale => '0.5'}
         parameters.format.should == :png
         parameters.encoding.should == {:bit_rate => 24}
       end
       it "should return the correct parameter if set" do
-        parameters = @parameters_class.new(
+        parameters = @parameters_class.new_with_defaults(
           :processing_method => :yo,
           :processing_options => {:a => 'b'},
           :format => :txt,
@@ -124,6 +131,9 @@ describe Dragonfly::Parameters do
         parameters.processing_options.should == {:a => 'b'}
         parameters.format.should == :txt
         parameters.encoding.should == {:ah => :arg}
+      end
+      it "should not override nil if explicity set" do
+        @parameters_class.new_with_defaults(:format => nil).format.should be_nil
       end
     end
     
@@ -200,11 +210,15 @@ describe Dragonfly::Parameters do
     end
     
     describe ".from_shortcut" do
-      it "should just be the parameters equivalent of 'hash_from_shortcut'" do
-        @parameters_class.add_shortcut(/^hello.*$/, Symbol) do |processing_method, format, matches|
-          {:processing_method => processing_method, :format => format}
+      before(:each) do
+        @parameters_class.add_shortcut(/^hello.*$/) do |processing_method, matches|
+          {:processing_method => processing_method}
         end
-        @parameters_class.from_shortcut('hellothere', :tif).should == @parameters_class.new(@parameters_class.hash_from_shortcut('hellothere', :tif))
+        @parameters_class.default_format = :tif
+      end
+      it "should just be the parameters equivalent of 'hash_from_shortcut', including defaults" do
+        @parameters_class.from_shortcut('hellothere').should == 
+          @parameters_class.new(@parameters_class.hash_from_shortcut('hellothere').merge(:format => :tif))
       end
     end
     
@@ -214,6 +228,7 @@ describe Dragonfly::Parameters do
     
     before(:each) do
       @parameters_class = Class.new(Dragonfly::Parameters)
+      @parameters_class.default_format = :tif
     end
     
     it "should be the same as 'new' if empty args" do

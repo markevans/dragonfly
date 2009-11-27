@@ -17,6 +17,15 @@ module Dragonfly
       configurable_attr :default_format
       configurable_attr :default_encoding, {}
       
+      def new_with_defaults(attributes={})
+        new({
+          :processing_method => default_processing_method,
+          :processing_options => default_processing_options,
+          :format => default_format,
+          :encoding => default_encoding
+        }.merge(attributes))
+      end
+      
       def add_shortcut(*args, &block)
         if block
           block_shortcuts_of_length(args.length).unshift([args, block])
@@ -39,7 +48,7 @@ module Dragonfly
       configuration_method :hash_from_shortcut
       
       def from_shortcut(*args)
-        new(hash_from_shortcut(*args))
+        new_with_defaults(hash_from_shortcut(*args))
       end
       
       def from_args(*args)
@@ -96,17 +105,18 @@ module Dragonfly
 
     # Instance methods
 
-    attr_accessor :uid, :processing_method, :processing_options, :format, :encoding
-
     def initialize(attributes={})
       attributes = attributes.dup
-      %w(processing_method processing_options format encoding).each do |attribute|
-        instance_variable_set "@#{attribute}", (attributes.delete(attribute.to_sym) || self.class.send("default_#{attribute}"))
-      end
-      @uid = attributes.delete(:uid)
+      self.uid                = attributes.delete(:uid)
+      self.processing_method  = attributes.delete(:processing_method)
+      self.processing_options = attributes.delete(:processing_options) || {}
+      self.format             = attributes.delete(:format)
+      self.encoding           = attributes.delete(:encoding) || {}
       raise ArgumentError, "Parameters doesn't recognise the following parameters: #{attributes.keys.join(', ')}" if attributes.any?
     end
 
+    attr_accessor :uid, :processing_method, :processing_options, :format, :encoding
+    
     def [](attribute)
       send(attribute)
     end
