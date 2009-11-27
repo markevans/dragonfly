@@ -6,7 +6,7 @@ module Dragonfly
         c.register_analyser(Analysis::RMagickAnalyser)
         c.register_processor(Processing::RMagickProcessor)
         c.register_encoder(Encoding::RMagickEncoder)
-        c.parameters do |p|
+        c.parameters.configure do |p|
           p.default_format = :jpg
           # Standard resizing like '30x40!', etc.
           p.add_shortcut(Symbol) do |format|

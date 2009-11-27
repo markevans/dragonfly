@@ -93,7 +93,7 @@ module Dragonfly
         if owner.has_configuration_method?(method_name)
           owner.send(method_name, *args, &block)
         elsif nested_configurable?(method_name, *args)
-          owner.send(method_name, *args).configure(&block)
+          owner.send(method_name, *args)
         else
           raise BadConfigAttribute, "You tried to configure using '#{method_name.inspect}',  but the valid config attributes are #{owner.configuration_methods.map{|a| %('#{a.inspect}') }.sort.join(', ')}"
         end

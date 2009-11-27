@@ -10,7 +10,7 @@ app.configure do |c|
   c.datastore.configure do |d|
     d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
   end
-  c.url_handler do |u|
+  c.url_handler.configure do |u|
     u.protect_from_dos_attacks = false
     u.path_prefix = '/media'
   end

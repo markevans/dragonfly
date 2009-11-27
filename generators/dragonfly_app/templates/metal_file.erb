@@ -10,7 +10,7 @@ Dragonfly::App[:<%= app_name %>].configure do |c|
   c.datastore.configure do |d|
     d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
   end
-  c.url_handler do |u|
+  c.url_handler.configure do |u|
     u.secret = '<%= random_secret %>'
     u.path_prefix = '/<%= path_prefix %>'
   end

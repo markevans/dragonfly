@@ -165,7 +165,7 @@ describe Dragonfly::Configurable do
       end
 
       @car.configure do |c|
-        c.nested_thing do |nt|
+        c.nested_thing.configure do |nt|
           nt.age = 50
         end
       end

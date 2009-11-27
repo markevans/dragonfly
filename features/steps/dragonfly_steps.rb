@@ -31,6 +31,10 @@ When /^I go to the url for "(.+?)", with format '(.+?)' and resize geometry '(.+
   )
 end
 
+When /^I go to the url for "(.+?)", with shortcut '([^']+?)'$/ do |name, arg1|
+  make_request name, arg1
+end
+
 Then "the response should be OK" do
   @response.status.should == 200
 end
