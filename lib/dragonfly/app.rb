@@ -123,6 +123,7 @@ module Dragonfly
         "Cache-Control" => "public, max-age=#{cache_duration}"
         }, temp_object]
     rescue UrlHandler::IncorrectSHA, UrlHandler::SHANotGiven => e
+      warn_with_info(e.message, env)
       [400, {"Content-Type" => "text/plain"}, [e.message]]
     rescue UrlHandler::UnknownUrl, DataStorage::DataNotFound => e
       [404, {"Content-Type" => 'text/plain'}, [e.message]]
@@ -183,6 +184,10 @@ module Dragonfly
     def initialize_temp_object_class
       @temp_object_class = Class.new(ExtendedTempObject)
       @temp_object_class.app = self
+    end
+
+    def warn_with_info(message, env)
+      log.warn "Got error: #{message}\nPath was #{env['PATH_INFO'].inspect} and query was #{env['QUERY_STRING'].inspect}"
     end
 
   end
