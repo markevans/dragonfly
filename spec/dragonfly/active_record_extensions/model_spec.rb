@@ -1,5 +1,9 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
+class MyTestAnalyser < Dragonfly::Analysis::Base
+  def number_of_As(temp_object); temp_object.data.count('A'); end
+end
+
 describe Item do
 
   # See extra setup in models / initializer files
@@ -101,6 +105,24 @@ describe Item do
           temp_object.should be_a(Dragonfly::ExtendedTempObject)
           temp_object.data.should == 'DATASTRING'
         end
+        
+        describe "delegating analyser methods to the temp_object" do
+          before(:each) do
+            @app.register_analyser(MyTestAnalyser)          
+          end
+          it "should have properties from the analyser" do
+            @item.preview_image.number_of_As.should == 2
+          end
+          it "should report that it responds to analyser methods" do
+            @item.preview_image.respond_to?(:number_of_As).should be_true
+          end
+          it "should include analyser methods in methods" do
+            @item.preview_image.methods.include?('number_of_As').should be_true
+          end
+          it "should include analyser methods in public_methods" do
+            @item.preview_image.public_methods.include?('number_of_As').should be_true
+          end
+        end
       end
       
       describe "when something has been assigned and saved" do
@@ -151,23 +173,27 @@ describe Item do
             temp_object.should be_a(Dragonfly::ExtendedTempObject)
             temp_object.data.should == 'DATASTRING'
           end
+          it "should have properties from the analyser" do
+            @app.register_analyser(MyTestAnalyser)
+            @item.preview_image.number_of_As.should == 2
+          end
         end
 
         describe "when something new is assigned" do
           before(:each) do
-            @item.preview_image = "NEWDATASTRING"
+            @item.preview_image = "ANEWDATASTRING"
           end
           it "should set the uid to pending" do
             @item.preview_image_uid.should be_a(Dragonfly::ActiveRecordExtensions::PendingUID)
           end
           it "should destroy the old data when saved" do
-            @app.datastore.should_receive(:store).with(a_temp_object_with_data("NEWDATASTRING")).once.and_return('some_uid')
+            @app.datastore.should_receive(:store).with(a_temp_object_with_data("ANEWDATASTRING")).once.and_return('some_uid')
             
             @app.datastore.should_receive(:destroy).with('some_uid')
             @item.save!
           end
           it "should store the new data when saved" do
-            @app.datastore.should_receive(:store).with(a_temp_object_with_data("NEWDATASTRING"))
+            @app.datastore.should_receive(:store).with(a_temp_object_with_data("ANEWDATASTRING"))
             @item.save!
           end
           it "should destroy the old data on destroy" do
@@ -175,12 +201,16 @@ describe Item do
             @item.destroy
           end
           it "should return the new size" do
-            @item.preview_image.size.should == 13
+            @item.preview_image.size.should == 14
           end
           it "should return the new temp_object" do
             temp_object = @item.preview_image.temp_object
             temp_object.should be_a(Dragonfly::ExtendedTempObject)
-            temp_object.data.should == 'NEWDATASTRING'
+            temp_object.data.should == 'ANEWDATASTRING'
+          end
+          it "should have properties from the analyser" do
+            @app.register_analyser(MyTestAnalyser)
+            @item.preview_image.number_of_As.should == 3
           end
         end
         

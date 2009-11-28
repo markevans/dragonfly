@@ -5,6 +5,9 @@ module Dragonfly
     
     class Attachment
       
+      extend Forwardable
+      def_delegators :temp_object, :size, :ext, :name
+      
       def initialize(app, parent_model, attribute_name)
         @app, @parent_model, @attribute_name = app, parent_model, attribute_name
       end
@@ -38,10 +41,6 @@ module Dragonfly
         end
       end
       
-      def size
-        temp_object.size
-      end
-      
       def temp_object
         if @temp_object
           @temp_object
@@ -58,6 +57,18 @@ module Dragonfly
         unless uid.nil? || uid.is_a?(PendingUID)
           app.url_for(uid, *args)
         end
+      end
+      
+      def methods(*args)
+        (super + methods_to_delegate_to_temp_object).uniq
+      end
+
+      def public_methods(*args)
+        (super + methods_to_delegate_to_temp_object).uniq
+      end
+
+      def respond_to?(method)
+        super || methods_to_delegate_to_temp_object.include?(method.to_s)
       end
       
       private
@@ -94,10 +105,14 @@ module Dragonfly
         app.analysers
       end
       
+      def methods_to_delegate_to_temp_object
+        analyser.callable_methods
+      end
+      
       def magic_attributes
         parent_model.class.column_names.select { |name|
           name =~ /^#{attribute_name}_(.+)$/ &&
-            (analyser.has_callable_method?($1) || %w(size name ext).include?($1))
+            (methods_to_delegate_to_temp_object.include?($1) || %w(size ext name).include?($1))
         }
       end
       
@@ -110,6 +125,10 @@ module Dragonfly
       
       def reset_magic_attributes
         magic_attributes.each{|attribute| parent_model.send("#{attribute}=", nil) }
+      end
+      
+      def method_missing(meth, *args, &block)
+        methods_to_delegate_to_temp_object.include?(meth.to_s) ? temp_object.send(meth, *args, &block) : super
       end
       
     end
