@@ -257,7 +257,7 @@ describe Item do
       
     end
     
-    describe "validates_mime_type_of" do
+    describe "validates_property" do
 
       before(:each) do
         @item = Item.new(:preview_image => "1234567890")
@@ -273,12 +273,17 @@ describe Item do
             else 'how/special'
             end
           end
+
+          def number_of_Gs(temp_object)
+            temp_object.data.count('G')
+          end
         end
         @app.register_analyser(custom_analyser)
         
         Item.class_eval do
-          validates_mime_type_of :preview_image, :in => ['how/special', 'how/crazy'], :if => :its_friday
-          validates_mime_type_of :other_image, :yet_another_image, :as => 'how/special'
+          validates_property :mime_type, :of => :preview_image, :in => ['how/special', 'how/crazy'], :if => :its_friday
+          validates_property :mime_type, :of => [:other_image, :yet_another_image], :as => 'how/special'
+          validates_property :number_of_Gs, :of => :preview_image, :in => (0..2)
 
           image_accessor :preview_image
           image_accessor :other_image
@@ -291,21 +296,27 @@ describe Item do
         end
       end
     
-      it "should be valid if nil, if not validated on presence (even with validates_mime_type_of)" do
+      it "should be valid if nil, if not validated on presence (even with validates_property)" do
         @item.other_image = nil
         @item.should be_valid
       end
     
-      it "should be invalid if the mime_type is unknown" do
+      it "should be invalid if the property is nil" do
         @item.preview_image = "OTHER TYPE"
         @item.should_not be_valid
-        @item.errors.on(:preview_image).should == "doesn't have the correct MIME-type. It needs to be one of 'how/special', 'how/crazy', but was 'unknown'"
+        @item.errors.on(:preview_image).should == "mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was ''"
       end
 
-      it "should be invalid if the mime_type is wrong" do
+      it "should be invalid if the property is wrong" do
         @item.preview_image = "WRONG TYPE"
         @item.should_not be_valid
-        @item.errors.on(:preview_image).should == "doesn't have the correct MIME-type. It needs to be one of 'how/special', 'how/crazy', but was 'wrong/type'"
+        @item.errors.on(:preview_image).should == "mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was 'wrong/type'"
+      end
+      
+      it "should work for a range" do
+        @item.preview_image = "GOOGLE GUM"
+        @item.should_not be_valid
+        @item.errors.on(:preview_image).should == "number of gs is incorrect. It needs to be between 0 and 2, but was '3'"
       end
 
       it "should validate individually" do
@@ -313,7 +324,7 @@ describe Item do
         @item.yet_another_image = "WRONG TYPE"
         @item.should_not be_valid
         @item.errors.on(:other_image).should be_nil
-        @item.errors.on(:yet_another_image).should == "doesn't have the correct MIME-type. It needs to be 'how/special', but was 'wrong/type'"
+        @item.errors.on(:yet_another_image).should == "mime type is incorrect. It needs to be 'how/special', but was 'wrong/type'"
       end
 
       it "should include standard extra options like 'if' on mime type validation" do
@@ -325,11 +336,28 @@ describe Item do
       it "should require either :as or :in as an argument" do
         lambda{
           Item.class_eval do
-            validates_mime_type_of :preview_image
+            validates_property :mime_type, :of => :preview_image
           end
         }.should raise_error(ArgumentError)
       end
 
+      it "should require :of as an argument" do
+        lambda{
+          Item.class_eval do
+            validates_property :mime_type, :as => 'hi/there'
+          end
+        }.should raise_error(ArgumentError)
+      end
+
+    end
+
+    describe "validates_mime_type_of" do
+      it "should provide validates_mime_type as a convenience wrapper for validates_property" do
+        Item.should_receive(:validates_property).with(:mime_type, :of => :preview_image, :in => ['how/special', 'how/crazy'], :if => :its_friday)
+        Item.class_eval do
+          validates_mime_type_of :preview_image, :in => ['how/special', 'how/crazy'], :if => :its_friday
+        end
+      end
     end
 
   end
