@@ -5,9 +5,6 @@ module Dragonfly
     
     class Attachment
       
-      extend Forwardable
-      def_delegators :temp_object, :size, :ext, :name
-      
       def initialize(app, parent_model, attribute_name)
         @app, @parent_model, @attribute_name = app, parent_model, attribute_name
       end
@@ -70,6 +67,18 @@ module Dragonfly
       def respond_to?(method)
         super || methods_to_delegate_to_temp_object.include?(method.to_s)
       end
+
+      def ext
+        has_magic_attribute_for?(:ext) ? magic_attribute_for(:ext) : temp_object.ext
+      end
+
+      def name
+        has_magic_attribute_for?(:name) ? magic_attribute_for(:name) : temp_object.name
+      end
+      
+      def size
+        has_magic_attribute_for?(:size) ? magic_attribute_for(:size) : temp_object.size
+      end
       
       private
       
@@ -131,13 +140,13 @@ module Dragonfly
         magic_attributes.include?("#{attribute_name}_#{property}")
       end
       
+      def magic_attribute_for(property)
+        parent_model.send("#{attribute_name}_#{property}")
+      end
+      
       def method_missing(meth, *args, &block)
         if methods_to_delegate_to_temp_object.include?(meth.to_s)
-          if has_magic_attribute_for?(meth)
-            parent_model.send("#{attribute_name}_#{meth}")
-          else
-            temp_object.send(meth, *args, &block)
-          end
+          has_magic_attribute_for?(meth) ? magic_attribute_for(meth) : temp_object.send(meth, *args, &block)
         else
           super
         end

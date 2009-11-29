@@ -140,15 +140,9 @@ describe Item do
             @app.datastore.should_receive(:destroy).with(@item.preview_image_uid)
             @item.destroy
           end
-          it "should return the size" do
-            @app.datastore.should_receive(:retrieve).with('some_uid').and_return('DATASTRING')
-            @item.preview_image.size.should == 10
-          end
           it "should return the temp_object" do
-            @app.datastore.should_receive(:retrieve).with('some_uid').and_return('DATASTRING')
-            temp_object = @item.preview_image.temp_object
-            temp_object.should be_a(Dragonfly::ExtendedTempObject)
-            temp_object.data.should == 'DATASTRING'
+            @app.should_receive(:fetch).with('some_uid').and_return(temp_object = mock('extended temp_object'))
+            @item.preview_image.temp_object.should == temp_object
           end
         end
 
@@ -442,25 +436,33 @@ describe Item do
           @app.datastore.stub!(:store).and_return('my_uid')
           item = Item.create!(:preview_image => 'DATASTRING')
           @item = Item.find(item.id)
+          @temp_object = @app.create_object('DATASTRING')
+          @temp_object.name = 'jonny.briggs'
         end
         it "should load the temp_object then delegate the method" do
-          @app.datastore.should_receive(:retrieve).with('my_uid').and_return('DATASTRING')
+          @app.should_receive(:fetch).with('my_uid').and_return(@temp_object)
           @item.preview_image.number_of_As.should == 2
         end
         it "should use the magic attribute if there is one, and not load the temp_object" do
-          @app.datastore.should_not_receive(:retrieve)
+          @app.should_not_receive(:fetch)
           @item.should_receive(:preview_image_some_analyser_method).and_return('result yo')
           @item.preview_image.some_analyser_method.should == 'result yo'
         end
-        it "should load the temp_object then delegate the method" do
-          @app.datastore.should_receive(:retrieve).with('my_uid').and_return('DATASTRING')
-          @item.preview_image.number_of_As.should == 2
+        
+        %w(size name ext).each do |attr|
+          it "should use the magic attribute for #{attr} if there is one, and not load the temp_object" do
+            @app.should_not_receive(:fetch)
+            @item.should_receive("preview_image_#{attr}".to_sym).and_return('result yo')
+            @item.preview_image.send(attr).should == 'result yo'
+          end
+          it "should load the temp_object then delegate '#{attr}' if there is no magic attribute for it" do
+            Item.should_receive(:column_names).and_return(['preview_image_uid']) # no magic attributes
+            
+            @app.should_receive(:fetch).with('my_uid').and_return(@temp_object)
+            @item.preview_image.send(attr).should == @temp_object.send(attr)
+          end
         end
-        it "should use the magic attribute if there is one, and not load the temp_object" do
-          @app.datastore.should_not_receive(:retrieve)
-          @item.should_receive(:preview_image_some_analyser_method).and_return('result yo')
-          @item.preview_image.some_analyser_method.should == 'result yo'
-        end
+        
       end
     
       it "should not raise an error if a non-existent method is called" do
