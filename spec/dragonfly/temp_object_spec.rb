@@ -232,6 +232,11 @@ describe Dragonfly::TempObject do
     it "should not set the name if the initial object doesn't respond to 'original filename'" do
       Dragonfly::TempObject.new(@obj).name.should be_nil
     end
+    it "should set the name if the initial object is a file object" do
+      file = File.new(SAMPLES_DIR + '/round.gif')
+      temp_object = Dragonfly::TempObject.new(file)
+      temp_object.name.should == 'round.gif'
+    end
   end
   
   describe "ext" do

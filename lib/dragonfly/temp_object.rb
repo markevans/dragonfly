@@ -114,6 +114,7 @@ module Dragonfly
         @initialized_tempfile = obj
       when File
         @initialized_file = obj
+        self.name = File.basename(obj.path)
       else
         raise ArgumentError, "#{self.class.name} must be initialized with a String, a File or a Tempfile"
       end
