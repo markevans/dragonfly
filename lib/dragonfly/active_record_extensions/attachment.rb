@@ -127,8 +127,20 @@ module Dragonfly
         magic_attributes.each{|attribute| parent_model.send("#{attribute}=", nil) }
       end
       
+      def has_magic_attribute_for?(property)
+        magic_attributes.include?("#{attribute_name}_#{property}")
+      end
+      
       def method_missing(meth, *args, &block)
-        methods_to_delegate_to_temp_object.include?(meth.to_s) ? temp_object.send(meth, *args, &block) : super
+        if methods_to_delegate_to_temp_object.include?(meth.to_s)
+          if has_magic_attribute_for?(meth)
+            parent_model.send("#{attribute_name}_#{meth}")
+          else
+            temp_object.send(meth, *args, &block)
+          end
+        else
+          super
+        end
       end
       
     end

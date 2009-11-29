@@ -1,9 +1,5 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-class MyTestAnalyser < Dragonfly::Analysis::Base
-  def number_of_As(temp_object); temp_object.data.count('A'); end
-end
-
 describe Item do
 
   # See extra setup in models / initializer files
@@ -97,31 +93,10 @@ describe Item do
         it "should return nil for the url" do
           @item.preview_image.url.should be_nil
         end
-        it "should return the size" do
-          @item.preview_image.size.should == 10
-        end
         it "should return the temp_object" do
           temp_object = @item.preview_image.temp_object
           temp_object.should be_a(Dragonfly::ExtendedTempObject)
           temp_object.data.should == 'DATASTRING'
-        end
-        
-        describe "delegating analyser methods to the temp_object" do
-          before(:each) do
-            @app.register_analyser(MyTestAnalyser)          
-          end
-          it "should have properties from the analyser" do
-            @item.preview_image.number_of_As.should == 2
-          end
-          it "should report that it responds to analyser methods" do
-            @item.preview_image.respond_to?(:number_of_As).should be_true
-          end
-          it "should include analyser methods in methods" do
-            @item.preview_image.methods.include?('number_of_As').should be_true
-          end
-          it "should include analyser methods in public_methods" do
-            @item.preview_image.public_methods.include?('number_of_As').should be_true
-          end
         end
       end
       
@@ -157,25 +132,23 @@ describe Item do
           @item.preview_image.url(:arg).should == 'some.url'
         end
         
-        describe "when reloaded" do
+        describe "when accessed by a new model object" do
           before(:each) do
-            @item.reload
+            @item = Item.find(@item.id)
           end
           it "should destroy the data on destroy" do
             @app.datastore.should_receive(:destroy).with(@item.preview_image_uid)
             @item.destroy
           end
           it "should return the size" do
+            @app.datastore.should_receive(:retrieve).with('some_uid').and_return('DATASTRING')
             @item.preview_image.size.should == 10
           end
           it "should return the temp_object" do
+            @app.datastore.should_receive(:retrieve).with('some_uid').and_return('DATASTRING')
             temp_object = @item.preview_image.temp_object
             temp_object.should be_a(Dragonfly::ExtendedTempObject)
             temp_object.data.should == 'DATASTRING'
-          end
-          it "should have properties from the analyser" do
-            @app.register_analyser(MyTestAnalyser)
-            @item.preview_image.number_of_As.should == 2
           end
         end
 
@@ -207,10 +180,6 @@ describe Item do
             temp_object = @item.preview_image.temp_object
             temp_object.should be_a(Dragonfly::ExtendedTempObject)
             temp_object.data.should == 'ANEWDATASTRING'
-          end
-          it "should have properties from the analyser" do
-            @app.register_analyser(MyTestAnalyser)
-            @item.preview_image.number_of_As.should == 3
           end
         end
         
@@ -246,9 +215,8 @@ describe Item do
         end
 
       end
-
     end
-  end  
+  end
 
   describe "validations" do
 
@@ -372,8 +340,8 @@ describe Item do
 
   end
 
-  describe "magic attributes" do
-    
+  describe "extra properties" do
+
     before(:each) do
       @app = Dragonfly::App[:images]
       custom_analyser = Class.new(Dragonfly::Analysis::Base)
@@ -381,6 +349,7 @@ describe Item do
         def some_analyser_method(temp_object)
           "abc" + temp_object.data[0..0]
         end
+        def number_of_As(temp_object); temp_object.data.count('A'); end
       end
       @app.register_analyser(custom_analyser)
       ActiveRecord::Base.register_dragonfly_app(:image, @app)
@@ -390,59 +359,117 @@ describe Item do
       @item = Item.new
     end
     
-    it "should default the magic attribute as nil" do
-      @item.preview_image_some_analyser_method.should be_nil
-    end
+    describe "magic attributes" do
     
-    it "should set the magic attribute when assigned" do
-      @item.preview_image = '123'
-      @item.preview_image_some_analyser_method.should == 'abc1'
-    end
+      it "should default the magic attribute as nil" do
+        @item.preview_image_some_analyser_method.should be_nil
+      end
     
-    it "should not set non-magic attributes with the same prefix when assigned" do
-      @item.preview_image_blah_blah = 'wassup'
-      @item.preview_image = '123'
-      @item.preview_image_blah_blah.should == 'wassup'
-    end
+      it "should set the magic attribute when assigned" do
+        @item.preview_image = '123'
+        @item.preview_image_some_analyser_method.should == 'abc1'
+      end
     
-    it "should update the magic attribute when something else is assigned" do
-      @item.preview_image = '123'
-      @item.preview_image = '456'
-      @item.preview_image_some_analyser_method.should == 'abc4'
-    end
+      it "should not set non-magic attributes with the same prefix when assigned" do
+        @item.preview_image_blah_blah = 'wassup'
+        @item.preview_image = '123'
+        @item.preview_image_blah_blah.should == 'wassup'
+      end
     
-    it "should reset the magic attribute when set to nil" do
-      @item.preview_image = '123'
-      @item.preview_image = nil
-      @item.preview_image_some_analyser_method.should be_nil
-    end
+      it "should update the magic attribute when something else is assigned" do
+        @item.preview_image = '123'
+        @item.preview_image = '456'
+        @item.preview_image_some_analyser_method.should == 'abc4'
+      end
     
-    it "should not reset non-magic attributes with the same prefix when set to nil" do
-      @item.preview_image_blah_blah = 'wassup'
-      @item.preview_image = '123'
-      @item.preview_image = nil
-      @item.preview_image_blah_blah.should == 'wassup'
-    end
+      it "should reset the magic attribute when set to nil" do
+        @item.preview_image = '123'
+        @item.preview_image = nil
+        @item.preview_image_some_analyser_method.should be_nil
+      end
     
-    it "should work for size too" do
-      @item.preview_image = '123'
-      @item.preview_image_size.should == 3
-    end
+      it "should not reset non-magic attributes with the same prefix when set to nil" do
+        @item.preview_image_blah_blah = 'wassup'
+        @item.preview_image = '123'
+        @item.preview_image = nil
+        @item.preview_image_blah_blah.should == 'wassup'
+      end
     
-    it "should store the original file extension if it exists" do
-      data = 'jasdlkf sadjl'
-      data.stub!(:original_filename).and_return('hello.png')
-      @item.preview_image = data
-      @item.preview_image_ext.should == 'png'
-    end
+      it "should work for size too" do
+        @item.preview_image = '123'
+        @item.preview_image_size.should == 3
+      end
+    
+      it "should store the original file extension if it exists" do
+        data = 'jasdlkf sadjl'
+        data.stub!(:original_filename).and_return('hello.png')
+        @item.preview_image = data
+        @item.preview_image_ext.should == 'png'
+      end
 
-    it "should store the original file name if it exists" do
-      data = 'jasdlkf sadjl'
-      data.stub!(:original_filename).and_return('hello.png')
-      @item.preview_image = data
-      @item.preview_image_name.should == 'hello.png'
+      it "should store the original file name if it exists" do
+        data = 'jasdlkf sadjl'
+        data.stub!(:original_filename).and_return('hello.png')
+        @item.preview_image = data
+        @item.preview_image_name.should == 'hello.png'
+      end
     end
+  
+  
+    describe "delegating methods to the temp_object" do
+      before(:each) do
+        @item.preview_image = "DATASTRING"
+      end
+      it "should have properties from the analyser" do
+        @item.preview_image.number_of_As.should == 2
+      end
+      it "should report that it responds to analyser methods" do
+        @item.preview_image.respond_to?(:number_of_As).should be_true
+      end
+      it "should include analyser methods in methods" do
+        @item.preview_image.methods.include?('number_of_As').should be_true
+      end
+      it "should include analyser methods in public_methods" do
+        @item.preview_image.public_methods.include?('number_of_As').should be_true
+      end
+      it "should update when something new is assigned" do
+        @item.preview_image = 'ANEWDATASTRING'
+        @item.preview_image.number_of_As.should == 3
+      end
+
+      describe "from a new model object" do
+        before(:each) do
+          @app.datastore.stub!(:store).and_return('my_uid')
+          item = Item.create!(:preview_image => 'DATASTRING')
+          @item = Item.find(item.id)
+        end
+        it "should load the temp_object then delegate the method" do
+          @app.datastore.should_receive(:retrieve).with('my_uid').and_return('DATASTRING')
+          @item.preview_image.number_of_As.should == 2
+        end
+        it "should use the magic attribute if there is one, and not load the temp_object" do
+          @app.datastore.should_not_receive(:retrieve)
+          @item.should_receive(:preview_image_some_analyser_method).and_return('result yo')
+          @item.preview_image.some_analyser_method.should == 'result yo'
+        end
+        it "should load the temp_object then delegate the method" do
+          @app.datastore.should_receive(:retrieve).with('my_uid').and_return('DATASTRING')
+          @item.preview_image.number_of_As.should == 2
+        end
+        it "should use the magic attribute if there is one, and not load the temp_object" do
+          @app.datastore.should_not_receive(:retrieve)
+          @item.should_receive(:preview_image_some_analyser_method).and_return('result yo')
+          @item.preview_image.some_analyser_method.should == 'result yo'
+        end
+      end
     
+      it "should not raise an error if a non-existent method is called" do
+        # Just checking method missing works ok
+        lambda{
+          @item.preview_image.eggbert
+        }.should raise_error(NoMethodError)
+      end
+    end
   end
 
 end
