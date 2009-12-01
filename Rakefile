@@ -10,6 +10,7 @@ begin
     s.homepage = "http://github.com/markevans/dragonfly"
     s.authors = ["Mark Evans"]
     s.add_dependency('rack')
+    s.has_rdoc = 'yard'
   end
   Jeweler::Tasks.new do |s|
     s.name = "dragonfly-rails"
@@ -41,11 +42,11 @@ end
 require 'yard'
 YARD::Rake::YardocTask.new do |t|
   t.files   = ['lib/**/*.rb']
-  t.options = %w(--no-private)
+  t.options = %w(--no-private -e yard/handlers/*.rb)
 end
 YARD::Rake::YardocTask.new 'yard:changed' do |t|
   t.files   = `git stat | grep '.rb' | grep modified | cut -d' ' -f4`.split
-  t.options = %w(--no-private)
+  t.options = %w(--no-private -e yard/handlers/*.rb)
 end
 
 require 'spec/rake/spectask'
