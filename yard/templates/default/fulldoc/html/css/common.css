@@ -1,0 +1,8 @@
+/* Overrides for yard documentation */
+
+pre.configuration {
+  background:#F5F5FF;
+  border:1px solid #EEEEFF;
+  margin-top:4px;
+  padding:5px 12px;
+}

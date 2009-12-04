@@ -1,2 +1,9 @@
 <h2>Configuration Summary</h2>
-<%= object[:boogie].inspect %>
+<% configurable_attributes = object[:configurable_attributes] || [] %>
+<% if configurable_attributes.any? %>
+<h3>Configurable attributes</h3>
+Configurable attributes can be configured either by using something like
+<pre class="configuration">
+  CONFIGURATION STUFF WILL GO HERE
+</pre>
+<% end %>
