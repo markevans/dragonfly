@@ -1,9 +1,15 @@
+require 'forwardable'
+
 module Dragonfly
   module ActiveRecordExtensions
     
     class PendingUID; def to_s; 'PENDING'; end; end
     
     class Attachment
+      
+      extend Forwardable
+      def_delegators :temp_object,
+        :data, :to_file, :file, :tempfile, :path, :process, :process!, :encode, :encode!, :transform, :transform!
       
       def initialize(app, parent_model, attribute_name)
         @app, @parent_model, @attribute_name = app, parent_model, attribute_name

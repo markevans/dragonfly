@@ -1,4 +1,5 @@
 module Dragonfly
+
   module ActiveRecordExtensions
 
     def self.extended(klass)

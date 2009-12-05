@@ -1,5 +1,12 @@
 /* Overrides for yard documentation */
 
+pre, code, .code,
+#filecontents pre.code,
+.docstring pre.code,
+.source_code pre {
+  font-family: monaco, 'Trebuchet MS', monospace;
+}
+
 pre.code, code {
   background:#F5F5FF;
   border:1px solid #EEEEFF;

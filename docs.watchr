@@ -1,1 +1,1 @@
-watch('lib/.*\.rb|yard/.*')  {|md| system("rake yard:changed") }
+watch('lib/.*\.rb|yard/.*|extra_docs/.*')  {|md| system("rake yard:changed") }

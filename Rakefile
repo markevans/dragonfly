@@ -41,12 +41,12 @@ end
 
 require 'yard'
 YARD::Rake::YardocTask.new do |t|
-  t.files   = ['lib/**/*.rb']
-  t.options = %w(--no-private -e yard/setup.rb)
+  t.files   = ['lib/**/*.rb', 'markdown_docs/*']
+  t.options = %w(--no-private -e yard/setup.rb --files extra_docs/*)
 end
 YARD::Rake::YardocTask.new 'yard:changed' do |t|
   t.files   = `git stat | grep '.rb' | grep modified | grep -v yard | cut -d' ' -f4`.split
-  t.options = %w(--no-private -e yard/setup.rb)
+  t.options = %w(--no-private -e yard/setup.rb --files extra_docs/*)
 end
 
 require 'spec/rake/spectask'
