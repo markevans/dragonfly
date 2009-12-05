@@ -30,7 +30,6 @@ Model:
 
     class Album < ActiveRecord::Base
     
-      
       validates_presence_of :cover_image
       validates_size_of :cover_image, :maximum => 500.kilobytes
       validates_mime_type_of :cover_image, :in => %w(image/jpeg image/png image/gif)

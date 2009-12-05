@@ -59,20 +59,21 @@ We can use the attribute much like other other active record attributes:
     
 We can inspect properties of the attribute
 
-    album.width                          # => 280
-    album.height                         # => 140
-    album.cover_image.number_of_colours  # => 34703 (can also use American spelling)
-    album.mime_type                      # => 'image/png'
+    album.cover_image.width                          # => 280
+    album.cover_image.height                         # => 140
+    album.cover_image.cover_image.number_of_colours  # => 34703 (can also use American spelling)
+    album.cover_image.mime_type                      # => 'image/png'
     
 The properties available (i.e. 'width', etc.) come from the {Dragonfly} app's registered analysers - see {file:Analysers.md Analysers}.
 
 We can play around with the data
 
-    album.data                           # => "\377???JFIF\000\..."
-    album.to_file('out.png')             # writes to file 'out.png' and returns a readable file object
-    album.tempfile                       # => #<File:/var/folders/st/strHv74sH044JPabSiODz... i.e. a tempfile holding the data
-    album.file                           # alias for tempfile, above
-    album.path                           # => '/var/folders/st/strHv74sH044JPabSiODz...' i.e. the path of the tempfile
+    album.cover_image.data                           # => "\377???JFIF\000\..."
+    album.cover_image.to_file('out.png')             # writes to file 'out.png' and returns a readable file object
+    album.cover_image.tempfile                       # => #<File:/var/folders/st/strHv74sH044JPabSiODz... i.e. a tempfile holding the data
+    album.cover_image.file                           # alias for tempfile, above
+    album.cover_image.path                           # => '/var/folders/st/strHv74sH044JPabSiODz...' i.e. the path of the tempfile
+    album.cover_image.size                           # => 134507 (size in bytes)
 
 We can process the data
 
@@ -129,12 +130,63 @@ Once the model is saved, we can get a url for the image (which is served by the 
     album.cover_image.url('300x200#nw', :gif)   # => '/media/2009/12/05/170406_file.tif?m=resize_and_crop&o[height]=...'
 
 Note that any arguments given to `url` are of the same form as those used for `transform`, i.e. those registered as shortcuts (see {file:Shortcuts.md Shortcuts})
+These urls are what you would use in, for example, html views.
 
 Validations
 -----------
-TODO
+`validates_presence_of` and `validates_size_of` work out of the box, and Dragonfly provides two more,
+`validates_property` and `validates_mime_type_of` (which is actually just a thin wrapper around `validates_property`).
+
+    class Album
+
+      validates_presence_of :cover_image
+      validates_size_of :cover_image, :maximum => 500.kilobytes
+      validates_mime_type_of :cover_image, :in => %w(image/jpeg image/png image/gif)
+      validates_property :width, :of => :cover_image, :in => (0..400)
+
+      # ...
+    end
+
+The property argument of `validates_property` will generally be one of the registered analyser properties as described in {file:Analysers.md Analysers}.
+However it would actually work for arbitrary properties, including those of non-dragonfly model attributes.
+See {Dragonfly::ActiveRecordExtensions::Validations} for more info.
+
+Name and extension
+------------------
+If the object assigned is a file, or responds to `original_filename` (as is the case with file uploads in Rails, etc.), then `name` and `ext` will be set.
+
+    album.cover_image = File.new('path/to/my_image.png')
+    
+    album.cover_image.name    # => 'my_image.png'
+    album.cover_image.ext     # => 'png'
+    
 
 'Magic' Attributes
 ------------------
-TODO
+The only model column necessary for the migration, as described above, is the uid column, e.g. `cover_image_uid`.
+However, in many cases you may want to record some other properties in the database, whether it be for using in sql queries, or
+for caching an attribute for performance reasons.
 
+For the properties `name`, `ext`, `size` and any of the registered analysis methods (e.g. `width`, etc. in the examples above),
+this is done automatically for you, if the corresponding column exists.
+For example:
+
+In the migration:
+
+    add_column :albums, :cover_image_ext, :string
+    add_column :albums, :cover_image_width, :integer
+
+These are automatically set when assigned:
+
+    album.cover_image = File.new('path/to/my_image.png')
+    
+    album.cover_image_ext    # => 'png'
+    album.cover_image_width  # => 280
+    
+They can be used to avoid retrieving data from the datastore for analysis (e.g. if you've used something like S3 to store data - see {file:DataStorage.md DataStorage})
+
+    album = Album.first
+    
+    album.cover_image.ext       # => 'png'  - no need to retrieve data - takes it from `cover_image_ext`
+    album.cover_image.width     # => 280    - no need to retrieve data - takes it from `cover_image_width`
+    album.cover_image.size      # => 134507 - but it needs to retrieve data from the data store, then analyse
