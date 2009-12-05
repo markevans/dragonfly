@@ -1,8 +1,20 @@
 /* Overrides for yard documentation */
 
-pre.configuration {
+pre.code, code {
   background:#F5F5FF;
   border:1px solid #EEEEFF;
+}
+pre.code {
   margin-top:4px;
   padding:5px 12px;
+}
+
+code .val {
+  color:#036A07;
+}
+code .kw {
+  color:#0000FF;
+}
+code .symbol {
+  color:#C5060B;
 }

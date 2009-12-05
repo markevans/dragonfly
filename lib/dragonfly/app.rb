@@ -66,7 +66,7 @@ module Dragonfly
       def apps
         @apps ||= {}
       end
-            
+    
     end
     
     def initialize
@@ -98,7 +98,7 @@ module Dragonfly
     
     configurable_attr :datastore do DataStorage::Base.new end
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
-    configurable_attr :cache_duration, 3600*24*365 # Defaults to 1 year
+    configurable_attr :cache_duration, 3600*24*365 # (1 year)
     configurable_attr :fallback_mime_type, 'application/octet-stream'    
     
     # The call method required by Rack to run.
