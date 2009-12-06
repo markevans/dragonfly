@@ -3,6 +3,7 @@ module Dragonfly
     
     def self.apply_configuration(app)
       app.configure do |c|
+        c.register_analyser(Analysis::FileCommandAnalyser)
         c.register_analyser(Analysis::RMagickAnalyser)
         c.register_processor(Processing::RMagickProcessor)
         c.register_encoder(Encoding::RMagickEncoder)

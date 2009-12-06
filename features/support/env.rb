@@ -8,9 +8,11 @@ require File.dirname(__FILE__) + '/../../spec/image_matchers.rb'
 # A hash of <name for reference> => <dragonfly uid> pairs
 TEMP_FILES = {}
 
-Dragonfly::App[:images].configure_with(Dragonfly::StandardConfiguration)
 Dragonfly::App[:images].configure_with(Dragonfly::RMagickConfiguration)
-Dragonfly::App[:files].configure_with(Dragonfly::StandardConfiguration)
+Dragonfly::App[:files].configure do |c|
+  c.register_analyser(Dragonfly::Analysis::FileCommandAnalyser)
+  c.register_encoder(Dragonfly::Encoding::TransparentEncoder)
+end
 
 SAMPLE_IMAGE_PATH = File.dirname(__FILE__)+'/../../samples/beach.png'
 

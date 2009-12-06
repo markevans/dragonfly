@@ -3,7 +3,6 @@ require 'dragonfly'
 ### The dragonfly app ###
 
 app = Dragonfly::App[:images]
-app.configure_with(Dragonfly::StandardConfiguration)
 app.configure_with(Dragonfly::RMagickConfiguration)
 app.configure do |c|
   c.log = RAILS_DEFAULT_LOGGER
