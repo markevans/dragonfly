@@ -6,6 +6,7 @@ Dragonfly provides a module that extends ActiveRecord so that you can access Dra
 Registering with ActiveRecord
 -----------------------------
 Suppose we have a dragonfly app
+
     app = Dragonfly::App[:my_app_name]
 
 First extend activerecord
@@ -14,7 +15,7 @@ First extend activerecord
 
 Now register the app, giving the prefix for defining accessor methods (in this case 'image')
 
-      ActiveRecord::Base.register_dragonfly_app(:image, app)
+    ActiveRecord::Base.register_dragonfly_app(:image, app)
 
 Adding accessors
 ----------------
@@ -108,7 +109,7 @@ then we can register a shortcut (see {file:Shortcuts.md Shortcuts}) and use that
 
 Persisting
 ----------
-When the model is saved, a before_save callback persists the data to the {App}'s configured datastore (see {file:DataStorage.md DataStorage})
+When the model is saved, a before_save callback persists the data to the {Dragonfly::App App}'s configured datastore (see {file:DataStorage.md DataStorage})
 The uid column is then filled in.
 
     album = Album.new
@@ -123,7 +124,7 @@ The uid column is then filled in.
 
 URLs
 ----
-Once the model is saved, we can get a url for the image (which is served by the Dragonfly {App} itself):
+Once the model is saved, we can get a url for the image (which is served by the Dragonfly {Dragonfly::App App} itself):
 
     album.cover_image.url                       # => '/media/2009/12/05/170406_file' (Note there is no extension)
     album.cover_image.url(:png)                 # => '/media/2009/12/05/170406_file.png'

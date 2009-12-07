@@ -30,4 +30,4 @@ You can now configure the app to use this datastore like so
 
     Dragonfly::App[:my_app_name].datastore = MyDataStore.new
 
-If you want your datastore to be configurable, you can include the {Configurable} module.
+If you want your datastore to be configurable, you can include the {Dragonfly::Configurable Configurable} module.

@@ -29,7 +29,7 @@ gives us the method `mime_type`, which is necessary for the app to serve the fil
 
     temp_object.mime_type    # => 'image/png'
 
-As the file command analyser is {Configurable configurable}, we can configure it as we register it if we need to
+As the file command analyser is {Dragonfly::Configurable configurable}, we can configure it as we register it if we need to
 
     app.register_analyser(Dragonfly::Analysis::FileCommandAnalyser) do |a|
       a.file_command = '/usr/bin/file'
@@ -49,7 +49,9 @@ Each method takes the temp_object as its argument.
         # use temp_object.data, temp_object.path, etc...
         temp_object.size / 30
       end
-    
+
+      # ... add as many methods as you wish
+
     end
 
     app.register_analyser(MyAnalyser)

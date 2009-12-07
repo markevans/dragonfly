@@ -51,7 +51,7 @@ registered encoder, and so on.
     
     app.register_encoder(MyEncoder)
 
-If the encoder is {Configurable configurable}, we can configure it as we register it if we need to
+If the encoder is {Dragonfly::Configurable configurable}, we can configure it as we register it if we need to
 
     app.register_encoder(MyEncoder) do |e|
       e.some_attribute = 'hello'
