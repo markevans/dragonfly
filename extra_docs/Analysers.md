@@ -35,6 +35,11 @@ As the file command analyser is {Configurable configurable}, we can configure it
       a.file_command = '/usr/bin/file'
     end
 
+The saved configuration {Dragonfly::RMagickConfiguration RMagickConfiguration} registers the above two analysers automatically.
+
+Custom Analysers
+----------------
+
 To register a custom analyser, derive from {Dragonfly::Analysis::Base Analysis::Base} and register.
 Each method takes the temp_object as its argument.
 
@@ -52,3 +57,5 @@ Each method takes the temp_object as its argument.
     temp_object = app.create_object(File.new('path/to/image.png'))
     
     temp_object.coolness     # => 2067
+
+You can register multiple analysers.
