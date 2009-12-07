@@ -42,7 +42,7 @@ module Dragonfly
         end
       end
       raise UnableToHandle, "None of the registered objects for #{self} were able to deal with the method call " +
-        "#{meth}(#{args.map{|a| a.inspect}.join(',')}), even though the method is implemented" if self.has_callable_method?(meth)
+        "#{meth}(#{args.map{|a| a.inspect[0..100]}.join(',')}), even though the method is implemented" if self.has_callable_method?(meth)
       super
     end
     
