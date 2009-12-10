@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2009-11-18}
+  s.date = %q{2009-12-10}
   s.email = %q{mark@new-bamboo.co.uk}
   s.homepage = %q{http://github.com/markevans/dragonfly}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -25,20 +25,17 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<dragonfly>, [">= 0"])
       s.add_runtime_dependency(%q<rack>, [">= 0"])
       s.add_runtime_dependency(%q<rack-cache>, [">= 0"])
-      s.add_runtime_dependency(%q<mime-types>, [">= 0"])
       s.add_runtime_dependency(%q<rmagick>, [">= 0"])
     else
       s.add_dependency(%q<dragonfly>, [">= 0"])
       s.add_dependency(%q<rack>, [">= 0"])
       s.add_dependency(%q<rack-cache>, [">= 0"])
-      s.add_dependency(%q<mime-types>, [">= 0"])
       s.add_dependency(%q<rmagick>, [">= 0"])
     end
   else
     s.add_dependency(%q<dragonfly>, [">= 0"])
     s.add_dependency(%q<rack>, [">= 0"])
     s.add_dependency(%q<rack-cache>, [">= 0"])
-    s.add_dependency(%q<mime-types>, [">= 0"])
     s.add_dependency(%q<rmagick>, [">= 0"])
   end
 end
