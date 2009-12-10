@@ -93,6 +93,7 @@ module Dragonfly
     
     extend Forwardable
     def_delegator :url_handler, :url_for
+    def_delegator :datastore, :destroy
     
     include Configurable
     

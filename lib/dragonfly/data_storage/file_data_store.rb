@@ -1,3 +1,5 @@
+require 'pathname'
+
 module Dragonfly
   module DataStorage
 
