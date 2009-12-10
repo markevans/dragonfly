@@ -2,7 +2,7 @@ Shortcuts
 =========
 
 When you call {Dragonfly::App#fetch fetch}, {Dragonfly::ExtendedTempObject#transform transform},
-{Dragonfly::App#url_for url_for}, (or {Dragonfly::ActiveRecordExtensions::Attachment#url url} on an ActiveRecord attachment), you can specify all the job parameters
+{Dragonfly::UrlHandler#url_for url_for}, (or {Dragonfly::ActiveRecordExtensions::Attachment#url url} on an ActiveRecord attachment), you can specify all the job parameters
 necessary to fetch the appropriate content.
 
 The parameters are the following:
