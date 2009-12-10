@@ -5,6 +5,8 @@ Dragonfly provides a module that extends ActiveRecord so that you can access Dra
 
 Registering with ActiveRecord
 -----------------------------
+If you've used a rails generator, or required the file 'dragonfly/rails/images.rb', then this step will be already done for you.
+
 Suppose we have a dragonfly app
 
     app = Dragonfly::App[:my_app_name]

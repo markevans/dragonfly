@@ -11,6 +11,5 @@ This will:
     image_accessor :preview_image
     
   in your models.
-- create an empty placeholder for putting your own custom processing methods
 
 ------------------------------------------------------------------------
