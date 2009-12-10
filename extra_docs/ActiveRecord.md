@@ -62,10 +62,10 @@ We can inspect properties of the attribute
 
     album.cover_image.width                          # => 280
     album.cover_image.height                         # => 140
-    album.cover_image.cover_image.number_of_colours  # => 34703 (can also use American spelling)
+    album.cover_image.number_of_colours              # => 34703 (can also use American spelling)
     album.cover_image.mime_type                      # => 'image/png'
     
-The properties available (i.e. 'width', etc.) come from the {Dragonfly} app's registered analysers - see {file:Analysers.md Analysers}.
+The properties available (i.e. 'width', etc.) come from the app's registered analysers - see {file:Analysers.md Analysers}.
 
 We can play around with the data
 
@@ -150,7 +150,7 @@ Validations
 
 The property argument of `validates_property` will generally be one of the registered analyser properties as described in {file:Analysers.md Analysers}.
 However it would actually work for arbitrary properties, including those of non-dragonfly model attributes.
-See {Dragonfly::ActiveRecordExtensions::Validations} for more info.
+See {Dragonfly::ActiveRecordExtensions::Validations Validations} for more info.
 
 Name and extension
 ------------------
