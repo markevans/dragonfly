@@ -43,12 +43,17 @@ View (to display):
     ...etc.
 
 Using outside of rails, custom storage/processing/encoding/analysis, and more...
-------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 Dragonfly is primarily a Rack app, the Rails part of it being nothing more than a separate layer on top of the main code, which means you can use it as a standalone app, or with Sinatra, Merb, etc.
 
 It is intended to be highly customizable, and is not limited to images, but any data type that could suit on-the-fly processing/encoding.
 
-The docs are in the process of being added, and will appear soon!...
+For more info, consult the <a href="http://yardoc.org/docs/markevans-dragonfly">DOCUMENTATION</a>
+
+Issues
+======
+Please use the <a href="http://github.com/markevans/dragonfly/issues">github issue tracker</a> if you have any issues.
+
 
 Credits
 =======
