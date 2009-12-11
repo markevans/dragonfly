@@ -1,4 +1,5 @@
 --no-private
--e yard/setup.rb
---files extra_docs/*
-
+-e
+yard/setup.rb
+--files
+extra_docs/*
