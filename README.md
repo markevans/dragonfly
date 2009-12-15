@@ -1,7 +1,7 @@
 Dragonfly
 ===========
 
-Dragonfly is an on-the-fly processing/encoding framework written as a Rack application.
+Dragonfly is a {http://rack.rubyforge.org Rack} framework for on-the-fly processing and encoding.
 It includes an extension for Ruby on Rails to enable easy image handling.
 
 For the lazy rails user
@@ -54,6 +54,9 @@ Issues
 ======
 Please use the <a href="http://github.com/markevans/dragonfly/issues">github issue tracker</a> if you have any issues.
 
+Suggestions/Questions
+=====================
+{http://groups.google.com/group/dragonfly-users}
 
 Credits
 =======
