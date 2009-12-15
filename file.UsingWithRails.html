@@ -44,17 +44,20 @@ and as a Rails Metal.</p>
 
 <p>In environment.rb:</p>
 
-<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly-rails'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'dragonfly/rails/images'</span>
+<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rmagick'</span>
+<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rack-cache'</span>
+
+<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'dragonfly/rails/images'</span>
 <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='use identifier id'>use</span> <span class='string val'>'Dragonfly::MiddlewareWithCache'</span><span class='comma token'>,</span> <span class='symbol val'>:images</span>
 </pre>
-
-<p>The gem dragonfly-rails does nothing more than tie together the gem dependencies dragonfly,
-rack-cache and rmagick.</p>
 
 <p>The required file 'dragonfly/rails/images.rb' initializes a dragonfly app, configures it to use rmagick processing, encoding, etc.,
 and registers the app so that you can use ActiveRecord accessors.</p>
 
-<p>For reference, the contents are as follows:</p>
+<p>Because in this case it's configured to use <a target="_parent" href="http://tomayko.com/src/rack-cache/" title="rack-cache">rack-cache</a> and <a target="_parent" href="http://rmagick.rubyforge.org/" title="rmagick">rmagick</a>,
+you should include the first two lines above.</p>
+
+<p>For reference, the contents of 'dragonfly/rails/images.rb' are as follows:</p>
 
 <pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
 
@@ -78,8 +81,8 @@ and registers the app so that you can use ActiveRecord accessors.</p>
 <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='register_dragonfly_app identifier id'>register_dragonfly_app</span><span class='lparen token'>(</span><span class='symbol val'>:image</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='rparen token'>)</span>
 </pre>
 
-<p>The second line configures rails to use a <tt><a href="Dragonfly/MiddlewareWithCache.html" title="middleware">middleware</a></tt> which uses the named app (named <code>:images</code>), and puts
-<a href="http://tomayko.com/src/rack-cache/" target="_parent" title="Rack::Cache">Rack::Cache</a> in front of it for performance.
+<p>The line <code>config.middleware.use 'Dragonfly::MiddlewareWithCache', :images</code> configures rails to use a <tt><a href="Dragonfly/MiddlewareWithCache.html" title="middleware">middleware</a></tt> which uses the named app (named <code>:images</code>), and puts
+<a target="_parent" href="http://tomayko.com/src/rack-cache/" title="Rack::Cache">Rack::Cache</a> in front of it for performance.
 You can pass extra arguments to this line which will go directly to configuring Rack::Cache (see its docs for how to configure it).
 The default configuration for Rack::Cache is</p>
 
@@ -94,7 +97,10 @@ The default configuration for Rack::Cache is</p>
 
 <h2>Using as a Rails Metal</h2>
 
-<p>The easiest way of setting up as a rails metal is using the supplied generator.
+<p>Setting up as a Rails Metal may be preferable to using the middleware as above if you want to see the configuration
+more explicitly (and therefore have more control over it).</p>
+
+<p>The easiest way is using the supplied generator.
 (NB I've had a couple of problems with the generator with plural/singular names with early versions of metal in Rails 2.3 -
 this should be resolvable by making sure the metal name matches its filename).</p>
 
@@ -149,7 +155,7 @@ this should be resolvable by making sure the metal name matches its filename).</
 </div></div>
     
     <div id="footer">
-  Generated on Sun Dec 13 14:55:37 2009 by 
+  Generated on Tue Dec 15 23:06:17 2009 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.4.0 (ruby-1.8.7).
 </div>

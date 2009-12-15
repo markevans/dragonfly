@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta name="Content-Type" content="text/html; charset=UTF-8" />
-<title>Documentation by YARD 0.4.0</title>
+<title>File: README</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -37,14 +37,19 @@
     
     <div id="content"><div id='filecontents'><h1>Dragonfly</h1>
 
-<p>Dragonfly is an on-the-fly processing/encoding framework written as a Rack application.
+<p>Dragonfly is a <a href="http://rack.rubyforge.org">Rack</a> framework for on-the-fly processing and encoding.
 It includes an extension for Ruby on Rails to enable easy image handling.</p>
 
 <h2>For the lazy rails user</h2>
 
+<p>To use simply for image thumbnails etc. in Rails...</p>
+
 <p>environment.rb:</p>
 
-<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly-rails'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'dragonfly/rails/images'</span>
+<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rmagick'</span>
+<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rack-cache'</span>
+
+<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'dragonfly/rails/images'</span>
 <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='use identifier id'>use</span> <span class='string val'>'Dragonfly::MiddlewareWithCache'</span><span class='comma token'>,</span> <span class='symbol val'>:images</span>
 </pre>
 
@@ -87,11 +92,15 @@ It includes an extension for Ruby on Rails to enable easy image handling.</p>
 
 <p>It is intended to be highly customizable, and is not limited to images, but any data type that could suit on-the-fly processing/encoding.</p>
 
-<p>For more info, consult the <a href="http://yardoc.org/docs/markevans-dragonfly">DOCUMENTATION</a></p>
+<p>For more info, consult the <a href="http://markevans.github.com/dragonfly">DOCUMENTATION</a></p>
 
 <h1>Issues</h1>
 
 <p>Please use the <a href="http://github.com/markevans/dragonfly/issues">github issue tracker</a> if you have any issues.</p>
+
+<h1>Suggestions/Questions</h1>
+
+<p><a href="http://groups.google.com/group/dragonfly-users">Google group dragonfly-users</a></p>
 
 <h1>Credits</h1>
 
@@ -106,7 +115,7 @@ It includes an extension for Ruby on Rails to enable easy image handling.</p>
 </div></div>
     
     <div id="footer">
-  Generated on Sun Dec 13 14:55:36 2009 by 
+  Generated on Tue Dec 15 23:06:17 2009 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.4.0 (ruby-1.8.7).
 </div>

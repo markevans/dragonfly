@@ -20,7 +20,7 @@
       <div id="menu">
   
     <a href="_index.html" title="Index">Index</a> &raquo; 
-    <span class="title">File: README</span>
+    <span class="title">File: Index</span>
   
 </div>
 
@@ -35,78 +35,57 @@
     
     <iframe id="search_frame"></iframe>
     
-    <div id="content"><div id='filecontents'><h1>Dragonfly</h1>
+    <div id="content"><div id='filecontents'><h1>Dragonfly Documentation</h1>
 
-<p>Dragonfly is an on-the-fly processing/encoding framework written as a Rack application.
-It includes an extension for Ruby on Rails to enable easy image handling.</p>
+<p>Welcome to the documentation for Dragonfly!</p>
 
-<h2>For the lazy rails user</h2>
+<p>Dragonfly is a <a target="_parent" href="http://rack.rubyforge.org" title="Rack">Rack</a> framework for on-the-fly processing and encoding.</p>
 
-<p>environment.rb:</p>
+<p>It includes an extension for Ruby on Rails to enable easy image handling.
+It is intended to be highly customizable, and is not limited to images, but any data type that could suit on-the-fly processing/encoding.</p>
 
-<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly-rails'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'dragonfly/rails/images'</span>
-<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='use identifier id'>use</span> <span class='string val'>'Dragonfly::MiddlewareWithCache'</span><span class='comma token'>,</span> <span class='symbol val'>:images</span>
-</pre>
+<p>Use the links at the top-right to navigate around the code, or jump straight to one of the guides below.</p>
 
-<p>Migration:</p>
+<ul>
+<li><a href="file.README.html" title="Quick start for using in Rails for image handling (README)">Quick start for using in Rails for image handling (README)</a></li>
+<li><a href="file.GettingStarted.html" title="Getting started">Getting started</a></li>
+<li><a href="file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li>
+<li><a href="file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li>
+<li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li>
+<li><a href="file.Analysers.html" title="Analysers">Analysers</a></li>
+<li><a href="file.Processing.html" title="Processing">Processing</a></li>
+<li><a href="file.Encoding.html" title="Encoding">Encoding</a></li>
+<li><a href="file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li>
+</ul>
 
-<pre class="code"><span class='add_column identifier id'>add_column</span> <span class='symbol val'>:albums</span><span class='comma token'>,</span> <span class='symbol val'>:cover_image_uid</span><span class='comma token'>,</span> <span class='symbol val'>:string</span>
-</pre>
 
-<p>Model:</p>
+<h2>Installation</h2>
 
-<pre class="code"><span class='class class kw'>class</span> <span class='Album constant id'>Album</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
-  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:cover_image</span>            <span class='comment val'># Defines reader/writer for cover_image</span>
-  <span class='comment val'># ...</span>
-<span class='end end kw'>end</span>
-</pre>
+<pre class="code"><span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='dragonfly identifier id'>dragonfly</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='source identifier id'>source</span><span class='assign token'>=</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/gemcutter.org
+</span></pre>
 
-<p>View (for uploading via a file field):</p>
+<h2>Issues</h2>
 
-<pre class="code"><span class='lt op'>&lt;</span><span class='string val'>% form_for </span><span class='@album ivar id'>@album</span><span class='comma token'>,</span> <span class='symbol val'>:html</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:multipart</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rbrace token'>}</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span> <span class='string val'>%&gt;
-  ...
-  &lt;%= f.file_field :cover_image %&gt;</span>
-  <span class='dot3 op'>...</span>
-<span class='lt op'>&lt;</span><span class='string val'>% end </span><span class='mod op'>%</span><span class='gt op'>&gt;</span>
-</pre>
+<p>Please use the <a href="http://github.com/markevans/dragonfly/issues">github issue tracker</a>.</p>
 
-<p>View (to display):</p>
+<h2>Suggestions/Questions</h2>
 
-<pre class="code"><span class='lt op'>&lt;</span><span class='string val'>%= image_tag @album.cover_image.url(:gif) %&gt;
-&lt;%=</span> <span class='image_tag identifier id'>image_tag</span> <span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='url identifier id'>url</span><span class='lparen token'>(</span><span class='string val'>'400x200'</span><span class='rparen token'>)</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span>
-<span class='lt op'>&lt;</span><span class='string val'>%= image_tag @album.cover_image.url('100x100!', :png) %&gt;
-&lt;%=</span> <span class='image_tag identifier id'>image_tag</span> <span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='url identifier id'>url</span><span class='lparen token'>(</span><span class='string val'>'100x100#'</span><span class='rparen token'>)</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span>
-<span class='lt op'>&lt;</span><span class='string val'>%= image_tag @album.cover_image.url('50x50+30+30sw', :tif) %&gt;
-&lt;%=</span> <span class='image_tag identifier id'>image_tag</span> <span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='url identifier id'>url</span><span class='lparen token'>(</span><span class='symbol val'>:rotate</span><span class='comma token'>,</span> <span class='integer val'>15</span><span class='rparen token'>)</span> <span class='mod op'>%</span><span class='gt op'>&gt;</span>
-<span class='dot3 op'>...</span><span class='etc identifier id'>etc</span><span class='dot token'>.</span>
-</pre>
+<p><a target="_parent" href="http://groups.google.com/group/dragonfly-users" title="http://groups.google.com/group/dragonfly-users">http://groups.google.com/group/dragonfly-users</a></p>
 
-<h2>Using outside of rails, custom storage/processing/encoding/analysis, and more...</h2>
-
-<p>Dragonfly is primarily a Rack app, the Rails part of it being nothing more than a separate layer on top of the main code, which means you can use it as a standalone app, or with Sinatra, Merb, etc.</p>
-
-<p>It is intended to be highly customizable, and is not limited to images, but any data type that could suit on-the-fly processing/encoding.</p>
-
-<p>For more info, consult the <a href="http://yardoc.org/docs/markevans-dragonfly">DOCUMENTATION</a></p>
-
-<h1>Issues</h1>
-
-<p>Please use the <a href="http://github.com/markevans/dragonfly/issues">github issue tracker</a> if you have any issues.</p>
-
-<h1>Credits</h1>
+<h2>Credits</h2>
 
 <ul>
 <li><a href="http://github.com/markevans">Mark Evans</a> (author)</li>
 </ul>
 
 
-<h1>Copyright</h1>
+<h2>Copyright</h2>
 
 <p>Copyright (c) 2009 Mark Evans. See LICENSE for details.</p>
 </div></div>
     
     <div id="footer">
-  Generated on Sun Dec 13 14:55:36 2009 by 
+  Generated on Tue Dec 15 23:06:17 2009 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.4.0 (ruby-1.8.7).
 </div>
