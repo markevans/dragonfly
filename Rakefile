@@ -4,28 +4,13 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
     s.name = "dragonfly"
-    s.summary = %Q{Dragonfly is an on-the-fly processing/encoding framework written as a Rack application.
-    It includes an extension for Ruby on Rails to enable easy image handling}
+    s.summary = %Q{Dragonfly is an on-the-fly Rack processing/encoding framework.
+    It includes an extension for Ruby on Rails for easy image handling}
     s.email = "mark@new-bamboo.co.uk"
     s.homepage = "http://github.com/markevans/dragonfly"
     s.authors = ["Mark Evans"]
     s.add_dependency('rack')
     s.has_rdoc = 'yard'
-  end
-  Jeweler::GemcutterTasks.new
-  Jeweler::Tasks.new do |s|
-    s.name = "dragonfly-rails"
-    s.summary = %Q{This gem is deprecated. It was previously used simply for bundling four gem dependencies into one: dragonfly, rack, rack-cache and rmagick}
-    s.email = "mark@new-bamboo.co.uk"
-    s.homepage = "http://github.com/markevans/dragonfly"
-    s.authors = ["Mark Evans"]
-    s.files = []
-    s.test_files = []
-    s.extra_rdoc_files = []
-    s.add_dependency('dragonfly')
-    s.add_dependency('rack')
-    s.add_dependency('rack-cache')
-    s.add_dependency('rmagick')
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError

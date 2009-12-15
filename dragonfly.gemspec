@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
@@ -121,7 +121,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{dragonfly is an on-the-fly processing/encoding framework written as a Rack application. It includes an extension for Ruby on Rails to enable easy image handling}
+  s.summary = %q{Dragonfly is an on-the-fly processing/encoding framework written as a Rack application. It includes an extension for Ruby on Rails to enable easy image handling}
   s.test_files = [
     "spec/argument_matchers.rb",
      "spec/dragonfly/active_record_extensions/attachment_spec.rb",
