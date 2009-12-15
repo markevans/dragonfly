@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+<title>Module: Dragonfly::ActiveRecordExtensions::ClassMethods</title>
+<link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '../..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (C)</a> &raquo; 
+    <a href="../../Dragonfly.html" title="Dragonfly">Dragonfly</a> &raquo; <a href="../ActiveRecordExtensions.html" title="ActiveRecordExtensions">ActiveRecordExtensions</a>
+     &raquo; 
+    <span class="title">ClassMethods</span>
+  
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Module: Dragonfly::ActiveRecordExtensions::ClassMethods 
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+      <dt class="r1">Includes:</dt>
+      <dd class="r1"><a href="Validations.html" title="Dragonfly::ActiveRecordExtensions::Validations">Dragonfly::ActiveRecordExtensions::Validations</a></dd>
+      
+    
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/dragonfly/active_record_extensions/class_methods.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+  
+  
+  
+  
+
+
+
+  <h2>Method Summary</h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#dragonfly_apps_for_attributes-instance_method" title="#dragonfly_apps_for_attributes (instance method)">- (Object) <strong>dragonfly_apps_for_attributes</strong> </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#register_dragonfly_app-instance_method" title="#register_dragonfly_app (instance method)">- (Object) <strong>register_dragonfly_app</strong>(accessor_prefix, app) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+  </ul>
+
+
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <a href="Validations.html" title="Dragonfly::ActiveRecordExtensions::Validations">Dragonfly::ActiveRecordExtensions::Validations</a></h3>
+  <p class="inherited"><a href="Validations.html#expected_values_string-instance_method" title="#expected_values_string">#expected_values_string</a>, <a href="Validations.html#validates_mime_type_of-instance_method" title="#validates_mime_type_of">#validates_mime_type_of</a>, <a href="Validations.html#validates_property-instance_method" title="#validates_property">#validates_property</a></p>
+
+
+  <div id="method_details">
+    <h2>Method Details</h2>
+    
+      <div class="method_details first">
+  <p class="signature first" id="dragonfly_apps_for_attributes-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>dragonfly_apps_for_attributes</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+35
+36
+37</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/class_methods.rb', line 35</span>
+
+<span class='def def kw'>def</span> <span class='dragonfly_apps_for_attributes identifier id'>dragonfly_apps_for_attributes</span>
+  <span class='@dragonfly_apps_for_attributes ivar id'>@dragonfly_apps_for_attributes</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="register_dragonfly_app-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>register_dragonfly_app</strong>(accessor_prefix, app) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/class_methods.rb', line 7</span>
+
+<span class='def def kw'>def</span> <span class='register_dragonfly_app identifier id'>register_dragonfly_app</span><span class='lparen token'>(</span><span class='accessor_prefix identifier id'>accessor_prefix</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='rparen token'>)</span>
+  <span class='metaclass identifier id'>metaclass</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
+    
+    <span class='comment val'># Defines e.g. 'image_accessor' for any activerecord class body</span>
+    <span class='define_method identifier id'>define_method</span> <span class='dstring node'>&quot;#{accessor_prefix}_accessor&quot;</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='attribute identifier id'>attribute</span><span class='bitor op'>|</span>
+
+      <span class='before_save identifier id'>before_save</span> <span class='symbol val'>:save_attached_files</span> <span class='unless unless_mod kw'>unless</span> <span class='before_save_callback_chain identifier id'>before_save_callback_chain</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:save_attached_files</span><span class='rparen token'>)</span>
+      <span class='before_destroy identifier id'>before_destroy</span> <span class='symbol val'>:destroy_attached_files</span> <span class='unless unless_mod kw'>unless</span> <span class='before_destroy_callback_chain identifier id'>before_destroy_callback_chain</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:destroy_attached_files</span><span class='rparen token'>)</span>
+
+      <span class='comment val'># Register the new attribute</span>
+      <span class='dragonfly_apps_for_attributes identifier id'>dragonfly_apps_for_attributes</span><span class='lbrack token'>[</span><span class='attribute identifier id'>attribute</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span>
+      
+      <span class='comment val'># Define the setter for the attribute</span>
+      <span class='define_method identifier id'>define_method</span> <span class='dstring node'>&quot;#{attribute}=&quot;</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='value identifier id'>value</span><span class='bitor op'>|</span>
+        <span class='attachments identifier id'>attachments</span><span class='lbrack token'>[</span><span class='attribute identifier id'>attribute</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='assign identifier id'>assign</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+
+      <span class='comment val'># Define the getter for the attribute</span>
+      <span class='define_method identifier id'>define_method</span> <span class='attribute identifier id'>attribute</span> <span class='do do kw'>do</span>
+        <span class='attachments identifier id'>attachments</span><span class='lbrack token'>[</span><span class='attribute identifier id'>attribute</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_value identifier id'>to_value</span>
+      <span class='end end kw'>end</span>
+
+    <span class='end end kw'>end</span>
+    
+  <span class='end end kw'>end</span>
+  <span class='app identifier id'>app</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Sun Dec 13 14:55:41 2009 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.4.0 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

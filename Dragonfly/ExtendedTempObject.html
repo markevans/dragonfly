@@ -1,0 +1,737 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+<title>Class: Dragonfly::ExtendedTempObject</title>
+<link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (E)</a> &raquo; 
+    <a href="../Dragonfly.html" title="Dragonfly">Dragonfly</a>
+     &raquo; 
+    <span class="title">ExtendedTempObject</span>
+  
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Class: Dragonfly::ExtendedTempObject 
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><a href="TempObject.html" title="Dragonfly::TempObject">Dragonfly::TempObject</a></span>
+      
+        <ul class="fullTree">
+          <li><a href="../Object.html" title="Object">Object</a></li>
+          
+            <li class="next"><a href="TempObject.html" title="Dragonfly::TempObject">Dragonfly::TempObject</a></li>
+          
+            <li class="next">Dragonfly::ExtendedTempObject</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/dragonfly/extended_temp_object.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+  
+  
+  
+  
+  <h2>Attribute Summary</h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#app-class_method" title="app (class method)">+ (Object) <strong>app</strong> </a>
+  
+  </span>
+  
+    
+    
+  
+  
+  
+  
+
+  
+    <span class="summary_desc">
+Returns the value of attribute <tt>app</tt>.
+
+</span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  <h2>Method Summary</h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#encode-instance_method" title="#encode (instance method)">- (Object) <strong>encode</strong>(*args) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#encode%21-instance_method" title="#encode! (instance method)">- (Object) <strong>encode!</strong>(*args) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#inspect-instance_method" title="#inspect (instance method)">- (Object) <strong>inspect</strong> </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc">
+As we create customly configured subclasses of this class, the console
+gives a confusing output when inspecting, so modify here.
+
+</span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#methods-instance_method" title="#methods (instance method)">- (Object) <strong>methods</strong>(*args) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc">
+Modify methods, public_methods and respond_to?, because method_missing
+allows methods from the analyser.
+
+</span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#process-instance_method" title="#process (instance method)">- (Object) <strong>process</strong>(processing_method, *args) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#process%21-instance_method" title="#process! (instance method)">- (Object) <strong>process!</strong>(processing_method, *args) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#public_methods-instance_method" title="#public_methods (instance method)">- (Object) <strong>public_methods</strong>(*args) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#respond_to%3F-instance_method" title="#respond_to? (instance method)">- (Object) <strong>respond_to?</strong>(method) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#transform-instance_method" title="#transform (instance method)">- (Object) <strong>transform</strong>(*args) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#transform%21-instance_method" title="#transform! (instance method)">- (Object) <strong>transform!</strong>(*args) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+  </ul>
+
+
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <a href="TempObject.html" title="Dragonfly::TempObject">Dragonfly::TempObject</a></h3>
+  <p class="inherited"><a href="TempObject.html#block_size-instance_method" title="#block_size">#block_size</a>, <a href="TempObject.html#copy_to_tempfile-instance_method" title="#copy_to_tempfile">#copy_to_tempfile</a>, <a href="TempObject.html#data-instance_method" title="#data">#data</a>, <a href="TempObject.html#each-instance_method" title="#each">#each</a>, <a href="TempObject.html#ext-instance_method" title="#ext">#ext</a>, <a href="TempObject.html#initialize-instance_method" title="#initialize">#initialize</a>, <a href="TempObject.html#initialize_from_object%21-instance_method" title="#initialize_from_object!">#initialize_from_object!</a>, <a href="TempObject.html#modify_self%21-instance_method" title="#modify_self!">#modify_self!</a>, <a href="TempObject.html#path-instance_method" title="#path">#path</a>, <a href="TempObject.html#reset%21-instance_method" title="#reset!">#reset!</a>, <a href="TempObject.html#size-instance_method" title="#size">#size</a>, <a href="TempObject.html#tempfile-instance_method" title="#tempfile">#tempfile</a>, <a href="TempObject.html#to_file-instance_method" title="#to_file">#to_file</a></p>
+<div id="constructor_details">
+  <h2>Constructor Details</h2>
+  
+    <p class="notice">This class inherits a constructor from <a href="TempObject.html#initialize-instance_method" title="Dragonfly::TempObject">Dragonfly::TempObject</a></p>
+  
+</div>
+<div id="method_missing_details">
+  <h2>Dynamic Method Handling</h2>
+  <p class="notice this">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+  
+    <div class="method_details first">
+  <p class="signature first" id="method_missing-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>method_missing</strong>(method, *args, &amp;block)  <span class="extras">(private)</span>
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 61</span>
+
+<span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='has_callable_method? fid id'>has_callable_method?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
+    <span class='comment val'># Define the method so we don't use method_missing next time</span>
+    <span class='instance_var identifier id'>instance_var</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;@#{method}&quot;</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
+      <span class='define_method identifier id'>define_method</span> <span class='method identifier id'>method</span> <span class='do do kw'>do</span>
+        <span class='comment val'># Lazy reader, like</span>
+        <span class='comment val'>#   @width ||= analyser.width(self)</span>
+        <span class='instance_variable_set identifier id'>instance_variable_set</span><span class='lparen token'>(</span><span class='instance_var identifier id'>instance_var</span><span class='comma token'>,</span> <span class='instance_variable_get identifier id'>instance_variable_get</span><span class='lparen token'>(</span><span class='instance_var identifier id'>instance_var</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+    <span class='comment val'># Now that it's defined (for next time)</span>
+    <span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='super super kw'>super</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="attr_details">
+    <h2>Attribute Details</h2>
+    
+      
+      <span id="app=-class_method"></span>
+      <span id="app-class_method"></span>
+      <div class="method_details first">
+  <p class="signature first" id="app-class_method">
+  
+    + (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>app</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute <tt>app</tt>
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+8
+9
+10</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 8</span>
+
+<span class='def def kw'>def</span> <span class='app identifier id'>app</span>
+  <span class='@app ivar id'>@app</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="method_details">
+    <h2>Method Details</h2>
+    
+      <div class="method_details first">
+  <p class="signature first" id="encode-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>encode</strong>(*args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+19
+20
+21</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 19</span>
+
+<span class='def def kw'>def</span> <span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="encode!-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>encode!</strong>(*args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+23
+24
+25</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 23</span>
+
+<span class='def def kw'>def</span> <span class='encode! fid id'>encode!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='modify_self! fid id'>modify_self!</span><span class='lparen token'>(</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="inspect-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>inspect</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+As we create customly configured subclasses of this class, the console
+gives a confusing output when inspecting, so modify here
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 40</span>
+
+<span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
+  <span class='super super kw'>super</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='string val'>'Class:'</span><span class='comma token'>,</span><span class='string val'>'Custom Dragonfly::ExtendedTempObject:'</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="methods-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>methods</strong>(*args) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Modify methods, public_methods and respond_to?, because method_missing
+allows methods from the analyser
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47
+48
+49</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='methods identifier id'>methods</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='lparen token'>(</span><span class='super super kw'>super</span> <span class='plus op'>+</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='callable_methods identifier id'>callable_methods</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='uniq identifier id'>uniq</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="process-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>process</strong>(processing_method, *args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+11
+12
+13</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 11</span>
+
+<span class='def def kw'>def</span> <span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='processing_method identifier id'>processing_method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='processing_method identifier id'>processing_method</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="process!-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>process!</strong>(processing_method, *args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+15
+16
+17</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 15</span>
+
+<span class='def def kw'>def</span> <span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='processing_method identifier id'>processing_method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='modify_self! fid id'>modify_self!</span><span class='lparen token'>(</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='processing_method identifier id'>processing_method</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="public_methods-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>public_methods</strong>(*args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+51
+52
+53</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 51</span>
+
+<span class='def def kw'>def</span> <span class='public_methods identifier id'>public_methods</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='lparen token'>(</span><span class='super super kw'>super</span> <span class='plus op'>+</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='callable_methods identifier id'>callable_methods</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='uniq identifier id'>uniq</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="respond_to?-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>respond_to?</strong>(method) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+55
+56
+57</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 55</span>
+
+<span class='def def kw'>def</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span> <span class='orop op'>||</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='has_callable_method? fid id'>has_callable_method?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="transform-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>transform</strong>(*args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+27
+28
+29</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 27</span>
+
+<span class='def def kw'>def</span> <span class='transform identifier id'>transform</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='any? fid id'>any?</span> <span class='integer val'>? </span><span class='dup identifier id'>dup</span><span class='dot token'>.</span><span class='transform! fid id'>transform!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="transform!-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>transform!</strong>(*args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+31
+32
+33
+34
+35
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 31</span>
+
+<span class='def def kw'>def</span> <span class='transform! fid id'>transform!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='parameters identifier id'>parameters</span> <span class='assign token'>=</span> <span class='parameters_class identifier id'>parameters_class</span><span class='dot token'>.</span><span class='from_args identifier id'>from_args</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span><span class='dot token'>.</span><span class='processing_method identifier id'>processing_method</span><span class='comma token'>,</span> <span class='parameters identifier id'>parameters</span><span class='dot token'>.</span><span class='processing_options identifier id'>processing_options</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='parameters identifier id'>parameters</span><span class='dot token'>.</span><span class='processing_method identifier id'>processing_method</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='encode! fid id'>encode!</span><span class='lparen token'>(</span><span class='parameters identifier id'>parameters</span><span class='dot token'>.</span><span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='parameters identifier id'>parameters</span><span class='dot token'>.</span><span class='encoding identifier id'>encoding</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='parameters identifier id'>parameters</span><span class='dot token'>.</span><span class='format identifier id'>format</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Sun Dec 13 14:55:40 2009 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.4.0 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

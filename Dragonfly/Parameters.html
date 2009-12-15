@@ -1,0 +1,1119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+<title>Class: Dragonfly::Parameters</title>
+<link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (P)</a> &raquo; 
+    <a href="../Dragonfly.html" title="Dragonfly">Dragonfly</a>
+     &raquo; 
+    <span class="title">Parameters</span>
+  
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Class: Dragonfly::Parameters 
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><a href="../Object.html" title="Object">Object</a></span>
+      
+      </dd>
+    
+  
+  
+    
+      <dt class="r2">Extends:</dt>
+      <dd class="r2"><a href="Configurable.html" title="Dragonfly::Configurable">Dragonfly::Configurable</a></dd>
+      
+    
+  
+    
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/dragonfly/parameters.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+  <h2>Attribute Summary</h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#encoding-instance_method" title="#encoding (instance method)">- (Object) <strong>encoding</strong> </a>
+  
+  </span>
+  
+    
+    
+  
+  
+  
+  
+
+  
+    <span class="summary_desc">
+Returns the value of attribute <tt>encoding</tt>.
+
+</span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#format-instance_method" title="#format (instance method)">- (Object) <strong>format</strong> </a>
+  
+  </span>
+  
+    
+    
+  
+  
+  
+  
+
+  
+    <span class="summary_desc">
+Returns the value of attribute <tt>format</tt>.
+
+</span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#processing_method-instance_method" title="#processing_method (instance method)">- (Object) <strong>processing_method</strong> </a>
+  
+  </span>
+  
+    
+    
+  
+  
+  
+  
+
+  
+    <span class="summary_desc">
+Returns the value of attribute <tt>processing_method</tt>.
+
+</span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#processing_options-instance_method" title="#processing_options (instance method)">- (Object) <strong>processing_options</strong> </a>
+  
+  </span>
+  
+    
+    
+  
+  
+  
+  
+
+  
+    <span class="summary_desc">
+Returns the value of attribute <tt>processing_options</tt>.
+
+</span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#uid-instance_method" title="#uid (instance method)">- (Object) <strong>uid</strong> </a>
+  
+  </span>
+  
+    
+    
+  
+  
+  
+  
+
+  
+    <span class="summary_desc">
+Returns the value of attribute <tt>uid</tt>.
+
+</span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+<h2>Configuration Summary</h2>
+<h3>Configurable attributes</h3>
+Configurable attributes for an object in general <code>object</code> can be configured either by using something like
+<pre class="code">
+  object.configure <span class="kw">do</span> |c|
+    c.some_configurable_attribute = <span class="string val">"some value"</span>
+    c.some_other_configurable_attribute = <span class="integer val">42</span>
+    ...
+  <span class="kw">end</span>
+</pre>
+or
+<pre class="code">
+  object.some_configurable_attribute = <span class="string val">"some value"</span>
+</pre>
+<h4>Configurable attributes for instances of Dragonfly::Parameters</h4>
+<ul>
+  
+  <li>
+    <code>default_processing_method</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>default_processing_options</code>
+    
+     - default <code></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>default_format</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>default_encoding</code>
+    
+     - default <code></code>
+    
+    
+  </li>
+  
+</ul>
+
+
+  <h2>Method Summary</h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#add_shortcut-class_method" title="add_shortcut (class method)">+ (Object) <strong>add_shortcut</strong>(*args, &amp;block) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#from_args-class_method" title="from_args (class method)">+ (Object) <strong>from_args</strong>(*args) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#from_shortcut-class_method" title="from_shortcut (class method)">+ (Object) <strong>from_shortcut</strong>(*args) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#hash_from_shortcut-class_method" title="hash_from_shortcut (class method)">+ (Object) <strong>hash_from_shortcut</strong>(*args) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#new_with_defaults-class_method" title="new_with_defaults (class method)">+ (Object) <strong>new_with_defaults</strong>(attributes = {}) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#%3D%3D-instance_method" title="#== (instance method)">- (Object) <strong>==</strong>(other_parameters) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#%5B%5D-instance_method" title="#[] (instance method)">- (Object) <strong>[]</strong>(attribute) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#%5B%5D%3D-instance_method" title="#[]= (instance method)">- (Object) <strong>[]=</strong>(attribute, value) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#generate_sha-instance_method" title="#generate_sha (instance method)">- (Object) <strong>generate_sha</strong>(salt, sha_length) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#initialize-instance_method" title="#initialize (instance method)">- (Parameters) <strong>initialize</strong>(attributes = {}) </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc">
+Instance methods.
+
+</span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#to_hash-instance_method" title="#to_hash (instance method)">- (Object) <strong>to_hash</strong> </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature"><a href="#unique_signature-instance_method" title="#unique_signature (instance method)">- (Object) <strong>unique_signature</strong> </a>
+  
+  </span>
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+  </ul>
+
+<div id="constructor_details">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    - (<tt><a href="" title="Parameters">Parameters</a></tt>) <strong>initialize</strong>(attributes = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Instance methods
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><a href="" title="Parameters">Parameters</a></tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        
+a new instance of <tt>Parameters</tt>
+
+
+      
+    </li>
+  
+</ul>
+<h3>Raises:</h3>
+<ul class="raise">
+  
+    <li>
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+108
+109
+110
+111
+112
+113
+114
+115
+116</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 108</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='attributes identifier id'>attributes</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='attributes identifier id'>attributes</span> <span class='assign token'>=</span> <span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='uid identifier id'>uid</span>                <span class='assign token'>=</span> <span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:uid</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='processing_method identifier id'>processing_method</span>  <span class='assign token'>=</span> <span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:processing_method</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='processing_options identifier id'>processing_options</span> <span class='assign token'>=</span> <span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:processing_options</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='format identifier id'>format</span>             <span class='assign token'>=</span> <span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:format</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='encoding identifier id'>encoding</span>           <span class='assign token'>=</span> <span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:encoding</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Parameters doesn't recognise the following parameters: #{attributes.keys.join(', ')}&quot;</span> <span class='if if_mod kw'>if</span> <span class='attributes identifier id'>attributes</span><span class='dot token'>.</span><span class='any? fid id'>any?</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="attr_details">
+    <h2>Attribute Details</h2>
+    
+      
+      <span id="encoding=-instance_method"></span>
+      <span id="encoding-instance_method"></span>
+      <div class="method_details first">
+  <p class="signature first" id="encoding-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>encoding</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute <tt>encoding</tt>
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+118
+119
+120</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 118</span>
+
+<span class='def def kw'>def</span> <span class='encoding identifier id'>encoding</span>
+  <span class='@encoding ivar id'>@encoding</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="format=-instance_method"></span>
+      <span id="format-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="format-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>format</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute <tt>format</tt>
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+118
+119
+120</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 118</span>
+
+<span class='def def kw'>def</span> <span class='format identifier id'>format</span>
+  <span class='@format ivar id'>@format</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="processing_method=-instance_method"></span>
+      <span id="processing_method-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="processing_method-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>processing_method</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute <tt>processing_method</tt>
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+118
+119
+120</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 118</span>
+
+<span class='def def kw'>def</span> <span class='processing_method identifier id'>processing_method</span>
+  <span class='@processing_method ivar id'>@processing_method</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="processing_options=-instance_method"></span>
+      <span id="processing_options-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="processing_options-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>processing_options</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute <tt>processing_options</tt>
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+118
+119
+120</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 118</span>
+
+<span class='def def kw'>def</span> <span class='processing_options identifier id'>processing_options</span>
+  <span class='@processing_options ivar id'>@processing_options</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="uid=-instance_method"></span>
+      <span id="uid-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="uid-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>uid</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute <tt>uid</tt>
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+118
+119
+120</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 118</span>
+
+<span class='def def kw'>def</span> <span class='uid identifier id'>uid</span>
+  <span class='@uid ivar id'>@uid</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="method_details">
+    <h2>Method Details</h2>
+    
+      <div class="method_details first">
+  <p class="signature first" id="add_shortcut-class_method">
+  
+    + (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>add_shortcut</strong>(*args, &amp;block) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29
+30
+31
+32
+33
+34
+35
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 29</span>
+
+<span class='def def kw'>def</span> <span class='add_shortcut identifier id'>add_shortcut</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='block identifier id'>block</span>
+    <span class='block_shortcuts_of_length identifier id'>block_shortcuts_of_length</span><span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='dot token'>.</span><span class='length identifier id'>length</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='unshift identifier id'>unshift</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='block identifier id'>block</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='shortcut_name identifier id'>shortcut_name</span><span class='comma token'>,</span> <span class='attributes identifier id'>attributes</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span>
+    <span class='simple_shortcuts identifier id'>simple_shortcuts</span><span class='lbrack token'>[</span><span class='shortcut_name identifier id'>shortcut_name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='attributes identifier id'>attributes</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="from_args-class_method">
+  
+    + (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>from_args</strong>(*args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56
+57
+58
+59
+60</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 54</span>
+
+<span class='def def kw'>def</span> <span class='from_args identifier id'>from_args</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='then then kw'>then</span> <span class='new identifier id'>new</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='eq op'>==</span> <span class='integer val'>1</span> <span class='andop op'>&amp;&amp;</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='then then kw'>then</span> <span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='rparen token'>)</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='eq op'>==</span> <span class='integer val'>1</span> <span class='andop op'>&amp;&amp;</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Parameters constant id'>Parameters</span><span class='rparen token'>)</span> <span class='then then kw'>then</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+  <span class='else else kw'>else</span> <span class='from_shortcut identifier id'>from_shortcut</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="from_shortcut-class_method">
+  
+    + (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>from_shortcut</strong>(*args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+50
+51
+52</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 50</span>
+
+<span class='def def kw'>def</span> <span class='from_shortcut identifier id'>from_shortcut</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='new_with_defaults identifier id'>new_with_defaults</span><span class='lparen token'>(</span><span class='hash_from_shortcut identifier id'>hash_from_shortcut</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="hash_from_shortcut-class_method">
+  
+    + (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>hash_from_shortcut</strong>(*args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39
+40
+41
+42
+43
+44
+45
+46
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 39</span>
+
+<span class='def def kw'>def</span> <span class='hash_from_shortcut identifier id'>hash_from_shortcut</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='attributes identifier id'>attributes</span> <span class='assign token'>=</span> <span class='matching_simple_shortcut identifier id'>matching_simple_shortcut</span><span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+    <span class='attributes identifier id'>attributes</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='attributes identifier id'>attributes</span> <span class='assign token'>=</span> <span class='matching_block_shortcut identifier id'>matching_block_shortcut</span><span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+    <span class='attributes identifier id'>attributes</span>
+  <span class='else else kw'>else</span>
+    <span class='raise identifier id'>raise</span> <span class='InvalidShortcut constant id'>InvalidShortcut</span><span class='comma token'>,</span> <span class='dstring node'>&quot;No shortcut was found matching (#{args.map{|a| a.inspect }.join(', ')})&quot;</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="new_with_defaults-class_method">
+  
+    + (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>new_with_defaults</strong>(attributes = {}) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+20
+21
+22
+23
+24
+25
+26
+27</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 20</span>
+
+<span class='def def kw'>def</span> <span class='new_with_defaults identifier id'>new_with_defaults</span><span class='lparen token'>(</span><span class='attributes identifier id'>attributes</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrace token'>{</span>
+    <span class='symbol val'>:processing_method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='default_processing_method identifier id'>default_processing_method</span><span class='comma token'>,</span>
+    <span class='symbol val'>:processing_options</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='default_processing_options identifier id'>default_processing_options</span><span class='comma token'>,</span>
+    <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='default_format identifier id'>default_format</span><span class='comma token'>,</span>
+    <span class='symbol val'>:encoding</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='default_encoding identifier id'>default_encoding</span>
+  <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='attributes identifier id'>attributes</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="==-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>==</strong>(other_parameters) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+128
+129
+130</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 128</span>
+
+<span class='def def kw'>def</span> <span class='eq op'>==</span><span class='lparen token'>(</span><span class='other_parameters identifier id'>other_parameters</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='to_hash identifier id'>to_hash</span> <span class='eq op'>==</span> <span class='other_parameters identifier id'>other_parameters</span><span class='dot token'>.</span><span class='to_hash identifier id'>to_hash</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="[]-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>[]</strong>(attribute) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+120
+121
+122</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 120</span>
+
+<span class='def def kw'>def</span> <span class='aref op'>[]</span><span class='lparen token'>(</span><span class='attribute identifier id'>attribute</span><span class='rparen token'>)</span>
+  <span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='attribute identifier id'>attribute</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="[]=-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>[]=</strong>(attribute, value) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+124
+125
+126</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 124</span>
+
+<span class='def def kw'>def</span> <span class='aset op'>[]=</span><span class='lparen token'>(</span><span class='attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{attribute}=&quot;</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="generate_sha-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>generate_sha</strong>(salt, sha_length) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+132
+133
+134</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 132</span>
+
+<span class='def def kw'>def</span> <span class='generate_sha identifier id'>generate_sha</span><span class='lparen token'>(</span><span class='salt identifier id'>salt</span><span class='comma token'>,</span> <span class='sha_length identifier id'>sha_length</span><span class='rparen token'>)</span>
+  <span class='Digest constant id'>Digest</span><span class='colon2 op'>::</span><span class='SHA1 constant id'>SHA1</span><span class='dot token'>.</span><span class='hexdigest identifier id'>hexdigest</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{to_sorted_array}#{salt}&quot;</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='dot3 op'>...</span><span class='sha_length identifier id'>sha_length</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_hash-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>to_hash</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+140
+141
+142
+143
+144
+145
+146
+147
+148</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 140</span>
+
+<span class='def def kw'>def</span> <span class='to_hash identifier id'>to_hash</span>
+  <span class='lbrace token'>{</span>
+    <span class='symbol val'>:uid</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='uid identifier id'>uid</span><span class='comma token'>,</span>
+    <span class='symbol val'>:processing_method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='processing_method identifier id'>processing_method</span><span class='comma token'>,</span>
+    <span class='symbol val'>:processing_options</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='processing_options identifier id'>processing_options</span><span class='comma token'>,</span>
+    <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='format identifier id'>format</span><span class='comma token'>,</span>
+    <span class='symbol val'>:encoding</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='encoding identifier id'>encoding</span>
+  <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="unique_signature-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>unique_signature</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+136
+137
+138</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/parameters.rb', line 136</span>
+
+<span class='def def kw'>def</span> <span class='unique_signature identifier id'>unique_signature</span>
+  <span class='generate_sha identifier id'>generate_sha</span><span class='lparen token'>(</span><span class='string val'>'I like cheese'</span><span class='comma token'>,</span> <span class='integer val'>10</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Sun Dec 13 14:55:41 2009 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.4.0 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

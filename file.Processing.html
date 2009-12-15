@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+<title>File: Processing</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html" title="Index">Index</a> &raquo; 
+    <span class="title">File: Processing</span>
+  
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><div id='filecontents'><h1>Processing</h1>
+
+<p>Processing is changing content in some way, and does not involve encoding.
+For example, resizing an image is classed as processing, whereas converting it from 'png' to 'jpeg' is classed as encoding.</p>
+
+<p>All processing jobs are defined by a processing method and a processing options hash (which is passed to the method).</p>
+
+<p>Let's say we have a dragonfly app called 'images'</p>
+
+<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+</pre>
+
+<p>Data gets passed around between the datastore, processor, analyser, etc. in the form of an <tt><a href="Dragonfly/ExtendedTempObject.html" title="ExtendedTempObject">ExtendedTempObject</a></tt>.</p>
+
+<pre class="code"><span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='create_object identifier id'>create_object</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/image.png'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+
+<p>We can process this object with any of the methods which have been registered with the app's processor.
+For example, registering the <tt><a href="Dragonfly/Processing/RMagickProcessor.html" title="rmagick processor">rmagick processor</a></tt></p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='register_processor identifier id'>register_processor</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Processing constant id'>Processing</span><span class='colon2 op'>::</span><span class='RMagickProcessor constant id'>RMagickProcessor</span><span class='rparen token'>)</span>
+</pre>
+
+<p>give us the processing methods <code>resize</code>, <code>crop</code>, <code>resize_and_crop</code>, <code>rotate</code>, etc.</p>
+
+<pre class="code"><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:resize</span><span class='comma token'>,</span> <span class='symbol val'>:geometry</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'30x30!'</span><span class='rparen token'>)</span>        <span class='comment val'># =&gt; returns a new temp_object with width x height = 30x30</span>
+<span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='symbol val'>:resize</span><span class='comma token'>,</span> <span class='symbol val'>:geometry</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'30x30!'</span><span class='rparen token'>)</span>       <span class='comment val'># =&gt; resizes its own data</span>
+</pre>
+
+<p>The saved configuration <tt><a href="Dragonfly/RMagickConfiguration.html" title="RMagickConfiguration">RMagickConfiguration</a></tt> registers the above processor automatically.</p>
+
+<h2>Custom Processing</h2>
+
+<p>To register a custom processor, derive from <tt><a href="Dragonfly/Processing/Base.html" title="Processing::Base">Processing::Base</a></tt> and register.
+Each method takes the temp_object, and the (optional) processing options hash as its argument.</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='MyProcessor constant id'>MyProcessor</span> <span class='lt op'>&lt;</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Processing constant id'>Processing</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+
+  <span class='def def kw'>def</span> <span class='black_and_white identifier id'>black_and_white</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+    <span class='comment val'># use temp_object.data, temp_object.path, etc...</span>
+    <span class='comment val'># ...process and return a String, File, Tempfile or TempObject</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># ... add as many methods as you wish</span>
+
+<span class='end end kw'>end</span>
+
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='register_processor identifier id'>register_processor</span><span class='lparen token'>(</span><span class='MyProcessor constant id'>MyProcessor</span><span class='rparen token'>)</span>
+
+<span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='create_object identifier id'>create_object</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/image.png'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+
+<span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:black_and_white</span><span class='comma token'>,</span> <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rparen token'>)</span>
+</pre>
+
+<p>You can register multiple processors.</p>
+
+<p>As with analysers and encoders, if the processor is <tt><a href="Dragonfly/Configurable.html" title="configurable">configurable</a></tt>, we can configure it as we register it if we need to</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='register_processor identifier id'>register_processor</span><span class='lparen token'>(</span><span class='MyProcessor constant id'>MyProcessor</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span>
+  <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='some_attribute identifier id'>some_attribute</span> <span class='assign token'>=</span> <span class='string val'>'hello'</span>
+<span class='end end kw'>end</span>
+</pre>
+</div></div>
+    
+    <div id="footer">
+  Generated on Sun Dec 13 14:55:37 2009 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.4.0 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+<title>File: Shortcuts</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html" title="Index">Index</a> &raquo; 
+    <span class="title">File: Shortcuts</span>
+  
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><div id='filecontents'><h1>Shortcuts</h1>
+
+<p>When you call <tt><a href="Dragonfly/App.html#fetch-instance_method" title="fetch">fetch</a></tt>, <tt><a href="Dragonfly/ExtendedTempObject.html#transform-instance_method" title="transform">transform</a></tt>,
+<tt><a href="Dragonfly/UrlHandler.html#url_for-instance_method" title="url_for">url_for</a></tt>, (or <tt><a href="Dragonfly/ActiveRecordExtensions/Attachment.html#url-instance_method" title="url">url</a></tt> on an ActiveRecord attachment), you can specify all the job parameters
+necessary to fetch the appropriate content.</p>
+
+<p>The parameters are the following:</p>
+
+<ul>
+<li><code>:uid</code> - the uid used by the datastore to retrieve the data (was returned when stored)</li>
+<li><code>:processing_method</code> - the method used to do the processing</li>
+<li><code>:processing_options</code> - options hash passed to the processing method</li>
+<li><code>:format</code> - the format to encode the data with, e.g. 'png'</li>
+<li><code>:encoding</code> - an options hash passed to the encoder for other options, e.g. bitrate, etc.</li>
+</ul>
+
+
+<p>Say we have an app configured with the <tt><a href="Dragonfly/RMagickConfiguration.html" title="RMagickConfiguration">RMagickConfiguration</a></tt></p>
+
+<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='RMagickConfiguration constant id'>RMagickConfiguration</span><span class='rparen token'>)</span>
+</pre>
+
+<p>we can call things like</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span> <span class='string val'>'some_uid'</span><span class='comma token'>,</span>
+  <span class='symbol val'>:processing_method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:resize_and_crop</span><span class='comma token'>,</span>
+  <span class='symbol val'>:processing_options</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>100</span><span class='comma token'>,</span> <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:gravity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ne'</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
+  <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:jpg</span><span class='comma token'>,</span>
+  <span class='symbol val'>:encoding</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rbrace token'>}</span>           <span class='comment val'># =&gt; gets a processed and encoded temp_object</span>
+
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span> <span class='string val'>'some_uid'</span><span class='comma token'>,</span>
+  <span class='symbol val'>:processing_method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:resize_and_crop</span><span class='comma token'>,</span>
+  <span class='symbol val'>:processing_options</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>100</span><span class='comma token'>,</span> <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:gravity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ne'</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
+  <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:jpg</span><span class='comma token'>,</span>
+  <span class='symbol val'>:encoding</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rbrace token'>}</span>           <span class='comment val'># =&gt; &quot;/images/some_uid.tif?m=resize_and_crop&amp;o[width]=....&quot;</span>
+</pre>
+
+<p>YIKES!!!!!</p>
+
+<p>That's an awful lot of code every time, especially if we reuse the same parameters over and over.
+That's why for the arguments after the uid, you can register <tt><a href="Dragonfly/Parameters.html" title="parameter shortcuts">parameter shortcuts</a></tt>.</p>
+
+<h2>Simple shortcuts</h2>
+
+<p>If we were to use the parameters in the example above a number of times, we could register a simple named shortcut, say 'thumb', using a symbol.</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='parameters identifier id'>parameters</span><span class='dot token'>.</span><span class='add_shortcut identifier id'>add_shortcut</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span>
+  <span class='symbol val'>:processing_method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:resize_and_crop</span><span class='comma token'>,</span>
+  <span class='symbol val'>:processing_options</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>100</span><span class='comma token'>,</span> <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:gravity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ne'</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
+  <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:jpg</span><span class='comma token'>,</span>
+  <span class='symbol val'>:encoding</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rbrace token'>}</span>
+<span class='rparen token'>)</span>
+</pre>
+
+<p>We can now use this named shortcut, <code>:thumb</code>, in place of the parameters elsewhere</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span> <span class='string val'>'some_uid'</span><span class='comma token'>,</span> <span class='symbol val'>:thumb</span>           <span class='comment val'># =&gt; gets a processed and encoded temp_object as before    </span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span> <span class='string val'>'some_uid'</span><span class='comma token'>,</span> <span class='symbol val'>:thumb</span>         <span class='comment val'># =&gt; &quot;/images/some_uid.tif?m=resize_and_crop&amp;o[width]=....&quot;, as before</span>
+</pre>
+
+<h2>Complex shortcuts</h2>
+
+<p>Rather than create a new named shortcut for every different set of parameters, we can make life easier by defining shortcuts
+which match a set of arguments, then form parameters from them.</p>
+
+<p>For example, take the shortcut</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='parameters identifier id'>parameters</span><span class='dot token'>.</span><span class='add_shortcut identifier id'>add_shortcut</span><span class='lparen token'>(</span><span class='regexp val'>/\d+x\d+/</span><span class='comma token'>,</span> <span class='Symbol constant id'>Symbol</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='geometry identifier id'>geometry</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='bitor op'>|</span>
+  <span class='lbrace token'>{</span>
+    <span class='symbol val'>:processing_method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:my_resize_method</span><span class='comma token'>,</span>
+    <span class='symbol val'>:processing_options</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:geometry</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='geometry identifier id'>geometry</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
+    <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='format identifier id'>format</span>
+  <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>It will match where there are two arguments, a string matching <code>/\d+x\d+/</code> and a symbol, and convert to a hash of job parameters.
+Note that the matching arguments are yielded to the block.
+So, for example,</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='comma token'>,</span> <span class='string val'>'100x50'</span><span class='comma token'>,</span> <span class='symbol val'>:jpg</span><span class='rparen token'>)</span>
+</pre>
+
+<p>generates the same url as if we'd used</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span> <span class='string val'>'some_uid'</span><span class='comma token'>,</span>
+  <span class='symbol val'>:processing_method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:my_resize_method</span><span class='comma token'>,</span>
+  <span class='symbol val'>:processing_options</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:geometry</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>100</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
+  <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:jpg</span>
+</pre>
+
+<p>The following examples would not match</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='comma token'>,</span> <span class='string val'>'100xg50'</span><span class='comma token'>,</span> <span class='symbol val'>:jpg</span><span class='rparen token'>)</span>           <span class='comment val'># '100xg50' doesn't match /\d+x\d+/</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='comma token'>,</span> <span class='string val'>'100x50'</span><span class='comma token'>,</span> <span class='string val'>'jpg'</span><span class='rparen token'>)</span>           <span class='comment val'># 'jpg' is not a Symbol</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='comma token'>,</span> <span class='string val'>'100x50'</span><span class='rparen token'>)</span>                  <span class='comment val'># not enough arguments</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='comma token'>,</span> <span class='string val'>'100x50'</span><span class='comma token'>,</span> <span class='symbol val'>:jpg</span><span class='comma token'>,</span> <span class='integer val'>4</span><span class='rparen token'>)</span>         <span class='comment val'># too many arguments</span>
+</pre>
+
+<p>The arguments are matched using the <code>===</code> operator (as used in <code>case</code> statements), which is why, for example, <code>:jpg</code> matches <code>Symbol</code>.</p>
+
+<h2>Regexp shortcuts</h2>
+
+<p>If we register a complex shortcut as a single regexp, then the match data is also yielded, for convenience.</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='parameters identifier id'>parameters</span><span class='dot token'>.</span><span class='add_shortcut identifier id'>add_shortcut</span><span class='lparen token'>(</span><span class='regexp val'>/(\d+)x(\d+)/</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='geometry identifier id'>geometry</span><span class='comma token'>,</span> <span class='match_data identifier id'>match_data</span><span class='bitor op'>|</span>
+  <span class='lbrace token'>{</span>
+    <span class='symbol val'>:processing_method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:my_resize_method</span><span class='comma token'>,</span>
+    <span class='symbol val'>:processing_options</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='match_data identifier id'>match_data</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='match_data identifier id'>match_data</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span>
+  <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<h2>Default parameters</h2>
+
+<p>If we've configured a default parameter, e.g.</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='parameters identifier id'>parameters</span><span class='dot token'>.</span><span class='default_format identifier id'>default_format</span> <span class='assign token'>=</span> <span class='symbol val'>:jpg</span>
+</pre>
+
+<p>then this will be used in these methods whenever that parameter is not given, such as in the example above.</p>
+
+<h2>Avoiding processing/encoding</h2>
+
+<p>If <code>:processing_method</code> is set to nil, then no processing takes place when methods like <tt><a href="Dragonfly/App.html#fetch-instance_method" title="fetch">fetch</a></tt>, <tt><a href="Dragonfly/ExtendedTempObject.html#transform-instance_method" title="transform">transform</a></tt>,
+<tt><a href="Dragonfly/UrlHandler.html#url_for-instance_method" title="url_for">url_for</a></tt>, and <tt><a href="Dragonfly/ActiveRecordExtensions/Attachment.html#url-instance_method" title="url">url</a></tt> are called.</p>
+
+<p>Similarly, if <code>:format</code> is set to nil, then no encoding takes place.</p>
+</div></div>
+    
+    <div id="footer">
+  Generated on Sun Dec 13 14:55:37 2009 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.4.0 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>
