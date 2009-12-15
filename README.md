@@ -1,15 +1,19 @@
 Dragonfly
 ===========
 
-Dragonfly is a {http://rack.rubyforge.org Rack} framework for on-the-fly processing and encoding.
+Dragonfly is a <a href="http://rack.rubyforge.org">Rack</a> framework for on-the-fly processing and encoding.
 It includes an extension for Ruby on Rails to enable easy image handling.
 
 For the lazy rails user
 -----------------------
+To use simply for image thumbnails etc. in Rails...
 
 environment.rb:
 
-    config.gem 'dragonfly-rails', :lib => 'dragonfly/rails/images'
+    config.gem 'rmagick'
+    config.gem 'rack-cache'
+
+    config.gem 'dragonfly', :lib => 'dragonfly/rails/images'
     config.middleware.use 'Dragonfly::MiddlewareWithCache', :images
 
 Migration:
@@ -56,7 +60,7 @@ Please use the <a href="http://github.com/markevans/dragonfly/issues">github iss
 
 Suggestions/Questions
 =====================
-{http://groups.google.com/group/dragonfly-users}
+<a href="http://groups.google.com/group/dragonfly-users">Google group dragonfly-users</a>
 
 Credits
 =======

@@ -8,16 +8,19 @@ Using as Middleware
 -------------------
 In environment.rb:
 
-    config.gem 'dragonfly-rails', :lib => 'dragonfly/rails/images'
-    config.middleware.use 'Dragonfly::MiddlewareWithCache', :images
+    config.gem 'rmagick'
+    config.gem 'rack-cache'
 
-The gem dragonfly-rails does nothing more than tie together the gem dependencies dragonfly,
-rack-cache and rmagick.
+    config.gem 'dragonfly', :lib => 'dragonfly/rails/images'
+    config.middleware.use 'Dragonfly::MiddlewareWithCache', :images
 
 The required file 'dragonfly/rails/images.rb' initializes a dragonfly app, configures it to use rmagick processing, encoding, etc.,
 and registers the app so that you can use ActiveRecord accessors.
 
-For reference, the contents are as follows:
+Because in this case it's configured to use {http://tomayko.com/src/rack-cache/ rack-cache} and {http://rmagick.rubyforge.org/ rmagick},
+you should include the first two lines above.
+
+For reference, the contents of 'dragonfly/rails/images.rb' are as follows:
 
     require 'dragonfly'
 
@@ -40,7 +43,7 @@ For reference, the contents are as follows:
     ActiveRecord::Base.extend Dragonfly::ActiveRecordExtensions
     ActiveRecord::Base.register_dragonfly_app(:image, app)
 
-The second line configures rails to use a {Dragonfly::MiddlewareWithCache middleware} which uses the named app (named `:images`), and puts
+The line `config.middleware.use 'Dragonfly::MiddlewareWithCache', :images` configures rails to use a {Dragonfly::MiddlewareWithCache middleware} which uses the named app (named `:images`), and puts
 {http://tomayko.com/src/rack-cache/ Rack::Cache} in front of it for performance.
 You can pass extra arguments to this line which will go directly to configuring Rack::Cache (see its docs for how to configure it).
 The default configuration for Rack::Cache is
@@ -55,7 +58,10 @@ To see what you can do with the active record accessors, see {file:ActiveRecord}
 
 Using as a Rails Metal
 ----------------------
-The easiest way of setting up as a rails metal is using the supplied generator.
+Setting up as a Rails Metal may be preferable to using the middleware as above if you want to see the configuration
+more explicitly (and therefore have more control over it).
+
+The easiest way is using the supplied generator.
 (NB I've had a couple of problems with the generator with plural/singular names with early versions of metal in Rails 2.3 -
 this should be resolvable by making sure the metal name matches its filename).
 
