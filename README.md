@@ -48,7 +48,7 @@ Dragonfly is primarily a Rack app, the Rails part of it being nothing more than 
 
 It is intended to be highly customizable, and is not limited to images, but any data type that could suit on-the-fly processing/encoding.
 
-For more info, consult the <a href="http://yardoc.org/docs/markevans-dragonfly">DOCUMENTATION</a>
+For more info, consult the <a href="http://markevans.github.com/dragonfly">DOCUMENTATION</a>
 
 Issues
 ======
