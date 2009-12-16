@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.3.2"
+  s.version = "0.3.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2009-12-15}
+  s.date = %q{2009-12-16}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -115,7 +115,6 @@ Gem::Specification.new do |s|
      "yard/templates/default/module/html/configuration_summary.erb",
      "yard/templates/default/module/setup.rb"
   ]
-  s.has_rdoc = %q{yard}
   s.homepage = %q{http://github.com/markevans/dragonfly}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]

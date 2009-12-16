@@ -10,7 +10,6 @@ begin
     s.homepage = "http://github.com/markevans/dragonfly"
     s.authors = ["Mark Evans"]
     s.add_dependency('rack')
-    s.has_rdoc = 'yard'
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
