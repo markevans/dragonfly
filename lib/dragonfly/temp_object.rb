@@ -17,8 +17,6 @@ module Dragonfly
       initialize_from_object!(obj)
     end
     
-    attr_accessor :name
-    
     def modify_self!(obj)
       unless obj == self
         reset!
@@ -59,6 +57,17 @@ module Dragonfly
       else
         File.size(path)
       end
+    end
+    
+    attr_writer :name
+    
+    def name
+      @name unless @name.blank?
+    end
+    
+    def basename
+      return unless name
+      name.sub(/\.[^.]+$/,'')
     end
     
     def ext

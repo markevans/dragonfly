@@ -237,6 +237,11 @@ describe Dragonfly::TempObject do
       temp_object = Dragonfly::TempObject.new(file)
       temp_object.name.should == 'round.gif'
     end
+    it "should still be nil if set to empty string" do
+      temp_object = Dragonfly::TempObject.new('sdf')
+      temp_object.name = ''
+      temp_object.name.should be_nil
+    end
   end
   
   describe "ext" do
@@ -254,6 +259,24 @@ describe Dragonfly::TempObject do
     it "should be nil if name is nil" do
       @temp_object.name = nil
       @temp_object.ext.should be_nil
+    end
+  end
+  
+  describe "basename" do
+    before(:each) do
+      @temp_object = Dragonfly::TempObject.new('asfsadf')
+    end
+    it "should use the correct basename from name" do
+      @temp_object.name = 'hello.there.mate'
+      @temp_object.basename.should == 'hello.there'
+    end
+    it "should be the name if it has no ext" do
+      @temp_object.name = 'hello'
+      @temp_object.basename.should == 'hello'
+    end
+    it "should be nil if name is nil" do
+      @temp_object.name = nil
+      @temp_object.basename.should be_nil
     end
   end
   

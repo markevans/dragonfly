@@ -11,12 +11,7 @@ module Dragonfly
 
       def store(temp_object)
 
-        suffix = if temp_object.name.blank?
-          'file'
-        else
-          temp_object.name.sub(/\.[^.]*?$/, '')
-        end
-        relative_path = relative_storage_path(suffix)
+        relative_path = relative_storage_path(temp_object.basename || 'file')
 
         begin
           while File.exist?(storage_path = absolute_storage_path(relative_path))
