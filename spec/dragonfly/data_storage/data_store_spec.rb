@@ -10,7 +10,8 @@ describe "data_store", :shared => true do
 
   describe "store" do
     it "should return a unique identifier for each storage" do
-      @data_store.store(@temp_object).should_not == @data_store.store(@temp_object)
+      temp_object2 = Dragonfly::TempObject.new('gollum')
+      @data_store.store(@temp_object).should_not == @data_store.store(temp_object2)
     end
   end
   
@@ -37,11 +38,6 @@ describe "data_store", :shared => true do
       }.should raise_error(Dragonfly::DataStorage::DataNotFound)
     end
     
-    it "should raise an error if the data doesn't exist" do
-      lambda{
-        @data_store.destroy('gooble/gubbub')
-      }.should raise_error(Dragonfly::DataStorage::DataNotFound)
-    end
   end
 
 end
