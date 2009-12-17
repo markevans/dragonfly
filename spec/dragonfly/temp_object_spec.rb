@@ -7,7 +7,7 @@ describe Dragonfly::TempObject do
   def new_tempfile(data = File.read(SAMPLES_DIR + '/round.gif'))
     tempfile = Tempfile.new('test')
     tempfile.write(data)
-    tempfile.close
+    tempfile.rewind
     tempfile
   end
   
@@ -73,12 +73,12 @@ describe Dragonfly::TempObject do
       end
     end
     describe "file" do
-      it "should lazily create a closed tempfile" do
+      it "should lazily create an unclosed tempfile" do
         @temp_object.file.should be_a(Tempfile)
-        @temp_object.file.should be_closed
+        @temp_object.file.should_not be_closed
       end
       it "should contain the correct data" do
-        @temp_object.file.open.read.should == @gif_string
+        @temp_object.file.read.should == @gif_string
       end
     end
     describe "each" do
@@ -102,9 +102,9 @@ describe Dragonfly::TempObject do
       end
     end
     describe "file" do
-      it "should return the closed tempfile" do
+      it "should return the unclosed tempfile" do
         @temp_object.file.should be_a(Tempfile)
-        @temp_object.file.should be_closed
+        @temp_object.file.should_not be_closed
         @temp_object.file.path.should == @tempfile.path
       end
     end
@@ -131,12 +131,12 @@ describe Dragonfly::TempObject do
       end
     end
     describe "file" do
-      it "should lazily return a closed tempfile" do
+      it "should lazily return an unclosed tempfile" do
         @temp_object.file.should be_a(Tempfile)
-        @temp_object.file.should be_closed
+        @temp_object.file.should_not be_closed
       end
       it "should contain the correct data" do
-        @temp_object.file.open.read.should == @file.read
+        @temp_object.file.read.should == @file.read
       end
     end
     describe "each" do
@@ -191,7 +191,7 @@ describe Dragonfly::TempObject do
     end
     it "should modify itself when the new object is a tempfile" do
       tempfile = new_tempfile
-      data = tempfile.open.read
+      data = tempfile.read
       @temp_object.modify_self!(tempfile)
       @temp_object.data.should == data
     end
