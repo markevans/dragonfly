@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.3.4"
+  s.version = "0.3.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2009-12-16}
+  s.date = %q{2009-12-17}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -61,6 +61,7 @@ Gem::Specification.new do |s|
      "lib/dragonfly/data_storage/base.rb",
      "lib/dragonfly/data_storage/base64_data_store.rb",
      "lib/dragonfly/data_storage/file_data_store.rb",
+     "lib/dragonfly/data_storage/s3data_store.rb",
      "lib/dragonfly/data_storage/transparent_data_store.rb",
      "lib/dragonfly/delegatable.rb",
      "lib/dragonfly/delegator.rb",
@@ -94,6 +95,7 @@ Gem::Specification.new do |s|
      "spec/dragonfly/configurable_spec.rb",
      "spec/dragonfly/data_storage/data_store_spec.rb",
      "spec/dragonfly/data_storage/file_data_store_spec.rb",
+     "spec/dragonfly/data_storage/s3_data_store_spec.rb",
      "spec/dragonfly/delegatable_spec.rb",
      "spec/dragonfly/delegator_spec.rb",
      "spec/dragonfly/encoding/r_magick_encoder_spec.rb",
@@ -133,6 +135,7 @@ Gem::Specification.new do |s|
      "spec/dragonfly/configurable_spec.rb",
      "spec/dragonfly/data_storage/data_store_spec.rb",
      "spec/dragonfly/data_storage/file_data_store_spec.rb",
+     "spec/dragonfly/data_storage/s3_data_store_spec.rb",
      "spec/dragonfly/delegatable_spec.rb",
      "spec/dragonfly/delegator_spec.rb",
      "spec/dragonfly/encoding/r_magick_encoder_spec.rb",
