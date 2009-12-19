@@ -61,7 +61,7 @@ module Dragonfly
         height  = opts[:height] ? opts[:height].to_i : image.rows
         gravity = GRAVITY_MAPPINGS[opts[:gravity]] || Magick::CenterGravity
 
-        image.resize_to_fill(width, height, gravity).to_blob
+        image.crop_resized(width, height, gravity).to_blob
       end
 
       def rotate(temp_object, opts={})
