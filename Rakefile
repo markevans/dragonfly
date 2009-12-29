@@ -27,7 +27,7 @@ end
 
 require 'yard'
 YARD::Rake::YardocTask.new do |t|
-  t.files   = ['lib/**/*.rb', 'markdown_docs/*']
+  t.files   = ['lib/**/*.rb']
   t.options = %w(-e yard/setup.rb)
 end
 YARD::Rake::YardocTask.new 'yard:changed' do |t|
