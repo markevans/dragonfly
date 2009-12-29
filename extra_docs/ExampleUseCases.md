@@ -1,7 +1,17 @@
 Example Use Cases
 =================
 
-Image thumbnails using the filesystem
-Using on Heroku with S3
+Image thumbnails in Rails
+-------------------------
+
+Rails thumbnails on Heroku with S3
+----------------------------------
+
 Serving attachments with no processing
+--------------------------------------
+
+Generating test data
+--------------------
+
 Text image replacement
+----------------------
