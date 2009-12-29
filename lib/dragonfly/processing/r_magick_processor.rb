@@ -34,17 +34,9 @@ module Dragonfly
         image.crop(gravity, x, y, width, height).to_blob
       end
       
-      def generate(width, height)
-        image = Magick::Image.new(width, height)
-        num_points = 7
-        args = []
-        num_points.times do
-          args << rand(width)
-          args << rand(height)
-          args << "rgb(#{rand(256)},#{rand(256)},#{rand(256)})"
-        end
-        image = image.sparse_color(Magick::ShepardsColorInterpolate, *args)
-        image.format = 'png'
+      def generate(width, height, format='png')
+        image = Magick::Image.read("plasma:fractal"){self.size = "#{width}x#{height}"}.first
+        image.format = format.to_s
         image.to_blob
       end
       

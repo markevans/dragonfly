@@ -8,7 +8,7 @@ describe Dragonfly::Processing::RMagickProcessor do
     @processor = Dragonfly::Processing::RMagickProcessor.new
   end
   
-  describe "#resize" do
+  describe "resize" do
     
     it "should work correctly with xNN" do
       image = @processor.resize(@image, :geometry => 'x30')
@@ -170,6 +170,19 @@ describe Dragonfly::Processing::RMagickProcessor do
       image.should have_height(355)
     end
     
+  end
+  
+  describe "generate" do
+    it "should generate an image with the given dimensions, defaulting to png format" do
+      image = @processor.generate(23,12)
+      image.should have_width(23)
+      image.should have_height(12)
+      image.should have_format('png')
+    end
+    it "should allow specifying the format" do
+      image = @processor.generate(23, 12, :gif)
+      image.should have_format('gif')
+    end
   end
   
 end
