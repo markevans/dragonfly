@@ -154,6 +154,9 @@ module Dragonfly
         padding_bottom = opts[:padding_bottom] || pb || 0
         padding_left   = opts[:padding_left]   || pl || 0
 
+        # Hack - for small font sizes, the width seems to be affected by rounding errors
+        padding_right += 2
+
         total_width = padding_left + width + padding_right
         total_height = padding_top + height + padding_bottom
 
