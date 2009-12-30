@@ -135,7 +135,7 @@ module Dragonfly
         # Settings
         draw.font         = opts[:font] if opts[:font]
         draw.font_family  = opts[:font_family] if opts[:font_family]
-        draw.pointsize    = opts[:font_size] if opts[:font_size]
+        draw.pointsize    = opts[:font_size].to_f if opts[:font_size]
         draw.fill         = opts[:color] if opts[:color]
         draw.stroke       = opts[:stroke_color] if opts[:stroke_color]
         draw.font_style   = FONT_STYLES[opts[:font_style]] if opts[:font_style]
