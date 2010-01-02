@@ -154,8 +154,8 @@ module Dragonfly
         uid,
         format,
         processing_method,
-        processing_options.sort{|a,b| a[1].to_s <=> b[1].to_s },
-        encoding.sort{|a,b| a[1].to_s <=> b[1].to_s }
+        processing_options.sort{|a,b| a[0].to_s <=> b[0].to_s },
+        encoding.sort{|a,b| a[0].to_s <=> b[0].to_s }
       ]
     end
 
