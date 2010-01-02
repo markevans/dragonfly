@@ -81,21 +81,21 @@ For reference, the contents of the metal file is given below. You could do somet
     require 'dragonfly'
 
     # Configuration of the Dragonfly App
-    Dragonfly::App[:images].configure_with(Dragonfly::RMagickConfiguration)
-    Dragonfly::App[:images].configure do |c|
+    app = Dragonfly::App[:images]
+    app.configure_with(Dragonfly::RMagickConfiguration)
+    app.configure do |c|
       c.log = RAILS_DEFAULT_LOGGER
       c.datastore.configure do |d|
         d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
       end
       c.url_handler.configure do |u|
-        u.secret = '29205f3e01648d0966bd5b119cd53347390a9ba9'
-        u.path_prefix = '/images'
+        u.secret = '42fb1c533022556651af59d2a4302f44b37491e5'
+        u.path_prefix = '/media'
       end
     end
 
     # The metal, for running the app
-    app = Dragonfly::App[:images]
-    Images = Rack::Builder.new do
+    ImageServer = Rack::Builder.new do
 
       # UNCOMMENT ME!!!
       # ... if you want to use super-dooper middleware 'rack-cache'
@@ -104,7 +104,7 @@ For reference, the contents of the metal file is given below. You could do somet
       #   :verbose     => true,
       #   :metastore   => 'file:/var/cache/rack/meta',
       #   :entitystore => 'file:/var/cache/rack/body'
-
+  
       run app
-
+  
     end

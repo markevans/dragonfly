@@ -4,9 +4,10 @@ class DragonflyAppGenerator < Rails::Generator::NamedBase
  
   def manifest
     app_name = plural_name
-    metal_name = plural_name.camelize
-    path_prefix = plural_name
     single_name = singular_name.singularize
+    metal_file = "#{single_name}_server"
+    metal_name = metal_file.camelize
+    path_prefix = 'media'
     
     record do |m|
       # The initializer
@@ -27,7 +28,7 @@ class DragonflyAppGenerator < Rails::Generator::NamedBase
       m.directory('app/metal')
       m.template(
         'metal_file.erb',
-        "app/metal/#{plural_name}.rb",
+        "app/metal/#{metal_file}.rb",
         :assigns => {
           :app_name => app_name,
           :metal_name => metal_name,

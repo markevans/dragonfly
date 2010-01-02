@@ -3,8 +3,9 @@ require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Ra
 require 'dragonfly'
 
 # Configuration of the Dragonfly App
-Dragonfly::App[:<%= app_name %>].configure_with(Dragonfly::RMagickConfiguration)
-Dragonfly::App[:<%= app_name %>].configure do |c|
+app = Dragonfly::App[:<%= app_name %>]
+app.configure_with(Dragonfly::RMagickConfiguration)
+app.configure do |c|
   c.log = RAILS_DEFAULT_LOGGER
   c.datastore.configure do |d|
     d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
@@ -16,7 +17,6 @@ Dragonfly::App[:<%= app_name %>].configure do |c|
 end
 
 # The metal, for running the app
-app = Dragonfly::App[:<%= app_name %>]
 <%= metal_name %> = Rack::Builder.new do
 
   # UNCOMMENT ME!!!
