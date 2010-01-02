@@ -42,7 +42,7 @@ View (to display):
     <%= image_tag @album.cover_image.url('400x200') %>
     <%= image_tag @album.cover_image.url('100x100!', :png) %>
     <%= image_tag @album.cover_image.url('100x100#') %>
-    <%= image_tag @album.cover_image.url('50x50+30+30sw', :tif) %>
+    <%= image_tag @album.cover_image.url('50x50+30+30sw', :tiff) %>
     <%= image_tag @album.cover_image.url(:rotate, 15) %>
     ...etc.
 
