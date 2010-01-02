@@ -1,5 +1,5 @@
 function createSourceLinks() {
-    $('#method_details .source_code, #constructor_details .source_code, #method_missing_details .source_code').
+    $('.method_details_list .source_code').
         before("<span class='showSource'>[<a href='#' class='toggleSource'>View source</a>]</span>");
     $('.toggleSource').toggle(function() {
        $(this).parent().next().slideDown(100);

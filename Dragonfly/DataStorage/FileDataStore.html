@@ -117,13 +117,19 @@ or
 </ul>
 
 
-  <h2>Method Summary</h2>
+  <h2>Instance Method Summary</h2>
+
   <ul class="summary">
     
       <li class="public ">
-  <span class="summary_signature"><a href="#destroy-instance_method" title="#destroy (instance method)">- (Object) <strong>destroy</strong>(relative_path) </a>
-  
+  <span class="summary_signature">
+    
+      <a href="#destroy-instance_method" title="#destroy (instance method)">- (Object) <strong>destroy</strong>(relative_path) </a>
+    
+
+    
   </span>
+  
   
   
   
@@ -136,9 +142,14 @@ or
 
     
       <li class="public ">
-  <span class="summary_signature"><a href="#retrieve-instance_method" title="#retrieve (instance method)">- (Object) <strong>retrieve</strong>(relative_path) </a>
-  
+  <span class="summary_signature">
+    
+      <a href="#retrieve-instance_method" title="#retrieve (instance method)">- (Object) <strong>retrieve</strong>(relative_path) </a>
+    
+
+    
   </span>
+  
   
   
   
@@ -151,9 +162,14 @@ or
 
     
       <li class="public ">
-  <span class="summary_signature"><a href="#store-instance_method" title="#store (instance method)">- (Object) <strong>store</strong>(temp_object) </a>
-  
+  <span class="summary_signature">
+    
+      <a href="#store-instance_method" title="#store (instance method)">- (Object) <strong>store</strong>(temp_object) </a>
+    
+
+    
   </span>
+  
   
   
   
@@ -166,7 +182,6 @@ or
 
     
   </ul>
-
 
   
   
@@ -182,8 +197,9 @@ or
   
   
 
-  <div id="method_details">
-    <h2>Method Details</h2>
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
     
       <div class="method_details first">
   <p class="signature first" id="destroy-instance_method">
@@ -219,19 +235,19 @@ or
       <pre class="lines">
 
 
+36
+37
+38
+39
+40
 41
 42
 43
 44
-45
-46
-47
-48
-49
-50</pre>
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 36</span>
 
 <span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
   <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rm identifier id'>rm</span> <span class='absolute_storage_path identifier id'>absolute_storage_path</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
@@ -283,14 +299,14 @@ or
       <pre class="lines">
 
 
-35
-36
-37
-38
-39</pre>
+30
+31
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 30</span>
 
 <span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
   <span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='absolute_storage_path identifier id'>absolute_storage_path</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
@@ -332,24 +348,14 @@ or
 25
 26
 27
-28
-29
-30
-31
-32
-33</pre>
+28</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 12</span>
 
 <span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
 
-  <span class='suffix identifier id'>suffix</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
-    <span class='string val'>'file'</span>
-  <span class='else else kw'>else</span>
-    <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/\.[^.]*?$/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-  <span class='relative_path identifier id'>relative_path</span> <span class='assign token'>=</span> <span class='relative_storage_path identifier id'>relative_storage_path</span><span class='lparen token'>(</span><span class='suffix identifier id'>suffix</span><span class='rparen token'>)</span>
+  <span class='relative_path identifier id'>relative_path</span> <span class='assign token'>=</span> <span class='relative_storage_path identifier id'>relative_storage_path</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span> <span class='orop op'>||</span> <span class='string val'>'file'</span><span class='rparen token'>)</span>
 
   <span class='begin begin kw'>begin</span>
     <span class='while while kw'>while</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='exist? fid id'>exist?</span><span class='lparen token'>(</span><span class='storage_path identifier id'>storage_path</span> <span class='assign token'>=</span> <span class='absolute_storage_path identifier id'>absolute_storage_path</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
@@ -375,9 +381,9 @@ or
 </div>
     
     <div id="footer">
-  Generated on Tue Dec 15 23:06:21 2009 by 
+  Generated on Sat Jan  2 16:54:44 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.4.0 (ruby-1.8.7).
+  0.5.2 (ruby-1.8.7).
 </div>
 
   </body>

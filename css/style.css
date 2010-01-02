@@ -26,9 +26,11 @@ h2 {
   background: #e3e4e3; border: 1px solid #d5d5d5; padding: 7px 10px;
 }
 .note.todo { background: #ffffc5; border-color: #ececaa; }
+.note.returns_void { background: #efefef; }
 .note.deprecated { background: #ffe5e5; border-color: #e9dada; }
 .note.title { text-transform: lowercase; padding: 1px 5px; margin-left: 5px; font-size: 0.9em; font-family: "Lucida Sans", "Lucida Grande", Verdana, Arial, sans-serif; }
 h1 .note.title { font-size: 0.5em; font-weight: normal; padding: 3px 5px; position: relative; top: -3px; text-transform: capitalize; }
+.note.title.constructor { color: #fff; background: #6a98d6; border-color: #6689d6; } 
 .note.title.writeonly { color: #fff; background: #45a638; border-color: #2da31d; } 
 .note.title.readonly { color: #fff; background: #6a98d6; border-color: #6689d6; } 
 .note.title.private { background: #d5d5d5; border-color: #c5c5c5; }
@@ -111,7 +113,7 @@ p.signature .aliases .names { font-family: Monaco, Consolas, Courier, monospace;
 .tags ul { margin-top: 5px; padding-left: 30px; list-style: square; }
 .tags ul li { margin-bottom: 3px; }
 .tags ul .name { font-family: monospace; font-weight: bold; }
-.tags ul p { display: inline; margin-bottom: 5px; }
+.tags ul p.note { padding: 3px 6px; }
 .tags { margin-bottom: 12px; }
 
 .tags .examples h3 { margin-bottom: 10px; }
@@ -169,7 +171,7 @@ p.children strong.modules { padding-left: 5px; }
 ul.fullTree { display: none; padding-left: 0; list-style: none; margin-left: 0; margin-bottom: 10px; }
 ul.fullTree ul { margin-left: 0; padding-left: 0; list-style: none; }
 ul.fullTree li { text-align: center; }
-ul.fullTree li.next:before { font-size: 1.2em; content: '⬆'; color: #bbb; display: block; margin-top: 3px; }
+ul.fullTree li.next:before { font-size: 1.2em; content: '\2B06'; color: #bbb; display: block; margin-top: 3px; }
 
 #search { position: absolute; right: 14px; top: 0px; }
 #search a:link, #search a:visited { 

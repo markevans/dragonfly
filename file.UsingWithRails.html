@@ -54,7 +54,7 @@ and as a Rails Metal.</p>
 <p>The required file 'dragonfly/rails/images.rb' initializes a dragonfly app, configures it to use rmagick processing, encoding, etc.,
 and registers the app so that you can use ActiveRecord accessors.</p>
 
-<p>Because in this case it's configured to use <a target="_parent" href="http://tomayko.com/src/rack-cache/" title="rack-cache">rack-cache</a> and <a target="_parent" href="http://rmagick.rubyforge.org/" title="rmagick">rmagick</a>,
+<p>Because in this case it's configured to use <a href="http://tomayko.com/src/rack-cache/" target="_parent" title="rack-cache">rack-cache</a> and <a href="http://rmagick.rubyforge.org/" target="_parent" title="rmagick">rmagick</a>,
 you should include the first two lines above.</p>
 
 <p>For reference, the contents of 'dragonfly/rails/images.rb' are as follows:</p>
@@ -82,7 +82,7 @@ you should include the first two lines above.</p>
 </pre>
 
 <p>The line <code>config.middleware.use 'Dragonfly::MiddlewareWithCache', :images</code> configures rails to use a <tt><a href="Dragonfly/MiddlewareWithCache.html" title="middleware">middleware</a></tt> which uses the named app (named <code>:images</code>), and puts
-<a target="_parent" href="http://tomayko.com/src/rack-cache/" title="Rack::Cache">Rack::Cache</a> in front of it for performance.
+<a href="http://tomayko.com/src/rack-cache/" target="_parent" title="Rack::Cache">Rack::Cache</a> in front of it for performance.
 You can pass extra arguments to this line which will go directly to configuring Rack::Cache (see its docs for how to configure it).
 The default configuration for Rack::Cache is</p>
 
@@ -124,21 +124,21 @@ this should be resolvable by making sure the metal name matches its filename).</
 <span class='require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
 
 <span class='comment val'># Configuration of the Dragonfly App</span>
-<span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='RMagickConfiguration constant id'>RMagickConfiguration</span><span class='rparen token'>)</span>
-<span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+<span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='RMagickConfiguration constant id'>RMagickConfiguration</span><span class='rparen token'>)</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
   <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='log identifier id'>log</span> <span class='assign token'>=</span> <span class='RAILS_DEFAULT_LOGGER constant id'>RAILS_DEFAULT_LOGGER</span>
   <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='d identifier id'>d</span><span class='bitor op'>|</span>
     <span class='d identifier id'>d</span><span class='dot token'>.</span><span class='root_path identifier id'>root_path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{Rails.root}/public/system/dragonfly/#{Rails.env}&quot;</span>
   <span class='end end kw'>end</span>
   <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_handler identifier id'>url_handler</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='u identifier id'>u</span><span class='bitor op'>|</span>
-    <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='secret identifier id'>secret</span> <span class='assign token'>=</span> <span class='string val'>'29205f3e01648d0966bd5b119cd53347390a9ba9'</span>
-    <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='path_prefix identifier id'>path_prefix</span> <span class='assign token'>=</span> <span class='string val'>'/images'</span>
+    <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='secret identifier id'>secret</span> <span class='assign token'>=</span> <span class='string val'>'42fb1c533022556651af59d2a4302f44b37491e5'</span>
+    <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='path_prefix identifier id'>path_prefix</span> <span class='assign token'>=</span> <span class='string val'>'/media'</span>
   <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
 
 <span class='comment val'># The metal, for running the app</span>
-<span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
-<span class='Images constant id'>Images</span> <span class='assign token'>=</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Builder constant id'>Builder</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span>
+<span class='ImageServer constant id'>ImageServer</span> <span class='assign token'>=</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Builder constant id'>Builder</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span>
 
   <span class='comment val'># UNCOMMENT ME!!!</span>
   <span class='comment val'># ... if you want to use super-dooper middleware 'rack-cache'</span>
@@ -155,9 +155,9 @@ this should be resolvable by making sure the metal name matches its filename).</
 </div></div>
     
     <div id="footer">
-  Generated on Tue Dec 15 23:06:17 2009 by 
+  Generated on Sat Jan  2 16:54:38 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.4.0 (ruby-1.8.7).
+  0.5.2 (ruby-1.8.7).
 </div>
 
   </body>
