@@ -4,9 +4,10 @@ Example:
 
     ./script/generate dragonfly_app images
     
-This will:
-- create a metal file with a dragonfly app routed to '/images'
-- add an initializer to extend activerecord, so you can do things like
+This will create an initializer called dragonfly_images, which will:
+- create and configure a dragonfly app for serving images
+- add the app to the middleware stack
+- extend activerecord, so you can do things like
 
     image_accessor :preview_image
     

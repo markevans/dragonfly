@@ -1,7 +1,28 @@
-<%- if already_initialized_code -%>
-<%= already_initialized_code %>
-<%- else -%>
 require 'dragonfly'
+
+# Configuration
+app = Dragonfly::App[:<%= app_name %>]
+app.configure_with(Dragonfly::RMagickConfiguration)
+app.configure do |c|
+  c.log = RAILS_DEFAULT_LOGGER
+  c.datastore.configure do |d|
+    d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
+  end
+  c.url_handler.configure do |u|
+    u.secret = '<%= random_secret %>'
+    u.path_prefix = '/<%= path_prefix %>'
+  end
+end
+
+# Extend ActiveRecord
+# This allows you to use e.g.
+#   <%= accessor_prefix %>_accessor :my_attribute
+# in your models.
 ActiveRecord::Base.extend Dragonfly::ActiveRecordExtensions
-<%- end -%>
 ActiveRecord::Base.register_dragonfly_app(:<%= accessor_prefix %>, Dragonfly::App[:<%= app_name %>])
+
+# Add the Dragonfly App to the middleware stack
+ActionController::Dispatcher.middleware.use Dragonfly::Middleware, :<%= app_name %>
+
+# USE THIS INSTEAD IF YOU WANT TO CACHE REQUESTS WITH Rack::Cache (remember to add config.gem for 'rack-cache')
+# ActionController::Dispatcher.middleware.use Dragonfly::MiddlewareWithCache, :<%= app_name %>

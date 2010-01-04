@@ -1,11 +1,10 @@
 Using With Rails
 ================
 
-There are two main ways to use Dragonfly with Rails - as a {Dragonfly::Middleware middleware},
-and as a Rails Metal.
+The main way to use Dragonfly with Rails is as a {Dragonfly::Middleware middleware}.
 
-Using as Middleware
--------------------
+The quick way
+-------------
 In environment.rb:
 
     config.gem 'rmagick'
@@ -20,29 +19,6 @@ and registers the app so that you can use ActiveRecord accessors.
 Because in this case it's configured to use {http://tomayko.com/src/rack-cache/ rack-cache} and {http://rmagick.rubyforge.org/ rmagick},
 you should include the first two lines above.
 
-For reference, the contents of 'dragonfly/rails/images.rb' are as follows:
-
-    require 'dragonfly'
-
-    ### The dragonfly app ###
-
-    app = Dragonfly::App[:images]
-    app.configure_with(Dragonfly::RMagickConfiguration)
-    app.configure do |c|
-      c.log = RAILS_DEFAULT_LOGGER
-      c.datastore.configure do |d|
-        d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
-      end
-      c.url_handler.configure do |u|
-        u.protect_from_dos_attacks = false
-        u.path_prefix = '/media'
-      end
-    end
-
-    ### Extend active record ###
-    ActiveRecord::Base.extend Dragonfly::ActiveRecordExtensions
-    ActiveRecord::Base.register_dragonfly_app(:image, app)
-
 The line `config.middleware.use 'Dragonfly::MiddlewareWithCache', :images` configures rails to use a {Dragonfly::MiddlewareWithCache middleware} which uses the named app (named `:images`), and puts
 {http://tomayko.com/src/rack-cache/ Rack::Cache} in front of it for performance.
 You can pass extra arguments to this line which will go directly to configuring Rack::Cache (see its docs for how to configure it).
@@ -56,31 +32,37 @@ The default configuration for Rack::Cache is
 
 To see what you can do with the active record accessors, see {file:ActiveRecord}.
 
-Using as a Rails Metal
-----------------------
-Setting up as a Rails Metal may be preferable to using the middleware as above if you want to see the configuration
-more explicitly (and therefore have more control over it).
+The more explicit way - using an initializer
+--------------------------------------------
+If you want more control over the configuration, you can do what the file 'dragonfly/rails/images' does yourself,
+in an initializer.
 
-The easiest way is using the supplied generator.
-(NB I've had a couple of problems with the generator with plural/singular names with early versions of metal in Rails 2.3 -
-this should be resolvable by making sure the metal name matches its filename).
+In that case in environment.rb we only need:
+
+    config.gem 'rmagick'      # if used
+    config.gem 'rack-cache'   # if used
+    config.gem 'dragonfly'
+
+The easiest way to create the initializer is using the supplied generator
+(which will be visible if you have the dragonfly gem installed).
 
     ./script/generate dragonfly_app images
     
 The argument 'images' could be anything - it is an arbitrary app name.
 
-This does two things:
+This creates an initializer 'dragonfly_images' which does the following:
 
-1. Creates and configures an app as a rails metal
+1. Creates and configures a dragonfly app
 2. Registers the app for use with ActiveRecord - see {file:ActiveRecord}
+3. Inserts the app into the Rails middleware stack
 
-For reference, the contents of the metal file is given below. You could do something similar yourself without the generator.
+For reference, the contents of an example initializer are shown below.
+You could just copy and paste this yourself into an initializer if you prefer,
+but make sure to change the 'secret' configuration option, so as to protect your app from Denial-of-Service attacks (see {file:GettingStarted}).
 
-    # Allow the metal piece to run in isolation
-    require(File.dirname(__FILE__) + "/../../config/environment") unless defined?(Rails)
     require 'dragonfly'
 
-    # Configuration of the Dragonfly App
+    # Configuration
     app = Dragonfly::App[:images]
     app.configure_with(Dragonfly::RMagickConfiguration)
     app.configure do |c|
@@ -89,22 +71,20 @@ For reference, the contents of the metal file is given below. You could do somet
         d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
       end
       c.url_handler.configure do |u|
-        u.secret = '42fb1c533022556651af59d2a4302f44b37491e5'
+        u.secret = 'd54d2f8f44e81e9a6c4ec5ba76bc8ba12cf95717'
         u.path_prefix = '/media'
       end
     end
 
-    # The metal, for running the app
-    ImageServer = Rack::Builder.new do
+    # Extend ActiveRecord
+    # This allows you to use e.g.
+    #   image_accessor :my_attribute
+    # in your models.
+    ActiveRecord::Base.extend Dragonfly::ActiveRecordExtensions
+    ActiveRecord::Base.register_dragonfly_app(:image, Dragonfly::App[:images])
 
-      # UNCOMMENT ME!!!
-      # ... if you want to use super-dooper middleware 'rack-cache'
-      # require 'rack/cache'
-      # use Rack::Cache,
-      #   :verbose     => true,
-      #   :metastore   => 'file:/var/cache/rack/meta',
-      #   :entitystore => 'file:/var/cache/rack/body'
-  
-      run app
-  
-    end
+    # Add the Dragonfly App to the middleware stack
+    ActionController::Dispatcher.middleware.use Dragonfly::Middleware, :images
+    
+    # USE THIS INSTEAD IF YOU WANT TO CACHE REQUESTS WITH Rack::Cache (remember to add config.gem for 'rack-cache')
+    # ActionController::Dispatcher.middleware.use Dragonfly::MiddlewareWithCache, :images
