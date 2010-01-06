@@ -1,4 +1,5 @@
 require 'dragonfly'
+require 'rack/cache'
 
 ### The dragonfly app ###
 
@@ -18,3 +19,11 @@ end
 ### Extend active record ###
 ActiveRecord::Base.extend Dragonfly::ActiveRecordExtensions
 ActiveRecord::Base.register_dragonfly_app(:image, app)
+
+### Insert the middleware ###
+ActionController::Dispatcher.middleware.insert_after ActionController::Failsafe, Dragonfly::Middleware, :images
+ActionController::Dispatcher.middleware.insert_before Dragonfly::Middleware, Rack::Cache, {
+  :verbose     => true,
+  :metastore   => "file:#{Rails.root}/tmp/dragonfly/cache/meta",
+  :entitystore => "file:#{Rails.root}/tmp/dragonfly/cache/body"
+}

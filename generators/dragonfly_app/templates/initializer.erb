@@ -22,7 +22,12 @@ ActiveRecord::Base.extend Dragonfly::ActiveRecordExtensions
 ActiveRecord::Base.register_dragonfly_app(:<%= accessor_prefix %>, Dragonfly::App[:<%= app_name %>])
 
 # Add the Dragonfly App to the middleware stack
-ActionController::Dispatcher.middleware.use Dragonfly::Middleware, :<%= app_name %>
+ActionController::Dispatcher.middleware.insert_after ActionController::Failsafe, Dragonfly::Middleware, :<%= app_name %>
 
-# USE THIS INSTEAD IF YOU WANT TO CACHE REQUESTS WITH Rack::Cache (remember to add config.gem for 'rack-cache')
-# ActionController::Dispatcher.middleware.use Dragonfly::MiddlewareWithCache, :<%= app_name %>
+# # UNCOMMENT THIS IF YOU WANT TO CACHE REQUESTS WITH Rack::Cache (remember to add config.gem for 'rack-cache')
+# require 'rack/cache'
+# ActionController::Dispatcher.middleware.insert_before Dragonfly::Middleware, Rack::Cache, {
+#   :verbose     => true,
+#   :metastore   => "file:#{Rails.root}/tmp/dragonfly/cache/meta",
+#   :entitystore => "file:#{Rails.root}/tmp/dragonfly/cache/body"
+# }
