@@ -11,24 +11,12 @@ In environment.rb:
     config.gem 'rack-cache'
 
     config.gem 'dragonfly', :lib => 'dragonfly/rails/images'
-    config.middleware.use 'Dragonfly::MiddlewareWithCache', :images
 
 The required file 'dragonfly/rails/images.rb' initializes a dragonfly app, configures it to use rmagick processing, encoding, etc.,
-and registers the app so that you can use ActiveRecord accessors.
+registers the app so that you can use ActiveRecord accessors, and inserts it into the Rails middleware stack.
 
 Because in this case it's configured to use {http://tomayko.com/src/rack-cache/ rack-cache} and {http://rmagick.rubyforge.org/ rmagick},
 you should include the first two lines above.
-
-The line `config.middleware.use 'Dragonfly::MiddlewareWithCache', :images` configures rails to use a {Dragonfly::MiddlewareWithCache middleware} which uses the named app (named `:images`), and puts
-{http://tomayko.com/src/rack-cache/ Rack::Cache} in front of it for performance.
-You can pass extra arguments to this line which will go directly to configuring Rack::Cache (see its docs for how to configure it).
-The default configuration for Rack::Cache is
-
-    {
-      :verbose     => true,
-      :metastore   => 'file:/var/cache/rack/meta',
-      :entitystore => 'file:/var/cache/rack/body'
-    }
 
 To see what you can do with the active record accessors, see {file:ActiveRecord}.
 
@@ -71,7 +59,7 @@ but make sure to change the 'secret' configuration option, so as to protect your
         d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
       end
       c.url_handler.configure do |u|
-        u.secret = 'd54d2f8f44e81e9a6c4ec5ba76bc8ba12cf95717'
+        u.secret = 'fed49e269eebed54cc85b28a6c51cba6a543e7b5'
         u.path_prefix = '/media'
       end
     end
@@ -84,7 +72,12 @@ but make sure to change the 'secret' configuration option, so as to protect your
     ActiveRecord::Base.register_dragonfly_app(:image, Dragonfly::App[:images])
 
     # Add the Dragonfly App to the middleware stack
-    ActionController::Dispatcher.middleware.use Dragonfly::Middleware, :images
-    
-    # USE THIS INSTEAD IF YOU WANT TO CACHE REQUESTS WITH Rack::Cache (remember to add config.gem for 'rack-cache')
-    # ActionController::Dispatcher.middleware.use Dragonfly::MiddlewareWithCache, :images
+    ActionController::Dispatcher.middleware.insert_after ActionController::Failsafe, Dragonfly::Middleware, :images
+
+    # # UNCOMMENT THIS IF YOU WANT TO CACHE REQUESTS WITH Rack::Cache (remember to add config.gem for 'rack-cache')
+    # require 'rack/cache'
+    # ActionController::Dispatcher.middleware.insert_before Dragonfly::Middleware, Rack::Cache, {
+    #   :verbose     => true,
+    #   :metastore   => "file:#{Rails.root}/tmp/dragonfly/cache/meta",
+    #   :entitystore => "file:#{Rails.root}/tmp/dragonfly/cache/body"
+    # }

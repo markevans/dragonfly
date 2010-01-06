@@ -12,9 +12,7 @@ environment.rb:
 
     config.gem 'rmagick'
     config.gem 'rack-cache'
-
     config.gem 'dragonfly', :lib => 'dragonfly/rails/images'
-    config.middleware.use 'Dragonfly::MiddlewareWithCache', :images
 
 Migration:
 
