@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.4.0"
+  s.version = "0.4.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2010-01-04}
+  s.date = %q{2010-01-07}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -70,7 +70,6 @@ Gem::Specification.new do |s|
      "lib/dragonfly/encoding/transparent_encoder.rb",
      "lib/dragonfly/extended_temp_object.rb",
      "lib/dragonfly/middleware.rb",
-     "lib/dragonfly/middleware_with_cache.rb",
      "lib/dragonfly/parameters.rb",
      "lib/dragonfly/processing/base.rb",
      "lib/dragonfly/processing/r_magick_processor.rb",
@@ -101,7 +100,6 @@ Gem::Specification.new do |s|
      "spec/dragonfly/encoding/r_magick_encoder_spec.rb",
      "spec/dragonfly/extended_temp_object_spec.rb",
      "spec/dragonfly/middleware_spec.rb",
-     "spec/dragonfly/middleware_with_cache_spec.rb",
      "spec/dragonfly/parameters_spec.rb",
      "spec/dragonfly/processing/rmagick_processor_spec.rb",
      "spec/dragonfly/shared_middleware_spec.rb",
@@ -141,7 +139,6 @@ Gem::Specification.new do |s|
      "spec/dragonfly/encoding/r_magick_encoder_spec.rb",
      "spec/dragonfly/extended_temp_object_spec.rb",
      "spec/dragonfly/middleware_spec.rb",
-     "spec/dragonfly/middleware_with_cache_spec.rb",
      "spec/dragonfly/parameters_spec.rb",
      "spec/dragonfly/processing/rmagick_processor_spec.rb",
      "spec/dragonfly/shared_middleware_spec.rb",
