@@ -7,10 +7,9 @@ The quick way
 -------------
 In environment.rb:
 
-    config.gem 'rmagick'
-    config.gem 'rack-cache'
-
-    config.gem 'dragonfly', :lib => 'dragonfly/rails/images'
+    config.gem 'rmagick',    :lib => 'RMagick'
+    config.gem 'rack-cache', :lib => 'rack/cache'
+    config.gem 'dragonfly',  :lib => 'dragonfly/rails/images', :source => 'http://gemcutter.org'
 
 The required file 'dragonfly/rails/images.rb' initializes a dragonfly app, configures it to use rmagick processing, encoding, etc.,
 registers the app so that you can use ActiveRecord accessors, and inserts it into the Rails middleware stack.
@@ -27,9 +26,9 @@ in an initializer.
 
 In that case in environment.rb we only need:
 
-    config.gem 'rmagick'      # if used
-    config.gem 'rack-cache'   # if used
-    config.gem 'dragonfly'
+    config.gem 'rmagick',    :lib => 'RMagick'                 # if used
+    config.gem 'rack-cache', :lib => 'rack/cache'              # if used
+    config.gem 'dragonfly',  :source => 'http://gemcutter.org'
 
 The easiest way to create the initializer is using the supplied generator
 (which will be visible if you have the dragonfly gem installed).
@@ -74,7 +73,9 @@ but make sure to change the 'secret' configuration option, so as to protect your
     # Add the Dragonfly App to the middleware stack
     ActionController::Dispatcher.middleware.insert_after ActionController::Failsafe, Dragonfly::Middleware, :images
 
-    # # UNCOMMENT THIS IF YOU WANT TO CACHE REQUESTS WITH Rack::Cache (remember to add config.gem for 'rack-cache')
+    # # UNCOMMENT THIS IF YOU WANT TO CACHE REQUESTS WITH Rack::Cache, and add the line
+    # #   config.gem 'rack-cache', :lib => 'rack/cache'
+    # # to environment.rb
     # require 'rack/cache'
     # ActionController::Dispatcher.middleware.insert_before Dragonfly::Middleware, Rack::Cache, {
     #   :verbose     => true,

@@ -10,9 +10,9 @@ To use simply for image thumbnails etc. in Rails...
 
 environment.rb:
 
-    config.gem 'rmagick'
-    config.gem 'rack-cache'
-    config.gem 'dragonfly', :lib => 'dragonfly/rails/images'
+    config.gem 'rmagick',    :lib => 'RMagick'
+    config.gem 'rack-cache', :lib => 'rack/cache'
+    config.gem 'dragonfly',  :lib => 'dragonfly/rails/images', :source => 'http://gemcutter.org'
 
 Migration:
 

@@ -24,7 +24,9 @@ ActiveRecord::Base.register_dragonfly_app(:<%= accessor_prefix %>, Dragonfly::Ap
 # Add the Dragonfly App to the middleware stack
 ActionController::Dispatcher.middleware.insert_after ActionController::Failsafe, Dragonfly::Middleware, :<%= app_name %>
 
-# # UNCOMMENT THIS IF YOU WANT TO CACHE REQUESTS WITH Rack::Cache (remember to add config.gem for 'rack-cache')
+# # UNCOMMENT THIS IF YOU WANT TO CACHE REQUESTS WITH Rack::Cache, and add the line
+# #   config.gem 'rack-cache', :lib => 'rack/cache'
+# # to environment.rb
 # require 'rack/cache'
 # ActionController::Dispatcher.middleware.insert_before Dragonfly::Middleware, Rack::Cache, {
 #   :verbose     => true,
