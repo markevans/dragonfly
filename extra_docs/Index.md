@@ -19,6 +19,7 @@ Use the links at the top-right to navigate around the code, or jump straight to 
 - {file:Processing.md Processing}
 - {file:Encoding.md Encoding}
 - {file:Shortcuts.md Shortcuts for processing and encoding}
+- {file:ExampleUseCases.md Example use cases}
 
 Installation
 ------------
