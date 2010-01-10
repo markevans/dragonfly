@@ -37,19 +37,218 @@
     
     <div id="content"><div id='filecontents'><h1>Example Use Cases</h1>
 
+<p>This document is concerned with different Dragonfly configurations, for various use cases.</p>
+
+<p>In a Rails app the configuration would generally be done in an initializer.</p>
+
+<p>In other Rack-based apps it could be config.ru, or anywhere where the application is generally set up.</p>
+
 <h2>Image thumbnails in Rails</h2>
 
-<h2>Rails thumbnails on Heroku with S3</h2>
+<p>See <a href="file.UsingWithRails.html" title="UsingWithRails">UsingWithRails</a></p>
 
-<h2>Serving attachments with no processing</h2>
+<h2>Image thumbnails in Rails, hosted on Heroku with S3 storage</h2>
+
+<p><a href="http://heroku.com" target="_parent" title="Heroku">Heroku</a> is a commonly used platform for hosting Rack-based websites.
+The following assumes your site is set up for deployment onto Heroku.</p>
+
+<p>As explained in <a href="file.UsingWithRails.html" title="UsingWithRails">UsingWithRails</a>, we can use a generator to create an initializer for setting up Dragonfly.</p>
+
+<pre class="code"><span class='dot token'>.</span><span class='div op'>/</span><span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='dragonfly_app identifier id'>dragonfly_app</span> <span class='images identifier id'>images</span>
+</pre>
+
+<p>The default configuration won't work out of the box for Heroku, because</p>
+
+<ul>
+<li>Heroku doesn't allow saving files to the filesystem (although it does use tempfiles)</li>
+<li>We won't need <a href="http://tomayko.com/src/rack-cache/" target="_parent" title="Rack::Cache">Rack::Cache</a> on Heroku because it already uses the caching proxy <a href="http://varnish.projects.linpro.no/" target="_parent" title="Varnish">Varnish</a>, which we can make use of</li>
+</ul>
+
+
+<p>Instead of the normal <tt><a href="Dragonfly/DataStorage/FileDataStore.html" title="FileDataStore">FileDataStore</a></tt>, we can use the <tt><a href="Dragonfly/DataStorage/S3DataStore.html" title="S3DataStore">S3DataStore</a></tt>.
+Amazon's <a href="http://aws.amazon.com/s3" target="_parent" title="S3">S3</a> is a commonly used platform for storing data.</p>
+
+<p>The following assumes you have an S3 account set up, and know your provided 'access key' and 'secret'.</p>
+
+<p>Assuming we don't bother with any caching for development/testing environments, our environment.rb then has:</p>
+
+<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rmagick'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'RMagick'</span>
+<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span><span class='comma token'>,</span> <span class='symbol val'>:source</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://www.gemcutter.org&quot;</span>
+</pre>
+
+<p>(these are ignored by Heroku but you might want them locally)</p>
+
+<p>The gems file for Heroku, <code>.gems</code>, has</p>
+
+<pre class="code"><span class='dragonfly identifier id'>dragonfly</span>
+</pre>
+
+<p>(rmagick not needed because it is already installed)</p>
+
+<p>Then in our configuration initializer, we replace</p>
+
+<pre class="code"><span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='d identifier id'>d</span><span class='bitor op'>|</span>
+  <span class='d identifier id'>d</span><span class='dot token'>.</span><span class='root_path identifier id'>root_path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{Rails.root}/public/system/dragonfly/#{Rails.env}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>with</p>
+
+<pre class="code"><span class='comment val'># Use S3 for production</span>
+<span class='if if kw'>if</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='env identifier id'>env</span> <span class='eq op'>==</span> <span class='string val'>'production'</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='S3DataStore constant id'>S3DataStore</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='d identifier id'>d</span><span class='bitor op'>|</span>
+    <span class='d identifier id'>d</span><span class='dot token'>.</span><span class='bucket_name identifier id'>bucket_name</span> <span class='assign token'>=</span> <span class='string val'>'my_s3_bucket_name'</span>
+    <span class='d identifier id'>d</span><span class='dot token'>.</span><span class='access_key_id identifier id'>access_key_id</span> <span class='assign token'>=</span> <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'S3_KEY'</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='raise identifier id'>raise</span><span class='lparen token'>(</span><span class='string val'>&quot;ENV variable 'S3_KEY' needs to be set&quot;</span><span class='rparen token'>)</span>
+    <span class='d identifier id'>d</span><span class='dot token'>.</span><span class='secret_access_key identifier id'>secret_access_key</span> <span class='assign token'>=</span> <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'S3_SECRET'</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='raise identifier id'>raise</span><span class='lparen token'>(</span><span class='string val'>&quot;ENV variable 'S3_SECRET' needs to be set&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='comment val'># and filesystem for other environments</span>
+<span class='else else kw'>else</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='d identifier id'>d</span><span class='bitor op'>|</span>
+    <span class='d identifier id'>d</span><span class='dot token'>.</span><span class='root_path identifier id'>root_path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{Rails.root}/public/system/dragonfly/#{Rails.env}&quot;</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>We've left the datastore as <tt><a href="Dragonfly/DataStorage/FileDataStore.html" title="FileDataStore">FileDataStore</a></tt> for non-production environments.</p>
+
+<p>As you can see we've used <code>ENV</code> to store the S3 access key and secret to avoid having them in the repository.
+Heroku has a <a href="http://docs.heroku.com/config-vars" target="_parent" title="way of setting these">way of setting these</a> using the command line (we only have to do this once).</p>
+
+<p>From your app's directory:</p>
+
+<pre class="code"><span class='heroku identifier id'>heroku</span> <span class='config identifier id'>config</span><span class='symbol val'>:add</span> <span class='S3_KEY constant id'>S3_KEY</span><span class='assign token'>=</span><span class='XXXXXXXXX constant id'>XXXXXXXXX</span> <span class='S3_SECRET constant id'>S3_SECRET</span><span class='assign token'>=</span><span class='XXXXXXXXXX constant id'>XXXXXXXXXX</span>
+</pre>
+
+<p>Obviously you replace 'XXXXXXXXX' with your access key and secret.</p>
+
+<p>Now you can benefit use Dragonfly in the normal way, benefitting from super-fast images served straight from Heroku's cache!</p>
+
+<p>The only downside is that Heroku's cache is cleared every time you deploy, so if this is an issue you may want to look into using something like
+a Memcached add-on, or maybe an after-deploy hook for hitting specific Dragonfly urls you want to cache, etc.
+It won't be a problem for most sites though.</p>
+
+<h2>Attaching files to ActiveRecord models with no processing or encoding</h2>
+
+<p>Although Dragonfly is normally concerned with processing and encoding, you may want to just use it with arbitrary uploaded files
+(e.g. .doc, .xls, .pdf files, etc.) without processing or encoding them, so as to still benefit from the <a href="file.ActiveRecord.html" title="ActiveRecord Extensions">ActiveRecord Extensions</a> API.</p>
+
+<p>The below shows how to do it in Rails, but the principles are the same in any context.
+Let's generate a configuration for a Dragonfly App called 'attachments'</p>
+
+<pre class="code"><span class='dot token'>.</span><span class='div op'>/</span><span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='dragonfly_app identifier id'>dragonfly_app</span> <span class='attachments identifier id'>attachments</span>
+</pre>
+
+<p>This generates an initializer for configuring the Dragonfly App 'attachments'.</p>
+
+<p>We won't be using RMagick or Rack::Cache (as there is no processing), so our environment.rb only has:</p>
+
+<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span><span class='comma token'>,</span>  <span class='symbol val'>:source</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://gemcutter.org'</span>
+</pre>
+
+<p>and in the generated configuration, we DELETE the line</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='RMagickConfiguration constant id'>RMagickConfiguration</span><span class='rparen token'>)</span>
+</pre>
+
+<p>Then in the configure block, we add the lines</p>
+
+<pre class="code"><span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_handler identifier id'>url_handler</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='u identifier id'>u</span><span class='bitor op'>|</span>
+  <span class='comment val'># ...</span>
+  <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='protect_from_dos_attacks identifier id'>protect_from_dos_attacks</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+<span class='c identifier id'>c</span><span class='dot token'>.</span><span class='register_analyser identifier id'>register_analyser</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='FileCommandAnalyser constant id'>FileCommandAnalyser</span><span class='rparen token'>)</span>
+<span class='c identifier id'>c</span><span class='dot token'>.</span><span class='register_encoder identifier id'>register_encoder</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='TransparentEncoder constant id'>TransparentEncoder</span><span class='rparen token'>)</span>
+</pre>
+
+<p>We don't need to protect the urls from Denial-of-service attacks as we aren't doing any expensive processing.
+The <tt><a href="Dragonfly/Analysis/FileCommandAnalyser.html" title="FileCommandAnalyser">FileCommandAnalyser</a></tt> is needed to know the mime-type of the content,
+and the <tt><a href="Dragonfly/Encoding/TransparentEncoder.html" title="TransparentEncoder">TransparentEncoder</a></tt> is like a 'dummy' encoder which does nothing
+(the way to switch off encoding may change in the future).</p>
+
+<p>If a user uploads a file called 'report.pdf', then normally the original file extension will be lost.
+Thankfully, to record it is as easy as adding an 'ext' column as well as the usual uid column to our migration
+(see <a href="file.ActiveRecord.html" title="ActiveRecord">ActiveRecord</a> for more info about 'magic attributes'):</p>
+
+<pre class="code"><span class='add_column identifier id'>add_column</span> <span class='symbol val'>:my_models</span><span class='comma token'>,</span> <span class='symbol val'>:attachment_uid</span><span class='comma token'>,</span> <span class='symbol val'>:string</span>
+<span class='add_column identifier id'>add_column</span> <span class='symbol val'>:my_models</span><span class='comma token'>,</span> <span class='symbol val'>:attachment_ext</span><span class='comma token'>,</span> <span class='symbol val'>:string</span>
+</pre>
+
+<p>Then we include a helper method in our model for setting the correct file extension when we link to the attachment:</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='MyModel constant id'>MyModel</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+
+  <span class='attachment_accessor identifier id'>attachment_accessor</span> <span class='symbol val'>:attachment</span>
+
+  <span class='def def kw'>def</span> <span class='url_for_attachment identifier id'>url_for_attachment</span>
+    <span class='attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='url identifier id'>url</span> <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='attachment_ext identifier id'>attachment_ext</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>Now we can add links to the attached file in our views:</p>
+
+<pre class="code"><span class='lt op'>&lt;</span><span class='string val'>%= link_to 'Attachment', @my_model.url_for_attachment %&gt;
+</span></pre>
 
 <h2>Generating test data</h2>
 
+<p>We may want to generate a load of test data in a test / populate script.</p>
+
+<p>Each <tt><a href="Dragonfly/App.html" title="Dragonfly App">Dragonfly App</a></tt> has a 'generate' method, which returns an <tt><a href="Dragonfly/ExtendedTempObject.html" title="ExtendedTempObject">ExtendedTempObject</a></tt> with generated data.
+The actual generation is delegated to the registered processors (along with any args passed in).</p>
+
+<p>For example, if our app is registered with the <tt><a href="Dragonfly/Processing/RMagickProcessor.html" title="RMagickProcessor">RMagickProcessor</a></tt> (which is already done if using with one of
+the Rails helper files/generators)</p>
+
+<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='register_processor identifier id'>register_processor</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Processing constant id'>Processing</span><span class='colon2 op'>::</span><span class='RMagickProcessor constant id'>RMagickProcessor</span><span class='rparen token'>)</span>
+</pre>
+
+<p>then we can generate images of different sizes/formats):</p>
+
+<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='integer val'>300</span><span class='comma token'>,</span> <span class='integer val'>200</span><span class='rparen token'>)</span>       <span class='comment val'># creates a png image of size 300x200 (as an ExtendedTempObject)</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='to_file identifier id'>to_file</span><span class='lparen token'>(</span><span class='string val'>'out.png'</span><span class='rparen token'>)</span>                                 <span class='comment val'># writes to file 'out.png'</span>
+<span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='integer val'>50</span><span class='comma token'>,</span> <span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:gif</span><span class='rparen token'>)</span>   <span class='comment val'># creates a gif image of size 50x50</span>
+</pre>
+
 <h2>Text image replacement</h2>
+
+<p>A common technique for making sure a specific font is displayed on a website is replacing text with images.</p>
+
+<p>We can easily use Dragonfly to do this on-the-fly.</p>
+
+<p>The <tt><a href="Dragonfly/Processing/RMagickProcessor.html" title="RMagickProcessor">RMagickProcessor</a></tt> has a 'text' method, which takes content in the form of text,
+and creates an image of the text, given the options passed in.</p>
+
+<p>We can also make use of the simple <tt><a href="Dragonfly/DataStorage/TransparentDataStore.html" title="TransparentDataStore">TransparentDataStore</a></tt>, where rather than fetch
+data for a given uid, the uid IS the data.</p>
+
+<p>The configuration will look something like:</p>
+
+<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='TransparentDataStore constant id'>TransparentDataStore</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='register_analyser identifier id'>register_analyser</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='FileCommandAnalyser constant id'>FileCommandAnalyser</span><span class='rparen token'>)</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='register_processor identifier id'>register_processor</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Processing constant id'>Processing</span><span class='colon2 op'>::</span><span class='RMagickProcessor constant id'>RMagickProcessor</span><span class='rparen token'>)</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='register_encoder identifier id'>register_encoder</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='RMagickEncoder constant id'>RMagickEncoder</span><span class='rparen token'>)</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='parameters identifier id'>parameters</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span>
+    <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='default_format identifier id'>default_format</span> <span class='assign token'>=</span> <span class='symbol val'>:png</span>
+    <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='default_processing_method identifier id'>default_processing_method</span> <span class='assign token'>=</span> <span class='symbol val'>:text</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>We need the <tt><a href="Dragonfly/Analysis/FileCommandAnalyser.html" title="FileCommandAnalyser">FileCommandAnalyser</a></tt> for mime-type analysis.</p>
+
+<p>Then when we visit a url like</p>
+
+<pre class="code"><span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='string val'>'some text'</span><span class='comma token'>,</span> <span class='symbol val'>:processing_options</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:font_size</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>30</span><span class='comma token'>,</span> <span class='symbol val'>:font_family</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Monaco'</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+
+<p>we get a png image of the text. We could easily wrap this in some kind of helper if we use it often.</p>
 </div></div>
     
     <div id="footer">
-  Generated on Sat Jan  2 16:45:09 2010 by 
+  Generated on Sun Jan 10 21:37:21 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.2 (ruby-1.8.7).
 </div>

@@ -73,7 +73,59 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>
+An ExtendedTempObject is just a TempObject that belongs to a Dragonfly App.
+</p>
+<p>
+Because of this, it can make use of the app&#8217;s registered processors,
+encoders and analysers
+</p>
+<p>
+Analysis methods can be accessed on the object itself, e.g. for a
+registered analysis method &#8216;width&#8217;, we have
+</p>
+<pre class="code">
+  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='width identifier id'>width</span>    <span class='comment val'># ===&gt; 280</span>
+</pre>
+<p>
+Processing methods can be accessed using &#8216;process&#8217;, e.g. for a
+registered process method &#8216;resize&#8217;, we have
+</p>
+<pre class="code">
+  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:resize</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>    <span class='comment val'># ===&gt; processed ExtendedTempObject</span>
+</pre>
+<p>
+Similarly, encoding with the method &#8216;encode&#8217; delegates to the
+app&#8217;s registered encoders
+</p>
+<pre class="code">
+  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:png</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>    <span class='comment val'># ===&gt; encoded ExtendedTempObject</span>
+</pre>
+<p>
+We can use bang methods to operate on the temp_object itself, rather than
+return a new one:
+</p>
+<pre class="code">
+  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='symbol val'>:resize</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='encode! fid id'>encode!</span><span class='lparen token'>(</span><span class='symbol val'>:png</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+<p>
+You can make use of the app&#8217;s registered parameter shortcuts (for
+processing and encoding in one go) using &#8216;transform&#8217;, e.g.
+</p>
+<pre class="code">
+  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='transform identifier id'>transform</span><span class='lparen token'>(</span><span class='string val'>'300x200'</span><span class='comma token'>,</span> <span class='symbol val'>:gif</span><span class='rparen token'>)</span>       <span class='comment val'># ===&gt; return a new processed and encoded ExtendedTempObject</span>
+  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='transform! fid id'>transform!</span><span class='lparen token'>(</span><span class='string val'>'300x200'</span><span class='comma token'>,</span> <span class='symbol val'>:gif</span><span class='rparen token'>)</span>      <span class='comment val'># ===&gt; operate on self</span>
+</pre>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+</div>
 
   
   
@@ -360,26 +412,26 @@ allows methods from the analyser.
       <pre class="lines">
 
 
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77</pre>
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 82</span>
 
 <span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='if if kw'>if</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='has_callable_method? fid id'>has_callable_method?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
@@ -436,12 +488,12 @@ Returns the value of attribute app
       <pre class="lines">
 
 
-8
-9
-10</pre>
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 29</span>
 
 <span class='def def kw'>def</span> <span class='app identifier id'>app</span>
   <span class='@app ivar id'>@app</span>
@@ -472,12 +524,12 @@ Returns the value of attribute app
       <pre class="lines">
 
 
-19
-20
-21</pre>
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 40</span>
 
 <span class='def def kw'>def</span> <span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
@@ -501,12 +553,12 @@ Returns the value of attribute app
       <pre class="lines">
 
 
-23
-24
-25</pre>
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 44</span>
 
 <span class='def def kw'>def</span> <span class='encode! fid id'>encode!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='modify_self! fid id'>modify_self!</span><span class='lparen token'>(</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
@@ -542,12 +594,12 @@ gives a confusing output when inspecting, so modify here
       <pre class="lines">
 
 
-40
-41
-42</pre>
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 61</span>
 
 <span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
   <span class='super super kw'>super</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='string val'>'Class:'</span><span class='comma token'>,</span><span class='string val'>'Custom Dragonfly::ExtendedTempObject:'</span><span class='rparen token'>)</span>
@@ -583,12 +635,12 @@ allows methods from the analyser
       <pre class="lines">
 
 
-47
-48
-49</pre>
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 68</span>
 
 <span class='def def kw'>def</span> <span class='methods identifier id'>methods</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='lparen token'>(</span><span class='super super kw'>super</span> <span class='plus op'>+</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='callable_methods identifier id'>callable_methods</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='uniq identifier id'>uniq</span>
@@ -612,12 +664,12 @@ allows methods from the analyser
       <pre class="lines">
 
 
-11
-12
-13</pre>
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 32</span>
 
 <span class='def def kw'>def</span> <span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='processing_method identifier id'>processing_method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='processing_method identifier id'>processing_method</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
@@ -641,12 +693,12 @@ allows methods from the analyser
       <pre class="lines">
 
 
-15
-16
-17</pre>
+36
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 36</span>
 
 <span class='def def kw'>def</span> <span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='processing_method identifier id'>processing_method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='modify_self! fid id'>modify_self!</span><span class='lparen token'>(</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='processing_method identifier id'>processing_method</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
@@ -670,12 +722,12 @@ allows methods from the analyser
       <pre class="lines">
 
 
-51
-52
-53</pre>
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 72</span>
 
 <span class='def def kw'>def</span> <span class='public_methods identifier id'>public_methods</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='lparen token'>(</span><span class='super super kw'>super</span> <span class='plus op'>+</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='callable_methods identifier id'>callable_methods</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='uniq identifier id'>uniq</span>
@@ -720,12 +772,12 @@ allows methods from the analyser
       <pre class="lines">
 
 
-55
-56
-57</pre>
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 76</span>
 
 <span class='def def kw'>def</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
   <span class='super super kw'>super</span> <span class='orop op'>||</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='has_callable_method? fid id'>has_callable_method?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
@@ -749,12 +801,12 @@ allows methods from the analyser
       <pre class="lines">
 
 
-27
-28
-29</pre>
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 48</span>
 
 <span class='def def kw'>def</span> <span class='transform identifier id'>transform</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='any? fid id'>any?</span> <span class='integer val'>? </span><span class='dup identifier id'>dup</span><span class='dot token'>.</span><span class='transform! fid id'>transform!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='self self kw'>self</span>
@@ -778,15 +830,15 @@ allows methods from the analyser
       <pre class="lines">
 
 
-31
-32
-33
-34
-35
-36</pre>
+52
+53
+54
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 52</span>
 
 <span class='def def kw'>def</span> <span class='transform! fid id'>transform!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='parameters identifier id'>parameters</span> <span class='assign token'>=</span> <span class='parameters_class identifier id'>parameters_class</span><span class='dot token'>.</span><span class='from_args identifier id'>from_args</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
@@ -805,7 +857,7 @@ allows methods from the analyser
 </div>
     
     <div id="footer">
-  Generated on Thu Jan  7 00:13:30 2010 by 
+  Generated on Sun Jan 10 21:37:26 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.2 (ruby-1.8.7).
 </div>
