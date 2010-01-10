@@ -1,4 +1,25 @@
 module Dragonfly
+  
+  # An ExtendedTempObject is just a TempObject that belongs to a Dragonfly App.
+  # 
+  # Because of this, it can make use of the app's registered processors, encoders and analysers
+  #
+  # Analysis methods can be accessed on the object itself, e.g. for a registered analysis method 'width', we have
+  #   temp_object.width    # ===> 280
+  #
+  # Processing methods can be accessed using 'process', e.g. for a registered process method 'resize', we have
+  #   temp_object.process(:resize, {:some => 'option'})    # ===> processed ExtendedTempObject
+  #
+  # Similarly, encoding with the method 'encode' delegates to the app's registered encoders
+  #   temp_object.encode(:png, {:some => 'option'})    # ===> encoded ExtendedTempObject
+  #
+  # We can use bang methods to operate on the temp_object itself, rather than return a new one:
+  #   temp_object.process!(:resize, {:some => 'option'})
+  #   temp_object.encode!(:png, {:some => 'option'})
+  #
+  # You can make use of the app's registered parameter shortcuts (for processing and encoding in one go) using 'transform', e.g.
+  #   temp_object.transform('300x200', :gif)       # ===> return a new processed and encoded ExtendedTempObject
+  #   temp_object.transform!('300x200', :gif)      # ===> operate on self
   class ExtendedTempObject < TempObject
     
     # Exceptions

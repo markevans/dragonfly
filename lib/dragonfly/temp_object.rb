@@ -1,6 +1,32 @@
 require 'tempfile'
 
 module Dragonfly
+
+  # A TempObject is used for HOLDING DATA.
+  # It's the thing that is passed between the datastore, the processor and the encoder, and is useful
+  # for separating how the data was created and how it is later accessed.
+  #
+  # You can initialize it various ways:
+  #
+  #   temp_object = Dragonfly::TempObject.new('this is the content')           # with a String
+  #   temp_object = Dragonfly::TempObject.new(File.new('path/to/content'))     # with a File
+  #   temp_object = Dragonfly::TempObject.new(some_tempfile)                   # with a Tempfile
+  #   temp_object = Dragonfly::TempObject.new(some_other_temp_object)          # with another TempObject
+  #
+  # However, no matter how it was initialized, you can always access the data a number of ways:
+  #
+  #   temp_object.data      # returns a data string
+  #   temp_object.file      # returns a file object holding the data
+  #   temp_object.path      # returns a path for the file
+  #
+  # The data/file are created lazily, something which you may wish to take advantage of.
+  #
+  # For example, if a TempObject is initialized with a file, and temp_object.data is never called, then
+  # the data string will never be loaded into memory.
+  #
+  # Conversely, if the TempObject is initialized with a data string, and neither temp_object.file nor temp_object.path
+  # are ever called, then the filesystem will never be hit.
+  #
   class TempObject
   
     # Class configuration
