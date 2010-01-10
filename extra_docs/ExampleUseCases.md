@@ -163,3 +163,34 @@ then we can generate images of different sizes/formats):
 
 Text image replacement
 ----------------------
+A common technique for making sure a specific font is displayed on a website is replacing text with images.
+
+We can easily use Dragonfly to do this on-the-fly.
+
+The {Dragonfly::Processing::RMagickProcessor RMagickProcessor} has a 'text' method, which takes content in the form of text,
+and creates an image of the text, given the options passed in.
+
+We can also make use of the simple {Dragonfly::DataStorage::TransparentDataStore TransparentDataStore}, where rather than fetch
+data for a given uid, the uid IS the data.
+
+The configuration will look something like:
+
+    Dragonfly::App[:text].configure do |c|
+      c.datastore = Dragonfly::DataStorage::TransparentDataStore.new
+      c.register_analyser(Dragonfly::Analysis::FileCommandAnalyser)
+      c.register_processor(Dragonfly::Processing::RMagickProcessor)
+      c.register_encoder(Dragonfly::Encoding::RMagickEncoder)
+      c.parameters.configure do |p|
+        p.default_format = :png
+        p.default_processing_method = :text
+      end
+    end
+
+We need the {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} for mime-type analysis.
+
+Then when we visit a url like
+
+    url = Dragonfly::App[:text].url_for('some text', :processing_options => {:font_size => 30, :font_family => 'Monaco'})
+
+we get a png image of the text. We could easily wrap this in some kind of helper if we use it often.
+
