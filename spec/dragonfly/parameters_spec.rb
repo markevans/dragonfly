@@ -231,13 +231,13 @@ describe Dragonfly::Parameters do
       @parameters_class.default_format = :tif
     end
     
-    it "should be the same as 'new' if empty args" do
-      @parameters_class.from_args.should == @parameters_class.new
+    it "should be the same as 'new_with_defaults' if empty args" do
+      @parameters_class.from_args.should == @parameters_class.new_with_defaults
     end
     
-    it "should treat the arguments as actual parameter values if args is a single hash" do
+    it "should treat the arguments as actual parameter values (including defaults) if args is a single hash" do
       @parameters_class.from_args(:uid => 'some_uid', :processing_method => :resize).
-        should == @parameters_class.new(:uid => 'some_uid', :processing_method => :resize)
+        should == @parameters_class.new_with_defaults(:uid => 'some_uid', :processing_method => :resize)
     end
 
     it "should simply return the same parameters if args is a single parameters object" do
