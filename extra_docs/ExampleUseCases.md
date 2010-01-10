@@ -144,6 +144,22 @@ Now we can add links to the attached file in our views:
 
 Generating test data
 --------------------
+We may want to generate a load of test data in a test / populate script.
+
+Each {Dragonfly::App Dragonfly App} has a 'generate' method, which returns an {Dragonfly::ExtendedTempObject ExtendedTempObject} with generated data.
+The actual generation is delegated to the registered processors (along with any args passed in).
+
+For example, if our app is registered with the {Dragonfly::Processing::RMagickProcessor RMagickProcessor} (which is already done if using with one of
+the Rails helper files/generators)
+
+    Dragonfly::App[:my_app].register_processor(Dragonfly::Processing::RMagickProcessor)
+
+then we can generate images of different sizes/formats):
+
+    image = Dragonfly::App[:my_app].generate(300, 200)       # creates a png image of size 300x200 (as an ExtendedTempObject)
+    image.to_file('out.png')                                 # writes to file 'out.png'
+    image = Dragonfly::App[:my_app].generate(50, 50, :gif)   # creates a gif image of size 50x50
+
 
 Text image replacement
 ----------------------
