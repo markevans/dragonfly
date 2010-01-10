@@ -7,6 +7,10 @@ In a Rails app the configuration would generally be done in an initializer.
 
 In other Rack-based apps it could be config.ru, or anywhere where the application is generally set up.
 
+Image thumbnails in Rails
+-------------------------
+See {file:UsingWithRails}
+
 
 Image thumbnails in Rails, hosted on Heroku with S3 storage
 -----------------------------------------------------------
@@ -80,8 +84,63 @@ The only downside is that Heroku's cache is cleared every time you deploy, so if
 a Memcached add-on, or maybe an after-deploy hook for hitting specific Dragonfly urls you want to cache, etc.
 It won't be a problem for most sites though.
 
-Serving attachments with no processing
---------------------------------------
+
+Attaching files to ActiveRecord models with no processing or encoding
+---------------------------------------------------------------------
+Although Dragonfly is normally concerned with processing and encoding, you may want to just use it with arbitrary uploaded files
+(e.g. .doc, .xls, .pdf files, etc.) without processing or encoding them, so as to still benefit from the {file:ActiveRecord ActiveRecord Extensions} API.
+
+The below shows how to do it in Rails, but the principles are the same in any context.
+Let's generate a configuration for a Dragonfly App called 'attachments'
+
+    ./script/generate dragonfly_app attachments
+
+This generates an initializer for configuring the Dragonfly App 'attachments'.
+
+We won't be using RMagick or Rack::Cache (as there is no processing), so our environment.rb only has:
+
+    config.gem 'dragonfly',  :source => 'http://gemcutter.org'
+
+and in the generated configuration, we DELETE the line
+
+    app.configure_with(Dragonfly::RMagickConfiguration)
+
+Then in the configure block, we add the lines
+
+    c.url_handler.configure do |u|
+      # ...
+      u.protect_from_dos_attacks = false
+    end
+    c.register_analyser(Dragonfly::Analysis::FileCommandAnalyser)
+    c.register_encoder(Dragonfly::Encoding::TransparentEncoder)
+
+We don't need to protect the urls from Denial-of-service attacks as we aren't doing any expensive processing.
+The {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} is needed to know the mime-type of the content,
+and the {Dragonfly::Encoding::TransparentEncoder TransparentEncoder} is like a 'dummy' encoder which does nothing
+(the way to switch off encoding may change in the future).
+
+If a user uploads a file called 'report.pdf', then normally the original file extension will be lost.
+Thankfully, to record it is as easy as adding an 'ext' column as well as the usual uid column to our migration
+(see {file:ActiveRecord} for more info about 'magic attributes'):
+
+    add_column :my_models, :attachment_uid, :string
+    add_column :my_models, :attachment_ext, :string
+    
+Then we include a helper method in our model for setting the correct file extension when we link to the attachment:
+
+    class MyModel < ActiveRecord::Base
+
+      attachment_accessor :attachment
+      
+      def url_for_attachment
+        attachment.url :format => attachment_ext
+      end
+    end
+
+Now we can add links to the attached file in our views:
+
+    <%= link_to 'Attachment', @my_model.url_for_attachment %>
+
 
 Generating test data
 --------------------

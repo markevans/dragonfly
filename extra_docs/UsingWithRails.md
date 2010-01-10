@@ -82,3 +82,6 @@ but make sure to change the 'secret' configuration option, so as to protect your
     #   :metastore   => "file:#{Rails.root}/tmp/dragonfly/cache/meta",
     #   :entitystore => "file:#{Rails.root}/tmp/dragonfly/cache/body"
     # }
+
+
+To see what you can do with the active record accessors, see {file:ActiveRecord}.
