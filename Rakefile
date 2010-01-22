@@ -31,7 +31,7 @@ YARD::Rake::YardocTask.new do |t|
   t.options = %w(-e yard/setup.rb)
 end
 YARD::Rake::YardocTask.new 'yard:changed' do |t|
-  t.files   = `git stat | grep '.rb' | grep modified | grep -v yard | cut -d' ' -f4`.split
+  t.files   = `git status | grep '.rb' | grep modified | grep -v yard | cut -d' ' -f4`.split
   t.options = %w(-e yard/setup.rb)
 end
 
