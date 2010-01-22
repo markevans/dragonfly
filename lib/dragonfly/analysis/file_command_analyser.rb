@@ -5,11 +5,19 @@ module Dragonfly
       
       include Configurable
       
-      configurable_attr :file_command do `which file`.chomp end
+      configurable_attr :file_command, "file"
+      configurable_attr :use_filesystem, false
       
       def mime_type(temp_object)
-        output = `#{file_command} -b --mime #{temp_object.path}`
-        output.split(';').first
+        if use_filesystem
+          `#{file_command} -b --mime '#{temp_object.path}'`
+        else
+          IO.popen("#{file_command} -b --mime -", 'r+') do |io|
+            io.write temp_object.data
+            io.close_write
+            io.read
+          end
+        end.split(';').first
       end
       
     end
