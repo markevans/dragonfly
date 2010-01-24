@@ -113,7 +113,15 @@ or
   <li>
     <code>file_command</code>
     
-     - default <code><span class="string val">"`which file`.chomp"</span></code> (evaluated lazily) 
+     - default <code><span class="string val">"file"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>use_filesystem</code>
+    
+     - default <code><span class="kw">false</span></code>
     
     
   </li>
@@ -186,17 +194,31 @@ or
       <pre class="lines">
 
 
-10
 11
 12
-13</pre>
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/file_command_analyser.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/file_command_analyser.rb', line 11</span>
 
 <span class='def def kw'>def</span> <span class='mime_type identifier id'>mime_type</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='output identifier id'>output</span> <span class='assign token'>=</span> <span class='dxstring node'>`#{file_command} -b --mime #{temp_object.path}`</span>
-  <span class='output identifier id'>output</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>';'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+  <span class='if if kw'>if</span> <span class='use_filesystem identifier id'>use_filesystem</span>
+    <span class='dxstring node'>`#{file_command} -b --mime '#{temp_object.path}'`</span>
+  <span class='else else kw'>else</span>
+    <span class='IO constant id'>IO</span><span class='dot token'>.</span><span class='popen identifier id'>popen</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{file_command} -b --mime -&quot;</span><span class='comma token'>,</span> <span class='string val'>'r+'</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='io identifier id'>io</span><span class='bitor op'>|</span>
+      <span class='io identifier id'>io</span><span class='dot token'>.</span><span class='write identifier id'>write</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span>
+      <span class='io identifier id'>io</span><span class='dot token'>.</span><span class='close_write identifier id'>close_write</span>
+      <span class='io identifier id'>io</span><span class='dot token'>.</span><span class='read identifier id'>read</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>';'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -209,7 +231,7 @@ or
 </div>
     
     <div id="footer">
-  Generated on Sun Jan 10 21:37:26 2010 by 
+  Generated on Sun Jan 24 22:18:34 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.2 (ruby-1.8.7).
 </div>

@@ -625,7 +625,7 @@ A new instance of App
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 72</span>
 
 <span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
-  <span class='@analysers ivar id'>@analysers</span><span class='comma token'>,</span> <span class='@processors ivar id'>@processors</span><span class='comma token'>,</span> <span class='@encoders ivar id'>@encoders</span> <span class='assign token'>=</span> <span class='Delegator constant id'>Delegator</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='comma token'>,</span> <span class='Delegator constant id'>Delegator</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='comma token'>,</span> <span class='Delegator constant id'>Delegator</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='@analysers ivar id'>@analysers</span><span class='comma token'>,</span> <span class='@processors ivar id'>@processors</span><span class='comma token'>,</span> <span class='@encoders ivar id'>@encoders</span> <span class='assign token'>=</span> <span class='AnalyserList constant id'>AnalyserList</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='comma token'>,</span> <span class='ProcessorList constant id'>ProcessorList</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='comma token'>,</span> <span class='EncoderList constant id'>EncoderList</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
   <span class='@parameters_class ivar id'>@parameters_class</span> <span class='assign token'>=</span> <span class='Class constant id'>Class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='Parameters constant id'>Parameters</span><span class='rparen token'>)</span>
   <span class='@url_handler ivar id'>@url_handler</span> <span class='assign token'>=</span> <span class='UrlHandler constant id'>UrlHandler</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@parameters_class ivar id'>@parameters_class</span><span class='rparen token'>)</span>
   <span class='initialize_temp_object_class identifier id'>initialize_temp_object_class</span>
@@ -662,7 +662,7 @@ A new instance of App
   <h3>See Also:</h3>
   <ul class="see">
     
-      <li>Analysis::AnalyserList</li>
+      <li><a href="AnalyserList.html" title="Analysis::AnalyserList">Analysis::AnalyserList</a></li>
     
   </ul>
 
@@ -709,7 +709,7 @@ A new instance of App
   <h3>See Also:</h3>
   <ul class="see">
     
-      <li>Encoding::EncoderList</li>
+      <li><a href="EncoderList.html" title="Encoding::EncoderList">Encoding::EncoderList</a></li>
     
   </ul>
 
@@ -807,7 +807,7 @@ A new instance of App
   <h3>See Also:</h3>
   <ul class="see">
     
-      <li>Processing::ProcessorList</li>
+      <li><a href="ProcessorList.html" title="Processing::ProcessorList">Processing::ProcessorList</a></li>
     
   </ul>
 
@@ -1548,7 +1548,7 @@ the uid assigned to it
 </div>
     
     <div id="footer">
-  Generated on Sun Jan 10 21:37:23 2010 by 
+  Generated on Sun Jan 24 22:18:33 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.2 (ruby-1.8.7).
 </div>
