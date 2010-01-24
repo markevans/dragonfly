@@ -1,5 +1,5 @@
 module Dragonfly
-  class Delegator
+  module Delegator
     
     # This gets raised if no delegated objects are able to handle
     # the method call, even though they respond to that method.
