@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.4.2"
+  s.version = "0.4.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2010-01-10}
+  s.date = %q{2010-01-24}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -51,6 +51,7 @@ Gem::Specification.new do |s|
      "lib/dragonfly/active_record_extensions/class_methods.rb",
      "lib/dragonfly/active_record_extensions/instance_methods.rb",
      "lib/dragonfly/active_record_extensions/validations.rb",
+     "lib/dragonfly/analyser_list.rb",
      "lib/dragonfly/analysis/base.rb",
      "lib/dragonfly/analysis/file_command_analyser.rb",
      "lib/dragonfly/analysis/r_magick_analyser.rb",
@@ -65,6 +66,7 @@ Gem::Specification.new do |s|
      "lib/dragonfly/data_storage/transparent_data_store.rb",
      "lib/dragonfly/delegatable.rb",
      "lib/dragonfly/delegator.rb",
+     "lib/dragonfly/encoder_list.rb",
      "lib/dragonfly/encoding/base.rb",
      "lib/dragonfly/encoding/r_magick_encoder.rb",
      "lib/dragonfly/encoding/transparent_encoder.rb",
@@ -73,6 +75,7 @@ Gem::Specification.new do |s|
      "lib/dragonfly/parameters.rb",
      "lib/dragonfly/processing/base.rb",
      "lib/dragonfly/processing/r_magick_processor.rb",
+     "lib/dragonfly/processor_list.rb",
      "lib/dragonfly/r_magick_configuration.rb",
      "lib/dragonfly/rails/images.rb",
      "lib/dragonfly/temp_object.rb",
@@ -89,6 +92,8 @@ Gem::Specification.new do |s|
      "spec/dragonfly/active_record_extensions/model_spec.rb",
      "spec/dragonfly/active_record_extensions/models.rb",
      "spec/dragonfly/active_record_extensions/spec_helper.rb",
+     "spec/dragonfly/analyser_list_spec.rb",
+     "spec/dragonfly/analysis/file_command_analyser_spec.rb",
      "spec/dragonfly/analysis/r_magick_analyser_spec.rb",
      "spec/dragonfly/app_spec.rb",
      "spec/dragonfly/configurable_spec.rb",
@@ -128,6 +133,8 @@ Gem::Specification.new do |s|
      "spec/dragonfly/active_record_extensions/model_spec.rb",
      "spec/dragonfly/active_record_extensions/models.rb",
      "spec/dragonfly/active_record_extensions/spec_helper.rb",
+     "spec/dragonfly/analyser_list_spec.rb",
+     "spec/dragonfly/analysis/file_command_analyser_spec.rb",
      "spec/dragonfly/analysis/r_magick_analyser_spec.rb",
      "spec/dragonfly/app_spec.rb",
      "spec/dragonfly/configurable_spec.rb",
