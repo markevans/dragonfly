@@ -13,6 +13,11 @@ module Dragonfly
         rmagick_image(image).rows
       end
       
+      def aspect_ratio(image)
+        rmagick_data = rmagick_image(image)
+        rmagick_data.columns.to_f / rmagick_data.rows
+      end
+      
       def depth(image)
         rmagick_image(image).depth
       end

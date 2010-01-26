@@ -16,6 +16,10 @@ describe Dragonfly::Analysis::RMagickAnalyser do
     @analyser.height(@beach).should == 355
   end
   
+  it "should return the aspect ratio" do
+    @analyser.aspect_ratio(@beach).should == (280.0/355.0)
+  end
+  
   it "should return the number of colours" do
     @analyser.number_of_colours(@beach).should == 34703
   end
