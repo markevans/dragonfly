@@ -2,7 +2,6 @@ $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
 require 'dragonfly'
 require 'spec/expectations'
 require 'test/unit/assertions'
-require 'ruby-debug'
 require File.dirname(__FILE__) + '/../../spec/image_matchers.rb'
 
 # A hack as system calls weren't using my path

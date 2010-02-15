@@ -1,6 +1,5 @@
 require 'spec'
 require 'rubygems'
-require 'ruby-debug'
 
 require File.dirname(__FILE__) + '/../lib/dragonfly'
 $:.unshift(File.dirname(__FILE__))
