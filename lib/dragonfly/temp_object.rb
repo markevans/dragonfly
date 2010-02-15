@@ -1,3 +1,4 @@
+require 'stringio'
 require 'tempfile'
 
 module Dragonfly
@@ -79,7 +80,7 @@ module Dragonfly
     
     def size
       if initialized_data
-        initialized_data.size
+        initialized_data.bytesize
       else
         File.size(path)
       end

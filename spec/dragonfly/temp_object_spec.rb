@@ -40,9 +40,9 @@ describe Dragonfly::TempObject do
     it "should yield 8192 bytes each time" do
       parts = get_parts(@temp_object)
       parts[0...-1].each do |part|
-        part.length.should == 8192
+        part.bytesize.should == 8192
       end
-      parts.last.length.should <= 8192
+      parts.last.bytesize.should <= 8192
     end
     
   end
