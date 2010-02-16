@@ -10,8 +10,9 @@ module Dragonfly
           # Defines e.g. 'image_accessor' for any activerecord class body
           define_method "#{accessor_prefix}_accessor" do |attribute|
       
-            before_save :save_attached_files unless before_save_callback_chain.find(:save_attached_files)
-            before_destroy :destroy_attached_files unless before_destroy_callback_chain.find(:destroy_attached_files)
+            # Prior to activerecord 3, adding before callbacks more than once does add it more than once
+            before_save :save_attached_files unless respond_to?(:before_save_callback_chain) && before_save_callback_chain.find(:save_attached_files)
+            before_destroy :destroy_attached_files unless respond_to?(:before_destroy_callback_chain) && before_destroy_callback_chain.find(:destroy_attached_files)
       
             # Register the new attribute
             dragonfly_apps_for_attributes[attribute] = app
