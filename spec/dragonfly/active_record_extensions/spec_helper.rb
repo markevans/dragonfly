@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
+require 'ginger'
 require 'active_record'
 
 DB_FILE = File.expand_path(File.dirname(__FILE__)+'/db.sqlite3')
