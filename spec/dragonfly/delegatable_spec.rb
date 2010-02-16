@@ -18,13 +18,13 @@ describe Dragonfly::Delegatable do
   
   describe "delegatable_methods" do
     it "should include all methods defined after including, including mixed-in and inherited" do
-      B.new.delegatable_methods.sort.should == %w(a b m)
+      B.new.delegatable_methods.should == [:b, :m, :a].map{|m| m.to_method_name }
     end
     
     it "should work the second (cached) time" do
       b = B.new
       b.delegatable_methods
-      b.delegatable_methods.sort.should == %w(a b m)
+      b.delegatable_methods.should == [:b, :m, :a].map{|m| m.to_method_name }
     end
     
   end

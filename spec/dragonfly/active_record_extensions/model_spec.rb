@@ -449,11 +449,12 @@ describe Item do
         @item.preview_image.respond_to?(:number_of_As).should be_true
       end
       it "should include analyser methods in methods" do
-        @item.preview_image.methods.include?('number_of_As').should be_true
+        @item.preview_image.methods.include?('number_of_As'.to_method_name).should be_true
       end
       it "should include analyser methods in public_methods" do
-        @item.preview_image.public_methods.include?('number_of_As').should be_true
+        @item.preview_image.public_methods.include?('number_of_As'.to_method_name).should be_true
       end
+      
       it "should update when something new is assigned" do
         @item.preview_image = 'ANEWDATASTRING'
         @item.preview_image.number_of_As.should == 3

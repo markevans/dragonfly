@@ -81,7 +81,7 @@ describe Dragonfly::Delegator do
     end
 
     it "should return all the callable methods" do
-      @delegator.callable_methods.sort.should == %w(clean drive open_back_doors open_boot pick_up)
+      @delegator.callable_methods.sort.should == %w(clean drive open_back_doors open_boot pick_up).map{|m| m.to_method_name }
     end
     
     it "should say if if has a callable method (as a string)" do

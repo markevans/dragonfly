@@ -28,7 +28,7 @@ module Dragonfly
     end
     
     def has_callable_method?(method)
-      callable_methods.include?(method.to_s)
+      callable_methods.include?(method.to_method_name)
     end
     
     private
