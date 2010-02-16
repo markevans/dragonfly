@@ -1,0 +1,12 @@
+0.4.4 (2010-02-16)
+==================
+
+Better late than never to start logging change history...
+
+New features
+------------
+- added aspect_ratio to rmagick_analyser
+
+Added support
+-------------
+- support for ruby 1.9
