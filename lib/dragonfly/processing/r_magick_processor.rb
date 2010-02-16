@@ -195,13 +195,13 @@ module Dragonfly
         padding_parts = str.gsub('px','').split(/\s+/).map{|px| px.to_i}
         case padding_parts.size
         when 1
-          p = *padding_parts
+          p = padding_parts.first
           [p,p,p,p]
         when 2
-          p,q = *padding_parts
+          p,q = padding_parts
           [p,q,p,q]
         when 3
-          p,q,r = *padding_parts
+          p,q,r = padding_parts
           [p,q,r,q]
         when 4
           padding_parts
