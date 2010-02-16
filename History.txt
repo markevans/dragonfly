@@ -10,3 +10,4 @@ New features
 Added support
 -------------
 - support for ruby 1.9
+- added development dependencies to gemspec for easier setting up

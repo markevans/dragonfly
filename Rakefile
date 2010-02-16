@@ -10,10 +10,18 @@ begin
     s.homepage = "http://github.com/markevans/dragonfly"
     s.authors = ["Mark Evans"]
     s.add_dependency('rack')
+    s.add_development_dependency 'jeweler'
+    s.add_development_dependency 'yard'
+    s.add_development_dependency 'rmagick'
+    s.add_development_dependency 'aws-s3'
+    s.add_development_dependency 'rspec'
+    s.add_development_dependency 'cucumber'
+    s.add_development_dependency 'activerecord'
+    s.add_development_dependency 'sqlite3-ruby'
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+  puts "Jeweler not available. Install it with: (sudo) gem install jeweler"
 end
 
 require 'rake/rdoctask'
@@ -25,33 +33,41 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-require 'yard'
-YARD::Rake::YardocTask.new do |t|
-  t.files   = ['lib/**/*.rb']
-  t.options = %w(-e yard/setup.rb)
-end
-YARD::Rake::YardocTask.new 'yard:changed' do |t|
-  t.files   = `git status | grep '.rb' | grep modified | grep -v yard | cut -d' ' -f4`.split
-  t.options = %w(-e yard/setup.rb)
-end
-
-require 'spec/rake/spectask'
-Spec::Rake::SpecTask.new(:spec) do |t|
-  t.libs << 'lib' << 'spec'
-  t.spec_files = FileList['spec/**/*_spec.rb']
+begin
+  require 'yard'
+  YARD::Rake::YardocTask.new do |t|
+    t.files   = ['lib/**/*.rb']
+    t.options = %w(-e yard/setup.rb)
+  end
+  YARD::Rake::YardocTask.new 'yard:changed' do |t|
+    t.files   = `git status | grep '.rb' | grep modified | grep -v yard | cut -d' ' -f4`.split
+    t.options = %w(-e yard/setup.rb)
+  end
+rescue LoadError
+  puts "YARD is not available. To run the documentation tasks, install it with: (sudo) gem install yard"
 end
 
-Spec::Rake::SpecTask.new(:rcov) do |t|
-  t.libs << 'lib' << 'spec'
-  t.spec_files = FileList['spec/**/*_spec.rb']
-  t.rcov = true
+begin
+  require 'spec/rake/spectask'
+  Spec::Rake::SpecTask.new(:spec) do |t|
+    t.libs << 'lib' << 'spec'
+    t.spec_files = FileList['spec/**/*_spec.rb']
+  end
+
+  Spec::Rake::SpecTask.new(:rcov) do |t|
+    t.libs << 'lib' << 'spec'
+    t.spec_files = FileList['spec/**/*_spec.rb']
+    t.rcov = true
+  end
+rescue LoadError
+  puts "RSpec is not available. To run tests, install it with: (sudo) gem install rspec"
 end
 
 begin
   require 'cucumber/rake/task'
   Cucumber::Rake::Task.new(:features)
 rescue LoadError
-  puts "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
+  puts "Cucumber is not available. To run features, install it with: (sudo) gem install cucumber"
 end
 
 task :default => [:spec, :features]
