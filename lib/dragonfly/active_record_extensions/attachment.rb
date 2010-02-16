@@ -71,7 +71,7 @@ module Dragonfly
       end
 
       def respond_to?(method)
-        super || methods_to_delegate_to_temp_object.include?(method.to_s)
+        super || methods_to_delegate_to_temp_object.include?(method.to_method_name)
       end
 
       def ext
@@ -124,10 +124,14 @@ module Dragonfly
         analyser.callable_methods
       end
       
+      def can_delegate_to_temp_object?(meth)
+        methods_to_delegate_to_temp_object.include?(meth.to_method_name)
+      end
+      
       def magic_attributes
         parent_model.class.column_names.select { |name|
           name =~ /^#{attribute_name}_(.+)$/ &&
-            (methods_to_delegate_to_temp_object.include?($1) || %w(size ext name).include?($1))
+            (can_delegate_to_temp_object?($1) || %w(size ext name).include?($1))
         }
       end
       
@@ -151,7 +155,7 @@ module Dragonfly
       end
       
       def method_missing(meth, *args, &block)
-        if methods_to_delegate_to_temp_object.include?(meth.to_s)
+        if can_delegate_to_temp_object?(meth)
           has_magic_attribute_for?(meth) ? magic_attribute_for(meth) : temp_object.send(meth, *args, &block)
         else
           super

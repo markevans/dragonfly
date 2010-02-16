@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 require 'rack'
 
 def dummy_rack_app
-  lambda{|env| [200, {"Content-Type" => "text/html"}, ["#{env['PATH_INFO']}, #{env['QUERY_STRING']}"]] }
+  lambda{|env| [200, {"Content-Type" => "text/html"}, ["dummy_rack_app body"]] }
 end
 
 describe Dragonfly::Middleware do
@@ -24,7 +24,7 @@ describe Dragonfly::Middleware do
     )
     response = make_request(@stack, 'hello.png?howare=you')
     response.status.should == 200
-    response.body.should == 'hello.png, howare=you'
+    response.body.should == 'dummy_rack_app body'
   end
 
   it "should return as per the dragonfly app if the app returns a 200" do

@@ -94,11 +94,10 @@ module Dragonfly
     attr_reader :parameters_class
 
     def symbolize_keys(hash)
-      hash = hash.dup
-      hash.each do |key, value|
-        hash[key.to_sym] = hash.delete(key)
+      hash.inject({}) do |memo, (key, value)|
+        memo[key.to_sym] = hash[key]
+        memo
       end
-      hash
     end
 
     def validate_parameters(parameters, query)

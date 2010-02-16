@@ -56,5 +56,9 @@ Then /^the image should have format '(.+?)'$/ do |format|
 end
 
 Then /^the response should have the same content as the file "([^\"]*)"$/ do |name|
-  @response.body.should == $app.fetch(TEMP_FILES[name]).data
+  if RUBY_VERSION =~ /^1\.8/
+    @response.body.should == $app.fetch(TEMP_FILES[name]).data
+  else
+    @response.body.force_encoding('BINARY').should == $app.fetch(TEMP_FILES[name]).data.force_encoding('BINARY')
+  end
 end
