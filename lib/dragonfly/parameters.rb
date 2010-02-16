@@ -152,8 +152,8 @@ module Dragonfly
     def to_sorted_array
       [
         uid,
-        format,
-        processing_method,
+        format.to_s,
+        processing_method.to_s,
         processing_options.sort{|a,b| a[0].to_s <=> b[0].to_s },
         encoding.sort{|a,b| a[0].to_s <=> b[0].to_s }
       ]
