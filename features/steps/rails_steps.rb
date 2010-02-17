@@ -16,9 +16,10 @@ When /^I use the Rails (.+) generator to set up dragonfly$/ do |version|
 end
 
 Then /^the cucumber features in my Rails (.+) app should pass$/ do |version|
-  puts "RUNNING FEATURES IN THE RAILS APP:"
+  puts "\n*** RUNNING FEATURES IN THE RAILS APP... ***\n"
   system "
     cd #{fixture_path(version)}/#{rails_app_name} &&
     RAILS_ENV=cucumber rake db:migrate &&
     cucumber features"
+    puts "\n*** FINISHED RUNNING FEATURES IN THE RAILS APP ***\n"
 end
