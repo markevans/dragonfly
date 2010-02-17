@@ -16,6 +16,7 @@ begin
     s.add_development_dependency 'aws-s3'
     s.add_development_dependency 'rspec'
     s.add_development_dependency 'cucumber'
+    s.add_development_dependency 'cucumber-rails'
     s.add_development_dependency 'activerecord'
     s.add_development_dependency 'sqlite3-ruby'
     s.add_development_dependency 'ginger'
