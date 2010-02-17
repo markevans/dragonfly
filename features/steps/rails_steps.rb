@@ -11,7 +11,7 @@ end
 Given /^a Rails (.+) application set up for using dragonfly$/ do |version|
   `cd #{fixture_path(version)} &&
     rm -rf #{rails_app_name} &&
-    rails -m template.rb #{rails_app_name}`
+    rails _#{version}_ -m template.rb #{rails_app_name}`
 end
 
 When /^I use the Rails (.+) generator to set up dragonfly$/ do |version|

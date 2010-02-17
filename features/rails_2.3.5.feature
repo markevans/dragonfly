@@ -1,6 +1,6 @@
-Feature: champion uses dragonfly in his Rails 2 application
+Feature: champion uses dragonfly in his Rails 2.3.5 application
   In order to be a champion
-  A user uses dragonfly in his Rails 2 application
+  A user uses dragonfly in his Rails 2.3.5 application
 
   Background:
     Given a Rails 2.3.5 application set up for using dragonfly
