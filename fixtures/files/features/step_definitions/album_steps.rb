@@ -1,5 +1,6 @@
 When /^I look at the generated (.+) image$/ do |image_name|
-  url = page.body[/[^\s]+#{image_name}[^\s]+/]
+  page.body =~ /src="(.+?#{image_name}.+?)"/
+  url = $1
   visit(url)
 end
 
