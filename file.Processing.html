@@ -89,12 +89,7 @@ Each method takes the temp_object, and the (optional) processing options hash as
 <span class='end end kw'>end</span>
 
 <span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
-
 <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='register_processor identifier id'>register_processor</span><span class='lparen token'>(</span><span class='MyProcessor constant id'>MyProcessor</span><span class='rparen token'>)</span>
-
-<span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='create_object identifier id'>create_object</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/image.png'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-
-<span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:black_and_white</span><span class='comma token'>,</span> <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rparen token'>)</span>
 </pre>
 
 <p>You can register multiple processors.</p>
@@ -104,6 +99,12 @@ Each method takes the temp_object, and the (optional) processing options hash as
 <pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='register_processor identifier id'>register_processor</span><span class='lparen token'>(</span><span class='MyProcessor constant id'>MyProcessor</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span>
   <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='some_attribute identifier id'>some_attribute</span> <span class='assign token'>=</span> <span class='string val'>'hello'</span>
 <span class='end end kw'>end</span>
+</pre>
+
+<p>Your new processing method is now available to use:</p>
+
+<pre class="code"><span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='create_object identifier id'>create_object</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/image.png'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:black_and_white</span><span class='comma token'>,</span> <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rparen token'>)</span>         <span class='comment val'># processed temp_object</span>
 </pre>
 
 <p>To get the url for content processed by your custom processor, the long way is using something like:</p>
@@ -128,7 +129,7 @@ Each method takes the temp_object, and the (optional) processing options hash as
 So in your configuration of the Dragonfly app (or in an initializer if using 'dragonfly/rails/images') you
 could do something like:</p>
 
-<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='parameters identifier id'>parameters</span><span class='dot token'>.</span><span class='add_shortcut identifier id'>add_shortcut</span><span class='lparen token'>(</span><span class='regexp val'>/^bw-(\d*x\d*)$/</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='match_data identifier id'>match_data</span><span class='bitor op'>|</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='parameters identifier id'>parameters</span><span class='dot token'>.</span><span class='add_shortcut identifier id'>add_shortcut</span><span class='lparen token'>(</span><span class='regexp val'>/^bw-(\d*x\d*)$/</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='match_data identifier id'>match_data</span><span class='bitor op'>|</span>
   <span class='lbrace token'>{</span>
     <span class='symbol val'>:processing_method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:black_and_white</span><span class='comma token'>,</span>
     <span class='symbol val'>:processing_options</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:size</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='match_data identifier id'>match_data</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
@@ -151,7 +152,7 @@ could do something like:</p>
 </div></div>
     
     <div id="footer">
-  Generated on Sat Feb 20 16:20:16 2010 by 
+  Generated on Sat Feb 20 16:32:20 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.7).
 </div>
