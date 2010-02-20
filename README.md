@@ -4,28 +4,42 @@ Dragonfly
 Dragonfly is a <a href="http://rack.rubyforge.org">Rack</a> framework for on-the-fly processing and encoding.
 It includes an extension for Ruby on Rails to enable easy image handling.
 
-For the lazy rails user
+For the lazy Rails user
 -----------------------
 To use simply for image thumbnails etc. in Rails...
 
-environment.rb:
+**environment.rb** (Rails 2.3 only):
 
     config.gem 'rmagick',    :lib => 'RMagick'
     config.gem 'rack-cache', :lib => 'rack/cache'
-    config.gem 'dragonfly',  :lib => 'dragonfly/rails/images', :source => 'http://gemcutter.org'
+    config.gem 'dragonfly'
 
-Migration:
+**Gemfile** (Rails 3 only):
+
+    gem 'rmagick',    :require => 'RMagick'
+    gem 'rack-cache', :require => 'rack/cache'
+    gem 'dragonfly'
+
+The above assumes that you have http://gemcutter.org as one of your gem sources.
+If not you should add it, e.g. `gem source --add http://gemcutter.org` from the command line,
+or add `source http://gemcutter.org` to your Gemfile.
+
+**Initializer** (e.g. config/initializers/dragonfly.rb):
+
+    require 'dragonfly/rails/images'
+
+**Migration**:
 
     add_column :albums, :cover_image_uid, :string
 
-Model:
+**Model**:
 
     class Album < ActiveRecord::Base
       image_accessor :cover_image            # Defines reader/writer for cover_image
       # ...
     end
 
-View (for uploading via a file field):
+**View** (for uploading via a file field):
 
     <% form_for @album, :html => {:multipart => true} do |f| %>
       ...
@@ -34,7 +48,7 @@ View (for uploading via a file field):
     <% end %>
 
 
-View (to display):
+**View** (to display):
 
     <%= image_tag @album.cover_image.url(:gif) %>
     <%= image_tag @album.cover_image.url('400x200') %>
@@ -67,4 +81,4 @@ Credits
 Copyright
 ========
 
-Copyright (c) 2009 Mark Evans. See LICENSE for details.
+Copyright (c) 2009-2010 Mark Evans. See LICENSE for details.
