@@ -21,8 +21,10 @@ ActiveRecord::Base.extend Dragonfly::ActiveRecordExtensions
 ActiveRecord::Base.register_dragonfly_app(:image, app)
 
 ### Insert the middleware ###
-ActionController::Dispatcher.middleware.insert_after ActionController::Failsafe, Dragonfly::Middleware, :images
-ActionController::Dispatcher.middleware.insert_before Dragonfly::Middleware, Rack::Cache, {
+# Where the middleware is depends on the version of Railste
+middleware = Rails.respond_to?(:application) ? Rails.application.middleware : ActionController::Dispatcher.middleware
+middleware.insert_after Rack::Lock, Dragonfly::Middleware, :images
+middleware.insert_before Dragonfly::Middleware, Rack::Cache, {
   :verbose     => true,
   :metastore   => "file:#{Rails.root}/tmp/dragonfly/cache/meta",
   :entitystore => "file:#{Rails.root}/tmp/dragonfly/cache/body"
