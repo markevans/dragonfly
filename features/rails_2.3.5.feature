@@ -9,6 +9,6 @@ Feature: champion uses dragonfly in his Rails 2.3.5 application
     When I use the Rails 2.3.5 generator to set up dragonfly
     Then the cucumber features in my Rails 2.3.5 app should pass
 
-  Scenario: Set up dragonfly using config.gem require
-    When I use config.gem to require the Rails 2.3.5 initializer
+  Scenario: Set up dragonfly using the provided initializer
+    When I use the provided 2.3.5 initializer
     Then the cucumber features in my Rails 2.3.5 app should pass

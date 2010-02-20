@@ -1,7 +1,8 @@
 RAILS_APP_NAME = 'tmp_app'
+FIXTURES_PATH = File.expand_path(File.dirname(__FILE__) + "/../../fixtures")
 
 def fixture_path(version)
-  File.expand_path(File.dirname(__FILE__) + "/../../fixtures/rails_#{version}")
+  "#{FIXTURES_PATH}/rails_#{version}"
 end
 
 def app_path(version)
@@ -23,27 +24,15 @@ When /^I use the Rails (.+) generator to set up dragonfly$/ do |version|
     ./script/generate dragonfly_app images`
 end
 
-When /^I use config\.gem to require the Rails (.+) initializer$/ do |version|
-  env_file = "#{fixture_path(version)}/#{RAILS_APP_NAME}/config/environment.rb"
-  line = "config.gem \\\"dragonfly\\\", :lib => \\\"dragonfly/rails/images\\\""
-  raise "Problem inserting config.gem line" unless `
-    ruby -pe '$_ += "\\n#{line}\\n" if $_ =~ /^Rails::Initializer\.run/' -i.bk #{env_file}`
-end
-
 When /^I use the provided (.+) initializer$/ do |version|
-  `echo "
-    gem 'rack-cache', :require => 'rack/cache'
-    gem 'rmagick', :require => 'RMagick'
-    " >> #{app_path(version)}/Gemfile`
-  FileUtils.cp("#{fixture_path(version)}/initializer.rb", "#{app_path(version)}/config/initializers/dragonfly.rb")
+  FileUtils.cp("#{FIXTURES_PATH}/dragonfly_setup.rb", "#{app_path(version)}/config/initializers")
 end
 
 Then /^the cucumber features in my Rails (.+) app should pass$/ do |version|
   puts "\n*** RUNNING FEATURES IN THE RAILS APP... ***\n"
-  features_passed = system "
-    cd #{fixture_path(version)}/#{RAILS_APP_NAME} &&
-    RAILS_ENV=cucumber rake db:migrate &&
-    cucumber features"
+  path = File.join(fixture_path(version), RAILS_APP_NAME)
+  `cd #{path} && RAILS_ENV=cucumber rake db:migrate`
+  features_passed = system "cd #{path} && cucumber features"
   puts "\n*** FINISHED RUNNING FEATURES IN THE RAILS APP ***\n"
   raise "Features failed" unless features_passed
 end

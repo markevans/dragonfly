@@ -87,14 +87,18 @@ namespace :rails do
   task :setup do
     version = ENV['RAILS_VERSION']
     raise "Please give a RAILS_VERSION, e.g. RAILS_VERSION=2.3.5" unless version
-    path = "fixtures/rails_#{version}"
+    path = File.expand_path("fixtures/rails_#{version}")
     app_name = 'tmp_app'
     system %(
       cd #{path} &&
       rm -rf #{app_name} &&
       ../rails _#{version}_ #{app_name} -m template.rb
     )
-    puts "Created a Rails #{version} app in #{path}/#{app_name}"
+    FileUtils.cp("fixtures/dragonfly_setup.rb", "#{path}/#{app_name}/config/initializers")
+    system %(cd #{path}/#{app_name} && rake db:migrate)
+    puts "*** Created a Rails #{version} app in #{path}/#{app_name} ***"
+    puts "Now just start the server, and go to localhost:3000/albums"
+    puts "***"
   end
 
 end
