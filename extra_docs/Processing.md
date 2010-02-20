@@ -43,6 +43,8 @@ Each method takes the temp_object, and the (optional) processing options hash as
 
     end
 
+    app = Dragonfly::App[:images]
+    
     app.register_processor(MyProcessor)
     
     temp_object = app.create_object(File.new('path/to/image.png'))
@@ -56,3 +58,41 @@ As with analysers and encoders, if the processor is {Dragonfly::Configurable con
     app.register_processor(MyProcessor) do |p|
       p.some_attribute = 'hello'
     end
+
+To get the url for content processed by your custom processor, the long way is using something like:
+
+    app.url_for('some_uid',
+      :processing_method => :black_and_white,
+      :processing_options => {:size => '30x30'},
+      :format => :png
+    )
+
+or if using an activerecord model,
+
+    my_model.preview_image.url('some_uid',
+      :processing_method => :black_and_white,
+      :processing_options => {:size => '30x30'},
+      :format => :png
+    )
+
+However, this could soon get tedious if using more than once, so the best thing is to register a shortcut for it.
+So in your configuration of the Dragonfly app (or in an initializer if using 'dragonfly/rails/images') you
+could do something like:
+
+    Dragonfly::App[:images].parameters.add_shortcut(/^bw-(\d*x\d*)$/) do |string, match_data|
+      {
+        :processing_method => :black_and_white,
+        :processing_options => {:size => match_data[1]},
+        :format => :png
+      }
+    end
+    
+Now you can get urls by using the shortcut:
+
+    app.url_for('some_uid', 'bw-30x30')
+
+or with activerecord:
+
+    my_model.preview_image.url('bw-30x30')
+
+For more information about shortcuts, see {file:Shortcuts}.
