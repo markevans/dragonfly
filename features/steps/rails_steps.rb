@@ -14,7 +14,7 @@ Given /^a Rails (.+) application set up for using dragonfly$/ do |version|
   raise "Problem setting up Rails app" unless `
     cd #{fixture_path(version)} &&
     rm -rf #{RAILS_APP_NAME} &&
-    rails _#{version}_ #{RAILS_APP_NAME} -m template.rb`
+    ../rails _#{version}_ #{RAILS_APP_NAME} -m template.rb`
 end
 
 When /^I use the Rails (.+) generator to set up dragonfly$/ do |version|

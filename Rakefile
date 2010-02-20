@@ -80,3 +80,21 @@ end
 task :default do
   system 'ginger spec && rake features'
 end
+
+desc 'Set up a Rails app ready for testing'
+namespace :rails do
+  
+  task :setup do
+    version = ENV['RAILS_VERSION']
+    raise "Please give a RAILS_VERSION, e.g. RAILS_VERSION=2.3.5" unless version
+    path = "fixtures/rails_#{version}"
+    app_name = 'tmp_app'
+    system %(
+      cd #{path} &&
+      rm -rf #{app_name} &&
+      ../rails _#{version}_ #{app_name} -m template.rb
+    )
+    puts "Created a Rails #{version} app in #{path}/#{app_name}"
+  end
+
+end
