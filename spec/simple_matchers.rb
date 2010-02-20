@@ -12,3 +12,11 @@ def be_an_empty_directory
     Dir.entries(given) == ['.','..']
   end
 end
+
+# The reason we need this is that ActiveRecord 2.x returns just a string/nil, whereas AR 3 always returns an array
+def match_ar_error(string)
+  simple_matcher("match activerecord error") do |given|
+    error = given.is_a?(Array) ? given.first : given
+    error == string
+  end
+end
