@@ -30,7 +30,7 @@ When /^I use config\.gem to require the Rails (.+) initializer$/ do |version|
     ruby -pe '$_ += "\\n#{line}\\n" if $_ =~ /^Rails::Initializer\.run/' -i.bk #{env_file}`
 end
 
-When /^I use bundler with the provided (.+) initializer$/ do |version|
+When /^I use the provided (.+) initializer$/ do |version|
   `echo "
     gem 'rack-cache', :require => 'rack/cache'
     gem 'rmagick', :require => 'RMagick'

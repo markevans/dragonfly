@@ -10,5 +10,5 @@ Feature: champion uses dragonfly in his Rails 3.0.0.beta application
   #   Then the cucumber features in my Rails 3.0.0.beta app should pass
 
   Scenario: Set up dragonfly using bundler require
-    When I use bundler with the provided 3.0.0.beta initializer
+    When I use the provided 3.0.0.beta initializer
     # Then the cucumber features in my Rails 3.0.0.beta app should pass
