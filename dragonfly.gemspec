@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.4.4"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2010-02-16}
+  s.date = %q{2010-02-20}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -39,9 +39,23 @@ Gem::Specification.new do |s|
      "extra_docs/UsingWithRails.md",
      "features/images.feature",
      "features/no_processing.feature",
+     "features/rails_2.3.5.feature",
+     "features/rails_3.0.0.beta.feature",
      "features/steps/common_steps.rb",
      "features/steps/dragonfly_steps.rb",
+     "features/steps/rails_steps.rb",
      "features/support/env.rb",
+     "fixtures/dragonfly_setup.rb",
+     "fixtures/files/app/models/album.rb",
+     "fixtures/files/app/views/albums/new.html.erb",
+     "fixtures/files/app/views/albums/show.html.erb",
+     "fixtures/files/config/initializers/aaa_dragonfly_load_path.rb",
+     "fixtures/files/features/manage_album_images.feature",
+     "fixtures/files/features/step_definitions/album_steps.rb",
+     "fixtures/files/features/support/paths.rb",
+     "fixtures/rails",
+     "fixtures/rails_2.3.5/template.rb",
+     "fixtures/rails_3.0.0.beta/template.rb",
      "generators/dragonfly_app/USAGE",
      "generators/dragonfly_app/dragonfly_app_generator.rb",
      "generators/dragonfly_app/templates/initializer.erb",
@@ -115,6 +129,7 @@ Gem::Specification.new do |s|
      "spec/dragonfly/temp_object_spec.rb",
      "spec/dragonfly/url_handler_spec.rb",
      "spec/dragonfly_spec.rb",
+     "spec/ginger_scenarios.rb",
      "spec/image_matchers.rb",
      "spec/simple_matchers.rb",
      "spec/spec_helper.rb",
@@ -157,6 +172,7 @@ Gem::Specification.new do |s|
      "spec/dragonfly/temp_object_spec.rb",
      "spec/dragonfly/url_handler_spec.rb",
      "spec/dragonfly_spec.rb",
+     "spec/ginger_scenarios.rb",
      "spec/image_matchers.rb",
      "spec/simple_matchers.rb",
      "spec/spec_helper.rb"
@@ -174,8 +190,10 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<aws-s3>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<cucumber>, [">= 0"])
+      s.add_development_dependency(%q<cucumber-rails>, [">= 0"])
       s.add_development_dependency(%q<activerecord>, [">= 0"])
       s.add_development_dependency(%q<sqlite3-ruby>, [">= 0"])
+      s.add_development_dependency(%q<ginger>, [">= 0"])
     else
       s.add_dependency(%q<rack>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
@@ -184,8 +202,10 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<aws-s3>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<cucumber>, [">= 0"])
+      s.add_dependency(%q<cucumber-rails>, [">= 0"])
       s.add_dependency(%q<activerecord>, [">= 0"])
       s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
+      s.add_dependency(%q<ginger>, [">= 0"])
     end
   else
     s.add_dependency(%q<rack>, [">= 0"])
@@ -195,8 +215,10 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<aws-s3>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<cucumber>, [">= 0"])
+    s.add_dependency(%q<cucumber-rails>, [">= 0"])
     s.add_dependency(%q<activerecord>, [">= 0"])
     s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
+    s.add_dependency(%q<ginger>, [">= 0"])
   end
 end
 
