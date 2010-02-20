@@ -36,6 +36,20 @@ describe Dragonfly::Analysis::FileCommandAnalyser do
         @analyser.mime_type(@temp_object)
         @temp_object.instance_eval{@tempfile}.should be_nil
       end
+      
+      {
+        :jpg => 'image/jpeg',
+        :png => 'image/png',
+        :gif => 'image/gif',
+        :tif => 'image/tiff'
+      }.each do |format, mime_type|
+        it "should work properly (without a broken pipe error) for big files of format #{format}" do
+          processor = Dragonfly::Processing::RMagickProcessor.new
+          temp_object = Dragonfly::TempObject.new(processor.generate(1000, 1000, format))
+          @analyser.mime_type(temp_object).should == mime_type
+        end
+      end
+      
     end
   
   end
