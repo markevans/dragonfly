@@ -16,18 +16,24 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
     <a href="../../_index.html">Index (R)</a> &raquo; 
-    <a href="../../Dragonfly.html" title="Dragonfly">Dragonfly</a> &raquo; <a href="../Processing.html" title="Processing">Processing</a>
+    <span class='title'><a href="../../Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span> &raquo; <span class='title'><a href="../Processing.html" title="Dragonfly::Processing (module)">Processing</a></span>
      &raquo; 
     <span class="title">RMagickProcessor</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -46,12 +52,12 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="Base.html" title="Dragonfly::Processing::Base">Dragonfly::Processing::Base</a></span>
+      <span class="inheritName"><a href="Base.html" title="Dragonfly::Processing::Base (class)">Base</a></span>
       
         <ul class="fullTree">
-          <li><a href="../../Object.html" title="Object">Object</a></li>
+          <li><a href="../../Object.html" title="Object (class)">Object</a></li>
           
-            <li class="next"><a href="Base.html" title="Dragonfly::Processing::Base">Dragonfly::Processing::Base</a></li>
+            <li class="next"><a href="Base.html" title="Dragonfly::Processing::Base (class)">Base</a></li>
           
             <li class="next">Dragonfly::Processing::RMagickProcessor</li>
           
@@ -78,7 +84,7 @@
   
     <dl class="constants">
       
-        <dt id="GRAVITIES-constant ">GRAVITIES =
+        <dt id="GRAVITIES-constant" class="">GRAVITIES =
             <span class="summary_desc"></span>
         </dt>
         <dd><pre class="code"><span class='lbrace token'>{</span>
@@ -94,7 +100,7 @@
 <span class='rbrace token'>}</span>
 </pre></dd>
       
-        <dt id="FONT_STYLES-constant ">FONT_STYLES =
+        <dt id="FONT_STYLES-constant" class="">FONT_STYLES =
             <span class="summary_desc"></span>
         </dt>
         <dd><pre class="code"><span class='lbrace token'>{</span>
@@ -104,7 +110,7 @@
 <span class='rbrace token'>}</span>
 </pre></dd>
       
-        <dt id="FONT_STRETCHES-constant ">FONT_STRETCHES =
+        <dt id="FONT_STRETCHES-constant" class="">FONT_STRETCHES =
             <span class="summary_desc"></span>
         </dt>
         <dd><pre class="code"><span class='lbrace token'>{</span>
@@ -120,7 +126,7 @@
 <span class='rbrace token'>}</span>
 </pre></dd>
       
-        <dt id="FONT_WEIGHTS-constant ">FONT_WEIGHTS =
+        <dt id="FONT_WEIGHTS-constant" class="">FONT_WEIGHTS =
             <span class="summary_desc"></span>
         </dt>
         <dd><pre class="code"><span class='lbrace token'>{</span>
@@ -314,8 +320,8 @@ Processing methods.
   
   
   
-  <h3 class="inherited">Methods included from <a href="../Delegatable.html" title="Dragonfly::Delegatable">Dragonfly::Delegatable</a></h3>
-  <p class="inherited"><a href="../Delegatable.html#delegatable_methods-instance_method" title="#delegatable_methods">#delegatable_methods</a></p>
+  <h3 class="inherited">Methods included from <a href="../Delegatable.html" title="Dragonfly::Delegatable (module)">Dragonfly::Delegatable</a></h3>
+  <p class="inherited"><a href="../Delegatable.html#delegatable_methods-instance_method" title="Dragonfly::Delegatable#delegatable_methods (method)">#delegatable_methods</a></p>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -325,7 +331,7 @@ Processing methods.
       <div class="method_details first">
   <p class="signature first" id="crop-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>crop</strong>(temp_object, opts = {}) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>crop</strong>(temp_object, opts = {}) 
   
 
   
@@ -391,7 +397,7 @@ Processing methods
       <div class="method_details ">
   <p class="signature " id="generate-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>generate</strong>(width, height, format = 'png') 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>generate</strong>(width, height, format = 'png') 
   
 
   
@@ -424,7 +430,7 @@ Processing methods
       <div class="method_details ">
   <p class="signature " id="resize-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>resize</strong>(temp_object, opts = {}) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>resize</strong>(temp_object, opts = {}) 
   
 
   
@@ -457,7 +463,7 @@ Processing methods
       <div class="method_details ">
   <p class="signature " id="resize_and_crop-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>resize_and_crop</strong>(temp_object, opts = {}) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>resize_and_crop</strong>(temp_object, opts = {}) 
   
 
   
@@ -498,7 +504,7 @@ Processing methods
       <div class="method_details ">
   <p class="signature " id="rotate-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>rotate</strong>(temp_object, opts = {}) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>rotate</strong>(temp_object, opts = {}) 
   
 
   
@@ -547,7 +553,7 @@ Processing methods
       <div class="method_details ">
   <p class="signature " id="text-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>text</strong>(temp_object, opts = {}) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>text</strong>(temp_object, opts = {}) 
   
 
   
@@ -660,7 +666,7 @@ Processing methods
       <div class="method_details ">
   <p class="signature " id="vignette-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>vignette</strong>(temp_object, opts = {}) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>vignette</strong>(temp_object, opts = {}) 
   
 
   
@@ -701,9 +707,9 @@ Processing methods
 </div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:32 2010 by 
+  Generated on Sat Feb 20 16:20:21 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>

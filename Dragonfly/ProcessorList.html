@@ -16,18 +16,24 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
     <a href="../_index.html">Index (P)</a> &raquo; 
-    <a href="../Dragonfly.html" title="Dragonfly">Dragonfly</a>
+    <span class='title'><a href="../Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span>
      &raquo; 
     <span class="title">ProcessorList</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -46,10 +52,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="../Object.html" title="Object">Object</a></span>
+      <span class="inheritName"><a href="../Object.html" title="Object (class)">Object</a></span>
       
         <ul class="fullTree">
-          <li><a href="../Object.html" title="Object">Object</a></li>
+          <li><a href="../Object.html" title="Object (class)">Object</a></li>
           
             <li class="next">Dragonfly::ProcessorList</li>
           
@@ -64,7 +70,7 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2"><a href="Delegator.html" title="Dragonfly::Delegator">Dragonfly::Delegator</a></dd>
+      <dd class="r2"><a href="Delegator.html" title="Dragonfly::Delegator (module)">Delegator</a></dd>
       
     
   
@@ -89,14 +95,14 @@
   
   
   
-  <h3 class="inherited">Methods included from <a href="Delegator.html" title="Dragonfly::Delegator">Dragonfly::Delegator</a></h3>
-  <p class="inherited"><a href="Delegator.html#callable_methods-instance_method" title="#callable_methods">#callable_methods</a>, <a href="Delegator.html#has_callable_method%3F-instance_method" title="#has_callable_method?">#has_callable_method?</a>, <a href="Delegator.html#register-instance_method" title="#register">#register</a>, <a href="Delegator.html#registered_objects-instance_method" title="#registered_objects">#registered_objects</a>, <a href="Delegator.html#unregister-instance_method" title="#unregister">#unregister</a>, <a href="Delegator.html#unregister_all-instance_method" title="#unregister_all">#unregister_all</a></p>
+  <h3 class="inherited">Methods included from <a href="Delegator.html" title="Dragonfly::Delegator (module)">Delegator</a></h3>
+  <p class="inherited"><a href="Delegator.html#callable_methods-instance_method" title="Dragonfly::Delegator#callable_methods (method)">#callable_methods</a>, <a href="Delegator.html#has_callable_method%3F-instance_method" title="Dragonfly::Delegator#has_callable_method? (method)">#has_callable_method?</a>, <a href="Delegator.html#register-instance_method" title="Dragonfly::Delegator#register (method)">#register</a>, <a href="Delegator.html#unregister-instance_method" title="Dragonfly::Delegator#unregister (method)">#unregister</a>, <a href="Delegator.html#unregister_all-instance_method" title="Dragonfly::Delegator#unregister_all (method)">#unregister_all</a></p>
 <div id="method_missing_details" class="method_details_list">
   <h2>Dynamic Method Handling</h2>
   <p class="notice super">
     This class handles dynamic methods through the <tt>method_missing</tt> method
     
-      in the class <a href="Delegator.html#method_missing-instance_method" title="Dragonfly::Delegator">Dragonfly::Delegator</a>
+      in the class <a href="Delegator.html#method_missing-instance_method" title="Dragonfly::Delegator#method_missing (method)">Dragonfly::Delegator</a>
     
   </p>
   
@@ -106,9 +112,9 @@
 </div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:31 2010 by 
+  Generated on Sat Feb 20 16:20:17 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>

@@ -16,6 +16,10 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
@@ -24,10 +28,12 @@
     
     <span class="title">Top Level Namespace</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -57,11 +63,11 @@
 <p class="children">
    
     
-      <strong class="modules">Modules:</strong> <a href="Dragonfly.html" title="Dragonfly">Dragonfly</a>
+      <strong class="modules">Modules:</strong> <a href="Dragonfly.html" title="Dragonfly (module)">Dragonfly</a>
     
    
     
-      <strong class="classes">Classes:</strong> <a href="Object.html" title="Object">Object</a>
+      <strong class="classes">Classes:</strong> <a href="Object.html" title="Object (class)">Object</a>, <a href="String.html" title="String (class)">String</a>, <a href="Symbol.html" title="Symbol (class)">Symbol</a>
     
   
 </p>
@@ -128,7 +134,7 @@ any modules/classes inside them All paths here are absolute.
       <div class="method_details first">
   <p class="signature first" id="autoload_files_in_dir-instance_method">
   
-    - (<tt><a href="Object.html" title="Object">Object</a></tt>) <strong>autoload_files_in_dir</strong>(path, namespace) 
+    - (<tt><a href="Object.html" title="Object (class)">Object</a></tt>) <strong>autoload_files_in_dir</strong>(path, namespace) 
   
 
   
@@ -179,7 +185,7 @@ any modules/classes inside them All paths here are absolute.
       <div class="method_details ">
   <p class="signature " id="camelize-instance_method">
   
-    - (<tt><a href="Object.html" title="Object">Object</a></tt>) <strong>camelize</strong>(path) 
+    - (<tt><a href="Object.html" title="Object (class)">Object</a></tt>) <strong>camelize</strong>(path) 
   
 
   
@@ -234,9 +240,9 @@ any modules/classes inside them All paths here are absolute
 </div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:33 2010 by 
+  Generated on Sat Feb 20 16:20:21 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>

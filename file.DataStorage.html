@@ -16,16 +16,22 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
     <a href="_index.html" title="Index">Index</a> &raquo; 
     <span class="title">File: DataStorage</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -69,13 +75,13 @@ having <code>store</code>, <code>retrieve</code> and <code>destroy</code>.</p>
 <pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app_name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='MyDataStore constant id'>MyDataStore</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
 </pre>
 
-<p>If you want your datastore to be configurable, you can include the <tt><a href="Dragonfly/Configurable.html" title="Configurable">Configurable</a></tt> module.</p>
+<p>If you want your datastore to be configurable, you can include the <tt><a href="Dragonfly/Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></tt> module.</p>
 </div></div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:27 2010 by 
+  Generated on Sat Feb 20 16:20:15 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>

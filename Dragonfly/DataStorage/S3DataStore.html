@@ -16,18 +16,24 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
     <a href="../../_index.html">Index (S)</a> &raquo; 
-    <a href="../../Dragonfly.html" title="Dragonfly">Dragonfly</a> &raquo; <a href="../DataStorage.html" title="DataStorage">DataStorage</a>
+    <span class='title'><a href="../../Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span> &raquo; <span class='title'><a href="../DataStorage.html" title="Dragonfly::DataStorage (module)">DataStorage</a></span>
      &raquo; 
     <span class="title">S3DataStore</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -46,12 +52,12 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="Base.html" title="Dragonfly::DataStorage::Base">Dragonfly::DataStorage::Base</a></span>
+      <span class="inheritName"><a href="Base.html" title="Dragonfly::DataStorage::Base (class)">Base</a></span>
       
         <ul class="fullTree">
-          <li><a href="../../Object.html" title="Object">Object</a></li>
+          <li><a href="../../Object.html" title="Object (class)">Object</a></li>
           
-            <li class="next"><a href="Base.html" title="Dragonfly::DataStorage::Base">Dragonfly::DataStorage::Base</a></li>
+            <li class="next"><a href="Base.html" title="Dragonfly::DataStorage::Base (class)">Base</a></li>
           
             <li class="next">Dragonfly::DataStorage::S3DataStore</li>
           
@@ -66,7 +72,7 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2"><a href="../Configurable.html" title="Dragonfly::Configurable">Dragonfly::Configurable</a></dd>
+      <dd class="r2"><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></dd>
       
     
   
@@ -244,8 +250,8 @@ or
   
   
   
-  <h3 class="inherited">Methods included from <a href="../Configurable.html" title="Dragonfly::Configurable">Dragonfly::Configurable</a></h3>
-  <p class="inherited"><a href="../Configurable.html#included-class_method" title="included">included</a></p>
+  <h3 class="inherited">Methods included from <a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></h3>
+  <p class="inherited"><a href="../Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></p>
 
   
   
@@ -260,7 +266,7 @@ or
       <div class="method_details first">
   <p class="signature first" id="connect!-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>connect!</strong> 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>connect!</strong> 
   
 
   
@@ -295,7 +301,7 @@ or
       <div class="method_details ">
   <p class="signature " id="create_bucket!-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>create_bucket!</strong> 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>create_bucket!</strong> 
   
 
   
@@ -324,7 +330,7 @@ or
       <div class="method_details ">
   <p class="signature " id="destroy-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>destroy</strong>(uid) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>destroy</strong>(uid) 
   
 
   
@@ -340,7 +346,7 @@ or
   
     <li>
       
-        <span class='type'>(<tt><a href="DataNotFound.html" title="DataNotFound">DataNotFound</a></tt>)</span>
+        <span class='type'>(<tt><a href="DataNotFound.html" title="Dragonfly::DataStorage::DataNotFound (class)">DataNotFound</a></tt>)</span>
       
       
       
@@ -380,7 +386,7 @@ or
       <div class="method_details ">
   <p class="signature " id="retrieve-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>retrieve</strong>(uid) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>retrieve</strong>(uid) 
   
 
   
@@ -396,7 +402,7 @@ or
   
     <li>
       
-        <span class='type'>(<tt><a href="DataNotFound.html" title="DataNotFound">DataNotFound</a></tt>)</span>
+        <span class='type'>(<tt><a href="DataNotFound.html" title="Dragonfly::DataStorage::DataNotFound (class)">DataNotFound</a></tt>)</span>
       
       
       
@@ -436,7 +442,7 @@ or
       <div class="method_details ">
   <p class="signature " id="store-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>store</strong>(temp_object) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>store</strong>(temp_object) 
   
 
   
@@ -473,9 +479,9 @@ or
 </div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:29 2010 by 
+  Generated on Sat Feb 20 16:20:20 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>

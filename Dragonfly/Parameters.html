@@ -16,18 +16,24 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
     <a href="../_index.html">Index (P)</a> &raquo; 
-    <a href="../Dragonfly.html" title="Dragonfly">Dragonfly</a>
+    <span class='title'><a href="../Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span>
      &raquo; 
     <span class="title">Parameters</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -46,10 +52,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="../Object.html" title="Object">Object</a></span>
+      <span class="inheritName"><a href="../Object.html" title="Object (class)">Object</a></span>
       
         <ul class="fullTree">
-          <li><a href="../Object.html" title="Object">Object</a></li>
+          <li><a href="../Object.html" title="Object (class)">Object</a></li>
           
             <li class="next">Dragonfly::Parameters</li>
           
@@ -62,7 +68,7 @@
   
     
       <dt class="r2">Extends:</dt>
-      <dd class="r2"><a href="Configurable.html" title="Dragonfly::Configurable">Dragonfly::Configurable</a></dd>
+      <dd class="r2"><a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></dd>
       
     
   
@@ -379,7 +385,7 @@ or
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#%3D%3D-instance_method" title="#== (instance method)">- (Object) <strong>==</strong>(other_parameters) </a>
+      <a href="#%3D%3D-instance_method" title="#== (instance method)">- (Object) <strong>=</strong>(other_parameters) </a>
     
 
     
@@ -419,7 +425,7 @@ or
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#%5B%5D%3D-instance_method" title="#[]= (instance method)">- (Object) <strong>[]=</strong>(attribute, value) </a>
+      <a href="#%5B%5D%3D-instance_method" title="#[]= (instance method)">- (Object) <strong>[]</strong>(attribute, value) </a>
     
 
     
@@ -528,7 +534,7 @@ Instance methods.
     <div class="method_details first">
   <p class="signature first" id="initialize-instance_method">
   
-    - (<tt><a href="" title="Parameters">Parameters</a></tt>) <strong>initialize</strong>(attributes = {}) 
+    - (<tt><a href="" title="Dragonfly::Parameters (class)">Parameters</a></tt>) <strong>initialize</strong>(attributes = {}) 
   
 
   
@@ -601,7 +607,7 @@ Instance methods
       <div class="method_details first">
   <p class="signature first" id="encoding-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>encoding</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>encoding</strong> 
   
 
   
@@ -644,7 +650,7 @@ Returns the value of attribute encoding
       <div class="method_details ">
   <p class="signature " id="format-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>format</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>format</strong> 
   
 
   
@@ -687,7 +693,7 @@ Returns the value of attribute format
       <div class="method_details ">
   <p class="signature " id="processing_method-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>processing_method</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>processing_method</strong> 
   
 
   
@@ -730,7 +736,7 @@ Returns the value of attribute processing_method
       <div class="method_details ">
   <p class="signature " id="processing_options-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>processing_options</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>processing_options</strong> 
   
 
   
@@ -773,7 +779,7 @@ Returns the value of attribute processing_options
       <div class="method_details ">
   <p class="signature " id="uid-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>uid</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>uid</strong> 
   
 
   
@@ -820,7 +826,7 @@ Returns the value of attribute uid
       <div class="method_details first">
   <p class="signature first" id="add_shortcut-class_method">
   
-    + (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>add_shortcut</strong>(*args, &amp;block) 
+    + (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>add_shortcut</strong>(*args, &amp;block) 
   
 
   
@@ -859,7 +865,7 @@ Returns the value of attribute uid
       <div class="method_details ">
   <p class="signature " id="from_args-class_method">
   
-    + (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>from_args</strong>(*args) 
+    + (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>from_args</strong>(*args) 
   
 
   
@@ -896,7 +902,7 @@ Returns the value of attribute uid
       <div class="method_details ">
   <p class="signature " id="from_shortcut-class_method">
   
-    + (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>from_shortcut</strong>(*args) 
+    + (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>from_shortcut</strong>(*args) 
   
 
   
@@ -925,7 +931,7 @@ Returns the value of attribute uid
       <div class="method_details ">
   <p class="signature " id="hash_from_shortcut-class_method">
   
-    + (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>hash_from_shortcut</strong>(*args) 
+    + (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>hash_from_shortcut</strong>(*args) 
   
 
   
@@ -966,7 +972,7 @@ Returns the value of attribute uid
       <div class="method_details ">
   <p class="signature " id="new_with_defaults-class_method">
   
-    + (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>new_with_defaults</strong>(attributes = {}) 
+    + (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>new_with_defaults</strong>(attributes = {}) 
   
 
   
@@ -1011,7 +1017,7 @@ Returns the value of attribute uid
       <div class="method_details first">
   <p class="signature first" id="==-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>==</strong>(other_parameters) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>==</strong>(other_parameters) 
   
 
   
@@ -1040,7 +1046,7 @@ Returns the value of attribute uid
       <div class="method_details ">
   <p class="signature " id="[]-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>[]</strong>(attribute) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>[]</strong>(attribute) 
   
 
   
@@ -1069,7 +1075,7 @@ Returns the value of attribute uid
       <div class="method_details ">
   <p class="signature " id="[]=-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>[]=</strong>(attribute, value) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>[]=</strong>(attribute, value) 
   
 
   
@@ -1098,7 +1104,7 @@ Returns the value of attribute uid
       <div class="method_details ">
   <p class="signature " id="generate_sha-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>generate_sha</strong>(salt, sha_length) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>generate_sha</strong>(salt, sha_length) 
   
 
   
@@ -1127,7 +1133,7 @@ Returns the value of attribute uid
       <div class="method_details ">
   <p class="signature " id="to_hash-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>to_hash</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>to_hash</strong> 
   
 
   
@@ -1168,7 +1174,7 @@ Returns the value of attribute uid
       <div class="method_details ">
   <p class="signature " id="unique_signature-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>unique_signature</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>unique_signature</strong> 
   
 
   
@@ -1199,9 +1205,9 @@ Returns the value of attribute uid
 </div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:29 2010 by 
+  Generated on Sat Feb 20 16:20:18 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>

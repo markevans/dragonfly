@@ -7,100 +7,65 @@
     <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
     <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/full_list.js"></script>
-    <base target="_parent" />
+    <base id="base_target" target="_parent" />
   </head>
   <body>
-    <h1 id="full_list_header">File List</h1>
-    <div id="search">Search: <input type="text" /></div>
-    <div class="clear"></div>
-    <ul id="full_list">
-      
-      
-        <li class="r1 ">
-          
-            <a href="index.html" title="Index">Index</a>
-          
-          
-        </li>
-      
-        <li class="r2 ">
-          
-            <a href="file.README.html" title="README">README</a>
-          
-          
-        </li>
-      
-        <li class="r1 ">
-          
-            <a href="file.GettingStarted.html" title="GettingStarted">GettingStarted</a>
-          
-          
-        </li>
-      
-        <li class="r2 ">
-          
-            <a href="file.UsingWithRails.html" title="UsingWithRails">UsingWithRails</a>
-          
-          
-        </li>
-      
-        <li class="r1 ">
-          
-            <a href="file.ActiveRecord.html" title="ActiveRecord">ActiveRecord</a>
-          
-          
-        </li>
-      
-        <li class="r2 ">
-          
-            <a href="file.DataStorage.html" title="DataStorage">DataStorage</a>
-          
-          
-        </li>
-      
-        <li class="r1 ">
-          
-            <a href="file.Shortcuts.html" title="Shortcuts">Shortcuts</a>
-          
-          
-        </li>
-      
-        <li class="r2 ">
-          
-            <a href="file.Analysers.html" title="Analysers">Analysers</a>
-          
-          
-        </li>
-      
-        <li class="r1 ">
-          
-            <a href="file.Processing.html" title="Processing">Processing</a>
-          
-          
-        </li>
-      
-        <li class="r2 ">
-          
-            <a href="file.Encoding.html" title="Encoding">Encoding</a>
-          
-          
-        </li>
-      
-        <li class="r1 ">
-          
-            <a href="file.ExampleUseCases.html" title="ExampleUseCases">ExampleUseCases</a>
-          
-          
-        </li>
-      
-        <li class="r2 ">
-          
-            <a href="file.LICENSE.html" title="LICENSE">LICENSE</a>
-          
-          
-        </li>
-      
-    </ul>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) {
+        document.getElementById('base_target').target = 'main';
+        document.body.className = 'frames';
+      }
+    </script>
+    <div id="content">
+      <h1 id="full_list_header">File List</h1>
+      <div id="nav">
+        <a target="_self" href="class_list.html">Classes</a> | 
+        <a target="_self" href="method_list.html">Methods</a> |
+        <a target="_self" href="file_list.html">Files</a>
+      </div>
+      <div id="search">Search: <input type="text" /></div>
+
+      <ul id="full_list" class="files">
+        
+
+  <li class="r1"><a href="index.html" title="Index">Index</a></li>
+  
+
+  <li class="r2"><a href="file.README.html" title="README">README</a></li>
+  
+
+  <li class="r1"><a href="file.GettingStarted.html" title="GettingStarted">GettingStarted</a></li>
+  
+
+  <li class="r2"><a href="file.UsingWithRails.html" title="UsingWithRails">UsingWithRails</a></li>
+  
+
+  <li class="r1"><a href="file.ActiveRecord.html" title="ActiveRecord">ActiveRecord</a></li>
+  
+
+  <li class="r2"><a href="file.DataStorage.html" title="DataStorage">DataStorage</a></li>
+  
+
+  <li class="r1"><a href="file.Shortcuts.html" title="Shortcuts">Shortcuts</a></li>
+  
+
+  <li class="r2"><a href="file.Analysers.html" title="Analysers">Analysers</a></li>
+  
+
+  <li class="r1"><a href="file.Processing.html" title="Processing">Processing</a></li>
+  
+
+  <li class="r2"><a href="file.Encoding.html" title="Encoding">Encoding</a></li>
+  
+
+  <li class="r1"><a href="file.ExampleUseCases.html" title="ExampleUseCases">ExampleUseCases</a></li>
+  
+
+  <li class="r2"><a href="file.LICENSE.html" title="LICENSE">LICENSE</a></li>
+  
+
+      </ul>
+    </div>
   </body>
 </html>
 

@@ -16,18 +16,24 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
     <a href="../_index.html">Index (U)</a> &raquo; 
-    <a href="../Dragonfly.html" title="Dragonfly">Dragonfly</a>
+    <span class='title'><a href="../Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span>
      &raquo; 
     <span class="title">UrlHandler</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -46,10 +52,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="../Object.html" title="Object">Object</a></span>
+      <span class="inheritName"><a href="../Object.html" title="Object (class)">Object</a></span>
       
         <ul class="fullTree">
-          <li><a href="../Object.html" title="Object">Object</a></li>
+          <li><a href="../Object.html" title="Object (class)">Object</a></li>
           
             <li class="next">Dragonfly::UrlHandler</li>
           
@@ -64,7 +70,7 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2"><a href="Configurable.html" title="Dragonfly::Configurable">Dragonfly::Configurable</a>, Rack::Utils</dd>
+      <dd class="r2"><a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a>, Rack::Utils</dd>
       
     
   
@@ -80,7 +86,7 @@
   
     <dl class="constants">
       
-        <dt id="MAPPINGS-constant ">MAPPINGS =
+        <dt id="MAPPINGS-constant" class="">MAPPINGS =
             <span class="summary_desc"></span>
         </dt>
         <dd><pre class="code"><span class='lbrace token'>{</span>
@@ -282,15 +288,15 @@ A new instance of UrlHandler.
   
   
   
-  <h3 class="inherited">Methods included from <a href="Configurable.html" title="Dragonfly::Configurable">Dragonfly::Configurable</a></h3>
-  <p class="inherited"><a href="Configurable.html#included-class_method" title="included">included</a></p>
+  <h3 class="inherited">Methods included from <a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></h3>
+  <p class="inherited"><a href="Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <p class="signature first" id="initialize-instance_method">
   
-    - (<tt><a href="" title="UrlHandler">UrlHandler</a></tt>) <strong>initialize</strong>(parameters_class = Parameters) 
+    - (<tt><a href="" title="Dragonfly::UrlHandler (class)">UrlHandler</a></tt>) <strong>initialize</strong>(parameters_class = Parameters) 
   
 
   
@@ -338,7 +344,7 @@ A new instance of UrlHandler
       <div class="method_details first">
   <p class="signature first" id="parameters_class-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>parameters_class</strong>  <span class="extras">(readonly)</span>
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>parameters_class</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -385,7 +391,7 @@ Returns the value of attribute parameters_class
       <div class="method_details first">
   <p class="signature first" id="parameters_to_url-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>parameters_to_url</strong>(parameters) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>parameters_to_url</strong>(parameters) 
   
 
   
@@ -428,7 +434,7 @@ Returns the value of attribute parameters_class
       <div class="method_details ">
   <p class="signature " id="url_for-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>url_for</strong>(uid, *args) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>url_for</strong>(uid, *args) 
   
 
   
@@ -461,7 +467,7 @@ Returns the value of attribute parameters_class
       <div class="method_details ">
   <p class="signature " id="url_to_parameters-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>url_to_parameters</strong>(path, query_string) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>url_to_parameters</strong>(path, query_string) 
   
 
   
@@ -518,9 +524,9 @@ Returns the value of attribute parameters_class
 </div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:33 2010 by 
+  Generated on Sat Feb 20 16:20:18 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>

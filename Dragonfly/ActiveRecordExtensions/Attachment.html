@@ -16,18 +16,24 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
     <a href="../../_index.html">Index (A)</a> &raquo; 
-    <a href="../../Dragonfly.html" title="Dragonfly">Dragonfly</a> &raquo; <a href="../ActiveRecordExtensions.html" title="ActiveRecordExtensions">ActiveRecordExtensions</a>
+    <span class='title'><a href="../../Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span> &raquo; <span class='title'><a href="../ActiveRecordExtensions.html" title="Dragonfly::ActiveRecordExtensions (module)">ActiveRecordExtensions</a></span>
      &raquo; 
     <span class="title">Attachment</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -46,10 +52,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="../../Object.html" title="Object">Object</a></span>
+      <span class="inheritName"><a href="../../Object.html" title="Object (class)">Object</a></span>
       
         <ul class="fullTree">
-          <li><a href="../../Object.html" title="Object">Object</a></li>
+          <li><a href="../../Object.html" title="Object (class)">Object</a></li>
           
             <li class="next">Dragonfly::ActiveRecordExtensions::Attachment</li>
           
@@ -161,22 +167,22 @@ Returns the value of attribute parent_model.
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#temp_object%3D-instance_method" title="#temp_object= (instance method)">- (Object) <strong>temp_object=</strong> </a>
+      <a href="#temp_object-instance_method" title="#temp_object (instance method)">- (Object) <strong>temp_object</strong> </a>
     
 
     
   </span>
   
   
+    
+    
+  
   
   
   
 
   
-    <span class="summary_desc">
-Sets the attribute temp_object.
-
-</span>
+    <span class="summary_desc"></span>
   
 </li>
 
@@ -418,29 +424,6 @@ A new instance of Attachment.
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#temp_object-instance_method" title="#temp_object (instance method)">- (Object) <strong>temp_object</strong> </a>
-    
-
-    
-  </span>
-  
-  
-    
-    <span class="note title writeonly">writeonly</span>
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#to_value-instance_method" title="#to_value (instance method)">- (Object) <strong>to_value</strong> </a>
     
 
@@ -485,7 +468,7 @@ A new instance of Attachment.
     <div class="method_details first">
   <p class="signature first" id="initialize-instance_method">
   
-    - (<tt><a href="" title="Attachment">Attachment</a></tt>) <strong>initialize</strong>(app, parent_model, attribute_name) 
+    - (<tt><a href="" title="Dragonfly::ActiveRecordExtensions::Attachment (class)">Attachment</a></tt>) <strong>initialize</strong>(app, parent_model, attribute_name) 
   
 
   
@@ -533,7 +516,7 @@ A new instance of Attachment
     <div class="method_details first">
   <p class="signature first" id="method_missing-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>method_missing</strong>(meth, *args, &amp;block)  <span class="extras">(private)</span>
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>method_missing</strong>(meth, *args, &amp;block)  <span class="extras">(private)</span>
   
 
   
@@ -543,19 +526,19 @@ A new instance of Attachment
       <pre class="lines">
 
 
-153
-154
-155
-156
 157
 158
-159</pre>
+159
+160
+161
+162
+163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 157</span>
 
 <span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='methods_to_delegate_to_temp_object identifier id'>methods_to_delegate_to_temp_object</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='can_delegate_to_temp_object? fid id'>can_delegate_to_temp_object?</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='rparen token'>)</span>
     <span class='has_magic_attribute_for? fid id'>has_magic_attribute_for?</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='magic_attribute_for identifier id'>magic_attribute_for</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='else else kw'>else</span>
     <span class='super super kw'>super</span>
@@ -578,7 +561,7 @@ A new instance of Attachment
       <div class="method_details first">
   <p class="signature first" id="app-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>app</strong>  <span class="extras">(readonly)</span>
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>app</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -621,7 +604,7 @@ Returns the value of attribute app
       <div class="method_details ">
   <p class="signature " id="attribute_name-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>attribute_name</strong>  <span class="extras">(readonly)</span>
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>attribute_name</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -664,7 +647,7 @@ Returns the value of attribute attribute_name
       <div class="method_details ">
   <p class="signature " id="parent_model-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>parent_model</strong>  <span class="extras">(readonly)</span>
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>parent_model</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -703,61 +686,37 @@ Returns the value of attribute parent_model
     
       
       <span id="temp_object=-instance_method"></span>
-      <span id=""></span>
+      <span id="temp_object-instance_method"></span>
       <div class="method_details ">
-  <p class="signature " id="temp_object=-instance_method">
+  <p class="signature " id="temp_object-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>temp_object=</strong> 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>temp_object</strong> 
   
 
   
-</p><div class="docstring">
-  <div class="discussion">
-    <p>
-Sets the attribute temp_object
-</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <h3>Parameters:</h3>
-<ul class="param">
-  
-    <li>
-      
-        <span class='type'></span>
-      
-      
-        <span class='name'>value</span>
-      
-      
-      
-        &mdash;
-        
-the value to set the attribute temp_object to.
-
-
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
+</p><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-117
-118
-119</pre>
+47
+48
+49
+50
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 47</span>
 
-<span class='def def kw'>def</span> <span class='temp_object= identifier id'>temp_object=</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
-  <span class='@temp_object ivar id'>@temp_object</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+<span class='def def kw'>def</span> <span class='temp_object identifier id'>temp_object</span>
+  <span class='if if kw'>if</span> <span class='@temp_object ivar id'>@temp_object</span>
+    <span class='@temp_object ivar id'>@temp_object</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='been_persisted? fid id'>been_persisted?</span>
+    <span class='@temp_object ivar id'>@temp_object</span> <span class='assign token'>=</span> <span class='fetch identifier id'>fetch</span>
+  <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -775,7 +734,7 @@ the value to set the attribute temp_object to.
       <div class="method_details first">
   <p class="signature first" id="assign-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>assign</strong>(value) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>assign</strong>(value) 
   
 
   
@@ -820,7 +779,7 @@ the value to set the attribute temp_object to.
       <div class="method_details ">
   <p class="signature " id="destroy!-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>destroy!</strong> 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>destroy!</strong> 
   
 
   
@@ -853,7 +812,7 @@ the value to set the attribute temp_object to.
       <div class="method_details ">
   <p class="signature " id="ext-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>ext</strong> 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>ext</strong> 
   
 
   
@@ -882,7 +841,7 @@ the value to set the attribute temp_object to.
       <div class="method_details ">
   <p class="signature " id="fetch-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>fetch</strong>(*args) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>fetch</strong>(*args) 
   
 
   
@@ -911,7 +870,7 @@ the value to set the attribute temp_object to.
       <div class="method_details ">
   <p class="signature " id="methods-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>methods</strong>(*args) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>methods</strong>(*args) 
   
 
   
@@ -940,7 +899,7 @@ the value to set the attribute temp_object to.
       <div class="method_details ">
   <p class="signature " id="name-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>name</strong> 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>name</strong> 
   
 
   
@@ -969,7 +928,7 @@ the value to set the attribute temp_object to.
       <div class="method_details ">
   <p class="signature " id="public_methods-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>public_methods</strong>(*args) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>public_methods</strong>(*args) 
   
 
   
@@ -1037,7 +996,7 @@ the value to set the attribute temp_object to.
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 73</span>
 
 <span class='def def kw'>def</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
-  <span class='super super kw'>super</span> <span class='orop op'>||</span> <span class='methods_to_delegate_to_temp_object identifier id'>methods_to_delegate_to_temp_object</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span> <span class='orop op'>||</span> <span class='methods_to_delegate_to_temp_object identifier id'>methods_to_delegate_to_temp_object</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='dot token'>.</span><span class='to_method_name identifier id'>to_method_name</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -1048,7 +1007,7 @@ the value to set the attribute temp_object to.
       <div class="method_details ">
   <p class="signature " id="save!-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>save!</strong> 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>save!</strong> 
   
 
   
@@ -1083,7 +1042,7 @@ the value to set the attribute temp_object to.
       <div class="method_details ">
   <p class="signature " id="size-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>size</strong> 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>size</strong> 
   
 
   
@@ -1110,46 +1069,9 @@ the value to set the attribute temp_object to.
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="temp_object-instance_method">
-  
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>temp_object</strong> 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-47
-48
-49
-50
-51
-52
-53</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 47</span>
-
-<span class='def def kw'>def</span> <span class='temp_object identifier id'>temp_object</span>
-  <span class='if if kw'>if</span> <span class='@temp_object ivar id'>@temp_object</span>
-    <span class='@temp_object ivar id'>@temp_object</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='been_persisted? fid id'>been_persisted?</span>
-    <span class='@temp_object ivar id'>@temp_object</span> <span class='assign token'>=</span> <span class='fetch identifier id'>fetch</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
   <p class="signature " id="to_value-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>to_value</strong> 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>to_value</strong> 
   
 
   
@@ -1178,7 +1100,7 @@ the value to set the attribute temp_object to.
       <div class="method_details ">
   <p class="signature " id="url-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>url</strong>(*args) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>url</strong>(*args) 
   
 
   
@@ -1213,9 +1135,9 @@ the value to set the attribute temp_object to.
 </div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:33 2010 by 
+  Generated on Sat Feb 20 16:20:21 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>

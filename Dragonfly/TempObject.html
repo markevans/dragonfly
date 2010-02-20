@@ -16,18 +16,24 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
     <a href="../_index.html">Index (T)</a> &raquo; 
-    <a href="../Dragonfly.html" title="Dragonfly">Dragonfly</a>
+    <span class='title'><a href="../Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span>
      &raquo; 
     <span class="title">TempObject</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -46,10 +52,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="../Object.html" title="Object">Object</a></span>
+      <span class="inheritName"><a href="../Object.html" title="Object (class)">Object</a></span>
       
         <ul class="fullTree">
-          <li><a href="../Object.html" title="Object">Object</a></li>
+          <li><a href="../Object.html" title="Object (class)">Object</a></li>
           
             <li class="next">Dragonfly::TempObject</li>
           
@@ -62,7 +68,7 @@
   
     
       <dt class="r2">Extends:</dt>
-      <dd class="r2"><a href="Configurable.html" title="Dragonfly::Configurable">Dragonfly::Configurable</a></dd>
+      <dd class="r2"><a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></dd>
       
     
   
@@ -120,7 +126,11 @@ filesystem will never be hit.
 </div>
 <div class="tags">
   
+</div><div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><a href="ExtendedTempObject.html" title="Dragonfly::ExtendedTempObject (class)">ExtendedTempObject</a></p>
 </div>
+
 
   <h2>Instance Attribute Summary</h2>
   <ul class="summary">
@@ -206,22 +216,22 @@ Returns the value of attribute initialized_tempfile.
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#name%3D-instance_method" title="#name= (instance method)">- (Object) <strong>name=</strong> </a>
+      <a href="#name-instance_method" title="#name (instance method)">- (Object) <strong>name</strong> </a>
     
 
     
   </span>
   
   
+    
+    
+  
   
   
   
 
   
-    <span class="summary_desc">
-Sets the attribute name.
-
-</span>
+    <span class="summary_desc"></span>
   
 </li>
 
@@ -390,29 +400,6 @@ Instance Methods.
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#name-instance_method" title="#name (instance method)">- (Object) <strong>name</strong> </a>
-    
-
-    
-  </span>
-  
-  
-    
-    <span class="note title writeonly">writeonly</span>
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#path-instance_method" title="#path (instance method)">- (Object) <strong>path</strong> </a>
     
 
@@ -499,7 +486,7 @@ Instance Methods.
     <div class="method_details first">
   <p class="signature first" id="initialize-instance_method">
   
-    - (<tt><a href="" title="TempObject">TempObject</a></tt>) <strong>initialize</strong>(obj) 
+    - (<tt><a href="" title="Dragonfly::TempObject (class)">TempObject</a></tt>) <strong>initialize</strong>(obj) 
   
 
   
@@ -520,12 +507,12 @@ Instance Methods
       <pre class="lines">
 
 
-42
 43
-44</pre>
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 43</span>
 
 <span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='rparen token'>)</span>
   <span class='initialize_from_object! fid id'>initialize_from_object!</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='rparen token'>)</span>
@@ -547,7 +534,7 @@ Instance Methods
       <div class="method_details first">
   <p class="signature first" id="initialized_data-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>initialized_data</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>initialized_data</strong> 
   
 
   
@@ -568,12 +555,12 @@ Returns the value of attribute initialized_data
       <pre class="lines">
 
 
-131
 132
-133</pre>
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 132</span>
 
 <span class='def def kw'>def</span> <span class='initialized_data identifier id'>initialized_data</span>
   <span class='@initialized_data ivar id'>@initialized_data</span>
@@ -590,7 +577,7 @@ Returns the value of attribute initialized_data
       <div class="method_details ">
   <p class="signature " id="initialized_file-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>initialized_file</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>initialized_file</strong> 
   
 
   
@@ -611,12 +598,12 @@ Returns the value of attribute initialized_file
       <pre class="lines">
 
 
-131
 132
-133</pre>
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 132</span>
 
 <span class='def def kw'>def</span> <span class='initialized_file identifier id'>initialized_file</span>
   <span class='@initialized_file ivar id'>@initialized_file</span>
@@ -633,7 +620,7 @@ Returns the value of attribute initialized_file
       <div class="method_details ">
   <p class="signature " id="initialized_tempfile-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>initialized_tempfile</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>initialized_tempfile</strong> 
   
 
   
@@ -654,12 +641,12 @@ Returns the value of attribute initialized_tempfile
       <pre class="lines">
 
 
-131
 132
-133</pre>
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 132</span>
 
 <span class='def def kw'>def</span> <span class='initialized_tempfile identifier id'>initialized_tempfile</span>
   <span class='@initialized_tempfile ivar id'>@initialized_tempfile</span>
@@ -672,61 +659,29 @@ Returns the value of attribute initialized_tempfile
     
       
       <span id="name=-instance_method"></span>
-      <span id=""></span>
+      <span id="name-instance_method"></span>
       <div class="method_details ">
-  <p class="signature " id="name=-instance_method">
+  <p class="signature " id="name-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>name=</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>name</strong> 
   
 
   
-</p><div class="docstring">
-  <div class="discussion">
-    <p>
-Sets the attribute name
-</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <h3>Parameters:</h3>
-<ul class="param">
-  
-    <li>
-      
-        <span class='type'></span>
-      
-      
-        <span class='name'>value</span>
-      
-      
-      
-        &mdash;
-        
-the value to set the attribute name to.
-
-
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
+</p><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-88
-89
-90</pre>
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 91</span>
 
-<span class='def def kw'>def</span> <span class='name= identifier id'>name=</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
-  <span class='@name ivar id'>@name</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+<span class='def def kw'>def</span> <span class='name identifier id'>name</span>
+  <span class='@name ivar id'>@name</span> <span class='unless unless_mod kw'>unless</span> <span class='@name ivar id'>@name</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -744,7 +699,7 @@ the value to set the attribute name to.
       <div class="method_details first">
   <p class="signature first" id="basename-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>basename</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>basename</strong> 
   
 
   
@@ -754,13 +709,13 @@ the value to set the attribute name to.
       <pre class="lines">
 
 
-94
 95
 96
-97</pre>
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 95</span>
 
 <span class='def def kw'>def</span> <span class='basename identifier id'>basename</span>
   <span class='return return kw'>return</span> <span class='unless unless_mod kw'>unless</span> <span class='name identifier id'>name</span>
@@ -775,7 +730,7 @@ the value to set the attribute name to.
       <div class="method_details ">
   <p class="signature " id="data-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>data</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>data</strong> 
   
 
   
@@ -785,12 +740,12 @@ the value to set the attribute name to.
       <pre class="lines">
 
 
-54
 55
-56</pre>
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 55</span>
 
 <span class='def def kw'>def</span> <span class='data identifier id'>data</span>
   <span class='@data ivar id'>@data</span> <span class='opasgn op'>||=</span> <span class='initialized_data identifier id'>initialized_data</span> <span class='orop op'>||</span> <span class='file identifier id'>file</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='dot token'>.</span><span class='read identifier id'>read</span>
@@ -804,7 +759,7 @@ the value to set the attribute name to.
       <div class="method_details ">
   <p class="signature " id="each-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>each</strong>(&amp;block) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>each</strong>(&amp;block) 
   
 
   
@@ -814,7 +769,6 @@ the value to set the attribute name to.
       <pre class="lines">
 
 
-105
 106
 107
 108
@@ -827,10 +781,11 @@ the value to set the attribute name to.
 115
 116
 117
-118</pre>
+118
+119</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 106</span>
 
 <span class='def def kw'>def</span> <span class='each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='if if kw'>if</span> <span class='initialized_data identifier id'>initialized_data</span>
@@ -855,7 +810,7 @@ the value to set the attribute name to.
       <div class="method_details ">
   <p class="signature " id="ext-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>ext</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>ext</strong> 
   
 
   
@@ -865,14 +820,14 @@ the value to set the attribute name to.
       <pre class="lines">
 
 
-99
 100
 101
 102
-103</pre>
+103
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 100</span>
 
 <span class='def def kw'>def</span> <span class='ext identifier id'>ext</span>
   <span class='return return kw'>return</span> <span class='unless unless_mod kw'>unless</span> <span class='name identifier id'>name</span>
@@ -888,7 +843,7 @@ the value to set the attribute name to.
       <div class="method_details ">
   <p class="signature " id="modify_self!-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>modify_self!</strong>(obj) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>modify_self!</strong>(obj) 
   
 
   
@@ -898,16 +853,16 @@ the value to set the attribute name to.
       <pre class="lines">
 
 
-46
 47
 48
 49
 50
 51
-52</pre>
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 47</span>
 
 <span class='def def kw'>def</span> <span class='modify_self! fid id'>modify_self!</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='rparen token'>)</span>
   <span class='unless unless kw'>unless</span> <span class='obj identifier id'>obj</span> <span class='eq op'>==</span> <span class='self self kw'>self</span>
@@ -923,38 +878,9 @@ the value to set the attribute name to.
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="name-instance_method">
-  
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>name</strong> 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-90
-91
-92</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 90</span>
-
-<span class='def def kw'>def</span> <span class='name identifier id'>name</span>
-  <span class='@name ivar id'>@name</span> <span class='unless unless_mod kw'>unless</span> <span class='@name ivar id'>@name</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
-<span class='end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
   <p class="signature " id="path-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>path</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>path</strong> 
   
 
   
@@ -964,12 +890,12 @@ the value to set the attribute name to.
       <pre class="lines">
 
 
-76
 77
-78</pre>
+78
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 77</span>
 
 <span class='def def kw'>def</span> <span class='path identifier id'>path</span>
   <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='path identifier id'>path</span>
@@ -983,7 +909,7 @@ the value to set the attribute name to.
       <div class="method_details ">
   <p class="signature " id="size-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>size</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>size</strong> 
   
 
   
@@ -993,20 +919,20 @@ the value to set the attribute name to.
       <pre class="lines">
 
 
-80
 81
 82
 83
 84
 85
-86</pre>
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 81</span>
 
 <span class='def def kw'>def</span> <span class='size identifier id'>size</span>
   <span class='if if kw'>if</span> <span class='initialized_data identifier id'>initialized_data</span>
-    <span class='initialized_data identifier id'>initialized_data</span><span class='dot token'>.</span><span class='size identifier id'>size</span>
+    <span class='initialized_data identifier id'>initialized_data</span><span class='dot token'>.</span><span class='bytesize identifier id'>bytesize</span>
   <span class='else else kw'>else</span>
     <span class='File constant id'>File</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
   <span class='end end kw'>end</span>
@@ -1020,7 +946,7 @@ the value to set the attribute name to.
       <div class="method_details ">
   <p class="signature " id="tempfile-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>tempfile</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>tempfile</strong> 
   
 
   
@@ -1034,7 +960,6 @@ the value to set the attribute name to.
       <pre class="lines">
 
 
-58
 59
 60
 61
@@ -1048,10 +973,11 @@ the value to set the attribute name to.
 69
 70
 71
-72</pre>
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 59</span>
 
 <span class='def def kw'>def</span> <span class='tempfile identifier id'>tempfile</span>
   <span class='if if kw'>if</span> <span class='@tempfile ivar id'>@tempfile</span>
@@ -1077,7 +1003,7 @@ the value to set the attribute name to.
       <div class="method_details ">
   <p class="signature " id="to_file-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>to_file</strong>(path) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>to_file</strong>(path) 
   
 
   
@@ -1087,17 +1013,17 @@ the value to set the attribute name to.
       <pre class="lines">
 
 
-120
 121
 122
 123
 124
 125
 126
-127</pre>
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 121</span>
 
 <span class='def def kw'>def</span> <span class='to_file identifier id'>to_file</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
   <span class='if if kw'>if</span> <span class='initialized_data identifier id'>initialized_data</span>
@@ -1118,9 +1044,9 @@ the value to set the attribute name to.
 </div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:29 2010 by 
+  Generated on Sat Feb 20 16:20:20 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>

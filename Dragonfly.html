@@ -16,6 +16,10 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
@@ -24,10 +28,12 @@
     
     <span class="title">Dragonfly</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -52,7 +58,7 @@
   
     <dt class="r1 last">Defined in:</dt>
     <dd class="r1 last">lib/dragonfly/app.rb<span class="defines">,<br />
-  lib/dragonfly/delegator.rb,<br /> lib/dragonfly/parameters.rb,<br /> lib/dragonfly/middleware.rb,<br /> lib/dragonfly/delegatable.rb,<br /> lib/dragonfly/url_handler.rb,<br /> lib/dragonfly/temp_object.rb,<br /> lib/dragonfly/encoder_list.rb,<br /> lib/dragonfly/configurable.rb,<br /> lib/dragonfly/data_storage.rb,<br /> lib/dragonfly/analyser_list.rb,<br /> lib/dragonfly/encoding/base.rb,<br /> lib/dragonfly/analysis/base.rb,<br /> lib/dragonfly/processor_list.rb,<br /> lib/dragonfly/processing/base.rb,<br /> lib/dragonfly/data_storage/base.rb,<br /> lib/dragonfly/extended_temp_object.rb,<br /> lib/dragonfly/r_magick_configuration.rb,<br /> lib/dragonfly/active_record_extensions.rb,<br /> lib/dragonfly/data_storage/s3data_store.rb,<br /> lib/dragonfly/encoding/r_magick_encoder.rb,<br /> lib/dragonfly/analysis/r_magick_analyser.rb,<br /> lib/dragonfly/data_storage/file_data_store.rb,<br /> lib/dragonfly/encoding/transparent_encoder.rb,<br /> lib/dragonfly/processing/r_magick_processor.rb,<br /> lib/dragonfly/analysis/file_command_analyser.rb,<br /> lib/dragonfly/data_storage/base64_data_store.rb,<br /> lib/dragonfly/data_storage/transparent_data_store.rb,<br /> lib/dragonfly/active_record_extensions/attachment.rb,<br /> lib/dragonfly/active_record_extensions/validations.rb,<br /> lib/dragonfly/active_record_extensions/class_methods.rb,<br /> lib/dragonfly/active_record_extensions/instance_methods.rb</span>
+  lib/dragonfly/delegator.rb,<br /> lib/dragonfly/parameters.rb,<br /> lib/dragonfly/middleware.rb,<br /> lib/dragonfly/url_handler.rb,<br /> lib/dragonfly/delegatable.rb,<br /> lib/dragonfly/temp_object.rb,<br /> lib/dragonfly/data_storage.rb,<br /> lib/dragonfly/encoder_list.rb,<br /> lib/dragonfly/configurable.rb,<br /> lib/dragonfly/encoding/base.rb,<br /> lib/dragonfly/analysis/base.rb,<br /> lib/dragonfly/analyser_list.rb,<br /> lib/dragonfly/processor_list.rb,<br /> lib/dragonfly/processing/base.rb,<br /> lib/dragonfly/data_storage/base.rb,<br /> lib/dragonfly/extended_temp_object.rb,<br /> lib/dragonfly/r_magick_configuration.rb,<br /> lib/dragonfly/active_record_extensions.rb,<br /> lib/dragonfly/encoding/r_magick_encoder.rb,<br /> lib/dragonfly/data_storage/s3data_store.rb,<br /> lib/dragonfly/analysis/r_magick_analyser.rb,<br /> lib/dragonfly/encoding/transparent_encoder.rb,<br /> lib/dragonfly/data_storage/file_data_store.rb,<br /> lib/dragonfly/processing/r_magick_processor.rb,<br /> lib/dragonfly/analysis/file_command_analyser.rb,<br /> lib/dragonfly/data_storage/base64_data_store.rb,<br /> lib/dragonfly/data_storage/transparent_data_store.rb,<br /> lib/dragonfly/active_record_extensions/attachment.rb,<br /> lib/dragonfly/active_record_extensions/validations.rb,<br /> lib/dragonfly/active_record_extensions/class_methods.rb,<br /> lib/dragonfly/active_record_extensions/instance_methods.rb</span>
 </dd>
   
 </dl>
@@ -62,11 +68,11 @@
 <p class="children">
    
     
-      <strong class="modules">Modules:</strong> <a href="Dragonfly/ActiveRecordExtensions.html" title="ActiveRecordExtensions">ActiveRecordExtensions</a>, <a href="Dragonfly/Analysis.html" title="Analysis">Analysis</a>, <a href="Dragonfly/Configurable.html" title="Configurable">Configurable</a>, <a href="Dragonfly/DataStorage.html" title="DataStorage">DataStorage</a>, <a href="Dragonfly/Delegatable.html" title="Delegatable">Delegatable</a>, <a href="Dragonfly/Delegator.html" title="Delegator">Delegator</a>, <a href="Dragonfly/Encoding.html" title="Encoding">Encoding</a>, <a href="Dragonfly/Processing.html" title="Processing">Processing</a>, <a href="Dragonfly/RMagickConfiguration.html" title="RMagickConfiguration">RMagickConfiguration</a>
+      <strong class="modules">Modules:</strong> <a href="Dragonfly/ActiveRecordExtensions.html" title="Dragonfly::ActiveRecordExtensions (module)">ActiveRecordExtensions</a>, <a href="Dragonfly/Analysis.html" title="Dragonfly::Analysis (module)">Analysis</a>, <a href="Dragonfly/Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a>, <a href="Dragonfly/DataStorage.html" title="Dragonfly::DataStorage (module)">DataStorage</a>, <a href="Dragonfly/Delegatable.html" title="Dragonfly::Delegatable (module)">Delegatable</a>, <a href="Dragonfly/Delegator.html" title="Dragonfly::Delegator (module)">Delegator</a>, <a href="Dragonfly/Encoding.html" title="Dragonfly::Encoding (module)">Encoding</a>, <a href="Dragonfly/Processing.html" title="Dragonfly::Processing (module)">Processing</a>, <a href="Dragonfly/RMagickConfiguration.html" title="Dragonfly::RMagickConfiguration (module)">RMagickConfiguration</a>
     
    
     
-      <strong class="classes">Classes:</strong> <a href="Dragonfly/AnalyserList.html" title="AnalyserList">AnalyserList</a>, <a href="Dragonfly/App.html" title="App">App</a>, <a href="Dragonfly/EncoderList.html" title="EncoderList">EncoderList</a>, <a href="Dragonfly/ExtendedTempObject.html" title="ExtendedTempObject">ExtendedTempObject</a>, <a href="Dragonfly/Middleware.html" title="Middleware">Middleware</a>, <a href="Dragonfly/Parameters.html" title="Parameters">Parameters</a>, <a href="Dragonfly/ProcessorList.html" title="ProcessorList">ProcessorList</a>, <a href="Dragonfly/TempObject.html" title="TempObject">TempObject</a>, <a href="Dragonfly/UrlHandler.html" title="UrlHandler">UrlHandler</a>
+      <strong class="classes">Classes:</strong> <a href="Dragonfly/AnalyserList.html" title="Dragonfly::AnalyserList (class)">AnalyserList</a>, <a href="Dragonfly/App.html" title="Dragonfly::App (class)">App</a>, <a href="Dragonfly/EncoderList.html" title="Dragonfly::EncoderList (class)">EncoderList</a>, <a href="Dragonfly/ExtendedTempObject.html" title="Dragonfly::ExtendedTempObject (class)">ExtendedTempObject</a>, <a href="Dragonfly/Middleware.html" title="Dragonfly::Middleware (class)">Middleware</a>, <a href="Dragonfly/Parameters.html" title="Dragonfly::Parameters (class)">Parameters</a>, <a href="Dragonfly/ProcessorList.html" title="Dragonfly::ProcessorList (class)">ProcessorList</a>, <a href="Dragonfly/TempObject.html" title="Dragonfly::TempObject (class)">TempObject</a>, <a href="Dragonfly/UrlHandler.html" title="Dragonfly::UrlHandler (class)">UrlHandler</a>
     
   
 </p>
@@ -79,9 +85,9 @@
 </div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:32 2010 by 
+  Generated on Sat Feb 20 16:20:21 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>

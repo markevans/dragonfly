@@ -16,18 +16,24 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
     <a href="../_index.html">Index (A)</a> &raquo; 
-    <a href="../Dragonfly.html" title="Dragonfly">Dragonfly</a>
+    <span class='title'><a href="../Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span>
      &raquo; 
     <span class="title">App</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -46,10 +52,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="../Object.html" title="Object">Object</a></span>
+      <span class="inheritName"><a href="../Object.html" title="Object (class)">Object</a></span>
       
         <ul class="fullTree">
-          <li><a href="../Object.html" title="Object">Object</a></li>
+          <li><a href="../Object.html" title="Object (class)">Object</a></li>
           
             <li class="next">Dragonfly::App</li>
           
@@ -68,7 +74,7 @@
   
     
       <dt class="r1">Includes:</dt>
-      <dd class="r1"><a href="Configurable.html" title="Dragonfly::Configurable">Dragonfly::Configurable</a></dd>
+      <dd class="r1"><a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></dd>
       
     
   
@@ -585,15 +591,15 @@ Store an object, using the configured datastore.
   
   
   
-  <h3 class="inherited">Methods included from <a href="Configurable.html" title="Dragonfly::Configurable">Dragonfly::Configurable</a></h3>
-  <p class="inherited"><a href="Configurable.html#included-class_method" title="included">included</a></p>
+  <h3 class="inherited">Methods included from <a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></h3>
+  <p class="inherited"><a href="Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <p class="signature first" id="initialize-instance_method">
   
-    - (<tt><a href="" title="App">App</a></tt>) <strong>initialize</strong> 
+    - (<tt><a href="" title="Dragonfly::App (class)">App</a></tt>) <strong>initialize</strong> 
   
 
   
@@ -647,7 +653,7 @@ A new instance of App
       <div class="method_details first">
   <p class="signature first" id="analysers-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>analysers</strong>  <span class="extras">(readonly)</span>
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>analysers</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -662,7 +668,7 @@ A new instance of App
   <h3>See Also:</h3>
   <ul class="see">
     
-      <li><a href="AnalyserList.html" title="Analysis::AnalyserList">Analysis::AnalyserList</a></li>
+      <li><a href="AnalyserList.html" title="Dragonfly::AnalyserList (class)">Analysis::AnalyserList</a></li>
     
   </ul>
 
@@ -694,7 +700,7 @@ A new instance of App
       <div class="method_details ">
   <p class="signature " id="encoders-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>encoders</strong>  <span class="extras">(readonly)</span>
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>encoders</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -709,7 +715,7 @@ A new instance of App
   <h3>See Also:</h3>
   <ul class="see">
     
-      <li><a href="EncoderList.html" title="Encoding::EncoderList">Encoding::EncoderList</a></li>
+      <li><a href="EncoderList.html" title="Dragonfly::EncoderList (class)">Encoding::EncoderList</a></li>
     
   </ul>
 
@@ -741,7 +747,7 @@ A new instance of App
       <div class="method_details ">
   <p class="signature " id="parameters_class-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>parameters_class</strong>  <span class="extras">(readonly)</span>
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>parameters_class</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -760,7 +766,7 @@ A new instance of App
   <h3>See Also:</h3>
   <ul class="see">
     
-      <li><a href="Parameters.html" title="Parameters">Parameters</a></li>
+      <li><a href="Parameters.html" title="Dragonfly::Parameters (class)">Parameters</a></li>
     
   </ul>
 
@@ -792,7 +798,7 @@ A new instance of App
       <div class="method_details ">
   <p class="signature " id="processors-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>processors</strong>  <span class="extras">(readonly)</span>
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>processors</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -807,7 +813,7 @@ A new instance of App
   <h3>See Also:</h3>
   <ul class="see">
     
-      <li><a href="ProcessorList.html" title="Processing::ProcessorList">Processing::ProcessorList</a></li>
+      <li><a href="ProcessorList.html" title="Dragonfly::ProcessorList (class)">Processing::ProcessorList</a></li>
     
   </ul>
 
@@ -839,7 +845,7 @@ A new instance of App
       <div class="method_details ">
   <p class="signature " id="temp_object_class-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>temp_object_class</strong>  <span class="extras">(readonly)</span>
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>temp_object_class</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -886,7 +892,7 @@ A new instance of App
       <div class="method_details ">
   <p class="signature " id="url_handler-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>url_handler</strong>  <span class="extras">(readonly)</span>
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>url_handler</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -901,7 +907,7 @@ A new instance of App
   <h3>See Also:</h3>
   <ul class="see">
     
-      <li><a href="UrlHandler.html" title="UrlHandler">UrlHandler</a></li>
+      <li><a href="UrlHandler.html" title="Dragonfly::UrlHandler (class)">UrlHandler</a></li>
     
   </ul>
 
@@ -937,7 +943,7 @@ A new instance of App
       <div class="method_details first">
   <p class="signature first" id="instance-class_method">
   
-    + (<tt><a href="" title="App">App</a></tt>) <strong>instance</strong>(name) 
+    + (<tt><a href="" title="Dragonfly::App (class)">App</a></tt>) <strong>instance</strong>(name) 
   
 
   
@@ -964,7 +970,7 @@ each app.
   
     <li>
       
-        <span class='type'>(<tt>Symbol</tt>)</span>
+        <span class='type'>(<tt><a href="../Symbol.html" title="Symbol (class)">Symbol</a></tt>)</span>
       
       
         <span class='name'>name</span>
@@ -985,7 +991,7 @@ the name of the App
   
     <li>
       
-        <span class='type'>(<tt><a href="" title="App">App</a></tt>)</span>
+        <span class='type'>(<tt><a href="" title="Dragonfly::App (class)">App</a></tt>)</span>
       
       
       
@@ -1149,7 +1155,7 @@ See the Rack documentation for more details
       <div class="method_details ">
   <p class="signature " id="create_object-instance_method">
   
-    - (<tt><a href="ExtendedTempObject.html" title="ExtendedTempObject">ExtendedTempObject</a></tt>) <strong>create_object</strong>(initialization_object) 
+    - (<tt><a href="ExtendedTempObject.html" title="Dragonfly::ExtendedTempObject (class)">ExtendedTempObject</a></tt>) <strong>create_object</strong>(initialization_object) 
   
 
   
@@ -1168,7 +1174,7 @@ Create a temp_object from the object passed in
   
     <li>
       
-        <span class='type'>(<tt>String</tt>, <tt>File</tt>, <tt>Tempfile</tt>, <tt><a href="TempObject.html" title="TempObject">TempObject</a></tt>)</span>
+        <span class='type'>(<tt><a href="../String.html" title="String (class)">String</a></tt>, <tt>File</tt>, <tt>Tempfile</tt>, <tt><a href="TempObject.html" title="Dragonfly::TempObject (class)">TempObject</a></tt>)</span>
       
       
         <span class='name'>initialization_object</span>
@@ -1189,7 +1195,7 @@ the object holding the data
   
     <li>
       
-        <span class='type'>(<tt><a href="ExtendedTempObject.html" title="ExtendedTempObject">ExtendedTempObject</a></tt>)</span>
+        <span class='type'>(<tt><a href="ExtendedTempObject.html" title="Dragonfly::ExtendedTempObject (class)">ExtendedTempObject</a></tt>)</span>
       
       
       
@@ -1229,7 +1235,7 @@ a temp_object holding the data
       <div class="method_details ">
   <p class="signature " id="fetch-instance_method">
   
-    - (<tt><a href="ExtendedTempObject.html" title="ExtendedTempObject">ExtendedTempObject</a></tt>) <strong>fetch</strong>(uid, *args) 
+    - (<tt><a href="ExtendedTempObject.html" title="Dragonfly::ExtendedTempObject (class)">ExtendedTempObject</a></tt>) <strong>fetch</strong>(uid, *args) 
   
 
   
@@ -1263,7 +1269,7 @@ parameter shortcuts (see Parameter class methods)
   
     <li>
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><a href="../String.html" title="String (class)">String</a></tt>)</span>
       
       
         <span class='name'>uid</span>
@@ -1301,7 +1307,7 @@ the shortcut args for transforming the object
   
     <li>
       
-        <span class='type'>(<tt><a href="ExtendedTempObject.html" title="ExtendedTempObject">ExtendedTempObject</a></tt>)</span>
+        <span class='type'>(<tt><a href="ExtendedTempObject.html" title="Dragonfly::ExtendedTempObject (class)">ExtendedTempObject</a></tt>)</span>
       
       
       
@@ -1319,7 +1325,7 @@ a temp_object holding the data
   <h3>See Also:</h3>
   <ul class="see">
     
-      <li><a href="Parameters.html" title="Parameters">Parameters</a></li>
+      <li><a href="Parameters.html" title="Dragonfly::Parameters (class)">Parameters</a></li>
     
   </ul>
 
@@ -1350,7 +1356,7 @@ a temp_object holding the data
       <div class="method_details ">
   <p class="signature " id="generate-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>generate</strong>(*args) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>generate</strong>(*args) 
   
 
   
@@ -1379,7 +1385,7 @@ a temp_object holding the data
       <div class="method_details ">
   <p class="signature " id="register_analyser-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>register_analyser</strong>(*args, &amp;block) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>register_analyser</strong>(*args, &amp;block) 
   
 
   
@@ -1408,7 +1414,7 @@ a temp_object holding the data
       <div class="method_details ">
   <p class="signature " id="register_encoder-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>register_encoder</strong>(*args, &amp;block) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>register_encoder</strong>(*args, &amp;block) 
   
 
   
@@ -1437,7 +1443,7 @@ a temp_object holding the data
       <div class="method_details ">
   <p class="signature " id="register_processor-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>register_processor</strong>(*args, &amp;block) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>register_processor</strong>(*args, &amp;block) 
   
 
   
@@ -1466,7 +1472,7 @@ a temp_object holding the data
       <div class="method_details ">
   <p class="signature " id="store-instance_method">
   
-    - (<tt>String</tt>) <strong>store</strong>(object) 
+    - (<tt><a href="../String.html" title="String (class)">String</a></tt>) <strong>store</strong>(object) 
   
 
   
@@ -1485,7 +1491,7 @@ Store an object, using the configured datastore
   
     <li>
       
-        <span class='type'>(<tt>String</tt>, <tt>File</tt>, <tt>Tempfile</tt>, <tt><a href="TempObject.html" title="TempObject">TempObject</a></tt>)</span>
+        <span class='type'>(<tt><a href="../String.html" title="String (class)">String</a></tt>, <tt>File</tt>, <tt>Tempfile</tt>, <tt><a href="TempObject.html" title="Dragonfly::TempObject (class)">TempObject</a></tt>)</span>
       
       
         <span class='name'>object</span>
@@ -1506,7 +1512,7 @@ the object holding the data
   
     <li>
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt><a href="../String.html" title="String (class)">String</a></tt>)</span>
       
       
       
@@ -1548,9 +1554,9 @@ the uid assigned to it
 </div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:30 2010 by 
+  Generated on Sat Feb 20 16:20:19 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>

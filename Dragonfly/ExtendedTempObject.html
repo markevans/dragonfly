@@ -16,18 +16,24 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
     <a href="../_index.html">Index (E)</a> &raquo; 
-    <a href="../Dragonfly.html" title="Dragonfly">Dragonfly</a>
+    <span class='title'><a href="../Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span>
      &raquo; 
     <span class="title">ExtendedTempObject</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -46,12 +52,12 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="TempObject.html" title="Dragonfly::TempObject">Dragonfly::TempObject</a></span>
+      <span class="inheritName"><a href="TempObject.html" title="Dragonfly::TempObject (class)">TempObject</a></span>
       
         <ul class="fullTree">
-          <li><a href="../Object.html" title="Object">Object</a></li>
+          <li><a href="../Object.html" title="Object (class)">Object</a></li>
           
-            <li class="next"><a href="TempObject.html" title="Dragonfly::TempObject">Dragonfly::TempObject</a></li>
+            <li class="next"><a href="TempObject.html" title="Dragonfly::TempObject (class)">TempObject</a></li>
           
             <li class="next">Dragonfly::ExtendedTempObject</li>
           
@@ -384,12 +390,12 @@ allows methods from the analyser.
   
   
   
-  <h3 class="inherited">Methods inherited from <a href="TempObject.html" title="Dragonfly::TempObject">Dragonfly::TempObject</a></h3>
-  <p class="inherited"><a href="TempObject.html#basename-instance_method" title="#basename">#basename</a>, <a href="TempObject.html#data-instance_method" title="#data">#data</a>, <a href="TempObject.html#each-instance_method" title="#each">#each</a>, <a href="TempObject.html#ext-instance_method" title="#ext">#ext</a>, <a href="TempObject.html#initialize-instance_method" title="#initialize">#initialize</a>, <a href="TempObject.html#modify_self%21-instance_method" title="#modify_self!">#modify_self!</a>, <a href="TempObject.html#name-instance_method" title="#name">#name</a>, <a href="TempObject.html#path-instance_method" title="#path">#path</a>, <a href="TempObject.html#size-instance_method" title="#size">#size</a>, <a href="TempObject.html#tempfile-instance_method" title="#tempfile">#tempfile</a>, <a href="TempObject.html#to_file-instance_method" title="#to_file">#to_file</a></p>
+  <h3 class="inherited">Methods inherited from <a href="TempObject.html" title="Dragonfly::TempObject (class)">TempObject</a></h3>
+  <p class="inherited"><a href="TempObject.html#basename-instance_method" title="Dragonfly::TempObject#basename (method)">#basename</a>, <a href="TempObject.html#data-instance_method" title="Dragonfly::TempObject#data (method)">#data</a>, <a href="TempObject.html#each-instance_method" title="Dragonfly::TempObject#each (method)">#each</a>, <a href="TempObject.html#ext-instance_method" title="Dragonfly::TempObject#ext (method)">#ext</a>, <a href="TempObject.html#initialize-instance_method" title="Dragonfly::TempObject#initialize (method)">#initialize</a>, <a href="TempObject.html#modify_self%21-instance_method" title="Dragonfly::TempObject#modify_self! (method)">#modify_self!</a>, <a href="TempObject.html#path-instance_method" title="Dragonfly::TempObject#path (method)">#path</a>, <a href="TempObject.html#size-instance_method" title="Dragonfly::TempObject#size (method)">#size</a>, <a href="TempObject.html#tempfile-instance_method" title="Dragonfly::TempObject#tempfile (method)">#tempfile</a>, <a href="TempObject.html#to_file-instance_method" title="Dragonfly::TempObject#to_file (method)">#to_file</a></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
-    <p class="notice">This class inherits a constructor from <a href="TempObject.html#initialize-instance_method" title="Dragonfly::TempObject">Dragonfly::TempObject</a></p>
+    <p class="notice">This class inherits a constructor from <a href="TempObject.html#initialize-instance_method" title="Dragonfly::TempObject#initialize (method)">Dragonfly::TempObject</a></p>
   
 </div>
 <div id="method_missing_details" class="method_details_list">
@@ -402,7 +408,7 @@ allows methods from the analyser.
     <div class="method_details first">
   <p class="signature first" id="method_missing-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>method_missing</strong>(method, *args, &amp;block)  <span class="extras">(private)</span>
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>method_missing</strong>(method, *args, &amp;block)  <span class="extras">(private)</span>
   
 
   
@@ -467,7 +473,7 @@ allows methods from the analyser.
       <div class="method_details first">
   <p class="signature first" id="app-class_method">
   
-    + (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>app</strong> 
+    + (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>app</strong> 
   
 
   
@@ -514,7 +520,7 @@ Returns the value of attribute app
       <div class="method_details first">
   <p class="signature first" id="encode-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>encode</strong>(*args) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>encode</strong>(*args) 
   
 
   
@@ -543,7 +549,7 @@ Returns the value of attribute app
       <div class="method_details ">
   <p class="signature " id="encode!-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>encode!</strong>(*args) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>encode!</strong>(*args) 
   
 
   
@@ -572,7 +578,7 @@ Returns the value of attribute app
       <div class="method_details ">
   <p class="signature " id="inspect-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>inspect</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>inspect</strong> 
   
 
   
@@ -613,7 +619,7 @@ gives a confusing output when inspecting, so modify here
       <div class="method_details ">
   <p class="signature " id="methods-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>methods</strong>(*args) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>methods</strong>(*args) 
   
 
   
@@ -654,7 +660,7 @@ allows methods from the analyser
       <div class="method_details ">
   <p class="signature " id="process-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>process</strong>(processing_method, *args) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>process</strong>(processing_method, *args) 
   
 
   
@@ -683,7 +689,7 @@ allows methods from the analyser
       <div class="method_details ">
   <p class="signature " id="process!-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>process!</strong>(processing_method, *args) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>process!</strong>(processing_method, *args) 
   
 
   
@@ -712,7 +718,7 @@ allows methods from the analyser
       <div class="method_details ">
   <p class="signature " id="public_methods-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>public_methods</strong>(*args) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>public_methods</strong>(*args) 
   
 
   
@@ -791,7 +797,7 @@ allows methods from the analyser
       <div class="method_details ">
   <p class="signature " id="transform-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>transform</strong>(*args) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>transform</strong>(*args) 
   
 
   
@@ -820,7 +826,7 @@ allows methods from the analyser
       <div class="method_details ">
   <p class="signature " id="transform!-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>transform!</strong>(*args) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>transform!</strong>(*args) 
   
 
   
@@ -857,9 +863,9 @@ allows methods from the analyser
 </div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:31 2010 by 
+  Generated on Sat Feb 20 16:20:19 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>

@@ -16,18 +16,24 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
     <a href="../_index.html">Index (C)</a> &raquo; 
-    <a href="../Dragonfly.html" title="Dragonfly">Dragonfly</a>
+    <span class='title'><a href="../Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span>
      &raquo; 
     <span class="title">Configurable</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -60,11 +66,11 @@
 <p class="children">
    
     
-      <strong class="modules">Modules:</strong> <a href="Configurable/ClassMethods.html" title="ClassMethods">ClassMethods</a>, <a href="Configurable/InstanceMethods.html" title="InstanceMethods">InstanceMethods</a>
+      <strong class="modules">Modules:</strong> <a href="Configurable/ClassMethods.html" title="Dragonfly::Configurable::ClassMethods (module)">ClassMethods</a>, <a href="Configurable/InstanceMethods.html" title="Dragonfly::Configurable::InstanceMethods (module)">InstanceMethods</a>
     
    
     
-      <strong class="classes">Classes:</strong> <a href="Configurable/BadConfigAttribute.html" title="BadConfigAttribute">BadConfigAttribute</a>, <a href="Configurable/ConfigurationProxy.html" title="ConfigurationProxy">ConfigurationProxy</a>
+      <strong class="classes">Classes:</strong> <a href="Configurable/BadConfigAttribute.html" title="Dragonfly::Configurable::BadConfigAttribute (class)">BadConfigAttribute</a>, <a href="Configurable/ConfigurationProxy.html" title="Dragonfly::Configurable::ConfigurationProxy (class)">ConfigurationProxy</a>
     
   
 </p>
@@ -107,7 +113,7 @@
       <div class="method_details first">
   <p class="signature first" id="included-class_method">
   
-    + (<tt><a href="../Object.html" title="Object">Object</a></tt>) <strong>included</strong>(klass) 
+    + (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>included</strong>(klass) 
   
 
   
@@ -180,9 +186,9 @@
 </div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:32 2010 by 
+  Generated on Sat Feb 20 16:20:18 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>

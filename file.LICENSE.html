@@ -16,16 +16,22 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
     <a href="_index.html" title="Index">Index</a> &raquo; 
     <span class="title">File: LICENSE</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -36,7 +42,7 @@
     <iframe id="search_frame"></iframe>
     
     <div id="content"><div id='filecontents'><p>
-Copyright &#169; 2009 Mark Evans
+Copyright &#169; 2009-2010 Mark Evans
 </p>
 <p>
 Permission is hereby granted, free of charge, to any person obtaining a
@@ -63,9 +69,9 @@ USE OR OTHER DEALINGS IN THE SOFTWARE.
 </div></div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:28 2010 by 
+  Generated on Sat Feb 20 16:20:16 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>

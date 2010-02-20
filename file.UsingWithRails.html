@@ -16,16 +16,22 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
     <a href="_index.html" title="Index">Index</a> &raquo; 
     <span class="title">File: UsingWithRails</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -37,70 +43,40 @@
     
     <div id="content"><div id='filecontents'><h1>Using With Rails</h1>
 
-<p>The main way to use Dragonfly with Rails is as a <tt><a href="Dragonfly/Middleware.html" title="middleware">middleware</a></tt>.</p>
+<p>Dragonfly works with both Rails 2.3 and Rails 3.</p>
+
+<p>The main way to use Dragonfly with Rails is as a <tt><a href="Dragonfly/Middleware.html" title="Dragonfly::Middleware (class)">middleware</a></tt>.</p>
+
+<h2>1. The initializer</h2>
 
 <h2>The quick way</h2>
 
-<p>In environment.rb:</p>
+<p>There is a ready-made file which sets up Dragonfly for image processing for your rails app.
+If image resizing, etc. is all you want to do, then put this in an initializer, e.g config/initializers/dragonfly.rb:</p>
 
-<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rmagick'</span><span class='comma token'>,</span>    <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'RMagick'</span>
-<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rack-cache'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'rack/cache'</span>
-<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span><span class='comma token'>,</span>  <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'dragonfly/rails/images'</span><span class='comma token'>,</span> <span class='symbol val'>:source</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://gemcutter.org'</span>
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'dragonfly/rails/images'</span>
 </pre>
 
-<p>The required file 'dragonfly/rails/images.rb' initializes a dragonfly app, configures it to use rmagick processing, encoding, etc.,
+<p>This file initializes a dragonfly app, configures it to use rmagick processing, encoding, etc.,
 registers the app so that you can use ActiveRecord accessors, and inserts it into the Rails middleware stack.</p>
 
-<p>Because in this case it's configured to use <a href="http://tomayko.com/src/rack-cache/" target="_parent" title="rack-cache">rack-cache</a> and <a href="http://rmagick.rubyforge.org/" target="_parent" title="rmagick">rmagick</a>,
-you should include the first two lines above.</p>
+<h2>The more explicit way</h2>
 
-<p>To see what you can do with the active record accessors, see <a href="file.ActiveRecord.html" title="ActiveRecord">ActiveRecord</a>.</p>
-
-<h2>The more explicit way - using an initializer</h2>
-
-<p>If you want more control over the configuration, you can do what the file 'dragonfly/rails/images' does yourself,
-in an initializer.</p>
-
-<p>In that case in environment.rb we only need:</p>
-
-<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rmagick'</span><span class='comma token'>,</span>    <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'RMagick'</span>                 <span class='comment val'># if used</span>
-<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rack-cache'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'rack/cache'</span>              <span class='comment val'># if used</span>
-<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span><span class='comma token'>,</span>  <span class='symbol val'>:source</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://gemcutter.org'</span>
-</pre>
-
-<p>The easiest way to create the initializer is using the supplied generator
-(which will be visible if you have the dragonfly gem installed).</p>
-
-<pre class="code"><span class='dot token'>.</span><span class='div op'>/</span><span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='dragonfly_app identifier id'>dragonfly_app</span> <span class='images identifier id'>images</span>
-</pre>
-
-<p>The argument 'images' could be anything - it is an arbitrary app name.</p>
-
-<p>This creates an initializer 'dragonfly_images' which does the following:</p>
-
-<ol>
-<li>Creates and configures a dragonfly app</li>
-<li>Registers the app for use with ActiveRecord - see <a href="file.ActiveRecord.html" title="ActiveRecord">ActiveRecord</a></li>
-<li>Inserts the app into the Rails middleware stack</li>
-</ol>
-
-
-<p>For reference, the contents of an example initializer are shown below.
-You could just copy and paste this yourself into an initializer if you prefer,
-but make sure to change the 'secret' configuration option, so as to protect your app from Denial-of-Service attacks (see <a href="file.GettingStarted.html" title="GettingStarted">GettingStarted</a>).</p>
+<p>If you want to set up and configure the Dragonfly app yourself, then you can put something like the code below in an initializer and
+modify accordingly:</p>
 
 <pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
 
-<span class='comment val'># Configuration</span>
+<span class='comment val'># Set up and configure the dragonfly app</span>
 <span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
 <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='RMagickConfiguration constant id'>RMagickConfiguration</span><span class='rparen token'>)</span>
 <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='log identifier id'>log</span> <span class='assign token'>=</span> <span class='RAILS_DEFAULT_LOGGER constant id'>RAILS_DEFAULT_LOGGER</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='log identifier id'>log</span> <span class='assign token'>=</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span>
   <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='d identifier id'>d</span><span class='bitor op'>|</span>
     <span class='d identifier id'>d</span><span class='dot token'>.</span><span class='root_path identifier id'>root_path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{Rails.root}/public/system/dragonfly/#{Rails.env}&quot;</span>
   <span class='end end kw'>end</span>
   <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_handler identifier id'>url_handler</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='u identifier id'>u</span><span class='bitor op'>|</span>
-    <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='secret identifier id'>secret</span> <span class='assign token'>=</span> <span class='string val'>'fed49e269eebed54cc85b28a6c51cba6a543e7b5'</span>
+    <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='secret identifier id'>secret</span> <span class='assign token'>=</span> <span class='string val'>'insert some secret here to protect from DOS attacks!'</span>
     <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='path_prefix identifier id'>path_prefix</span> <span class='assign token'>=</span> <span class='string val'>'/media'</span>
   <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
@@ -112,27 +88,59 @@ but make sure to change the 'secret' configuration option, so as to protect your
 <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='ActiveRecordExtensions constant id'>ActiveRecordExtensions</span>
 <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='register_dragonfly_app identifier id'>register_dragonfly_app</span><span class='lparen token'>(</span><span class='symbol val'>:image</span><span class='comma token'>,</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
 
-<span class='comment val'># Add the Dragonfly App to the middleware stack</span>
-<span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Dispatcher constant id'>Dispatcher</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert_after identifier id'>insert_after</span> <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Failsafe constant id'>Failsafe</span><span class='comma token'>,</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Middleware constant id'>Middleware</span><span class='comma token'>,</span> <span class='symbol val'>:images</span>
+<span class='comment val'>### Insert the middleware ###</span>
+<span class='comment val'># Where the middleware is depends on the version of Rails</span>
+<span class='middleware identifier id'>middleware</span> <span class='assign token'>=</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:application</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='application identifier id'>application</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span> <span class='colon op'>:</span> <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Dispatcher constant id'>Dispatcher</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span>
+<span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert_after identifier id'>insert_after</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Lock constant id'>Lock</span><span class='comma token'>,</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Middleware constant id'>Middleware</span><span class='comma token'>,</span> <span class='symbol val'>:images</span>
 
-<span class='comment val'># # UNCOMMENT THIS IF YOU WANT TO CACHE REQUESTS WITH Rack::Cache, and add the line</span>
-<span class='comment val'># #   config.gem 'rack-cache', :lib =&gt; 'rack/cache'</span>
-<span class='comment val'># # to environment.rb</span>
+<span class='comment val'># # UNCOMMENT THIS IF YOU WANT TO CACHE REQUESTS WITH Rack::Cache</span>
 <span class='comment val'># require 'rack/cache'</span>
-<span class='comment val'># ActionController::Dispatcher.middleware.insert_before Dragonfly::Middleware, Rack::Cache, {</span>
+<span class='comment val'># middleware.insert_before Dragonfly::Middleware, Rack::Cache, {</span>
 <span class='comment val'>#   :verbose     =&gt; true,</span>
 <span class='comment val'>#   :metastore   =&gt; &quot;file:#{Rails.root}/tmp/dragonfly/cache/meta&quot;,</span>
 <span class='comment val'>#   :entitystore =&gt; &quot;file:#{Rails.root}/tmp/dragonfly/cache/body&quot;</span>
 <span class='comment val'># }</span>
 </pre>
 
+<p>If you can't be bothered to copy and paste, then there's actually a generator for Rails 2.3 (not Rails 3 yet) that will do something like the above for you:</p>
+
+<pre class="code"><span class='dot token'>.</span><span class='div op'>/</span><span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='dragonfly_app identifier id'>dragonfly_app</span> <span class='images identifier id'>images</span>
+</pre>
+
+<h2>2. Gem dependencies</h2>
+
+<p>Tell Rails about the gem dependencies in the usual way:</p>
+
+<p>For Rails 2.3 add this to config/environment.rb:</p>
+
+<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rmagick'</span><span class='comma token'>,</span>    <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'RMagick'</span>      <span class='comment val'># only if used</span>
+<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rack-cache'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'rack/cache'</span>   <span class='comment val'># only if used</span>
+<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span>
+</pre>
+
+<p>For Rails 3 add it to the Gemfile, e.g.:</p>
+
+<pre class="code"><span class='gem identifier id'>gem</span> <span class='string val'>'rmagick'</span><span class='comma token'>,</span>    <span class='symbol val'>:require</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'RMagick'</span>         <span class='comment val'># only if used</span>
+<span class='gem identifier id'>gem</span> <span class='string val'>'rack-cache'</span><span class='comma token'>,</span> <span class='symbol val'>:require</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'rack/cache'</span>      <span class='comment val'># only if used</span>
+<span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span>
+</pre>
+
+<p>You only need the lines above for <a href="http://tomayko.com/src/rack-cache/" target="_parent" title="rack-cache">rack-cache</a> and
+<a href="http://rmagick.rubyforge.org/" target="_parent" title="rmagick">rmagick</a> if you've used the file 'dragonfly/rails/images', or manually used them yourself.</p>
+
+<h2>3. Use it!</h2>
+
+<p>Now that you have a parasitic Dragonfly app living inside your Rails app, you can upload media to your models, display/play around with them, etc.</p>
+
 <p>To see what you can do with the active record accessors, see <a href="file.ActiveRecord.html" title="ActiveRecord">ActiveRecord</a>.</p>
+
+<p>For more info about general Dragonfly setup, including avoiding denial-of-service attacks, see <a href="file.GettingStarted.html" title="GettingStarted">GettingStarted</a>.</p>
 </div></div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:26 2010 by 
+  Generated on Sat Feb 20 16:20:15 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>

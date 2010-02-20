@@ -16,18 +16,24 @@
 
   </head>
   <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
     <div id="header">
       <div id="menu">
   
     <a href="../../_index.html">Index (B)</a> &raquo; 
-    <a href="../../Dragonfly.html" title="Dragonfly">Dragonfly</a> &raquo; <a href="../Analysis.html" title="Analysis">Analysis</a>
+    <span class='title'><a href="../../Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span> &raquo; <span class='title'><a href="../Analysis.html" title="Dragonfly::Analysis (module)">Analysis</a></span>
      &raquo; 
     <span class="title">Base</span>
   
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Namespace List</a>
+  <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
@@ -46,10 +52,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="../../Object.html" title="Object">Object</a></span>
+      <span class="inheritName"><a href="../../Object.html" title="Object (class)">Object</a></span>
       
         <ul class="fullTree">
-          <li><a href="../../Object.html" title="Object">Object</a></li>
+          <li><a href="../../Object.html" title="Object (class)">Object</a></li>
           
             <li class="next">Dragonfly::Analysis::Base</li>
           
@@ -64,7 +70,7 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2"><a href="../Delegatable.html" title="Dragonfly::Delegatable">Dragonfly::Delegatable</a></dd>
+      <dd class="r2"><a href="../Delegatable.html" title="Dragonfly::Delegatable (module)">Dragonfly::Delegatable</a></dd>
       
     
   
@@ -75,6 +81,10 @@
 </dl>
 <div class="clear"></div>
 
+<div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><a href="FileCommandAnalyser.html" title="Dragonfly::Analysis::FileCommandAnalyser (class)">FileCommandAnalyser</a>, <a href="RMagickAnalyser.html" title="Dragonfly::Analysis::RMagickAnalyser (class)">RMagickAnalyser</a></p>
+</div>
 
 
   
@@ -115,8 +125,8 @@
   
   
   
-  <h3 class="inherited">Methods included from <a href="../Delegatable.html" title="Dragonfly::Delegatable">Dragonfly::Delegatable</a></h3>
-  <p class="inherited"><a href="../Delegatable.html#delegatable_methods-instance_method" title="#delegatable_methods">#delegatable_methods</a></p>
+  <h3 class="inherited">Methods included from <a href="../Delegatable.html" title="Dragonfly::Delegatable (module)">Dragonfly::Delegatable</a></h3>
+  <p class="inherited"><a href="../Delegatable.html#delegatable_methods-instance_method" title="Dragonfly::Delegatable#delegatable_methods (method)">#delegatable_methods</a></p>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -126,7 +136,7 @@
       <div class="method_details first">
   <p class="signature first" id="mime_type-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object">Object</a></tt>) <strong>mime_type</strong>(*args) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>mime_type</strong>(*args) 
   
 
   
@@ -157,9 +167,9 @@
 </div>
     
     <div id="footer">
-  Generated on Sun Jan 24 22:24:31 2010 by 
+  Generated on Sat Feb 20 16:20:19 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.2 (ruby-1.8.7).
+  0.5.3 (ruby-1.8.7).
 </div>
 
   </body>
