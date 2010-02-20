@@ -6,7 +6,7 @@ require 'rack/cache'
 app = Dragonfly::App[:images]
 app.configure_with(Dragonfly::RMagickConfiguration)
 app.configure do |c|
-  c.log = RAILS_DEFAULT_LOGGER
+  c.log = Rails.logger
   c.datastore.configure do |d|
     d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
   end
