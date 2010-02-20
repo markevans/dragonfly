@@ -11,13 +11,13 @@ module Dragonfly
 
       private
       
-      def save_attached_files
+      def save_attachments
         attachments.each do |attribute, attachment|
           attachment.save!
         end
       end
       
-      def destroy_attached_files
+      def destroy_attachments
         attachments.each do |attribute, attachment|
           attachment.destroy!
         end

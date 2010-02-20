@@ -6,7 +6,7 @@ require 'rack/cache'
 app = Dragonfly::App[:images]
 app.configure_with(Dragonfly::RMagickConfiguration)
 app.configure do |c|
-  c.log = RAILS_DEFAULT_LOGGER
+  c.log = Rails.logger
   c.datastore.configure do |d|
     d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
   end
@@ -21,8 +21,10 @@ ActiveRecord::Base.extend Dragonfly::ActiveRecordExtensions
 ActiveRecord::Base.register_dragonfly_app(:image, app)
 
 ### Insert the middleware ###
-ActionController::Dispatcher.middleware.insert_after ActionController::Failsafe, Dragonfly::Middleware, :images
-ActionController::Dispatcher.middleware.insert_before Dragonfly::Middleware, Rack::Cache, {
+# Where the middleware is depends on the version of Rails
+middleware = Rails.respond_to?(:application) ? Rails.application.middleware : ActionController::Dispatcher.middleware
+middleware.insert_after Rack::Lock, Dragonfly::Middleware, :images
+middleware.insert_before Dragonfly::Middleware, Rack::Cache, {
   :verbose     => true,
   :metastore   => "file:#{Rails.root}/tmp/dragonfly/cache/meta",
   :entitystore => "file:#{Rails.root}/tmp/dragonfly/cache/body"
