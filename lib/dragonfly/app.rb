@@ -158,6 +158,15 @@ module Dragonfly
       create_object(processors.generate(*args))
     end
 
+    # Return the mime type for a given extension, from the registered list
+    # By default uses the list provided by Rack (see Rack::Mime::MIME_TYPES)
+    # @param [Symbol, String] format the format (file-extension)
+    # @return [String] the mime-type
+    # @see register_mime_type
+    def mime_type_for(format)
+      registered_mime_types[file_ext_string(format)]
+    end
+
     # Store an object, using the configured datastore
     # @param [String, File, Tempfile, TempObject] object the object holding the data
     # @return [String] the uid assigned to it
@@ -180,6 +189,11 @@ module Dragonfly
     end
     configuration_method :register_encoder
 
+    def register_mime_type(format, mime_type)
+      registered_mime_types[file_ext_string(format)] = mime_type
+    end
+    configuration_method :register_mime_type
+
     private
     
     def initialize_temp_object_class
@@ -189,6 +203,14 @@ module Dragonfly
 
     def warn_with_info(message, env)
       log.warn "Got error: #{message}\nPath was #{env['PATH_INFO'].inspect} and query was #{env['QUERY_STRING'].inspect}"
+    end
+    
+    def file_ext_string(format)
+      '.' + format.to_s.downcase.sub(/^.*\./,'')
+    end
+    
+    def registered_mime_types
+      @registered_mime_types ||= Rack::Mime::MIME_TYPES
     end
 
   end
