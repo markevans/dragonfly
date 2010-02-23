@@ -23,6 +23,11 @@ describe Dragonfly::Encoding::RMagickEncoder do
       end
       test_string.should == "I'm a string"
     end
+    
+    it "should do nothing if the image is already in the correct format" do
+      image = @encoder.encode(@image, :png)
+      image.should == @image
+    end
   end
   
 end
