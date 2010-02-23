@@ -67,54 +67,35 @@ describe Dragonfly::App do
   end
 
   describe "mime types" do
-    
-    describe "response headers" do
-      before(:each) do
-        @app = Dragonfly::App[:images]
-        @app.url_handler.protect_from_dos_attacks = false
-        @app.fallback_mime_type = 'egg/heads'
-        @temp_object = Dragonfly::TempObject.new('GOOG')
-        @app.stub!(:fetch).and_return(@temp_object)
-      end
-      it "should use the temp object mime-type" do
-        @temp_object.should_receive(:mime_type).and_return 'my/type'
-        response = make_request(@app, '/hello.png')
-        response.headers['Content-Type'].should == 'my/type'
-      end
-      it "should use the app's fallback mime-type if the temp_object one isn't known" do
-        @temp_object.should_receive(:mime_type).and_return nil
-        response = make_request(@app, '/hello.png')
-        response.headers['Content-Type'].should == 'egg/heads'
-      end
+    before(:each) do
+      @app = Dragonfly::App[:images]
     end
-    
-    describe "registered mime types" do
-      before(:each) do
-        @app = Dragonfly::App[:images]
-      end
-      it "should return the correct mime type for a symbol" do
-        @app.mime_type_for(:png).should == 'image/png'
-      end
-      it "should work for strings" do
-        @app.mime_type_for('png').should == 'image/png'
-      end
-      it "should work with uppercase strings" do
-        @app.mime_type_for('PNG').should == 'image/png'
-      end
-      it "should work with a dot" do
-        @app.mime_type_for('.png').should == 'image/png'
-      end
-      it "should return nil if not known" do
-        @app.mime_type_for(:mark).should be_nil
-      end
-      it "should allow for configuring extra mime types" do
-        @app.configure{|c| c.register_mime_type 'mark', 'application/mark'}
-        @app.mime_type_for(:mark).should == 'application/mark'
-      end
-      it "should override existing mime types when registered" do
-        @app.configure{|c| c.register_mime_type :png, 'ping/pong'}
-        @app.mime_type_for(:png).should == 'ping/pong'
-      end
+    it "should return the correct mime type for a symbol" do
+      @app.mime_type_for(:png).should == 'image/png'
+    end
+    it "should work for strings" do
+      @app.mime_type_for('png').should == 'image/png'
+    end
+    it "should work with uppercase strings" do
+      @app.mime_type_for('PNG').should == 'image/png'
+    end
+    it "should work with a dot" do
+      @app.mime_type_for('.png').should == 'image/png'
+    end
+    it "should return the fallback mime_type if not known" do
+      @app.mime_type_for(:mark).should == 'application/octet-stream'
+    end
+    it "should return the fallback mime_type if not known" do
+      @app.configure{|c| c.fallback_mime_type = 'egg/nog'}
+      @app.mime_type_for(:mark).should == 'egg/nog'
+    end
+    it "should allow for configuring extra mime types" do
+      @app.configure{|c| c.register_mime_type 'mark', 'application/mark'}
+      @app.mime_type_for(:mark).should == 'application/mark'
+    end
+    it "should override existing mime types when registered" do
+      @app.configure{|c| c.register_mime_type :png, 'ping/pong'}
+      @app.mime_type_for(:png).should == 'ping/pong'
     end
   end
 

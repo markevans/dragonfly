@@ -118,7 +118,7 @@ module Dragonfly
       parameters = url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])
       temp_object = fetch(parameters.uid, parameters)
       [200, {
-        "Content-Type" => temp_object.mime_type || fallback_mime_type,
+        "Content-Type" => mime_type_for(parameters.format),
         "Content-Length" => temp_object.size.to_s,
         "ETag" => parameters.unique_signature,
         "Cache-Control" => "public, max-age=#{cache_duration}"
@@ -164,7 +164,7 @@ module Dragonfly
     # @return [String] the mime-type
     # @see register_mime_type
     def mime_type_for(format)
-      registered_mime_types[file_ext_string(format)]
+      registered_mime_types[file_ext_string(format)] || fallback_mime_type
     end
 
     # Store an object, using the configured datastore
