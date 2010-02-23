@@ -16,13 +16,16 @@ describe Dragonfly::ExtendedTempObject do
       @analyser.stub!(:has_callable_method?).with(:width).and_return(true)
       @processor = mock('processor')
       @encoder = mock('encoder')
-      @app = mock('app', :analysers => @analyser, :processor => @processor, :encoder => @encoder)
+      @app = mock('app', :analysers => @analyser, :processors => @processor, :encoders => @encoder)
       @klass = Class.new(Dragonfly::ExtendedTempObject)
       @klass.app = @app
-      @object = @klass.new('asdf')
     end
     
     describe "analysis" do
+
+      before(:each) do
+        @object = @klass.new('asdf')
+      end
       
       it "should respond to something that the analyser responds to" do
         @analyser.should_receive(:has_callable_method?).with(:some_method).and_return(true)
@@ -60,6 +63,23 @@ describe Dragonfly::ExtendedTempObject do
         @object.width.should == 17
       end
       
+    end
+    
+    describe "encoding" do
+      before(:each) do
+        @temp_object = @klass.new('abcde')
+      end
+      
+      it "should encode the data and return the new temp object" do
+        @encoder.should_receive(:encode).with(@temp_object, :some_format, :some => 'option').and_return('ABCDE')
+        new_temp_object = @temp_object.encode(:some_format, :some => 'option')
+        new_temp_object.data.should == 'ABCDE'
+      end
+      it "should encode its own data" do
+        @encoder.should_receive(:encode).with(@temp_object, :some_format, :some => 'option').and_return('ABCDE')
+        @temp_object.encode!(:some_format, :some => 'option')
+        @temp_object.data.should == 'ABCDE'
+      end
     end
     
   end
