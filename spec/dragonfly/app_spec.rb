@@ -67,35 +67,65 @@ describe Dragonfly::App do
   end
 
   describe "mime types" do
-    before(:each) do
-      @app = Dragonfly::App[:images]
+    describe "#mime_type_for" do
+      before(:each) do
+        Dragonfly::App.send(:apps)[:images] = nil # A Hack to get rspec to reset stuff in between tests
+        @app = Dragonfly::App[:images]
+      end
+      it "should return the correct mime type for a symbol" do
+        @app.mime_type_for(:png).should == 'image/png'
+      end
+      it "should work for strings" do
+        @app.mime_type_for('png').should == 'image/png'
+      end
+      it "should work with uppercase strings" do
+        @app.mime_type_for('PNG').should == 'image/png'
+      end
+      it "should work with a dot" do
+        @app.mime_type_for('.png').should == 'image/png'
+      end
+      it "should return the fallback mime_type if not known" do
+        @app.mime_type_for(:mark).should == 'application/octet-stream'
+      end
+      it "should return the fallback mime_type if not known" do
+        @app.configure{|c| c.fallback_mime_type = 'egg/nog'}
+        @app.mime_type_for(:mark).should == 'egg/nog'
+      end
+      it "should allow for configuring extra mime types" do
+        @app.configure{|c| c.register_mime_type 'mark', 'application/mark'}
+        @app.mime_type_for(:mark).should == 'application/mark'
+      end
+      it "should override existing mime types when registered" do
+        @app.configure{|c| c.register_mime_type :png, 'ping/pong'}
+        @app.mime_type_for(:png).should == 'ping/pong'
+      end
     end
-    it "should return the correct mime type for a symbol" do
-      @app.mime_type_for(:png).should == 'image/png'
-    end
-    it "should work for strings" do
-      @app.mime_type_for('png').should == 'image/png'
-    end
-    it "should work with uppercase strings" do
-      @app.mime_type_for('PNG').should == 'image/png'
-    end
-    it "should work with a dot" do
-      @app.mime_type_for('.png').should == 'image/png'
-    end
-    it "should return the fallback mime_type if not known" do
-      @app.mime_type_for(:mark).should == 'application/octet-stream'
-    end
-    it "should return the fallback mime_type if not known" do
-      @app.configure{|c| c.fallback_mime_type = 'egg/nog'}
-      @app.mime_type_for(:mark).should == 'egg/nog'
-    end
-    it "should allow for configuring extra mime types" do
-      @app.configure{|c| c.register_mime_type 'mark', 'application/mark'}
-      @app.mime_type_for(:mark).should == 'application/mark'
-    end
-    it "should override existing mime types when registered" do
-      @app.configure{|c| c.register_mime_type :png, 'ping/pong'}
-      @app.mime_type_for(:png).should == 'ping/pong'
+    
+    describe "Content-Type header" do
+      before(:each) do
+        Dragonfly::App.send(:apps)[:test] = nil # A Hack to get rspec to reset stuff in between tests
+        @app = Dragonfly::App[:test]
+        @app.url_handler.protect_from_dos_attacks = false
+        @app.datastore = Dragonfly::DataStorage::TransparentDataStore.new
+        @app.register_encoder(Dragonfly::Encoding::TransparentEncoder)
+        @analyser = Class.new(Dragonfly::Analysis::Base){ def mime_type(*args); 'analyser/mime-type'; end }
+      end
+      it "should return the fallback mime_type if none registered and no mime_type analyser" do
+        make_request(@app, '/some_uid.gog').headers['Content-Type'].should == 'application/octet-stream'
+      end
+      it "should return the analysed mime-type if an analyser is registered" do
+        @app.register_analyser(@analyser)
+        make_request(@app, '/some_uid.gog').headers['Content-Type'].should == 'analyser/mime-type'
+      end
+      it "should return the registered mime_type over the analysed one" do
+        @app.register_analyser(@analyser)
+        @app.register_mime_type(:gog, 'numb/nut')
+        make_request(@app, '/some_uid.gog').headers['Content-Type'].should == 'numb/nut'
+      end
+      it "should use the fallback mime-type if the registered analyser doesn't respond to 'mime-type'" do
+        @app.register_analyser(Class.new(Dragonfly::Analysis::Base))
+        make_request(@app, '/some_uid.gog').headers['Content-Type'].should == 'application/octet-stream'
+      end
     end
   end
 

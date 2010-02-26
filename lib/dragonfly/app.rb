@@ -118,7 +118,7 @@ module Dragonfly
       parameters = url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])
       temp_object = fetch(parameters.uid, parameters)
       [200, {
-        "Content-Type" => mime_type_for(parameters.format),
+        "Content-Type" => mime_type_for(parameters.format, temp_object),
         "Content-Length" => temp_object.size.to_s,
         "ETag" => parameters.unique_signature,
         "Cache-Control" => "public, max-age=#{cache_duration}"
@@ -160,11 +160,14 @@ module Dragonfly
 
     # Return the mime type for a given extension, from the registered list
     # By default uses the list provided by Rack (see Rack::Mime::MIME_TYPES)
+    # If not found there, it falls back to the registered analysers (if temp_object provided).
+    # If not found there, it falls back to the configured 'fallback_mime_type'
     # @param [Symbol, String] format the format (file-extension)
+    # @param [TempObject] temp_object (optional)
     # @return [String] the mime-type
     # @see register_mime_type
-    def mime_type_for(format)
-      registered_mime_types[file_ext_string(format)] || fallback_mime_type
+    def mime_type_for(format, temp_object=nil)
+      registered_mime_types[file_ext_string(format)] || (temp_object.mime_type if temp_object.respond_to?(:mime_type)) || fallback_mime_type
     end
 
     # Store an object, using the configured datastore
@@ -194,6 +197,10 @@ module Dragonfly
     end
     configuration_method :register_mime_type
 
+    def registered_mime_types
+      @registered_mime_types ||= Rack::Mime::MIME_TYPES.dup
+    end
+
     private
     
     def initialize_temp_object_class
@@ -207,10 +214,6 @@ module Dragonfly
     
     def file_ext_string(format)
       '.' + format.to_s.downcase.sub(/^.*\./,'')
-    end
-    
-    def registered_mime_types
-      @registered_mime_types ||= Rack::Mime::MIME_TYPES
     end
 
   end
