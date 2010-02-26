@@ -99,6 +99,13 @@ describe Dragonfly::App do
         @app.configure{|c| c.register_mime_type :png, 'ping/pong'}
         @app.mime_type_for(:png).should == 'ping/pong'
       end
+      it "should have a per-app mime-type configuration" do
+        other_app = Dragonfly::App[:other_app]
+        @app.register_mime_type(:mark, 'first/one')
+        other_app.register_mime_type(:mark, 'second/one')
+        @app.mime_type_for(:mark).should == 'first/one'
+        other_app.mime_type_for(:mark).should == 'second/one'
+      end
     end
     
     describe "Content-Type header" do
