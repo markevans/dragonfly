@@ -1,5 +1,28 @@
 /* Overrides for yard documentation */
 
+/* Clearfix */
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
+ /************/
+
 pre, code, .code,
 #filecontents pre.code,
 .docstring pre.code,
@@ -24,4 +47,26 @@ code .kw {
 }
 code .symbol {
   color:#C5060B;
+}
+
+ul.main_files {
+  list-style-type:none;
+  margin:0;
+  padding:0 px 0;
+  font-size:14px;
+  font-weight:bold;
+}
+ul.main_files li a {
+  margin: 5px;
+  padding:10px;
+  background: #eef;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  float:left;
+  clear:both;
+  width:450px;
+}
+ul.main_files li a {
+  display:block;
 }
