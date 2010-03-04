@@ -33,6 +33,7 @@ pre, code, .code,
 pre.code, code {
   background:#F5F5FF;
   border:1px solid #EEEEFF;
+  overflow-x: auto;
 }
 pre.code {
   margin-top:4px;
@@ -52,21 +53,46 @@ code .symbol {
 ul.main_files {
   list-style-type:none;
   margin:0;
-  padding:0 px 0;
+  padding:0;
   font-size:14px;
-  font-weight:bold;
+}
+ul.main_files li {
+  margin:0;
+  padding:0;
 }
 ul.main_files li a {
   margin: 5px;
   padding:10px;
-  background: #eef;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  float:left;
-  clear:both;
-  width:450px;
-}
-ul.main_files li a {
   display:block;
+}
+
+/* Layout */
+#header,
+#content,
+#footer {
+  margin:0 auto;
+  width:1000px;
+}
+#header #logo {
+  float:left;
+  width:50%;
+  font-size: 24px;
+  letter-spacing: -1px;
+  margin-top: 20px;
+  text-transform: uppercase;
+}
+#header #search {
+  position:static;
+  float:right;
+}
+#content .col1 {
+  float:left;
+  width: 750px;
+}
+#content .col2 {
+  float:left;
+  margin: 20px 0 0 20px;
+  padding: 0 0 0 20px;
+  width: 200px;
+  border-left: 1px dotted #D5D5D5;
 }

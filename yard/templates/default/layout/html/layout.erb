@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <%= erb(:headers) %>
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header" class="clearfix">
+      <%#= erb(:breadcrumb) %>
+      <div id="logo">Dragonfly Documentation</div>
+      <%= erb(:search) %>
+    </div>
+    
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+    
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <%= yieldall %>
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <%= [
+            ['README', 'Quick start for Rails (README)'],
+            ['GettingStarted', 'Getting started'],
+            ['UsingWithRails', 'Using with Rails'],
+            ['ActiveRecord', 'Using with ActiveRecord'],
+            ['DataStorage', 'Data Storage'],
+            ['Analysers', 'Analysers'],
+            ['Processing', 'Processing'],
+            ['Encoding', 'Encoding'],
+            ['Shortcuts', 'Shortcuts for processing and encoding'],
+            ['ExampleUseCases', 'Example use cases']
+          ].map{|(file, text)|
+            "<li>#{link_file(file, text)}</li>"
+          }.join
+          %>
+        </ul>
+      </div>
+    </div>
+    
+    <%= erb(:footer) %>
+  </body>
+</html>
