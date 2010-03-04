@@ -32,12 +32,15 @@ pre, code, .code,
 
 pre.code, code {
   background:#F5F5FF;
-  border:1px solid #EEEEFF;
   overflow-x: auto;
 }
-pre.code {
-  margin-top:4px;
+#filecontents pre.code {
+  margin:10px 0;
   padding:5px 12px;
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border: 1px dotted #CCC;
 }
 
 code .val {
