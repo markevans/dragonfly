@@ -39,11 +39,11 @@ begin
   require 'yard'
   YARD::Rake::YardocTask.new do |t|
     t.files   = ['lib/**/*.rb']
-    t.options = %w(-e yard/setup.rb)
+    t.options = []
   end
   YARD::Rake::YardocTask.new 'yard:changed' do |t|
     t.files   = `git status | grep '.rb' | grep modified | grep -v yard | cut -d' ' -f4`.split
-    t.options = %w(-e yard/setup.rb)
+    t.options = []
   end
 rescue LoadError
   puts "YARD is not available. To run the documentation tasks, install it with: (sudo) gem install yard"
