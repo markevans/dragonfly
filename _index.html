@@ -20,28 +20,24 @@
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
     
-    <div id="header">
-      <div id="menu">
-  
-    
-    <span class="title"></span>
-  
-  
-  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
-</div>
-
+    <div id="header" class="clearfix">
+      
+      <div id="logo">Dragonfly Documentation</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
 
-      <div class="clear"></div>
     </div>
     
-    <iframe id="search_frame"></iframe>
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
     
-    <div id="content"><div id="listing">
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <div id="listing">
   <h1 class="noborder title">Documentation by YARD 0.5.3</h1>
   <h1 class="alphaindex">Alphabetic Index</h1>
   
@@ -80,10 +76,13 @@
       <li class="r2"><a href="file.Encoding.html" title="Encoding">Encoding</a></li>
       
     
-      <li class="r1"><a href="file.ExampleUseCases.html" title="ExampleUseCases">ExampleUseCases</a></li>
+      <li class="r1"><a href="file.MimeTypes.html" title="MimeTypes">MimeTypes</a></li>
       
     
-      <li class="r2"><a href="file.LICENSE.html" title="LICENSE">LICENSE</a></li>
+      <li class="r2"><a href="file.ExampleUseCases.html" title="ExampleUseCases">ExampleUseCases</a></li>
+      
+    
+      <li class="r1"><a href="file.LICENSE.html" title="LICENSE">LICENSE</a></li>
       
     
     </ul>
@@ -157,13 +156,6 @@
                 </li>
               
                 <li>
-                  <a href="Dragonfly/Encoding/Base.html" title="Dragonfly::Encoding::Base (class)">Base</a> 
-                  
-                    <small>(Dragonfly::Encoding)</small>
-                  
-                </li>
-              
-                <li>
                   <a href="Dragonfly/DataStorage/Base.html" title="Dragonfly::DataStorage::Base (class)">Base</a> 
                   
                     <small>(Dragonfly::DataStorage)</small>
@@ -181,6 +173,13 @@
                   <a href="Dragonfly/Analysis/Base.html" title="Dragonfly::Analysis::Base (class)">Base</a> 
                   
                     <small>(Dragonfly::Analysis)</small>
+                  
+                </li>
+              
+                <li>
+                  <a href="Dragonfly/Encoding/Base.html" title="Dragonfly::Encoding::Base (class)">Base</a> 
+                  
+                    <small>(Dragonfly::Encoding)</small>
                   
                 </li>
               
@@ -616,10 +615,17 @@
       </td>
     </tr>
   </table>
-</div></div>
+</div>
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li>
+        </ul>
+      </div>
+    </div>
     
     <div id="footer">
-  Generated on Sat Feb 20 16:32:18 2010 by 
+  Generated on Thu Mar  4 23:43:21 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.7).
 </div>

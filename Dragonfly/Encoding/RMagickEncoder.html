@@ -20,30 +20,24 @@
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
     
-    <div id="header">
-      <div id="menu">
-  
-    <a href="../../_index.html">Index (R)</a> &raquo; 
-    <span class='title'><a href="../../Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span> &raquo; <span class='title'><a href="../Encoding.html" title="Dragonfly::Encoding (module)">Encoding</a></span>
-     &raquo; 
-    <span class="title">RMagickEncoder</span>
-  
-  
-  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
-</div>
-
+    <div id="header" class="clearfix">
+      
+      <div id="logo">Dragonfly Documentation</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
   <a id ="file_list_link" href="#">File List</a>
 </div>
 
-      <div class="clear"></div>
     </div>
     
-    <iframe id="search_frame"></iframe>
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
     
-    <div id="content"><h1>Class: Dragonfly::Encoding::RMagickEncoder 
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <h1>Class: Dragonfly::Encoding::RMagickEncoder 
   
   
 </h1>
@@ -167,16 +161,26 @@
 12
 13
 14
-15</pre>
+15
+16
+17
+18
+19
+20</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/encoding/r_magick_encoder.rb', line 10</span>
 
 <span class='def def kw'>def</span> <span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='encoding identifier id'>encoding</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='throw identifier id'>throw</span> <span class='symbol val'>:unable_to_handle</span> <span class='unless unless_mod kw'>unless</span> <span class='SUPPORTED_FORMATS constant id'>SUPPORTED_FORMATS</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+  <span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span>
+  <span class='throw identifier id'>throw</span> <span class='symbol val'>:unable_to_handle</span> <span class='unless unless_mod kw'>unless</span> <span class='SUPPORTED_FORMATS constant id'>SUPPORTED_FORMATS</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='rparen token'>)</span>
   <span class='encoded_image identifier id'>encoded_image</span> <span class='assign token'>=</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='Image constant id'>Image</span><span class='dot token'>.</span><span class='from_blob identifier id'>from_blob</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='data identifier id'>data</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
-  <span class='encoded_image identifier id'>encoded_image</span><span class='dot token'>.</span><span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
-  <span class='encoded_image identifier id'>encoded_image</span><span class='dot token'>.</span><span class='to_blob identifier id'>to_blob</span>
+  <span class='if if kw'>if</span> <span class='encoded_image identifier id'>encoded_image</span><span class='dot token'>.</span><span class='format identifier id'>format</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span> <span class='eq op'>==</span> <span class='format identifier id'>format</span>
+    <span class='image identifier id'>image</span> <span class='comment val'># do nothing</span>
+  <span class='else else kw'>else</span>
+    <span class='encoded_image identifier id'>encoded_image</span><span class='dot token'>.</span><span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='format identifier id'>format</span>
+    <span class='encoded_image identifier id'>encoded_image</span><span class='dot token'>.</span><span class='to_blob identifier id'>to_blob</span>
+  <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -186,10 +190,17 @@
     
   </div>
 
-</div>
+
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li>
+        </ul>
+      </div>
+    </div>
     
     <div id="footer">
-  Generated on Sat Feb 20 16:32:25 2010 by 
+  Generated on Thu Mar  4 23:43:28 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.7).
 </div>
