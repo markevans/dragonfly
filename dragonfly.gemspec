@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.5.1"
+  s.version = "0.5.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2010-02-20}
+  s.date = %q{2010-03-04}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
      "extra_docs/ExampleUseCases.md",
      "extra_docs/GettingStarted.md",
      "extra_docs/Index.md",
+     "extra_docs/MimeTypes.md",
      "extra_docs/Processing.md",
      "extra_docs/Shortcuts.md",
      "extra_docs/UsingWithRails.md",
@@ -109,7 +110,6 @@ Gem::Specification.new do |s|
      "spec/dragonfly/active_record_extensions/model_spec.rb",
      "spec/dragonfly/active_record_extensions/models.rb",
      "spec/dragonfly/active_record_extensions/spec_helper.rb",
-     "spec/dragonfly/analyser_list_spec.rb",
      "spec/dragonfly/analysis/file_command_analyser_spec.rb",
      "spec/dragonfly/analysis/r_magick_analyser_spec.rb",
      "spec/dragonfly/app_spec.rb",
@@ -136,6 +136,7 @@ Gem::Specification.new do |s|
      "yard/handlers/configurable_attr_handler.rb",
      "yard/setup.rb",
      "yard/templates/default/fulldoc/html/css/common.css",
+     "yard/templates/default/layout/html/layout.erb",
      "yard/templates/default/module/html/configuration_summary.erb",
      "yard/templates/default/module/setup.rb"
   ]
@@ -152,7 +153,6 @@ Gem::Specification.new do |s|
      "spec/dragonfly/active_record_extensions/model_spec.rb",
      "spec/dragonfly/active_record_extensions/models.rb",
      "spec/dragonfly/active_record_extensions/spec_helper.rb",
-     "spec/dragonfly/analyser_list_spec.rb",
      "spec/dragonfly/analysis/file_command_analyser_spec.rb",
      "spec/dragonfly/analysis/r_magick_analyser_spec.rb",
      "spec/dragonfly/app_spec.rb",
