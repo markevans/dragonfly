@@ -1,3 +1,23 @@
+0.5.2 (2010-03-04)
+==================
+
+Features
+--------
+- Added 'registered mime-types'
+- Enhanced docs
+
+Fixes
+-----
+- RMagickEncoder only encodes if not already in that format
+
+
+0.5.1 (2010-02-20)
+==================
+
+Fixes
+-----
+- Fixed 'broken pipe' errors in FileCommandAnalyser due to outputting loads of stuff to the command line stdin
+
 0.5.0 (2010-02-20)
 ==================
 
