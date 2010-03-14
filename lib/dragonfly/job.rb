@@ -18,12 +18,21 @@ module Dragonfly
     end
     
     def initialize(&block)
+      @parts = []
       instance_eval(&block)
     end
     
-    def parts
-      @parts ||= []
+    attr_reader :parts
+    
+    def +(other_job)
+      new_job = self.class.new{}
+      new_job.parts = parts + other_job.parts
+      new_job
     end
+    
+    protected
+    
+    attr_writer :parts
     
     private
     
