@@ -18,31 +18,30 @@ module Dragonfly
     end
     
     def initialize(&block)
-      @parts = []
-      instance_eval(&block)
+      @steps = []
     end
     
-    attr_reader :parts
+    attr_reader :steps
+
+    def add_process(name, *args)
+      steps << Process.new(name, *args)
+    end
     
+    def add_encoding(format, *args)
+      steps << Encoding.new(format, *args)
+    end
+
     def +(other_job)
-      new_job = self.class.new{}
-      new_job.parts = parts + other_job.parts
+      new_job = self.class.new
+      new_job.steps = steps + other_job.steps
       new_job
+    end
+
+    def num_steps
+      steps.length
     end
     
     protected
-    
-    attr_writer :parts
-    
-    private
-    
-    def process(name, *args)
-      parts << Process.new(name, *args)
-    end
-    
-    def encode(format, *args)
-      parts << Encoding.new(format, *args)
-    end
-    
+    attr_writer :steps
   end
 end
