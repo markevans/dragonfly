@@ -1,6 +1,9 @@
 module Dragonfly
   class JobManager
     
+    # Exceptions
+    class JobNotFound < RuntimeError; end
+    
     class JobBuilder
       def initialize(args, definition_proc)
         @job = Job.new
@@ -45,10 +48,10 @@ module Dragonfly
     end
     
     def job_for(*args)
-      job_definitions.each do |jd|
+      job_definitions.reverse.each do |jd|
         return jd.create_job(args) if jd.matches?(args)
       end
-      nil
+      raise JobNotFound, "No job was found matching (#{args.map{|a| a.inspect }.join(', ')})"
     end
     
     private
