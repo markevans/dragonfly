@@ -30,31 +30,31 @@ describe Dragonfly::Processing::RMagickProcessor do
     describe "resize" do
     
       it "should work correctly with xNN" do
-        image = @processor.resize(@image, :geometry => 'x30')
+        image = @processor.resize(@image, 'x30')
         image.should have_width(24)
         image.should have_height(30)
       end
     
       it "should work correctly with NNx" do
-        image = @processor.resize(@image, :geometry => '30x')
+        image = @processor.resize(@image, '30x')
         image.should have_width(30)
         image.should have_height(38)
       end
     
       it "should work correctly with NNxNN" do
-        image = @processor.resize(@image, :geometry => '30x30')
+        image = @processor.resize(@image, '30x30')
         image.should have_width(24)
         image.should have_height(30)
       end
     
       it "should work correctly with NNxNN!" do
-        image = @processor.resize(@image, :geometry => '30x30!')
+        image = @processor.resize(@image, '30x30!')
         image.should have_width(30)
         image.should have_height(30)
       end
     
       it "should work correctly with NNxNN%" do
-        image = @processor.resize(@image, :geometry => '25x50%')
+        image = @processor.resize(@image, '25x50%')
         image.should have_width(70)
         image.should have_height(178)
       end
@@ -62,13 +62,13 @@ describe Dragonfly::Processing::RMagickProcessor do
       describe "NNxNN>" do
       
         it "should not resize if the image is smaller than specified" do
-          image = @processor.resize(@image, :geometry => '1000x1000>')
+          image = @processor.resize(@image, '1000x1000>')
           image.should have_width(280)
           image.should have_height(355)
         end
       
         it "should resize if the image is larger than specified" do
-          image = @processor.resize(@image, :geometry => '30x30>')
+          image = @processor.resize(@image, '30x30>')
           image.should have_width(24)
           image.should have_height(30)
         end
@@ -78,13 +78,13 @@ describe Dragonfly::Processing::RMagickProcessor do
       describe "NNxNN<" do
       
         it "should not resize if the image is larger than specified" do
-          image = @processor.resize(@image, :geometry => '10x10<')
+          image = @processor.resize(@image, '10x10<')
           image.should have_width(280)
           image.should have_height(355)
         end
       
         it "should resize if the image is smaller than specified" do
-          image = @processor.resize(@image, :geometry => '400x400<')
+          image = @processor.resize(@image, '400x400<')
           image.should have_width(315)
           image.should have_height(400)
         end
