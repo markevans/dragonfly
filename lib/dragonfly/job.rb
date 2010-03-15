@@ -7,6 +7,9 @@ module Dragonfly
         @name, @args = name, args
       end
       attr_reader :name, :args
+      def perform(temp_object)
+        temp_object.process(name, *args)
+      end
     end
     
     # Encoding job part
@@ -15,6 +18,9 @@ module Dragonfly
         @format, @args = format, args
       end
       attr_reader :format, :args
+      def perform(temp_object)
+        temp_object.encode(format, *args)
+      end
     end
     
     def initialize(&block)
@@ -39,6 +45,12 @@ module Dragonfly
 
     def num_steps
       steps.length
+    end
+    
+    def perform(temp_object)
+      steps.inject(temp_object) do |tmp, step|
+        step.perform(tmp)
+      end
     end
     
     protected

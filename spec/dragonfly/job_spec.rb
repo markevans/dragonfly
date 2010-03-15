@@ -54,4 +54,18 @@ describe Dragonfly::Job do
     end
   end
   
+  describe "performing a job" do
+    before(:each) do
+      @job = Dragonfly::Job.new
+      @job.add_process :resize, '10x10'
+      @job.add_encoding :png, :bitrate => 'loads'
+    end
+    it "should apply the steps to the temp_object" do
+      temp_object = mock('temp_object')
+      temp_object.should_receive(:process).with(:resize, '10x10').and_return(temp_object2=mock)
+      temp_object2.should_receive(:encode).with(:png, :bitrate => 'loads').and_return(temp_object3=mock)
+      @job.perform(temp_object).should == temp_object3
+    end
+  end
+  
 end
