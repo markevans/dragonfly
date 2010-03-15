@@ -89,6 +89,23 @@ describe Dragonfly::JobManager do
       
     end
 
+    describe "calling other jobs inside a job definition" do
+      before(:each) do
+        pending
+        @job_manager.define_job :terry do
+          process :resize, '50x50'
+        end
+        @job_manager.define_job :butcher do
+          process :black_and_white
+          job :terry
+        end
+      end
+      it "should correctly add the steps from the other job" do
+        job = @job_manager.job_for(:butcher)
+        job.steps.map(&:name).should == [:black_and_white, :resize]
+      end
+    end
+
   end
 
 end
