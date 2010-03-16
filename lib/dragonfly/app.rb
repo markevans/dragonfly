@@ -71,6 +71,7 @@ module Dragonfly
     
     def initialize
       @analysers, @processors, @encoders = AnalyserList.new(self), ProcessorList.new(self), EncoderList.new(self)
+      @job_manager = JobManager.new
       @parameters_class = Class.new(Parameters)
       @url_handler = UrlHandler.new(@parameters_class)
     end
@@ -81,6 +82,8 @@ module Dragonfly
     attr_reader :processors
     # @see Encoding::EncoderList
     attr_reader :encoders
+    # @see JobManager
+    attr_reader :job_manager
     # @see UrlHandler
     attr_reader :url_handler
     # @see Parameters
@@ -95,6 +98,7 @@ module Dragonfly
     include Configurable
     
     configurable_attr :datastore do DataStorage::FileDataStore.new end
+    configurable_attr :default_format
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
     configurable_attr :cache_duration, 3600*24*365 # (1 year)
     configurable_attr :fallback_mime_type, 'application/octet-stream'    
@@ -133,6 +137,9 @@ module Dragonfly
     def create_object(initialization_object)
       ExtendedTempObject.new(initialization_object, self)
     end
+
+    def_delegator :job_manager, :define_job
+    configuration_method :define_job
 
     # Fetch an object from the database and optionally transform
     #
