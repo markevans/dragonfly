@@ -197,6 +197,24 @@ describe Dragonfly::Processing::RMagickProcessor do
       end
     
     end
+
+    describe "thumb" do
+      it "should call resize if the correct string given" do
+        @processor.should_receive(:resize).with(@image, '30x40').and_return(image = mock)
+        @processor.thumb(@image, '30x40').should == image
+      end
+      it "should call resize_and_crop if the correct string given" do
+        @processor.should_receive(:resize_and_crop).with(@image, :width => '30', :height => '40', :gravity => 'se').and_return(image = mock)
+        @processor.thumb(@image, '30x40#se').should == image
+      end
+      it "should call crop if the correct string given" do
+        @processor.should_receive(:crop).with(@image, :width => '30', :height => '40', :x => '+10', :y => '+20', :gravity => 'ne').and_return(image = mock)
+        @processor.thumb(@image, '30x40+10+20ne').should == image
+      end
+      it "should raise an argument error if an unrecognized string is given" do
+        lambda{ @processor.thumb(@image, '30x40#ne!') }.should raise_error(ArgumentError)
+      end
+    end
   end
   
 end
