@@ -4,11 +4,6 @@ require 'spec/expectations'
 require 'test/unit/assertions'
 require File.dirname(__FILE__) + '/../../spec/image_matchers.rb'
 
-# A hack as system calls weren't using my path
-extra_paths = %w(/opt/local/bin)
-ENV['PATH'] ||= ''
-ENV['PATH'] += ':' + extra_paths.join(':')
-
 # A hash of <name for reference> => <dragonfly uid> pairs
 TEMP_FILES = {}
 
