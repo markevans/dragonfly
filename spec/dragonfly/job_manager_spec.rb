@@ -77,18 +77,23 @@ describe Dragonfly::JobManager do
 
     describe "calling other jobs inside a job definition" do
       before(:each) do
-        pending
-        @job_manager.define_job :terry do
-          process :resize, '50x50'
+        @job_manager.define_job :terry do |size|
+          process :resize, size
         end
         @job_manager.define_job :butcher do
           process :black_and_white
-          job :terry
+          job :terry, '100x100'
+          encode :gif
         end
       end
       it "should correctly add the steps from the other job" do
         job = @job_manager.job_for(:butcher)
-        job.steps.map(&:name).should == [:black_and_white, :resize]
+        
+        process1, process2, encoding = job.steps
+        process1.name.should == :black_and_white
+        process2.name.should == :resize
+        process2.args.should == ['100x100']
+        encoding.format.should == :gif
       end
     end
 

@@ -5,30 +5,34 @@ module Dragonfly
     class JobNotFound < RuntimeError; end
     
     class JobBuilder
-      def initialize(args, definition_proc)
-        @job = Job.new
+      def initialize(args, definition_proc, job_manager)
+        @job_manager = job_manager
+        @built_job = Job.new
         instance_exec(*args, &definition_proc)
       end
-      attr_reader :job
+      attr_reader :built_job
       private
       def process(name, *args)
-        @job.add_process name, *args
+        built_job.add_process name, *args
       end
       def encode(format, *args)
-        @job.add_encoding format, *args
+        built_job.add_encoding format, *args
+      end
+      def job(name, *args)
+        @built_job += @job_manager.job_for(name, *args)
       end
     end
     
     class JobDefinition
-      def initialize(name, definition_proc)
-        @name, @definition_proc = name, definition_proc
+      def initialize(name, definition_proc, job_manager)
+        @name, @definition_proc, @job_manager = name, definition_proc, job_manager
       end
       attr_reader :name
       def create_job(args)
-        JobBuilder.new(args, definition_proc).job
+        JobBuilder.new(args, definition_proc, job_manager).built_job
       end
       private
-      attr_reader :definition_proc
+      attr_reader :definition_proc, :job_manager
     end
     
     def initialize
@@ -36,7 +40,7 @@ module Dragonfly
     end
     
     def define_job(name, &definition_proc)
-      job_definitions[name] = JobDefinition.new(name, definition_proc)
+      job_definitions[name] = JobDefinition.new(name, definition_proc, self)
     end
     
     def job_for(name, *args)
