@@ -20,38 +20,32 @@ module Dragonfly
     end
     
     class JobDefinition
-      def initialize(arg_matchers, definition_proc)
-        @arg_matchers, @definition_proc = arg_matchers, definition_proc
+      def initialize(name, definition_proc)
+        @name, @definition_proc = name, definition_proc
       end
-      
+      attr_reader :name
       def create_job(args)
         JobBuilder.new(args, definition_proc).job
       end
-      
-      def matches?(args)
-        arg_matchers.length == args.length &&
-          ![arg_matchers, args].transpose.map{|(matcher, arg)|
-            matcher === arg
-          }.include?(false)
-      end
-      
       private
-      attr_reader :arg_matchers, :definition_proc
+      attr_reader :definition_proc
     end
     
     def initialize
-      @job_definitions = []
+      @job_definitions = {}
     end
     
-    def define_job(*arg_matchers, &definition_proc)
-      job_definitions << JobDefinition.new(arg_matchers, definition_proc)
+    def define_job(name, &definition_proc)
+      job_definitions[name] = JobDefinition.new(name, definition_proc)
     end
     
-    def job_for(*args)
-      job_definitions.reverse.each do |jd|
-        return jd.create_job(args) if jd.matches?(args)
+    def job_for(name, *args)
+      job_definition = job_definitions[name]
+      if job_definition
+        job_definition.create_job(args)
+      else
+        raise JobNotFound, "No job was found with name '#{name}'"
       end
-      raise JobNotFound, "No job was found matching (#{args.map{|a| a.inspect }.join(', ')})"
     end
     
     private

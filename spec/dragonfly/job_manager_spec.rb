@@ -14,7 +14,7 @@ describe Dragonfly::JobManager do
     
     describe "defining a simple processing job" do
       before(:each) do
-        @job_manager.define_job :thumb do |sym|
+        @job_manager.define_job :thumb do
           process :resize, 300, 200
         end
         @job = @job_manager.job_for(:thumb)
@@ -28,7 +28,7 @@ describe Dragonfly::JobManager do
 
     describe "defining a simple encoding job" do
       before(:each) do
-        @job_manager.define_job :enc do |sym|
+        @job_manager.define_job :enc do
           encode :gif, :bitrate => 128
         end
         @job = @job_manager.job_for(:enc)
@@ -53,38 +53,24 @@ describe Dragonfly::JobManager do
       end
     end
 
-    describe "matching arguments" do
+    describe "jobs with arguments" do
       before(:each) do
-        @job_manager.define_job /^\d+x\d+$/, Symbol do |geometry, scoobie|
+        @job_manager.define_job :thumb do |geometry, scoobie|
           process :resize, geometry, scoobie
         end
       end
       
-      it "should match args and yield them to the block" do
-        job = @job_manager.job_for('30x50', :yum)
+      it "should yield args to the block" do
+        job = @job_manager.job_for(:thumb, '30x50', :yum)
         
         process_step = job.steps.first
         process_step.name.should == :resize
         process_step.args.should == ['30x50', :yum]
       end
       
-      it "should not match if the args don't all match" do
-        lambda{
-          @job_manager.job_for('30x50!', :yum)
-        }.should raise_error(Dragonfly::JobManager::JobNotFound)
-      end
-      
-      it "should raise an error if the args match but have the wrong number of args" do
-        lambda{
-          @job_manager.job_for('30x50', :yum, :innit_man)
-        }.should raise_error(Dragonfly::JobManager::JobNotFound)
-      end
-
-      it "should let later shortcuts have priority over earlier ones" do
-        @job_manager.define_job /^\d+x\d+$/, Symbol do |geometry, scoobie|
-          process :crop_and_resize, geometry, scoobie
-        end
-        @job_manager.job_for('30x50', :gif).steps.first.name.should == :crop_and_resize
+      it "default args to nil" do
+        job = @job_manager.job_for(:thumb, '30x50!')
+        job.steps.first.args.should == ['30x50!', nil]
       end
       
     end
