@@ -10,6 +10,9 @@ module Dragonfly
       def perform(temp_object)
         temp_object.process(name, *args)
       end
+      def to_a
+        [:process, name, *args]
+      end
     end
     
     # Encoding job part
@@ -20,6 +23,9 @@ module Dragonfly
       attr_reader :format, :args
       def perform(temp_object)
         temp_object.encode(format, *args)
+      end
+      def to_a
+        [:encoding, format, *args]
       end
     end
     

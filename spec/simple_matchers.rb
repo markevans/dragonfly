@@ -20,3 +20,9 @@ def match_ar_error(string)
     error == string
   end
 end
+
+def match_job(steps)
+  simple_matcher("match job #{steps.inspect}") do |given|
+    given.steps.map{|step| step.to_a } == steps
+  end
+end

@@ -31,12 +31,12 @@ describe Dragonfly::Job do
     job.add_process :hello
     job.add_encoding :gip
     
-    job.steps.map(&:class).should == [
-      Dragonfly::Job::Process,
-      Dragonfly::Job::Encoding,
-      Dragonfly::Job::Process,
-      Dragonfly::Job::Encoding
-    ]
+    job.should match_job([
+      [:process, :doobie],
+      [:encoding, :png],
+      [:process, :hello],
+      [:encoding, :gip]
+    ])
   end
   
   describe "adding jobs" do
@@ -47,10 +47,10 @@ describe Dragonfly::Job do
       job2.add_encoding :png
       
       job3 = job1 + job2
-      job3.steps.map(&:class).should == [
-        Dragonfly::Job::Process,
-        Dragonfly::Job::Encoding
-      ]
+      job3.should match_job([
+        [:process, :resize],
+        [:encoding, :png]
+      ])
     end
   end
   
