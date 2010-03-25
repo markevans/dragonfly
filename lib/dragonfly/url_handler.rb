@@ -9,13 +9,13 @@ module Dragonfly
     class SHANotGiven < RuntimeError; end
     class UnknownUrl < RuntimeError; end
     
+    include Rack::Utils
     include Configurable
 
     configurable_attr :protect_from_dos_attacks, true
     configurable_attr :secret, 'This is a secret!'
     configurable_attr :sha_length, 16
     configurable_attr :path_prefix, ''
-
 
     class Parameters
       
@@ -30,7 +30,7 @@ module Dragonfly
       end
       
       def path_prefix
-        @path_prefix ||= url_details[:path_prefix] || ''
+        @path_prefix ||= url_details[:path_prefix]
       end
       
       def path
@@ -75,25 +75,21 @@ module Dragonfly
     end
 
     def parse_env(env)
-      url = Parameters.new(
+      params = Parameters.new(
         :host => env['HTTP_HOST'],
         :path => env['PATH_INFO'],
         :query => env['QUERY_STRING'],
         :path_prefix => path_prefix
       )
-      raise UnknownUrl, "path '#{url.path}' not found" unless url.valid?
-      url
+      raise UnknownUrl, "path '#{params.path}' not found" unless params.valid?
+      params
     end
-
-    def parameters_to_url(parameters)
-      query_string = [:processing_method, :processing_options, :encoding].map do |attribute|
-        build_query(MAPPINGS[attribute] => parameters[attribute]) unless parameters[attribute].blank?
-      end.compact.join('&')
-      sha_string = "&#{MAPPINGS[:sha]}=#{sha_from_parameters(parameters)}" if protect_from_dos_attacks?
-      ext = ".#{parameters.format}" if parameters.format
-      url = "#{path_prefix}/#{escape_except_for_slashes(parameters.uid)}#{ext}?#{query_string}#{sha_string}"
-      url.sub!(/\?$/,'')
-      url
+      
+    def params_to_url(uid, format, job_args)
+      query_string = "j=#{Serializer.marshal_encode(job_args)}" unless job_args.blank?
+      prefix = "/#{escape(path_prefix.sub(/^\//,''))}" unless path_prefix.blank?
+      path = "#{prefix}/#{escape(uid)}#{'.'+escape(format.to_s) if format}"
+      [path, query_string].compact.join('?')
     end
 
     private
