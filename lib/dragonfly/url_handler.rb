@@ -56,8 +56,20 @@ module Dragonfly
         @query ||= parse_query(url_details[:query])
       end
       
+      def encoded_job_args
+        @encoded_job_args ||= query['j']
+      end
+      
       def job_args
-        @job_args ||= Serializer.marshal_decode(query['j']) if query['j']
+        @job_args ||= Serializer.marshal_decode(encoded_job_args) if encoded_job_args
+      end
+      
+      def sha
+        @sha ||= query['s']
+      end
+
+      def generate_sha(secret, length)
+        Digest::SHA1.hexdigest("#{uid}#{encoded_job_args}#{secret}")[0...length]
       end
       
       def valid?
@@ -81,7 +93,7 @@ module Dragonfly
         :query => env['QUERY_STRING'],
         :path_prefix => path_prefix
       )
-      raise UnknownUrl, "path '#{params.path}' not found" unless params.valid?
+      validate_params!(params)
       params
     end
       
@@ -93,22 +105,14 @@ module Dragonfly
     end
 
     private
-  
-    def validate_parameters(parameters, query)
-      if protect_from_dos_attacks?
-        sha = query[MAPPINGS[:sha]]
-        raise SHANotGiven, "You need to give a SHA" if sha.nil?
-        raise IncorrectSHA, "The SHA parameter you gave is incorrect" if sha_from_parameters(parameters) != sha
+
+    def validate_params!(params)
+      raise UnknownUrl, "path '#{params.path}' not found" unless params.valid?
+      if protect_from_dos_attacks
+        raise SHANotGiven, "You need to give a SHA" unless params.sha
+        raise IncorrectSHA, "The SHA parameter you gave is incorrect" if params.generate_sha(secret, sha_length) != params.sha
       end
     end
-    
-    def protect_from_dos_attacks?
-      protect_from_dos_attacks
-    end
-    
-    def sha_from_parameters(parameters)
-      parameters.generate_sha(secret, sha_length)
-    end
-    
+
   end
 end

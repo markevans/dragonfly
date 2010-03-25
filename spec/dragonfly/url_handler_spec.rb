@@ -54,38 +54,38 @@ describe Dragonfly::UrlHandler do
         end
       end
 
-    describe "errors" do
-      it "should raise an UnknownUrl error if the path doesn't have a uid bit" do
-        lambda{
-          @url_handler.parse_env(env_for('.hello'))
-        }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+      describe "errors" do
+        it "should raise an UnknownUrl error if the path doesn't have a uid bit" do
+          lambda{
+            @url_handler.parse_env(env_for('.hello'))
+          }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+        end
+  
+        it "should raise an UnknownUrl error if the path is only slashes" do
+          lambda{
+            @url_handler.parse_env(env_for('/./'))
+          }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+        end
       end
   
-      it "should raise an UnknownUrl error if the path is only slashes" do
-        lambda{
-          @url_handler.parse_env(env_for('/./'))
-        }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
-      end
-    end
-  
-    describe "edge cases" do
-      it "should set most of the path as the uid if there is more than one dot" do
-        params = @url_handler.parse_env(env_for('/hello.old.bean'))
-        params.uid.should == 'hello.old'
-        params.format.should == :bean
-      end
+      describe "edge cases" do
+        it "should set most of the path as the uid if there is more than one dot" do
+          params = @url_handler.parse_env(env_for('/hello.old.bean'))
+          params.uid.should == 'hello.old'
+          params.format.should == :bean
+        end
 
-      it "should set most of the path as the uid if there are more than one slashes" do
-        params = @url_handler.parse_env(env_for('/hello/old.bean'))
-        params.uid.should == 'hello/old'
-        params.format.should == :bean
-      end
+        it "should set most of the path as the uid if there are more than one slashes" do
+          params = @url_handler.parse_env(env_for('/hello/old.bean'))
+          params.uid.should == 'hello/old'
+          params.format.should == :bean
+        end
 
-      it "should unescape any url-escaped characters" do
-        params = @url_handler.parse_env(env_for('/hello%20bean.jpg'))
-        params.uid.should == 'hello bean'
+        it "should unescape any url-escaped characters" do
+          params = @url_handler.parse_env(env_for('/hello%20bean.jpg'))
+          params.uid.should == 'hello bean'
+        end
       end
-    end
   
       describe "when no job is given" do
         before(:each) do
@@ -117,10 +117,8 @@ describe Dragonfly::UrlHandler do
       @url_handler.params_to_url(@uid, @format, @job_args).should  == '/thisisunique.gif?j=BAhbBzoKdGh1bWIiCjMweDQw'
     end
     it "should correctly form a query string when dos protection turned on" do
-      pending
       @url_handler.protect_from_dos_attacks = true
-      @parameters.should_receive(:generate_sha).and_return('thisismysha12345')
-      @url_handler.params_to_url(@parameters).should match_url('/thisisunique.gif?m=b&o[d]=e&o[j]=k&e[x]=y&s=thisismysha12345')
+      @url_handler.params_to_url(@uid, @format, @job_args).should  == '/thisisunique.gif?j=BAhbBzoKdGh1bWIiCjMweDQw'
     end
     it "should leave out the format if there is none" do
       @url_handler.params_to_url(@uid, nil, @job_args).should == '/thisisunique?j=BAhbBzoKdGh1bWIiCjMweDQw'
@@ -142,29 +140,25 @@ describe Dragonfly::UrlHandler do
         c.secret     = 'secret'
         c.sha_length = 16
       }
-      @path = "/images/some_image.jpg"
-      @query_string = "m=b&o[d]=e&o[j]=k"
-      @parameters = Dragonfly::Parameters.new
-      Dragonfly::Parameters.stub!(:new).and_return(@parameters)
+      @url = "/some_image.gif?j=BAhbBzoKdGh1bWIiCjMweDQw"
+      @correct_sha = "428ee97948379e63"
     end
     
     it "should return the parameters as normal if the sha is ok" do
-      @parameters.should_receive(:generate_sha).with('secret', 16).and_return('thisismysha12345')
       lambda{
-        @url_handler.url_to_parameters(@path, "#{@query_string}&s=thisismysha12345")
+        @url_handler.parse_env(env_for("#{@url}&s=#{@correct_sha}"))
       }.should_not raise_error
     end
     
     it "should raise an error if the sha is incorrect" do
-      @parameters.should_receive(:generate_sha).with('secret', 16).and_return('thisismysha12345')
       lambda{
-        @url_handler.url_to_parameters(@path, "#{@query_string}&s=heyNOTmysha12345")
+        @url_handler.parse_env(env_for("#{@url}&s=heyNOTmysha12345"))
       }.should raise_error(Dragonfly::UrlHandler::IncorrectSHA)
     end
     
     it "should raise an error if the sha isn't given" do
       lambda{
-        @url_handler.url_to_parameters(@path, @query_string)
+        @url_handler.parse_env(env_for("#{@url}"))
       }.should raise_error(Dragonfly::UrlHandler::SHANotGiven)
     end
     
@@ -174,33 +168,36 @@ describe Dragonfly::UrlHandler do
         @url_handler.configure{|c|
           c.sha_length = 3
         }
-        Digest::SHA1.should_receive(:hexdigest).and_return("thisismysha12345")
       end
 
       it "should use a SHA of the specified length" do
           lambda{
-            @url_handler.url_to_parameters(@path, "#{@query_string}&s=thi")
+            @url_handler.parse_env(env_for("#{@url}&s=428"))
           }.should_not raise_error
       end
 
       it "should raise an error if the SHA is correct but too long" do
           lambda{
-            @url_handler.url_to_parameters(@path, "#{@query_string}&s=this")
+            @url_handler.parse_env(env_for("#{@url}&s=428e"))
           }.should raise_error(Dragonfly::UrlHandler::IncorrectSHA)
       end
 
       it "should raise an error if the SHA is correct but too short" do
           lambda{
-            @url_handler.url_to_parameters(@path, "#{@query_string}&s=th")
+            @url_handler.parse_env(env_for("#{@url}&s=42"))
           }.should raise_error(Dragonfly::UrlHandler::IncorrectSHA)
       end
       
     end
     
     it "should use the secret given to create the sha" do
-      @url_handler.configure{|c| c.secret = 'digby' }
-      Digest::SHA1.should_receive(:hexdigest).with(string_matching(/digby/)).and_return('thisismysha12345')
-      @url_handler.url_to_parameters(@path, "#{@query_string}&s=thisismysha12345")
+      lambda{
+        @url_handler.parse_env(env_for("#{@url}&s=#{@correct_sha}"))
+      }.should_not raise_error
+      @url_handler.secret = 'digby'
+      lambda{
+        @url_handler.parse_env(env_for("#{@url}&s=#{@correct_sha}"))
+      }.should raise_error(Dragonfly::UrlHandler::IncorrectSHA)
     end
     
   end
