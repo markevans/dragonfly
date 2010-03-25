@@ -2,96 +2,108 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Dragonfly::UrlHandler do
   
+  include Dragonfly::Serializer
+  
   before(:each) do
     @url_handler = Dragonfly::UrlHandler.new
   end
   
+  def env_for(url)
+    Rack::MockRequest.env_for("http://doogie.com#{url}")
+  end
+  
+  def query_string(*args)
+    "j=#{marshal_encode(args)}"
+  end
+  
   describe "extracting parameters from the url" do
-    
-    before(:each) do
-      @url_handler.configure{|c| c.protect_from_dos_attacks = false}
-      @path = "/images/some_image.jpg"
-      @query_string = "m=b&o[d]=e&o[j]=k&e[l]=m"
-      @parameters = @url_handler.url_to_parameters(@path, @query_string)
-    end
-    
-    it "should correctly extract the uid" do
-      @parameters.uid.should == 'images/some_image'
-    end
-    
-    it "should take into account the path prefix if there is one" do
-      @url_handler.path_prefix = '/images'
-      parameters = @url_handler.url_to_parameters('/images/2009/some_image.jpg', @query_string)
-      parameters.uid.should == '2009/some_image'
-    end
-    
-    it "should raise an UnknownUrl error if the url doesn't have the path prefix" do
-      @url_handler.path_prefix = '/images'
-      lambda{
-        parameters = @url_handler.url_to_parameters('/wrongprefix/2009/some_image.jpg', @query_string)
-      }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
-    end
-    
-    it "should correctly extract the format" do
-      @parameters.format.should == 'jpg'
-    end
-    
-    it "should correctly extract the processing method" do
-      @parameters.processing_method.should == 'b'
-    end
-    
-    it "should correctly extract the processing_options" do
-      @parameters.processing_options.should == {:j => 'k', :d => 'e'}
-    end
-    
-    it "should correctly extract the encoding" do
-      @parameters.encoding.should == {:l => 'm'}
-    end
-    
-    it "should have processing_options and encoding as optional" do
-      parameters = @url_handler.url_to_parameters(@path, 'm=b')
-      parameters.processing_options.should == {}
-      parameters.encoding.should == {}
-    end
-    
-    it "should use the parameters class passed in if initialized with one" do
-      parameters_class = mock('parameters_class')
-      url_handler = Dragonfly::UrlHandler.new(parameters_class)
-      url_handler.stub!(:validate_parameters)
-      parameters_class.should_receive(:new)
-      url_handler.url_to_parameters(@path, @query_string)
-    end
-    
-    it "should not set the format if the path doesn't have an extension" do
-      parameters = @url_handler.url_to_parameters('/hello', @query_string)
-      parameters.uid.should == 'hello'
-      parameters.format.should be_nil
-    end
 
-    it "should raise an UnknownUrl error if the path doesn't have a uid bit" do
-      lambda{
-        @url_handler.url_to_parameters('.hello', @query_string)
-      }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+    describe "without dos protection" do
+      before(:each) do
+        @url_handler.protect_from_dos_attacks = false
+      end
+      
+      describe "normal usage" do
+        before(:each) do
+          env = env_for("/some_uid.png?#{query_string(:thumb, '20x30#ne', :png)}")
+          @params = @url_handler.parse_env(env)
+        end
+        it "should extract the uid" do
+          @params.uid.should == 'some_uid'
+        end
+        it "should extract the job args" do
+          @params.job_args.should == [:thumb, '20x30#ne', :png]
+        end
+        it "should extract the format" do
+          @params.format.should == :png
+        end
+      end
+
+      describe "with a path prefix" do
+        before(:each) do
+          @url_handler.path_prefix = '/media'
+        end
+        it "should correctly extract the uid" do
+          params = @url_handler.parse_env(env_for("/media/some_uid.png"))
+          params.uid.should == 'some_uid'
+        end
+        it "should raise an UnknownUrl error if the url doesn't have the path prefix" do
+          lambda{
+            @url_handler.parse_env(env_for("/some_uid.png"))
+          }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+        end
+      end
+
+    describe "errors" do
+      it "should raise an UnknownUrl error if the path doesn't have a uid bit" do
+        lambda{
+          @url_handler.parse_env(env_for('.hello'))
+        }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+      end
+  
+      it "should raise an UnknownUrl error if the path is only slashes" do
+        lambda{
+          @url_handler.parse_env(env_for('/./'))
+        }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+      end
     end
-    
-    it "should raise an UnknownUrl error if the path is only slashes" do
-      lambda{
-        @url_handler.url_to_parameters('/./', @query_string)
-      }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+  
+    describe "edge cases" do
+      it "should set most of the path as the uid if there is more than one dot" do
+        params = @url_handler.parse_env(env_for('/hello.old.bean'))
+        params.uid.should == 'hello.old'
+        params.format.should == :bean
+      end
+
+      it "should set most of the path as the uid if there are more than one slashes" do
+        params = @url_handler.parse_env(env_for('/hello/old.bean'))
+        params.uid.should == 'hello/old'
+        params.format.should == :bean
+      end
+
+      it "should unescape any url-escaped characters" do
+        params = @url_handler.parse_env(env_for('/hello%20bean.jpg'))
+        params.uid.should == 'hello bean'
+      end
     end
-    
-    it "should set most of the path as the uid if there is more than one dot" do
-      parameters = @url_handler.url_to_parameters('/hello.old.bean', @query_string)
-      parameters.uid.should == 'hello.old'
-      parameters.format.should == 'bean'
+  
+      describe "when no job is given" do
+        before(:each) do
+          env = env_for("/some_uid.png")
+          @params = @url_handler.parse_env(env)
+        end
+        it "should extract the uid" do
+          @params.uid.should == 'some_uid'
+        end
+        it "should set the job args to nil" do
+          @params.job_args.should be_nil
+        end
+        it "should extract the format" do
+          @params.format.should == :png
+        end
+      end
     end
-    
-    it "should unescape any url-escaped characters" do
-      parameters = @url_handler.url_to_parameters('/hello%20bean.jpg', 'm=whats%20up')
-      parameters.uid.should == 'hello bean'
-      parameters.processing_method.should == 'whats up'
-    end
-    
+      
   end
   
   describe "forming a url from parameters" do

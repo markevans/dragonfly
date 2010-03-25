@@ -138,7 +138,7 @@ module Dragonfly
       ExtendedTempObject.new(initialization_object, self)
     end
 
-    def_delegator :job_manager, :define_job
+    def_delegators :job_manager, :define_job, :job_for
     configuration_method :define_job
 
     # Fetch an object from the database and optionally transform
