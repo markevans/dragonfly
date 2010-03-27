@@ -17,6 +17,7 @@ module Dragonfly
       
       def assign(value)
         if value.nil?
+          self.temp_object = nil
           self.uid = nil
           reset_magic_attributes
         else
@@ -40,7 +41,7 @@ module Dragonfly
       def save!
         if changed?
           destroy!
-          self.uid = app.datastore.store(temp_object)
+          self.uid = app.datastore.store(temp_object) if temp_object
         end
       end
       

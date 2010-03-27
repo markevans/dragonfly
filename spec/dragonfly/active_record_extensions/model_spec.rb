@@ -105,7 +105,7 @@ describe Item do
         before(:each) do
           @item.preview_image = "DATASTRING"
           @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING")).once.and_return('some_uid')
-          @app.datastore.stub!(:store)
+          @app.datastore.stub!(:store).and_return('some_uid')
           @app.datastore.stub!(:destroy)
           @item.save!
         end
@@ -190,6 +190,7 @@ describe Item do
           it "should destroy the data on save" do
             @app.datastore.should_receive(:destroy).with('some_uid')
             @item.save!
+            @item.preview_image.should be_nil
           end
           it "should destroy the old data on destroy" do
             @app.datastore.should_receive(:destroy).with('some_uid')
