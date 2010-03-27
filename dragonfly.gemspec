@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.5.2"
+  s.version = "0.5.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2010-03-04}
+  s.date = %q{2010-03-27}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -143,7 +143,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/markevans/dragonfly}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Dragonfly is an on-the-fly Rack processing/encoding framework. It includes an extension for Ruby on Rails for easy image handling}
   s.test_files = [
     "spec/argument_matchers.rb",
