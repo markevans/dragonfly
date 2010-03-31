@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'digest/sha1'
 require 'rack'
 
@@ -16,98 +17,112 @@ module Dragonfly
     configurable_attr :secret, 'This is a secret!'
     configurable_attr :sha_length, 16
     configurable_attr :path_prefix, ''
+    configurable_attr :default_route do Route.new("(?<uid>\w+)", :j => :job, :s => :sha) end
 
     class Parameters
       
       include Rack::Utils
       
-      def initialize(url_details)
-        required_keys = [:host, :path, :query, :path_prefix]
-        unless required_keys - url_details.keys == []
-          raise ArgumentError, "#{self.class.name} must be initialized with a hash with the keys (#{required_keys.join(', ')})"
+      def self.from_url(path, query_string, route)
+        params = new
+        attrs = route.parse_url(path, query_string)
+        %w(uid job sha).each do |meth|
+          params.send("#{meth}=", attrs[meth])
         end
-        @url_details = url_details
+        params
       end
       
-      def path_prefix
-        @path_prefix ||= url_details[:path_prefix]
+      def initialize(uid=nil, job=nil)
+        @uid = uid
+        @job_name, *@job_args = job unless job.blank?
       end
       
-      def path
-        @path ||= unescape(url_details[:path])
-      end
-
-      def rel_path
-        @rel_path ||= path.sub(path_prefix, '')
+      attr_accessor :uid, :sha
+      attr_reader :job_name, :job_args
+      
+      def job
+        Serializer.marshal_encode([@job_name, *@job_args]) if @job_name
       end
       
-      def uid
-        @uid ||= rel_path.sub(/^\//,'').sub(/\.[^.]+$/, '')
+      def job=(encoded_job)
+        @job_name, *@job_args = Serializer.marshal_decode(encoded_job) if encoded_job
       end
       
-      def format
-        @format ||= begin
-          bits = rel_path.sub(/^\//,'').split('.')
-          bits.last.to_sym if bits.length > 1
-        end
+      def generate_sha!(secret, length)
+        self.sha = generate_sha(secret, length)
       end
       
-      def query
-        @query ||= parse_query(url_details[:query])
-      end
-      
-      def encoded_job_args
-        @encoded_job_args ||= query['j']
-      end
-      
-      def job_args
-        @job_args ||= Serializer.marshal_decode(encoded_job_args) if encoded_job_args
-      end
-      
-      def sha
-        @sha ||= query['s']
-      end
-
       def generate_sha(secret, length)
-        Digest::SHA1.hexdigest("#{uid}#{encoded_job_args}#{secret}")[0...length]
+        Digest::SHA1.hexdigest("#{uid}#{job}#{secret}")[0...length]
       end
       
-      def valid?
-        path =~ %r(^#{path_prefix}/[^.]+)
+      def to_url(route)
+        route
+      end
+    end
+
+    class Route
+      include Rack::Utils
+      
+      def initialize(path_spec, query_spec)
+        @path_spec, @query_spec = path_spec, query_spec
+      end
+
+      def parse_url(path, query_string)
+        attrs_from_path  = parse_path(path)
+        attrs_from_query = parse_query_string(query_string)
+        attrs_from_path.merge(attrs_from_query)
+      end
+      
+      def to_url(params)
+        # substitute named portions of the path spec with the value from params
+        path = %w(uid job).inject(@path_spec) do |path, meth|
+          path.sub( /\(\?<#{meth}>[^\(\)]+\)/, escape(params.send(meth) || '') )
+        end
+        query = @query_spec.inject({}) do |query, (k, meth)|
+          value = params.send(meth)
+          query[k] = value if value
+          query
+        end
+        query_string = build_query(query)
+        [path, query_string].reject{|i| i.blank? }.join('?')
       end
       
       private
-      attr_reader :url_details
-    end
-
-    def url_for(uid, *args)
-      parameters = parameters_class.from_args(*args)
-      parameters.uid = uid
-      parameters_to_url(parameters)
+      def regexp
+        @regexp ||= Regexp.new(@path_spec)
+      end
+      
+      def parse_path(path)
+        match_data = regexp.match(path)
+        raise UnknownUrl, "path '#{path}' not found" unless match_data
+        Hash[[match_data.names, match_data.captures].transpose]
+      end
+      
+      def parse_query_string(query_string)
+        query = parse_query(query_string)
+        attrs_from_query = @query_spec.inject({}) do |attrs, (k, v)|
+          attrs[v.to_s] = query[k.to_s]
+          attrs
+        end
+      end
     end
 
     def parse_env(env)
-      params = Parameters.new(
-        :host => env['HTTP_HOST'],
-        :path => env['PATH_INFO'],
-        :query => env['QUERY_STRING'],
-        :path_prefix => path_prefix
-      )
+      params = Parameters.from_url(env['PATH_INFO'], env['QUERY_STRING'], default_route)
       validate_params!(params)
       params
     end
       
-    def params_to_url(uid, format, job_args)
-      query_string = "j=#{Serializer.marshal_encode(job_args)}" unless job_args.blank?
-      prefix = "/#{escape(path_prefix.sub(/^\//,''))}" unless path_prefix.blank?
-      path = "#{prefix}/#{escape(uid)}#{'.'+escape(format.to_s) if format}"
-      [path, query_string].compact.join('?')
+    def url_for(uid, *job)
+      params = Parameters.new(uid, job)
+      params.generate_sha!(secret, sha_length) if protect_from_dos_attacks
+      default_route.to_url(params)
     end
 
     private
 
     def validate_params!(params)
-      raise UnknownUrl, "path '#{params.path}' not found" unless params.valid?
       if protect_from_dos_attacks
         raise SHANotGiven, "You need to give a SHA" unless params.sha
         raise IncorrectSHA, "The SHA parameter you gave is incorrect" if params.generate_sha(secret, sha_length) != params.sha

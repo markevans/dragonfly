@@ -73,7 +73,7 @@ module Dragonfly
       @analysers, @processors, @encoders = AnalyserList.new(self), ProcessorList.new(self), EncoderList.new(self)
       @job_manager = JobManager.new
       @parameters_class = Class.new(Parameters)
-      @url_handler = UrlHandler.new(@parameters_class)
+      @url_handler = UrlHandler.new
     end
     
     # @see Analysis::AnalyserList
