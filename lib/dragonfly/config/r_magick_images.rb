@@ -15,24 +15,16 @@ module Dragonfly
           c.register_analyser(Analysis::RMagickAnalyser)
           c.register_processor(Processing::RMagickProcessor)
           c.register_encoder(Encoding::RMagickEncoder)
-          c.define_job Processing::RMagickProcessor::THUMB_GEOMETRY do |geometry|
-            process :thumb, geometry
-            encode app.default_format if app.default_format
+          c.define_job do
+            process :thumb, opts[:geometry]
+            encode opts[:format] || app.default_format
           end
-          c.define_job Processing::RMagickProcessor::THUMB_GEOMETRY, Symbol do |geometry, format|
-            process :thumb, geometry
-            encode format
+          c.define_job :encode do
+            encode opts[:format]
           end
-          c.define_job Symbol do |format|
-            encode format
-          end
-          c.define_job :rotate, Numeric do |_, amount|
-            process :rotate, :amount => amount, :background_colour => '#0000'
-            encode app.default_format if app.default_format
-          end
-          c.define_job :rotate, Numeric, Symbol do |_, amount, format|
-            process :rotate, :amount => amount, :background_colour => '#0000'
-            encode format
+          c.define_job :rotate do
+            process :rotate, :amount => opts[:amount], :background_colour => '#0000'
+            encode opts[:format] || app.default_format
           end
         end
     

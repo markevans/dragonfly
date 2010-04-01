@@ -55,13 +55,13 @@ describe Dragonfly::JobManager do
 
     describe "jobs with arguments" do
       before(:each) do
-        @job_manager.define_job :thumb do |geometry, scoobie|
-          process :resize, geometry, scoobie
+        @job_manager.define_job :thumb do
+          process :resize, opts[:geometry], opts[:scoobie]
         end
       end
       
-      it "should yield args to the block" do
-        job = @job_manager.job_for(:thumb, '30x50', :yum)
+      it "should make args available to the block" do
+        job = @job_manager.job_for(:thumb, :geometry => '30x50', :scoobie => :yum)
         
         process_step = job.steps.first
         process_step.name.should == :resize
@@ -69,7 +69,7 @@ describe Dragonfly::JobManager do
       end
       
       it "default args to nil" do
-        job = @job_manager.job_for(:thumb, '30x50!')
+        job = @job_manager.job_for(:thumb, :geometry => '30x50!')
         job.steps.first.args.should == ['30x50!', nil]
       end
       
@@ -77,12 +77,12 @@ describe Dragonfly::JobManager do
 
     describe "calling other jobs inside a job definition" do
       before(:each) do
-        @job_manager.define_job :terry do |size|
-          process :resize, size
+        @job_manager.define_job :terry do
+          process :resize, opts[:size]
         end
         @job_manager.define_job :butcher do
           process :black_and_white
-          job :terry, '100x100'
+          job :terry, :size => '100x100'
           encode :gif
         end
       end
