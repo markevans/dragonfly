@@ -46,18 +46,18 @@ describe Dragonfly::UrlHandler do
           params = @url_handler.parse_env(env_for("/media/some_uid"))
           params.uid.should == 'some_uid'
         end
-        it "should raise an UnknownUrl error if the url doesn't have the path prefix" do
+        it "should raise a NotFound error if the url doesn't have the path prefix" do
           lambda{
             @url_handler.parse_env(env_for("/some_uid"))
-          }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+          }.should raise_error(Dragonfly::Route::NotFound)
         end
       end
 
       describe "errors" do
-        it "should raise an UnknownUrl error if the path doesn't have a uid bit" do
+        it "should raise a NotFound error if the path doesn't have a uid bit" do
           lambda{
             @url_handler.parse_env(env_for('/'))
-          }.should raise_error(Dragonfly::UrlHandler::UnknownUrl)
+          }.should raise_error(Dragonfly::Route::NotFound)
         end
       end
   
