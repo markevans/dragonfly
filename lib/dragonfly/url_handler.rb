@@ -17,11 +17,9 @@ module Dragonfly
     configurable_attr :secret, 'This is a secret!'
     configurable_attr :sha_length, 16
     configurable_attr :path_prefix, ''
-    configurable_attr :default_route do Route.new("(?<uid>\w+)", :j => :job, :s => :sha) end
+    configurable_attr :default_route, ['(?<uid>\w+)', {:j => :job, :s => :sha}]
 
     class Parameters
-      
-      include Rack::Utils
       
       def self.from_url(path, query_string, route)
         params = new
@@ -54,6 +52,10 @@ module Dragonfly
       
       def generate_sha(secret, length)
         Digest::SHA1.hexdigest("#{uid}#{job}#{secret}")[0...length]
+      end
+      
+      def unique_signature
+        generate_sha('I like cheese', 10)
       end
       
       def to_url(route)
@@ -108,25 +110,28 @@ module Dragonfly
       end
     end
 
+    def route
+      path_spec, query_spec = default_route
+      Route.new "#{path_prefix}/#{path_spec}", query_spec
+    end
+
     def parse_env(env)
-      params = Parameters.from_url(env['PATH_INFO'], env['QUERY_STRING'], default_route)
-      validate_params!(params)
+      params = Parameters.from_url(env['PATH_INFO'], env['QUERY_STRING'], route)
+      check_for_sha!(params) if protect_from_dos_attacks
       params
     end
       
     def url_for(uid, *job)
       params = Parameters.new(uid, job)
       params.generate_sha!(secret, sha_length) if protect_from_dos_attacks
-      default_route.to_url(params)
+      route.to_url(params)
     end
 
     private
 
-    def validate_params!(params)
-      if protect_from_dos_attacks
-        raise SHANotGiven, "You need to give a SHA" unless params.sha
-        raise IncorrectSHA, "The SHA parameter you gave is incorrect" if params.generate_sha(secret, sha_length) != params.sha
-      end
+    def check_for_sha!(params)
+      raise SHANotGiven, "You need to give a SHA" unless params.sha
+      raise IncorrectSHA, "The SHA parameter you gave is incorrect" if params.generate_sha(secret, sha_length) != params.sha
     end
 
   end

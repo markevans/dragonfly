@@ -61,13 +61,6 @@ describe Dragonfly::UrlHandler do
         end
       end
   
-      describe "edge cases" do
-        it "should include any dot suffixes in the uid" do
-          params = @url_handler.parse_env(env_for('/hello.there'))
-          params.uid.should == 'hello.there'
-        end
-      end
-  
       describe "when no job is given" do
         before(:each) do
           env = env_for("/some_uid")
