@@ -11,21 +11,27 @@ module Dragonfly
     configurable_attr :secret, 'This is a secret!'
     configurable_attr :sha_length, 16
     configurable_attr :path_prefix, ''
-    configurable_attr :default_route, ['(?<uid>\w+)', {:j => :job, :s => :sha}]
+    configurable_attr :default_route, ":uid"
 
     def route
-      path_spec, query_spec = default_route
-      Route.new "#{path_prefix}/#{path_spec}", query_spec
+      Route.new "#{path_prefix}/#{default_route}"
     end
 
     def parse_env(env)
-      params = Parameters.from_url(env['PATH_INFO'], env['QUERY_STRING'], route)
+      params = Parameters.new
+      attrs = route.parse_url(env['PATH_INFO'], env['QUERY_STRING'])
+      params.uid = attrs[:uid]
+      params.job = attrs[:job]
+      params.sha = attrs[:sha]
       check_for_sha!(params) if protect_from_dos_attacks
       params
     end
       
-    def url_for(uid, *job)
-      params = Parameters.new(uid, job)
+    def url_for(uid, job_name, job_opts)
+      params = Parameters.new
+      params.uid      = uid
+      params.job_name = job_name
+      params.job_opts = job_opts
       params.generate_sha!(secret, sha_length) if protect_from_dos_attacks
       route.to_url(params)
     end
