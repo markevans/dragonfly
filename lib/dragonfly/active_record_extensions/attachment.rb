@@ -39,10 +39,8 @@ module Dragonfly
       end
       
       def save!
-        if changed?
-          destroy!
-          self.uid = app.datastore.store(temp_object) if temp_object
-        end
+        destroy! if uid_changed?
+        self.uid = app.datastore.store(temp_object) if has_data_to_store?
       end
       
       def temp_object
@@ -97,7 +95,11 @@ module Dragonfly
         uid && !uid.is_a?(PendingUID)
       end
       
-      def changed?
+      def has_data_to_store?
+        uid.is_a?(PendingUID)
+      end
+      
+      def uid_changed?
         parent_model.send("#{attribute_name}_uid_changed?")
       end
       

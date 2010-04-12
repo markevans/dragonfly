@@ -72,6 +72,24 @@ describe Item do
         end
       end
       
+      describe "when the uid is set manually" do
+        before(:each) do
+          @item.preview_image_uid = 'some_known_uid'
+        end
+        it "should not try to retrieve any data" do
+          @app.datastore.should_not_receive(:retrieve)
+          @item.save!
+        end
+        it "should not try to destroy any data" do
+          @app.datastore.should_not_receive(:destroy)
+          @item.save!
+        end
+        it "should not try to store any data" do
+          @app.datastore.should_not_receive(:store)
+          @item.save!
+        end
+      end
+      
       describe "when there has been some thing assigned but not saved" do
         before(:each) do
           @item.preview_image = "DATASTRING"
@@ -98,6 +116,24 @@ describe Item do
           temp_object.should be_a(Dragonfly::ExtendedTempObject)
           temp_object.data.should == 'DATASTRING'
         end
+        describe "when the uid is set manually" do
+          before(:each) do
+            @item.preview_image_uid = 'some_known_uid'
+          end
+          it "should not try to retrieve any data" do
+            @app.datastore.should_not_receive(:retrieve)
+            @item.save!
+          end
+          it "should not try to destroy any data" do
+            @app.datastore.should_not_receive(:destroy)
+            @item.save!
+          end
+          it "should not try to store any data" do
+            @app.datastore.should_not_receive(:store)
+            @item.save!
+          end
+        end
+        
       end
       
       describe "when something has been assigned and saved" do
@@ -130,6 +166,12 @@ describe Item do
         it "should return the url for the data" do
           @app.should_receive(:url_for).with(@item.preview_image_uid, :arg).and_return('some.url')
           @item.preview_image.url(:arg).should == 'some.url'
+        end
+        
+        it "should destroy the old data when the uid is set manually" do
+          @app.datastore.should_receive(:destroy).with('some_uid')
+          @item.preview_image_uid = 'some_known_uid'
+          @item.save!
         end
         
         describe "when accessed by a new model object" do
