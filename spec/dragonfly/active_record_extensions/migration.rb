@@ -14,6 +14,13 @@ class MigrationForTest < ActiveRecord::Migration
       t.string  :trailer_video_uid
       t.timestamps
     end
+    
+    create_table :cars do |t|
+      t.string :image_uid
+      t.string :reliant_image_uid
+      t.string :type
+    end
+    
   end
 
   def self.down

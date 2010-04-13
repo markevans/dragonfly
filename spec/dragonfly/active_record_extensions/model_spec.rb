@@ -545,5 +545,31 @@ describe Item do
       end
     end
   end
+  
+  describe "inheritance" do
+    before(:all) do
+      @app = Dragonfly::App[:images]
+      ActiveRecord::Base.register_dragonfly_app(:image, @app)
+      Car.class_eval do
+        image_accessor :image
+      end
+      ReliantRobin.class_eval do
+        image_accessor :reliant_image
+      end
+    end
+    it "should allow assigning base class accessors" do
+      Car.create! :image => 'blah'
+    end
+    it "should not allow assigning subclass accessors in the base class" do
+      Car.new.should_not respond_to(:reliant_image=)
+    end
+    it "should allow assigning base class accessors in the subclass" do
+      ReliantRobin.create! :image => 'blah'
+    end
+    it "should allow assigning subclass accessors in the subclass" do
+      ReliantRobin.create! :reliant_image => 'blah'
+    end
+
+  end
 
 end
