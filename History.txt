@@ -1,3 +1,30 @@
+0.5.5 (2010-04-13)
+==================
+
+Fixes
+--------
+- Rails 3 has changed 'metaclass' -> 'singleton_class' so adapt accordingly
+
+0.5.4 (2010-04-12)
+==================
+
+Features
+--------
+- Allow setting the uid manually
+
+Fixes
+-----
+- Assigning an accessor to nil wasn't working properly
+
+
+0.5.3 (2010-03-27)
+==================
+
+Fixes
+-----
+- Assigning an accessor to nil wasn't working properly
+
+
 0.5.2 (2010-03-04)
 ==================
 
