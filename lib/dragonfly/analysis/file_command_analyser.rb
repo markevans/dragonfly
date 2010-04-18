@@ -10,7 +10,7 @@ module Dragonfly
       configurable_attr :num_bytes_to_check, 255
       
       def mime_type(temp_object)
-        if use_filesystem
+        content_type = if use_filesystem
           `#{file_command} -b --mime '#{temp_object.path}'`
         else
           IO.popen("#{file_command} -b --mime -", 'r+') do |io|
@@ -23,6 +23,7 @@ module Dragonfly
             io.read
           end
         end.split(';').first
+        content_type.strip if content_type
       end
       
     end
