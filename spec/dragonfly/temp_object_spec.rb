@@ -4,14 +4,18 @@ describe Dragonfly::TempObject do
   
   ####### Helper Methods #######
 
-  def new_tempfile(data = File.read(SAMPLES_DIR + '/round.gif'))
+  def sample_path(filename)
+    File.dirname(__FILE__) + '/../../samples/' + filename
+  end
+
+  def new_tempfile(data='HELLO')
     tempfile = Tempfile.new('test')
     tempfile.write(data)
     tempfile.rewind
     tempfile
   end
   
-  def new_file(data = File.read(SAMPLES_DIR + '/round.gif'))
+  def new_file(data='HELLO')
     File.open('/tmp/test_file', 'w') do |f|
       f.write(data)
     end
@@ -35,116 +39,129 @@ describe Dragonfly::TempObject do
     }.should raise_error(ArgumentError)
   end
   
-  describe "common behaviour for #each", :shared => true do
+  describe "common behaviour", :shared => true do
 
-    it "should yield 8192 bytes each time" do
-      parts = get_parts(@temp_object)
-      parts[0...-1].each do |part|
-        part.bytesize.should == 8192
-      end
-      parts.last.bytesize.should <= 8192
-    end
-    
-  end
-  
-  describe "configuring #each" do
-
-    it "should yield the number of bytes specified in the class configuration" do
-      temp_object_class = Class.new(Dragonfly::TempObject)
-      temp_object_class.block_size = 3001
-      temp_object = temp_object_class.new(new_tempfile)
-      parts = get_parts(temp_object)
-      parts[0...-1].each do |part|
-        part.length.should == 3001
-      end
-      parts.last.length.should <= 3001
-    end
-
-  end
-  
-  describe "initializing from a string" do
     before(:each) do
-      @gif_string = File.read(SAMPLES_DIR + '/round.gif')
-      @temp_object = Dragonfly::TempObject.new(@gif_string)
+      @temp_object = new_temp_object('HELLO')
     end
+
     describe "data" do
       it "should return the data correctly" do
-        @temp_object.data.should == @gif_string
+        @temp_object.data.should == 'HELLO'
       end
     end
+
     describe "file" do
       it "should lazily create an unclosed tempfile" do
         @temp_object.file.should be_a(Tempfile)
         @temp_object.file.should_not be_closed
       end
       it "should contain the correct data" do
-        @temp_object.file.read.should == @gif_string
+        @temp_object.file.read.should == 'HELLO'
       end
     end
-    describe "each" do
-      it "should not create a file" do
-        @temp_object.should_not_receive(:tempfile)
-        @temp_object.each{}
+    
+    describe "path" do
+      it "should return the absolute file path" do
+        @temp_object.path.should == @temp_object.tempfile.path
       end
-      it_should_behave_like "common behaviour for #each"
+    end
+    
+    describe "size" do
+      it "should return the size in bytes" do
+        @temp_object.size.should == 5
+      end
+    end
+
+    describe "to_file" do
+      before(:each) do
+        @filename = 'eggnog.txt'
+        FileUtils.rm(@filename) if File.exists?(@filename)
+      end
+      after(:each) do
+        FileUtils.rm(@filename) if File.exists?(@filename)
+      end
+      it "should write to a file" do
+        @temp_object.to_file(@filename)
+        File.exists?(@filename).should be_true
+      end
+      it "should write the correct data to the file" do
+        @temp_object.to_file(@filename)
+        File.read(@filename).should == 'HELLO'
+      end
+      it "should return a readable file" do
+        file = @temp_object.to_file(@filename)
+        file.should be_a(File)
+        file.read.should == 'HELLO'
+      end
+    end
+
+    describe "each" do
+      it "should yield 8192 bytes each time" do
+        temp_object = new_temp_object(File.read(sample_path('round.gif')))
+        parts = get_parts(temp_object)
+        parts[0...-1].each do |part|
+          part.bytesize.should == 8192
+        end
+        parts.last.bytesize.should <= 8192
+      end
+      it "should yield the number of bytes specified in the class configuration" do
+        klass = Class.new(Dragonfly::TempObject)
+        temp_object = new_temp_object(File.read(sample_path('round.gif')), klass)
+        klass.block_size = 3001
+        parts = get_parts(temp_object)
+        parts[0...-1].each do |part|
+          part.length.should == 3001
+        end
+        parts.last.length.should <= 3001
+      end
+    end
+    
+
+  end
+  
+  describe "initializing from a string" do
+
+    def new_temp_object(data, klass=Dragonfly::TempObject)
+      klass.new(data)
+    end
+
+    it_should_behave_like "common behaviour"
+
+    it "should not create a file when calling each" do
+      temp_object = new_temp_object('HELLO')
+      temp_object.should_not_receive(:tempfile)
+      temp_object.each{}
     end
   end
   
   describe "initializing from a tempfile" do
-    before(:each) do
-      @gif_string = File.read(SAMPLES_DIR + '/round.gif')
-      @tempfile = new_tempfile(@gif_string)
-      @temp_object = Dragonfly::TempObject.new(@tempfile)
+
+    def new_temp_object(data, klass=Dragonfly::TempObject)
+      klass.new(new_tempfile(data))
     end
-    describe "data" do
-      it "should lazily return the correct data" do
-        @temp_object.data.should == @gif_string
-      end
-    end
-    describe "file" do
-      it "should return the unclosed tempfile" do
-        @temp_object.file.should be_a(Tempfile)
-        @temp_object.file.should_not be_closed
-        @temp_object.file.path.should == @tempfile.path
-      end
-    end
-    describe "each" do
-      it "should not create a data string" do
-        @temp_object.should_not_receive(:data)
-        @temp_object.each{}
-      end
-      it_should_behave_like "common behaviour for #each"
+
+    it_should_behave_like "common behaviour"
+
+    it "should not create a data string when calling each" do
+      temp_object = new_temp_object('HELLO')
+      temp_object.should_not_receive(:data)
+      temp_object.each{}
     end
   end
   
   describe "initializing from a file" do
-    before(:each) do
-      @file = File.new(SAMPLES_DIR + '/beach.png')
-      @temp_object = Dragonfly::TempObject.new(@file)
+
+    def new_temp_object(data, klass=Dragonfly::TempObject)
+      klass.new(new_file(data))
     end
-    after(:each) do
-      @file.close
-    end
-    describe "data" do
-      it "should lazily return the correct data" do
-        @temp_object.data.should == @file.read
-      end
-    end
-    describe "file" do
-      it "should lazily return an unclosed tempfile" do
-        @temp_object.file.should be_a(Tempfile)
-        @temp_object.file.should_not be_closed
-      end
-      it "should contain the correct data" do
-        @temp_object.file.read.should == @file.read
-      end
-    end
-    describe "each" do
-      it "should not create a data string" do
-        @temp_object.should_not_receive(:data)
-        @temp_object.each{}
-      end
-      it_should_behave_like "common behaviour for #each"
+
+    it_should_behave_like "common behaviour"
+
+    it "should not create a data string when calling each" do
+      temp_object = new_temp_object('HELLO')
+      temp_object.should_not_receive(:data)
+      temp_object.each{}
     end
   end
   
@@ -161,13 +178,6 @@ describe Dragonfly::TempObject do
     end
     it "should have a different file path" do
       @temp_object1.path.should_not == @temp_object2.path
-    end
-  end
-  
-  describe "path" do
-    it "should return the absolute file path" do
-      temp_object = Dragonfly::TempObject.new(File.new(SAMPLES_DIR + '/beach.png'))
-      temp_object.path.should == temp_object.file.path
     end
   end
   
@@ -200,23 +210,6 @@ describe Dragonfly::TempObject do
       @temp_object.data.should == 'DATA_ONE'
     end
     
-  end
-  
-  describe "size" do
-    
-    before(:each) do
-      @gif_string = File.read(SAMPLES_DIR + '/round.gif')
-    end
-    
-    it "should return the size in bytes when initialized with a string" do
-      Dragonfly::TempObject.new(@gif_string).size.should == 61346
-    end
-    it "should return the size in bytes when initialized with a tempfile" do
-      Dragonfly::TempObject.new(new_tempfile(@gif_string)).size.should == 61346
-    end
-    it "should return the size in bytes when initialized with a file" do
-      Dragonfly::TempObject.new(new_file(@gif_string)).size.should == 61346
-    end
   end
   
   describe "name" do
@@ -279,47 +272,5 @@ describe Dragonfly::TempObject do
       @temp_object.basename.should be_nil
     end
   end
-  
-  describe "to_file" do
-    
-    describe "common behaviour for to_file", :shared => true do
-      before(:each) do
-        @filename = 'eggnog.txt'
-        FileUtils.rm(@filename) if File.exists?(@filename)
-      end
-      after(:each) do
-        FileUtils.rm(@filename) if File.exists?(@filename)
-      end
-      it "should write to a file" do
-        @temp_object.to_file(@filename)
-        File.exists?(@filename).should be_true
-      end
-      it "should write the correct data to the file" do
-        @temp_object.to_file(@filename)
-        File.read(@filename).should == 'HELLO'
-      end
-      it "should return a readable file" do
-        file = @temp_object.to_file(@filename)
-        file.should be_a(File)
-        file.read.should == 'HELLO'
-      end
-    end
-    
-    describe "when initialized with a string" do
-      before(:each){ @temp_object = Dragonfly::TempObject.new('HELLO') }
-      it_should_behave_like "common behaviour for to_file"
-    end
-    
-    describe "when initialized with a file" do
-      before(:each){ @temp_object = Dragonfly::TempObject.new(new_tempfile('HELLO')) }
-      it_should_behave_like "common behaviour for to_file"
-    end
-    
-    describe "when initialized with a tempfile" do
-      before(:each){ @temp_object = Dragonfly::TempObject.new(new_file('HELLO')) }
-      it_should_behave_like "common behaviour for to_file"
-    end
 
-  end
-  
 end
