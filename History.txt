@@ -1,3 +1,10 @@
+0.5.7 (2010-04-18)
+==================
+
+Fixes
+--------
+- Strip file command mime_type value because some versions of file command were appending a line-break
+
 0.5.6 (2010-04-13)
 ==================
 
