@@ -197,44 +197,49 @@ describe Dragonfly::Processing::RMagickProcessor do
       end
 
       it "should create a text image, defaulted to png" do
-        image = @processor.text(@text)
-        image.should have_width(34)
-        image.should have_height(14)
+        image = @processor.text(@text, :font_size => 12)
+        image.should have_width(20..40) # approximate
+        image.should have_height(10..20)
         image.should have_format('png')
       end
 
       # it "should ignore percent characters used by rmagick"
 
       describe "padding" do
+        before(:each) do
+          no_padding_text = @processor.text(@text, :font_size => 12)
+          @width = image_properties(no_padding_text)[:width].to_i
+          @height = image_properties(no_padding_text)[:height].to_i
+        end
         it "1 number shortcut" do
           image = @processor.text(@text, :padding => '10')
-          image.should have_width(54)
-          image.should have_height(34)
+          image.should have_width(@width + 20)
+          image.should have_height(@height + 20)
         end
         it "2 numbers shortcut" do
           image = @processor.text(@text, :padding => '10 5')
-          image.should have_width(44)
-          image.should have_height(34)
+          image.should have_width(@width + 10)
+          image.should have_height(@height + 20)
         end
         it "3 numbers shortcut" do
           image = @processor.text(@text, :padding => '10 5 8')
-          image.should have_width(44)
-          image.should have_height(32)
+          image.should have_width(@width + 10)
+          image.should have_height(@height + 18)
         end
         it "4 numbers shortcut" do
           image = @processor.text(@text, :padding => '1 2 3 4')
-          image.should have_width(40)
-          image.should have_height(18)
+          image.should have_width(@width + 6)
+          image.should have_height(@height + 4)
         end
         it "should override the general padding declaration with the specific one (e.g. 'padding-left')" do
           image = @processor.text(@text, :padding => '10', 'padding-left' => 9)
-          image.should have_width(53)
-          image.should have_height(34)
+          image.should have_width(@width + 19)
+          image.should have_height(@height + 20)
         end
         it "should ignore 'px' suffixes" do
           image = @processor.text(@text, :padding => '1px 2px 3px 4px')
-          image.should have_width(40)
-          image.should have_height(18)
+          image.should have_width(@width + 6)
+          image.should have_height(@height + 4)
         end
         it "bad padding string" do
           lambda{

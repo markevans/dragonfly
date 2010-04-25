@@ -23,11 +23,11 @@ def image_properties(image)
 end
 
 def have_width(width)
-  simple_matcher("have width #{width}"){|given| image_properties(given)[:width].to_i.should == width }
+  simple_matcher("have width #{width}"){|given| width.should === image_properties(given)[:width].to_i }
 end
 
 def have_height(height)
-  simple_matcher("have height #{height}"){|given| image_properties(given)[:height].to_i.should == height }
+  simple_matcher("have height #{height}"){|given| height.should === image_properties(given)[:height].to_i }
 end
 
 def have_format(format)
