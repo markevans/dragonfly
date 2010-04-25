@@ -64,42 +64,53 @@ module Dragonfly
         draw.gravity = Magick::CenterGravity
         draw.text_antialias = true
         
+        # Font size
+        font_size = opts[:font_size] || 12
+
+        # Scale up the text for better quality -
+        #  it will be reshrunk at the end
+        s = scale_factor_for(font_size)
+
         # Settings
+        draw.pointsize    = font_size * s
         draw.font         = opts[:font] if opts[:font]
         draw.font_family  = opts[:font_family] if opts[:font_family]
-        draw.pointsize    = opts[:font_size].to_f if opts[:font_size]
         draw.fill         = opts[:color] if opts[:color]
         draw.stroke       = opts[:stroke_color] if opts[:stroke_color]
         draw.font_style   = FONT_STYLES[opts[:font_style]] if opts[:font_style]
         draw.font_stretch = FONT_STRETCHES[opts[:font_stretch]] if opts[:font_stretch]
         draw.font_weight  = FONT_WEIGHTS[opts[:font_weight]] if opts[:font_weight]
 
+        # Padding
+        # NB the values are scaled up by the scale factor
+        pt, pr, pb, pl = parse_padding_string(opts[:padding]) if opts[:padding]
+        padding_top    = (opts[:padding_top]    || pt || 0) * s
+        padding_right  = (opts[:padding_right]  || pr || 0) * s
+        padding_bottom = (opts[:padding_bottom] || pb || 0) * s
+        padding_left   = (opts[:padding_left]   || pl || 0) * s
+
         text = temp_object.data
 
-        # Calculate dimensions
+        # Calculate (scaled up) dimensions
         metrics = draw.get_type_metrics(text)
         width, height = metrics.width, metrics.height
 
-        pt, pr, pb, pl = parse_padding_string(opts[:padding]) if opts[:padding]
-        padding_top    = opts[:padding_top]    || pt || 0
-        padding_right  = opts[:padding_right]  || pr || 0
-        padding_bottom = opts[:padding_bottom] || pb || 0
-        padding_left   = opts[:padding_left]   || pl || 0
-
-        # Hack - for small font sizes, the width seems to be affected by rounding errors
-        padding_right += 2
-
-        total_width = padding_left + width + padding_right
-        total_height = padding_top + height + padding_bottom
+        scaled_up_width = padding_left + width + padding_right
+        scaled_up_height = padding_top + height + padding_bottom
 
         # Draw the background
-        image = Magick::Image.new(total_width, total_height){
+        image = Magick::Image.new(scaled_up_width, scaled_up_height){
           self.background_color = opts[:background_color] || 'transparent'
         }
         # Draw the text
         draw.annotate(image, width, height, padding_left, padding_top, text)
-        # Output image as string
+        
+        # Scale back down again
+        image.scale!(1/s)
+        
         image.format = 'png'
+
+        # Output image as string
         image.to_blob
       end
       
@@ -126,6 +137,16 @@ module Dragonfly
           padding_parts
         else raise ArgumentError, "Couldn't parse padding string '#{str}' - should be a css-style string"
         end
+      end
+      
+      def scale_factor_for(font_size)
+        # Scale approximately to 64 if below
+        min_size = 64
+        if font_size < min_size
+          (min_size.to_f / font_size).ceil
+        else
+          1
+        end.to_f
       end
 
     end
