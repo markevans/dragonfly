@@ -53,26 +53,34 @@ module Dragonfly
     end
     
     def data
-      @data ||= initialized_data || file.open.read
+      @data ||= initialized_data || file.read
     end
 
     def tempfile
-      if @tempfile
+      @tempfile ||= begin
+        if initialized_tempfile
+          @tempfile = initialized_tempfile
+        elsif initialized_data
+          @tempfile = Tempfile.new('dragonfly')
+          @tempfile.write(initialized_data)
+        elsif initialized_file
+          @tempfile = copy_to_tempfile(initialized_file.path)
+        end
+        @tempfile.close
         @tempfile
-      elsif initialized_tempfile
-        initialized_tempfile.open
-        @tempfile = initialized_tempfile
-      elsif initialized_data
-        tempfile = Tempfile.new('dragonfly')
-        tempfile.write(initialized_data)
-        tempfile.open
-        @tempfile = tempfile
-      elsif initialized_file
-        @tempfile = copy_to_tempfile(initialized_file)
       end
     end
-    
-    alias_method :file, :tempfile
+
+    def file(&block)
+      f = tempfile.open
+      if block_given?
+        ret = yield f
+        f.close
+      else
+        ret = f
+      end
+      ret
+    end
     
     def path
       tempfile.path
@@ -104,17 +112,10 @@ module Dragonfly
     end
     
     def each(&block)
-      if initialized_data
-        string_io = StringIO.new(initialized_data)
-        while part = string_io.read(block_size)
+      to_io do |io|
+        while part = io.read(block_size)
           yield part
         end
-      else
-        tempfile.open
-        while part = tempfile.read(block_size)
-          yield part
-        end
-        tempfile.close
       end
     end
     
@@ -127,6 +128,14 @@ module Dragonfly
       File.new(path)
     end
     
+    def to_io(&block)
+      if initialized_data
+        StringIO.open(initialized_data, &block)
+      else
+        file(&block)
+      end
+    end
+
     protected
     
     attr_accessor :initialized_data, :initialized_tempfile, :initialized_file
@@ -143,7 +152,7 @@ module Dragonfly
       case obj
       when TempObject
         @initialized_data = obj.initialized_data
-        @initialized_tempfile = copy_to_tempfile(obj.initialized_tempfile) if obj.initialized_tempfile
+        @initialized_tempfile = copy_to_tempfile(obj.initialized_tempfile.path) if obj.initialized_tempfile
         @initialized_file = obj.initialized_file
       when String
         @initialized_data = obj
@@ -153,19 +162,19 @@ module Dragonfly
         @initialized_file = obj
         self.name = File.basename(obj.path)
       else
-        raise ArgumentError, "#{self.class.name} must be initialized with a String, a File or a Tempfile"
+        raise ArgumentError, "#{self.class.name} must be initialized with a String, a File, a Tempfile, or another TempObject"
       end
       self.name = obj.original_filename if obj.respond_to?(:original_filename)
     end
     
-    def copy_to_tempfile(file)
-      tempfile = Tempfile.new('dragonfly')
-      FileUtils.cp File.expand_path(file.path), tempfile.path
-      tempfile
-    end
-    
     def block_size
       self.class.block_size
+    end
+    
+    def copy_to_tempfile(path)
+      tempfile = Tempfile.new('dragonfly')
+      FileUtils.cp File.expand_path(path), tempfile.path
+      tempfile
     end
     
   end

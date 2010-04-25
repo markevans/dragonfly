@@ -52,12 +52,32 @@ describe Dragonfly::TempObject do
     end
 
     describe "file" do
-      it "should lazily create an unclosed tempfile" do
-        @temp_object.file.should be_a(Tempfile)
-        @temp_object.file.should_not be_closed
+      it "should return a readable file" do
+        @temp_object.file.should be_a(File)
       end
       it "should contain the correct data" do
         @temp_object.file.read.should == 'HELLO'
+      end
+      it "should yield a file then close it if a block is given" do
+        @temp_object.file do |f|
+          f.read.should == 'HELLO'
+          f.should_receive :close
+        end
+      end
+      it "should return whatever is returned from the block if a block is given" do
+        @temp_object.file do |f|
+          'doogie'
+        end.should == 'doogie'
+      end
+    end
+
+    describe "tempfile" do
+      it "should create a closed tempfile" do
+        @temp_object.tempfile.should be_a(Tempfile)
+        @temp_object.tempfile.should be_closed
+      end
+      it "should contain the correct data" do
+        @temp_object.tempfile.open.read.should == 'HELLO'
       end
     end
     
