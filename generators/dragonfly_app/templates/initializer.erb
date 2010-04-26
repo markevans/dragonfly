@@ -2,12 +2,7 @@ require 'dragonfly'
 
 # Configuration
 app = Dragonfly::App[:<%= app_name %>]
-app.configure_with(Dragonfly::Config::RMagickImages)
-app.configure do |c|
-  c.log = Rails.logger
-  c.datastore.configure do |d|
-    d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
-  end
+app.configure_with(Dragonfly::Config::RailsImages) do |c|
   c.url_handler.configure do |u|
     u.secret = '<%= random_secret %>'
     u.path_prefix = '/<%= path_prefix %>'

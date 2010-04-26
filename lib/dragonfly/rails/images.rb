@@ -4,17 +4,7 @@ require 'rack/cache'
 ### The dragonfly app ###
 
 app = Dragonfly::App[:images]
-app.configure_with(Dragonfly::Config::RMagickImages)
-app.configure do |c|
-  c.log = Rails.logger
-  c.datastore.configure do |d|
-    d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
-  end
-  c.url_handler.configure do |u|
-    u.protect_from_dos_attacks = false
-    u.path_prefix = '/media'
-  end
-end
+app.configure_with(Dragonfly::Config::RailsImages)
 
 ### Extend active record ###
 ActiveRecord::Base.extend Dragonfly::ActiveRecordExtensions

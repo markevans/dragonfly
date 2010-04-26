@@ -17,10 +17,6 @@ Image thumbnails in Rails, hosted on Heroku with S3 storage
 {http://heroku.com Heroku} is a commonly used platform for hosting Rack-based websites.
 The following assumes your site is set up for deployment onto Heroku.
 
-As explained in {file:UsingWithRails}, we can use a generator to create an initializer for setting up Dragonfly.
-
-    ./script/generate dragonfly_app images
-
 The default configuration won't work out of the box for Heroku, because
 
 - Heroku doesn't allow saving files to the filesystem (although it does use tempfiles)
@@ -31,46 +27,35 @@ Amazon's {http://aws.amazon.com/s3 S3} is a commonly used platform for storing d
 
 The following assumes you have an S3 account set up, and know your provided 'access key' and 'secret'.
 
-Assuming we don't bother with any caching for development/testing environments, our environment.rb then has:
+### Rails 2.3
+
+environment.rb:
 
     config.gem 'rmagick', :lib => 'RMagick'
-    config.gem 'dragonfly', :source => "http://www.gemcutter.org"
+    config.gem 'dragonfly'
 
-(these are ignored by Heroku but you might want them locally)
-
-The gems file for Heroku, `.gems`, has
+and
+.gems:
 
     dragonfly
 
-(rmagick not needed because it is already installed)
+### Rails 3
 
-Then in our configuration initializer, we replace
+Gemfile:
 
-    c.datastore.configure do |d|
-      d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
-    end
+    gem 'rmagick', :require => 'RMagick'
+    gem 'dragonfly'
 
-with
+### All versions
 
-    # Use S3 for production
-    if Rails.env == 'production'
-      c.datastore = Dragonfly::DataStorage::S3DataStore.new
-      c.datastore.configure do |d|
-        d.bucket_name = 'my_s3_bucket_name'
-        d.access_key_id = ENV['S3_KEY'] || raise("ENV variable 'S3_KEY' needs to be set")
-        d.secret_access_key = ENV['S3_SECRET'] || raise("ENV variable 'S3_SECRET' needs to be set")
-      end
-    # and filesystem for other environments
-    else
-      c.datastore.configure do |d|
-        d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
-      end
-    end
+Initializer (e.g. config/initializers/dragonfly.rb):
 
-We've left the datastore as {Dragonfly::DataStorage::FileDataStore FileDataStore} for non-production environments.
+    Dragonfly::App[:images].configure_with(Dragonfly::Config::HerokuRailsImages, 'my_bucket_name')
 
-As you can see we've used `ENV` to store the S3 access key and secret to avoid having them in the repository.
-Heroku has a {http://docs.heroku.com/config-vars way of setting these} using the command line (we only have to do this once).
+The datastore remains as the {Dragonfly::DataStorage::FileDataStore FileDataStore} for non-production environments.
+
+We don't store the S3 access key and secret in the repository, rather we use Heroku's
+{http://docs.heroku.com/config-vars config variables} using the command line (we only have to do this once).
 
 From your app's directory:
 
@@ -80,8 +65,8 @@ Obviously you replace 'XXXXXXXXX' with your access key and secret.
 
 Now you can benefit use Dragonfly in the normal way, benefitting from super-fast images served straight from Heroku's cache!
 
-The only downside is that Heroku's cache is cleared every time you deploy, so if this is an issue you may want to look into using something like 
-a Memcached add-on, or maybe an after-deploy hook for hitting specific Dragonfly urls you want to cache, etc.
+NOTE: HEROKU'S CACHE IS CLEARED EVERY TIME YOU DEPLOY.
+If this is an issue you may want to look into using something like a Memcached add-on, or maybe an after-deploy hook for hitting specific Dragonfly urls you want to cache, etc.
 It won't be a problem for most sites though.
 
 
