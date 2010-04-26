@@ -27,12 +27,13 @@ module Dragonfly
     
     module InstanceMethods
       
-      def configure(&blk)
+      def configure(&block)
         yield ConfigurationProxy.new(self)
       end
     
-      def configure_with(configurer)
-        configurer.apply_configuration(self)
+      def configure_with(configurer, *args, &block)
+        configurer.apply_configuration(self, *args)
+        configure(&block) if block
       end
     
       def configuration

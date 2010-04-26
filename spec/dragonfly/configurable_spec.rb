@@ -177,16 +177,31 @@ describe Dragonfly::Configurable do
   end
   
   describe "configuring with a configurer" do
-    it "should allow configuration by a configurer" do
-      cool_configuration = Object.new
-      def cool_configuration.apply_configuration(car)
+    before(:each) do
+      @cool_configuration = Object.new
+      def @cool_configuration.apply_configuration(car, colour=nil)
         car.configure do |c|
-          c.colour = 'vermelho'
+          c.colour = (colour || 'vermelho')
         end
       end
-      @car.configure_with(cool_configuration)
+    end
+    
+    it "should allow configuration by a configurer" do
+      @car.configure_with(@cool_configuration)
       @car.colour.should == 'vermelho'
       @car.top_speed.should == 216
+    end
+    
+    it "should pass any args through to the configurer" do
+      @car.configure_with(@cool_configuration, 'preto')
+      @car.colour.should == 'preto'
+    end
+    
+    it "should yield a block for any extra configuration" do
+      @car.configure_with(@cool_configuration) do |c|
+        c.colour = 'branco'
+      end
+      @car.colour.should == 'branco'
     end
   end
   
