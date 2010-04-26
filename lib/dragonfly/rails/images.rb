@@ -4,7 +4,7 @@ require 'rack/cache'
 ### The dragonfly app ###
 
 app = Dragonfly::App[:images]
-app.configure_with(Dragonfly::RMagickConfiguration)
+app.configure_with(Dragonfly::Config::RMagickImages)
 app.configure do |c|
   c.log = Rails.logger
   c.datastore.configure do |d|

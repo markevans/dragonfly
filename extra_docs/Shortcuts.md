@@ -13,10 +13,10 @@ The parameters are the following:
   - `:format` - the format to encode the data with, e.g. 'png'
   - `:encoding` - an options hash passed to the encoder for other options, e.g. bitrate, etc.
 
-Say we have an app configured with the {Dragonfly::RMagickConfiguration RMagickConfiguration}
+Say we have an app configured with the {Dragonfly::Config::RMagickImages RMagickImages}
 
     app = Dragonfly::App[:my_app]
-    app.configure_with(Dragonfly::RMagickConfiguration)
+    app.configure_with(Dragonfly::Config::RMagickImages)
 
 we can call things like
 

@@ -29,7 +29,21 @@ end
 
 autoload_files_in_dir("#{File.dirname(__FILE__)}/dragonfly", 'Dragonfly')
 
-require 'rubygems'
 require File.dirname(__FILE__) + '/dragonfly/core_ext/object'
 require File.dirname(__FILE__) + '/dragonfly/core_ext/string'
 require File.dirname(__FILE__) + '/dragonfly/core_ext/symbol'
+
+module Dragonfly
+  class << self
+    def const_missing(const)
+      case const
+      when :RMagickConfiguration
+        puts "WARNING: RMagickConfiguration is deprecated and will be removed in future "+
+             "versions of Dragonfly. Please change to Dragonfly::Config::RMagickImages"
+        const_set(:RMagickConfiguration, Config::RMagickImages)
+      else
+        super
+      end
+    end
+  end
+end

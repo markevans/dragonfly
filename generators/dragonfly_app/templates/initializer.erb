@@ -2,7 +2,7 @@ require 'dragonfly'
 
 # Configuration
 app = Dragonfly::App[:<%= app_name %>]
-app.configure_with(Dragonfly::RMagickConfiguration)
+app.configure_with(Dragonfly::Config::RMagickImages)
 app.configure do |c|
   c.log = Rails.logger
   c.datastore.configure do |d|

@@ -103,7 +103,7 @@ We won't be using RMagick or Rack::Cache (as there is no processing), so our env
 
 and in the generated configuration, we DELETE the line
 
-    app.configure_with(Dragonfly::RMagickConfiguration)
+    app.configure_with(Dragonfly::Config::RMagickImages)
 
 Then in the configure block, we add the lines
 

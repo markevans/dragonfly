@@ -12,7 +12,7 @@ ENV['PATH'] += ':' + extra_paths.join(':')
 # A hash of <name for reference> => <dragonfly uid> pairs
 TEMP_FILES = {}
 
-Dragonfly::App[:images].configure_with(Dragonfly::RMagickConfiguration)
+Dragonfly::App[:images].configure_with(Dragonfly::Config::RMagickImages)
 Dragonfly::App[:files].configure do |c|
   c.register_analyser(Dragonfly::Analysis::FileCommandAnalyser)
   c.register_encoder(Dragonfly::Encoding::TransparentEncoder)

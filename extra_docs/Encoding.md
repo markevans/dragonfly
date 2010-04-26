@@ -27,7 +27,7 @@ Then we can encode {Dragonfly::ExtendedTempObject temp_objects} to formats recog
 
     temp_object.encode(:doc)    # => throws :unable_to_handle
 
-The saved configuration {Dragonfly::RMagickConfiguration RMagickConfiguration} registers the above encoder automatically.
+The saved configuration {Dragonfly::Config::RMagickImages RMagickImages} registers the above encoder automatically.
 
 Custom Encoders
 ---------------

@@ -24,7 +24,7 @@ give us the processing methods `resize`, `crop`, `resize_and_crop`, `rotate`, et
     temp_object.process(:resize, :geometry => '30x30!')        # => returns a new temp_object with width x height = 30x30
     temp_object.process!(:resize, :geometry => '30x30!')       # => resizes its own data
 
-The saved configuration {Dragonfly::RMagickConfiguration RMagickConfiguration} registers the above processor automatically.
+The saved configuration {Dragonfly::Config::RMagickImages RMagickImages} registers the above processor automatically.
 
 Custom Processing
 -----------------
