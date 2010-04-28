@@ -54,8 +54,8 @@ describe Dragonfly::Delegator do
       lambda{ @delegator.drive }.should raise_error(NoMethodError)
     end
 
-    it "should should return callable_methods as an empty array" do
-      @delegator.callable_methods.should == []
+    it "should should return delegatable_methods as an empty array" do
+      @delegator.delegatable_methods.should == []
     end
     
   end
@@ -75,21 +75,25 @@ describe Dragonfly::Delegator do
       @delegator.open_boot.should == :open_boot
       @delegator.open_back_doors.should == :open_back_doors
     end
-  
+
+    it "should allow delegating explicitly" do
+      @delegator.delegate(:open_boot).should == :open_boot
+    end
+
     it "should delegate to the last registered when more than one item implements the method" do
       @delegator.drive('fishmonger').should == "Driving lorry fishmonger"
     end
 
     it "should return all the callable methods" do
-      @delegator.callable_methods.sort.should == %w(clean drive open_back_doors open_boot pick_up).map{|m| m.to_method_name }
+      @delegator.delegatable_methods.sort.should == %w(clean drive open_back_doors open_boot pick_up).map{|m| m.to_method_name }
     end
     
     it "should say if if has a callable method (as a string)" do
-      @delegator.has_callable_method?('drive').should be_true
+      @delegator.has_delegatable_method?('drive').should be_true
     end
 
     it "should say if if has a callable method (as a symbol)" do
-      @delegator.has_callable_method?(:drive).should be_true
+      @delegator.has_delegatable_method?(:drive).should be_true
     end
 
     it "should skip methods that throw :unable_to_handle" do

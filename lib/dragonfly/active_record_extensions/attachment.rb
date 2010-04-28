@@ -124,7 +124,7 @@ module Dragonfly
       end
       
       def methods_to_delegate_to_temp_object
-        analyser.callable_methods
+        analyser.delegatable_methods
       end
       
       def can_delegate_to_temp_object?(meth)

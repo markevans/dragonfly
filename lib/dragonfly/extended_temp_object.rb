@@ -66,21 +66,21 @@ module Dragonfly
     # allows methods from the analyser
     
     def methods(*args)
-      (super + analyser.callable_methods).uniq
+      (super + analyser.delegatable_methods).uniq
     end
     
     def public_methods(*args)
-      (super + analyser.callable_methods).uniq
+      (super + analyser.delegatable_methods).uniq
     end
     
     def respond_to?(method)
-      super || analyser.has_callable_method?(method)
+      super || analyser.has_delegatable_method?(method)
     end
 
     private
     
     def method_missing(method, *args, &block)
-      if analyser.has_callable_method?(method)
+      if analyser.has_delegatable_method?(method)
         # Define the method so we don't use method_missing next time
         instance_var = "@#{method}"
         self.class.class_eval do
