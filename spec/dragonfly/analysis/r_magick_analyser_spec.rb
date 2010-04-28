@@ -28,4 +28,15 @@ describe Dragonfly::Analysis::RMagickAnalyser do
     @analyser.depth(@beach).should == 8
   end
   
+  it "should return the format" do
+    @analyser.format(@beach).should == :png
+  end
+  
+  it "should throw unable_to_handle if it's not an image file" do
+    temp_object = Dragonfly::TempObject.new('blah')
+    lambda{
+      @analyser.format(temp_object).should be_nil
+    }.should throw_symbol(:unable_to_handle)
+  end
+  
 end

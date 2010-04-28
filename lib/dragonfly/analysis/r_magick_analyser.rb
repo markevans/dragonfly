@@ -26,6 +26,12 @@ module Dragonfly
         rmagick_image(image).number_colors
       end
       alias number_of_colors number_of_colours
+
+      def format(image)
+        rmagick_image(image).format.downcase.to_sym
+      rescue Magick::ImageMagickError => e
+        throw :unable_to_handle
+      end
       
       private
       
