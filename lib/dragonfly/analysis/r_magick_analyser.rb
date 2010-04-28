@@ -29,14 +29,14 @@ module Dragonfly
 
       def format(image)
         rmagick_image(image).format.downcase.to_sym
-      rescue Magick::ImageMagickError => e
-        throw :unable_to_handle
       end
       
       private
       
       def rmagick_image(image)
         Magick::Image.from_blob(image.data).first
+      rescue Magick::ImageMagickError => e
+        throw :unable_to_handle
       end
       
     end
