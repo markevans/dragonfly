@@ -87,7 +87,7 @@ module Dragonfly
           define_method method do
             # Lazy reader, like
             #   @width ||= analyser.width(self)
-            instance_variable_set(instance_var, instance_variable_get(instance_var) || analyser.send(method, self))
+            instance_variable_set(instance_var, instance_variable_get(instance_var) || analyser.delegate(method, self))
           end
         end
         # Now that it's defined (for next time)
