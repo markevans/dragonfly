@@ -41,8 +41,8 @@ module Dragonfly
           return object.send(meth, *args) if object.respond_to?(meth)
         end
       end
-      raise UnableToHandle, "None of the registered objects for #{self} were able to deal with the method call " +
-        "#{meth}(#{args.map{|a| a.inspect[0..100]}.join(',')}), even though the method is implemented" if self.has_callable_method?(meth)
+      raise UnableToHandle, "None of the objects registered with #{self} were able to deal with the method call " +
+        "#{meth}(#{args.map{|a| a.inspect[0..100]}.join(',')}). You need to register one that can." if self.has_callable_method?(meth)
       super
     end
     
