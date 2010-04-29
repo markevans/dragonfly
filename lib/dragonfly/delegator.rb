@@ -10,6 +10,7 @@ module Dragonfly
     def register(klass, *args, &block)
       object = klass.new(*args)
       object.configure(&block) if block
+      object.log = self.log if object.is_a?(Loggable)
       registered_objects << object
     end
     

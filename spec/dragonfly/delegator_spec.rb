@@ -15,6 +15,7 @@ class CarDriver
 end
 
 class LorryDriver
+  include Dragonfly::Loggable
   include Dragonfly::Delegatable
 
   def drive(lorry)
@@ -109,6 +110,10 @@ describe Dragonfly::Delegator do
       objects.length.should == 2
       objects[0].should be_a(CarDriver)
       objects[1].should be_a(LorryDriver)
+    end
+    
+    it "should set the registered object's log to its own if loggable" do
+      @delegator.registered_objects[1].log.should == @delegator.log
     end
     
     it "should enable unregistering classes" do
