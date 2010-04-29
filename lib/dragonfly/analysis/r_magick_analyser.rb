@@ -36,6 +36,7 @@ module Dragonfly
       def rmagick_image(image)
         Magick::Image.from_blob(image.data).first
       rescue Magick::ImageMagickError => e
+        log.warn("Unable to handle content in #{self.class} - got:\n#{e}")
         throw :unable_to_handle
       end
       

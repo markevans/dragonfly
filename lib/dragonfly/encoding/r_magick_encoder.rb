@@ -10,7 +10,7 @@ module Dragonfly
       def encode(image, format, encoding={})
         format = format.to_s.downcase
         throw :unable_to_handle unless SUPPORTED_FORMATS.include?(format)
-        encoded_image = Magick::Image.from_blob(image.data).first
+        encoded_image = rmagick_image(image)
         if encoded_image.format.downcase == format
           image # do nothing
         else
@@ -19,6 +19,15 @@ module Dragonfly
         end
       end
       
+      private
+      
+      def rmagick_image(temp_object)
+        Magick::Image.from_blob(temp_object.data).first
+      rescue Magick::ImageMagickError => e
+        log.warn("Unable to handle content in #{self.class} - got:\n#{e}")
+        throw :unable_to_handle
+      end
+
     end
     
   end
