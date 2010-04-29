@@ -2,6 +2,8 @@ module Dragonfly
   module DataStorage
     class Base
 
+      include Loggable
+
       def store(temp_object)
         raise NotImplementedError
       end
