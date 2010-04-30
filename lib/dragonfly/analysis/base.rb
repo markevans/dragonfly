@@ -2,7 +2,7 @@ module Dragonfly
   module Analysis
     class Base
 
-      include Loggable
+      include BelongsToApp
       include Delegatable
 
     end

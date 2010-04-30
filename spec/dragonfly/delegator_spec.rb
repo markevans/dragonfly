@@ -15,7 +15,7 @@ class CarDriver
 end
 
 class LorryDriver
-  include Dragonfly::Loggable
+  include Dragonfly::BelongsToApp
   include Dragonfly::Delegatable
 
   def drive(lorry)
@@ -59,13 +59,18 @@ describe Dragonfly::Delegator do
       @delegator.delegatable_methods.should == []
     end
     
+    it "should return the object registered when registering" do
+      @delegator.register(CarDriver).should be_a(CarDriver)
+    end
+    
   end
 
   describe "after registering a number of classes" do
 
     before(:each) do
-      @delegator.register(CarDriver)
-      @delegator.register(LorryDriver)
+      @delegator.app = Dragonfly::App[:test]
+      @car_driver = @delegator.register(CarDriver)
+      @lorry_driver = @delegator.register(LorryDriver)
     end
 
     it "should raise an error when calling an unknown method" do
@@ -106,14 +111,11 @@ describe Dragonfly::Delegator do
     end
 
     it "should return registered objects" do
-      objects = @delegator.registered_objects
-      objects.length.should == 2
-      objects[0].should be_a(CarDriver)
-      objects[1].should be_a(LorryDriver)
+      @delegator.registered_objects.should == [@car_driver, @lorry_driver]
     end
     
-    it "should set the registered object's log to its own if loggable" do
-      @delegator.registered_objects[1].log.should == @delegator.log
+    it "should set the registered object's app to its own if object should belong to an app" do
+      @lorry_driver.app.should == @delegator.app
     end
     
     it "should enable unregistering classes" do
