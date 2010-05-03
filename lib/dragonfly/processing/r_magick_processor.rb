@@ -41,6 +41,12 @@ module Dragonfly
         image.crop(gravity, x, y, width, height).to_blob
       end
       
+      def greyscale(temp_object, opts={})
+        depth = opts[:depth] || 256
+        rmagick_image(temp_object).quantize(depth, Magick::GRAYColorspace).to_blob
+      end
+      alias grayscale greyscale
+      
       def resize(temp_object, opts={})
         rmagick_image(temp_object).change_geometry!(opts[:geometry]) do |cols, rows, img|
          img.resize!(cols, rows)

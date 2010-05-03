@@ -134,7 +134,14 @@ describe Dragonfly::Processing::RMagickProcessor do
       end
     
     end
-  
+
+    describe "greyscale" do
+      it "should not raise an error" do
+        # Bit tricky to test
+        @processor.greyscale(@image)
+      end
+    end
+
     describe "resize_and_crop" do
     
       it "should do nothing if no args given" do
