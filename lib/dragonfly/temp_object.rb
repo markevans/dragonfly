@@ -143,9 +143,7 @@ module Dragonfly
     private
     
     def reset!
-      instance_variables.each do |var|
-        instance_variable_set(var, nil)
-      end
+      @data = @tempfile = @initialized_data = @initialized_file = @initialized_tempfile = nil
     end
     
     def initialize_from_object!(obj)

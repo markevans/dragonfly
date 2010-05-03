@@ -229,7 +229,11 @@ describe Dragonfly::TempObject do
       @temp_object.modify_self!(@temp_object)
       @temp_object.data.should == 'DATA_ONE'
     end
-    
+    it "should keep the same name" do
+      @temp_object.name = 'billy.bob'
+      @temp_object.modify_self!('WASSUP PUNk')
+      @temp_object.name.should == 'billy.bob'
+    end
   end
   
   describe "name" do
