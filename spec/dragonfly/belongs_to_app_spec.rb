@@ -19,11 +19,22 @@ describe Dragonfly::BelongsToApp do
     it "should say it's not set" do
       @object.app_set?.should be_false
     end
+    it "should still return a log" do
+      @object.log.should be_a(Logger)
+    end
+    it "should cache the log" do
+      @object.log.should == @object.log
+    end
+    it "should return the app's log if it's subsequently set" do
+      @object.log.should be_a(Logger)
+      @object.app = (app = mock('app', :log => mock))
+      @object.log.should == app.log
+    end
   end
 
   describe "when the app is set" do
     before(:each) do
-      @app = Dragonfly::App[:test]
+      @app = mock('app', :log => mock)
       @object.app = @app
     end
     

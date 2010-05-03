@@ -1,3 +1,5 @@
+require 'logger'
+
 module Dragonfly
   module BelongsToApp
     
@@ -15,7 +17,7 @@ module Dragonfly
     end
     
     def log
-      app.log
+      app_set? ? app.log : (@log ||= Logger.new(STDOUT))
     end
     
   end
