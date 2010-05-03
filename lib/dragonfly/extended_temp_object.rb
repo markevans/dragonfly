@@ -87,9 +87,8 @@ module Dragonfly
 
     def method_missing(method, *args, &block)
       if analyser.has_delegatable_method?(method)
-        # Define the method so we don't use method_missing next time
-        instance_var = "@#{method}"
-        self.class.class_eval do
+        # Define the method on the instance so we don't use method_missing next time
+        class << self; self; end.class_eval do
           define_method method do
             cache[method] ||= analyser.delegate(method, self)
           end
