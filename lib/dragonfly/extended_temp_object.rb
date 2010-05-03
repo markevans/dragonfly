@@ -22,15 +22,16 @@ module Dragonfly
   #   temp_object.transform!('300x200', :gif)      # ===> operate on self
   class ExtendedTempObject < TempObject
     
-    # Exceptions
-    class NotConfiguredError < RuntimeError; end
+    include BelongsToApp
     
-    class << self
-      attr_accessor :app
+    def initialize(obj, app)
+      super(obj)
+      self.app = app
+      @cache = {}
     end
     
     def process(processing_method, *args)
-      self.class.new(processor.send(processing_method, self, *args))
+      self.class.new(processor.send(processing_method, self, *args), app)
     end
     
     def process!(processing_method, *args)
@@ -38,7 +39,7 @@ module Dragonfly
     end
 
     def encode(*args)
-      self.class.new(encoder.encode(self, *args))
+      self.class.new(encoder.encode(self, *args), app)
     end
     
     def encode!(*args)
@@ -54,12 +55,6 @@ module Dragonfly
       process!(parameters.processing_method, parameters.processing_options) unless parameters.processing_method.nil?
       encode!(parameters.format, parameters.encoding) unless parameters.format.nil?
       self
-    end
-    
-    # As we create customly configured subclasses of this class, the console
-    # gives a confusing output when inspecting, so modify here
-    def inspect
-      super.sub('Class:','Custom Dragonfly::ExtendedTempObject:')
     end
     
     # Modify methods, public_methods and respond_to?, because method_missing
@@ -78,16 +73,25 @@ module Dragonfly
     end
 
     private
+
+    attr_reader :cache
     
+    def flush_cache!
+      @cache = {}
+    end
+
+    def reset!
+      super
+      flush_cache!
+    end
+
     def method_missing(method, *args, &block)
       if analyser.has_delegatable_method?(method)
         # Define the method so we don't use method_missing next time
         instance_var = "@#{method}"
         self.class.class_eval do
           define_method method do
-            # Lazy reader, like
-            #   @width ||= analyser.width(self)
-            instance_variable_set(instance_var, instance_variable_get(instance_var) || analyser.delegate(method, self))
+            cache[method] ||= analyser.delegate(method, self)
           end
         end
         # Now that it's defined (for next time)
@@ -95,10 +99,6 @@ module Dragonfly
       else
         super
       end
-    end
-    
-    def app
-      self.class.app ? self.class.app : raise(NotConfiguredError, "#{self.class} has no app set")
     end
     
     def analyser
@@ -116,6 +116,6 @@ module Dragonfly
     def parameters_class
       app.parameters_class
     end
-
+    
   end
 end

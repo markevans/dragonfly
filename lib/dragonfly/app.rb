@@ -73,7 +73,6 @@ module Dragonfly
       @analysers, @processors, @encoders = AnalyserList.new(self), ProcessorList.new(self), EncoderList.new(self)
       @parameters_class = Class.new(Parameters)
       @url_handler = UrlHandler.new(@parameters_class)
-      initialize_temp_object_class
     end
     
     # @see Analysis::AnalyserList
@@ -86,8 +85,6 @@ module Dragonfly
     attr_reader :url_handler
     # @see Parameters
     attr_reader :parameters_class
-    # @see TempObject, and ExtendedTempObject
-    attr_reader :temp_object_class
 
     alias parameters parameters_class
     
@@ -134,7 +131,7 @@ module Dragonfly
     # @param [String, File, Tempfile, TempObject] initialization_object the object holding the data
     # @return [ExtendedTempObject] a temp_object holding the data
     def create_object(initialization_object)
-      temp_object_class.new(initialization_object)
+      ExtendedTempObject.new(initialization_object, self)
     end
 
     # Fetch an object from the database and optionally transform
@@ -150,7 +147,7 @@ module Dragonfly
     # app.fetch('abcd1234', '20x20!')   # returns a transformed temp_object, in this case with image data resized to 20x20
     # @see Parameters
     def fetch(uid, *args)
-      temp_object = temp_object_class.new(datastore.retrieve(uid))
+      temp_object = ExtendedTempObject.new(datastore.retrieve(uid), self)
       temp_object.transform(*args)
     end
 
@@ -202,11 +199,6 @@ module Dragonfly
     end
 
     private
-    
-    def initialize_temp_object_class
-      @temp_object_class = Class.new(ExtendedTempObject)
-      @temp_object_class.app = self
-    end
 
     def warn_with_info(message, env)
       log.warn "Got error: #{message}\nPath was #{env['PATH_INFO'].inspect} and query was #{env['QUERY_STRING'].inspect}"

@@ -2,72 +2,56 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Dragonfly::ExtendedTempObject do
   
-  it "should raise an error if not configured with an app" do
-    temp_object = Dragonfly::ExtendedTempObject.new('asdf')
-    lambda{
-      temp_object.process(:dummy)
-    }.should raise_error(Dragonfly::ExtendedTempObject::NotConfiguredError)
-  end
-  
   describe "when configured correctly" do
     
     before(:each) do
-      @analyser = mock('analyser', :has_delegatable_method? => false)
-      @analyser.stub!(:has_delegatable_method?).with(:width).and_return(true)
-      @processor = mock('processor')
-      @encoder = mock('encoder')
-      @app = mock('app', :analysers => @analyser, :processors => @processor, :encoders => @encoder)
-      @klass = Class.new(Dragonfly::ExtendedTempObject)
-      @klass.app = @app
+      @app = Dragonfly::App[:test]
     end
     
     describe "analysis" do
 
       before(:each) do
-        @object = @klass.new('asdf')
+        analyser_class = Class.new(Dragonfly::Analysis::Base) do
+          def width(temp_object); temp_object.data.size; end
+        end
+        @analyser = @app.register_analyser(analyser_class)
+        @object = Dragonfly::ExtendedTempObject.new('asdf', @app)
       end
       
       it "should respond to something that the analyser responds to" do
-        @analyser.should_receive(:has_delegatable_method?).with(:some_method).and_return(true)
-        @object.should respond_to(:some_method)
+        @object.should respond_to(:width)
       end
       
       it "should not respond to something that the analyser doesn't respond to" do
-        @analyser.should_receive(:has_delegatable_method?).with(:some_method).and_return(false)
-        @object.should_not respond_to(:some_method)
+        @object.should_not respond_to(:spaghetti)
       end
 
       it "should delegate the analysis to the analyser" do
-        @analyser.should_receive(:width).with(@object).and_return(4)
         @object.width.should == 4
       end
       
       it "should cache the result so that it doesn't call it a second time" do
         @analyser.should_receive(:width).with(@object).and_return(4)
         @object.width.should == 4
-
         @analyser.should_not_receive(:width)
         @object.width.should == 4
       end
       
       it "should do the analysis again when it has been modified" do
-        @analyser.should_receive(:width).with(@object).and_return(4)
         @object.width.should == 4
-        
         @object.modify_self!('hellothisisnew')
-        
-        @analyser.should_receive(:width).with(@object).and_return(17)
-        @object.width.should == 17
-        
+        @object.width.should == 14
         @analyser.should_not_receive(:width)
-        @object.width.should == 17
+        @object.width.should == 14
       end
       
     end
     
     describe "encoding" do
       before(:each) do
-        @temp_object = @klass.new('abcde')
+        encoder_class = Class.new(Dragonfly::Encoding::Base)
+        @encoder = @app.register_encoder(encoder_class)
+        @temp_object = Dragonfly::ExtendedTempObject.new('abcde', @app)
       end
       
       it "should encode the data and return the new temp object" do
