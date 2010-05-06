@@ -1,3 +1,10 @@
+# Seems to blow up on Rails 3 without this
+begin
+  require 'active_support/all'
+rescue LoadError => e
+  puts "Couldn't load activesupport: #{e}"
+end
+
 class MigrationForTest < ActiveRecord::Migration
   
   def self.up
