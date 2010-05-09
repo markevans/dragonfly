@@ -18,10 +18,6 @@ Given /^a Rails (.+) application set up for using dragonfly$/ do |version|
     rails _#{version}_ #{RAILS_APP_NAME} -m template.rb`
 end
 
-When /^I use the provided (.+) initializer$/ do |version|
-  FileUtils.cp("#{FIXTURES_PATH}/dragonfly_setup.rb", "#{app_path(version)}/config/initializers")
-end
-
 Then /^the cucumber features in my Rails (.+) app should pass$/ do |version|
   puts "\n*** RUNNING FEATURES IN THE RAILS APP... ***\n"
   path = File.join(fixture_path(version), RAILS_APP_NAME)
