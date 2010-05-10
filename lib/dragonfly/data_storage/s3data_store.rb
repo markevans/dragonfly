@@ -6,10 +6,12 @@ module Dragonfly
     class S3DataStore < Base
   
       include Configurable
+      include AWS::S3
   
       configurable_attr :bucket_name
       configurable_attr :access_key_id
       configurable_attr :secret_access_key
+      configurable_attr :use_filesystem, true
 
       def connect!
         AWS::S3::Base.establish_connection!(
@@ -19,31 +21,36 @@ module Dragonfly
       end
 
       def create_bucket!
-        AWS::S3::Bucket.create(bucket_name)
+        Bucket.create(bucket_name) unless bucket_names.include?(bucket_name)
       end
 
       def store(temp_object)
         uid = generate_uid(temp_object.basename || 'file')
         ensure_initialized
-        AWS::S3::S3Object.store(uid, temp_object.file, bucket_name)
+        object = use_filesystem ? temp_object.file : temp_object.data
+        S3Object.store(uid, object, bucket_name)
         uid
       end
 
       def retrieve(uid)
         ensure_initialized
-        AWS::S3::S3Object.value(uid, bucket_name)
+        S3Object.value(uid, bucket_name)
       rescue AWS::S3::NoSuchKey => e
         raise DataNotFound, "#{e} - #{uid}"
       end
   
       def destroy(uid)
         ensure_initialized
-        AWS::S3::S3Object.delete(uid, bucket_name)
+        S3Object.delete(uid, bucket_name)
       rescue AWS::S3::NoSuchKey => e
         raise DataNotFound, "#{e} - #{uid}"
       end
 
       private
+
+      def bucket_names
+        Service.buckets.map{|bucket| bucket.name }
+      end
 
       def ensure_initialized
         unless @initialized
