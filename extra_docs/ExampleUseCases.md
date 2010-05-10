@@ -50,6 +50,7 @@ Gemfile:
 
 Initializer (e.g. config/initializers/dragonfly.rb):
 
+    require 'dragonfly'
     Dragonfly::App[:images].configure_with(Dragonfly::Config::HerokuRailsImages, 'my_bucket_name')
 
 The datastore remains as the {Dragonfly::DataStorage::FileDataStore FileDataStore} for non-production environments.
@@ -76,33 +77,19 @@ Although Dragonfly is normally concerned with processing and encoding, you may w
 (e.g. .doc, .xls, .pdf files, etc.) without processing or encoding them, so as to still benefit from the {file:ActiveRecord ActiveRecord Extensions} API.
 
 The below shows how to do it in Rails, but the principles are the same in any context.
-Let's generate a configuration for a Dragonfly App called 'attachments'
 
-    ./script/generate dragonfly_app attachments
+Initializer, e.g. config/initializers/dragonfly.rb:
 
-This generates an initializer for configuring the Dragonfly App 'attachments'.
+    require 'dragonfly'
 
-We won't be using RMagick or Rack::Cache (as there is no processing), so our environment.rb only has:
-
-    config.gem 'dragonfly',  :source => 'http://gemcutter.org'
-
-and in the generated configuration, we DELETE the line
-
-    app.configure_with(Dragonfly::Config::RMagickImages)
-
-Then in the configure block, we add the lines
-
-    c.url_handler.configure do |u|
-      # ...
-      u.protect_from_dos_attacks = false
+    Dragonfly::App[:attachments].configure_with(Dragonfly::Config::RailsDefaults) do |c|
+      c.register_analyser(Dragonfly::Analysis::FileCommandAnalyser)
+      c.register_encoder(Dragonfly::Encoding::TransparentEncoder)
     end
-    c.register_analyser(Dragonfly::Analysis::FileCommandAnalyser)
-    c.register_encoder(Dragonfly::Encoding::TransparentEncoder)
 
-We don't need to protect the urls from Denial-of-service attacks as we aren't doing any expensive processing.
 The {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} is needed to know the mime-type of the content,
 and the {Dragonfly::Encoding::TransparentEncoder TransparentEncoder} is like a 'dummy' encoder which does nothing
-(the way to switch off encoding may change in the future).
+(the way to switch off encoding will be simplified in future versions of Dragonfly).
 
 If a user uploads a file called 'report.pdf', then normally the original file extension will be lost.
 Thankfully, to record it is as easy as adding an 'ext' column as well as the usual uid column to our migration
@@ -152,30 +139,12 @@ A common technique for making sure a specific font is displayed on a website is 
 
 We can easily use Dragonfly to do this on-the-fly.
 
-The {Dragonfly::Processing::RMagickProcessor RMagickProcessor} has a 'text' method, which takes content in the form of text,
-and creates an image of the text, given the options passed in.
+Configuration (e.g. initializer in Rails):
 
-We can also make use of the simple {Dragonfly::DataStorage::TransparentDataStore TransparentDataStore}, where rather than fetch
-data for a given uid, the uid IS the data.
-
-The configuration will look something like:
-
-    Dragonfly::App[:text].configure do |c|
-      c.datastore = Dragonfly::DataStorage::TransparentDataStore.new
-      c.register_analyser(Dragonfly::Analysis::FileCommandAnalyser)
-      c.register_processor(Dragonfly::Processing::RMagickProcessor)
-      c.register_encoder(Dragonfly::Encoding::RMagickEncoder)
-      c.parameters.configure do |p|
-        p.default_format = :png
-        p.default_processing_method = :text
-      end
-    end
-
-We need the {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} for mime-type analysis.
+    Dragonfly::App[:text].configure_with(Dragonfly::Config::RMagickText)
 
 Then when we visit a url like
 
-    url = Dragonfly::App[:text].url_for('some text', :processing_options => {:font_size => 30, :font_family => 'Monaco'})
+    url = Dragonfly::App[:text].url_for('some text', :text, :font_size => 30, :font_family => 'Monaco')
 
 we get a png image of the text. We could easily wrap this in some kind of helper if we use it often.
-
