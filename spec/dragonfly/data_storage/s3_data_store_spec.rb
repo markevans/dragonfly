@@ -33,6 +33,7 @@ describe Dragonfly::DataStorage::S3DataStore do
         :secret_access_key => @data_store.secret_access_key
       )
       AWS::S3::Bucket.stub!(:create).with(@data_store.bucket_name)
+      AWS::S3::Service.stub!(:buckets).and_return([])
       AWS::S3::S3Object.stub!(:store).with(anything, anything, @data_store.bucket_name)
       AWS::S3::S3Object.stub!(:value).with(anything, @data_store.bucket_name)
       AWS::S3::S3Object.stub!(:delete).with(anything, @data_store.bucket_name)
