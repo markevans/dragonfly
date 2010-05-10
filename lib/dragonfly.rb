@@ -35,6 +35,7 @@ require File.dirname(__FILE__) + '/dragonfly/core_ext/symbol'
 
 module Dragonfly
   class << self
+
     def const_missing(const)
       case const
       when :RMagickConfiguration
@@ -45,5 +46,12 @@ module Dragonfly
         super
       end
     end
+
+    def active_record_macro(prefix, app)
+      already_extended = (class << ActiveRecord::Base; self; end).included_modules.include?(ActiveRecordExtensions)
+      ActiveRecord::Base.extend(ActiveRecordExtensions) unless already_extended
+      ActiveRecord::Base.register_dragonfly_app(prefix, app)
+    end
+
   end
 end

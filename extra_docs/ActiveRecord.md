@@ -11,13 +11,11 @@ Suppose we have a dragonfly app
 
     app = Dragonfly::App[:my_app_name]
 
-First extend activerecord
+We can define an accessor on ActiveRecord models using
 
-    ActiveRecord::Base.extend Dragonfly::ActiveRecordExtensions
+    Dragonfly.active_record_macro(:image, app)
 
-Now register the app, giving the prefix for defining accessor methods (in this case 'image')
-
-    ActiveRecord::Base.register_dragonfly_app(:image, app)
+The first argument is the prefix for the accessor macro (in this case 'image').
 
 Adding accessors
 ----------------

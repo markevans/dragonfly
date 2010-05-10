@@ -5,7 +5,7 @@ require 'active_record'
 
 DB_FILE = File.expand_path(File.dirname(__FILE__)+'/db.sqlite3')
 
-%w{migration initializer models}.each do |file|
+%w{migration models}.each do |file|
   require "#{File.dirname(__FILE__)}/#{file}"
 end 
 

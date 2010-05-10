@@ -6,18 +6,17 @@ describe Item do
 
   describe "registering dragonfly apps" do
 
-    before(:each) do
-      @app1, @app2 = Dragonfly::App[:images], Dragonfly::App[:videos]
-      ActiveRecord::Base.register_dragonfly_app(:image, @app1)
-      ActiveRecord::Base.register_dragonfly_app(:video, @app2)
-    end
-
+    let(:app1){ Dragonfly::App[:images] }
+    let(:app2){ Dragonfly::App[:videos] }
+    
     it "should return the mapping of apps to attributes" do
+      Dragonfly.active_record_macro(:image, app1)
+      Dragonfly.active_record_macro(:video, app2)
       Item.class_eval do
         image_accessor :preview_image
         video_accessor :trailer_video
       end
-      Item.dragonfly_apps_for_attributes.should == {:preview_image => @app1, :trailer_video => @app2}
+      Item.dragonfly_apps_for_attributes.should == {:preview_image => app1, :trailer_video => app2}
     end
 
   end
@@ -36,7 +35,7 @@ describe Item do
     
       before(:each) do
         @app = Dragonfly::App[:images]
-        ActiveRecord::Base.register_dragonfly_app(:image, @app)
+        Dragonfly.active_record_macro(:image, @app)
         Item.class_eval do
           image_accessor :preview_image
         end
@@ -259,7 +258,7 @@ describe Item do
 
     before(:all) do
       @app = Dragonfly::App[:images]
-      ActiveRecord::Base.register_dragonfly_app(:image, @app)
+      Dragonfly.active_record_macro(:image, @app)
     end
     
     describe "validates_presence_of" do
@@ -417,7 +416,7 @@ describe Item do
         def number_of_As(temp_object); temp_object.data.count('A'); end
       end
       @app.register_analyser(custom_analyser)
-      ActiveRecord::Base.register_dragonfly_app(:image, @app)
+      Dragonfly.active_record_macro(:image, @app)
       Item.class_eval do
         image_accessor :preview_image
       end
@@ -549,7 +548,7 @@ describe Item do
   describe "inheritance" do
     before(:all) do
       @app = Dragonfly::App[:images]
-      ActiveRecord::Base.register_dragonfly_app(:image, @app)
+      Dragonfly.active_record_macro(:image, @app)
       Car.class_eval do
         image_accessor :image
       end

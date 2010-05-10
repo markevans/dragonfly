@@ -2,13 +2,11 @@ require 'dragonfly'
 require 'rack/cache'
 
 ### The dragonfly app ###
-
 app = Dragonfly::App[:images]
 app.configure_with(Dragonfly::Config::RailsImages)
 
 ### Extend active record ###
-ActiveRecord::Base.extend Dragonfly::ActiveRecordExtensions
-ActiveRecord::Base.register_dragonfly_app(:image, app)
+Dragonfly.active_record_macro(:image, app)
 
 ### Insert the middleware ###
 # Where the middleware is depends on the version of Rails
