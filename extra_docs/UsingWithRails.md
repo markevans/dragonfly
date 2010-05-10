@@ -20,48 +20,26 @@ registers the app so that you can use ActiveRecord accessors, and inserts it int
 
 The more explicit way
 ---------------------
-If you want to set up and configure the Dragonfly app yourself, then you can put something like the code below in an initializer and
-modify accordingly:
+You can do the above explicitly.
+
+config/initializers/dragonfly.rb:
 
     require 'dragonfly'
 
-    # Set up and configure the dragonfly app
     app = Dragonfly::App[:images]
-    app.configure_with(Dragonfly::Config::RMagickImages)
-    app.configure do |c|
-      c.log = Rails.logger
-      c.datastore.configure do |d|
-        d.root_path = "#{Rails.root}/public/system/dragonfly/#{Rails.env}"
-      end
-      c.url_handler.configure do |u|
-        u.secret = 'insert some secret here to protect from DOS attacks!'
-        u.path_prefix = '/media'
-      end
-    end
+    app.configure_with(Dragonfly::Config::RailsImages)
+    
+    # Define the method 'image_accessor' in ActiveRecord models
+    Dragonfly.active_record_macro(:image, app)
 
-    # Extend ActiveRecord
-    # This allows you to use e.g.
-    #   image_accessor :my_attribute
-    # in your models.
-    ActiveRecord::Base.extend Dragonfly::ActiveRecordExtensions
-    ActiveRecord::Base.register_dragonfly_app(:image, Dragonfly::App[:images])
+environment.rb:
 
-    ### Insert the middleware ###
-    # Where the middleware is depends on the version of Rails
-    middleware = Rails.respond_to?(:application) ? Rails.application.middleware : ActionController::Dispatcher.middleware
-    middleware.insert_after Rack::Lock, Dragonfly::Middleware, :images
-
-    # # UNCOMMENT THIS IF YOU WANT TO CACHE REQUESTS WITH Rack::Cache
-    # require 'rack/cache'
-    # middleware.insert_before Dragonfly::Middleware, Rack::Cache, {
-    #   :verbose     => true,
-    #   :metastore   => "file:#{Rails.root}/tmp/dragonfly/cache/meta",
-    #   :entitystore => "file:#{Rails.root}/tmp/dragonfly/cache/body"
-    # }
-
-If you can't be bothered to copy and paste, then there's actually a generator for Rails 2.3 (not Rails 3 yet) that will do something like the above for you:
-
-    ./script/generate dragonfly_app images
+    config.middleware.insert_after 'Rack::Lock', 'Dragonfly::Middleware', :images
+    config.middleware.insert_before 'Dragonfly::Middleware', 'Rack::Cache', {
+      :verbose     => true,
+      :metastore   => "file:#{Rails.root}/tmp/dragonfly/cache/meta",
+      :entitystore => "file:#{Rails.root}/tmp/dragonfly/cache/body"
+    }
 
 2. Gem dependencies
 -------------------
