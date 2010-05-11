@@ -32,19 +32,24 @@ The following assumes you have an S3 account set up, and know your provided 'acc
 environment.rb:
 
     config.gem 'rmagick', :lib => 'RMagick'
+    gem 'aws-s3', :lib => 'aws/s3'
     config.gem 'dragonfly'
 
 and
 .gems:
 
     dragonfly
+    aws-s3
 
 ### Rails 3
 
 Gemfile:
 
-    gem 'rmagick', :require => 'RMagick'
+    gem 'rmagick', '2.12.2', :require => 'RMagick'
+    gem 'aws-s3', :require => 'aws/s3'
     gem 'dragonfly'
+
+Apparently to use Bundler you need to switch to the 'Bamboo' stack - see {http://docs.heroku.com/bamboo}
 
 ### All versions
 
@@ -57,7 +62,7 @@ Initializer (e.g. config/initializers/dragonfly.rb):
 
 The datastore remains as the {Dragonfly::DataStorage::FileDataStore FileDataStore} for non-production environments.
 
-environment.rb:
+environment.rb (application.rb in Rails 3):
 
     config.middleware.insert_after 'Rack::Lock', 'Dragonfly::Middleware', :images
 
@@ -99,7 +104,7 @@ The {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} is needed to 
 and the {Dragonfly::Encoding::TransparentEncoder TransparentEncoder} is like a 'dummy' encoder which does nothing
 (the way to switch off encoding will be simplified in future versions of Dragonfly).
 
-environment.rb:
+environment.rb (application.rb in Rails 3):
 
     config.middleware.insert_after 'Rack::Lock', 'Dragonfly::Middleware', :attachments
 
@@ -154,7 +159,15 @@ We can easily use Dragonfly to do this on-the-fly.
 Configuration (e.g. initializer in Rails):
 
     require 'dragonfly'
-    Dragonfly::App[:text].configure_with(Dragonfly::Config::RMagickText)
+    Dragonfly::App[:text].configure_with(Dragonfly::Config::RMagickText) do |c|
+      c.url_handler.path_prefix = '/text'
+    end
+
+If using Rails, then in environment.rb (application.rb in Rails 3):
+
+    config.middleware.insert_after 'Rack::Lock', 'Dragonfly::Middleware', :text
+    
+You probably will want to insert Rack::Cache too or use some other caching proxy - see {file:UsingWithRails}.
 
 Then when we visit a url like
 

@@ -32,7 +32,7 @@ config/initializers/dragonfly.rb:
     # Define the method 'image_accessor' in ActiveRecord models
     Dragonfly.active_record_macro(:image, app)
 
-environment.rb:
+environment.rb (application.rb in Rails 3):
 
     config.middleware.insert_after 'Rack::Lock', 'Dragonfly::Middleware', :images
     config.middleware.insert_before 'Dragonfly::Middleware', 'Rack::Cache', {
