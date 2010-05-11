@@ -5,7 +5,7 @@ Dragonfly works with both Rails 2.3 and Rails 3.
 
 The main way to use Dragonfly with Rails is as a {Dragonfly::Middleware middleware}.
 
-1. The initializer
+1. Setting up
 ------------------
 
 The quick way
@@ -69,3 +69,13 @@ Now that you have a parasitic Dragonfly app living inside your Rails app, you ca
 To see what you can do with the active record accessors, see {file:ActiveRecord}.
 
 For more info about general Dragonfly setup, including avoiding denial-of-service attacks, see {file:GettingStarted}.
+
+Extra Config
+------------
+There are one or two config options you may commonly want to tweak.
+In this case, add something like the following to your initializer:
+
+    Dragonfly::App[:images].configure do |c|
+      c.url_handler.path_prefix = '/attachments'   # configures where the Dragonfly app is served from - default '/media'
+      c.url_handler.secret = 'PUT A SECRET HERE!!' # for protecting from Denial-Of-Service attacks
+    end
