@@ -1,4 +1,4 @@
-0.6.0 (xxxx-xx-xx)
+0.6.0 (2010-05-11)
 ==================
 
 Features
@@ -23,7 +23,7 @@ Changes
 Can also pass a block to temp_object.file which closes the file automatically
 - Processors/Analysers/Encoders know about app now so can log to app's log
 - Imagemagick errors in RMagick processor/analyser/encoder now throw unable_to_handle and log a warning
-
+- Removed Rails generators - better being more explicit with saved configurations which are more concise now
 
 0.5.7 (2010-04-18)
 ==================
