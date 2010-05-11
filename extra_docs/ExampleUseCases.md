@@ -51,9 +51,15 @@ Gemfile:
 Initializer (e.g. config/initializers/dragonfly.rb):
 
     require 'dragonfly'
-    Dragonfly::App[:images].configure_with(Dragonfly::Config::HerokuRailsImages, 'my_bucket_name')
+    app = Dragonfly::App[:images]
+    app.configure_with(Dragonfly::Config::HerokuRailsImages, 'my_bucket_name')
+    Dragonfly.active_record_macro(:image, app)
 
 The datastore remains as the {Dragonfly::DataStorage::FileDataStore FileDataStore} for non-production environments.
+
+environment.rb:
+
+    config.middleware.insert_after 'Rack::Lock', 'Dragonfly::Middleware', :images
 
 We don't store the S3 access key and secret in the repository, rather we use Heroku's
 {http://docs.heroku.com/config-vars config variables} using the command line (we only have to do this once).
@@ -82,14 +88,20 @@ Initializer, e.g. config/initializers/dragonfly.rb:
 
     require 'dragonfly'
 
-    Dragonfly::App[:attachments].configure_with(Dragonfly::Config::RailsDefaults) do |c|
+    app = Dragonfly::App[:attachments]
+    app.configure_with(Dragonfly::Config::RailsDefaults) do |c|
       c.register_analyser(Dragonfly::Analysis::FileCommandAnalyser)
       c.register_encoder(Dragonfly::Encoding::TransparentEncoder)
     end
+    Dragonfly.active_record_macro(:attachment, app)
 
 The {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} is needed to know the mime-type of the content,
 and the {Dragonfly::Encoding::TransparentEncoder TransparentEncoder} is like a 'dummy' encoder which does nothing
 (the way to switch off encoding will be simplified in future versions of Dragonfly).
+
+environment.rb:
+
+    config.middleware.insert_after 'Rack::Lock', 'Dragonfly::Middleware', :attachments
 
 If a user uploads a file called 'report.pdf', then normally the original file extension will be lost.
 Thankfully, to record it is as easy as adding an 'ext' column as well as the usual uid column to our migration
@@ -122,7 +134,7 @@ Each {Dragonfly::App Dragonfly App} has a 'generate' method, which returns an {D
 The actual generation is delegated to the registered processors (along with any args passed in).
 
 For example, if our app is registered with the {Dragonfly::Processing::RMagickProcessor RMagickProcessor} (which is already done if using with one of
-the Rails helper files/generators)
+the RMagick/RailsImage configurations)
 
     Dragonfly::App[:my_app].register_processor(Dragonfly::Processing::RMagickProcessor)
 
@@ -141,6 +153,7 @@ We can easily use Dragonfly to do this on-the-fly.
 
 Configuration (e.g. initializer in Rails):
 
+    require 'dragonfly'
     Dragonfly::App[:text].configure_with(Dragonfly::Config::RMagickText)
 
 Then when we visit a url like
@@ -148,3 +161,16 @@ Then when we visit a url like
     url = Dragonfly::App[:text].url_for('some text', :text, :font_size => 30, :font_family => 'Monaco')
 
 we get a png image of the text. We could easily wrap this in some kind of helper if we use it often.
+
+This configuration uses the {Dragonfly::Processing::RMagickTextProcessor RMagickTextProcessor} processor.
+Options can be specified either css-like (e.g. `'font-family' => 'Helvetica'`), or with underscore-style symbols
+(e.g. `:font_family => 'Helvetica'`).
+
+Available options are `font` (see {http://www.imagemagick.org/RMagick/doc/draw.html#font}),
+`'font-family'`,
+`'stroke_color'`,
+`'color'`,
+`'font_style'`,
+`'font_stretch'`,
+`'font_weight'` and
+`'padding'` (or `'padding-left'`, `'padding-top'`, etc.)
