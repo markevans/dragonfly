@@ -22,7 +22,7 @@
     
     <div id="header" class="clearfix">
       
-      <div id="logo">Dragonfly Documentation</div>
+      <div id="logo">DRAGONFLY (v 0.6.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -66,7 +66,7 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2"><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></dd>
+      <dd class="r2">AWS::S3, <a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></dd>
       
     
   
@@ -79,6 +79,11 @@
 
 
 
+  
+  
+  
+  
+  
   
   
   
@@ -126,6 +131,14 @@ or
     <code>secret_access_key</code>
     
      - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>use_filesystem</code>
+    
+     - default <code><span class="kw">true</span></code>
     
     
   </li>
@@ -252,6 +265,15 @@ or
   
   
   
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <a href="../BelongsToApp.html" title="Dragonfly::BelongsToApp (module)">Dragonfly::BelongsToApp</a></h3>
+  <p class="inherited"><a href="../BelongsToApp.html#app_set%3F-instance_method" title="Dragonfly::BelongsToApp#app_set? (method)">#app_set?</a>, <a href="../BelongsToApp.html#log-instance_method" title="Dragonfly::BelongsToApp#log (method)">#log</a></p>
+
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -270,15 +292,15 @@ or
       <pre class="lines">
 
 
-14
-15
 16
 17
 18
-19</pre>
+19
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 16</span>
 
 <span class='def def kw'>def</span> <span class='connect! fid id'>connect!</span>
   <span class='AWS constant id'>AWS</span><span class='colon2 op'>::</span><span class='S3 constant id'>S3</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='establish_connection! fid id'>establish_connection!</span><span class='lparen token'>(</span>
@@ -305,15 +327,15 @@ or
       <pre class="lines">
 
 
-21
-22
-23</pre>
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 23</span>
 
 <span class='def def kw'>def</span> <span class='create_bucket! fid id'>create_bucket!</span>
-  <span class='AWS constant id'>AWS</span><span class='colon2 op'>::</span><span class='S3 constant id'>S3</span><span class='colon2 op'>::</span><span class='Bucket constant id'>Bucket</span><span class='dot token'>.</span><span class='create identifier id'>create</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='rparen token'>)</span>
+  <span class='Bucket constant id'>Bucket</span><span class='dot token'>.</span><span class='create identifier id'>create</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='bucket_names identifier id'>bucket_names</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -355,19 +377,19 @@ or
       <pre class="lines">
 
 
-39
-40
-41
 42
 43
-44</pre>
+44
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 42</span>
 
 <span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
   <span class='ensure_initialized identifier id'>ensure_initialized</span>
-  <span class='AWS constant id'>AWS</span><span class='colon2 op'>::</span><span class='S3 constant id'>S3</span><span class='colon2 op'>::</span><span class='S3Object constant id'>S3Object</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='bucket_name identifier id'>bucket_name</span><span class='rparen token'>)</span>
+  <span class='S3Object constant id'>S3Object</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='bucket_name identifier id'>bucket_name</span><span class='rparen token'>)</span>
 <span class='rescue rescue kw'>rescue</span> <span class='AWS constant id'>AWS</span><span class='colon2 op'>::</span><span class='S3 constant id'>S3</span><span class='colon2 op'>::</span><span class='NoSuchKey constant id'>NoSuchKey</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
   <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
 <span class='end end kw'>end</span>
@@ -411,19 +433,19 @@ or
       <pre class="lines">
 
 
-32
-33
-34
 35
 36
-37</pre>
+37
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 35</span>
 
 <span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
   <span class='ensure_initialized identifier id'>ensure_initialized</span>
-  <span class='AWS constant id'>AWS</span><span class='colon2 op'>::</span><span class='S3 constant id'>S3</span><span class='colon2 op'>::</span><span class='S3Object constant id'>S3Object</span><span class='dot token'>.</span><span class='value identifier id'>value</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='bucket_name identifier id'>bucket_name</span><span class='rparen token'>)</span>
+  <span class='S3Object constant id'>S3Object</span><span class='dot token'>.</span><span class='value identifier id'>value</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='bucket_name identifier id'>bucket_name</span><span class='rparen token'>)</span>
 <span class='rescue rescue kw'>rescue</span> <span class='AWS constant id'>AWS</span><span class='colon2 op'>::</span><span class='S3 constant id'>S3</span><span class='colon2 op'>::</span><span class='NoSuchKey constant id'>NoSuchKey</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
   <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
 <span class='end end kw'>end</span>
@@ -446,20 +468,22 @@ or
       <pre class="lines">
 
 
-25
-26
 27
 28
 29
-30</pre>
+30
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 27</span>
 
 <span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
   <span class='uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='generate_uid identifier id'>generate_uid</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span> <span class='orop op'>||</span> <span class='string val'>'file'</span><span class='rparen token'>)</span>
   <span class='ensure_initialized identifier id'>ensure_initialized</span>
-  <span class='AWS constant id'>AWS</span><span class='colon2 op'>::</span><span class='S3 constant id'>S3</span><span class='colon2 op'>::</span><span class='S3Object constant id'>S3Object</span><span class='dot token'>.</span><span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span><span class='comma token'>,</span> <span class='bucket_name identifier id'>bucket_name</span><span class='rparen token'>)</span>
+  <span class='object identifier id'>object</span> <span class='assign token'>=</span> <span class='use_filesystem identifier id'>use_filesystem</span> <span class='integer val'>? </span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span> <span class='colon op'>:</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span>
+  <span class='S3Object constant id'>S3Object</span><span class='dot token'>.</span><span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='bucket_name identifier id'>bucket_name</span><span class='rparen token'>)</span>
   <span class='uid identifier id'>uid</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -474,13 +498,13 @@ or
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li>
+          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
     
     <div id="footer">
-  Generated on Thu Mar  4 23:43:28 2010 by 
+  Generated on Tue May 11 15:08:24 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.7).
 </div>

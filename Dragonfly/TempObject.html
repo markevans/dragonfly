@@ -22,7 +22,7 @@
     
     <div id="header" class="clearfix">
       
-      <div id="logo">Dragonfly Documentation</div>
+      <div id="logo">DRAGONFLY (v 0.6.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -349,6 +349,26 @@ or
       <li class="public ">
   <span class="summary_signature">
     
+      <a href="#file-instance_method" title="#file (instance method)">- (Object) <strong>file</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#initialize-instance_method" title="#initialize (instance method)">- (TempObject) <strong>initialize</strong>(obj) </a>
     
 
@@ -438,8 +458,6 @@ Instance Methods.
     
 
     
-      (also: #file)
-    
   </span>
   
   
@@ -457,6 +475,26 @@ Instance Methods.
   <span class="summary_signature">
     
       <a href="#to_file-instance_method" title="#to_file (instance method)">- (Object) <strong>to_file</strong>(path) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_io-instance_method" title="#to_io (instance method)">- (Object) <strong>to_io</strong>(&amp;block) </a>
     
 
     
@@ -549,12 +587,12 @@ Returns the value of attribute initialized_data
       <pre class="lines">
 
 
-132
-133
-134</pre>
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 141</span>
 
 <span class='def def kw'>def</span> <span class='initialized_data identifier id'>initialized_data</span>
   <span class='@initialized_data ivar id'>@initialized_data</span>
@@ -592,12 +630,12 @@ Returns the value of attribute initialized_file
       <pre class="lines">
 
 
-132
-133
-134</pre>
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 141</span>
 
 <span class='def def kw'>def</span> <span class='initialized_file identifier id'>initialized_file</span>
   <span class='@initialized_file ivar id'>@initialized_file</span>
@@ -635,12 +673,12 @@ Returns the value of attribute initialized_tempfile
       <pre class="lines">
 
 
-132
-133
-134</pre>
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 141</span>
 
 <span class='def def kw'>def</span> <span class='initialized_tempfile identifier id'>initialized_tempfile</span>
   <span class='@initialized_tempfile ivar id'>@initialized_tempfile</span>
@@ -667,12 +705,12 @@ Returns the value of attribute initialized_tempfile
       <pre class="lines">
 
 
-91
-92
-93</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 99</span>
 
 <span class='def def kw'>def</span> <span class='name identifier id'>name</span>
   <span class='@name ivar id'>@name</span> <span class='unless unless_mod kw'>unless</span> <span class='@name ivar id'>@name</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
@@ -703,13 +741,13 @@ Returns the value of attribute initialized_tempfile
       <pre class="lines">
 
 
-95
-96
-97
-98</pre>
+103
+104
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 103</span>
 
 <span class='def def kw'>def</span> <span class='basename identifier id'>basename</span>
   <span class='return return kw'>return</span> <span class='unless unless_mod kw'>unless</span> <span class='name identifier id'>name</span>
@@ -742,7 +780,7 @@ Returns the value of attribute initialized_tempfile
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 55</span>
 
 <span class='def def kw'>def</span> <span class='data identifier id'>data</span>
-  <span class='@data ivar id'>@data</span> <span class='opasgn op'>||=</span> <span class='initialized_data identifier id'>initialized_data</span> <span class='orop op'>||</span> <span class='file identifier id'>file</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='dot token'>.</span><span class='read identifier id'>read</span>
+  <span class='@data ivar id'>@data</span> <span class='opasgn op'>||=</span> <span class='initialized_data identifier id'>initialized_data</span> <span class='orop op'>||</span> <span class='file identifier id'>file</span><span class='dot token'>.</span><span class='read identifier id'>read</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -763,36 +801,22 @@ Returns the value of attribute initialized_tempfile
       <pre class="lines">
 
 
-106
-107
-108
-109
-110
-111
-112
-113
 114
 115
 116
 117
 118
-119</pre>
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 114</span>
 
 <span class='def def kw'>def</span> <span class='each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='initialized_data identifier id'>initialized_data</span>
-    <span class='string_io identifier id'>string_io</span> <span class='assign token'>=</span> <span class='StringIO constant id'>StringIO</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='initialized_data identifier id'>initialized_data</span><span class='rparen token'>)</span>
-    <span class='while while kw'>while</span> <span class='part identifier id'>part</span> <span class='assign token'>=</span> <span class='string_io identifier id'>string_io</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='block_size identifier id'>block_size</span><span class='rparen token'>)</span>
+  <span class='to_io identifier id'>to_io</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='io identifier id'>io</span><span class='bitor op'>|</span>
+    <span class='while while kw'>while</span> <span class='part identifier id'>part</span> <span class='assign token'>=</span> <span class='io identifier id'>io</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='block_size identifier id'>block_size</span><span class='rparen token'>)</span>
       <span class='yield yield kw'>yield</span> <span class='part identifier id'>part</span>
     <span class='end end kw'>end</span>
-  <span class='else else kw'>else</span>
-    <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='open identifier id'>open</span>
-    <span class='while while kw'>while</span> <span class='part identifier id'>part</span> <span class='assign token'>=</span> <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='block_size identifier id'>block_size</span><span class='rparen token'>)</span>
-      <span class='yield yield kw'>yield</span> <span class='part identifier id'>part</span>
-    <span class='end end kw'>end</span>
-    <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='close identifier id'>close</span>
   <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -814,19 +838,62 @@ Returns the value of attribute initialized_tempfile
       <pre class="lines">
 
 
-100
-101
-102
-103
-104</pre>
+108
+109
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 108</span>
 
 <span class='def def kw'>def</span> <span class='ext identifier id'>ext</span>
   <span class='return return kw'>return</span> <span class='unless unless_mod kw'>unless</span> <span class='name identifier id'>name</span>
   <span class='bits identifier id'>bits</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='rparen token'>)</span>
   <span class='bits identifier id'>bits</span><span class='dot token'>.</span><span class='last identifier id'>last</span> <span class='if if_mod kw'>if</span> <span class='bits identifier id'>bits</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='gt op'>&gt;</span> <span class='integer val'>1</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="file-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>file</strong>(&amp;block) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 74</span>
+
+<span class='def def kw'>def</span> <span class='file identifier id'>file</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='f identifier id'>f</span> <span class='assign token'>=</span> <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='open identifier id'>open</span>
+  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+    <span class='ret identifier id'>ret</span> <span class='assign token'>=</span> <span class='yield yield kw'>yield</span> <span class='f identifier id'>f</span>
+    <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='close identifier id'>close</span>
+  <span class='else else kw'>else</span>
+    <span class='ret identifier id'>ret</span> <span class='assign token'>=</span> <span class='f identifier id'>f</span>
+  <span class='end end kw'>end</span>
+  <span class='ret identifier id'>ret</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -884,12 +951,12 @@ Returns the value of attribute initialized_tempfile
       <pre class="lines">
 
 
-77
-78
-79</pre>
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 85</span>
 
 <span class='def def kw'>def</span> <span class='path identifier id'>path</span>
   <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='path identifier id'>path</span>
@@ -913,16 +980,16 @@ Returns the value of attribute initialized_tempfile
       <pre class="lines">
 
 
-81
-82
-83
-84
-85
-86
-87</pre>
+89
+90
+91
+92
+93
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 89</span>
 
 <span class='def def kw'>def</span> <span class='size identifier id'>size</span>
   <span class='if if kw'>if</span> <span class='initialized_data identifier id'>initialized_data</span>
@@ -944,10 +1011,6 @@ Returns the value of attribute initialized_tempfile
   
 
   
-    <span class="aliases">Also known as:
-    <span class="names"><span id='file-instance_method'>file</span></span>
-    </span>
-  
 </p><table class="source_code">
   <tr>
     <td>
@@ -967,25 +1030,23 @@ Returns the value of attribute initialized_tempfile
 69
 70
 71
-72
-73</pre>
+72</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 59</span>
 
 <span class='def def kw'>def</span> <span class='tempfile identifier id'>tempfile</span>
-  <span class='if if kw'>if</span> <span class='@tempfile ivar id'>@tempfile</span>
+  <span class='@tempfile ivar id'>@tempfile</span> <span class='opasgn op'>||=</span> <span class='begin begin kw'>begin</span>
+    <span class='if if kw'>if</span> <span class='initialized_tempfile identifier id'>initialized_tempfile</span>
+      <span class='@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='initialized_tempfile identifier id'>initialized_tempfile</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='initialized_data identifier id'>initialized_data</span>
+      <span class='@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='Tempfile constant id'>Tempfile</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'dragonfly'</span><span class='rparen token'>)</span>
+      <span class='@tempfile ivar id'>@tempfile</span><span class='dot token'>.</span><span class='write identifier id'>write</span><span class='lparen token'>(</span><span class='initialized_data identifier id'>initialized_data</span><span class='rparen token'>)</span>
+    <span class='elsif elsif kw'>elsif</span> <span class='initialized_file identifier id'>initialized_file</span>
+      <span class='@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='copy_to_tempfile identifier id'>copy_to_tempfile</span><span class='lparen token'>(</span><span class='initialized_file identifier id'>initialized_file</span><span class='dot token'>.</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='@tempfile ivar id'>@tempfile</span><span class='dot token'>.</span><span class='close identifier id'>close</span>
     <span class='@tempfile ivar id'>@tempfile</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='initialized_tempfile identifier id'>initialized_tempfile</span>
-    <span class='initialized_tempfile identifier id'>initialized_tempfile</span><span class='dot token'>.</span><span class='open identifier id'>open</span>
-    <span class='@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='initialized_tempfile identifier id'>initialized_tempfile</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='initialized_data identifier id'>initialized_data</span>
-    <span class='tempfile identifier id'>tempfile</span> <span class='assign token'>=</span> <span class='Tempfile constant id'>Tempfile</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'dragonfly'</span><span class='rparen token'>)</span>
-    <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='write identifier id'>write</span><span class='lparen token'>(</span><span class='initialized_data identifier id'>initialized_data</span><span class='rparen token'>)</span>
-    <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='open identifier id'>open</span>
-    <span class='@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='tempfile identifier id'>tempfile</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='initialized_file identifier id'>initialized_file</span>
-    <span class='@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='copy_to_tempfile identifier id'>copy_to_tempfile</span><span class='lparen token'>(</span><span class='initialized_file identifier id'>initialized_file</span><span class='rparen token'>)</span>
   <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -1007,17 +1068,17 @@ Returns the value of attribute initialized_tempfile
       <pre class="lines">
 
 
-121
 122
 123
 124
 125
 126
 127
-128</pre>
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 121</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 122</span>
 
 <span class='def def kw'>def</span> <span class='to_file identifier id'>to_file</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
   <span class='if if kw'>if</span> <span class='initialized_data identifier id'>initialized_data</span>
@@ -1033,19 +1094,56 @@ Returns the value of attribute initialized_tempfile
 </table>
 </div>
     
+      <div class="method_details ">
+  <p class="signature " id="to_io-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>to_io</strong>(&amp;block) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+131
+132
+133
+134
+135
+136
+137</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 131</span>
+
+<span class='def def kw'>def</span> <span class='to_io identifier id'>to_io</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='initialized_data identifier id'>initialized_data</span>
+    <span class='StringIO constant id'>StringIO</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='initialized_data identifier id'>initialized_data</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='file identifier id'>file</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li>
+          <li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
     
     <div id="footer">
-  Generated on Thu Mar  4 23:43:26 2010 by 
+  Generated on Tue May 11 15:08:26 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.7).
 </div>

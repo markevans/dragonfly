@@ -22,7 +22,7 @@
     
     <div id="header" class="clearfix">
       
-      <div id="logo">Dragonfly Documentation</div>
+      <div id="logo">DRAGONFLY (v 0.6.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -520,16 +520,16 @@ A new instance of Attachment
       <pre class="lines">
 
 
-157
-158
-159
 160
 161
 162
-163</pre>
+163
+164
+165
+166</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 160</span>
 
 <span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='if if kw'>if</span> <span class='can_delegate_to_temp_object? fid id'>can_delegate_to_temp_object?</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='rparen token'>)</span>
@@ -576,12 +576,12 @@ Returns the value of attribute app
       <pre class="lines">
 
 
-115
-116
-117</pre>
+118
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 118</span>
 
 <span class='def def kw'>def</span> <span class='app identifier id'>app</span>
   <span class='@app ivar id'>@app</span>
@@ -619,12 +619,12 @@ Returns the value of attribute attribute_name
       <pre class="lines">
 
 
-115
-116
-117</pre>
+118
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 118</span>
 
 <span class='def def kw'>def</span> <span class='attribute_name identifier id'>attribute_name</span>
   <span class='@attribute_name ivar id'>@attribute_name</span>
@@ -662,12 +662,12 @@ Returns the value of attribute parent_model
       <pre class="lines">
 
 
-115
-116
-117</pre>
+118
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 118</span>
 
 <span class='def def kw'>def</span> <span class='parent_model identifier id'>parent_model</span>
   <span class='@parent_model ivar id'>@parent_model</span>
@@ -694,16 +694,16 @@ Returns the value of attribute parent_model
       <pre class="lines">
 
 
+46
 47
 48
 49
 50
 51
-52
-53</pre>
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 46</span>
 
 <span class='def def kw'>def</span> <span class='temp_object identifier id'>temp_object</span>
   <span class='if if kw'>if</span> <span class='@temp_object ivar id'>@temp_object</span>
@@ -748,13 +748,15 @@ Returns the value of attribute parent_model
 25
 26
 27
-28</pre>
+28
+29</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 18</span>
 
 <span class='def def kw'>def</span> <span class='assign identifier id'>assign</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
   <span class='if if kw'>if</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
     <span class='self self kw'>self</span><span class='dot token'>.</span><span class='uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
     <span class='reset_magic_attributes identifier id'>reset_magic_attributes</span>
   <span class='else else kw'>else</span>
@@ -783,14 +785,14 @@ Returns the value of attribute parent_model
       <pre class="lines">
 
 
-30
 31
 32
 33
-34</pre>
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 31</span>
 
 <span class='def def kw'>def</span> <span class='destroy! fid id'>destroy!</span>
   <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='previous_uid identifier id'>previous_uid</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='previous_uid identifier id'>previous_uid</span>
@@ -816,12 +818,12 @@ Returns the value of attribute parent_model
       <pre class="lines">
 
 
+76
 77
-78
-79</pre>
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 76</span>
 
 <span class='def def kw'>def</span> <span class='ext identifier id'>ext</span>
   <span class='has_magic_attribute_for? fid id'>has_magic_attribute_for?</span><span class='lparen token'>(</span><span class='symbol val'>:ext</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='magic_attribute_for identifier id'>magic_attribute_for</span><span class='lparen token'>(</span><span class='symbol val'>:ext</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='ext identifier id'>ext</span>
@@ -845,12 +847,12 @@ Returns the value of attribute parent_model
       <pre class="lines">
 
 
-36
 37
-38</pre>
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 37</span>
 
 <span class='def def kw'>def</span> <span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
@@ -874,12 +876,12 @@ Returns the value of attribute parent_model
       <pre class="lines">
 
 
+64
 65
-66
-67</pre>
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 64</span>
 
 <span class='def def kw'>def</span> <span class='methods identifier id'>methods</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='lparen token'>(</span><span class='super super kw'>super</span> <span class='plus op'>+</span> <span class='methods_to_delegate_to_temp_object identifier id'>methods_to_delegate_to_temp_object</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='uniq identifier id'>uniq</span>
@@ -903,12 +905,12 @@ Returns the value of attribute parent_model
       <pre class="lines">
 
 
+80
 81
-82
-83</pre>
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 80</span>
 
 <span class='def def kw'>def</span> <span class='name identifier id'>name</span>
   <span class='has_magic_attribute_for? fid id'>has_magic_attribute_for?</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='magic_attribute_for identifier id'>magic_attribute_for</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='name identifier id'>name</span>
@@ -932,12 +934,12 @@ Returns the value of attribute parent_model
       <pre class="lines">
 
 
+68
 69
-70
-71</pre>
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 68</span>
 
 <span class='def def kw'>def</span> <span class='public_methods identifier id'>public_methods</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='lparen token'>(</span><span class='super super kw'>super</span> <span class='plus op'>+</span> <span class='methods_to_delegate_to_temp_object identifier id'>methods_to_delegate_to_temp_object</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='uniq identifier id'>uniq</span>
@@ -982,12 +984,12 @@ Returns the value of attribute parent_model
       <pre class="lines">
 
 
+72
 73
-74
-75</pre>
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 72</span>
 
 <span class='def def kw'>def</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
   <span class='super super kw'>super</span> <span class='orop op'>||</span> <span class='methods_to_delegate_to_temp_object identifier id'>methods_to_delegate_to_temp_object</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='dot token'>.</span><span class='to_method_name identifier id'>to_method_name</span><span class='rparen token'>)</span>
@@ -1011,21 +1013,17 @@ Returns the value of attribute parent_model
       <pre class="lines">
 
 
-40
 41
 42
 43
-44
-45</pre>
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 41</span>
 
 <span class='def def kw'>def</span> <span class='save! fid id'>save!</span>
-  <span class='if if kw'>if</span> <span class='changed? fid id'>changed?</span>
-    <span class='destroy! fid id'>destroy!</span>
-    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
+  <span class='destroy! fid id'>destroy!</span> <span class='if if_mod kw'>if</span> <span class='uid_changed? fid id'>uid_changed?</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='has_data_to_store? fid id'>has_data_to_store?</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -1046,12 +1044,12 @@ Returns the value of attribute parent_model
       <pre class="lines">
 
 
+84
 85
-86
-87</pre>
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 84</span>
 
 <span class='def def kw'>def</span> <span class='size identifier id'>size</span>
   <span class='has_magic_attribute_for? fid id'>has_magic_attribute_for?</span><span class='lparen token'>(</span><span class='symbol val'>:size</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='magic_attribute_for identifier id'>magic_attribute_for</span><span class='lparen token'>(</span><span class='symbol val'>:size</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='size identifier id'>size</span>
@@ -1075,12 +1073,12 @@ Returns the value of attribute parent_model
       <pre class="lines">
 
 
+54
 55
-56
-57</pre>
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 54</span>
 
 <span class='def def kw'>def</span> <span class='to_value identifier id'>to_value</span>
   <span class='self self kw'>self</span> <span class='if if_mod kw'>if</span> <span class='been_assigned? fid id'>been_assigned?</span>
@@ -1104,14 +1102,14 @@ Returns the value of attribute parent_model
       <pre class="lines">
 
 
+58
 59
 60
 61
-62
-63</pre>
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/attachment.rb', line 58</span>
 
 <span class='def def kw'>def</span> <span class='url identifier id'>url</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='unless unless kw'>unless</span> <span class='uid identifier id'>uid</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='uid identifier id'>uid</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='PendingUID constant id'>PendingUID</span><span class='rparen token'>)</span>
@@ -1130,13 +1128,13 @@ Returns the value of attribute parent_model
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li>
+          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
     
     <div id="footer">
-  Generated on Thu Mar  4 23:43:30 2010 by 
+  Generated on Tue May 11 15:08:26 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.7).
 </div>

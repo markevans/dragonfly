@@ -22,7 +22,7 @@
     
     <div id="header" class="clearfix">
       
-      <div id="logo">Dragonfly Documentation</div>
+      <div id="logo">DRAGONFLY (v 0.6.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -225,29 +225,6 @@ Configuration including nested items
   <span class="summary_signature">
     
       <a href="#processors-instance_method" title="#processors (instance method)">- (Object) <strong>processors</strong> </a>
-    
-
-    
-  </span>
-  
-  
-    <span class="note title readonly">readonly</span>
-    
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#temp_object_class-instance_method" title="#temp_object_class (instance method)">- (Object) <strong>temp_object_class</strong> </a>
     
 
     
@@ -684,17 +661,15 @@ A new instance of App
 73
 74
 75
-76
-77</pre>
+76</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 72</span>
 
 <span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
-  <span class='@analysers ivar id'>@analysers</span><span class='comma token'>,</span> <span class='@processors ivar id'>@processors</span><span class='comma token'>,</span> <span class='@encoders ivar id'>@encoders</span> <span class='assign token'>=</span> <span class='AnalyserList constant id'>AnalyserList</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='comma token'>,</span> <span class='ProcessorList constant id'>ProcessorList</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='comma token'>,</span> <span class='EncoderList constant id'>EncoderList</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='@analysers ivar id'>@analysers</span><span class='comma token'>,</span> <span class='@processors ivar id'>@processors</span><span class='comma token'>,</span> <span class='@encoders ivar id'>@encoders</span> <span class='assign token'>=</span> <span class='AnalyserList constant id'>AnalyserList</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='ProcessorList constant id'>ProcessorList</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='EncoderList constant id'>EncoderList</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
   <span class='@parameters_class ivar id'>@parameters_class</span> <span class='assign token'>=</span> <span class='Class constant id'>Class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='Parameters constant id'>Parameters</span><span class='rparen token'>)</span>
   <span class='@url_handler ivar id'>@url_handler</span> <span class='assign token'>=</span> <span class='UrlHandler constant id'>UrlHandler</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@parameters_class ivar id'>@parameters_class</span><span class='rparen token'>)</span>
-  <span class='initialize_temp_object_class identifier id'>initialize_temp_object_class</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -738,12 +713,12 @@ A new instance of App
       <pre class="lines">
 
 
+79
 80
-81
-82</pre>
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 79</span>
 
 <span class='def def kw'>def</span> <span class='analysers identifier id'>analysers</span>
   <span class='@analysers ivar id'>@analysers</span>
@@ -785,12 +760,12 @@ A new instance of App
       <pre class="lines">
 
 
+83
 84
-85
-86</pre>
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 83</span>
 
 <span class='def def kw'>def</span> <span class='encoders identifier id'>encoders</span>
   <span class='@encoders ivar id'>@encoders</span>
@@ -836,12 +811,12 @@ A new instance of App
       <pre class="lines">
 
 
+87
 88
-89
-90</pre>
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 87</span>
 
 <span class='def def kw'>def</span> <span class='parameters_class identifier id'>parameters_class</span>
   <span class='@parameters_class ivar id'>@parameters_class</span>
@@ -883,62 +858,15 @@ A new instance of App
       <pre class="lines">
 
 
+81
 82
-83
-84</pre>
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 81</span>
 
 <span class='def def kw'>def</span> <span class='processors identifier id'>processors</span>
   <span class='@processors ivar id'>@processors</span>
-<span class='end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id=""></span>
-      <span id="temp_object_class-instance_method"></span>
-      <div class="method_details ">
-  <p class="signature " id="temp_object_class-instance_method">
-  
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>temp_object_class</strong>  <span class="extras">(readonly)</span>
-  
-
-  
-</p><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-  <h3>See Also:</h3>
-  <ul class="see">
-    
-      <li>and ExtendedTempObject</li>
-    
-  </ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-90
-91
-92</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 90</span>
-
-<span class='def def kw'>def</span> <span class='temp_object_class identifier id'>temp_object_class</span>
-  <span class='@temp_object_class ivar id'>@temp_object_class</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -977,12 +905,12 @@ A new instance of App
       <pre class="lines">
 
 
+85
 86
-87
-88</pre>
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 85</span>
 
 <span class='def def kw'>def</span> <span class='url_handler identifier id'>url_handler</span>
   <span class='@url_handler ivar id'>@url_handler</span>
@@ -1172,6 +1100,9 @@ See the Rack documentation for more details
       <pre class="lines">
 
 
+114
+115
+116
 117
 118
 119
@@ -1183,13 +1114,10 @@ See the Rack documentation for more details
 125
 126
 127
-128
-129
-130
-131</pre>
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 114</span>
 
 <span class='def def kw'>def</span> <span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
   <span class='parameters identifier id'>parameters</span> <span class='assign token'>=</span> <span class='url_handler identifier id'>url_handler</span><span class='dot token'>.</span><span class='url_to_parameters identifier id'>url_to_parameters</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='lbrack token'>[</span><span class='string val'>'PATH_INFO'</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='env identifier id'>env</span><span class='lbrack token'>[</span><span class='string val'>'QUERY_STRING'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
@@ -1276,15 +1204,15 @@ a temp_object holding the data
       <pre class="lines">
 
 
-136
-137
-138</pre>
+133
+134
+135</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 133</span>
 
 <span class='def def kw'>def</span> <span class='create_object identifier id'>create_object</span><span class='lparen token'>(</span><span class='initialization_object identifier id'>initialization_object</span><span class='rparen token'>)</span>
-  <span class='temp_object_class identifier id'>temp_object_class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='initialization_object identifier id'>initialization_object</span><span class='rparen token'>)</span>
+  <span class='ExtendedTempObject constant id'>ExtendedTempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='initialization_object identifier id'>initialization_object</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -1395,16 +1323,16 @@ a temp_object holding the data
       <pre class="lines">
 
 
-152
-153
-154
-155</pre>
+149
+150
+151
+152</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 149</span>
 
 <span class='def def kw'>def</span> <span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='temp_object_class identifier id'>temp_object_class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='ExtendedTempObject constant id'>ExtendedTempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span>
   <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='transform identifier id'>transform</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -1426,12 +1354,12 @@ a temp_object holding the data
       <pre class="lines">
 
 
-157
-158
-159</pre>
+154
+155
+156</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 154</span>
 
 <span class='def def kw'>def</span> <span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='create_object identifier id'>create_object</span><span class='lparen token'>(</span><span class='processors identifier id'>processors</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
@@ -1536,12 +1464,12 @@ the mime-type
       <pre class="lines">
 
 
-169
-170
-171</pre>
+166
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 166</span>
 
 <span class='def def kw'>def</span> <span class='mime_type_for identifier id'>mime_type_for</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='temp_object identifier id'>temp_object</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
   <span class='registered_mime_types identifier id'>registered_mime_types</span><span class='lbrack token'>[</span><span class='file_ext_string identifier id'>file_ext_string</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='rparen token'>)</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='mime_type identifier id'>mime_type</span> <span class='if if_mod kw'>if</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:mime_type</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='fallback_mime_type identifier id'>fallback_mime_type</span>
@@ -1565,12 +1493,12 @@ the mime-type
       <pre class="lines">
 
 
-180
-181
-182</pre>
+177
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 177</span>
 
 <span class='def def kw'>def</span> <span class='register_analyser identifier id'>register_analyser</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='analysers identifier id'>analysers</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
@@ -1594,12 +1522,12 @@ the mime-type
       <pre class="lines">
 
 
-190
-191
-192</pre>
+187
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 190</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 187</span>
 
 <span class='def def kw'>def</span> <span class='register_encoder identifier id'>register_encoder</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='encoders identifier id'>encoders</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
@@ -1623,12 +1551,12 @@ the mime-type
       <pre class="lines">
 
 
-195
-196
-197</pre>
+192
+193
+194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 195</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 192</span>
 
 <span class='def def kw'>def</span> <span class='register_mime_type identifier id'>register_mime_type</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='mime_type identifier id'>mime_type</span><span class='rparen token'>)</span>
   <span class='registered_mime_types identifier id'>registered_mime_types</span><span class='lbrack token'>[</span><span class='file_ext_string identifier id'>file_ext_string</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='rparen token'>)</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='mime_type identifier id'>mime_type</span>
@@ -1652,12 +1580,12 @@ the mime-type
       <pre class="lines">
 
 
-185
-186
-187</pre>
+182
+183
+184</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 185</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 182</span>
 
 <span class='def def kw'>def</span> <span class='register_processor identifier id'>register_processor</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='processors identifier id'>processors</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
@@ -1681,12 +1609,12 @@ the mime-type
       <pre class="lines">
 
 
-200
-201
-202</pre>
+197
+198
+199</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 200</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 197</span>
 
 <span class='def def kw'>def</span> <span class='registered_mime_types identifier id'>registered_mime_types</span>
   <span class='@registered_mime_types ivar id'>@registered_mime_types</span> <span class='opasgn op'>||=</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Mime constant id'>Mime</span><span class='colon2 op'>::</span><span class='MIME_TYPES constant id'>MIME_TYPES</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
@@ -1761,12 +1689,12 @@ the uid assigned to it
       <pre class="lines">
 
 
-176
-177
-178</pre>
+173
+174
+175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 173</span>
 
 <span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
   <span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='create_object identifier id'>create_object</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
@@ -1783,13 +1711,13 @@ the uid assigned to it
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li>
+          <li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
     
     <div id="footer">
-  Generated on Thu Mar  4 23:43:27 2010 by 
+  Generated on Tue May 11 15:08:25 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.7).
 </div>

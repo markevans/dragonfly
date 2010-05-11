@@ -22,7 +22,7 @@
     
     <div id="header" class="clearfix">
       
-      <div id="logo">Dragonfly Documentation</div>
+      <div id="logo">DRAGONFLY (v 0.6.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -43,7 +43,7 @@
 
 <p>The main way to use Dragonfly with Rails is as a <tt><a href="Dragonfly/Middleware.html" title="Dragonfly::Middleware (class)">middleware</a></tt>.</p>
 
-<h2>1. The initializer</h2>
+<h2>1. Setting up</h2>
 
 <h2>The quick way</h2>
 
@@ -58,49 +58,27 @@ registers the app so that you can use ActiveRecord accessors, and inserts it int
 
 <h2>The more explicit way</h2>
 
-<p>If you want to set up and configure the Dragonfly app yourself, then you can put something like the code below in an initializer and
-modify accordingly:</p>
+<p>You can do the above explicitly.</p>
+
+<p>config/initializers/dragonfly.rb:</p>
 
 <pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
 
-<span class='comment val'># Set up and configure the dragonfly app</span>
 <span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='RMagickConfiguration constant id'>RMagickConfiguration</span><span class='rparen token'>)</span>
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='log identifier id'>log</span> <span class='assign token'>=</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='d identifier id'>d</span><span class='bitor op'>|</span>
-    <span class='d identifier id'>d</span><span class='dot token'>.</span><span class='root_path identifier id'>root_path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{Rails.root}/public/system/dragonfly/#{Rails.env}&quot;</span>
-  <span class='end end kw'>end</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_handler identifier id'>url_handler</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='u identifier id'>u</span><span class='bitor op'>|</span>
-    <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='secret identifier id'>secret</span> <span class='assign token'>=</span> <span class='string val'>'insert some secret here to protect from DOS attacks!'</span>
-    <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='path_prefix identifier id'>path_prefix</span> <span class='assign token'>=</span> <span class='string val'>'/media'</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Config constant id'>Config</span><span class='colon2 op'>::</span><span class='RailsImages constant id'>RailsImages</span><span class='rparen token'>)</span>
 
-<span class='comment val'># Extend ActiveRecord</span>
-<span class='comment val'># This allows you to use e.g.</span>
-<span class='comment val'>#   image_accessor :my_attribute</span>
-<span class='comment val'># in your models.</span>
-<span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='ActiveRecordExtensions constant id'>ActiveRecordExtensions</span>
-<span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='register_dragonfly_app identifier id'>register_dragonfly_app</span><span class='lparen token'>(</span><span class='symbol val'>:image</span><span class='comma token'>,</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-
-<span class='comment val'>### Insert the middleware ###</span>
-<span class='comment val'># Where the middleware is depends on the version of Rails</span>
-<span class='middleware identifier id'>middleware</span> <span class='assign token'>=</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:application</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='application identifier id'>application</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span> <span class='colon op'>:</span> <span class='ActionController constant id'>ActionController</span><span class='colon2 op'>::</span><span class='Dispatcher constant id'>Dispatcher</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span>
-<span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert_after identifier id'>insert_after</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Lock constant id'>Lock</span><span class='comma token'>,</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Middleware constant id'>Middleware</span><span class='comma token'>,</span> <span class='symbol val'>:images</span>
-
-<span class='comment val'># # UNCOMMENT THIS IF YOU WANT TO CACHE REQUESTS WITH Rack::Cache</span>
-<span class='comment val'># require 'rack/cache'</span>
-<span class='comment val'># middleware.insert_before Dragonfly::Middleware, Rack::Cache, {</span>
-<span class='comment val'>#   :verbose     =&gt; true,</span>
-<span class='comment val'>#   :metastore   =&gt; &quot;file:#{Rails.root}/tmp/dragonfly/cache/meta&quot;,</span>
-<span class='comment val'>#   :entitystore =&gt; &quot;file:#{Rails.root}/tmp/dragonfly/cache/body&quot;</span>
-<span class='comment val'># }</span>
+<span class='comment val'># Define the method 'image_accessor' in ActiveRecord models</span>
+<span class='Dragonfly constant id'>Dragonfly</span><span class='dot token'>.</span><span class='active_record_macro identifier id'>active_record_macro</span><span class='lparen token'>(</span><span class='symbol val'>:image</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='rparen token'>)</span>
 </pre>
 
-<p>If you can't be bothered to copy and paste, then there's actually a generator for Rails 2.3 (not Rails 3 yet) that will do something like the above for you:</p>
+<p>environment.rb (application.rb in Rails 3):</p>
 
-<pre class="code"><span class='dot token'>.</span><span class='div op'>/</span><span class='script identifier id'>script</span><span class='div op'>/</span><span class='generate identifier id'>generate</span> <span class='dragonfly_app identifier id'>dragonfly_app</span> <span class='images identifier id'>images</span>
+<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert_after identifier id'>insert_after</span> <span class='string val'>'Rack::Lock'</span><span class='comma token'>,</span> <span class='string val'>'Dragonfly::Middleware'</span><span class='comma token'>,</span> <span class='symbol val'>:images</span>
+<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert_before identifier id'>insert_before</span> <span class='string val'>'Dragonfly::Middleware'</span><span class='comma token'>,</span> <span class='string val'>'Rack::Cache'</span><span class='comma token'>,</span> <span class='lbrace token'>{</span>
+  <span class='symbol val'>:verbose</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span>
+  <span class='symbol val'>:metastore</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;file:#{Rails.root}/tmp/dragonfly/cache/meta&quot;</span><span class='comma token'>,</span>
+  <span class='symbol val'>:entitystore</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;file:#{Rails.root}/tmp/dragonfly/cache/body&quot;</span>
+<span class='rbrace token'>}</span>
 </pre>
 
 <h2>2. Gem dependencies</h2>
@@ -131,17 +109,28 @@ modify accordingly:</p>
 <p>To see what you can do with the active record accessors, see <a href="file.ActiveRecord.html" title="ActiveRecord">ActiveRecord</a>.</p>
 
 <p>For more info about general Dragonfly setup, including avoiding denial-of-service attacks, see <a href="file.GettingStarted.html" title="GettingStarted">GettingStarted</a>.</p>
+
+<h2>Extra Config</h2>
+
+<p>There are one or two config options you may commonly want to tweak.
+In this case, add something like the following to your initializer:</p>
+
+<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_handler identifier id'>url_handler</span><span class='dot token'>.</span><span class='path_prefix identifier id'>path_prefix</span> <span class='assign token'>=</span> <span class='string val'>'/attachments'</span>   <span class='comment val'># configures where the Dragonfly app is served from - default '/media'</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_handler identifier id'>url_handler</span><span class='dot token'>.</span><span class='secret identifier id'>secret</span> <span class='assign token'>=</span> <span class='string val'>'PUT A SECRET HERE!!'</span> <span class='comment val'># for protecting from Denial-Of-Service attacks</span>
+<span class='end end kw'>end</span>
+</pre>
 </div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li>
+          <li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
     
     <div id="footer">
-  Generated on Thu Mar  4 23:43:22 2010 by 
+  Generated on Tue May 11 15:08:22 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.7).
 </div>

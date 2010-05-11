@@ -22,7 +22,7 @@
     
     <div id="header" class="clearfix">
       
-      <div id="logo">Dragonfly Documentation</div>
+      <div id="logo">DRAGONFLY (v 0.6.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -138,15 +138,21 @@
       <pre class="lines">
 
 
-36
 37
-38</pre>
+38
+39
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/class_methods.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/class_methods.rb', line 37</span>
 
 <span class='def def kw'>def</span> <span class='dragonfly_apps_for_attributes identifier id'>dragonfly_apps_for_attributes</span>
-  <span class='@dragonfly_apps_for_attributes ivar id'>@dragonfly_apps_for_attributes</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='@dragonfly_apps_for_attributes ivar id'>@dragonfly_apps_for_attributes</span> <span class='opasgn op'>||=</span> <span class='begin begin kw'>begin</span>
+    <span class='parent_class identifier id'>parent_class</span> <span class='assign token'>=</span> <span class='ancestors identifier id'>ancestors</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
+    <span class='parent_class identifier id'>parent_class</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:dragonfly_apps_for_attributes</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='parent_class identifier id'>parent_class</span><span class='dot token'>.</span><span class='dragonfly_apps_for_attributes identifier id'>dragonfly_apps_for_attributes</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span> <span class='colon op'>:</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -194,13 +200,15 @@
 31
 32
 33
-34</pre>
+34
+35</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_record_extensions/class_methods.rb', line 7</span>
 
 <span class='def def kw'>def</span> <span class='register_dragonfly_app identifier id'>register_dragonfly_app</span><span class='lparen token'>(</span><span class='accessor_prefix identifier id'>accessor_prefix</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='rparen token'>)</span>
-  <span class='metaclass identifier id'>metaclass</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
+  <span class='eigenclass identifier id'>eigenclass</span> <span class='assign token'>=</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:metaclass</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='metaclass identifier id'>metaclass</span> <span class='colon op'>:</span> <span class='singleton_class identifier id'>singleton_class</span> <span class='comment val'># Because rails changed the name from metaclass -&gt; singleton_class</span>
+  <span class='eigenclass identifier id'>eigenclass</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
     
     <span class='comment val'># Defines e.g. 'image_accessor' for any activerecord class body</span>
     <span class='define_method identifier id'>define_method</span> <span class='dstring node'>&quot;#{accessor_prefix}_accessor&quot;</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='attribute identifier id'>attribute</span><span class='bitor op'>|</span>
@@ -239,13 +247,13 @@
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li>
+          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
     
     <div id="footer">
-  Generated on Thu Mar  4 23:43:25 2010 by 
+  Generated on Tue May 11 15:08:28 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.7).
 </div>

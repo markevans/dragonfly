@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta name="Content-Type" content="text/html; charset=UTF-8" />
-<title>Class: Dragonfly::Encoding::TransparentEncoder</title>
+<title>Module: Dragonfly::Config::RailsDefaults</title>
 <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -37,67 +37,38 @@
     
     <div id="content" class="clearfix">
       <div class="col1">
-        <h1>Class: Dragonfly::Encoding::TransparentEncoder 
+        <h1>Module: Dragonfly::Config::RailsDefaults 
   
   
 </h1>
 
 <dl class="box">
   
-    <dt class="r1">Inherits:</dt>
-    <dd class="r1">
-      <span class="inheritName"><a href="Base.html" title="Dragonfly::Encoding::Base (class)">Base</a></span>
-      
-        <ul class="fullTree">
-          <li><a href="../../Object.html" title="Object (class)">Object</a></li>
-          
-            <li class="next"><a href="Base.html" title="Dragonfly::Encoding::Base (class)">Base</a></li>
-          
-            <li class="next">Dragonfly::Encoding::TransparentEncoder</li>
-          
-        </ul>
-        <a href="#" class="inheritanceTree">show all</a>
-      
-      </dd>
-    
-  
   
     
   
     
   
   
-    <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/dragonfly/encoding/transparent_encoder.rb</dd>
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/dragonfly/config/rails_defaults.rb</dd>
   
 </dl>
 <div class="clear"></div>
 
 
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 
 
 
-  <h2>Instance Method Summary</h2>
+  <h2>Class Method Summary</h2>
 
   <ul class="summary">
     
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#encode-instance_method" title="#encode (instance method)">- (Object) <strong>encode</strong>(temp_object, format, encoding = {}) </a>
+      <a href="#apply_configuration-class_method" title="apply_configuration (class method)">+ (Object) <strong>apply_configuration</strong>(app) </a>
     
 
     
@@ -109,75 +80,52 @@
   
 
   
-    <span class="summary_desc">
-Does nothing.
-
-</span>
+    <span class="summary_desc"></span>
   
 </li>
 
     
   </ul>
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <a href="../BelongsToApp.html" title="Dragonfly::BelongsToApp (module)">Dragonfly::BelongsToApp</a></h3>
-  <p class="inherited"><a href="../BelongsToApp.html#app_set%3F-instance_method" title="Dragonfly::BelongsToApp#app_set? (method)">#app_set?</a>, <a href="../BelongsToApp.html#log-instance_method" title="Dragonfly::BelongsToApp#log (method)">#log</a></p>
 
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <a href="../Delegatable.html" title="Dragonfly::Delegatable (module)">Dragonfly::Delegatable</a></h3>
-  <p class="inherited"><a href="../Delegatable.html#delegatable_methods-instance_method" title="Dragonfly::Delegatable#delegatable_methods (method)">#delegatable_methods</a></p>
-
-
-  <div id="instance_method_details" class="method_details_list">
-    <h2>Instance Method Details</h2>
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
     
     
       <div class="method_details first">
-  <p class="signature first" id="encode-instance_method">
+  <p class="signature first" id="apply_configuration-class_method">
   
-    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>encode</strong>(temp_object, format, encoding = {}) 
+    + (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>apply_configuration</strong>(app) 
   
 
   
-</p><div class="docstring">
-  <div class="discussion">
-    <p>
-Does nothing
-</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-</div><table class="source_code">
+</p><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
+6
 7
 8
-9</pre>
+9
+10
+11
+12
+13
+14</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/encoding/transparent_encoder.rb', line 7</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/config/rails_defaults.rb', line 6</span>
 
-<span class='def def kw'>def</span> <span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='encoding identifier id'>encoding</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='temp_object identifier id'>temp_object</span>
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='apply_configuration identifier id'>apply_configuration</span><span class='lparen token'>(</span><span class='app identifier id'>app</span><span class='rparen token'>)</span>
+  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='log identifier id'>log</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='root_path identifier id'>root_path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{::Rails.root}/public/system/dragonfly/#{::Rails.env}&quot;</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_handler identifier id'>url_handler</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='u identifier id'>u</span><span class='bitor op'>|</span>
+      <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='path_prefix identifier id'>path_prefix</span> <span class='assign token'>=</span> <span class='string val'>'/media'</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -197,7 +145,7 @@ Does nothing
     </div>
     
     <div id="footer">
-  Generated on Tue May 11 15:08:25 2010 by 
+  Generated on Tue May 11 15:08:29 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.7).
 </div>

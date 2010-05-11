@@ -22,7 +22,7 @@
     
     <div id="header" class="clearfix">
       
-      <div id="logo">Dragonfly Documentation</div>
+      <div id="logo">DRAGONFLY (v 0.6.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -83,6 +83,10 @@
   
   
   
+  
+  
+  
+  
 
 
 
@@ -114,6 +118,26 @@
   <span class="summary_signature">
     
       <a href="#depth-instance_method" title="#depth (instance method)">- (Object) <strong>depth</strong>(image) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#format-instance_method" title="#format (instance method)">- (Object) <strong>format</strong>(image) </a>
     
 
     
@@ -204,6 +228,14 @@
   
   
   
+  <h3 class="inherited">Methods included from <a href="../BelongsToApp.html" title="Dragonfly::BelongsToApp (module)">Dragonfly::BelongsToApp</a></h3>
+  <p class="inherited"><a href="../BelongsToApp.html#app_set%3F-instance_method" title="Dragonfly::BelongsToApp#app_set? (method)">#app_set?</a>, <a href="../BelongsToApp.html#log-instance_method" title="Dragonfly::BelongsToApp#log (method)">#log</a></p>
+
+  
+  
+  
+  
+  
   <h3 class="inherited">Methods included from <a href="../Delegatable.html" title="Dragonfly::Delegatable (module)">Dragonfly::Delegatable</a></h3>
   <p class="inherited"><a href="../Delegatable.html#delegatable_methods-instance_method" title="Dragonfly::Delegatable#delegatable_methods (method)">#delegatable_methods</a></p>
 
@@ -265,6 +297,35 @@
 
 <span class='def def kw'>def</span> <span class='depth identifier id'>depth</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span>
   <span class='rmagick_image identifier id'>rmagick_image</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='depth identifier id'>depth</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="format-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>format</strong>(image) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+30
+31
+32</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/r_magick_analyser.rb', line 30</span>
+
+<span class='def def kw'>def</span> <span class='format identifier id'>format</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span>
+  <span class='rmagick_image identifier id'>rmagick_image</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='format identifier id'>format</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -369,13 +430,13 @@
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li>
+          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
     
     <div id="footer">
-  Generated on Thu Mar  4 23:43:29 2010 by 
+  Generated on Tue May 11 15:08:28 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.7).
 </div>

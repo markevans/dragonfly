@@ -22,7 +22,7 @@
     
     <div id="header" class="clearfix">
       
-      <div id="logo">Dragonfly Documentation</div>
+      <div id="logo">DRAGONFLY (v 0.6.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -65,10 +65,14 @@
     
   
     
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><a href="BelongsToApp.html" title="Dragonfly::BelongsToApp (module)">BelongsToApp</a></dd>
+      
+    
   
   
-    <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/dragonfly/extended_temp_object.rb</dd>
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/dragonfly/extended_temp_object.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -131,20 +135,24 @@ processing and encoding in one go) using &#8216;transform&#8217;, e.g.
   
   
   
-  <h2>Class Attribute Summary</h2>
+  
+  
+  
+  
+  <h2>Instance Attribute Summary</h2>
   <ul class="summary">
     
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#app-class_method" title="app (class method)">+ (Object) <strong>app</strong> </a>
+      <a href="#cache-instance_method" title="#cache (instance method)">- (Object) <strong>cache</strong> </a>
     
 
     
   </span>
   
   
-    
+    <span class="note title readonly">readonly</span>
     
   
   
@@ -153,7 +161,7 @@ processing and encoding in one go) using &#8216;transform&#8217;, e.g.
 
   
     <span class="summary_desc">
-Returns the value of attribute app.
+Returns the value of attribute cache.
 
 </span>
   
@@ -212,11 +220,13 @@ Returns the value of attribute app.
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#inspect-instance_method" title="#inspect (instance method)">- (Object) <strong>inspect</strong> </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (ExtendedTempObject) <strong>initialize</strong>(obj, app) </a>
     
 
     
   </span>
+  
+    <span class="note title constructor">constructor</span>
   
   
   
@@ -225,8 +235,7 @@ Returns the value of attribute app.
 
   
     <span class="summary_desc">
-As we create customly configured subclasses of this class, the console
-gives a confusing output when inspecting, so modify here.
+A new instance of ExtendedTempObject.
 
 </span>
   
@@ -384,12 +393,62 @@ allows methods from the analyser.
   
   
   
+  <h3 class="inherited">Methods included from <a href="BelongsToApp.html" title="Dragonfly::BelongsToApp (module)">BelongsToApp</a></h3>
+  <p class="inherited"><a href="BelongsToApp.html#app_set%3F-instance_method" title="Dragonfly::BelongsToApp#app_set? (method)">#app_set?</a>, <a href="BelongsToApp.html#log-instance_method" title="Dragonfly::BelongsToApp#log (method)">#log</a></p>
+
+  
+  
+  
+  
+  
   <h3 class="inherited">Methods inherited from <a href="TempObject.html" title="Dragonfly::TempObject (class)">TempObject</a></h3>
-  <p class="inherited"><a href="TempObject.html#basename-instance_method" title="Dragonfly::TempObject#basename (method)">#basename</a>, <a href="TempObject.html#data-instance_method" title="Dragonfly::TempObject#data (method)">#data</a>, <a href="TempObject.html#each-instance_method" title="Dragonfly::TempObject#each (method)">#each</a>, <a href="TempObject.html#ext-instance_method" title="Dragonfly::TempObject#ext (method)">#ext</a>, <a href="TempObject.html#initialize-instance_method" title="Dragonfly::TempObject#initialize (method)">#initialize</a>, <a href="TempObject.html#modify_self%21-instance_method" title="Dragonfly::TempObject#modify_self! (method)">#modify_self!</a>, <a href="TempObject.html#path-instance_method" title="Dragonfly::TempObject#path (method)">#path</a>, <a href="TempObject.html#size-instance_method" title="Dragonfly::TempObject#size (method)">#size</a>, <a href="TempObject.html#tempfile-instance_method" title="Dragonfly::TempObject#tempfile (method)">#tempfile</a>, <a href="TempObject.html#to_file-instance_method" title="Dragonfly::TempObject#to_file (method)">#to_file</a></p>
+  <p class="inherited"><a href="TempObject.html#basename-instance_method" title="Dragonfly::TempObject#basename (method)">#basename</a>, <a href="TempObject.html#data-instance_method" title="Dragonfly::TempObject#data (method)">#data</a>, <a href="TempObject.html#each-instance_method" title="Dragonfly::TempObject#each (method)">#each</a>, <a href="TempObject.html#ext-instance_method" title="Dragonfly::TempObject#ext (method)">#ext</a>, <a href="TempObject.html#file-instance_method" title="Dragonfly::TempObject#file (method)">#file</a>, <a href="TempObject.html#modify_self%21-instance_method" title="Dragonfly::TempObject#modify_self! (method)">#modify_self!</a>, <a href="TempObject.html#path-instance_method" title="Dragonfly::TempObject#path (method)">#path</a>, <a href="TempObject.html#size-instance_method" title="Dragonfly::TempObject#size (method)">#size</a>, <a href="TempObject.html#tempfile-instance_method" title="Dragonfly::TempObject#tempfile (method)">#tempfile</a>, <a href="TempObject.html#to_file-instance_method" title="Dragonfly::TempObject#to_file (method)">#to_file</a>, <a href="TempObject.html#to_io-instance_method" title="Dragonfly::TempObject#to_io (method)">#to_io</a></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
-    <p class="notice">This class inherits a constructor from <a href="TempObject.html#initialize-instance_method" title="Dragonfly::TempObject#initialize (method)">Dragonfly::TempObject</a></p>
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    - (<tt><a href="" title="Dragonfly::ExtendedTempObject (class)">ExtendedTempObject</a></tt>) <strong>initialize</strong>(obj, app) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+A new instance of ExtendedTempObject
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+27
+28
+29
+30
+31</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 27</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span>
+  <span class='@cache ivar id'>@cache</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
   
 </div>
 <div id="method_missing_details" class="method_details_list">
@@ -412,12 +471,6 @@ allows methods from the analyser.
       <pre class="lines">
 
 
-82
-83
-84
-85
-86
-87
 88
 89
 90
@@ -428,20 +481,20 @@ allows methods from the analyser.
 95
 96
 97
-98</pre>
+98
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 88</span>
 
 <span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='has_callable_method? fid id'>has_callable_method?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
-    <span class='comment val'># Define the method so we don't use method_missing next time</span>
-    <span class='instance_var identifier id'>instance_var</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;@#{method}&quot;</span>
-    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
+  <span class='if if kw'>if</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='has_delegatable_method? fid id'>has_delegatable_method?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
+    <span class='comment val'># Define the method on the instance so we don't use method_missing next time</span>
+    <span class='class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='self self kw'>self</span><span class='semicolon token'>;</span> <span class='self self kw'>self</span><span class='semicolon token'>;</span> <span class='end end kw'>end</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
       <span class='define_method identifier id'>define_method</span> <span class='method identifier id'>method</span> <span class='do do kw'>do</span>
-        <span class='comment val'># Lazy reader, like</span>
-        <span class='comment val'>#   @width ||= analyser.width(self)</span>
-        <span class='instance_variable_set identifier id'>instance_variable_set</span><span class='lparen token'>(</span><span class='instance_var identifier id'>instance_var</span><span class='comma token'>,</span> <span class='instance_variable_get identifier id'>instance_variable_get</span><span class='lparen token'>(</span><span class='instance_var identifier id'>instance_var</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+        <span class='cache identifier id'>cache</span><span class='lbrack token'>[</span><span class='method identifier id'>method</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='delegate identifier id'>delegate</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span>
       <span class='end end kw'>end</span>
     <span class='end end kw'>end</span>
     <span class='comment val'># Now that it's defined (for next time)</span>
@@ -458,23 +511,23 @@ allows methods from the analyser.
   
 </div>
 
-  <div id="class_attr_details" class="attr_details">
-    <h2>Class Attribute Details</h2>
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
     
       
-      <span id="app=-class_method"></span>
-      <span id="app-class_method"></span>
+      <span id=""></span>
+      <span id="cache-instance_method"></span>
       <div class="method_details first">
-  <p class="signature first" id="app-class_method">
+  <p class="signature first" id="cache-instance_method">
   
-    + (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>app</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>cache</strong>  <span class="extras">(readonly)</span>
   
 
   
 </p><div class="docstring">
   <div class="discussion">
     <p>
-Returns the value of attribute app
+Returns the value of attribute cache
 </p>
 
 
@@ -488,15 +541,15 @@ Returns the value of attribute app
       <pre class="lines">
 
 
-29
-30
-31</pre>
+77
+78
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 77</span>
 
-<span class='def def kw'>def</span> <span class='app identifier id'>app</span>
-  <span class='@app ivar id'>@app</span>
+<span class='def def kw'>def</span> <span class='cache identifier id'>cache</span>
+  <span class='@cache ivar id'>@cache</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -524,15 +577,15 @@ Returns the value of attribute app
       <pre class="lines">
 
 
-40
 41
-42</pre>
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 41</span>
 
 <span class='def def kw'>def</span> <span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -553,56 +606,15 @@ Returns the value of attribute app
       <pre class="lines">
 
 
-44
 45
-46</pre>
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 45</span>
 
 <span class='def def kw'>def</span> <span class='encode! fid id'>encode!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='modify_self! fid id'>modify_self!</span><span class='lparen token'>(</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="inspect-instance_method">
-  
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>inspect</strong> 
-  
-
-  
-</p><div class="docstring">
-  <div class="discussion">
-    <p>
-As we create customly configured subclasses of this class, the console
-gives a confusing output when inspecting, so modify here
-</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-61
-62
-63</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 61</span>
-
-<span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
-  <span class='super super kw'>super</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='string val'>'Class:'</span><span class='comma token'>,</span><span class='string val'>'Custom Dragonfly::ExtendedTempObject:'</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -635,15 +647,15 @@ allows methods from the analyser
       <pre class="lines">
 
 
-68
-69
-70</pre>
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 63</span>
 
 <span class='def def kw'>def</span> <span class='methods identifier id'>methods</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='lparen token'>(</span><span class='super super kw'>super</span> <span class='plus op'>+</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='callable_methods identifier id'>callable_methods</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='uniq identifier id'>uniq</span>
+  <span class='lparen token'>(</span><span class='super super kw'>super</span> <span class='plus op'>+</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='delegatable_methods identifier id'>delegatable_methods</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='uniq identifier id'>uniq</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -664,15 +676,15 @@ allows methods from the analyser
       <pre class="lines">
 
 
-32
 33
-34</pre>
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 33</span>
 
 <span class='def def kw'>def</span> <span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='processing_method identifier id'>processing_method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='processing_method identifier id'>processing_method</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='processing_method identifier id'>processing_method</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -693,12 +705,12 @@ allows methods from the analyser
       <pre class="lines">
 
 
-36
 37
-38</pre>
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 37</span>
 
 <span class='def def kw'>def</span> <span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='processing_method identifier id'>processing_method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='modify_self! fid id'>modify_self!</span><span class='lparen token'>(</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='processing_method identifier id'>processing_method</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
@@ -722,15 +734,15 @@ allows methods from the analyser
       <pre class="lines">
 
 
-72
-73
-74</pre>
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 67</span>
 
 <span class='def def kw'>def</span> <span class='public_methods identifier id'>public_methods</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='lparen token'>(</span><span class='super super kw'>super</span> <span class='plus op'>+</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='callable_methods identifier id'>callable_methods</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='uniq identifier id'>uniq</span>
+  <span class='lparen token'>(</span><span class='super super kw'>super</span> <span class='plus op'>+</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='delegatable_methods identifier id'>delegatable_methods</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='uniq identifier id'>uniq</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -772,15 +784,15 @@ allows methods from the analyser
       <pre class="lines">
 
 
-76
-77
-78</pre>
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 71</span>
 
 <span class='def def kw'>def</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
-  <span class='super super kw'>super</span> <span class='orop op'>||</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='has_callable_method? fid id'>has_callable_method?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span> <span class='orop op'>||</span> <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='has_delegatable_method? fid id'>has_delegatable_method?</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -801,12 +813,12 @@ allows methods from the analyser
       <pre class="lines">
 
 
-48
 49
-50</pre>
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 49</span>
 
 <span class='def def kw'>def</span> <span class='transform identifier id'>transform</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='any? fid id'>any?</span> <span class='integer val'>? </span><span class='dup identifier id'>dup</span><span class='dot token'>.</span><span class='transform! fid id'>transform!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='self self kw'>self</span>
@@ -830,15 +842,15 @@ allows methods from the analyser
       <pre class="lines">
 
 
-52
 53
 54
 55
 56
-57</pre>
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/extended_temp_object.rb', line 53</span>
 
 <span class='def def kw'>def</span> <span class='transform! fid id'>transform!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='parameters identifier id'>parameters</span> <span class='assign token'>=</span> <span class='parameters_class identifier id'>parameters_class</span><span class='dot token'>.</span><span class='from_args identifier id'>from_args</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
@@ -858,13 +870,13 @@ allows methods from the analyser
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li>
+          <li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
     
     <div id="footer">
-  Generated on Thu Mar  4 23:43:27 2010 by 
+  Generated on Tue May 11 15:08:27 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.7).
 </div>

@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+<title>Class: Dragonfly::Processing::RMagickTextProcessor</title>
+<link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '../..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.6.0)</div>
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+    </div>
+    
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+    
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <h1>Class: Dragonfly::Processing::RMagickTextProcessor 
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><a href="Base.html" title="Dragonfly::Processing::Base (class)">Base</a></span>
+      
+        <ul class="fullTree">
+          <li><a href="../../Object.html" title="Object (class)">Object</a></li>
+          
+            <li class="next"><a href="Base.html" title="Dragonfly::Processing::Base (class)">Base</a></li>
+          
+            <li class="next">Dragonfly::Processing::RMagickTextProcessor</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/dragonfly/processing/r_magick_text_processor.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="FONT_STYLES-constant" class="">FONT_STYLES =
+            <span class="summary_desc"></span>
+        </dt>
+        <dd><pre class="code"><span class='lbrace token'>{</span>
+  <span class='string val'>'normal'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='NormalStyle constant id'>NormalStyle</span><span class='comma token'>,</span>
+  <span class='string val'>'italic'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='ItalicStyle constant id'>ItalicStyle</span><span class='comma token'>,</span>
+  <span class='string val'>'oblique'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='ObliqueStyle constant id'>ObliqueStyle</span>
+<span class='rbrace token'>}</span>
+</pre></dd>
+      
+        <dt id="FONT_STRETCHES-constant" class="">FONT_STRETCHES =
+            <span class="summary_desc"></span>
+        </dt>
+        <dd><pre class="code"><span class='lbrace token'>{</span>
+  <span class='string val'>'normal'</span>          <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='NormalStretch constant id'>NormalStretch</span><span class='comma token'>,</span>
+  <span class='string val'>'semi-condensed'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='SemiCondensedStretch constant id'>SemiCondensedStretch</span><span class='comma token'>,</span>
+  <span class='string val'>'condensed'</span>       <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='CondensedStretch constant id'>CondensedStretch</span><span class='comma token'>,</span>
+  <span class='string val'>'extra-condensed'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='ExtraCondensedStretch constant id'>ExtraCondensedStretch</span><span class='comma token'>,</span>
+  <span class='string val'>'ultra-condensed'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='UltraCondensedStretch constant id'>UltraCondensedStretch</span><span class='comma token'>,</span>
+  <span class='string val'>'semi-expanded'</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='SemiExpandedStretch constant id'>SemiExpandedStretch</span><span class='comma token'>,</span>
+  <span class='string val'>'expanded'</span>        <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='ExpandedStretch constant id'>ExpandedStretch</span><span class='comma token'>,</span>
+  <span class='string val'>'extra-expanded'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='ExtraExpandedStretch constant id'>ExtraExpandedStretch</span><span class='comma token'>,</span>
+  <span class='string val'>'ultra-expanded'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='UltraExpandedStretch constant id'>UltraExpandedStretch</span>
+<span class='rbrace token'>}</span>
+</pre></dd>
+      
+        <dt id="FONT_WEIGHTS-constant" class="">FONT_WEIGHTS =
+            <span class="summary_desc"></span>
+        </dt>
+        <dd><pre class="code"><span class='lbrace token'>{</span>
+  <span class='string val'>'normal'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='NormalWeight constant id'>NormalWeight</span><span class='comma token'>,</span>
+  <span class='string val'>'bold'</span>    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='BoldWeight constant id'>BoldWeight</span><span class='comma token'>,</span>
+  <span class='string val'>'bolder'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='BolderWeight constant id'>BolderWeight</span><span class='comma token'>,</span>
+  <span class='string val'>'lighter'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='LighterWeight constant id'>LighterWeight</span><span class='comma token'>,</span>
+  <span class='string val'>'100'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>100</span><span class='comma token'>,</span>
+  <span class='string val'>'200'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>200</span><span class='comma token'>,</span>
+  <span class='string val'>'300'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>300</span><span class='comma token'>,</span>
+  <span class='string val'>'400'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>400</span><span class='comma token'>,</span>
+  <span class='string val'>'500'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>500</span><span class='comma token'>,</span>
+  <span class='string val'>'600'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>600</span><span class='comma token'>,</span>
+  <span class='string val'>'700'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>700</span><span class='comma token'>,</span>
+  <span class='string val'>'800'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>800</span><span class='comma token'>,</span>
+  <span class='string val'>'900'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>900</span>
+<span class='rbrace token'>}</span>
+</pre></dd>
+      
+    </dl>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+  <h2>Instance Method Summary</h2>
+
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#text-instance_method" title="#text (instance method)">- (Object) <strong>text</strong>(temp_object, opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"></span>
+  
+</li>
+
+    
+  </ul>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <a href="../BelongsToApp.html" title="Dragonfly::BelongsToApp (module)">Dragonfly::BelongsToApp</a></h3>
+  <p class="inherited"><a href="../BelongsToApp.html#app_set%3F-instance_method" title="Dragonfly::BelongsToApp#app_set? (method)">#app_set?</a>, <a href="../BelongsToApp.html#log-instance_method" title="Dragonfly::BelongsToApp#log (method)">#log</a></p>
+
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <a href="../Delegatable.html" title="Dragonfly::Delegatable (module)">Dragonfly::Delegatable</a></h3>
+  <p class="inherited"><a href="../Delegatable.html#delegatable_methods-instance_method" title="Dragonfly::Delegatable#delegatable_methods (method)">#delegatable_methods</a></p>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="text-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>text</strong>(temp_object, opts = {}) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/r_magick_text_processor.rb', line 60</span>
+
+<span class='def def kw'>def</span> <span class='text identifier id'>text</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='HashWithCssStyleKeys constant id'>HashWithCssStyleKeys</span><span class='lbrack token'>[</span><span class='opts identifier id'>opts</span><span class='rbrack token'>]</span>
+  
+  <span class='draw identifier id'>draw</span> <span class='assign token'>=</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='Draw constant id'>Draw</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='draw identifier id'>draw</span><span class='dot token'>.</span><span class='gravity identifier id'>gravity</span> <span class='assign token'>=</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='CenterGravity constant id'>CenterGravity</span>
+  <span class='draw identifier id'>draw</span><span class='dot token'>.</span><span class='text_antialias identifier id'>text_antialias</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  
+  <span class='comment val'># Font size</span>
+  <span class='font_size identifier id'>font_size</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_size</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='integer val'>12</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+
+  <span class='comment val'># Scale up the text for better quality -</span>
+  <span class='comment val'>#  it will be reshrunk at the end</span>
+  <span class='s identifier id'>s</span> <span class='assign token'>=</span> <span class='scale_factor_for identifier id'>scale_factor_for</span><span class='lparen token'>(</span><span class='font_size identifier id'>font_size</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># Settings</span>
+  <span class='draw identifier id'>draw</span><span class='dot token'>.</span><span class='pointsize identifier id'>pointsize</span>    <span class='assign token'>=</span> <span class='font_size identifier id'>font_size</span> <span class='mult op'>*</span> <span class='s identifier id'>s</span>
+  <span class='draw identifier id'>draw</span><span class='dot token'>.</span><span class='font identifier id'>font</span>         <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font</span><span class='rbrack token'>]</span>
+  <span class='draw identifier id'>draw</span><span class='dot token'>.</span><span class='font_family identifier id'>font_family</span>  <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_family</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_family</span><span class='rbrack token'>]</span>
+  <span class='draw identifier id'>draw</span><span class='dot token'>.</span><span class='fill identifier id'>fill</span>         <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:color</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:color</span><span class='rbrack token'>]</span>
+  <span class='draw identifier id'>draw</span><span class='dot token'>.</span><span class='stroke identifier id'>stroke</span>       <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:stroke_color</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:stroke_color</span><span class='rbrack token'>]</span>
+  <span class='draw identifier id'>draw</span><span class='dot token'>.</span><span class='font_style identifier id'>font_style</span>   <span class='assign token'>=</span> <span class='FONT_STYLES constant id'>FONT_STYLES</span><span class='lbrack token'>[</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_style</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_style</span><span class='rbrack token'>]</span>
+  <span class='draw identifier id'>draw</span><span class='dot token'>.</span><span class='font_stretch identifier id'>font_stretch</span> <span class='assign token'>=</span> <span class='FONT_STRETCHES constant id'>FONT_STRETCHES</span><span class='lbrack token'>[</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_stretch</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_stretch</span><span class='rbrack token'>]</span>
+  <span class='draw identifier id'>draw</span><span class='dot token'>.</span><span class='font_weight identifier id'>font_weight</span>  <span class='assign token'>=</span> <span class='FONT_WEIGHTS constant id'>FONT_WEIGHTS</span><span class='lbrack token'>[</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_weight</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_weight</span><span class='rbrack token'>]</span>
+
+  <span class='comment val'># Padding</span>
+  <span class='comment val'># NB the values are scaled up by the scale factor</span>
+  <span class='pt identifier id'>pt</span><span class='comma token'>,</span> <span class='pr identifier id'>pr</span><span class='comma token'>,</span> <span class='pb identifier id'>pb</span><span class='comma token'>,</span> <span class='pl identifier id'>pl</span> <span class='assign token'>=</span> <span class='parse_padding_string identifier id'>parse_padding_string</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:padding</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:padding</span><span class='rbrack token'>]</span>
+  <span class='padding_top identifier id'>padding_top</span>    <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:padding_top</span><span class='rbrack token'>]</span>    <span class='orop op'>||</span> <span class='pt identifier id'>pt</span> <span class='orop op'>||</span> <span class='integer val'>0</span><span class='rparen token'>)</span> <span class='mult op'>*</span> <span class='s identifier id'>s</span>
+  <span class='padding_right identifier id'>padding_right</span>  <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:padding_right</span><span class='rbrack token'>]</span>  <span class='orop op'>||</span> <span class='pr identifier id'>pr</span> <span class='orop op'>||</span> <span class='integer val'>0</span><span class='rparen token'>)</span> <span class='mult op'>*</span> <span class='s identifier id'>s</span>
+  <span class='padding_bottom identifier id'>padding_bottom</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:padding_bottom</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='pb identifier id'>pb</span> <span class='orop op'>||</span> <span class='integer val'>0</span><span class='rparen token'>)</span> <span class='mult op'>*</span> <span class='s identifier id'>s</span>
+  <span class='padding_left identifier id'>padding_left</span>   <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:padding_left</span><span class='rbrack token'>]</span>   <span class='orop op'>||</span> <span class='pl identifier id'>pl</span> <span class='orop op'>||</span> <span class='integer val'>0</span><span class='rparen token'>)</span> <span class='mult op'>*</span> <span class='s identifier id'>s</span>
+
+  <span class='text identifier id'>text</span> <span class='assign token'>=</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span>
+
+  <span class='comment val'># Calculate (scaled up) dimensions</span>
+  <span class='metrics identifier id'>metrics</span> <span class='assign token'>=</span> <span class='draw identifier id'>draw</span><span class='dot token'>.</span><span class='get_type_metrics identifier id'>get_type_metrics</span><span class='lparen token'>(</span><span class='text identifier id'>text</span><span class='rparen token'>)</span>
+  <span class='width identifier id'>width</span><span class='comma token'>,</span> <span class='height identifier id'>height</span> <span class='assign token'>=</span> <span class='metrics identifier id'>metrics</span><span class='dot token'>.</span><span class='width identifier id'>width</span><span class='comma token'>,</span> <span class='metrics identifier id'>metrics</span><span class='dot token'>.</span><span class='height identifier id'>height</span>
+
+  <span class='scaled_up_width identifier id'>scaled_up_width</span> <span class='assign token'>=</span> <span class='padding_left identifier id'>padding_left</span> <span class='plus op'>+</span> <span class='width identifier id'>width</span> <span class='plus op'>+</span> <span class='padding_right identifier id'>padding_right</span>
+  <span class='scaled_up_height identifier id'>scaled_up_height</span> <span class='assign token'>=</span> <span class='padding_top identifier id'>padding_top</span> <span class='plus op'>+</span> <span class='height identifier id'>height</span> <span class='plus op'>+</span> <span class='padding_bottom identifier id'>padding_bottom</span>
+
+  <span class='comment val'># Draw the background</span>
+  <span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='Image constant id'>Image</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='scaled_up_width identifier id'>scaled_up_width</span><span class='comma token'>,</span> <span class='scaled_up_height identifier id'>scaled_up_height</span><span class='rparen token'>)</span><span class='lbrace token'>{</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='background_color identifier id'>background_color</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:background_color</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'transparent'</span>
+  <span class='rbrace token'>}</span>
+  <span class='comment val'># Draw the text</span>
+  <span class='draw identifier id'>draw</span><span class='dot token'>.</span><span class='annotate identifier id'>annotate</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='comma token'>,</span> <span class='width identifier id'>width</span><span class='comma token'>,</span> <span class='height identifier id'>height</span><span class='comma token'>,</span> <span class='padding_left identifier id'>padding_left</span><span class='comma token'>,</span> <span class='padding_top identifier id'>padding_top</span><span class='comma token'>,</span> <span class='text identifier id'>text</span><span class='rparen token'>)</span>
+  
+  <span class='comment val'># Scale back down again</span>
+  <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='scale! fid id'>scale!</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='div op'>/</span><span class='s identifier id'>s</span><span class='rparen token'>)</span>
+  
+  <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='string val'>'png'</span>
+
+  <span class='comment val'># Output image as string</span>
+  <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='to_blob identifier id'>to_blob</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div id="footer">
+  Generated on Tue May 11 15:08:29 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.3 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

@@ -79,10 +79,9 @@ ul.main_files li a {
 #header #logo {
   float:left;
   width:50%;
-  font-size: 24px;
+  font-size: 32px;
   letter-spacing: -1px;
   margin-top: 20px;
-  text-transform: uppercase;
 }
 #header #search {
   position:static;
