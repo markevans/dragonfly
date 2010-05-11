@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.5.7"
+  s.version = "0.6.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2010-04-18}
+  s.date = %q{2010-05-11}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".gitignore",
      ".yardopts",
-     "History.txt",
+     "History.md",
      "LICENSE",
      "README.md",
      "Rakefile",
@@ -41,25 +41,20 @@ Gem::Specification.new do |s|
      "features/images.feature",
      "features/no_processing.feature",
      "features/rails_2.3.5.feature",
-     "features/rails_3.0.0.beta.feature",
+     "features/rails_3.0.0.beta3.feature",
      "features/steps/common_steps.rb",
      "features/steps/dragonfly_steps.rb",
      "features/steps/rails_steps.rb",
      "features/support/env.rb",
-     "fixtures/dragonfly_setup.rb",
      "fixtures/files/app/models/album.rb",
      "fixtures/files/app/views/albums/new.html.erb",
      "fixtures/files/app/views/albums/show.html.erb",
-     "fixtures/files/config/initializers/aaa_dragonfly_load_path.rb",
+     "fixtures/files/config/initializers/dragonfly.rb",
      "fixtures/files/features/manage_album_images.feature",
      "fixtures/files/features/step_definitions/album_steps.rb",
      "fixtures/files/features/support/paths.rb",
-     "fixtures/rails",
      "fixtures/rails_2.3.5/template.rb",
-     "fixtures/rails_3.0.0.beta/template.rb",
-     "generators/dragonfly_app/USAGE",
-     "generators/dragonfly_app/dragonfly_app_generator.rb",
-     "generators/dragonfly_app/templates/initializer.erb",
+     "fixtures/rails_3.0.0.beta3/template.rb",
      "irbrc.rb",
      "lib/dragonfly.rb",
      "lib/dragonfly/active_record_extensions.rb",
@@ -72,6 +67,12 @@ Gem::Specification.new do |s|
      "lib/dragonfly/analysis/file_command_analyser.rb",
      "lib/dragonfly/analysis/r_magick_analyser.rb",
      "lib/dragonfly/app.rb",
+     "lib/dragonfly/belongs_to_app.rb",
+     "lib/dragonfly/config/heroku_rails_images.rb",
+     "lib/dragonfly/config/r_magick_images.rb",
+     "lib/dragonfly/config/r_magick_text.rb",
+     "lib/dragonfly/config/rails_defaults.rb",
+     "lib/dragonfly/config/rails_images.rb",
      "lib/dragonfly/configurable.rb",
      "lib/dragonfly/core_ext/object.rb",
      "lib/dragonfly/core_ext/string.rb",
@@ -93,8 +94,8 @@ Gem::Specification.new do |s|
      "lib/dragonfly/parameters.rb",
      "lib/dragonfly/processing/base.rb",
      "lib/dragonfly/processing/r_magick_processor.rb",
+     "lib/dragonfly/processing/r_magick_text_processor.rb",
      "lib/dragonfly/processor_list.rb",
-     "lib/dragonfly/r_magick_configuration.rb",
      "lib/dragonfly/rails/images.rb",
      "lib/dragonfly/temp_object.rb",
      "lib/dragonfly/url_handler.rb",
@@ -105,7 +106,6 @@ Gem::Specification.new do |s|
      "samples/taj.jpg",
      "spec/argument_matchers.rb",
      "spec/dragonfly/active_record_extensions/attachment_spec.rb",
-     "spec/dragonfly/active_record_extensions/initializer.rb",
      "spec/dragonfly/active_record_extensions/migration.rb",
      "spec/dragonfly/active_record_extensions/model_spec.rb",
      "spec/dragonfly/active_record_extensions/models.rb",
@@ -113,6 +113,7 @@ Gem::Specification.new do |s|
      "spec/dragonfly/analysis/file_command_analyser_spec.rb",
      "spec/dragonfly/analysis/r_magick_analyser_spec.rb",
      "spec/dragonfly/app_spec.rb",
+     "spec/dragonfly/belongs_to_app_spec.rb",
      "spec/dragonfly/configurable_spec.rb",
      "spec/dragonfly/core_ext/string_spec.rb",
      "spec/dragonfly/core_ext/symbol_spec.rb",
@@ -125,7 +126,8 @@ Gem::Specification.new do |s|
      "spec/dragonfly/extended_temp_object_spec.rb",
      "spec/dragonfly/middleware_spec.rb",
      "spec/dragonfly/parameters_spec.rb",
-     "spec/dragonfly/processing/rmagick_processor_spec.rb",
+     "spec/dragonfly/processing/r_magick_processor_spec.rb",
+     "spec/dragonfly/processing/r_magick_text_processor_spec.rb",
      "spec/dragonfly/temp_object_spec.rb",
      "spec/dragonfly/url_handler_spec.rb",
      "spec/dragonfly_spec.rb",
@@ -148,7 +150,6 @@ Gem::Specification.new do |s|
   s.test_files = [
     "spec/argument_matchers.rb",
      "spec/dragonfly/active_record_extensions/attachment_spec.rb",
-     "spec/dragonfly/active_record_extensions/initializer.rb",
      "spec/dragonfly/active_record_extensions/migration.rb",
      "spec/dragonfly/active_record_extensions/model_spec.rb",
      "spec/dragonfly/active_record_extensions/models.rb",
@@ -156,6 +157,7 @@ Gem::Specification.new do |s|
      "spec/dragonfly/analysis/file_command_analyser_spec.rb",
      "spec/dragonfly/analysis/r_magick_analyser_spec.rb",
      "spec/dragonfly/app_spec.rb",
+     "spec/dragonfly/belongs_to_app_spec.rb",
      "spec/dragonfly/configurable_spec.rb",
      "spec/dragonfly/core_ext/string_spec.rb",
      "spec/dragonfly/core_ext/symbol_spec.rb",
@@ -168,7 +170,8 @@ Gem::Specification.new do |s|
      "spec/dragonfly/extended_temp_object_spec.rb",
      "spec/dragonfly/middleware_spec.rb",
      "spec/dragonfly/parameters_spec.rb",
-     "spec/dragonfly/processing/rmagick_processor_spec.rb",
+     "spec/dragonfly/processing/r_magick_processor_spec.rb",
+     "spec/dragonfly/processing/r_magick_text_processor_spec.rb",
      "spec/dragonfly/temp_object_spec.rb",
      "spec/dragonfly/url_handler_spec.rb",
      "spec/dragonfly_spec.rb",
