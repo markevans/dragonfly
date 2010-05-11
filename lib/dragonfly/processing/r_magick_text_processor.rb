@@ -65,7 +65,7 @@ module Dragonfly
         draw.text_antialias = true
         
         # Font size
-        font_size = opts[:font_size] || 12
+        font_size = (opts[:font_size] || 12).to_i
 
         # Scale up the text for better quality -
         #  it will be reshrunk at the end
