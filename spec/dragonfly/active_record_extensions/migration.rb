@@ -27,7 +27,11 @@ class MigrationForTest < ActiveRecord::Migration
       t.string :reliant_image_uid
       t.string :type
     end
-    
+
+    create_table :photos do |t|
+      t.string :image_uid
+    end
+
   end
 
   def self.down

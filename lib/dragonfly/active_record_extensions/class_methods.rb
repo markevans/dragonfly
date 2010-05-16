@@ -36,11 +36,11 @@ module Dragonfly
       
       def dragonfly_apps_for_attributes
         @dragonfly_apps_for_attributes ||= begin
-          parent_class = ancestors[1]
+          parent_class = ancestors.select{|a| a.is_a?(Class) }[1]
           parent_class.respond_to?(:dragonfly_apps_for_attributes) ? parent_class.dragonfly_apps_for_attributes.dup : {}
         end
       end
-
+      
     end
   end
 end

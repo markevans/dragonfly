@@ -546,29 +546,52 @@ describe Item do
   end
   
   describe "inheritance" do
+    
     before(:all) do
       @app = Dragonfly::App[:images]
+      @app2 = Dragonfly::App[:egg]
       Dragonfly.active_record_macro(:image, @app)
+      Dragonfly.active_record_macro(:egg, @app2)
       Car.class_eval do
         image_accessor :image
       end
-      ReliantRobin.class_eval do
+      Photo.class_eval do
+        egg_accessor :image
+      end
+
+      @base_class = Car
+      @subclass = Class.new(Car){ image_accessor :reliant_image }
+      @subclass_with_module = Class.new(Car) do
+        include Module.new
         image_accessor :reliant_image
       end
-    end
-    it "should allow assigning base class accessors" do
-      Car.create! :image => 'blah'
-    end
-    it "should not allow assigning subclass accessors in the base class" do
-      Car.new.should_not respond_to(:reliant_image=)
-    end
-    it "should allow assigning base class accessors in the subclass" do
-      ReliantRobin.create! :image => 'blah'
-    end
-    it "should allow assigning subclass accessors in the subclass" do
-      ReliantRobin.create! :reliant_image => 'blah'
+      @unrelated_class = Photo
     end
 
+    it "should allow assigning base class accessors" do
+      @base_class.create! :image => 'blah'
+    end
+    it "should not allow assigning subclass accessors in the base class" do
+      @base_class.new.should_not respond_to(:reliant_image=)
+    end
+    it "should allow assigning base class accessors in the subclass" do
+      @subclass.create! :image => 'blah'
+    end
+    it "should allow assigning subclass accessors in the subclass" do
+      @subclass.create! :reliant_image => 'blah'
+    end
+    it "should allow assigning base class accessors in the subclass, even if it has mixins" do
+      @subclass_with_module.create! :image => 'blah'
+    end
+    it "should allow assigning subclass accessors in the subclass, even if it has mixins" do
+      @subclass_with_module.create! :reliant_image => 'blah'
+    end
+    it "return the correct apps for each accessors, even when names clash" do
+      @base_class.dragonfly_apps_for_attributes.should == {:image => @app}
+      @subclass.dragonfly_apps_for_attributes.should == {:image => @app, :reliant_image => @app}
+      @subclass_with_module.dragonfly_apps_for_attributes.should == {:image => @app, :reliant_image => @app}
+      @unrelated_class.dragonfly_apps_for_attributes.should == {:image => @app2}
+    end
   end
 
 end
