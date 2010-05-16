@@ -39,7 +39,7 @@
     
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.6.0)</div>
+      <div id="logo">DRAGONFLY (v 0.6.1)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -167,7 +167,7 @@
 
 <span class='def def kw'>def</span> <span class='dragonfly_apps_for_attributes identifier id'>dragonfly_apps_for_attributes</span>
   <span class='@dragonfly_apps_for_attributes ivar id'>@dragonfly_apps_for_attributes</span> <span class='opasgn op'>||=</span> <span class='begin begin kw'>begin</span>
-    <span class='parent_class identifier id'>parent_class</span> <span class='assign token'>=</span> <span class='ancestors identifier id'>ancestors</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
+    <span class='parent_class identifier id'>parent_class</span> <span class='assign token'>=</span> <span class='ancestors identifier id'>ancestors</span><span class='dot token'>.</span><span class='select identifier id'>select</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span> <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Class constant id'>Class</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
     <span class='parent_class identifier id'>parent_class</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:dragonfly_apps_for_attributes</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='parent_class identifier id'>parent_class</span><span class='dot token'>.</span><span class='dragonfly_apps_for_attributes identifier id'>dragonfly_apps_for_attributes</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span> <span class='colon op'>:</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
   <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
@@ -270,7 +270,7 @@
     </div>
     
     <div id="footer">
-  Generated on Wed May 12 23:55:36 2010 by 
+  Generated on Sun May 16 13:22:12 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.7).
 </div>
