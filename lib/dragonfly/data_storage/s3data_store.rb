@@ -29,6 +29,7 @@ module Dragonfly
         ensure_initialized
         object = use_filesystem ? temp_object.file : temp_object.data
         S3Object.store(uid, object, bucket_name)
+        object.close if use_filesystem
         uid
       end
 
