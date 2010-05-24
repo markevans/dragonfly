@@ -10,12 +10,13 @@ module Dragonfly
       configurable_attr :root_path, '/var/tmp/dragonfly'
 
       def store(temp_object)
+        filename = temp_object.name || 'file'
 
-        relative_path = relative_storage_path(temp_object.basename || 'file')
-
+        relative_path = relative_storage_path(filename)
         begin
           while File.exist?(storage_path = absolute_storage_path(relative_path))
-            relative_path = increment_path(relative_path)
+            filename = disambiguate(filename)
+            relative_path = relative_storage_path(filename)
           end
           storage_dir = File.dirname(storage_path)
           FileUtils.mkdir_p(storage_dir) unless File.exist?(storage_dir)
@@ -44,14 +45,16 @@ module Dragonfly
         raise DataNotFound, e.message
       end
 
-      private
-    
-      def increment_path(path)
-        path.sub(/(_(\d+))?$/){ $1 ? "_#{$2.to_i+1}" : '_2' }
+      def disambiguate(filename)
+        basename = File.basename(filename, '.*')
+        extname = File.extname(filename)
+        "#{basename}_#{Time.now.usec.to_s(32)}#{extname}"
       end
 
-      def relative_storage_path(suffix)
-        "#{Time.now.strftime '%Y/%m/%d/%H%M%S'}_#{suffix}"
+      private
+
+      def relative_storage_path(filename)
+        "#{Time.now.strftime '%Y/%m/%d'}/#{filename}"
       end
       
       def absolute_storage_path(relative_path)
