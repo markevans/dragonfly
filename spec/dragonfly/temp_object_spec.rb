@@ -22,6 +22,15 @@ describe Dragonfly::TempObject do
     File.new('/tmp/test_file')
   end
   
+  def new_temp_object(data, opts={})
+    klass = opts[:class] || Dragonfly::TempObject
+    klass.new(initialization_object(data))
+  end
+  
+  def initialization_object(data)
+    raise NotImplementedError, "This should be implemented in the describe block!"
+  end
+  
   def get_parts(temp_object)
     parts = []
     temp_object.each do |bytes|
@@ -127,7 +136,7 @@ describe Dragonfly::TempObject do
       end
       it "should yield the number of bytes specified in the class configuration" do
         klass = Class.new(Dragonfly::TempObject)
-        temp_object = new_temp_object(File.read(sample_path('round.gif')), klass)
+        temp_object = new_temp_object(File.read(sample_path('round.gif')), :class => klass)
         klass.block_size = 3001
         parts = get_parts(temp_object)
         parts[0...-1].each do |part|
@@ -142,8 +151,8 @@ describe Dragonfly::TempObject do
   
   describe "initializing from a string" do
 
-    def new_temp_object(data, klass=Dragonfly::TempObject)
-      klass.new(data)
+    def initialization_object(data)
+      data
     end
 
     it_should_behave_like "common behaviour"
@@ -157,8 +166,8 @@ describe Dragonfly::TempObject do
   
   describe "initializing from a tempfile" do
 
-    def new_temp_object(data, klass=Dragonfly::TempObject)
-      klass.new(new_tempfile(data))
+    def initialization_object(data)
+      new_tempfile(data)
     end
 
     it_should_behave_like "common behaviour"
@@ -172,8 +181,8 @@ describe Dragonfly::TempObject do
   
   describe "initializing from a file" do
 
-    def new_temp_object(data, klass=Dragonfly::TempObject)
-      klass.new(new_file(data))
+    def initialization_object(data)
+      new_file(data)
     end
 
     it_should_behave_like "common behaviour"
