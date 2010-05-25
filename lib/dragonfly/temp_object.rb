@@ -40,8 +40,10 @@ module Dragonfly
   
     # Instance Methods
     
-    def initialize(obj)
+    def initialize(obj, opts={})
       initialize_from_object!(obj)
+      validate_options!(opts)
+      self.name = opts[:name] if opts[:name]
     end
     
     def modify_self!(obj)
@@ -173,6 +175,12 @@ module Dragonfly
       tempfile = Tempfile.new('dragonfly')
       FileUtils.cp File.expand_path(path), tempfile.path
       tempfile
+    end
+    
+    def validate_options!(opts)
+      valid_keys = [:name, :meta]
+      invalid_keys = opts.keys - valid_keys
+      raise ArgumentError, "Unrecognised options #{invalid_keys.inspect}" if invalid_keys.any?
     end
     
   end

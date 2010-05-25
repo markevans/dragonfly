@@ -23,8 +23,8 @@ describe Dragonfly::TempObject do
   end
   
   def new_temp_object(data, opts={})
-    klass = opts[:class] || Dragonfly::TempObject
-    klass.new(initialization_object(data))
+    klass = opts.delete(:class) || Dragonfly::TempObject
+    klass.new(initialization_object(data), opts)
   end
   
   def initialization_object(data)
@@ -50,78 +50,94 @@ describe Dragonfly::TempObject do
   
   describe "common behaviour", :shared => true do
 
-    before(:each) do
-      @temp_object = new_temp_object('HELLO')
-    end
+    describe "simple initialization" do
 
-    describe "data" do
-      it "should return the data correctly" do
-        @temp_object.data.should == 'HELLO'
+      before(:each) do
+        @temp_object = new_temp_object('HELLO')
       end
-    end
 
-    describe "file" do
-      it "should return a readable file" do
-        @temp_object.file.should be_a(File)
-      end
-      it "should contain the correct data" do
-        @temp_object.file.read.should == 'HELLO'
-      end
-      it "should yield a file then close it if a block is given" do
-        @temp_object.file do |f|
-          f.read.should == 'HELLO'
-          f.should_receive :close
+      describe "data" do
+        it "should return the data correctly" do
+          @temp_object.data.should == 'HELLO'
         end
       end
-      it "should return whatever is returned from the block if a block is given" do
-        @temp_object.file do |f|
-          'doogie'
-        end.should == 'doogie'
+
+      describe "file" do
+        it "should return a readable file" do
+          @temp_object.file.should be_a(File)
+        end
+        it "should contain the correct data" do
+          @temp_object.file.read.should == 'HELLO'
+        end
+        it "should yield a file then close it if a block is given" do
+          @temp_object.file do |f|
+            f.read.should == 'HELLO'
+            f.should_receive :close
+          end
+        end
+        it "should return whatever is returned from the block if a block is given" do
+          @temp_object.file do |f|
+            'doogie'
+          end.should == 'doogie'
+        end
       end
+
+      describe "tempfile" do
+        it "should create a closed tempfile" do
+          @temp_object.tempfile.should be_a(Tempfile)
+          @temp_object.tempfile.should be_closed
+        end
+        it "should contain the correct data" do
+          @temp_object.tempfile.open.read.should == 'HELLO'
+        end
+      end
+    
+      describe "path" do
+        it "should return the absolute file path" do
+          @temp_object.path.should == @temp_object.tempfile.path
+        end
+      end
+    
+      describe "size" do
+        it "should return the size in bytes" do
+          @temp_object.size.should == 5
+        end
+      end
+
+      describe "to_file" do
+        before(:each) do
+          @filename = 'eggnog.txt'
+          FileUtils.rm(@filename) if File.exists?(@filename)
+        end
+        after(:each) do
+          FileUtils.rm(@filename) if File.exists?(@filename)
+        end
+        it "should write to a file" do
+          @temp_object.to_file(@filename)
+          File.exists?(@filename).should be_true
+        end
+        it "should write the correct data to the file" do
+          @temp_object.to_file(@filename)
+          File.read(@filename).should == 'HELLO'
+        end
+        it "should return a readable file" do
+          file = @temp_object.to_file(@filename)
+          file.should be_a(File)
+          file.read.should == 'HELLO'
+        end
+      end
+
     end
 
-    describe "tempfile" do
-      it "should create a closed tempfile" do
-        @temp_object.tempfile.should be_a(Tempfile)
-        @temp_object.tempfile.should be_closed
+    describe "initializing attributes too" do
+      it "should set the name" do
+        temp_object = Dragonfly::TempObject.new(initialization_object('HELLO'), :name => 'monkey.egg')
+        temp_object.name.should == 'monkey.egg'
       end
-      it "should contain the correct data" do
-        @temp_object.tempfile.open.read.should == 'HELLO'
-      end
-    end
-    
-    describe "path" do
-      it "should return the absolute file path" do
-        @temp_object.path.should == @temp_object.tempfile.path
-      end
-    end
-    
-    describe "size" do
-      it "should return the size in bytes" do
-        @temp_object.size.should == 5
-      end
-    end
-
-    describe "to_file" do
-      before(:each) do
-        @filename = 'eggnog.txt'
-        FileUtils.rm(@filename) if File.exists?(@filename)
-      end
-      after(:each) do
-        FileUtils.rm(@filename) if File.exists?(@filename)
-      end
-      it "should write to a file" do
-        @temp_object.to_file(@filename)
-        File.exists?(@filename).should be_true
-      end
-      it "should write the correct data to the file" do
-        @temp_object.to_file(@filename)
-        File.read(@filename).should == 'HELLO'
-      end
-      it "should return a readable file" do
-        file = @temp_object.to_file(@filename)
-        file.should be_a(File)
-        file.read.should == 'HELLO'
+      it "should raise an error if an invalid option is given" do
+        lambda {
+          Dragonfly::TempObject.new(initialization_object('HELLO'), :doobie => 'doo')
+        }.should raise_error(ArgumentError)
       end
     end
 
@@ -287,7 +303,7 @@ describe Dragonfly::TempObject do
       @temp_object.ext.should be_nil
     end
   end
-  
+
   describe "basename" do
     before(:each) do
       @temp_object = Dragonfly::TempObject.new('asfsadf')
