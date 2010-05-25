@@ -44,6 +44,7 @@ module Dragonfly
       initialize_from_object!(obj)
       validate_options!(opts)
       self.name = opts[:name] if opts[:name]
+      @meta = opts[:meta] || {}
     end
     
     def modify_self!(obj)
@@ -112,6 +113,8 @@ module Dragonfly
       bits = name.split('.')
       bits.last if bits.size > 1
     end
+    
+    attr_reader :meta
     
     def each(&block)
       to_io do |io|

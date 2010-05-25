@@ -126,6 +126,16 @@ describe Dragonfly::TempObject do
           file.read.should == 'HELLO'
         end
       end
+      
+      describe "meta" do
+        it "should return an empty hash if not set" do
+          @temp_object.meta.should == {}
+        end
+        it "should allow setting" do
+          @temp_object.meta[:teeth] = 'many'
+          @temp_object.meta.should == {:teeth => 'many'}
+        end
+      end
 
     end
 
@@ -133,6 +143,10 @@ describe Dragonfly::TempObject do
       it "should set the name" do
         temp_object = Dragonfly::TempObject.new(initialization_object('HELLO'), :name => 'monkey.egg')
         temp_object.name.should == 'monkey.egg'
+      end
+      it "should set the meta" do
+        temp_object = Dragonfly::TempObject.new(initialization_object('HELLO'), :meta => {:dr => 'doolittle'})
+        temp_object.meta.should == {:dr => 'doolittle'}
       end
       it "should raise an error if an invalid option is given" do
         lambda {
