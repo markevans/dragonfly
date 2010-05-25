@@ -24,14 +24,14 @@ module Dragonfly
     
     include BelongsToApp
     
-    def initialize(obj, app)
+    def initialize(app, obj)
       super(obj)
       self.app = app
       @cache = {}
     end
     
     def process(processing_method, *args)
-      self.class.new(processor.send(processing_method, self, *args), app)
+      self.class.new(app, processor.send(processing_method, self, *args))
     end
     
     def process!(processing_method, *args)
@@ -39,7 +39,7 @@ module Dragonfly
     end
 
     def encode(*args)
-      self.class.new(encoder.encode(self, *args), app)
+      self.class.new(app, encoder.encode(self, *args))
     end
     
     def encode!(*args)

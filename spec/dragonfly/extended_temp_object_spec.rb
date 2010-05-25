@@ -15,7 +15,7 @@ describe Dragonfly::ExtendedTempObject do
           def width(temp_object); temp_object.data.size; end
         end
         @analyser = @app.register_analyser(analyser_class)
-        @object = Dragonfly::ExtendedTempObject.new('asdf', @app)
+        @object = Dragonfly::ExtendedTempObject.new(@app, 'asdf')
       end
       
       it "should respond to something that the analyser responds to" do
@@ -51,7 +51,7 @@ describe Dragonfly::ExtendedTempObject do
       before(:each) do
         encoder_class = Class.new(Dragonfly::Encoding::Base)
         @encoder = @app.register_encoder(encoder_class)
-        @temp_object = Dragonfly::ExtendedTempObject.new('abcde', @app)
+        @temp_object = Dragonfly::ExtendedTempObject.new(@app, 'abcde')
       end
       
       it "should encode the data and return the new temp object" do

@@ -135,7 +135,7 @@ module Dragonfly
     # @param [String, File, Tempfile, TempObject] initialization_object the object holding the data
     # @return [ExtendedTempObject] a temp_object holding the data
     def create_object(initialization_object)
-      ExtendedTempObject.new(initialization_object, self)
+      ExtendedTempObject.new(self, initialization_object)
     end
 
     def_delegators :job_manager, :define_job, :job_for
@@ -154,7 +154,7 @@ module Dragonfly
     # app.fetch('abcd1234', '20x20!')   # returns a transformed temp_object, in this case with image data resized to 20x20
     # @see Parameters
     def fetch(uid, *args)
-      temp_object = ExtendedTempObject.new(datastore.retrieve(uid), self)
+      temp_object = ExtendedTempObject.new(self, datastore.retrieve(uid))
       temp_object.transform(*args)
     end
 
