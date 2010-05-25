@@ -114,7 +114,11 @@ module Dragonfly
       bits.last if bits.size > 1
     end
     
-    attr_reader :meta
+    attr_writer :meta
+    
+    def meta
+      @meta ||= {}
+    end
     
     def each(&block)
       to_io do |io|
