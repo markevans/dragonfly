@@ -27,7 +27,7 @@ describe Dragonfly::DataStorage::FileDataStore do
   describe "store" do
     
     def it_should_write_to_file(storage_path, temp_object)
-      FileUtils.should_receive(:cp).with(temp_object.path, storage_path)
+      temp_object.should_receive(:to_file).with(storage_path).and_return(mock('file', :close => nil))
     end
     
     before(:each) do
@@ -116,18 +116,19 @@ describe Dragonfly::DataStorage::FileDataStore do
     end
   
     it "should raise an error if it can't create a file" do
-      FileUtils.should_receive(:cp).and_raise(Errno::EACCES)
+      @temp_object.should_receive(:to_file).and_raise(Errno::EACCES)
       lambda{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::DataStorage::UnableToStore)
     end
 
   end
   
   describe "retrieve" do
-    it "should be able to retrieve any file, stored or not" do
+    it "should be able to retrieve any file, stored or not (and without extra data)" do
       FileUtils.mkdir_p("#{@data_store.root_path}/jelly_beans/are")
       File.open("#{@data_store.root_path}/jelly_beans/are/good", 'w'){|f| f.write('hey dog') }
-      file = @data_store.retrieve("jelly_beans/are/good")
+      file, meta = @data_store.retrieve("jelly_beans/are/good")
       file.read.should == 'hey dog'
+      meta.should be_nil
     end
   end
   

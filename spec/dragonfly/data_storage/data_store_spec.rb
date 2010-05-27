@@ -16,9 +16,31 @@ describe "data_store", :shared => true do
   end
   
   describe "retrieve" do
-    it "should retrieve the stored data" do
-      uid = @data_store.store(@temp_object)
-      Dragonfly::TempObject.new(@data_store.retrieve(uid)).data.should == @temp_object.data
+    
+    describe "without extra info" do
+      before(:each) do
+        uid = @data_store.store(@temp_object)
+        @obj, @extra_info = @data_store.retrieve(uid)
+      end
+
+      it "should retrieve the stored data" do
+        Dragonfly::TempObject.new(@obj).data.should == @temp_object.data
+      end
+      
+      it { @extra_info[:name].should be_nil }
+      it { @extra_info[:meta].should == {} }
+    end
+
+    describe "when extra info is given" do
+      before(:each) do
+        @temp_object.name = 'danny.boy'
+        @temp_object.meta = {:bitrate => '35'}
+        @uid = @data_store.store(@temp_object)
+        @obj, @extra_info = @data_store.retrieve(@uid)
+      end
+
+      it { @extra_info[:name].should == 'danny.boy' }
+      it { @extra_info[:meta].should == {:bitrate => '35'} }
     end
 
     it "should raise an exception if the data doesn't exist" do
