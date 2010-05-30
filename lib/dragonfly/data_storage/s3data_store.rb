@@ -7,7 +7,8 @@ module Dragonfly
   
       include Configurable
       include AWS::S3
-  
+      include Serializer
+
       configurable_attr :bucket_name
       configurable_attr :access_key_id
       configurable_attr :secret_access_key
@@ -28,13 +29,18 @@ module Dragonfly
         uid = generate_uid(temp_object.basename || 'file')
         ensure_initialized
         object = use_filesystem ? temp_object.file : temp_object.data
-        S3Object.store(uid, object, bucket_name)
+        extra_data = {:name => temp_object.name, :meta => temp_object.meta}
+        S3Object.store(uid, object, bucket_name, s3_metadata_for(extra_data))
         uid
       end
 
       def retrieve(uid)
         ensure_initialized
-        S3Object.value(uid, bucket_name)
+        s3_object = S3Object.find(uid, bucket_name)
+        [
+          s3_object.value,
+          parse_s3_metadata(s3_object.metadata)
+        ]
       rescue AWS::S3::NoSuchKey => e
         raise DataNotFound, "#{e} - #{uid}"
       end
@@ -65,7 +71,15 @@ module Dragonfly
         "#{time.strftime '%Y/%m/%d/%H/%M/%S'}/#{rand(1000)}/#{suffix}"
       end
 
+      def s3_metadata_for(extra_data)
+        {'x-amz-meta-extra' => marshal_encode(extra_data)}
+      end
+
+      def parse_s3_metadata(metadata)
+        marshal_decode(metadata['x-amz-meta-extra'])
+      end
+
     end
-    
+
   end
 end
