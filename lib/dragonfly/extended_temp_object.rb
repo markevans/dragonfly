@@ -24,8 +24,8 @@ module Dragonfly
     
     include BelongsToApp
     
-    def initialize(app, obj)
-      super(obj)
+    def initialize(app, obj, opts={})
+      super(obj, opts)
       self.app = app
       @cache = {}
     end
