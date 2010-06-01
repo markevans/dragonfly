@@ -7,7 +7,7 @@ module Dragonfly
         @name, @args = name, args
       end
       attr_reader :name, :args
-      def perform(temp_object)
+      def apply(temp_object)
         temp_object.process(name, *args)
       end
       def to_a
@@ -21,7 +21,7 @@ module Dragonfly
         @format, @args = format, args
       end
       attr_reader :format, :args
-      def perform(temp_object)
+      def apply(temp_object)
         temp_object.encode(format, *args)
       end
       def to_a
@@ -53,9 +53,9 @@ module Dragonfly
       steps.length
     end
     
-    def perform(temp_object)
+    def apply(temp_object)
       steps.inject(temp_object) do |tmp, step|
-        step.perform(tmp)
+        step.apply(tmp)
       end
     end
     
