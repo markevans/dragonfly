@@ -1,50 +1,73 @@
+require 'forwardable'
+
 module Dragonfly
   class Job
     
-    # Processing job part
-    class Process
-      def initialize(name, *args)
-        @name, @args = name, args
+    extend Forwardable
+    def_delegators :resulting_temp_object, :data
+    
+    class Step
+      def initialize(*args)
+        @args = args
       end
-      attr_reader :name, :args
-      def apply(temp_object)
-        temp_object.process(name, *args)
+      private
+      attr_reader :args
+    end
+    
+    # Processing job part
+    class Process < Step
+      def name
+        args.first
+      end
+      def arguments
+        args[1..-1]
+      end
+      def apply(job)
+        job.temp_object = TempObject.new job.app.processors.send(name, job.temp_object, *arguments)
       end
       def to_a
-        [:process, name, *args]
+        [:process, *args]
       end
     end
     
     # Encoding job part
-    class Encoding
-      def initialize(format, *args)
-        @format, @args = format, args
+    class Encoding < Step
+      def format
+        args.first
       end
-      attr_reader :format, :args
-      def apply(temp_object)
-        temp_object.encode(format, *args)
+      def arguments
+        args[1..-1]
+      end
+      def apply(job)
+        job.temp_object = TempObject.new job.app.encoders.encode(job.temp_object, format, *arguments)
       end
       def to_a
-        [:encoding, format, *args]
+        [:encoding, *args]
       end
     end
     
-    def initialize(&block)
+    def initialize(app, temp_object=nil, &block)
+      @app = app
+      @temp_object = temp_object
       @steps = []
+      @next_step = 0
     end
     
-    attr_reader :steps
+    attr_accessor :temp_object
+    attr_reader :steps, :app
 
-    def add_process(name, *args)
-      steps << Process.new(name, *args)
+    def process(*args)
+      steps << Process.new(*args)
+      self
     end
     
-    def add_encoding(format, *args)
-      steps << Encoding.new(format, *args)
+    def encode(*args)
+      steps << Encoding.new(*args)
+      self
     end
 
     def +(other_job)
-      new_job = self.class.new
+      new_job = self.class.new(self.app)
       new_job.steps = steps + other_job.steps
       new_job
     end
@@ -53,13 +76,28 @@ module Dragonfly
       steps.length
     end
     
-    def apply(temp_object)
-      steps.inject(temp_object) do |tmp, step|
-        step.apply(tmp)
+    def apply
+      steps[next_step..-1].each do |step|
+        step.apply(self)
       end
+      next_step = steps.length
     end
-    
+
+    def already_applied?
+      next_step == steps.length
+    end
+
     protected
     attr_writer :steps
+
+    private
+    
+    attr_reader :next_step
+    
+    def resulting_temp_object
+      apply unless already_applied?
+      temp_object
+    end
+
   end
 end

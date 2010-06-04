@@ -2,34 +2,36 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Dragonfly::Job do
   
+  let(:app){ mock('app') }
+  
   it "should define a single processing job" do
-    job = Dragonfly::Job.new
-    job.add_process :resize, 300, 200
+    job = Dragonfly::Job.new(app)
+    job.process :resize, 300, 200
     
     job.num_steps.should == 1
 
     process = job.steps.first
     process.name.should == :resize
-    process.args.should == [300, 200]
+    process.arguments.should == [300, 200]
   end
   
   it "should define a single encoding job" do
-    job = Dragonfly::Job.new
-    job.add_encoding :gif, :doobie, :bitrate => 128
+    job = Dragonfly::Job.new(app)
+    job.encode :gif, :doobie, :bitrate => 128
     
     job.num_steps.should == 1
 
     encoding = job.steps.first
     encoding.format.should == :gif
-    encoding.args.should == [:doobie, {:bitrate => 128}]
+    encoding.arguments.should == [:doobie, {:bitrate => 128}]
   end
   
   it "should allow for defining more complicated jobs" do
-    job = Dragonfly::Job.new
-    job.add_process :doobie
-    job.add_encoding :png
-    job.add_process :hello
-    job.add_encoding :gip
+    job = Dragonfly::Job.new(app)
+    job.process :doobie
+    job.encode :png
+    job.process :hello
+    job.encode :gip
     
     job.should match_job([
       [:process, :doobie],
@@ -41,10 +43,10 @@ describe Dragonfly::Job do
   
   describe "adding jobs" do
     it "should concatenate jobs" do
-      job1 = Dragonfly::Job.new
-      job1.add_process :resize
-      job2 = Dragonfly::Job.new
-      job2.add_encoding :png
+      job1 = Dragonfly::Job.new(app)
+      job1.process :resize
+      job2 = Dragonfly::Job.new(app)
+      job2.encode :png
       
       job3 = job1 + job2
       job3.should match_job([
@@ -55,17 +57,25 @@ describe Dragonfly::Job do
   end
   
   describe "applying a job" do
+    
     before(:each) do
-      @job = Dragonfly::Job.new
-      @job.add_process :resize, '10x10'
-      @job.add_encoding :png, :bitrate => 'loads'
+      @app = Dragonfly::App[:asdfe]
     end
-    it "should apply the steps to the temp_object" do
-      temp_object = mock('temp_object')
-      temp_object.should_receive(:process).with(:resize, '10x10').and_return(temp_object2=mock)
-      temp_object2.should_receive(:encode).with(:png, :bitrate => 'loads').and_return(temp_object3=mock)
-      @job.apply(temp_object).should == temp_object3
+    
+    describe "encoding" do
+      before(:each) do
+        encoder_class = Class.new(Dragonfly::Encoding::Base)
+        @encoder = @app.register_encoder(encoder_class)
+        @temp_object = Dragonfly::TempObject.new('abcde')
+        @job = Dragonfly::Job.new(@app, @temp_object)
+      end
+
+      it "should encode the data and return the new temp object" do
+        @encoder.should_receive(:encode).with(@temp_object, :some_format, :some => 'option').and_return('ABCDE')
+        @job.encode(:some_format, :some => 'option').data.should == 'ABCDE'
+      end
     end
+
   end
   
 end

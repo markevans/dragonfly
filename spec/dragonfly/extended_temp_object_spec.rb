@@ -46,26 +46,6 @@ describe Dragonfly::ExtendedTempObject do
       end
       
     end
-    
-    describe "encoding" do
-      before(:each) do
-        encoder_class = Class.new(Dragonfly::Encoding::Base)
-        @encoder = @app.register_encoder(encoder_class)
-        @temp_object = Dragonfly::ExtendedTempObject.new(@app, 'abcde')
-      end
-      
-      it "should encode the data and return the new temp object" do
-        @encoder.should_receive(:encode).with(@temp_object, :some_format, :some => 'option').and_return('ABCDE')
-        new_temp_object = @temp_object.encode(:some_format, :some => 'option')
-        new_temp_object.data.should == 'ABCDE'
-      end
-      it "should encode its own data" do
-        @encoder.should_receive(:encode).with(@temp_object, :some_format, :some => 'option').and_return('ABCDE')
-        @temp_object.encode!(:some_format, :some => 'option')
-        @temp_object.data.should == 'ABCDE'
-      end
-    end
-    
-  end
   
+  end
 end
