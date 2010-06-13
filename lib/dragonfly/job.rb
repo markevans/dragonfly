@@ -10,11 +10,18 @@ module Dragonfly
       def initialize(*args)
         @args = args
       end
-      private
       attr_reader :args
     end
+
+    class Fetch < Step
+      def uid
+        args.first
+      end
+      def apply(job)
+        job.temp_object = TempObject.new job.app.datastore.retrieve(uid)
+      end
+    end
     
-    # Processing job part
     class Process < Step
       def name
         args.first
@@ -25,12 +32,8 @@ module Dragonfly
       def apply(job)
         job.temp_object = TempObject.new job.app.processors.send(name, job.temp_object, *arguments)
       end
-      def to_a
-        [:process, *args]
-      end
     end
     
-    # Encoding job part
     class Encoding < Step
       def format
         args.first
@@ -40,9 +43,6 @@ module Dragonfly
       end
       def apply(job)
         job.temp_object = TempObject.new job.app.encoders.encode(job.temp_object, format, *arguments)
-      end
-      def to_a
-        [:encoding, *args]
       end
     end
     
@@ -55,6 +55,11 @@ module Dragonfly
     
     attr_accessor :temp_object
     attr_reader :steps, :app
+
+    def fetch(uid)
+      steps << Fetch.new(uid)
+      self
+    end
 
     def process(*args)
       steps << Process.new(*args)

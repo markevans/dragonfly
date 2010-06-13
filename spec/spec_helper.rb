@@ -22,3 +22,12 @@ end
 def todo
   raise "TODO"
 end
+
+def mock_app
+  mock('app',
+    :datastore => mock('datastore'),
+    :processors => mock('processors'),
+    :encoders => mock('encoders'),
+    :analysers => mock('analysers')
+  )
+end
