@@ -37,7 +37,8 @@ describe Dragonfly::Job do
     
     before(:each) do
       @temp_object = Dragonfly::TempObject.new('HELLO')
-      @job = Dragonfly::Job.new(@app, @temp_object)
+      @job = Dragonfly::Job.new(@app)
+      @job.temp_object = @temp_object
     end
     
     describe "process" do

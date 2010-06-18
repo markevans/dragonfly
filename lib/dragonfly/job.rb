@@ -46,9 +46,8 @@ module Dragonfly
       end
     end
     
-    def initialize(app, temp_object=nil, &block)
+    def initialize(app, &block)
       @app = app
-      @temp_object = temp_object
       @steps = []
       @next_step = 0
     end
