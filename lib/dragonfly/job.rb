@@ -33,7 +33,7 @@ module Dragonfly
         args[1..-1]
       end
       def apply(job)
-        job.temp_object = TempObject.new job.app.processors.send(name, job.temp_object, *arguments)
+        job.temp_object = TempObject.new job.app.processors.process(name, job.temp_object, *arguments)
       end
     end
     
