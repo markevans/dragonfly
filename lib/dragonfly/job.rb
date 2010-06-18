@@ -2,6 +2,9 @@ require 'forwardable'
 
 module Dragonfly
   class Job
+
+    # Exceptions
+    class AppDoesNotMatch < StandardError; end
     
     extend Forwardable
     def_delegators :resulting_temp_object, :data
@@ -71,7 +74,10 @@ module Dragonfly
     end
 
     def +(other_job)
-      new_job = self.class.new(self.app)
+      unless app == other_job.app
+        raise AppDoesNotMatch, "Cannot add jobs belonging to different apps (#{app} is not #{other_job.app})"
+      end
+      new_job = self.class.new(app)
       new_job.steps = steps + other_job.steps
       new_job
     end

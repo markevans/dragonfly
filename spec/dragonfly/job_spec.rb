@@ -7,7 +7,6 @@ def have_steps(steps)
   end
 end
 
-
 describe Dragonfly::Job do
   
   before(:each) do
@@ -96,6 +95,14 @@ describe Dragonfly::Job do
         Dragonfly::Job::Process,
         Dragonfly::Job::Encoding
       ])
+    end
+    it "should raise an error if the app is different" do
+      app2 = mock('app')
+      job1 = Dragonfly::Job.new(@app)
+      job2 = Dragonfly::Job.new(app2)
+      lambda {
+        job1 + job2
+      }.should raise_error(Dragonfly::Job::AppDoesNotMatch)
     end
   end
   
