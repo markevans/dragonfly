@@ -6,6 +6,8 @@ module Dragonfly
     # Exceptions
     class AppDoesNotMatch < StandardError; end
     
+    include BelongsToApp
+    
     extend Forwardable
     def_delegators :resulting_temp_object, :data
     
@@ -56,7 +58,7 @@ module Dragonfly
     end
     
     attr_accessor :temp_object
-    attr_reader :steps, :app
+    attr_reader :steps
 
     def fetch(uid)
       steps << Fetch.new(uid)
