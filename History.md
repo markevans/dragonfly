@@ -1,3 +1,15 @@
+0.6.2 (2010-06-24)
+==================
+Features
+-----
+- Added ability for custom error messages in validations
+
+0.6.1 (2010-05-16)
+==================
+Fixes
+-----
+- STI was breaking when the model had a mixin too
+
 0.6.0 (2010-05-11)
 ==================
 
