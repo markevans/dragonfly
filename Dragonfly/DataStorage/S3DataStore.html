@@ -39,7 +39,7 @@
     
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.6.1)</div>
+      <div id="logo">DRAGONFLY (v 0.6.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -394,15 +394,15 @@ or
       <pre class="lines">
 
 
-42
 43
 44
 45
 46
-47</pre>
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 43</span>
 
 <span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
   <span class='ensure_initialized identifier id'>ensure_initialized</span>
@@ -450,15 +450,15 @@ or
       <pre class="lines">
 
 
-35
 36
 37
 38
 39
-40</pre>
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 36</span>
 
 <span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
   <span class='ensure_initialized identifier id'>ensure_initialized</span>
@@ -491,7 +491,8 @@ or
 30
 31
 32
-33</pre>
+33
+34</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 27</span>
@@ -501,6 +502,7 @@ or
   <span class='ensure_initialized identifier id'>ensure_initialized</span>
   <span class='object identifier id'>object</span> <span class='assign token'>=</span> <span class='use_filesystem identifier id'>use_filesystem</span> <span class='integer val'>? </span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span> <span class='colon op'>:</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span>
   <span class='S3Object constant id'>S3Object</span><span class='dot token'>.</span><span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='bucket_name identifier id'>bucket_name</span><span class='rparen token'>)</span>
+  <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='close identifier id'>close</span> <span class='if if_mod kw'>if</span> <span class='use_filesystem identifier id'>use_filesystem</span>
   <span class='uid identifier id'>uid</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -521,7 +523,7 @@ or
     </div>
     
     <div id="footer">
-  Generated on Sun May 16 13:22:09 2010 by 
+  Generated on Thu Jun 24 15:26:01 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.7).
 </div>
