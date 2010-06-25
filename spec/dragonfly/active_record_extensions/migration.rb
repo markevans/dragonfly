@@ -18,6 +18,7 @@ class MigrationForTest < ActiveRecord::Migration
       t.string  :preview_image_blah_blah
       t.string  :other_image_uid
       t.string  :yet_another_image_uid
+      t.string  :otra_imagen_uid
       t.string  :trailer_video_uid
       t.timestamps
     end

@@ -326,10 +326,12 @@ describe Item do
           validates_property :mime_type, :of => :preview_image, :in => ['how/special', 'how/crazy'], :if => :its_friday
           validates_property :mime_type, :of => [:other_image, :yet_another_image], :as => 'how/special'
           validates_property :number_of_Gs, :of => :preview_image, :in => (0..2)
+          validates_property :mime_type, :of => :otra_imagen, :in => ['que/pasa', 'illo/tio'], :message => "tipo de contenido incorrecto. Que chungo tio"
 
           image_accessor :preview_image
           image_accessor :other_image
           image_accessor :yet_another_image
+          image_accessor :otra_imagen
 
           def its_friday
             true
@@ -389,6 +391,12 @@ describe Item do
             validates_property :mime_type, :as => 'hi/there'
           end
         }.should raise_error(ArgumentError)
+      end
+
+      it "should allow for custom messages" do
+        @item.otra_imagen = "WRONG TYPE"
+        @item.should_not be_valid
+        @item.errors[:otra_imagen].should match_ar_error("tipo de contenido incorrecto. Que chungo tio")
       end
 
     end
