@@ -13,7 +13,7 @@ module Dragonfly
     include BelongsToApp
     
     extend Forwardable
-    def_delegators :resulting_temp_object, :data
+    def_delegators :to_temp_object, :data
     
     class Step
       def initialize(*args)
@@ -84,7 +84,7 @@ module Dragonfly
     
     def analyse(*args)
       raise NothingToAnalyse, "Can't analyse because temp object has not been initialized. Need to fetch first?" unless temp_object
-      app.analysers.analyse(resulting_temp_object, *args)
+      app.analysers.analyse(to_temp_object, *args)
     end
 
     def +(other_job)
@@ -120,7 +120,7 @@ module Dragonfly
 
     private
 
-    def resulting_temp_object
+    def to_temp_object
       apply
       temp_object
     end
