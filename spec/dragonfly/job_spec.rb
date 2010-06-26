@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 # Matchers
-def have_steps(steps)
-  simple_matcher("have steps #{steps.inspect}") do |given|
-    given.steps.map{|step| step.class } == steps
+def match_steps(steps)
+  simple_matcher("match steps #{steps.inspect}") do |given|
+    given.map{|step| step.class } == steps
   end
 end
 
@@ -24,7 +24,7 @@ describe Dragonfly::Job do
         @job.fetch('some_uid')
       end
 
-      it { @job.should have_steps([Dragonfly::Job::Fetch]) }
+      it { @job.steps.should match_steps([Dragonfly::Job::Fetch]) }
 
       it "should retrieve from the app's datastore when applied" do
         @app.datastore.should_receive(:retrieve).with('some_uid').and_return('HELLO')
@@ -74,7 +74,7 @@ describe Dragonfly::Job do
         @job.process(:resize, '20x30')
       end
 
-      it { @job.should have_steps([Dragonfly::Job::Process]) }
+      it { @job.steps.should match_steps([Dragonfly::Job::Process]) }
 
       it "should use the processor when applied" do
         @app.processors.should_receive(:process).with(@temp_object, :resize, '20x30').and_return('hi')
@@ -88,7 +88,7 @@ describe Dragonfly::Job do
         @job.encode(:gif, :bitrate => 'mumma')
       end
 
-      it { @job.should have_steps([Dragonfly::Job::Encoding]) }
+      it { @job.steps.should match_steps([Dragonfly::Job::Encoding]) }
 
       it "should use the encoder when applied" do
         @app.encoders.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
@@ -112,7 +112,7 @@ describe Dragonfly::Job do
     job.process :thump
     job.encode :gip
     
-    job.should have_steps([
+    job.steps.should match_steps([
       Dragonfly::Job::Fetch,
       Dragonfly::Job::Process,
       Dragonfly::Job::Encoding
@@ -127,7 +127,7 @@ describe Dragonfly::Job do
       job2.encode :png
       
       job3 = job1 + job2
-      job3.should have_steps([
+      job3.steps.should match_steps([
         Dragonfly::Job::Process,
         Dragonfly::Job::Encoding
       ])
@@ -139,6 +139,46 @@ describe Dragonfly::Job do
       lambda {
         job1 + job2
       }.should raise_error(Dragonfly::Job::AppDoesNotMatch)
+    end
+  end
+  
+  describe "defining extra steps after applying" do
+    before(:each) do
+      @job = Dragonfly::Job.new(@app)
+      @job.temp_object = Dragonfly::TempObject.new("hello")
+      @job.process :resize
+      @job.apply
+      @job.encode :micky
+    end
+    it "should not call apply on already applied steps" do
+      @job.steps[0].should_not_receive(:apply)
+      @job.apply
+    end
+    it "should call apply on not yet applied steps" do
+      @job.steps[1].should_receive(:apply)
+      @job.apply
+    end
+    it "should return all steps" do
+      @job.steps.should match_steps([
+        Dragonfly::Job::Process,
+        Dragonfly::Job::Encoding
+      ])
+    end
+    it "should return applied steps" do
+      @job.applied_steps.should match_steps([
+        Dragonfly::Job::Process
+      ])
+    end
+    it "should return the pending steps" do
+      @job.pending_steps.should match_steps([
+        Dragonfly::Job::Encoding
+      ])
+    end
+    it "should not call apply on any steps when already applied" do
+      @job.apply
+      @job.steps[0].should_not_receive(:apply)
+      @job.steps[1].should_not_receive(:apply)
+      @job.apply
     end
   end
   

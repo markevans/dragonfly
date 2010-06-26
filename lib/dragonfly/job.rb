@@ -59,7 +59,7 @@ module Dragonfly
     def initialize(app, &block)
       @app = app
       @steps = []
-      @next_step = 0
+      @next_step_index = 0
     end
     
     attr_accessor :temp_object
@@ -93,20 +93,18 @@ module Dragonfly
       new_job.steps = steps + other_job.steps
       new_job
     end
-
-    def num_steps
-      steps.length
-    end
     
     def apply
-      steps[next_step..-1].each do |step|
-        step.apply(self)
-      end
-      next_step = steps.length
+      pending_steps.each{|step| step.apply(self) }
+      self.next_step_index = steps.length
     end
-
-    def already_applied?
-      next_step == steps.length
+    
+    def applied_steps
+      steps[0...next_step_index]
+    end
+    
+    def pending_steps
+      steps[next_step_index..-1]
     end
 
     protected
@@ -114,10 +112,10 @@ module Dragonfly
 
     private
     
-    attr_reader :next_step
+    attr_accessor :next_step_index
     
     def resulting_temp_object
-      apply unless already_applied?
+      apply
       temp_object
     end
 

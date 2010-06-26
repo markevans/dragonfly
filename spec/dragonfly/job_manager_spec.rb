@@ -20,7 +20,7 @@ describe Dragonfly::JobManager do
         @job = @job_manager.job_for(:thumb)
         @step = @job.steps[0]
       end
-      it("should have the correct num_steps"){ @job.num_steps.should == 1 }
+      it("should have the correct num_steps"){ @job.steps.length.should == 1 }
       it("should have the correct step type"){ @step.should be_a(Dragonfly::Job::Process) }
       it("should have the correct name"){ @step.name.should == :resize }
       it("should have the correct args"){ @step.args.should == [300, 200] }
@@ -34,7 +34,7 @@ describe Dragonfly::JobManager do
         @job = @job_manager.job_for(:enc)
         @step = @job.steps[0]
       end
-      it("should have the correct num_steps"){ @job.num_steps.should == 1 }
+      it("should have the correct num_steps"){ @job.steps.length.should == 1 }
       it("should have the correct step type"){ @step.should be_a(Dragonfly::Job::Encoding) }
       it("should have the correct format"){ @step.format.should == :gif }
       it("should have the correct args"){ @step.args.should == [{:bitrate => 128}] }
