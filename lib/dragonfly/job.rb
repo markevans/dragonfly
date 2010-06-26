@@ -47,7 +47,7 @@ module Dragonfly
       end
     end
     
-    class Encoding < Step
+    class Encode < Step
       def format
         args.first
       end
@@ -81,7 +81,7 @@ module Dragonfly
     end
     
     def encode(*args)
-      steps << Encoding.new(*args)
+      steps << Encode.new(*args)
       self
     end
     

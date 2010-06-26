@@ -93,7 +93,7 @@ describe Dragonfly::Job do
         @job.encode(:gif, :bitrate => 'mumma')
       end
 
-      it { @job.steps.should match_steps([Dragonfly::Job::Encoding]) }
+      it { @job.steps.should match_steps([Dragonfly::Job::Encode]) }
 
       it "should use the encoder when applied" do
         @app.encoders.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
@@ -120,7 +120,7 @@ describe Dragonfly::Job do
     job.steps.should match_steps([
       Dragonfly::Job::Fetch,
       Dragonfly::Job::Process,
-      Dragonfly::Job::Encoding
+      Dragonfly::Job::Encode
     ])
   end
   
@@ -146,7 +146,7 @@ describe Dragonfly::Job do
         job3 = @job1 + @job2
         job3.steps.should match_steps([
           Dragonfly::Job::Process,
-          Dragonfly::Job::Encoding
+          Dragonfly::Job::Encode
         ])
       end
     
@@ -178,7 +178,7 @@ describe Dragonfly::Job do
       it "should have the correct pending steps" do
         @job1.apply
         (@job1 + @job2).pending_steps.should match_steps([
-          Dragonfly::Job::Encoding
+          Dragonfly::Job::Encode
         ])
       end
     end
@@ -204,7 +204,7 @@ describe Dragonfly::Job do
     it "should return all steps" do
       @job.steps.should match_steps([
         Dragonfly::Job::Process,
-        Dragonfly::Job::Encoding
+        Dragonfly::Job::Encode
       ])
     end
     it "should return applied steps" do
@@ -214,7 +214,7 @@ describe Dragonfly::Job do
     end
     it "should return the pending steps" do
       @job.pending_steps.should match_steps([
-        Dragonfly::Job::Encoding
+        Dragonfly::Job::Encode
       ])
     end
     it "should not call apply on any steps when already applied" do
@@ -234,7 +234,7 @@ describe Dragonfly::Job do
       job.to_a.should == [
         [:fetch, 'some_uid'],
         [:process, :resize, '30x40'],
-        [:encoding, :gif, {:bitrate => 20}]
+        [:encode, :gif, {:bitrate => 20}]
       ]
     end
   end
