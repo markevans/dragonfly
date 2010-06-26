@@ -5,6 +5,7 @@ module Dragonfly
 
     # Exceptions
     class AppDoesNotMatch < StandardError; end
+    class JobAlreadyApplied < StandardError; end
     class NothingToProcess < StandardError; end
     class NothingToEncode < StandardError; end
     class NothingToAnalyse < StandardError; end
@@ -56,10 +57,11 @@ module Dragonfly
       end
     end
     
-    def initialize(app, &block)
+    def initialize(app, content=nil)
       @app = app
       @steps = []
       @next_step_index = 0
+      @temp_object = TempObject.new(content) if content
     end
     
     attr_accessor :temp_object
@@ -89,8 +91,12 @@ module Dragonfly
       unless app == other_job.app
         raise AppDoesNotMatch, "Cannot add jobs belonging to different apps (#{app} is not #{other_job.app})"
       end
-      new_job = self.class.new(app)
+      unless other_job.applied_steps.empty?
+        raise JobAlreadyApplied, "Cannot add jobs when the second one has already been applied (#{other_job})"
+      end
+      new_job = self.class.new(app, temp_object)
       new_job.steps = steps + other_job.steps
+      new_job.next_step_index = next_step_index
       new_job
     end
     
@@ -108,12 +114,12 @@ module Dragonfly
     end
 
     protected
+
     attr_writer :steps
+    attr_accessor :next_step_index
 
     private
-    
-    attr_accessor :next_step_index
-    
+
     def resulting_temp_object
       apply
       temp_object

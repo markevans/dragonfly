@@ -19,6 +19,11 @@ describe Dragonfly::Job do
       @job = Dragonfly::Job.new(@app)
     end
 
+    it "should allow initializing with content" do
+      job = Dragonfly::Job.new(@app, 'eggheads')
+      job.temp_object.data.should == 'eggheads'
+    end
+
     describe "fetch" do
       before(:each) do
         @job.fetch('some_uid')
@@ -120,26 +125,64 @@ describe Dragonfly::Job do
   end
   
   describe "adding jobs" do
-    it "should concatenate jobs" do
-      job1 = Dragonfly::Job.new(@app)
-      job1.process :resize
-      job2 = Dragonfly::Job.new(@app)
-      job2.encode :png
-      
-      job3 = job1 + job2
-      job3.steps.should match_steps([
-        Dragonfly::Job::Process,
-        Dragonfly::Job::Encoding
-      ])
-    end
+    
     it "should raise an error if the app is different" do
-      app2 = mock('app')
       job1 = Dragonfly::Job.new(@app)
-      job2 = Dragonfly::Job.new(app2)
+      job2 = Dragonfly::Job.new(mock_app)
       lambda {
         job1 + job2
       }.should raise_error(Dragonfly::Job::AppDoesNotMatch)
     end
+
+    describe "both belonging to the same app" do
+      before(:each) do
+        @job1 = Dragonfly::Job.new(@app, 'hello')
+        @job1.process :resize
+        @job2 = Dragonfly::Job.new(@app, 'hola')
+        @job2.encode :png
+      end
+      
+      it "should concatenate jobs" do
+        job3 = @job1 + @job2
+        job3.steps.should match_steps([
+          Dragonfly::Job::Process,
+          Dragonfly::Job::Encoding
+        ])
+      end
+    
+      it "should raise an error if the second job has applied steps" do
+        @job2.apply
+        lambda {
+          @job1 + @job2
+        }.should raise_error(Dragonfly::Job::JobAlreadyApplied)
+      end
+      
+      it "should not raise an error if the first job has applied steps" do
+        @job1.apply
+        lambda {
+          @job1 + @job2
+        }.should_not raise_error
+      end
+      
+      it "should have the first job's temp_object" do
+        (@job1 + @job2).temp_object.data.should == 'hello'
+      end
+      
+      it "should have the correct applied steps" do
+        @job1.apply
+        (@job1 + @job2).applied_steps.should match_steps([
+          Dragonfly::Job::Process
+        ])
+      end
+      
+      it "should have the correct pending steps" do
+        @job1.apply
+        (@job1 + @job2).pending_steps.should match_steps([
+          Dragonfly::Job::Encoding
+        ])
+      end
+    end
+
   end
   
   describe "defining extra steps after applying" do
