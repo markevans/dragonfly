@@ -47,14 +47,6 @@ module Dragonfly
       @meta = opts[:meta] || {}
     end
     
-    def modify_self!(obj)
-      unless obj == self
-        reset!
-        initialize_from_object!(obj)
-      end
-      self
-    end
-    
     def data
       @data ||= initialized_data || file.read
     end
@@ -150,10 +142,6 @@ module Dragonfly
     attr_accessor :initialized_data, :initialized_tempfile, :initialized_file
     
     private
-    
-    def reset!
-      @data = @tempfile = @initialized_data = @initialized_file = @initialized_tempfile = nil
-    end
     
     def initialize_from_object!(obj)
       case obj

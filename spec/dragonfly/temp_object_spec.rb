@@ -240,41 +240,6 @@ describe Dragonfly::TempObject do
     end
   end
   
-  describe "modify_self!" do
-
-    before(:each) do
-      @temp_object = Dragonfly::TempObject.new('DATA_ONE')
-      @temp_object.data # Make sure internal stuff is initialized
-      @temp_object.file #
-    end
-    it "should modify itself" do
-      @temp_object.modify_self!('DATA_TWO')
-      @temp_object.data.should == 'DATA_TWO'
-    end
-    it "should return itself" do
-      @temp_object.modify_self!('DATA_TWO').should == @temp_object
-    end
-    it "should modify itself when the new object is a file" do
-      @temp_object.modify_self!(File.new(SAMPLES_DIR + '/beach.png'))
-      @temp_object.data.should == File.read(SAMPLES_DIR + '/beach.png')
-    end
-    it "should modify itself when the new object is a tempfile" do
-      tempfile = new_tempfile
-      data = tempfile.read
-      @temp_object.modify_self!(tempfile)
-      @temp_object.data.should == data
-    end
-    it "should still work when the object is itself" do
-      @temp_object.modify_self!(@temp_object)
-      @temp_object.data.should == 'DATA_ONE'
-    end
-    it "should keep the same name" do
-      @temp_object.name = 'billy.bob'
-      @temp_object.modify_self!('WASSUP PUNk')
-      @temp_object.name.should == 'billy.bob'
-    end
-  end
-  
   describe "name" do
     before(:each) do
       @obj = new_tempfile
