@@ -25,9 +25,9 @@ end
 
 def mock_app
   mock('app',
-    :datastore => mock('datastore'),
-    :processors => mock('processors'),
-    :encoders => mock('encoders'),
-    :analysers => mock('analysers')
+    :datastore => mock('datastore', :store => 'some_uid', :retrieve => ["SOME_DATA", {}], :destroy => nil),
+    :processors => mock('processors', :process => "SOME_PROCESSED_DATA"),
+    :encoders => mock('encoders', :encode => "SOME_ENCODED_DATA"),
+    :analysers => mock('analysers', :analyse => "some_result")
   )
 end

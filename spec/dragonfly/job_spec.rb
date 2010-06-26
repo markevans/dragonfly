@@ -14,10 +14,13 @@ describe Dragonfly::Job do
   end
   
   describe "without temp_object" do
-    
+
+    before(:each) do
+      @job = Dragonfly::Job.new(@app)
+    end
+
     describe "fetch" do
       before(:each) do
-        @job = Dragonfly::Job.new(@app)
         @job.fetch('some_uid')
       end
 
@@ -27,6 +30,32 @@ describe Dragonfly::Job do
         @app.datastore.should_receive(:retrieve).with('some_uid').and_return('HELLO')
         @job.apply
         @job.temp_object.data.should == 'HELLO'
+      end
+    end
+    
+    describe "process" do
+      it "should raise an error when applying" do
+        @job.process(:resize, '20x30')
+        lambda{
+          @job.apply
+        }.should raise_error(Dragonfly::Job::NothingToProcess)
+      end
+    end
+
+    describe "encode" do
+      it "should raise an error when applying" do
+        @job.encode(:gif)
+        lambda{
+          @job.apply
+        }.should raise_error(Dragonfly::Job::NothingToEncode)
+      end
+    end
+    
+    describe "analyse" do
+      it "should raise an error" do
+        lambda{
+          @job.analyse(:width)
+        }.should raise_error(Dragonfly::Job::NothingToAnalyse)
       end
     end
     
@@ -48,7 +77,7 @@ describe Dragonfly::Job do
       it { @job.should have_steps([Dragonfly::Job::Process]) }
 
       it "should use the processor when applied" do
-        @app.processors.should_receive(:process).with(:resize, @temp_object, '20x30').and_return('hi')
+        @app.processors.should_receive(:process).with(@temp_object, :resize, '20x30').and_return('hi')
         @job.apply
         @job.temp_object.data.should == 'hi'
       end
@@ -65,6 +94,13 @@ describe Dragonfly::Job do
         @app.encoders.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
         @job.apply
         @job.temp_object.data.should == 'alo'
+      end
+    end
+    
+    describe "analyse" do
+      it "should use the app's analyser to analyse the temp_object" do
+        @app.analysers.should_receive(:analyse).with(@temp_object, :width)
+        @job.analyse(:width)
       end
     end
 

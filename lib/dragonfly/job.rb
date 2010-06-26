@@ -5,6 +5,9 @@ module Dragonfly
 
     # Exceptions
     class AppDoesNotMatch < StandardError; end
+    class NothingToProcess < StandardError; end
+    class NothingToEncode < StandardError; end
+    class NothingToAnalyse < StandardError; end
     
     include BelongsToApp
     
@@ -35,7 +38,8 @@ module Dragonfly
         args[1..-1]
       end
       def apply(job)
-        job.temp_object = TempObject.new job.app.processors.process(name, job.temp_object, *arguments)
+        raise NothingToProcess, "Can't process because temp object has not been initialized. Need to fetch first?" unless job.temp_object
+        job.temp_object = TempObject.new job.app.processors.process(job.temp_object, name, *arguments)
       end
     end
     
@@ -47,6 +51,7 @@ module Dragonfly
         args[1..-1]
       end
       def apply(job)
+        raise NothingToEncode, "Can't encode because temp object has not been initialized. Need to fetch first?" unless job.temp_object
         job.temp_object = TempObject.new job.app.encoders.encode(job.temp_object, format, *arguments)
       end
     end
@@ -73,6 +78,11 @@ module Dragonfly
     def encode(*args)
       steps << Encoding.new(*args)
       self
+    end
+    
+    def analyse(*args)
+      raise NothingToAnalyse, "Can't analyse because temp object has not been initialized. Need to fetch first?" unless temp_object
+      app.analysers.analyse(resulting_temp_object, *args)
     end
 
     def +(other_job)

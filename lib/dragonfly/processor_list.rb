@@ -6,8 +6,8 @@ module Dragonfly
       @app = app
     end
 
-    def process(method, *args)
-      delegate(meth, *args)
+    def process(temp_object, method, *args)
+      delegate(meth, temp_object, *args)
     end
 
   end
