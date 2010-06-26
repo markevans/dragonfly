@@ -20,6 +20,9 @@ module Dragonfly
         @args = args
       end
       attr_reader :args
+      def type
+        @type ||= self.class.name.split('::').last.downcase.to_sym
+      end
     end
 
     class Fetch < Step
@@ -111,6 +114,12 @@ module Dragonfly
     
     def pending_steps
       steps[next_step_index..-1]
+    end
+
+    def to_a
+      steps.map{|step|
+        [step.type, *step.args]
+      }
     end
 
     protected

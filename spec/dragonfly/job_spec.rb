@@ -225,4 +225,18 @@ describe Dragonfly::Job do
     end
   end
   
+  describe "to_a" do
+    it "should represent all the steps in array form" do
+      job = Dragonfly::Job.new(@app)
+      job.fetch 'some_uid'
+      job.process :resize, '30x40'
+      job.encode :gif, :bitrate => 20
+      job.to_a.should == [
+        [:fetch, 'some_uid'],
+        [:process, :resize, '30x40'],
+        [:encoding, :gif, {:bitrate => 20}]
+      ]
+    end
+  end
+  
 end
