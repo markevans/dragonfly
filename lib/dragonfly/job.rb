@@ -20,9 +20,6 @@ module Dragonfly
         @args = args
       end
       attr_reader :args
-      def type
-        @type ||= self.class.name.split('::').last.downcase.to_sym
-      end
     end
 
     class Fetch < Step
@@ -59,6 +56,12 @@ module Dragonfly
         job.temp_object = TempObject.new job.app.encoders.encode(job.temp_object, format, *arguments)
       end
     end
+    
+    STEP_ABBREVIATIONS = {
+      Fetch   => :f,
+      Process => :p,
+      Encode  => :e
+    }
     
     def initialize(app, content=nil)
       @app = app
@@ -118,7 +121,7 @@ module Dragonfly
 
     def to_a
       steps.map{|step|
-        [step.type, *step.args]
+        [STEP_ABBREVIATIONS[step.class], *step.args]
       }
     end
 

@@ -232,9 +232,9 @@ describe Dragonfly::Job do
       job.process :resize, '30x40'
       job.encode :gif, :bitrate => 20
       job.to_a.should == [
-        [:fetch, 'some_uid'],
-        [:process, :resize, '30x40'],
-        [:encode, :gif, {:bitrate => 20}]
+        [:f, 'some_uid'],
+        [:p, :resize, '30x40'],
+        [:e, :gif, {:bitrate => 20}]
       ]
     end
   end
