@@ -63,6 +63,22 @@ module Dragonfly
       Encode  => :e
     }
     
+    # Class methods
+    class << self
+      
+      def from_a(steps_array, app)
+        job = Job.new(app)
+        steps_array.each do |step_array|
+          step_class = STEP_ABBREVIATIONS.index(step_array.shift)
+          job.steps << step_class.new(*step_array)
+        end
+        job
+      end
+      
+    end
+
+    # Instance methods
+
     def initialize(app, content=nil)
       @app = app
       @steps = []
@@ -73,8 +89,8 @@ module Dragonfly
     attr_accessor :temp_object
     attr_reader :steps
 
-    def fetch(uid)
-      steps << Fetch.new(uid)
+    def fetch(*args)
+      steps << Fetch.new(*args)
       self
     end
 
