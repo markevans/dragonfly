@@ -37,6 +37,7 @@ module Dragonfly
   #   c.parameters.configure do |p|   # see Parameters (class methods)
   #     # ...
   #   end
+  # TODO: change!
   #   c.url_handler.configure do |u|   # see UrlHandler
   #     # ...
   #   end
@@ -73,7 +74,7 @@ module Dragonfly
       @analysers, @processors, @encoders = AnalyserList.new(self), ProcessorList.new(self), EncoderList.new(self)
       @job_manager = JobManager.new
       @parameters_class = Class.new(Parameters)
-      @url_handler = UrlHandler.new
+      @request_handler = RequestHandler.new
     end
     
     # @see Analysis::AnalyserList
@@ -84,15 +85,14 @@ module Dragonfly
     attr_reader :encoders
     # @see JobManager
     attr_reader :job_manager
-    # @see UrlHandler
-    attr_reader :url_handler
+    # @see RequestHandler
+    attr_reader :request_handler
     # @see Parameters
     attr_reader :parameters_class
 
     alias parameters parameters_class
     
     extend Forwardable
-    def_delegator :url_handler, :url_for
     def_delegator :datastore, :destroy
     
     include Configurable
@@ -116,18 +116,20 @@ module Dragonfly
     #
     # See the Rack documentation for more details
     def call(env)
-      parameters = url_handler.url_to_parameters(env['PATH_INFO'], env['QUERY_STRING'])
-      temp_object = fetch(parameters.uid, parameters)
+      request_handler.init!(env)
+      job = request_handler.job
+      temp_object = job.to_temp_object
+
       [200, {
         "Content-Type" => mime_type_for(parameters.format, temp_object),
         "Content-Length" => temp_object.size.to_s,
         "ETag" => parameters.unique_signature,
         "Cache-Control" => "public, max-age=#{cache_duration}"
         }, temp_object]
-    rescue UrlHandler::IncorrectSHA, UrlHandler::SHANotGiven => e
+    rescue RequestHandler::IncorrectSHA, RequestHandler::SHANotGiven => e
       warn_with_info(e.message, env)
       [400, {"Content-Type" => "text/plain"}, [e.message]]
-    rescue UrlHandler::UnknownUrl, DataStorage::DataNotFound => e
+    rescue RequestHandler::UnknownUrl, DataStorage::DataNotFound => e
       [404, {"Content-Type" => 'text/plain'}, [e.message]]
     end
 
