@@ -59,6 +59,17 @@ describe Dragonfly::RequestHandler do
         @request_handler.generate_sha.should == @sha
       end
     end
+    
+    describe "sha" do
+      it "should return the request's sha parameter" do
+        @request_handler.init! env_for('/hellothere?s=abcd123')
+        @request_handler.sha.should == 'abcd123'
+      end
+      it "should return nil if not set" do
+        @request_handler.init! env_for('/hellothere?a=b')
+        @request_handler.sha.should be_nil
+      end
+    end
   end
 
 end

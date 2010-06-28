@@ -32,6 +32,10 @@ module Dragonfly
       Digest::SHA1.hexdigest("#{path}#{secret}")[0...sha_length]
     end
     
+    def sha
+      request.params['s']
+    end
+    
     private
 
   end
