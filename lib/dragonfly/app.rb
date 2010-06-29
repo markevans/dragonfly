@@ -143,36 +143,14 @@ module Dragonfly
     def_delegators :job_manager, :define_job, :job_for
     configuration_method :define_job
 
-    # Fetch an object from the database and optionally transform
-    #
-    # Note that the arguments passed in to transform are as defined by the
-    # parameter shortcuts (see Parameter class methods)
-    # @param [String] uid the string uid corresponding to the stored data object
-    # @param [*args [optional]] shortcut_args the shortcut args for transforming the object 
-    # @return [ExtendedTempObject] a temp_object holding the data
-    # @example 
-    # app = Dragonfly::App[:images]
-    # app.fetch('abcd1234')             # returns a temp_object with exactly the data that was originally stored
-    # app.fetch('abcd1234', '20x20!')   # returns a transformed temp_object, in this case with image data resized to 20x20
-    # @see Parameters
-    def fetch(uid)
-      ExtendedTempObject.new(self, *datastore.retrieve(uid))
+    def_delegators :new_job, :fetch
+
+    def new_job
+      Job.new(self)
     end
 
     def generate(*args)
       create_object(processors.generate(*args))
-    end
-
-    # Return the mime type for a given extension, from the registered list
-    # By default uses the list provided by Rack (see Rack::Mime::MIME_TYPES)
-    # If not found there, it falls back to the registered analysers (if temp_object provided).
-    # If not found there, it falls back to the configured 'fallback_mime_type'
-    # @param [Symbol, String] format the format (file-extension)
-    # @param [TempObject] temp_object (optional)
-    # @return [String] the mime-type
-    # @see register_mime_type
-    def mime_type_for(format, temp_object=nil)
-      registered_mime_types[file_ext_string(format)] || (temp_object.mime_type if temp_object.respond_to?(:mime_type)) || fallback_mime_type
     end
 
     # Store an object, using the configured datastore
@@ -204,6 +182,10 @@ module Dragonfly
 
     def registered_mime_types
       @registered_mime_types ||= Rack::Mime::MIME_TYPES.dup
+    end
+    
+    def mime_type_for(format)
+      registered_mime_types[file_ext_string(format)]
     end
 
     private
