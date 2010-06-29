@@ -82,7 +82,7 @@ module Dragonfly
       
       def retrieve_extra_data(data_path)
         path = extra_data_path(data_path)
-        Marshal.load(File.read(path)) if File.exist?(path)
+        File.exist?(path) ? Marshal.load(File.read(path)) : {}
       end
       
       def prepare_path(path)
