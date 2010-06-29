@@ -3,10 +3,6 @@ require 'rack/mock'
 
 describe Dragonfly::App do
 
-  def make_request(app, url)
-    Rack::MockRequest.new(app).get(url)
-  end
-
   describe ".instance" do
     
     it "should create a new instance if it didn't already exist" do
