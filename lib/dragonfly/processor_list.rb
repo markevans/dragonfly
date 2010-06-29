@@ -7,7 +7,7 @@ module Dragonfly
     end
 
     def process(temp_object, method, *args)
-      delegate(meth, temp_object, *args)
+      delegate(method, temp_object, *args)
     end
 
   end
