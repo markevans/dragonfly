@@ -113,6 +113,10 @@ module Dragonfly
       encoding_steps.last.format if encoding_steps.any?
     end
 
+    def mime_type
+      app.mime_type_for(format) if format
+    end
+
     def +(other_job)
       unless app == other_job.app
         raise AppDoesNotMatch, "Cannot add jobs belonging to different apps (#{app} is not #{other_job.app})"

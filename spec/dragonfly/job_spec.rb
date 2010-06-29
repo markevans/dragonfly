@@ -283,4 +283,18 @@ describe Dragonfly::Job do
     end
   end
   
+  describe "mime_type" do
+    before(:each) do
+      @job = Dragonfly::Job.new(@app)
+    end
+    it "should return nil if no encoding steps have been defined" do
+      @job.mime_type.should be_nil
+    end
+    it "should get the mime_type of the last encoding step from the app" do
+      @job.encode :png
+      @app.should_receive(:mime_type_for).with(:png).and_return 'image/png'
+      @job.mime_type.should == 'image/png'
+    end
+  end
+  
 end
