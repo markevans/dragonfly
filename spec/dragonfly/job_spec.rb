@@ -267,4 +267,20 @@ describe Dragonfly::Job do
     end
   end
   
+  describe "format" do
+    before(:each) do
+      @job = Dragonfly::Job.new(@app)
+    end
+    it "should return nil if no encoding steps have been defined" do
+      @job.format.should be_nil
+    end
+    it "should return the format of the last encoding step" do
+      @job.encode :gif
+      @job.process :resize, '30x30'
+      @job.encode :png
+      @job.process :resize, '50x50'
+      @job.format.should == :png
+    end
+  end
+  
 end

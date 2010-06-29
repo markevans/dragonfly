@@ -109,6 +109,10 @@ module Dragonfly
       app.analysers.analyse(to_temp_object, *args)
     end
 
+    def format
+      encoding_steps.last.format if encoding_steps.any?
+    end
+
     def +(other_job)
       unless app == other_job.app
         raise AppDoesNotMatch, "Cannot add jobs belonging to different apps (#{app} is not #{other_job.app})"
@@ -147,10 +151,9 @@ module Dragonfly
     attr_accessor :next_step_index
 
     private
-
-    def to_temp_object
-      apply
-      temp_object
+    
+    def encoding_steps
+      steps.select{|step| step.is_a?(Encode) }
     end
 
   end
