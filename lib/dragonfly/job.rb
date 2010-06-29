@@ -27,7 +27,7 @@ module Dragonfly
         args.first
       end
       def apply(job)
-        job.temp_object = TempObject.new job.app.datastore.retrieve(uid)
+        job.temp_object = TempObject.new(*job.app.datastore.retrieve(uid))
       end
     end
     
@@ -143,6 +143,15 @@ module Dragonfly
       steps.map{|step|
         [STEP_ABBREVIATIONS[step.class], *step.args]
       }
+    end
+
+    def to_app
+      Endpoint.new(self)
+    end
+
+    def to_temp_object
+      apply
+      temp_object
     end
 
     protected
