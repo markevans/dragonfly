@@ -157,6 +157,10 @@ module Dragonfly
     def to_app
       Endpoint.new(self)
     end
+    
+    def to_response
+      to_app.call
+    end
 
     protected
 
