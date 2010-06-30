@@ -16,7 +16,7 @@ module Dragonfly
       [200, {
         "Content-Type" => mime_type,
         "Content-Length" => temp_object.size.to_s,
-        "Cache-Control" => "public, max-age=100"
+        "Cache-Control" => "public, max-age=#{app.cache_duration}"
         }, temp_object]
     rescue DataStorage::DataNotFound => e
       [404, {"Content-Type" => 'text/plain'}, [e.message]]
