@@ -10,6 +10,8 @@ module Dragonfly
       @app = job.app
     end
 
+    attr_reader :job
+
     def call(env=nil)
       raise EmptyJob, "Job contains no steps" if job.empty?
       temp_object = job.apply
@@ -21,11 +23,9 @@ module Dragonfly
     rescue DataStorage::DataNotFound => e
       [404, {"Content-Type" => 'text/plain'}, [e.message]]
     end
-    
+
     private
     
-    attr_reader :job
-
     def mime_type
       job.mime_type || job.analyse(:mime_type) || app.fallback_mime_type
     end

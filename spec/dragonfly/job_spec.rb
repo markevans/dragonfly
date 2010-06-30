@@ -275,6 +275,17 @@ describe Dragonfly::Job do
     end
   end
   
+  describe "to_app" do
+    before(:each) do
+      @job = Dragonfly::Job.new(@app)
+    end
+    it "should return an endpoint" do
+      endpoint = @job.to_app
+      endpoint.should be_a(Dragonfly::Endpoint)
+      endpoint.job.should == @job
+    end
+  end
+  
   describe "format" do
     before(:each) do
       @job = Dragonfly::Job.new(@app)
