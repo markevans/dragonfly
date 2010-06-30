@@ -23,11 +23,13 @@ def todo
   raise "TODO"
 end
 
+require 'logger'
 def mock_app
   mock('app',
     :datastore => mock('datastore', :store => 'some_uid', :retrieve => ["SOME_DATA", {}], :destroy => nil),
     :processors => mock('processors', :process => "SOME_PROCESSED_DATA"),
     :encoders => mock('encoders', :encode => "SOME_ENCODED_DATA"),
-    :analysers => mock('analysers', :analyse => "some_result")
+    :analysers => mock('analysers', :analyse => "some_result"),
+    :log => Logger.new($stderr)
   )
 end

@@ -108,8 +108,12 @@ describe Dragonfly::Job do
     
     describe "analyse" do
       it "should use the app's analyser to analyse the temp_object" do
-        @app.analysers.should_receive(:analyse).with(@temp_object, :width)
-        @job.analyse(:width)
+        @app.analysers.should_receive(:analyse).with(@temp_object, :width).and_return(3)
+        @job.analyse(:width).should == 3
+      end
+      it "should return nil if the analyser raises UnableToHandle" do
+        @app.analysers.should_receive(:analyse).with(@temp_object, :width).and_raise(Dragonfly::Delegator::UnableToHandle)
+        @job.analyse(:width).should be_nil
       end
     end
 
