@@ -133,13 +133,6 @@ module Dragonfly
       [404, {"Content-Type" => 'text/plain'}, [e.message]]
     end
 
-    # Create a temp_object from the object passed in
-    # @param [String, File, Tempfile, TempObject] initialization_object the object holding the data
-    # @return [ExtendedTempObject] a temp_object holding the data
-    def create_object(initialization_object, opts={})
-      ExtendedTempObject.new(self, initialization_object, opts)
-    end
-
     def_delegators :job_manager, :define_job, :job_for
     configuration_method :define_job
 
