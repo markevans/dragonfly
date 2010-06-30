@@ -8,7 +8,7 @@ describe Dragonfly::Endpoint do
   
   before(:each) do
     @app = mock_app
-    @job = Dragonfly::Job.new(@app)
+    @job = Dragonfly::Job.new(@app).fetch('egg')
     @endpoint = Dragonfly::Endpoint.new(@job)
   end
   
@@ -36,6 +36,15 @@ describe Dragonfly::Endpoint do
       @job.should_receive(:mime_type).and_return('numb/nut')
       @job.should_not_receive(:analyse).with(:mime_type)
       make_request(@endpoint).headers['Content-Type'].should == 'numb/nut'
+    end
+  end
+
+  describe "calling" do
+    it "should raise an error if the job is empty" do
+      endpoint = Dragonfly::Endpoint.new(Dragonfly::Job.new(@app))
+      lambda{
+        endpoint.call 
+      }.should raise_error(Dragonfly::Endpoint::EmptyJob)
     end
   end
 

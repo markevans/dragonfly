@@ -14,6 +14,7 @@ module Dragonfly
     
     extend Forwardable
     def_delegators :apply, :data
+    def_delegators :steps, :any?, :empty?
     
     class Step
       def initialize(*args)

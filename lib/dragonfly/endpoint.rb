@@ -1,6 +1,8 @@
 module Dragonfly
   class Endpoint
 
+    class EmptyJob < StandardError; end
+
     include BelongsToApp
 
     def initialize(job)
@@ -9,6 +11,7 @@ module Dragonfly
     end
 
     def call(env=nil)
+      raise EmptyJob, "Job contains no steps" if job.empty?
       temp_object = job.apply
       [200, {
         "Content-Type" => mime_type,
