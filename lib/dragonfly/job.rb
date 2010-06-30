@@ -13,7 +13,7 @@ module Dragonfly
     include BelongsToApp
     
     extend Forwardable
-    def_delegators :to_temp_object, :data
+    def_delegators :apply, :data
     
     class Step
       def initialize(*args)
@@ -106,7 +106,7 @@ module Dragonfly
     
     def analyse(*args)
       raise NothingToAnalyse, "Can't analyse because temp object has not been initialized. Need to fetch first?" unless temp_object
-      app.analysers.analyse(to_temp_object, *args)
+      app.analysers.analyse(apply, *args)
     end
 
     def format
@@ -133,6 +133,7 @@ module Dragonfly
     def apply
       pending_steps.each{|step| step.apply(self) }
       self.next_step_index = steps.length
+      temp_object
     end
     
     def applied_steps
@@ -151,11 +152,6 @@ module Dragonfly
 
     def to_app
       Endpoint.new(self)
-    end
-
-    def to_temp_object
-      apply
-      temp_object
     end
 
     protected

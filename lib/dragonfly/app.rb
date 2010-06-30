@@ -118,7 +118,7 @@ module Dragonfly
     def call(env)
       request_handler.init!(env)
       job = request_handler.job
-      temp_object = job.to_temp_object
+      temp_object = job.apply
 
       [200, {
         "Content-Type" => mime_type_for(parameters.format, temp_object),

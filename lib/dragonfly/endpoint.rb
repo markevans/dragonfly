@@ -8,8 +8,8 @@ module Dragonfly
       @app = job.app
     end
 
-    def call(env)
-      temp_object = job.to_temp_object
+    def call(env=nil)
+      temp_object = job.apply
       [200, {
         "Content-Type" => mime_type,
         "Content-Length" => temp_object.size.to_s,

@@ -74,6 +74,12 @@ describe Dragonfly::Job do
       @job.temp_object = @temp_object
     end
     
+    describe "apply" do
+      it "should return the temp_object" do
+        @job.apply.should be_a(Dragonfly::TempObject)
+      end
+    end
+    
     describe "process" do
       before(:each) do
         @job.process(:resize, '20x30')
@@ -83,8 +89,7 @@ describe Dragonfly::Job do
 
       it "should use the processor when applied" do
         @app.processors.should_receive(:process).with(@temp_object, :resize, '20x30').and_return('hi')
-        @job.apply
-        @job.temp_object.data.should == 'hi'
+        @job.apply.data.should == 'hi'
       end
     end
 
@@ -97,8 +102,7 @@ describe Dragonfly::Job do
 
       it "should use the encoder when applied" do
         @app.encoders.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
-        @job.apply
-        @job.temp_object.data.should == 'alo'
+        @job.apply.data.should == 'alo'
       end
     end
     
