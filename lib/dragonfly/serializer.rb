@@ -4,6 +4,9 @@ require 'base64'
 module Dragonfly
   module Serializer
     
+    # Exceptions
+    class BadString < RuntimeError; end
+    
     extend self # So we can do Serializer.b64_encode, etc.
     
     def b64_encode(string)
@@ -21,6 +24,8 @@ module Dragonfly
     
     def marshal_decode(string)
       Marshal.load(b64_decode(string))
+    rescue TypeError, ArgumentError => e
+      raise BadString, "couldn't decode - got #{e}"
     end
     
   end

@@ -43,4 +43,17 @@ describe Dragonfly::Serializer do
     end
   end
   
+  describe "marshal_decode" do
+    it "should raise an error if the string passed in is empty" do
+      lambda{
+        marshal_decode('')
+      }.should raise_error(Dragonfly::Serializer::BadString)
+    end
+    it "should raise an error if the string passed in is gobbledeegook" do
+      lambda{
+        marshal_decode('ahasdkjfhasdkfjh')
+      }.should raise_error(Dragonfly::Serializer::BadString)
+    end
+  end
+  
 end
