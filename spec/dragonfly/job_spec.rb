@@ -275,6 +275,19 @@ describe Dragonfly::Job do
     end
   end
   
+  describe "serialization" do
+    before(:each) do
+      @job = Dragonfly::Job.new(@app).fetch('mumma').process(:resize, '1x50')
+    end
+    it "should serialize itself" do
+      @job.serialize.should =~ /^\w{1,}$/
+    end
+    it "should deserialize to the same as the original" do
+      new_job = Dragonfly::Job.deserialize(@job.serialize, @app)
+      new_job.to_a.should == @job.to_a
+    end
+  end
+  
   describe "to_app" do
     before(:each) do
       @job = Dragonfly::Job.new(@app)

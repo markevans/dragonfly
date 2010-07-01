@@ -76,6 +76,10 @@ module Dragonfly
         job
       end
       
+      def deserialize(string, app)
+        from_a(Serializer.marshal_decode(string), app)
+      end
+      
     end
 
     # Instance methods
@@ -152,6 +156,10 @@ module Dragonfly
       steps.map{|step|
         [STEP_ABBREVIATIONS[step.class], *step.args]
       }
+    end
+
+    def serialize
+      Serializer.marshal_encode(to_a)
     end
 
     def to_app
