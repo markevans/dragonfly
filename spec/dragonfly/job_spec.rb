@@ -248,30 +248,50 @@ describe Dragonfly::Job do
   end
   
   describe "from_a" do
-    before(:each) do
-      @job = Dragonfly::Job.from_a([
-        [:f, 'some_uid'],
-        [:p, :resize, '30x40'],
-        [:e, :gif, {:bitrate => 20}]
-      ], @app)
+    describe "a well-defined array" do
+      before(:each) do
+        @job = Dragonfly::Job.from_a([
+          [:f, 'some_uid'],
+          [:p, :resize, '30x40'],
+          [:e, :gif, {:bitrate => 20}]
+        ], @app)
+      end
+      it "should have the correct step types" do
+        @job.steps.should match_steps([
+          Dragonfly::Job::Fetch,
+          Dragonfly::Job::Process,
+          Dragonfly::Job::Encode
+        ])
+      end
+      it "should have the correct args" do
+        @job.steps[0].args.should == ['some_uid']
+        @job.steps[1].args.should == [:resize, '30x40']
+        @job.steps[2].args.should == [:gif, {:bitrate => 20}]
+      end
+      it "should have no applied steps" do
+        @job.applied_steps.should be_empty
+      end
+      it "should have all steps pending" do
+        @job.steps.should == @job.pending_steps
+      end
     end
-    it "should have the correct step types" do
-      @job.steps.should match_steps([
-        Dragonfly::Job::Fetch,
-        Dragonfly::Job::Process,
-        Dragonfly::Job::Encode
-      ])
+    
+    [
+      :f,
+      [:f],
+      [[]],
+      [[:egg]]
+    ].each do |object|
+      it "should raise an error if the object passed in is #{object.inspect}" do
+        lambda {
+          Dragonfly::Job.from_a(object, @app)
+        }.should raise_error(Dragonfly::Job::InvalidArray)
+      end
     end
-    it "should have the correct args" do
-      @job.steps[0].args.should == ['some_uid']
-      @job.steps[1].args.should == [:resize, '30x40']
-      @job.steps[2].args.should == [:gif, {:bitrate => 20}]
-    end
-    it "should have no applied steps" do
-      @job.applied_steps.should be_empty
-    end
-    it "should have all steps pending" do
-      @job.steps.should == @job.pending_steps
+    
+    it "should initialize an empty job if the array is empty" do
+      job = Dragonfly::Job.from_a([], @app)
+      job.should be_empty
     end
   end
   

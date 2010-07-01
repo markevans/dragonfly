@@ -9,6 +9,7 @@ module Dragonfly
     class NothingToProcess < StandardError; end
     class NothingToEncode < StandardError; end
     class NothingToAnalyse < StandardError; end
+    class InvalidArray < StandardError; end
     
     include BelongsToApp
     
@@ -68,6 +69,10 @@ module Dragonfly
     class << self
       
       def from_a(steps_array, app)
+        unless steps_array.is_a?(Array) &&
+               steps_array.all?{|s| s.is_a?(Array) && STEP_ABBREVIATIONS.index(s.first) }
+          raise InvalidArray
+        end
         job = Job.new(app)
         steps_array.each do |step_array|
           step_class = STEP_ABBREVIATIONS.index(step_array.shift)
