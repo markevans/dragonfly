@@ -25,7 +25,7 @@ module Dragonfly
     def marshal_decode(string)
       Marshal.load(b64_decode(string))
     rescue TypeError, ArgumentError => e
-      raise BadString, "couldn't decode - got #{e}"
+      raise BadString, "couldn't decode #{string} - got #{e}"
     end
     
   end

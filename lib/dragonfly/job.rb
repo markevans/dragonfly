@@ -71,7 +71,7 @@ module Dragonfly
       def from_a(steps_array, app)
         unless steps_array.is_a?(Array) &&
                steps_array.all?{|s| s.is_a?(Array) && STEP_ABBREVIATIONS.index(s.first) }
-          raise InvalidArray
+          raise InvalidArray, "can't define a job from #{steps_array.inspect}"
         end
         job = Job.new(app)
         steps_array.each do |step_array|
@@ -173,6 +173,10 @@ module Dragonfly
     
     def to_response
       to_app.call
+    end
+
+    def url
+      app.url_for(self)
     end
 
     protected

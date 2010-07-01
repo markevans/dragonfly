@@ -68,4 +68,48 @@ describe Dragonfly::App do
     end
   end
 
+  describe "simple integration tests" do
+
+    def request(app, path)
+      Rack::MockRequest.new(app).get(path)
+    end
+
+    before(:each) do
+      @app = Dragonfly::App[:simple_integration_tests]
+      @app.log = Logger.new($stderr)
+      @uid = @app.store('HELLO THERE')
+    end
+    
+    after(:each) do
+      @app.destroy(@uid)
+    end
+    
+    it "should get the stored thing" do
+      @app.fetch(@uid).data.should == 'HELLO THERE'
+    end
+    
+    it "should return the thing when given the url" do
+      url = @app.fetch(@uid).url
+      response = request(@app, url)
+      response.status.should == 200
+      response.body.should == 'HELLO THERE'
+      response.content_type.should == 'application/octet-stream'
+    end
+    
+    it "should return a 404 when the url isn't known" do
+      response = request(@app, '/sadhfasdfdsfsdf')
+      response.status.should == 404
+      response.body.should == 'Not found'
+      response.content_type.should == 'text/plain'
+    end
+    
+    it "should return a 404 when the url is a well-encoded but bad array" do
+      url = "/#{Dragonfly::Serializer.marshal_encode([[:egg, {:some => 'args'}]])}"
+      response = request(@app, url)
+      response.status.should == 404
+      response.body.should == 'Not found'
+      response.content_type.should == 'text/plain'
+    end
+  end
+
 end
