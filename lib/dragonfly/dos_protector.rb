@@ -4,9 +4,8 @@ require 'digest/sha1'
 module Dragonfly
   class DosProtector
     
-    def initialize(app, secret)
-      @app = app
-      @secret = secret
+    def initialize(app, secret, opts={})
+      @app, @secret, @opts = app, secret, opts
     end
     
     def call(env)
@@ -23,10 +22,14 @@ module Dragonfly
     
     private
     
-    attr_reader :app, :secret
+    attr_reader :app, :secret, :opts
     
     def sha_for(request)
-      Digest::SHA1.hexdigest("#{request.path}#{secret}")#[0...sha_length]
+      Digest::SHA1.hexdigest("#{request.path}#{secret}")[0...sha_length]
+    end
+    
+    def sha_length
+      opts[:sha_length] || 16
     end
     
   end
