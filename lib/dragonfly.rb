@@ -47,6 +47,10 @@ module Dragonfly
       end
     end
 
+    def [](*args)
+      App[*args]
+    end
+
     def active_record_macro(prefix, app)
       already_extended = (class << ActiveRecord::Base; self; end).included_modules.include?(ActiveRecordExtensions)
       ActiveRecord::Base.extend(ActiveRecordExtensions) unless already_extended
