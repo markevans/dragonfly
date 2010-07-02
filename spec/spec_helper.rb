@@ -30,6 +30,11 @@ def mock_app
     :processors => mock('processors', :process => "SOME_PROCESSED_DATA"),
     :encoders => mock('encoders', :encode => "SOME_ENCODED_DATA"),
     :analysers => mock('analysers', :analyse => "some_result"),
-    :log => Logger.new($stderr)
+    :log => Logger.new($stderr),
+    :cache_duration => 10000
   )
+end
+
+def test_app
+  Dragonfly::App.send(:new)
 end

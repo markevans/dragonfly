@@ -4,18 +4,12 @@ def make_request(endpoint)
   Rack::MockRequest.new(endpoint).get('')
 end
 
-describe Dragonfly::Endpoint do
-  
+describe Dragonfly::SimpleEndpoint do
+
   before(:each) do
     @app = mock_app
     @job = Dragonfly::Job.new(@app).fetch('egg')
-    @endpoint = Dragonfly::Endpoint.new(@job)
-  end
-  
-  it "should return 404 if the datastore raises data not found" do
-    @job.should_receive(:apply).and_raise(Dragonfly::DataStorage::DataNotFound)
-    response = make_request(@endpoint)
-    response.status.should == 404
+    @endpoint = Dragonfly::SimpleEndpoint.new(@job)
   end
 
   describe "Content-Type header" do
@@ -39,13 +33,21 @@ describe Dragonfly::Endpoint do
     end
   end
 
-  describe "calling" do
+  describe "errors" do
+
+    it "should return 404 if the datastore raises data not found" do
+      @job.should_receive(:apply).and_raise(Dragonfly::DataStorage::DataNotFound)
+      response = make_request(@endpoint)
+      response.status.should == 404
+    end
+
     it "should raise an error if the job is empty" do
-      endpoint = Dragonfly::Endpoint.new(Dragonfly::Job.new(@app))
+      endpoint = Dragonfly::SimpleEndpoint.new(Dragonfly::Job.new(@app))
       lambda{
-        endpoint.call 
+        make_request(endpoint)
       }.should raise_error(Dragonfly::Endpoint::EmptyJob)
     end
+
   end
 
 end
