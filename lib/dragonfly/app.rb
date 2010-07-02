@@ -58,6 +58,10 @@ module Dragonfly
       Job.new(self)
     end
 
+    def endpoint(job=nil, &block)
+      block ? RoutedEndpoint.new(self, &block) : SimpleEndpoint.new(job)
+    end
+
     def store(object, opts={})
       datastore.store(TempObject.new(object, opts))
     end
