@@ -168,7 +168,7 @@ module Dragonfly
     end
 
     def to_app
-      Endpoint.new(self)
+      SimpleEndpoint.new(self)
     end
     
     def to_response

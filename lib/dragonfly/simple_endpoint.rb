@@ -7,9 +7,11 @@ module Dragonfly
       @job = job
     end
 
-    def call(env)
-      response_for_job(@job)
+    def call(env=nil)
+      response_for_job(job)
     end
+    
+    attr_reader :job
 
   end
 end
