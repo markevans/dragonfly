@@ -34,21 +34,13 @@ module Dragonfly
         app.log.warn("*** WARNING ***: tried to destroy data with uid #{previous_uid}, but got error: #{e}")
       end
       
-      def fetch(*args)
-        app.fetch(uid, *args)
-      end
-      
       def save!
         destroy! if uid_changed?
         self.uid = app.datastore.store(temp_object) if has_data_to_store?
       end
       
-      def temp_object
-        if @temp_object
-          @temp_object
-        elsif been_persisted?
-          @temp_object = fetch
-        end
+      def job
+        temp_object ? Job.new(app, temp_object) : app.fetch(uid, *args)
       end
       
       def to_value
@@ -117,7 +109,7 @@ module Dragonfly
       
       attr_reader :app, :parent_model, :attribute_name
       
-      attr_writer :temp_object
+      attr_accessor :temp_object
       
       def analyser
         app.analysers
