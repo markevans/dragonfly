@@ -20,7 +20,7 @@ describe Dragonfly::Job do
     end
 
     it "should allow initializing with content" do
-      job = Dragonfly::Job.new(@app, 'eggheads')
+      job = Dragonfly::Job.new(@app, Dragonfly::TempObject.new('eggheads'))
       job.temp_object.data.should == 'eggheads'
     end
 
@@ -144,9 +144,9 @@ describe Dragonfly::Job do
 
     describe "both belonging to the same app" do
       before(:each) do
-        @job1 = Dragonfly::Job.new(@app, 'hello')
+        @job1 = Dragonfly::Job.new(@app, Dragonfly::TempObject.new('hello'))
         @job1.process :resize
-        @job2 = Dragonfly::Job.new(@app, 'hola')
+        @job2 = Dragonfly::Job.new(@app, Dragonfly::TempObject.new('hola'))
         @job2.encode :png
       end
       

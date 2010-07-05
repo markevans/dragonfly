@@ -89,11 +89,11 @@ module Dragonfly
 
     # Instance methods
 
-    def initialize(app, content=nil)
+    def initialize(app, temp_object=nil)
       @app = app
       @steps = []
       @next_step_index = 0
-      @temp_object = TempObject.new(content) if content
+      @temp_object = temp_object
     end
     
     attr_accessor :temp_object
