@@ -28,7 +28,7 @@ def mock_app
   mock('app',
     :datastore => mock('datastore', :store => 'some_uid', :retrieve => ["SOME_DATA", {}], :destroy => nil),
     :processor => mock('processor', :process => "SOME_PROCESSED_DATA"),
-    :encoders => mock('encoders', :encode => "SOME_ENCODED_DATA"),
+    :encoder => mock('encoder', :encode => "SOME_ENCODED_DATA"),
     :analyser => mock('analyser', :analyse => "some_result"),
     :log => Logger.new($stderr),
     :cache_duration => 10000

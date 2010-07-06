@@ -55,7 +55,7 @@ module Dragonfly
       end
       def apply(job)
         raise NothingToEncode, "Can't encode because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        job.temp_object = TempObject.new job.app.encoders.encode(job.temp_object, format, *arguments)
+        job.temp_object = TempObject.new job.app.encoder.encode(job.temp_object, format, *arguments)
       end
     end
     

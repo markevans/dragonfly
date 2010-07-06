@@ -101,7 +101,7 @@ describe Dragonfly::Job do
       it { @job.steps.should match_steps([Dragonfly::Job::Encode]) }
 
       it "should use the encoder when applied" do
-        @app.encoders.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
+        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
         @job.apply.data.should == 'alo'
       end
     end

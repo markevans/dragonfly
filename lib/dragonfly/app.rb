@@ -23,7 +23,7 @@ module Dragonfly
     end
     
     def initialize
-      @analyser, @processor, @encoders = Analyser.new(self), Processor.new(self), EncoderList.new(self)
+      @analyser, @processor, @encoder = Analyser.new(self), Processor.new(self), Encoder.new(self)
     end
     
     include Configurable
@@ -42,7 +42,7 @@ module Dragonfly
 
     attr_reader :analyser
     attr_reader :processor
-    attr_reader :encoders
+    attr_reader :encoder
 
     def call(env)
       request = Rack::Request.new(env)
@@ -77,7 +77,7 @@ module Dragonfly
     configuration_method :register_processor
 
     def register_encoder(*args, &block)
-      encoders.register(*args, &block)
+      encoder.register(*args, &block)
     end
     configuration_method :register_encoder
 

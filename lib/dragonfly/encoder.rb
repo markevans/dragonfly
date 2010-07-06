@@ -1,5 +1,5 @@
 module Dragonfly
-  class EncoderList
+  class Encoder
     include Delegator
     
     def initialize(app)
