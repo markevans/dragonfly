@@ -1,5 +1,5 @@
 module Dragonfly
-  class ProcessorList
+  class Processor
     include Delegator
     
     def initialize(app)

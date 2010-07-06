@@ -88,7 +88,7 @@ describe Dragonfly::Job do
       it { @job.steps.should match_steps([Dragonfly::Job::Process]) }
 
       it "should use the processor when applied" do
-        @app.processors.should_receive(:process).with(@temp_object, :resize, '20x30').and_return('hi')
+        @app.processor.should_receive(:process).with(@temp_object, :resize, '20x30').and_return('hi')
         @job.apply.data.should == 'hi'
       end
     end

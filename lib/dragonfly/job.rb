@@ -42,7 +42,7 @@ module Dragonfly
       end
       def apply(job)
         raise NothingToProcess, "Can't process because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        job.temp_object = TempObject.new job.app.processors.process(job.temp_object, name, *arguments)
+        job.temp_object = TempObject.new job.app.processor.process(job.temp_object, name, *arguments)
       end
     end
     
