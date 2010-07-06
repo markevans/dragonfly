@@ -110,11 +110,6 @@ describe Item do
         it "should return nil for the url" do
           @item.preview_image.url.should be_nil
         end
-        it "should return the temp_object" do
-          temp_object = @item.preview_image.temp_object
-          temp_object.should be_a(Dragonfly::ExtendedTempObject)
-          temp_object.data.should == 'DATASTRING'
-        end
         describe "when the uid is set manually" do
           before(:each) do
             @item.preview_image_uid = 'some_known_uid'
@@ -181,10 +176,6 @@ describe Item do
             @app.datastore.should_receive(:destroy).with(@item.preview_image_uid)
             @item.destroy
           end
-          it "should return the temp_object" do
-            @app.should_receive(:fetch).with('some_uid').and_return(temp_object = mock('extended temp_object'))
-            @item.preview_image.temp_object.should == temp_object
-          end
         end
 
         describe "when something new is assigned" do
@@ -211,10 +202,8 @@ describe Item do
           it "should return the new size" do
             @item.preview_image.size.should == 14
           end
-          it "should return the new temp_object" do
-            temp_object = @item.preview_image.temp_object
-            temp_object.should be_a(Dragonfly::ExtendedTempObject)
-            temp_object.data.should == 'ANEWDATASTRING'
+          it "should return the new data" do
+            @item.preview_image.data.should == 'ANEWDATASTRING'
           end
         end
         

@@ -8,8 +8,10 @@ module Dragonfly
     class Attachment
       
       extend Forwardable
-      def_delegators :temp_object,
-        :data, :to_file, :file, :tempfile, :path, :process, :process!, :encode, :encode!, :transform, :transform!
+      def_delegators :job,
+        :data, :to_file, :file, :tempfile, :path
+      def_delegators :to_job,
+        :process, :encode, :analyse
       
       def initialize(app, parent_model, attribute_name)
         @app, @parent_model, @attribute_name = app, parent_model, attribute_name
@@ -17,11 +19,11 @@ module Dragonfly
       
       def assign(value)
         if value.nil?
-          self.temp_object = nil
+          self.job = nil
           self.uid = nil
           reset_magic_attributes
         else
-          self.temp_object = app.create_object(value)
+          self.job = Job.new(app, TempObject.new(value))
           self.uid = PendingUID.new
           set_magic_attributes
         end
@@ -40,7 +42,11 @@ module Dragonfly
       end
       
       def job
-        temp_object ? Job.new(app, temp_object) : app.fetch(uid, *args)
+        @job || app.fetch(uid, *args)
+      end
+      
+      def to_job
+        job.dup
       end
       
       def to_value
@@ -109,7 +115,7 @@ module Dragonfly
       
       attr_reader :app, :parent_model, :attribute_name
       
-      attr_accessor :temp_object
+      attr_writer :job
       
       def analyser
         app.analysers
