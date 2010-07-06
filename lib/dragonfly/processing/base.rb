@@ -2,7 +2,7 @@ module Dragonfly
   module Processing
     class Base
 
-      include BelongsToApp
+      include Loggable
       include Delegatable
 
     end

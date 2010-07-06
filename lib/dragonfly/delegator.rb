@@ -1,7 +1,7 @@
 module Dragonfly
   module Delegator
     
-    include BelongsToApp
+    include Loggable
     
     # This gets raised if no delegated objects are able to handle
     # the method call, even though they respond to that method.
@@ -10,7 +10,7 @@ module Dragonfly
     def register(klass, *args, &block)
       object = klass.new(*args)
       object.configure(&block) if block
-      object.app = self.app if app_set? && object.is_a?(BelongsToApp)
+      object.use_same_log_as(self) if object.is_a?(Loggable)
       registered_objects << object
       object
     end

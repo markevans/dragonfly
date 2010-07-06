@@ -15,7 +15,7 @@ class CarDriver
 end
 
 class LorryDriver
-  include Dragonfly::BelongsToApp
+  include Dragonfly::Loggable
   include Dragonfly::Delegatable
 
   def drive(lorry)

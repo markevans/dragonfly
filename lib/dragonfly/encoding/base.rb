@@ -2,7 +2,7 @@ module Dragonfly
   module Encoding    
     class Base
 
-      include BelongsToApp
+      include Loggable
       include Delegatable
 
       def encode(*args)
