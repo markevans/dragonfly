@@ -23,7 +23,7 @@ module Dragonfly
     end
     
     def initialize
-      @analysers, @processor, @encoders = AnalyserList.new(self), Processor.new(self), EncoderList.new(self)
+      @analyser, @processor, @encoders = Analyser.new(self), Processor.new(self), EncoderList.new(self)
     end
     
     include Configurable
@@ -40,7 +40,7 @@ module Dragonfly
     configurable_attr :path_prefix, '/'
     configurable_attr :secret
 
-    attr_reader :analysers
+    attr_reader :analyser
     attr_reader :processor
     attr_reader :encoders
 
@@ -67,7 +67,7 @@ module Dragonfly
     end
 
     def register_analyser(*args, &block)
-      analysers.register(*args, &block)
+      analyser.register(*args, &block)
     end
     configuration_method :register_analyser
 

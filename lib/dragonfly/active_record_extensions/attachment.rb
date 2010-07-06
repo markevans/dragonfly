@@ -118,7 +118,7 @@ module Dragonfly
       attr_writer :job
       
       def analyser
-        app.analysers
+        app.analyser
       end
       
       def methods_to_delegate_to_temp_object

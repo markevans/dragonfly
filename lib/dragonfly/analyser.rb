@@ -1,5 +1,5 @@
 module Dragonfly
-  class AnalyserList
+  class Analyser
     include Delegator
     
     def initialize(app)
