@@ -54,7 +54,7 @@ describe Dragonfly::FunctionManager do
       end
       
       it "should work when calling" do
-        @fm.call(:doogie, 3).should == "eggheads 3"
+        @fm.call_last(:doogie, 3).should == "eggheads 3"
       end
       
       it "should return the object when registering" do
@@ -83,12 +83,12 @@ describe Dragonfly::FunctionManager do
 
     it "should pass the args on register to the object initializer" do
       @fm.register(@class, 43)
-      @fm.call(:height_and_age).should == [183, 43]
+      @fm.call_last(:height_and_age).should == [183, 43]
     end
     
     it "should run configure if a block given" do
       @fm.register(@class){|c| c.height = 180 }
-      @fm.call(:height_and_age).should == [180, 6]
+      @fm.call_last(:height_and_age).should == [180, 6]
     end
     
     it "should not include configurable methods in the functions" do
@@ -96,11 +96,45 @@ describe Dragonfly::FunctionManager do
     end
   end
 
-  describe "after registering a number of classes" do
+  describe "calling" do
 
-    before(:each) do
-      pending
+    describe "errors" do
+      it "should raise an error for call_last if the function doesn't exist" do
+        lambda{
+          @fm.call_last(:i_dont_exist)
+        }.should raise_error(Dragonfly::FunctionManager::NotDefined)
+      end
+      
+      it "should raise an error if the function is defined but unable to handle" do
+        @fm.add(:chicken){ throw :unable_to_handle }
+        lambda{
+          @fm.call_last(:chicken)
+        }.should raise_error(Dragonfly::FunctionManager::UnableToHandle)
+      end
     end
+
+    describe "simple" do
+      it "should correctly call a registered block" do
+        @fm.add(:egg){|num| num + 1 }
+        @fm.call_last(:egg, 4).should == 5
+      end
+      it "should correctly call a registered class" do
+        klass = Class.new do
+          def dog(num)
+            num * 2
+          end
+        end
+        @fm.register(klass)
+        @fm.call_last(:dog, 4).should == 8
+      end
+      it "should correctly call an object that responds to 'call'" do
+        obj = Object.new
+        def obj.call(num); num - 3; end
+        @fm.add(:spoon, obj)
+        @fm.call_last(:spoon, 4).should == 1
+      end
+    end
+
     it "should raise an error when calling an unknown method" do
       lambda{ @delegator.swim }.should raise_error(NoMethodError)
     end

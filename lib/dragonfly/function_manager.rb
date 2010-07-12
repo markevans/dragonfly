@@ -1,6 +1,10 @@
 module Dragonfly
   class FunctionManager
     
+    # Exceptions
+    class NotDefined < NoMethodError; end
+    class UnableToHandle < NotImplementedError; end
+    
     include Loggable
     
     def initialize
@@ -27,14 +31,19 @@ module Dragonfly
     end
     
     def call_last(meth, *args)
-      functions[meth.to_sym].reverse.each do |function|
-        catch :unable_to_handle do
-          return function[*args]
+      if functions[meth.to_sym]
+        functions[meth.to_sym].reverse.each do |function|
+          catch :unable_to_handle do
+            return function.call(*args)
+          end
         end
+        # If the code gets here, then none of the registered functions were able to handle the method call
+        raise UnableToHandle, "None of the functions registered with #{self} were able to deal with the method call " +
+          "#{meth}(#{args.map{|a| a.inspect[0..100]}.join(',')}). You may need to register one that can."
+      else
+        raise NotDefined, "function #{meth} not registered with #{self}"
       end
     end
-
-    alias call call_last
 
     private
     
