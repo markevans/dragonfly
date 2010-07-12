@@ -3,7 +3,6 @@ module Dragonfly
     class Base
 
       include Loggable
-      include Delegatable
 
     end
   end
