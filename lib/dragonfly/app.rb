@@ -23,7 +23,10 @@ module Dragonfly
     end
     
     def initialize
-      @analyser, @processor, @encoder = Analyser.new(self), Processor.new(self), Encoder.new(self)
+      @analyser, @processor, @encoder = Analyser.new, Processor.new, Encoder.new
+      @analyser.use_same_log_as(self)
+      @processor.use_same_log_as(self)
+      @encoder.use_same_log_as(self)
     end
     
     include Configurable

@@ -1,9 +1,9 @@
 module Dragonfly
-  class Encoder
-    include Delegator
+  class Encoder < FunctionManager
     
-    def initialize(app)
-      @app = app
+    def encode(temp_object, *args)
+      call_last(:encode, temp_object, *args)
     end
+
   end
 end

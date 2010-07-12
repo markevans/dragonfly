@@ -1,13 +1,8 @@
 module Dragonfly
-  class Processor
-    include Delegator
-    
-    def initialize(app)
-      @app = app
-    end
+  class Processor < FunctionManager
 
     def process(temp_object, method, *args)
-      delegate(method, temp_object, *args)
+      call_last(method, temp_object, *args)
     end
 
   end
