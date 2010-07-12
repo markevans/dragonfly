@@ -112,7 +112,7 @@ describe Dragonfly::Job do
         @job.analyse(:width).should == 3
       end
       it "should return nil if the analyser raises UnableToHandle" do
-        @app.analyser.should_receive(:analyse).with(@temp_object, :width).and_raise(Dragonfly::Delegator::UnableToHandle)
+        @app.analyser.should_receive(:analyse).with(@temp_object, :width).and_raise(Dragonfly::FunctionManager::UnableToHandle)
         @job.analyse(:width).should be_nil
       end
     end

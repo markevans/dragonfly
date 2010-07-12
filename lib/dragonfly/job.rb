@@ -97,7 +97,7 @@ module Dragonfly
     end
     
     attr_accessor :temp_object
-    attr_reader :steps
+    attr_reader :app, :steps
 
     def fetch(*args)
       steps << Fetch.new(*args)
@@ -117,7 +117,7 @@ module Dragonfly
     def analyse(*args)
       raise NothingToAnalyse, "Can't analyse because temp object has not been initialized. Need to fetch first?" unless temp_object
       app.analyser.analyse(apply, *args)
-    rescue Delegator::UnableToHandle => e
+    rescue FunctionManager::UnableToHandle => e
       log.warn(e.message)
       nil
     end
