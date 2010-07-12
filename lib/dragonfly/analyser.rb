@@ -15,6 +15,9 @@ module Dragonfly
     
     def analyse(temp_object, method, *args)
       call_last(method, temp_object, *args)
+    rescue NotDefined, UnableToHandle => e
+      log.warn(e.message)
+      nil
     end
     
     # Each time a function is registered with the analyser,

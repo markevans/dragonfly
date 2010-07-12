@@ -29,4 +29,14 @@ describe Dragonfly::Analyser do
     
   end
   
+  describe "analyse" do
+    it "should return nil if the function isn't defined" do
+      @analyser.analyse(Dragonfly::TempObject.new("Hello"), :width).should be_nil
+    end
+    it "should return nil if the function can't be handled" do
+      @analyser.add(:width){ throw :unable_to_handle }
+      @analyser.analyse(Dragonfly::TempObject.new("Hello"), :width).should be_nil
+    end
+  end
+  
 end
