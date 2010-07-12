@@ -149,21 +149,6 @@ describe Dragonfly::FunctionManager do
       end
     end
 
-    describe "unregistering" do
-      before(:each) do
-        pending
-      end
-      it "should enable unregistering classes" do
-        @delegator.unregister(LorryDriver)
-        @delegator.registered_objects.map(&:class).should == [CarDriver]
-      end
-    
-      it "should enable unregistering all" do
-        @delegator.unregister_all
-        @delegator.registered_objects.should == []
-      end
-    end
-
   end
-  
+
 end
