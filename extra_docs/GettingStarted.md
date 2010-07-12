@@ -97,7 +97,7 @@ etc.
 
 Therefore the app can protect the url by generating a unique sha from a secret specified by you
 
-    Dragonfly::App[:images].url_handler.configure do |c|
+    Dragonfly::App[:images].configure do |c|
       c.protect_from_dos_attacks = true                           # Actually this is true by default
       c.secret = 'You should supply some random secret here'
     end

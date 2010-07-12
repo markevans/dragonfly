@@ -76,6 +76,6 @@ There are one or two config options you may commonly want to tweak.
 In this case, add something like the following to your initializer:
 
     Dragonfly::App[:images].configure do |c|
-      c.url_handler.path_prefix = '/attachments'   # configures where the Dragonfly app is served from - default '/media'
-      c.url_handler.secret = 'PUT A SECRET HERE!!' # for protecting from Denial-Of-Service attacks
+      c.path_prefix = '/attachments'   # configures where the Dragonfly app is served from - default '/media'
+      c.secret = 'PUT A SECRET HERE!!' # for protecting from Denial-Of-Service attacks
     end

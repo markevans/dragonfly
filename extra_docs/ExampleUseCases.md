@@ -160,7 +160,7 @@ Configuration (e.g. initializer in Rails):
 
     require 'dragonfly'
     Dragonfly::App[:text].configure_with(Dragonfly::Config::RMagickText) do |c|
-      c.url_handler.path_prefix = '/text'
+      c.path_prefix = '/text'
     end
 
 If using Rails, then in environment.rb (application.rb in Rails 3):
