@@ -5,7 +5,8 @@ module Dragonfly
   class DosProtector
     
     def initialize(app, secret, opts={})
-      @app, @secret, @opts = app, secret, opts
+      @app, @secret = app, secret
+      @sha_length = opts[:sha_length] || 16
     end
     
     def call(env)
@@ -22,14 +23,10 @@ module Dragonfly
     
     private
     
-    attr_reader :app, :secret, :opts
+    attr_reader :app, :secret, :sha_length
     
     def sha_for(request)
       Digest::SHA1.hexdigest("#{request.path}#{secret}")[0...sha_length]
-    end
-    
-    def sha_length
-      opts[:sha_length] || 16
     end
     
   end
