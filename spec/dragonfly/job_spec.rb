@@ -314,7 +314,7 @@ describe Dragonfly::Job do
     end
     it "should return an endpoint" do
       endpoint = @job.to_app
-      endpoint.should be_a(Dragonfly::SimpleEndpoint)
+      endpoint.should be_a(Dragonfly::JobEndpoint)
       endpoint.job.should == @job
     end
   end

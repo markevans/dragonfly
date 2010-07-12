@@ -1,5 +1,5 @@
 module Dragonfly
-  class SimpleEndpoint
+  class JobEndpoint
     
     include Endpoint
 

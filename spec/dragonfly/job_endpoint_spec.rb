@@ -4,12 +4,12 @@ def make_request(endpoint)
   Rack::MockRequest.new(endpoint).get('')
 end
 
-describe Dragonfly::SimpleEndpoint do
+describe Dragonfly::JobEndpoint do
 
   before(:each) do
     @app = mock_app
     @job = Dragonfly::Job.new(@app).fetch('egg')
-    @endpoint = Dragonfly::SimpleEndpoint.new(@job)
+    @endpoint = Dragonfly::JobEndpoint.new(@job)
   end
 
   describe "Content-Type header" do
@@ -42,7 +42,7 @@ describe Dragonfly::SimpleEndpoint do
     end
 
     it "should raise an error if the job is empty" do
-      endpoint = Dragonfly::SimpleEndpoint.new(Dragonfly::Job.new(@app))
+      endpoint = Dragonfly::JobEndpoint.new(Dragonfly::Job.new(@app))
       lambda{
         make_request(endpoint)
       }.should raise_error(Dragonfly::Endpoint::EmptyJob)

@@ -69,7 +69,7 @@ module Dragonfly
     end
 
     def endpoint(job=nil, &block)
-      block ? RoutedEndpoint.new(self, &block) : SimpleEndpoint.new(job)
+      block ? RoutedEndpoint.new(self, &block) : JobEndpoint.new(job)
     end
 
     def store(object, opts={})
