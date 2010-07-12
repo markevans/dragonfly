@@ -23,12 +23,14 @@ module Dragonfly
     end
     
     def initialize
+      self.log = proc{ Logger.new('/var/tmp/dragonfly.log') }
       @analyser, @processor, @encoder = Analyser.new, Processor.new, Encoder.new
       @analyser.use_same_log_as(self)
       @processor.use_same_log_as(self)
       @encoder.use_same_log_as(self)
     end
     
+    include Loggable
     include Configurable
     
     extend Forwardable
@@ -37,11 +39,12 @@ module Dragonfly
     
     configurable_attr :datastore do DataStorage::FileDataStore.new end
     configurable_attr :default_format
-    configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
     configurable_attr :cache_duration, 3600*24*365 # (1 year)
     configurable_attr :fallback_mime_type, 'application/octet-stream'
     configurable_attr :path_prefix, '/'
     configurable_attr :secret
+
+    configuration_method :log
 
     attr_reader :analyser
     attr_reader :processor
