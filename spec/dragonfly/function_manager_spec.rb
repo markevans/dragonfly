@@ -49,7 +49,7 @@ describe Dragonfly::FunctionManager do
       end
       
       it "should record the registered object" do
-        @fm.objects.length.should == 1
+        @fm.objects.length.should eql(1)
         @fm.objects.first.should be_a(@class)
       end
       
@@ -135,47 +135,33 @@ describe Dragonfly::FunctionManager do
       end
     end
 
-    it "should raise an error when calling an unknown method" do
-      lambda{ @delegator.swim }.should raise_error(NoMethodError)
+    describe "with more than one implementation of same function" do
+      it "should use the last registered" do
+        @fm.add(:bingo){|num| num + 1 }
+        @fm.add(:bingo){|num| num - 1 }
+        @fm.call_last(:bingo, 4).should == 3
+      end
+      
+      it "should skip methods that throw :unable_to_handle" do
+        @fm.add(:bingo){|num| num + 1 }
+        @fm.add(:bingo){|num| throw :unable_to_handle }
+        @fm.call_last(:bingo, 4).should == 5
+      end
     end
 
-    it "should correctly delegate when only one item implements the method" do
-      @delegator.open_boot.should == :open_boot
-      @delegator.open_back_doors.should == :open_back_doors
-    end
-
-    it "should delegate to the last registered when more than one item implements the method" do
-      @delegator.drive('fishmonger').should == "Driving lorry fishmonger"
-    end
-
-    it "should return all the callable methods" do
-      @delegator.delegatable_methods.sort.should == %w(clean drive open_back_doors open_boot pick_up).map{|m| m.to_method_name }
-    end
+    describe "unregistering" do
+      before(:each) do
+        pending
+      end
+      it "should enable unregistering classes" do
+        @delegator.unregister(LorryDriver)
+        @delegator.registered_objects.map(&:class).should == [CarDriver]
+      end
     
-    it "should say if if has a callable method (as a string)" do
-      @delegator.has_delegatable_method?('drive').should be_true
-    end
-
-    it "should say if if has a callable method (as a symbol)" do
-      @delegator.has_delegatable_method?(:drive).should be_true
-    end
-
-    it "should skip methods that throw :unable_to_handle" do
-      @delegator.clean('my car').should == "Cleaning my car"
-    end
-    
-    it "should raise an error if nothing was able to handle it" do
-      lambda{ @delegator.pick_up('my lorry') }.should raise_error(Dragonfly::Delegator::UnableToHandle)
-    end
-
-    it "should enable unregistering classes" do
-      @delegator.unregister(LorryDriver)
-      @delegator.registered_objects.map(&:class).should == [CarDriver]
-    end
-    
-    it "should enable unregistering all" do
-      @delegator.unregister_all
-      @delegator.registered_objects.should == []
+      it "should enable unregistering all" do
+        @delegator.unregister_all
+        @delegator.registered_objects.should == []
+      end
     end
 
   end
