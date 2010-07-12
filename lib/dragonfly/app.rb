@@ -28,6 +28,7 @@ module Dragonfly
       @analyser.use_same_log_as(self)
       @processor.use_same_log_as(self)
       @encoder.use_same_log_as(self)
+      @dos_protector = DosProtector.new(self, 'this is a secret yo')
     end
     
     include Loggable
@@ -36,12 +37,14 @@ module Dragonfly
     extend Forwardable
     def_delegator :datastore, :destroy
     def_delegators :new_job, :fetch
+    def_delegator :server, :call
     
     configurable_attr :datastore do DataStorage::FileDataStore.new end
     configurable_attr :default_format
     configurable_attr :cache_duration, 3600*24*365 # (1 year)
     configurable_attr :fallback_mime_type, 'application/octet-stream'
-    configurable_attr :path_prefix, ''
+    configurable_attr :path_prefix
+    configurable_attr :protect_from_dos_attacks, true
     configurable_attr :secret
 
     configuration_method :log
@@ -50,18 +53,16 @@ module Dragonfly
     attr_reader :processor
     attr_reader :encoder
 
-    def call(env)
-      request = Rack::Request.new(env)
-      
-      job = extract_job(request.path)
-      if job
-        job.to_response
-      else
-        not_found_response('X-Cascade' => 'pass')
-      end
-    rescue Serializer::BadString, Job::InvalidArray => e
-      log.warn(e.message)
-      not_found_response
+    def server
+      @server ||= (
+        app = self
+        Rack::Builder.new do
+          map app.mount_path do
+            use DosProtector, app.secret if app.protect_from_dos_attacks
+            run SimpleEndpoint.new(app)
+          end
+        end
+      )
     end
 
     def new_job
@@ -104,24 +105,18 @@ module Dragonfly
       registered_mime_types[file_ext_string(format)]
     end
     
+    def mount_path
+      path_prefix.blank? ? '/' : path_prefix
+    end
+    
     def url_for(job)
       "#{path_prefix}/#{job.serialize}"
     end
 
     private
-
-    def extract_job(path)
-      if path =~ %r(^#{path_prefix}/(.+))
-        Job.deserialize($1, self)
-      end
-    end
     
     def file_ext_string(format)
       '.' + format.to_s.downcase.sub(/^.*\./,'')
-    end
-
-    def not_found_response(extra_headers={})
-      [404, {'Content-Type' => 'text/plain'}.merge(extra_headers), ['Not found']]
     end
 
   end

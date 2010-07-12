@@ -72,59 +72,20 @@ describe Dragonfly::App do
     end
   end
 
-  describe "simple integration tests" do
-
+  describe "without path prefix or DOS protection" do
     before(:each) do
       @app = test_app
-      @app.log = Logger.new($stderr)
-      @uid = @app.store('HELLO THERE')
-    end
-    
-    after(:each) do
-      @app.destroy(@uid)
-    end
-    
-    it "should get the stored thing" do
-      @app.fetch(@uid).data.should == 'HELLO THERE'
-    end
-    
-    it "should return the thing when given the url" do
-      url = @app.fetch(@uid).url
-      response = request(@app, url)
-      response.status.should == 200
-      response.body.should == 'HELLO THERE'
-      response.content_type.should == 'application/octet-stream'
-    end
-    
-    it "should return a 404 when the url isn't known" do
-      response = request(@app, '/sadhfasdfdsfsdf')
-      response.status.should == 404
-      response.body.should == 'Not found'
-      response.content_type.should == 'text/plain'
-    end
-    
-    it "should return a 404 when the url is a well-encoded but bad array" do
-      url = "/#{Dragonfly::Serializer.marshal_encode([[:egg, {:some => 'args'}]])}"
-      response = request(@app, url)
-      response.status.should == 404
-      response.body.should == 'Not found'
-      response.content_type.should == 'text/plain'
-    end
-  end
-  
-  describe "Denial of Service protection" do
-    before(:each) do
-      pending
-      @app = test_app
-    end
-    it "should have it on by default" do
-      response = request(@app, '/sadhfasdfdsfsdf')
-      response.status.should == 400
-    end
-    it "should allow turning it off with configuration" do
+      @job = Dragonfly::Job.new(@app).fetch('some_uid')
+      @app.datastore.stub!(:retrieve).with('some_uid').and_return "Hi there"
       @app.configure{|c| c.protect_from_dos_attacks = false }
-      response = request(@app, '/sadhfasdfdsfsdf')
-      response.status.should == 404
+    end
+    it "should correctly respond with the job data" do
+      response = request(@app, "/#{@job.serialize}")
+      response.status.should == 200
+      response.body.should == "Hi there"
+    end
+    it "should generate the correct url" do
+      @app.url_for(@job).should == "/#{@job.serialize}"
     end
   end
 
@@ -138,13 +99,19 @@ describe Dragonfly::App do
       response.status.should == 404
       response.headers['X-Cascade'].should == 'pass'
     end
-    it "should not allow the segment later in the path" do
-      response = request(@app, '/abc/media')
-      response.status.should == 404
-    end
     it "should add the path prefix to the url" do
       job = Dragonfly::Job.new(@app)
       @app.url_for(job).should =~ %r{/media/(\w+)}
+    end
+  end
+  
+  describe "Denial of Service protection" do
+    before(:each) do
+      @app = test_app
+    end
+    it "should have it on by default" do
+      response = request(@app, '/sadhfasdfdsfsdf')
+      response.status.should == 400
     end
   end
 
