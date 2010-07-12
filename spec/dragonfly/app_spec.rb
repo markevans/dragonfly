@@ -1,6 +1,10 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 require 'rack/mock'
 
+def request(app, path)
+  Rack::MockRequest.new(app).get(path)
+end
+
 describe Dragonfly::App do
 
   describe ".instance" do
@@ -70,12 +74,8 @@ describe Dragonfly::App do
 
   describe "simple integration tests" do
 
-    def request(app, path)
-      Rack::MockRequest.new(app).get(path)
-    end
-
     before(:each) do
-      @app = Dragonfly::App[:simple_integration_tests]
+      @app = test_app
       @app.log = Logger.new($stderr)
       @uid = @app.store('HELLO THERE')
     end
@@ -109,6 +109,42 @@ describe Dragonfly::App do
       response.status.should == 404
       response.body.should == 'Not found'
       response.content_type.should == 'text/plain'
+    end
+  end
+  
+  describe "Denial of Service protection" do
+    before(:each) do
+      pending
+      @app = test_app
+    end
+    it "should have it on by default" do
+      response = request(@app, '/sadhfasdfdsfsdf')
+      response.status.should == 400
+    end
+    it "should allow turning it off with configuration" do
+      @app.configure{|c| c.protect_from_dos_attacks = false }
+      response = request(@app, '/sadhfasdfdsfsdf')
+      response.status.should == 404
+    end
+  end
+
+  describe "path prefix" do
+    before(:each) do
+      @app = test_app
+      @app.configure{|c| c.path_prefix = '/media' }
+    end
+    it "should return a 404 and X-Cascade if the path prefix doesn't match" do
+      response = request(@app, '/abc')
+      response.status.should == 404
+      response.headers['X-Cascade'].should == 'pass'
+    end
+    it "should not allow the segment later in the path" do
+      response = request(@app, '/abc/media')
+      response.status.should == 404
+    end
+    it "should add the path prefix to the url" do
+      job = Dragonfly::Job.new(@app)
+      @app.url_for(job).should =~ %r{/media/(\w+)}
     end
   end
 

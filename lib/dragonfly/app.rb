@@ -41,7 +41,7 @@ module Dragonfly
     configurable_attr :default_format
     configurable_attr :cache_duration, 3600*24*365 # (1 year)
     configurable_attr :fallback_mime_type, 'application/octet-stream'
-    configurable_attr :path_prefix, '/'
+    configurable_attr :path_prefix, ''
     configurable_attr :secret
 
     configuration_method :log
@@ -52,12 +52,16 @@ module Dragonfly
 
     def call(env)
       request = Rack::Request.new(env)
-      job_string = request.path.sub('/','')
-      job = Job.deserialize(job_string, self)
-      job.to_response
+      
+      job = extract_job(request.path)
+      if job
+        job.to_response
+      else
+        not_found_response('X-Cascade' => 'pass')
+      end
     rescue Serializer::BadString, Job::InvalidArray => e
       log.warn(e.message)
-      [404, {'Content-Type' => 'text/plain'}, ['Not found']]
+      not_found_response
     end
 
     def new_job
@@ -101,13 +105,23 @@ module Dragonfly
     end
     
     def url_for(job)
-      "/#{job.serialize}"
+      "#{path_prefix}/#{job.serialize}"
     end
 
     private
+
+    def extract_job(path)
+      if path =~ %r(^#{path_prefix}/(.+))
+        Job.deserialize($1, self)
+      end
+    end
     
     def file_ext_string(format)
       '.' + format.to_s.downcase.sub(/^.*\./,'')
+    end
+
+    def not_found_response(extra_headers={})
+      [404, {'Content-Type' => 'text/plain'}.merge(extra_headers), ['Not found']]
     end
 
   end
