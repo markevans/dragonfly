@@ -115,8 +115,9 @@ module Dragonfly
     end
     
     def analyse(*args)
+      temp_object = apply
       raise NothingToAnalyse, "Can't analyse because temp object has not been initialized. Need to fetch first?" unless temp_object
-      app.analyser.analyse(apply, *args)
+      app.analyser.analyse(temp_object, *args)
     rescue FunctionManager::UnableToHandle => e
       log.warn(e.message)
       nil
