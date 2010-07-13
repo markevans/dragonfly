@@ -3,7 +3,7 @@ require 'RMagick'
 module Dragonfly
   module Processing
 
-    class RMagickTextProcessor < Base
+    class RMagickTextProcessor
       
       FONT_STYLES = {
         'normal' => Magick::NormalStyle,

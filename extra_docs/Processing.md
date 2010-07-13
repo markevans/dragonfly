@@ -32,7 +32,7 @@ Custom Processing
 To register a custom processor, derive from {Dragonfly::Processing::Base Processing::Base} and register.
 Each method takes the temp_object, and the (optional) processing options hash as its argument.
 
-    class MyProcessor < Dragonfly::Processing::Base
+    class MyProcessor
     
       def black_and_white(temp_object, opts={})
         # use temp_object.data, temp_object.path, etc...

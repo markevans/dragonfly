@@ -1,7 +1,7 @@
 module Dragonfly
   module Analysis
     
-    class FileCommandAnalyser < Base
+    class FileCommandAnalyser
       
       include Configurable
       

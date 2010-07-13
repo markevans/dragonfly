@@ -3,7 +3,7 @@ require 'RMagick'
 module Dragonfly
   module Encoding
 
-    class RMagickEncoder < Base
+    class RMagickEncoder
 
       include Configurable
 

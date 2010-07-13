@@ -43,7 +43,7 @@ Custom Analysers
 To register a custom analyser, derive from {Dragonfly::Analysis::Base Analysis::Base} and register.
 Each method takes the temp_object as its argument.
 
-    class MyAnalyser < Dragonfly::Analysis::Base
+    class MyAnalyser
     
       def coolness(temp_object)
         # use temp_object.data, temp_object.path, etc...

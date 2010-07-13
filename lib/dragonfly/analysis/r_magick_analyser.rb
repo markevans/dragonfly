@@ -3,7 +3,7 @@ require 'RMagick'
 module Dragonfly
   module Analysis
     
-    class RMagickAnalyser < Base
+    class RMagickAnalyser
       
       def width(image)
         rmagick_image(image).columns

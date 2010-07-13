@@ -37,7 +37,7 @@ As described above, you need to implement the `encode` method.
 If the encoder can't handle a format, it should throw `:unable_to_handle`, and control will pass to the previously
 registered encoder, and so on.
 
-    class MyEncoder < Dragonfly::Encoding::Base
+    class MyEncoder
     
       def encode(temp_object, format, encoding={})
         if format.to_s == 'yo'
