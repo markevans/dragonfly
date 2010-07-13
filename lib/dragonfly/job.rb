@@ -99,19 +99,13 @@ module Dragonfly
     attr_accessor :temp_object
     attr_reader :app, :steps
 
-    def fetch(*args)
-      steps << Fetch.new(*args)
-      self
-    end
-
-    def process(*args)
-      steps << Process.new(*args)
-      self
-    end
-    
-    def encode(*args)
-      steps << Encode.new(*args)
-      self
+    %w(Fetch Process Encode).each do |step|
+      class_eval %(
+        def #{step.downcase}(*args)
+          steps << #{step}.new(*args)
+          self
+        end
+      )
     end
     
     def analyse(*args)

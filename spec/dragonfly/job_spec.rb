@@ -119,17 +119,21 @@ describe Dragonfly::Job do
 
   end
   
-  it "should allow for defining more complicated jobs" do
-    job = Dragonfly::Job.new(@app)
-    job.fetch 'some_uid'
-    job.process :thump
-    job.encode :gip
+  describe "chaining" do
+
+    it "should allow for defining more complicated jobs" do
+      job = Dragonfly::Job.new(@app)
+      job.fetch 'some_uid'
+      job.process :thump
+      job.encode :gip
     
-    job.steps.should match_steps([
-      Dragonfly::Job::Fetch,
-      Dragonfly::Job::Process,
-      Dragonfly::Job::Encode
-    ])
+      job.steps.should match_steps([
+        Dragonfly::Job::Fetch,
+        Dragonfly::Job::Process,
+        Dragonfly::Job::Encode
+      ])
+    end
+
   end
   
   describe "adding jobs" do
