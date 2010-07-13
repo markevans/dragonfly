@@ -7,7 +7,7 @@ module Dragonfly
 
     def response_for_job(job)
       raise EmptyJob, "Job contains no steps" if job.empty?
-      temp_object = job.apply
+      temp_object = job.to_temp_object
       [200, {
         "Content-Type" => mime_type(job),
         "Content-Length" => temp_object.size.to_s,
