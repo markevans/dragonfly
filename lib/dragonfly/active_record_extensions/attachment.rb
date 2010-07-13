@@ -9,12 +9,13 @@ module Dragonfly
       
       extend Forwardable
       def_delegators :job,
-        :data, :to_file, :file, :tempfile, :path
-      def_delegators :to_job,
+        :data, :to_file, :file, :tempfile, :path,
         :process, :encode, :analyse
       
       def initialize(app, parent_model, attribute_name)
         @app, @parent_model, @attribute_name = app, parent_model, attribute_name
+        self.extend app.analyser.analysis_methods
+        self.job = app.fetch(uid) if been_persisted?
       end
       
       def assign(value)
@@ -38,49 +39,27 @@ module Dragonfly
       
       def save!
         destroy! if uid_changed?
-        self.uid = app.datastore.store(temp_object) if has_data_to_store?
-      end
-      
-      def job
-        @job || app.fetch(uid, *args)
-      end
-      
-      def to_job
-        job.dup
+        self.uid = app.datastore.store(job.to_temp_object) if has_data_to_store?
       end
       
       def to_value
         self if been_assigned?
       end
       
-      def url(*args)
+      def url
         unless uid.nil? || uid.is_a?(PendingUID)
-          app.url_for(uid, *args)
+          app.url_for(job)
         end
       end
       
-      def methods(*args)
-        (super + methods_to_delegate_to_temp_object).uniq
-      end
-
-      def public_methods(*args)
-        (super + methods_to_delegate_to_temp_object).uniq
-      end
-
-      def respond_to?(method)
-        super || methods_to_delegate_to_temp_object.include?(method.to_method_name)
-      end
-
-      def ext
-        has_magic_attribute_for?(:ext) ? magic_attribute_for(:ext) : temp_object.ext
-      end
-
-      def name
-        has_magic_attribute_for?(:name) ? magic_attribute_for(:name) : temp_object.name
+      def analyse(meth, *args)
+        has_magic_attribute_for?(meth) ? magic_attribute_for(meth) : job.send(meth)
       end
       
-      def size
-        has_magic_attribute_for?(:size) ? magic_attribute_for(:size) : temp_object.size
+      [:size, :ext, :name].each do |meth|
+        define_method meth do
+          analyse(meth)
+        end
       end
       
       private
@@ -115,31 +94,22 @@ module Dragonfly
       
       attr_reader :app, :parent_model, :attribute_name
       
-      attr_writer :job
+      attr_accessor :job
       
-      def analyser
-        app.analyser
-      end
-      
-      def methods_to_delegate_to_temp_object
-        analyser.delegatable_methods
-      end
-      
-      def can_delegate_to_temp_object?(meth)
-        methods_to_delegate_to_temp_object.include?(meth.to_method_name)
+      def allowed_magic_attributes
+        app.analyser.analysis_method_names + [:size, :ext, :name]
       end
       
       def magic_attributes
         parent_model.class.column_names.select { |name|
-          name =~ /^#{attribute_name}_(.+)$/ &&
-            (can_delegate_to_temp_object?($1) || %w(size ext name).include?($1))
+          name =~ /^#{attribute_name}_(.+)$/ && allowed_magic_attributes.include?($1.to_sym)
         }
       end
       
       def set_magic_attributes
         magic_attributes.each do |attribute|
           method = attribute.sub("#{attribute_name}_", '')
-          parent_model.send("#{attribute}=", temp_object.send(method))
+          parent_model.send("#{attribute}=", job.send(method))
         end
       end
       
@@ -153,14 +123,6 @@ module Dragonfly
       
       def magic_attribute_for(property)
         parent_model.send("#{attribute_name}_#{property}")
-      end
-      
-      def method_missing(meth, *args, &block)
-        if can_delegate_to_temp_object?(meth)
-          has_magic_attribute_for?(meth) ? magic_attribute_for(meth) : temp_object.send(meth, *args, &block)
-        else
-          super
-        end
       end
       
     end

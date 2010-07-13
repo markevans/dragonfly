@@ -6,8 +6,8 @@ describe Item do
 
   describe "registering dragonfly apps" do
 
-    let(:app1){ Dragonfly::App[:images] }
-    let(:app2){ Dragonfly::App[:videos] }
+    let(:app1){ Dragonfly[:images] }
+    let(:app2){ Dragonfly[:videos] }
     
     it "should return the mapping of apps to attributes" do
       Dragonfly.active_record_macro(:image, app1)
@@ -34,7 +34,7 @@ describe Item do
     describe "correctly defined" do
     
       before(:each) do
-        @app = Dragonfly::App[:images]
+        @app = Dragonfly[:images]
         Dragonfly.active_record_macro(:image, @app)
         Item.class_eval do
           image_accessor :preview_image
@@ -135,8 +135,6 @@ describe Item do
         before(:each) do
           @item.preview_image = "DATASTRING"
           @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING")).once.and_return('some_uid')
-          @app.datastore.stub!(:store).and_return('some_uid')
-          @app.datastore.stub!(:destroy)
           @item.save!
         end
         it "should have the correct uid" do
@@ -158,8 +156,8 @@ describe Item do
         end
 
         it "should return the url for the data" do
-          @app.should_receive(:url_for).with(@item.preview_image_uid, :arg).and_return('some.url')
-          @item.preview_image.url(:arg).should == 'some.url'
+          @app.should_receive(:url_for).with(an_instance_of(Dragonfly::Job)).and_return('some.url')
+          @item.preview_image.url.should == 'some.url'
         end
         
         it "should destroy the old data when the uid is set manually" do
@@ -229,11 +227,8 @@ describe Item do
         end
 
         describe "when the data can't be found" do
-          before(:each) do
-            @app.datastore.stub!(:destroy).with('some_uid').and_raise(Dragonfly::DataStorage::DataNotFound)
-            @app.datastore.stub!(:retrieve).with('some_uid').and_raise(Dragonfly::DataStorage::DataNotFound)
-          end
           it "should log a warning if the data wasn't found on destroy" do
+            @app.datastore.should_receive(:destroy).with('some_uid').and_raise(Dragonfly::DataStorage::DataNotFound)
             @app.log.should_receive(:warn)
             @item.destroy
           end 
@@ -246,7 +241,7 @@ describe Item do
   describe "validations" do
 
     before(:all) do
-      @app = Dragonfly::App[:images]
+      @app = Dragonfly[:images]
       Dragonfly.active_record_macro(:image, @app)
     end
     
@@ -295,8 +290,7 @@ describe Item do
       end
 
       before(:all) do
-        custom_analyser = Class.new(Dragonfly::Analysis::Base)
-        custom_analyser.class_eval do
+        custom_analyser = Class.new do
           def mime_type(temp_object)
             case temp_object.data
             when "WRONG TYPE" then 'wrong/type'
@@ -404,9 +398,8 @@ describe Item do
   describe "extra properties" do
 
     before(:each) do
-      @app = Dragonfly::App[:images]
-      custom_analyser = Class.new(Dragonfly::Analysis::Base)
-      custom_analyser.class_eval do
+      @app = Dragonfly[:images]
+      custom_analyser = Class.new do
         def some_analyser_method(temp_object)
           "abc" + temp_object.data[0..0]
         end
@@ -477,7 +470,7 @@ describe Item do
     end
   
   
-    describe "delegating methods to the temp_object" do
+    describe "delegating methods to the job" do
       before(:each) do
         @item.preview_image = "DATASTRING"
       end
@@ -504,30 +497,28 @@ describe Item do
           @app.datastore.stub!(:store).and_return('my_uid')
           item = Item.create!(:preview_image => 'DATASTRING')
           @item = Item.find(item.id)
-          @temp_object = @app.create_object('DATASTRING')
-          @temp_object.name = 'jonny.briggs'
         end
-        it "should load the temp_object then delegate the method" do
-          @app.should_receive(:fetch).with('my_uid').and_return(@temp_object)
+        it "should load the content then delegate the method" do
+          @app.datastore.should_receive(:retrieve).with('my_uid').and_return(['DATASTRING', {}])
           @item.preview_image.number_of_As.should == 2
         end
-        it "should use the magic attribute if there is one, and not load the temp_object" do
-          @app.should_not_receive(:fetch)
+        it "should use the magic attribute if there is one, and not load the content" do
+          @app.datastore.should_not_receive(:retrieve)
           @item.should_receive(:preview_image_some_analyser_method).and_return('result yo')
           @item.preview_image.some_analyser_method.should == 'result yo'
         end
         
         %w(size name ext).each do |attr|
-          it "should use the magic attribute for #{attr} if there is one, and not load the temp_object" do
-            @app.should_not_receive(:fetch)
+          it "should use the magic attribute for #{attr} if there is one, and not load the content" do
+            @app.datastore.should_not_receive(:retrieve)
             @item.should_receive("preview_image_#{attr}".to_sym).and_return('result yo')
             @item.preview_image.send(attr).should == 'result yo'
           end
-          it "should load the temp_object then delegate '#{attr}' if there is no magic attribute for it" do
+          
+          it "should load the content then delegate '#{attr}' if there is no magic attribute for it" do
             Item.should_receive(:column_names).and_return(['preview_image_uid']) # no magic attributes
-            
-            @app.should_receive(:fetch).with('my_uid').and_return(@temp_object)
-            @item.preview_image.send(attr).should == @temp_object.send(attr)
+            @app.datastore.should_receive(:retrieve).with('my_uid').and_return(['DATASTRING', {}])
+            @item.preview_image.send(attr).should == @item.preview_image.send(:job).send(attr)
           end
         end
         
