@@ -39,4 +39,12 @@ describe Dragonfly::Analyser do
     end
   end
   
+  describe "analysis_method_names" do
+    it "should return the analysis methods" do
+      @analyser.add(:width){}
+      @analyser.add(:height){}
+      @analyser.analysis_method_names.should == [:width, :height]
+    end
+  end
+  
 end

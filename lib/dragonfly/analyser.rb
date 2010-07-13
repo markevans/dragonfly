@@ -9,9 +9,10 @@ module Dragonfly
           analyser
         end
       end
+      @analysis_method_names = []
     end
     
-    attr_reader :analysis_methods
+    attr_reader :analysis_methods, :analysis_method_names
     
     def analyse(temp_object, method, *args)
       call_last(method, temp_object, *args)
@@ -29,6 +30,7 @@ module Dragonfly
           analyser.analyse(to_temp_object, :#{name}, *args)
         end
       )
+      analysis_method_names << name.to_sym
       super
     end
     
