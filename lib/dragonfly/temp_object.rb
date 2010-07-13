@@ -53,12 +53,13 @@ module Dragonfly
 
     def tempfile
       @tempfile ||= begin
-        if initialized_tempfile
+        case initialized_with
+        when :tempfile
           @tempfile = initialized_tempfile
-        elsif initialized_data
+        when :data
           @tempfile = Tempfile.new('dragonfly')
           @tempfile.write(initialized_data)
-        elsif initialized_file
+        when :file
           @tempfile = copy_to_tempfile(initialized_file.path)
         end
         @tempfile.close
@@ -137,6 +138,10 @@ module Dragonfly
       end
     end
 
+    def inspect
+      to_s.sub(/>$/, " initialized with #{initialized_with}, @meta=#{@meta.inspect}, @name=#{@name.inspect} >")
+    end
+
     protected
     
     attr_accessor :initialized_data, :initialized_tempfile, :initialized_file
@@ -160,6 +165,16 @@ module Dragonfly
         raise ArgumentError, "#{self.class.name} must be initialized with a String, a File, a Tempfile, or another TempObject"
       end
       self.name = obj.original_filename if obj.respond_to?(:original_filename)
+    end
+    
+    def initialized_with
+      if initialized_tempfile
+        :tempfile
+      elsif initialized_data
+        :data
+      elsif initialized_file
+        :file
+      end
     end
     
     def block_size

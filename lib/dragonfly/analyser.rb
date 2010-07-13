@@ -22,7 +22,7 @@ module Dragonfly
     
     def analyse(temp_object, method, *args)
       if enable_cache
-        cache[[temp_object, method, *args]] ||= call_last(method, temp_object, *args)
+        cache[[temp_object.object_id, method, *args]] ||= call_last(method, temp_object, *args)
       else
         call_last(method, temp_object, *args)
       end
