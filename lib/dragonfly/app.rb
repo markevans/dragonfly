@@ -23,7 +23,6 @@ module Dragonfly
     end
     
     def initialize
-      self.log = proc{ Logger.new('/var/tmp/dragonfly.log') }
       @analyser, @processor, @encoder, @generator = Analyser.new, Processor.new, Encoder.new, Generator.new
       @analyser.use_same_log_as(self)
       @processor.use_same_log_as(self)
@@ -32,7 +31,6 @@ module Dragonfly
       @dos_protector = DosProtector.new(self, 'this is a secret yo')
     end
     
-    include Loggable
     include Configurable
     
     extend Forwardable
@@ -47,8 +45,7 @@ module Dragonfly
     configurable_attr :path_prefix
     configurable_attr :protect_from_dos_attacks, true
     configurable_attr :secret
-
-    configuration_method :log
+    configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
 
     attr_reader :analyser
     attr_reader :processor

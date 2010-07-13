@@ -21,7 +21,7 @@ module Dragonfly
     attr_reader :log_object
 
     def use_same_log_as(object)
-      self.log = object.log_object
+      self.log = proc{ object.log }
     end
 
   end
