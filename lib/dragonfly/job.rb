@@ -98,6 +98,7 @@ module Dragonfly
 
     def initialize(app, temp_object=nil)
       @app = app
+      self.extend app.analyser.analysis_methods
       @steps = []
       @next_step_index = 0
       @temp_object = temp_object
@@ -106,6 +107,7 @@ module Dragonfly
     # Used by 'dup' and 'clone'
     def initialize_copy(other)
       self.steps = other.steps.dup
+      self.extend app.analyser.analysis_methods
     end
     
     attr_accessor :temp_object
@@ -127,13 +129,11 @@ module Dragonfly
       )
     end
     
-    def analyse(*args)
-      temp_object = to_temp_object
-      raise NothingToAnalyse, "Can't analyse because temp object has not been initialized. Need to fetch first?" unless temp_object
-      app.analyser.analyse(temp_object, *args)
-    rescue FunctionManager::UnableToHandle => e
-      log.warn(e.message)
-      nil
+    def analyse(method, *args)
+      unless to_temp_object
+        raise NothingToAnalyse, "Can't analyse because temp object has not been initialized. Need to fetch first?"
+      end
+      analyser.analyse(to_temp_object, method, *args)
     end
 
     def format

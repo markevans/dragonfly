@@ -29,7 +29,7 @@ def mock_app
     :datastore => mock('datastore', :store => 'some_uid', :retrieve => ["SOME_DATA", {}], :destroy => nil),
     :processor => mock('processor', :process => "SOME_PROCESSED_DATA"),
     :encoder => mock('encoder', :encode => "SOME_ENCODED_DATA"),
-    :analyser => mock('analyser', :analyse => "some_result"),
+    :analyser => mock('analyser', :analyse => "some_result", :analysis_methods => Module.new),
     :generator => mock('generator', :generate => "SOME_GENERATED_DATA"),
     :log => Logger.new($stderr),
     :cache_duration => 10000

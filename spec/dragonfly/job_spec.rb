@@ -9,13 +9,10 @@ end
 
 describe Dragonfly::Job do
   
-  before(:each) do
-    @app = mock_app
-  end
-  
   describe "without temp_object" do
 
     before(:each) do
+      @app = mock_app
       @job = Dragonfly::Job.new(@app)
     end
 
@@ -82,6 +79,7 @@ describe Dragonfly::Job do
   describe "with temp_object already there" do
     
     before(:each) do
+      @app = mock_app
       @temp_object = Dragonfly::TempObject.new('HELLO')
       @job = Dragonfly::Job.new(@app)
       @job.temp_object = @temp_object
@@ -118,23 +116,38 @@ describe Dragonfly::Job do
         @job.apply.data.should == 'alo'
       end
     end
-    
-    describe "analyse" do
-      it "should use the app's analyser to analyse the temp_object" do
-        @app.analyser.should_receive(:analyse).with(@temp_object, :width).and_return(3)
-        @job.analyse(:width).should == 3
-      end
-      it "should return nil if the analyser raises UnableToHandle" do
-        @app.analyser.should_receive(:analyse).with(@temp_object, :width).and_raise(Dragonfly::FunctionManager::UnableToHandle)
-        @job.analyse(:width).should be_nil
-      end
-    end
-
   end
   
+  describe "analysis" do
+    before(:each) do
+      @app = test_app
+      @job = Dragonfly::Job.new(@app, Dragonfly::TempObject.new('HELLO'))
+      @app.analyser.add(:num_letters){|temp_object, letter| temp_object.data.count(letter) }
+    end
+    it "should return correctly when calling analyse" do
+      @job.analyse(:num_letters, 'L').should == 2
+    end
+    it "should have mixed in the analyser method" do
+      @job.num_letters('L').should == 2
+    end
+    it "should return nil from analyse if calling any old method" do
+      @job.analyse(:robin_van_persie).should be_nil
+    end
+    it "should not allow calling any old method" do
+      lambda{
+        @job.robin_van_persie
+      }.should raise_error(NoMethodError)
+    end
+    it "should work correctly with chained jobs, applying before analysing" do
+      @app.processor.add(:double){|temp_object| temp_object.data * 2 }
+      @job.process(:double).num_letters('L').should == 4
+    end
+  end
+
   describe "chaining" do
 
     before(:each) do
+      @app = mock_app
       @job = Dragonfly::Job.new(@app)
     end
 
@@ -199,6 +212,10 @@ describe Dragonfly::Job do
   
   describe "adding jobs" do
     
+    before(:each) do
+      @app = mock_app
+    end
+    
     it "should raise an error if the app is different" do
       job1 = Dragonfly::Job.new(@app)
       job2 = Dragonfly::Job.new(mock_app)
@@ -260,6 +277,7 @@ describe Dragonfly::Job do
   
   describe "defining extra steps after applying" do
     before(:each) do
+      @app = mock_app
       @job = Dragonfly::Job.new(@app)
       @job.temp_object = Dragonfly::TempObject.new("hello")
       @job.process! :resize
@@ -299,6 +317,9 @@ describe Dragonfly::Job do
   end
   
   describe "to_a" do
+    before(:each) do
+      @app = mock_app
+    end
     it "should represent all the steps in array form" do
       job = Dragonfly::Job.new(@app)
       job.fetch! 'some_uid'
@@ -315,6 +336,11 @@ describe Dragonfly::Job do
   end
   
   describe "from_a" do
+    
+    before(:each) do
+      @app = mock_app
+    end
+    
     describe "a well-defined array" do
       before(:each) do
         @job = Dragonfly::Job.from_a([
@@ -367,6 +393,7 @@ describe Dragonfly::Job do
   
   describe "serialization" do
     before(:each) do
+      @app = mock_app
       @job = Dragonfly::Job.new(@app).fetch('mumma').process(:resize, '1x50')
     end
     it "should serialize itself" do
@@ -380,6 +407,7 @@ describe Dragonfly::Job do
   
   describe "to_app" do
     before(:each) do
+      @app = mock_app
       @job = Dragonfly::Job.new(@app)
     end
     it "should return an endpoint" do
@@ -391,6 +419,7 @@ describe Dragonfly::Job do
   
   describe "format" do
     before(:each) do
+      @app = mock_app
       @job = Dragonfly::Job.new(@app)
     end
     it "should return nil if no encoding steps have been defined" do
@@ -407,6 +436,7 @@ describe Dragonfly::Job do
   
   describe "mime_type" do
     before(:each) do
+      @app = mock_app
       @job = Dragonfly::Job.new(@app)
     end
     it "should return nil if no encoding steps have been defined" do
