@@ -14,7 +14,7 @@ module Dragonfly
     include Loggable
     
     extend Forwardable
-    def_delegators :apply, :data
+    def_delegators :to_temp_object, :data
     def_delegators :steps, :any?, :empty?
     
     class Step
@@ -96,12 +96,24 @@ module Dragonfly
       @temp_object = temp_object
     end
     
+    # Used by 'dup' and 'clone'
+    def initialize_copy(other)
+      self.steps = other.steps.dup
+    end
+    
     attr_accessor :temp_object
     attr_reader :app, :steps
 
+    # define fetch(), fetch!(), process(), etc.
     %w(Fetch Process Encode).each do |step|
       class_eval %(
         def #{step.downcase}(*args)
+          new_job = self.dup
+          new_job.steps << #{step}.new(*args)
+          new_job
+        end
+        
+        def #{step.downcase}!(*args)
           steps << #{step}.new(*args)
           self
         end
@@ -109,7 +121,7 @@ module Dragonfly
     end
     
     def analyse(*args)
-      temp_object = apply
+      temp_object = to_temp_object
       raise NothingToAnalyse, "Can't analyse because temp object has not been initialized. Need to fetch first?" unless temp_object
       app.analyser.analyse(temp_object, *args)
     rescue FunctionManager::UnableToHandle => e
@@ -141,6 +153,11 @@ module Dragonfly
     def apply
       pending_steps.each{|step| step.apply(self) }
       self.next_step_index = steps.length
+      self
+    end
+    
+    def to_temp_object
+      apply
       temp_object
     end
     

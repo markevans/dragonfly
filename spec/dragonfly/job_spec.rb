@@ -26,7 +26,7 @@ describe Dragonfly::Job do
 
     describe "fetch" do
       before(:each) do
-        @job.fetch('some_uid')
+        @job.fetch!('some_uid')
       end
 
       it { @job.steps.should match_steps([Dragonfly::Job::Fetch]) }
@@ -40,7 +40,7 @@ describe Dragonfly::Job do
     
     describe "process" do
       it "should raise an error when applying" do
-        @job.process(:resize, '20x30')
+        @job.process!(:resize, '20x30')
         lambda{
           @job.apply
         }.should raise_error(Dragonfly::Job::NothingToProcess)
@@ -49,7 +49,7 @@ describe Dragonfly::Job do
 
     describe "encode" do
       it "should raise an error when applying" do
-        @job.encode(:gif)
+        @job.encode!(:gif)
         lambda{
           @job.apply
         }.should raise_error(Dragonfly::Job::NothingToEncode)
@@ -75,14 +75,14 @@ describe Dragonfly::Job do
     end
     
     describe "apply" do
-      it "should return the temp_object" do
-        @job.apply.should be_a(Dragonfly::TempObject)
+      it "should return itself" do
+        @job.apply.should == @job
       end
     end
     
     describe "process" do
       before(:each) do
-        @job.process(:resize, '20x30')
+        @job.process!(:resize, '20x30')
       end
 
       it { @job.steps.should match_steps([Dragonfly::Job::Process]) }
@@ -95,7 +95,7 @@ describe Dragonfly::Job do
 
     describe "encode" do
       before(:each) do
-        @job.encode(:gif, :bitrate => 'mumma')
+        @job.encode!(:gif, :bitrate => 'mumma')
       end
 
       it { @job.steps.should match_steps([Dragonfly::Job::Encode]) }
@@ -121,17 +121,65 @@ describe Dragonfly::Job do
   
   describe "chaining" do
 
-    it "should allow for defining more complicated jobs" do
-      job = Dragonfly::Job.new(@app)
-      job.fetch 'some_uid'
-      job.process :thump
-      job.encode :gip
-    
-      job.steps.should match_steps([
-        Dragonfly::Job::Fetch,
-        Dragonfly::Job::Process,
-        Dragonfly::Job::Encode
-      ])
+    before(:each) do
+      @job = Dragonfly::Job.new(@app)
+    end
+
+    it "should return itself if bang is used" do
+      @job.fetch!('some_uid').should == @job
+    end
+
+    it "should return a new job if bang is not used" do
+      @job.fetch('some_uid').should_not == @job
+    end
+
+    describe "when a chained job is defined" do
+      before(:each) do
+        @job.fetch!('some_uid')
+        @job2 = @job.process(:resize, '30x30')
+      end
+
+      it "should return the correct steps for the original job" do
+        @job.applied_steps.should match_steps([
+        ])
+        @job.pending_steps.should match_steps([
+          Dragonfly::Job::Fetch
+        ])
+      end
+
+      it "should return the correct data for the original job" do
+        @job.data.should == 'SOME_DATA'
+      end
+
+      it "should return the correct steps for the new job" do
+        @job2.applied_steps.should match_steps([
+        ])
+        @job2.pending_steps.should match_steps([
+          Dragonfly::Job::Fetch,
+          Dragonfly::Job::Process
+        ])
+      end
+
+      it "should return the correct data for the new job" do
+        @job2.data.should == 'SOME_PROCESSED_DATA'
+      end
+      
+      it "should not affect the other one when one is applied" do
+        @job.apply
+        @job.applied_steps.should match_steps([
+          Dragonfly::Job::Fetch
+        ])
+        @job.pending_steps.should match_steps([
+        ])
+        @job.temp_object.data.should == 'SOME_DATA'
+        @job2.applied_steps.should match_steps([
+        ])
+        @job2.pending_steps.should match_steps([
+          Dragonfly::Job::Fetch,
+          Dragonfly::Job::Process
+        ])
+        @job2.temp_object.should be_nil
+      end
     end
 
   end
@@ -149,9 +197,9 @@ describe Dragonfly::Job do
     describe "both belonging to the same app" do
       before(:each) do
         @job1 = Dragonfly::Job.new(@app, Dragonfly::TempObject.new('hello'))
-        @job1.process :resize
+        @job1.process! :resize
         @job2 = Dragonfly::Job.new(@app, Dragonfly::TempObject.new('hola'))
-        @job2.encode :png
+        @job2.encode! :png
       end
       
       it "should concatenate jobs" do
@@ -201,9 +249,9 @@ describe Dragonfly::Job do
     before(:each) do
       @job = Dragonfly::Job.new(@app)
       @job.temp_object = Dragonfly::TempObject.new("hello")
-      @job.process :resize
+      @job.process! :resize
       @job.apply
-      @job.encode :micky
+      @job.encode! :micky
     end
     it "should not call apply on already applied steps" do
       @job.steps[0].should_not_receive(:apply)
@@ -240,9 +288,9 @@ describe Dragonfly::Job do
   describe "to_a" do
     it "should represent all the steps in array form" do
       job = Dragonfly::Job.new(@app)
-      job.fetch 'some_uid'
-      job.process :resize, '30x40'
-      job.encode :gif, :bitrate => 20
+      job.fetch! 'some_uid'
+      job.process! :resize, '30x40'
+      job.encode! :gif, :bitrate => 20
       job.to_a.should == [
         [:f, 'some_uid'],
         [:p, :resize, '30x40'],
@@ -331,10 +379,10 @@ describe Dragonfly::Job do
       @job.format.should be_nil
     end
     it "should return the format of the last encoding step" do
-      @job.encode :gif
-      @job.process :resize, '30x30'
-      @job.encode :png
-      @job.process :resize, '50x50'
+      @job.encode! :gif
+      @job.process! :resize, '30x30'
+      @job.encode! :png
+      @job.process! :resize, '50x50'
       @job.format.should == :png
     end
   end
@@ -347,7 +395,7 @@ describe Dragonfly::Job do
       @job.mime_type.should be_nil
     end
     it "should get the mime_type of the last encoding step from the app" do
-      @job.encode :png
+      @job.encode! :png
       @app.should_receive(:mime_type_for).with(:png).and_return 'image/png'
       @job.mime_type.should == 'image/png'
     end
