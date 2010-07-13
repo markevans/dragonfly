@@ -12,13 +12,13 @@ To use simply for image thumbnails etc. in Rails...
 
     config.gem 'rmagick',    :lib => 'RMagick'
     config.gem 'rack-cache', :lib => 'rack/cache'
-    config.gem 'dragonfly'
+    config.gem 'dragonfly',  :version => '~>0.6.2'
 
 **Gemfile** (Rails 3 only):
 
     gem 'rmagick',    :require => 'RMagick'
     gem 'rack-cache', :require => 'rack/cache'
-    gem 'dragonfly'
+    gem 'dragonfly', '~>0.6.2'
 
 The above assumes that you have http://gemcutter.org as one of your gem sources.
 If not you should add it, e.g. `gem source --add http://gemcutter.org` from the command line,

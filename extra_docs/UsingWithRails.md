@@ -50,13 +50,13 @@ For Rails 2.3 add this to config/environment.rb:
 
     config.gem 'rmagick',    :lib => 'RMagick'      # only if used
     config.gem 'rack-cache', :lib => 'rack/cache'   # only if used
-    config.gem 'dragonfly'
+    config.gem 'dragonfly',  :version => '~>0.6.2'
 
 For Rails 3 add it to the Gemfile, e.g.:
 
     gem 'rmagick',    :require => 'RMagick'         # only if used
     gem 'rack-cache', :require => 'rack/cache'      # only if used
-    gem 'dragonfly'
+    gem 'dragonfly', '~>0.6.2'
 
 You only need the lines above for {http://tomayko.com/src/rack-cache/ rack-cache} and
 {http://rmagick.rubyforge.org/ rmagick} if you've used the file 'dragonfly/rails/images', or manually used them yourself.
