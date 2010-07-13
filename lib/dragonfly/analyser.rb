@@ -1,6 +1,9 @@
 module Dragonfly
   class Analyser < FunctionManager
     
+    include Configurable
+    configurable_attr :enable_cache, true
+    
     def initialize
       super
       analyser = self
@@ -12,12 +15,17 @@ module Dragonfly
         
       end
       @analysis_method_names = []
+      @cache = {}
     end
     
     attr_reader :analysis_methods, :analysis_method_names
     
     def analyse(temp_object, method, *args)
-      call_last(method, temp_object, *args)
+      if enable_cache
+        cache[[temp_object, method, *args]] ||= call_last(method, temp_object, *args)
+      else
+        call_last(method, temp_object, *args)
+      end
     rescue NotDefined, UnableToHandle => e
       log.warn(e.message)
       nil
@@ -35,6 +43,14 @@ module Dragonfly
       analysis_method_names << name.to_sym
       super
     end
+    
+    def clear_cache!
+      @cache = {}
+    end
+    
+    private
+    
+    attr_reader :cache
     
   end
 end
