@@ -64,6 +64,19 @@ describe Dragonfly::Job do
       end
     end
     
+    describe "generate" do
+      before(:each) do
+        @job.generate!(:plasma, 20, 30)
+      end
+
+      it { @job.steps.should match_steps([Dragonfly::Job::Generate]) }
+
+      it "should use the generator when applied" do
+        @app.generator.should_receive(:generate).with(:plasma, 20, 30).and_return('hi')
+        @job.apply.data.should == 'hi'
+      end
+    end
+    
   end
   
   describe "with temp_object already there" do
@@ -289,10 +302,12 @@ describe Dragonfly::Job do
     it "should represent all the steps in array form" do
       job = Dragonfly::Job.new(@app)
       job.fetch! 'some_uid'
+      job.generate! :plasma # you wouldn't really call this after fetch but still works
       job.process! :resize, '30x40'
       job.encode! :gif, :bitrate => 20
       job.to_a.should == [
         [:f, 'some_uid'],
+        [:g, :plasma],
         [:p, :resize, '30x40'],
         [:e, :gif, {:bitrate => 20}]
       ]
@@ -304,6 +319,7 @@ describe Dragonfly::Job do
       before(:each) do
         @job = Dragonfly::Job.from_a([
           [:f, 'some_uid'],
+          [:g, :plasma],
           [:p, :resize, '30x40'],
           [:e, :gif, {:bitrate => 20}]
         ], @app)
@@ -311,14 +327,16 @@ describe Dragonfly::Job do
       it "should have the correct step types" do
         @job.steps.should match_steps([
           Dragonfly::Job::Fetch,
+          Dragonfly::Job::Generate,
           Dragonfly::Job::Process,
           Dragonfly::Job::Encode
         ])
       end
       it "should have the correct args" do
         @job.steps[0].args.should == ['some_uid']
-        @job.steps[1].args.should == [:resize, '30x40']
-        @job.steps[2].args.should == [:gif, {:bitrate => 20}]
+        @job.steps[1].args.should == [:plasma]
+        @job.steps[2].args.should == [:resize, '30x40']
+        @job.steps[3].args.should == [:gif, {:bitrate => 20}]
       end
       it "should have no applied steps" do
         @job.applied_steps.should be_empty

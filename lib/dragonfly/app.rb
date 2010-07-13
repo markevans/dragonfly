@@ -24,10 +24,11 @@ module Dragonfly
     
     def initialize
       self.log = proc{ Logger.new('/var/tmp/dragonfly.log') }
-      @analyser, @processor, @encoder = Analyser.new, Processor.new, Encoder.new
+      @analyser, @processor, @encoder, @generator = Analyser.new, Processor.new, Encoder.new, Generator.new
       @analyser.use_same_log_as(self)
       @processor.use_same_log_as(self)
       @encoder.use_same_log_as(self)
+      @generator.use_same_log_as(self)
       @dos_protector = DosProtector.new(self, 'this is a secret yo')
     end
     

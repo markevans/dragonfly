@@ -58,11 +58,18 @@ module Dragonfly
         job.temp_object = TempObject.new job.app.encoder.encode(job.temp_object, format, *arguments)
       end
     end
-    
+
+    class Generate < Step
+      def apply(job)
+        job.temp_object = TempObject.new job.app.generator.generate(*args)
+      end
+    end
+
     STEP_ABBREVIATIONS = {
-      Fetch   => :f,
-      Process => :p,
-      Encode  => :e
+      Fetch    => :f,
+      Process  => :p,
+      Encode   => :e,
+      Generate => :g
     }
     
     # Class methods
@@ -105,7 +112,7 @@ module Dragonfly
     attr_reader :app, :steps
 
     # define fetch(), fetch!(), process(), etc.
-    %w(Fetch Process Encode).each do |step|
+    %w(Fetch Process Encode Generate).each do |step|
       class_eval %(
         def #{step.downcase}(*args)
           new_job = self.dup
