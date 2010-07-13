@@ -15,6 +15,7 @@ module Dragonfly
           c.register_analyser(Analysis::RMagickAnalyser)
           c.register_processor(Processing::RMagickProcessor)
           c.register_encoder(Encoding::RMagickEncoder)
+          c.register_generator(Generation::RMagickGenerator)
           # c.define_job do
           #   process :thumb, opts[:geometry]
           #   encode opts[:format] || app.default_format

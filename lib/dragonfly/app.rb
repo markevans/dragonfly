@@ -37,7 +37,7 @@ module Dragonfly
     
     extend Forwardable
     def_delegator :datastore, :destroy
-    def_delegators :new_job, :fetch
+    def_delegators :new_job, :fetch, :generate
     def_delegator :server, :call
     
     configurable_attr :datastore do DataStorage::FileDataStore.new end
@@ -53,6 +53,7 @@ module Dragonfly
     attr_reader :analyser
     attr_reader :processor
     attr_reader :encoder
+    attr_reader :generator
 
     def server
       @server ||= (
@@ -92,6 +93,11 @@ module Dragonfly
       encoder.register(*args, &block)
     end
     configuration_method :register_encoder
+
+    def register_generator(*args, &block)
+      generator.register(*args, &block)
+    end
+    configuration_method :register_generator
 
     def register_mime_type(format, mime_type)
       registered_mime_types[file_ext_string(format)] = mime_type
