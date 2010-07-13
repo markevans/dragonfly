@@ -10,10 +10,6 @@ module Dragonfly
           analyser
         end
         
-        def analyse(method, *args)
-          analyser.analyse(to_temp_object, method, *args)
-        end
-        
       end
       @analysis_method_names = []
     end
@@ -29,7 +25,7 @@ module Dragonfly
     
     # Each time a function is registered with the analyser,
     # add a method to the analysis_methods module.
-    # Expects the object that is extended to define 'to_temp_object'
+    # Expects the object that is extended to define 'analyse(method, *args)'
     def add(name, *args, &block)
       analysis_methods.module_eval %(
         def #{name}(*args)

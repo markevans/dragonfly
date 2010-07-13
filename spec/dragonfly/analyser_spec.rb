@@ -12,7 +12,6 @@ describe Dragonfly::Analyser do
       @analyser.add(:num_letters){|temp_object, letter| temp_object.data.count(letter) }
       @obj = Object.new
       @obj.extend @analyser.analysis_methods
-      @obj.stub!(:to_temp_object).and_return Dragonfly::TempObject.new("HELLO")
     end
     
     it "should return a module" do
@@ -23,11 +22,10 @@ describe Dragonfly::Analyser do
       @obj.analyser.should == @analyser
     end
     
-    it "should provide the object with the analyse method" do
-      @obj.analyse(:num_letters, 'L').should == 2
-    end
-    
-    it "should provide the object with the direct analysis method" do
+    it "should provide the object with the direct analysis method, provided that analyse method exists" do
+      def @obj.analyse(meth, *args)
+        analyser.analyse Dragonfly::TempObject.new('HELLO'), meth, *args
+      end
       @obj.num_letters('L').should == 2
     end
     
