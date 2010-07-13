@@ -9,22 +9,26 @@ describe Dragonfly::Analyser do
   describe "analysis_methods module" do
     
     before(:each) do
-      @analyser.add(:width){|temp_object| temp_object.size }
+      @analyser.add(:num_letters){|temp_object, letter| temp_object.data.count(letter) }
       @obj = Object.new
       @obj.extend @analyser.analysis_methods
+      @obj.stub!(:to_temp_object).and_return Dragonfly::TempObject.new("HELLO")
     end
     
     it "should return a module" do
       @analyser.analysis_methods.should be_a(Module)
     end
     
-    it "should provide the object with the analyser" do
+    it "should provide the object with the analyser method" do
       @obj.analyser.should == @analyser
     end
     
-    it "should pass the object returned by to_temp_object to the analyser" do
-      @obj.should_receive(:to_temp_object).and_return Dragonfly::TempObject.new("HELLO")
-      @obj.width.should == 5
+    it "should provide the object with the analyse method" do
+      @obj.analyse(:num_letters, 'L').should == 2
+    end
+    
+    it "should provide the object with the direct analysis method" do
+      @obj.num_letters('L').should == 2
     end
     
   end

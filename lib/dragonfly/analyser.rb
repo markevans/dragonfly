@@ -5,9 +5,15 @@ module Dragonfly
       super
       analyser = self
       @analysis_methods = Module.new do
+
         define_method :analyser do
           analyser
         end
+        
+        def analyse(method, *args)
+          analyser.analyse(to_temp_object, method, *args)
+        end
+        
       end
       @analysis_method_names = []
     end
@@ -27,7 +33,7 @@ module Dragonfly
     def add(name, *args, &block)
       analysis_methods.module_eval %(
         def #{name}(*args)
-          analyser.analyse(to_temp_object, :#{name}, *args)
+          analyse(:#{name}, *args)
         end
       )
       analysis_method_names << name.to_sym
