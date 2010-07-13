@@ -2,23 +2,6 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Dragonfly::Processing::RMagickProcessor do
   
-  describe "generate" do
-    before(:each) do
-      @processor = Dragonfly::Processing::RMagickProcessor.new
-    end
-    
-    it "should generate an image with the given dimensions, defaulting to png format" do
-      image = @processor.generate(23,12)
-      image.should have_width(23)
-      image.should have_height(12)
-      image.should have_format('png')
-    end
-    it "should allow specifying the format" do
-      image = @processor.generate(23, 12, :gif)
-      image.should have_format('gif')
-    end
-  end
-
   describe "processing methods" do
   
     before(:each) do

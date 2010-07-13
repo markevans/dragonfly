@@ -16,12 +16,6 @@ module Dragonfly
         'se' => Magick::SouthEastGravity
       }
 
-      def generate(width, height, format='png')
-        image = Magick::Image.read("plasma:fractal"){self.size = "#{width}x#{height}"}.first
-        image.format = format.to_s
-        image.to_blob
-      end
-      
       # Geometry string patterns
       RESIZE_GEOMETRY         = /^\d*x\d*[><%^!]?$|^\d+@$/ # e.g. '300x200!'
       CROPPED_RESIZE_GEOMETRY = /^(\d+)x(\d+)#(\w{1,2})?$/ # e.g. '20x50#ne'

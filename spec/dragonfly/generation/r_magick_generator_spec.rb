@@ -1,15 +1,32 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe Dragonfly::Processing::RMagickTextProcessor do
-  
+describe Dragonfly::Generation::RMagickGenerator do
+
+  describe "plasma" do
+    before(:each) do
+      @generator = Dragonfly::Generation::RMagickGenerator.new
+    end
+    
+    it "should generate an image with the given dimensions, defaulting to png format" do
+      image = @generator.plasma(23,12)
+      image.should have_width(23)
+      image.should have_height(12)
+      image.should have_format('png')
+    end
+    it "should allow specifying the format" do
+      image = @generator.plasma(23, 12, :gif)
+      image.should have_format('gif')
+    end
+  end
+
   describe "text" do
     before(:each) do
-      @processor = Dragonfly::Processing::RMagickTextProcessor.new
-      @text =  Dragonfly::TempObject.new("mmm")
+      @generator = Dragonfly::Generation::RMagickGenerator.new
+      @text = "mmm"
     end
 
     it "should create a text image, defaulted to png" do
-      image = @processor.text(@text, :font_size => 12)
+      image = @generator.text(@text, :font_size => 12)
       image.should have_width(20..40) # approximate
       image.should have_height(10..20)
       image.should have_format('png')
@@ -19,51 +36,51 @@ describe Dragonfly::Processing::RMagickTextProcessor do
 
     describe "padding" do
       before(:each) do
-        no_padding_text = @processor.text(@text, :font_size => 12)
+        no_padding_text = @generator.text(@text, :font_size => 12)
         @width = image_properties(no_padding_text)[:width].to_i
         @height = image_properties(no_padding_text)[:height].to_i
       end
       it "1 number shortcut" do
-        image = @processor.text(@text, :padding => '10')
+        image = @generator.text(@text, :padding => '10')
         image.should have_width(@width + 20)
         image.should have_height(@height + 20)
       end
       it "2 numbers shortcut" do
-        image = @processor.text(@text, :padding => '10 5')
+        image = @generator.text(@text, :padding => '10 5')
         image.should have_width(@width + 10)
         image.should have_height(@height + 20)
       end
       it "3 numbers shortcut" do
-        image = @processor.text(@text, :padding => '10 5 8')
+        image = @generator.text(@text, :padding => '10 5 8')
         image.should have_width(@width + 10)
         image.should have_height(@height + 18)
       end
       it "4 numbers shortcut" do
-        image = @processor.text(@text, :padding => '1 2 3 4')
+        image = @generator.text(@text, :padding => '1 2 3 4')
         image.should have_width(@width + 6)
         image.should have_height(@height + 4)
       end
       it "should override the general padding declaration with the specific one (e.g. 'padding-left')" do
-        image = @processor.text(@text, :padding => '10', 'padding-left' => 9)
+        image = @generator.text(@text, :padding => '10', 'padding-left' => 9)
         image.should have_width(@width + 19)
         image.should have_height(@height + 20)
       end
       it "should ignore 'px' suffixes" do
-        image = @processor.text(@text, :padding => '1px 2px 3px 4px')
+        image = @generator.text(@text, :padding => '1px 2px 3px 4px')
         image.should have_width(@width + 6)
         image.should have_height(@height + 4)
       end
       it "bad padding string" do
         lambda{
-          @processor.text(@text, :padding => '1 2 3 4 5')
+          @generator.text(@text, :padding => '1 2 3 4 5')
         }.should raise_error(ArgumentError)
       end
     end
   end
 
-  describe Dragonfly::Processing::RMagickTextProcessor::HashWithCssStyleKeys do
+  describe Dragonfly::Generation::RMagickGenerator::HashWithCssStyleKeys do
     before(:each) do
-      @hash = Dragonfly::Processing::RMagickTextProcessor::HashWithCssStyleKeys[
+      @hash = Dragonfly::Generation::RMagickGenerator::HashWithCssStyleKeys[
         :font_style => 'normal',
         :'font-weight' => 'bold',
         'font_colour' => 'white',

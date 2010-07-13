@@ -1,9 +1,8 @@
 require 'RMagick'
 
 module Dragonfly
-  module Processing
-
-    class RMagickTextProcessor
+  module Generation
+    class RMagickGenerator
       
       FONT_STYLES = {
         'normal' => Magick::NormalStyle,
@@ -56,8 +55,14 @@ module Dragonfly
           )
         end
       end
-            
-      def text(temp_object, opts={})
+      
+      def plasma(width, height, format='png')
+        image = Magick::Image.read("plasma:fractal"){self.size = "#{width}x#{height}"}.first
+        image.format = format.to_s
+        image.to_blob
+      end
+      
+      def text(text_string, opts={})
         opts = HashWithCssStyleKeys[opts]
         
         draw = Magick::Draw.new
@@ -89,10 +94,8 @@ module Dragonfly
         padding_bottom = (opts[:padding_bottom] || pb || 0) * s
         padding_left   = (opts[:padding_left]   || pl || 0) * s
 
-        text = temp_object.data
-
         # Calculate (scaled up) dimensions
-        metrics = draw.get_type_metrics(text)
+        metrics = draw.get_type_metrics(text_string)
         width, height = metrics.width, metrics.height
 
         scaled_up_width = padding_left + width + padding_right
@@ -103,7 +106,7 @@ module Dragonfly
           self.background_color = opts[:background_color] || 'transparent'
         }
         # Draw the text
-        draw.annotate(image, width, height, padding_left, padding_top, text)
+        draw.annotate(image, width, height, padding_left, padding_top, text_string)
         
         # Scale back down again
         image.scale!(1/s)
