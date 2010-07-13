@@ -144,72 +144,6 @@ describe Dragonfly::Job do
     end
   end
 
-  describe "chaining" do
-
-    before(:each) do
-      @app = mock_app
-      @job = Dragonfly::Job.new(@app)
-    end
-
-    it "should return itself if bang is used" do
-      @job.fetch!('some_uid').should == @job
-    end
-
-    it "should return a new job if bang is not used" do
-      @job.fetch('some_uid').should_not == @job
-    end
-
-    describe "when a chained job is defined" do
-      before(:each) do
-        @job.fetch!('some_uid')
-        @job2 = @job.process(:resize, '30x30')
-      end
-
-      it "should return the correct steps for the original job" do
-        @job.applied_steps.should match_steps([
-        ])
-        @job.pending_steps.should match_steps([
-          Dragonfly::Job::Fetch
-        ])
-      end
-
-      it "should return the correct data for the original job" do
-        @job.data.should == 'SOME_DATA'
-      end
-
-      it "should return the correct steps for the new job" do
-        @job2.applied_steps.should match_steps([
-        ])
-        @job2.pending_steps.should match_steps([
-          Dragonfly::Job::Fetch,
-          Dragonfly::Job::Process
-        ])
-      end
-
-      it "should return the correct data for the new job" do
-        @job2.data.should == 'SOME_PROCESSED_DATA'
-      end
-      
-      it "should not affect the other one when one is applied" do
-        @job.apply
-        @job.applied_steps.should match_steps([
-          Dragonfly::Job::Fetch
-        ])
-        @job.pending_steps.should match_steps([
-        ])
-        @job.temp_object.data.should == 'SOME_DATA'
-        @job2.applied_steps.should match_steps([
-        ])
-        @job2.pending_steps.should match_steps([
-          Dragonfly::Job::Fetch,
-          Dragonfly::Job::Process
-        ])
-        @job2.temp_object.should be_nil
-      end
-    end
-
-  end
-  
   describe "adding jobs" do
     
     before(:each) do
@@ -314,6 +248,72 @@ describe Dragonfly::Job do
       @job.steps[1].should_not_receive(:apply)
       @job.apply
     end
+  end
+
+  describe "chaining" do
+
+    before(:each) do
+      @app = mock_app
+      @job = Dragonfly::Job.new(@app)
+    end
+
+    it "should return itself if bang is used" do
+      @job.fetch!('some_uid').should == @job
+    end
+
+    it "should return a new job if bang is not used" do
+      @job.fetch('some_uid').should_not == @job
+    end
+
+    describe "when a chained job is defined" do
+      before(:each) do
+        @job.fetch!('some_uid')
+        @job2 = @job.process(:resize, '30x30')
+      end
+
+      it "should return the correct steps for the original job" do
+        @job.applied_steps.should match_steps([
+        ])
+        @job.pending_steps.should match_steps([
+          Dragonfly::Job::Fetch
+        ])
+      end
+
+      it "should return the correct data for the original job" do
+        @job.data.should == 'SOME_DATA'
+      end
+
+      it "should return the correct steps for the new job" do
+        @job2.applied_steps.should match_steps([
+        ])
+        @job2.pending_steps.should match_steps([
+          Dragonfly::Job::Fetch,
+          Dragonfly::Job::Process
+        ])
+      end
+
+      it "should return the correct data for the new job" do
+        @job2.data.should == 'SOME_PROCESSED_DATA'
+      end
+      
+      it "should not affect the other one when one is applied" do
+        @job.apply
+        @job.applied_steps.should match_steps([
+          Dragonfly::Job::Fetch
+        ])
+        @job.pending_steps.should match_steps([
+        ])
+        @job.temp_object.data.should == 'SOME_DATA'
+        @job2.applied_steps.should match_steps([
+        ])
+        @job2.pending_steps.should match_steps([
+          Dragonfly::Job::Fetch,
+          Dragonfly::Job::Process
+        ])
+        @job2.temp_object.should be_nil
+      end
+    end
+
   end
   
   describe "to_a" do
