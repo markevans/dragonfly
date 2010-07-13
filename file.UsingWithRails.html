@@ -106,14 +106,14 @@ registers the app so that you can use ActiveRecord accessors, and inserts it int
 
 <pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rmagick'</span><span class='comma token'>,</span>    <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'RMagick'</span>      <span class='comment val'># only if used</span>
 <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rack-cache'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'rack/cache'</span>   <span class='comment val'># only if used</span>
-<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span>
+<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span><span class='comma token'>,</span>  <span class='symbol val'>:version</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'~&gt;0.6.2'</span>
 </pre>
 
 <p>For Rails 3 add it to the Gemfile, e.g.:</p>
 
 <pre class="code"><span class='gem identifier id'>gem</span> <span class='string val'>'rmagick'</span><span class='comma token'>,</span>    <span class='symbol val'>:require</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'RMagick'</span>         <span class='comment val'># only if used</span>
 <span class='gem identifier id'>gem</span> <span class='string val'>'rack-cache'</span><span class='comma token'>,</span> <span class='symbol val'>:require</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'rack/cache'</span>      <span class='comment val'># only if used</span>
-<span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span>
+<span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span><span class='comma token'>,</span> <span class='string val'>'~&gt;0.6.2'</span>
 </pre>
 
 <p>You only need the lines above for <a href="http://tomayko.com/src/rack-cache/" target="_parent" title="rack-cache">rack-cache</a> and
@@ -147,7 +147,7 @@ In this case, add something like the following to your initializer:</p>
     </div>
     
     <div id="footer">
-  Generated on Thu Jun 24 15:25:58 2010 by 
+  Generated on Tue Jul 13 13:01:40 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.7).
 </div>
