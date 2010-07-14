@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-def make_request(app, url)
-  Rack::MockRequest.new(app).get(url)
-end
-
 describe Dragonfly::DosProtector do
+
+  def make_request(app, url)
+    Rack::MockRequest.new(app).get(url)
+  end
 
   describe "without extra configuration" do
     before(:each) do

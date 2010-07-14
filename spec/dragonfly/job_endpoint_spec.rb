@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-def make_request(endpoint)
-  Rack::MockRequest.new(endpoint).get('')
-end
-
 describe Dragonfly::JobEndpoint do
+
+  def make_request(endpoint)
+    Rack::MockRequest.new(endpoint).get('')
+  end
 
   before(:each) do
     @app = mock_app
