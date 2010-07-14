@@ -128,7 +128,7 @@ describe Dragonfly::DataStorage::FileDataStore do
       File.open("#{@data_store.root_path}/jelly_beans/are/good", 'w'){|f| f.write('hey dog') }
       file, meta = @data_store.retrieve("jelly_beans/are/good")
       file.read.should == 'hey dog'
-      meta.should be_nil
+      meta.should == {}
     end
   end
   
