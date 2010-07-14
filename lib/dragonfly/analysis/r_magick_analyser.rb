@@ -2,9 +2,10 @@ require 'RMagick'
 
 module Dragonfly
   module Analysis
-    
     class RMagickAnalyser
-      
+
+      include Loggable
+
       def width(image)
         rmagick_image(image).columns
       end
@@ -41,6 +42,5 @@ module Dragonfly
       end
       
     end
-    
   end
 end
