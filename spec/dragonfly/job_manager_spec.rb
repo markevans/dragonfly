@@ -2,6 +2,10 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Dragonfly::JobManager do
   
+  before(:each) do
+    pending
+  end
+  
   describe "defining jobs" do
     
     before(:each) do
