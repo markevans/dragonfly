@@ -139,7 +139,14 @@ module Dragonfly
     end
 
     def inspect
-      to_s.sub(/>$/, " initialized with #{initialized_with}, @meta=#{@meta.inspect}, @name=#{@name.inspect} >")
+      content_string = case initialized_with
+      when :data
+        data_string = size > 20 ? "#{initialized_data[0..20]}..." : initialized_data
+        "data=#{data_string.inspect}"
+      when :file then "file=#{initialized_file.inspect}"
+      when :tempfile then "tempfile=#{initialized_tempfile.inspect}"
+      end
+      to_s.sub(/>$/, " #{content_string}, @meta=#{@meta.inspect}, @name=#{@name.inspect} >")
     end
 
     protected
