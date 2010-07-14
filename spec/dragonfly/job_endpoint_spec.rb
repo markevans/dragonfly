@@ -17,7 +17,6 @@ describe Dragonfly::JobEndpoint do
       @job.stub!(:mime_type).and_return(nil)
       @app.stub!(:fallback_mime_type).and_return('application/octet-stream')
       @job.stub!(:analyse).with(:mime_type).and_return(nil)
-      @job.stub!(:apply).and_return(Dragonfly::TempObject.new('HELLO'))
     end
     it "should return the fallback mime_type if nothing from job/analysis" do
       make_request(@endpoint).headers['Content-Type'].should == 'application/octet-stream'
