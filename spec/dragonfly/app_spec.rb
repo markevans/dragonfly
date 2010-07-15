@@ -108,10 +108,15 @@ describe Dragonfly::App do
   describe "Denial of Service protection" do
     before(:each) do
       @app = test_app
+      @job = Dragonfly::Job.new(@app).fetch('some_uid')
     end
     it "should have it on by default" do
       response = request(@app, '/sadhfasdfdsfsdf')
       response.status.should == 400
+    end
+    it "should generate the correct url" do
+      path = "/#{@job.serialize}"
+      @app.url_for(@job).should == "#{path}?s=#{Dragonfly::DosProtector.sha_for(path, @app.secret, @app.sha_length)}"
     end
   end
 

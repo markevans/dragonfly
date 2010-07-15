@@ -1,5 +1,6 @@
 require 'logger'
 require 'forwardable'
+require 'rack'
 
 module Dragonfly
   class App
@@ -45,6 +46,7 @@ module Dragonfly
     configurable_attr :path_prefix
     configurable_attr :protect_from_dos_attacks, true
     configurable_attr :secret
+    configurable_attr :sha_length, 16
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
 
     attr_reader :analyser
@@ -57,10 +59,10 @@ module Dragonfly
         app = self
         Rack::Builder.new do
           map app.mount_path do
-            use DosProtector, app.secret if app.protect_from_dos_attacks
+            use DosProtector, app.secret, :sha_length => app.sha_length if app.protect_from_dos_attacks
             run SimpleEndpoint.new(app)
           end
-        end
+        end.to_app
       )
     end
 
@@ -114,7 +116,14 @@ module Dragonfly
     end
     
     def url_for(job)
-      "#{path_prefix}/#{job.serialize}"
+      path = "#{path_prefix}#{SimpleEndpoint.job_to_path(job)}"
+      if protect_from_dos_attacks
+        query_string = DosProtector.required_params_for(path, secret, :sha_length => sha_length).map{|k,v|
+          "#{k}=#{v}"
+        }.join('&')
+        path << "?#{query_string}"
+      end
+      path
     end
 
     private
