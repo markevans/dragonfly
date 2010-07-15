@@ -7,9 +7,7 @@ module Dragonfly
         app.configure do |c|
           c.log = ::Rails.logger
           c.datastore.root_path = "#{::Rails.root}/public/system/dragonfly/#{::Rails.env}"
-          # c.url_handler.configure do |u|
-          #   u.path_prefix = '/media'
-          # end
+          c.path_prefix = '/media'
         end
       end
 

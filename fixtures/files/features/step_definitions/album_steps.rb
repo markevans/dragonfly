@@ -1,5 +1,5 @@
 When /^I look at the generated (.+) image$/ do |image_name|
-  page.body =~ /src="(.+?#{image_name}.+?)"/
+  page.body =~ %r{src="(/media[^"]+?)"}
   url = $1
   visit(url)
 end
@@ -9,6 +9,6 @@ Then /^I should see a (.+) image of size (.+)$/ do |format, size|
   tempfile.write page.body
   tempfile.close
   output = `identify #{tempfile.path}`.split(' ')
-  output[1].should == 'JPEG'
-  output[2].should == '200x100'
+  output[1].should == format
+  output[2].should == size
 end
