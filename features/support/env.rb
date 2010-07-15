@@ -24,10 +24,9 @@ end
 
 module MyHelpers
   
-  def make_request(name, *args)
+  def make_request(job)
     request = Rack::MockRequest.new($app)
-    url = $app.url_for(TEMP_FILES[name], *args)
-    @response = request.get(url)
+    @response = request.get(job.url)
   end
   
 end

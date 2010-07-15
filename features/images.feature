@@ -39,7 +39,7 @@ Feature: champion uses dragonfly to process images
     And the image should have format 'png'
 
   Scenario: use a parameters shortcut
-  # Note that this scenario makes use of the configured default format
+  When this is PENDING!!!
   When I go to the url for "beach.png", with shortcut '100x150!'
   Then the response should be OK
   And the response should have mime-type 'image/jpeg'

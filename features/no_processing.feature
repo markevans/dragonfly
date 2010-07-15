@@ -12,9 +12,3 @@ Feature: winner uses dragonfly to serve different kinds of files
     Then the response should be OK
     And the response should have mime-type 'application/zip'
     And the response should have the same content as the file "sample.docx"
-
-  Scenario: Go to url for original, with extension
-    Given a stored file "sample.docx"
-    When I go to the url for "sample.docx", with format 'docx'
-    Then the response should be OK
-    And the response should have mime-type 'application/zip'
