@@ -10,7 +10,6 @@ TEMP_FILES = {}
 Dragonfly::App[:images].configure_with(Dragonfly::Config::RMagickImages)
 Dragonfly::App[:files].configure do |c|
   c.register_analyser(Dragonfly::Analysis::FileCommandAnalyser)
-  c.register_encoder(Dragonfly::Encoding::TransparentEncoder)
 end
 
 SAMPLE_IMAGE_PATH = File.dirname(__FILE__)+'/../../samples/beach.png'

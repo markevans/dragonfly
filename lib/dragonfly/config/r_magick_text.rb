@@ -5,7 +5,6 @@ module Dragonfly
 
       def self.apply_configuration(app)
         app.configure do |c|
-          c.datastore = DataStorage::TransparentDataStore.new
           c.register_analyser(Analysis::FileCommandAnalyser)
           c.register_generator(Generation::RMagickGenerator)
           c.register_encoder(Encoding::RMagickEncoder)
