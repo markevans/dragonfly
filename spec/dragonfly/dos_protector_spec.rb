@@ -52,4 +52,14 @@ describe Dragonfly::DosProtector do
     end
   end
 
+  describe "required_params_for" do
+    it "should give the required sha params for it to pass" do
+      Dragonfly::DosProtector.required_params_for('/hello/there', 'mysecret').should == {'s' => '22d94173b7eb3671'}
+    end
+    it "should take into account the sha_length" do
+      Dragonfly::DosProtector.required_params_for('/hello/there', 'mysecret', :sha_length => 8).should == {'s' => '22d94173'}
+    end
+  end
+
+
 end

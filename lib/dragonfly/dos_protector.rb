@@ -4,9 +4,25 @@ require 'digest/sha1'
 module Dragonfly
   class DosProtector
     
+    DEFAULT_SHA_LENGTH = 16
+    
+    # Class methods
+    class << self
+      def required_params_for(path, secret, opts={})
+        sha_length = opts[:sha_length] || DEFAULT_SHA_LENGTH
+        {'s' => sha_for(path, secret, sha_length)}
+      end
+    
+      def sha_for(path, secret, sha_length)
+        Digest::SHA1.hexdigest("#{path}#{secret}")[0...sha_length]
+      end
+    end
+    
+    # Instance methods
+    
     def initialize(app, secret, opts={})
       @app, @secret = app, secret
-      @sha_length = opts[:sha_length] || 16
+      @sha_length = opts[:sha_length] || DEFAULT_SHA_LENGTH
     end
     
     def call(env)
@@ -14,7 +30,7 @@ module Dragonfly
       case request.params['s']
       when nil, ''
         [400, {"Content-Type" => "text/plain"}, ["You need to give a SHA parameter"]]
-      when sha_for(request)
+      when sha_for(request.path)
         app.call(env)
       else
         [400, {"Content-Type" => "text/plain"}, ["The SHA parameter you gave is incorrect"]]
@@ -24,9 +40,9 @@ module Dragonfly
     private
     
     attr_reader :app, :secret, :sha_length
-    
-    def sha_for(request)
-      Digest::SHA1.hexdigest("#{request.path}#{secret}")[0...sha_length]
+
+    def sha_for(path)
+      self.class.sha_for(path, secret, sha_length)
     end
     
   end
