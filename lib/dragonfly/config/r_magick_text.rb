@@ -8,13 +8,6 @@ module Dragonfly
           c.register_analyser(Analysis::FileCommandAnalyser)
           c.register_generator(Generation::RMagickGenerator)
           c.register_encoder(Encoding::RMagickEncoder)
-          c.parameters.add_shortcut :text, Hash do |_, options|
-            {
-              :processing_method => :text,
-              :processing_options => options,
-              :format => :png
-            }
-          end
         end
 
       end
