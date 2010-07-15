@@ -11,11 +11,18 @@ end
 
 ##############################################################################
 
-Given /^a Rails (.+) application set up for using dragonfly$/ do |version|
-  raise "Problem setting up Rails app" unless `
-    cd #{fixture_path(version)} &&
-    rm -rf #{RAILS_APP_NAME} &&
-    rails _#{version}_ #{RAILS_APP_NAME} -m template.rb`
+{
+  '2.3.5' => "rails _2.3.5_ #{RAILS_APP_NAME} -m template.rb",
+  '3.0.0.beta4' => "rails _3.0.0.beta4_ new #{RAILS_APP_NAME} -m template.rb"
+}.each do |version, rails_command|
+
+  Given /^a Rails #{version} application set up for using dragonfly$/ do
+    raise "Problem setting up Rails app" unless `
+      cd #{fixture_path(version)} &&
+      rm -rf #{RAILS_APP_NAME} &&
+      #{rails_command}`
+  end
+  
 end
 
 Then /^the cucumber features in my Rails (.+) app should pass$/ do |version|
