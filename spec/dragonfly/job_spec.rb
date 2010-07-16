@@ -9,6 +9,38 @@ end
 
 describe Dragonfly::Job do
   
+  describe "Step types" do
+    
+    {
+      Dragonfly::Job::Fetch => :fetch,
+      Dragonfly::Job::Process => :process,
+      Dragonfly::Job::Encode => :encode,
+      Dragonfly::Job::Generate => :generate
+    }.each do |klass, step_name|
+      it "should return the correct step name for #{klass}" do
+        klass.step_name.should == step_name
+      end
+    end
+
+    {
+      Dragonfly::Job::Fetch => :f,
+      Dragonfly::Job::Process => :p,
+      Dragonfly::Job::Encode => :e,
+      Dragonfly::Job::Generate => :g
+    }.each do |klass, abbreviation|
+      it "should return the correct abbreviation for #{klass}" do
+        klass.abbreviation.should == abbreviation
+      end
+    end
+    
+    describe "step_names" do
+      it "should return the available step names" do
+        Dragonfly::Job.step_names.should == [:fetch, :process, :encode, :generate]
+      end
+    end
+
+  end
+  
   describe "without temp_object" do
 
     before(:each) do

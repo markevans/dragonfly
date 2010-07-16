@@ -18,6 +18,22 @@ module Dragonfly
     def_delegators :steps, :any?, :empty?
     
     class Step
+      
+      class << self
+        # Dragonfly::Job::Fetch -> 'Fetch'
+        def basename
+          @basename ||= name.split('::').last
+        end
+        # Dragonfly::Job::Fetch -> :fetch
+        def step_name
+          @step_name ||= basename.gsub(/[A-Z]/){ "_#{$&.downcase}" }.sub('_','').to_sym
+        end
+        # Dragonfly::Job::Fetch -> :f
+        def abbreviation
+          @abbreviation ||= basename.scan(/[A-Z]/).join.downcase.to_sym
+        end
+      end
+      
       def initialize(*args)
         @args = args
       end
@@ -65,24 +81,24 @@ module Dragonfly
       end
     end
 
-    STEP_ABBREVIATIONS = {
-      Fetch    => :f,
-      Process  => :p,
-      Encode   => :e,
-      Generate => :g
-    }
+    STEPS = [
+      Fetch,
+      Process,
+      Encode,
+      Generate
+    ]
     
     # Class methods
     class << self
       
       def from_a(steps_array, app)
         unless steps_array.is_a?(Array) &&
-               steps_array.all?{|s| s.is_a?(Array) && STEP_ABBREVIATIONS.index(s.first) }
+               steps_array.all?{|s| s.is_a?(Array) && step_abbreviations[s.first] }
           raise InvalidArray, "can't define a job from #{steps_array.inspect}"
         end
         job = Job.new(app)
         steps_array.each do |step_array|
-          step_class = STEP_ABBREVIATIONS.index(step_array.shift)
+          step_class = step_abbreviations[step_array.shift]
           job.steps << step_class.new(*step_array)
         end
         job
@@ -92,6 +108,14 @@ module Dragonfly
         from_a(Serializer.marshal_decode(string), app)
       end
       
+      def step_abbreviations
+        @step_abbreviations ||= STEPS.inject({}){|hash, step_class| hash[step_class.abbreviation] = step_class; hash }
+      end
+      
+      def step_names
+        @step_names ||= STEPS.map{|step_class| step_class.step_name }
+      end
+
     end
 
     # Instance methods
@@ -114,16 +138,16 @@ module Dragonfly
     attr_reader :app, :steps
 
     # define fetch(), fetch!(), process(), etc.
-    %w(Fetch Process Encode Generate).each do |step|
+    STEPS.each do |step_class|
       class_eval %(
-        def #{step.downcase}(*args)
+        def #{step_class.step_name}(*args)
           new_job = self.dup
-          new_job.steps << #{step}.new(*args)
+          new_job.steps << #{step_class}.new(*args)
           new_job
         end
         
-        def #{step.downcase}!(*args)
-          steps << #{step}.new(*args)
+        def #{step_class.step_name}!(*args)
+          steps << #{step_class}.new(*args)
           self
         end
       )
@@ -178,7 +202,7 @@ module Dragonfly
 
     def to_a
       steps.map{|step|
-        [STEP_ABBREVIATIONS[step.class], *step.args]
+        [step.class.abbreviation, *step.args]
       }
     end
 
