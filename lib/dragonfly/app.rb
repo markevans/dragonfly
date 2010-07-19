@@ -30,6 +30,7 @@ module Dragonfly
       @encoder.use_same_log_as(self)
       @generator.use_same_log_as(self)
       @dos_protector = DosProtector.new(self, 'this is a secret yo')
+      @job_definitions = JobDefinitions.new
     end
     
     include Configurable
@@ -53,6 +54,8 @@ module Dragonfly
     attr_reader :processor
     attr_reader :encoder
     attr_reader :generator
+    
+    attr_accessor :job_definitions
 
     def server
       @server ||= (
@@ -73,6 +76,11 @@ module Dragonfly
     def endpoint(job=nil, &block)
       block ? RoutedEndpoint.new(self, &block) : JobEndpoint.new(job)
     end
+
+    def job(name, &block)
+      job_definitions.add(name, &block)
+    end
+    configuration_method :job
 
     def store(object, opts={})
       datastore.store(TempObject.new(object, opts))

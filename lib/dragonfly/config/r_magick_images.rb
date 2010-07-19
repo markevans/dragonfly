@@ -16,21 +16,17 @@ module Dragonfly
           c.register_processor(Processing::RMagickProcessor)
           c.register_encoder(Encoding::RMagickEncoder)
           c.register_generator(Generation::RMagickGenerator)
-          # c.define_job do
-          #   process :thumb, opts[:geometry]
-          #   encode opts[:format] || app.default_format
-          # end
-          # c.define_job :encode do
-          #   encode opts[:format]
-          # end
-          # c.define_job :rotate do
-          #   process :rotate, :amount => opts[:amount], :background_colour => '#0000'
-          #   encode opts[:format] || app.default_format
-          # end
+          c.job :thumb do |geometry, format|
+            process :thumb, geometry
+            encode format if format
+          end
+          c.job :encode do |format|
+            encode format
+          end
         end
-    
+
       end
-    
-    end  
+
+    end
   end
 end

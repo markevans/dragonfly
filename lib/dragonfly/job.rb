@@ -123,6 +123,7 @@ module Dragonfly
     def initialize(app, temp_object=nil)
       @app = app
       self.extend app.analyser.analysis_methods
+      self.extend app.job_definitions
       @steps = []
       @next_step_index = 0
       @temp_object = temp_object
@@ -132,6 +133,7 @@ module Dragonfly
     def initialize_copy(other)
       self.steps = other.steps.dup
       self.extend app.analyser.analysis_methods
+      self.extend app.job_definitions
     end
     
     attr_accessor :temp_object
