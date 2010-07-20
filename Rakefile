@@ -78,7 +78,7 @@ rescue LoadError
   puts "To run 'rake', to test everything, you need the Ginger gem. Install it with: (sudo) gem install ginger"
 end
 task :default do
-  system 'ginger spec && rake features'
+  system 'ginger spec && cucumber features' # Don't want rake features because it invokes bundler, which hides rails 2.3.5
 end
 
 desc 'Set up a Rails app ready for testing'
