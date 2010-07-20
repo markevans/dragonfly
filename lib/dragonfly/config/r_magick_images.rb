@@ -20,9 +20,6 @@ module Dragonfly
             process :thumb, geometry
             encode format if format
           end
-          c.job :encode do |format|
-            encode format
-          end
         end
 
       end
