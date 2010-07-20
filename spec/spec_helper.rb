@@ -32,7 +32,8 @@ def mock_app
     :analyser => mock('analyser', :analyse => "some_result", :analysis_methods => Module.new),
     :generator => mock('generator', :generate => "SOME_GENERATED_DATA"),
     :log => Logger.new($stderr),
-    :cache_duration => 10000
+    :cache_duration => 10000,
+    :job_definitions => Module.new
   )
 end
 
