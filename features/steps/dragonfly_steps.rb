@@ -32,8 +32,9 @@ When /^I go to the url for "(.+?)", with format '(.+?)' and resize geometry '(.+
   make_request $app.fetch(uid).process(:resize, geometry).encode(format)
 end
 
-When /^I go to the url for "(.+?)", with shortcut '([^']+?)'$/ do |name, arg1|
-  raise 'TODO'
+When /^I go to the url for "(.+?)", with shortcut '([^']+?)'$/ do |name, geometry|
+  uid = TEMP_FILES[name]
+  make_request $app.fetch(uid).thumb(geometry)
 end
 
 Then "the response should be OK" do
