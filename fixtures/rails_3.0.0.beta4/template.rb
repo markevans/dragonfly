@@ -3,10 +3,9 @@ gem 'rmagick', :require => 'RMagick'
 
 gem 'capybara'
 gem 'cucumber-rails'
-gem 'cucumber', '0.7.2'
-gem 'rspec-rails', '2.0.0.beta.8'
+gem 'cucumber', '0.8.5'
 
-generate 'cucumber:skeleton'
+generate 'cucumber:install'
 
 generate 'scaffold albums cover_image_uid:string'
 rake 'db:migrate'
