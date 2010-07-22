@@ -38,6 +38,9 @@ module Dragonfly
         @args = args
       end
       attr_reader :args
+      def inspect
+        "#{self.class.step_name}(#{args.map{|a| a.inspect }.join(', ')})"
+      end
     end
 
     class Fetch < Step
@@ -222,6 +225,10 @@ module Dragonfly
 
     def url
       app.url_for(self)
+    end
+
+    def inspect
+      to_s.sub(/>$/, " app=#{app}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >")
     end
 
     protected
