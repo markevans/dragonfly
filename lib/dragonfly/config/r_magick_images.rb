@@ -20,6 +20,15 @@ module Dragonfly
             process :thumb, geometry
             encode format if format
           end
+          c.job :gif do
+            encode :gif
+          end
+          c.job :jpg do
+            encode :jpg
+          end
+          c.job :png do
+            encode :png
+          end
         end
 
       end
