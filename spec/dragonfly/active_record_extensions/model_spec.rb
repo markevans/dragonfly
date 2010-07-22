@@ -454,13 +454,6 @@ describe Item do
         @item.preview_image_size.should == 3
       end
     
-      it "should store the original file extension if it exists" do
-        data = 'jasdlkf sadjl'
-        data.stub!(:original_filename).and_return('hello.png')
-        @item.preview_image = data
-        @item.preview_image_ext.should == 'png'
-      end
-
       it "should store the original file name if it exists" do
         data = 'jasdlkf sadjl'
         data.stub!(:original_filename).and_return('hello.png')
@@ -508,7 +501,7 @@ describe Item do
           @item.preview_image.some_analyser_method.should == 'result yo'
         end
         
-        %w(size name ext).each do |attr|
+        %w(size name).each do |attr|
           it "should use the magic attribute for #{attr} if there is one, and not load the content" do
             @app.datastore.should_not_receive(:retrieve)
             @item.should_receive("preview_image_#{attr}".to_sym).and_return('result yo')

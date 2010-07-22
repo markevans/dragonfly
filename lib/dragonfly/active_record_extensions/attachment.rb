@@ -56,7 +56,7 @@ module Dragonfly
         has_magic_attribute_for?(meth) ? magic_attribute_for(meth) : job.send(meth)
       end
       
-      [:size, :ext, :name].each do |meth|
+      [:size, :name].each do |meth|
         define_method meth do
           analyse(meth)
         end
@@ -97,7 +97,7 @@ module Dragonfly
       attr_accessor :job
       
       def allowed_magic_attributes
-        app.analyser.analysis_method_names + [:size, :ext, :name]
+        app.analyser.analysis_method_names + [:size, :name]
       end
       
       def magic_attributes

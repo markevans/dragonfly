@@ -101,12 +101,6 @@ module Dragonfly
       name.sub(/\.[^.]+$/,'')
     end
     
-    def ext
-      return unless name
-      bits = name.split('.')
-      bits.last if bits.size > 1
-    end
-    
     attr_writer :meta
     
     def meta
