@@ -259,27 +259,48 @@ describe Dragonfly::TempObject do
       temp_object.name.should == 'round.gif'
     end
     it "should still be nil if set to empty string" do
-      temp_object = Dragonfly::TempObject.new('sdf')
-      temp_object.name = ''
+      temp_object = Dragonfly::TempObject.new('sdf', :name => '')
       temp_object.name.should be_nil
     end
   end
   
   describe "basename" do
-    before(:each) do
-      @temp_object = Dragonfly::TempObject.new('asfsadf')
-    end
     it "should use the correct basename from name" do
-      @temp_object.name = 'hello.there.mate'
-      @temp_object.basename.should == 'hello.there'
+      temp_object = Dragonfly::TempObject.new('A', :name => 'hello.there.mate')
+      temp_object.basename.should == 'hello.there'
     end
     it "should be the name if it has no ext" do
-      @temp_object.name = 'hello'
-      @temp_object.basename.should == 'hello'
+      temp_object = Dragonfly::TempObject.new('A', :name => 'hello')
+      temp_object.basename.should == 'hello'
     end
     it "should be nil if name is nil" do
-      @temp_object.name = nil
-      @temp_object.basename.should be_nil
+      temp_object = Dragonfly::TempObject.new('A', :name => nil)
+      temp_object.basename.should be_nil
+    end
+  end
+  
+  describe "copying attributes" do
+    before(:each) do
+      @t1 = Dragonfly::TempObject.new('DATA',
+        :name => 'keith.png',
+        :meta => {:egg => :bread, :tea => :toast}
+      )
+    end
+    it "should copy attributes over" do
+      t2 = Dragonfly::TempObject.new('MORE_DATA')
+      t2.copy_attributes_from(@t1)
+      t2.name.should == 'keith.png'
+      t2.meta.should == {:egg => :bread, :tea => :toast}
+    end
+    it "should shouldn't overwrite the name" do
+      t2 = Dragonfly::TempObject.new('MORE_DATA', :name => 'dog.leg')
+      t2.copy_attributes_from(@t1)
+      t2.name.should == 'dog.leg'
+    end
+    it "should merge the meta without overwriting" do
+      t2 = Dragonfly::TempObject.new('MORE_DATA', :meta => {:egg => :bacon, :meals => :wheels})
+      t2.copy_attributes_from(@t1)
+      t2.meta.should == {:egg => :bacon, :meals => :wheels, :tea => :toast}
     end
   end
 

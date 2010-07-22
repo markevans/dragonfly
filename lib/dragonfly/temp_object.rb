@@ -43,7 +43,7 @@ module Dragonfly
     def initialize(obj, opts={})
       initialize_from_object!(obj)
       validate_options!(opts)
-      self.name = opts[:name] if opts[:name]
+      @name = opts[:name] if opts[:name]
       @meta = opts[:meta] || {}
     end
     
@@ -90,8 +90,6 @@ module Dragonfly
       end
     end
     
-    attr_writer :name
-    
     def name
       @name unless @name.blank?
     end
@@ -100,8 +98,6 @@ module Dragonfly
       return unless name
       name.sub(/\.[^.]+$/,'')
     end
-    
-    attr_writer :meta
     
     def meta
       @meta ||= {}
@@ -130,6 +126,11 @@ module Dragonfly
       else
         file(&block)
       end
+    end
+
+    def copy_attributes_from(other)
+      @name = other.name if @name.blank?
+      @meta = other.meta.merge(@meta)
     end
 
     def inspect
@@ -161,11 +162,11 @@ module Dragonfly
         @initialized_tempfile = obj
       when File
         @initialized_file = obj
-        self.name = File.basename(obj.path)
+        @name = File.basename(obj.path)
       else
         raise ArgumentError, "#{self.class.name} must be initialized with a String, a File, a Tempfile, or another TempObject"
       end
-      self.name = obj.original_filename if obj.respond_to?(:original_filename)
+      @name = obj.original_filename if obj.respond_to?(:original_filename)
     end
     
     def initialized_with
