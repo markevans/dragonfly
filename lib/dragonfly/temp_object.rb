@@ -43,8 +43,9 @@ module Dragonfly
     def initialize(obj, opts={})
       initialize_from_object!(obj)
       validate_options!(opts)
-      self.name = opts[:name] if opts[:name]
+      self.name = opts[:name] unless opts[:name].blank?
       self.meta = opts[:meta] || {}
+      self.format = opts[:format]
     end
     
     def data
@@ -90,25 +91,16 @@ module Dragonfly
       end
     end
     
-    def name
-      @name unless @name.blank?
-    end
-    
+    attr_accessor :name, :meta, :format
+
+    FILENAME_PATTERN = %r{^(.+)\.(.+?)$}
+
     def basename
-      return unless name
-      name.sub(/\.[^.]+$/,'')
+      name[FILENAME_PATTERN, 1] || name if name
     end
     
     def ext
-      return unless name
-      bits = name.split('.')
-      bits.last if bits.size > 1
-    end
-    
-    attr_writer :name, :meta
-
-    def meta
-      @meta ||= {}
+      name[FILENAME_PATTERN, 2] if name
     end
     
     def each(&block)
@@ -198,7 +190,7 @@ module Dragonfly
     end
     
     def validate_options!(opts)
-      valid_keys = [:name, :meta]
+      valid_keys = [:name, :meta, :format]
       invalid_keys = opts.keys - valid_keys
       raise ArgumentError, "Unrecognised options #{invalid_keys.inspect}" if invalid_keys.any?
     end

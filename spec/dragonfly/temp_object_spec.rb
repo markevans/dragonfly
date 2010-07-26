@@ -127,16 +127,6 @@ describe Dragonfly::TempObject do
         end
       end
       
-      describe "meta" do
-        it "should return an empty hash if not set" do
-          @temp_object.meta.should == {}
-        end
-        it "should allow setting" do
-          @temp_object.meta[:teeth] = 'many'
-          @temp_object.meta.should == {:teeth => 'many'}
-        end
-      end
-
     end
 
     describe "initializing attributes too" do
@@ -147,6 +137,10 @@ describe Dragonfly::TempObject do
       it "should set the meta" do
         temp_object = Dragonfly::TempObject.new(initialization_object('HELLO'), :meta => {:dr => 'doolittle'})
         temp_object.meta.should == {:dr => 'doolittle'}
+      end
+      it "should set the format" do
+        temp_object = Dragonfly::TempObject.new(initialization_object('HELLO'), :format => :jpg)
+        temp_object.format.should == :jpg
       end
       it "should raise an error if an invalid option is given" do
         lambda {
@@ -258,7 +252,7 @@ describe Dragonfly::TempObject do
       temp_object = Dragonfly::TempObject.new(file)
       temp_object.name.should == 'round.gif'
     end
-    it "should still be nil if set to empty string" do
+    it "should still be nil if set to empty string on initialize" do
       temp_object = Dragonfly::TempObject.new('sdf', :name => '')
       temp_object.name.should be_nil
     end
@@ -297,6 +291,32 @@ describe Dragonfly::TempObject do
     end
   end
   
+  describe "meta" do
+    before(:each) do
+      @temp_object = Dragonfly::TempObject.new('get outta here!')
+    end
+    it "should return an empty hash if not set" do
+      @temp_object.meta.should == {}
+    end
+    it "should allow setting" do
+      @temp_object.meta[:teeth] = 'many'
+      @temp_object.meta.should == {:teeth => 'many'}
+    end
+  end
+  
+  describe "format" do
+    before(:each) do
+      @temp_object = Dragonfly::TempObject.new('wassin my belly??!')
+    end
+    it "should return nil if not set" do
+      @temp_object.format.should be_nil
+    end
+    it "should allow setting" do
+      @temp_object.format = :jpg
+      @temp_object.format.should == :jpg
+    end
+  end
+
   describe "copying attributes" do
     before(:each) do
       @t1 = Dragonfly::TempObject.new('DATA',
