@@ -93,14 +93,12 @@ module Dragonfly
     
     attr_accessor :name, :meta, :format
 
-    FILENAME_PATTERN = %r{^(.+)\.(.+?)$}
-
     def basename
-      name[FILENAME_PATTERN, 1] || name if name
+      File.basename(name, '.*') if name
     end
     
     def ext
-      name[FILENAME_PATTERN, 2] if name
+      File.extname(name)[/\.(.*)/, 1] if name
     end
     
     def each(&block)
