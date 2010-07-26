@@ -14,7 +14,7 @@ module Dragonfly
     include Loggable
     
     extend Forwardable
-    def_delegators :to_temp_object, :data, :size, :ext, :name
+    def_delegators :to_temp_object, :data, :file, :tempfile, :path, :to_file, :size, :ext, :name
     def_delegators :steps, :any?, :empty?
     
     class Step
