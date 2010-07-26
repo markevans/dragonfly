@@ -65,6 +65,14 @@ describe Dragonfly::Job do
         @job.apply
         @job.temp_object.data.should == 'HELLO'
       end
+
+      it "should set extra data if returned from the datastore" do
+        @app.datastore.should_receive(:retrieve).with('some_uid').and_return(['HELLO', {:name => 'test.txt', :meta => {1=>2}}])
+        @job.apply
+        @job.temp_object.data.should == 'HELLO'
+        @job.temp_object.name.should == 'test.txt'
+        @job.temp_object.meta.should == {1 => 2}
+      end
     end
     
     describe "process" do
@@ -112,7 +120,7 @@ describe Dragonfly::Job do
     
     before(:each) do
       @app = mock_app
-      @temp_object = Dragonfly::TempObject.new('HELLO')
+      @temp_object = Dragonfly::TempObject.new('HELLO', :name => 'hello.txt', :meta => {:a => :b})
       @job = Dragonfly::Job.new(@app)
       @job.temp_object = @temp_object
     end
@@ -134,6 +142,14 @@ describe Dragonfly::Job do
         @app.processor.should_receive(:process).with(@temp_object, :resize, '20x30').and_return('hi')
         @job.apply.data.should == 'hi'
       end
+
+      it "should maintain the temp object attributes" do
+        @app.processor.should_receive(:process).with(@temp_object, :resize, '20x30').and_return('hi')
+        temp_object = @job.apply.temp_object
+        temp_object.data.should == 'hi'
+        temp_object.name.should == 'hello.txt'
+        temp_object.meta.should == {:a => :b}
+      end
     end
 
     describe "encode" do
@@ -146,6 +162,14 @@ describe Dragonfly::Job do
       it "should use the encoder when applied" do
         @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
         @job.apply.data.should == 'alo'
+      end
+
+      it "should maintain the temp object attributes" do
+        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
+        temp_object = @job.apply.temp_object
+        temp_object.data.should == 'alo'
+        temp_object.name.should == 'hello.txt'
+        temp_object.meta.should == {:a => :b}
       end
     end
   end
