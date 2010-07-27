@@ -91,7 +91,7 @@ module Dragonfly
       end
     end
     
-    attr_accessor :name, :meta, :format
+    attr_reader :name, :meta, :format
 
     def basename
       File.basename(name, '.*') if name
@@ -147,6 +147,8 @@ module Dragonfly
     attr_accessor :initialized_data, :initialized_tempfile, :initialized_file
     
     private
+    
+    attr_writer :name, :meta, :format
     
     def initialize_from_object!(obj)
       case obj

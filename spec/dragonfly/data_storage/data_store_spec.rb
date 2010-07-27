@@ -33,9 +33,11 @@ describe "data_store", :shared => true do
 
     describe "when extra info is given" do
       before(:each) do
-        @temp_object.name = 'danny.boy'
-        @temp_object.meta = {:bitrate => '35'}
-        @uid = @data_store.store(@temp_object)
+        temp_object = Dragonfly::TempObject.new('gollum',
+          :name => 'danny.boy',
+          :meta => {:bitrate => '35'}
+        )
+        @uid = @data_store.store(temp_object)
         @obj, @extra_info = @data_store.retrieve(@uid)
       end
 

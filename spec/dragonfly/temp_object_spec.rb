@@ -259,20 +259,17 @@ describe Dragonfly::TempObject do
   end
   
   describe "ext" do
-    before(:each) do
-      @temp_object = Dragonfly::TempObject.new('asfsadf')
-    end
     it "should use the correct extension from name" do
-      @temp_object.name = 'hello.there.mate'
-      @temp_object.ext.should == 'mate'
+      temp_object = Dragonfly::TempObject.new('asfsadf', :name => 'hello.there.mate')
+      temp_object.ext.should == 'mate'
     end
     it "should be nil if name has none" do
-      @temp_object.name = 'hello'
-      @temp_object.ext.should be_nil
+      temp_object = Dragonfly::TempObject.new('asfsadf', :name => 'hello')
+      temp_object.ext.should be_nil
     end
     it "should be nil if name is nil" do
-      @temp_object.name = nil
-      @temp_object.ext.should be_nil
+      temp_object = Dragonfly::TempObject.new('asfsadf')
+      temp_object.ext.should be_nil
     end
   end
 
@@ -305,15 +302,13 @@ describe Dragonfly::TempObject do
   end
   
   describe "format" do
-    before(:each) do
-      @temp_object = Dragonfly::TempObject.new('wassin my belly??!')
-    end
     it "should return nil if not set" do
-      @temp_object.format.should be_nil
+      temp_object = Dragonfly::TempObject.new('wassin my belly??!')
+      temp_object.format.should be_nil
     end
-    it "should allow setting" do
-      @temp_object.format = :jpg
-      @temp_object.format.should == :jpg
+    it "should allow setting on initialize" do
+      temp_object = Dragonfly::TempObject.new('wassin my belly??!', :format => :jpg)
+      temp_object.format.should == :jpg
     end
   end
 

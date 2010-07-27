@@ -43,14 +43,8 @@ describe Dragonfly::DataStorage::FileDataStore do
     end
 
     it "should use the temp_object name if it exists" do
-      @temp_object.name = 'hello.there'
+      @temp_object.should_receive(:name).at_least(:once).and_return('hello.there')
       it_should_write_to_file("#{@file_pattern_prefix}hello.there", @temp_object)
-      @data_store.store(@temp_object)
-    end
-
-    it "should use the default file suffix if the temp_object name is blank" do
-      @temp_object.name = ''
-      it_should_write_to_file("#{@file_pattern_prefix}file", @temp_object)
       @data_store.store(@temp_object)
     end
 
@@ -64,7 +58,7 @@ describe Dragonfly::DataStorage::FileDataStore do
       end
     
       it "should use a different filename taking into account the name and ext" do
-        @temp_object.name = 'hello.png'
+        @temp_object.should_receive(:name).at_least(:once).and_return('hello.png')
         touch_file("#{@file_pattern_prefix}hello.png")
         @data_store.should_receive(:disambiguate).with('hello.png').and_return('blah.png')
         @data_store.store(@temp_object)
@@ -88,7 +82,7 @@ describe Dragonfly::DataStorage::FileDataStore do
       end
     
       it "should return the filepath without the root of the stored file when a file name is provided" do
-        @temp_object.name = 'hello.you.png'
+        @temp_object.should_receive(:name).at_least(:once).and_return('hello.you.png')
         @data_store.store(@temp_object).should == "#{@file_pattern_prefix_without_root}hello.you.png"
       end
     
