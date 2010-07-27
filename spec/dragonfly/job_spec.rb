@@ -129,7 +129,7 @@ describe Dragonfly::Job do
     
     before(:each) do
       @app = mock_app
-      @temp_object = Dragonfly::TempObject.new('HELLO', :name => 'hello.txt', :meta => {:a => :b})
+      @temp_object = Dragonfly::TempObject.new('HELLO', :name => 'hello.txt', :meta => {:a => :b}, :format => :txt)
       @job = Dragonfly::Job.new(@app)
       @job.temp_object = @temp_object
     end
@@ -158,6 +158,7 @@ describe Dragonfly::Job do
         temp_object.data.should == 'hi'
         temp_object.name.should == 'hello.txt'
         temp_object.meta.should == {:a => :b}
+        temp_object.format.should == :txt
       end
     end
 
@@ -173,12 +174,17 @@ describe Dragonfly::Job do
         @job.apply.data.should == 'alo'
       end
 
-      it "should maintain the temp object attributes" do
+      it "should maintain the temp object attributes (except format)" do
         @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
         temp_object = @job.apply.temp_object
         temp_object.data.should == 'alo'
         temp_object.name.should == 'hello.txt'
         temp_object.meta.should == {:a => :b}
+      end
+      
+      it "should update the format" do
+        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
+        @job.apply.temp_object.format.should == :gif
       end
     end
   end

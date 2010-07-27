@@ -126,9 +126,12 @@ module Dragonfly
       end
     end
 
-    def copy_attributes_from(other)
-      self.name = other.name if @name.blank?
-      self.meta = other.meta.merge(@meta)
+    def attributes
+      {
+        :name => name,
+        :meta => meta,
+        :format => format
+      }
     end
 
     def inspect

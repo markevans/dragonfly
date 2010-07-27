@@ -312,29 +312,4 @@ describe Dragonfly::TempObject do
     end
   end
 
-  describe "copying attributes" do
-    before(:each) do
-      @t1 = Dragonfly::TempObject.new('DATA',
-        :name => 'keith.png',
-        :meta => {:egg => :bread, :tea => :toast}
-      )
-    end
-    it "should copy attributes over" do
-      t2 = Dragonfly::TempObject.new('MORE_DATA')
-      t2.copy_attributes_from(@t1)
-      t2.name.should == 'keith.png'
-      t2.meta.should == {:egg => :bread, :tea => :toast}
-    end
-    it "should shouldn't overwrite the name" do
-      t2 = Dragonfly::TempObject.new('MORE_DATA', :name => 'dog.leg')
-      t2.copy_attributes_from(@t1)
-      t2.name.should == 'dog.leg'
-    end
-    it "should merge the meta without overwriting" do
-      t2 = Dragonfly::TempObject.new('MORE_DATA', :meta => {:egg => :bacon, :meals => :wheels})
-      t2.copy_attributes_from(@t1)
-      t2.meta.should == {:egg => :bacon, :meals => :wheels, :tea => :toast}
-    end
-  end
-
 end
