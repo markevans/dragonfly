@@ -84,7 +84,7 @@ module Dragonfly
 
     class Generate < Step
       def apply(job)
-        job.temp_object = TempObject.new job.app.generator.generate(*args)
+        job.temp_object = TempObject.new(*job.app.generator.generate(*args))
       end
     end
 

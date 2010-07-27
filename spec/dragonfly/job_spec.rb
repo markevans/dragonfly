@@ -112,6 +112,15 @@ describe Dragonfly::Job do
         @app.generator.should_receive(:generate).with(:plasma, 20, 30).and_return('hi')
         @job.apply.data.should == 'hi'
       end
+
+      it "should save extra data if the generator returns it" do
+        @app.generator.should_receive(:generate).with(:plasma, 20, 30).and_return(['hi', {:name => 'plasma.png', :format => :png, :meta => {:a => :b}}])
+        @job.apply
+        @job.temp_object.data.should == 'hi'
+        @job.temp_object.name.should == 'plasma.png'
+        @job.temp_object.format.should == :png
+        @job.temp_object.meta.should == {:a => :b}
+      end
     end
     
   end
