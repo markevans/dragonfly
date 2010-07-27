@@ -48,7 +48,8 @@ module Dragonfly
         args.first
       end
       def apply(job)
-        job.temp_object = TempObject.new(*job.app.datastore.retrieve(uid))
+        content, extra = job.app.datastore.retrieve(uid)
+        job.temp_object = TempObject.new(content, (extra || {}))
       end
     end
     
@@ -88,7 +89,8 @@ module Dragonfly
 
     class Generate < Step
       def apply(job)
-        job.temp_object = TempObject.new(*job.app.generator.generate(*args))
+        content, extra = job.app.generator.generate(*args)
+        job.temp_object = TempObject.new(content, (extra || {}))
       end
     end
 
