@@ -39,7 +39,7 @@ module Dragonfly
       
       def save!
         destroy! if uid_changed?
-        self.uid = app.datastore.store(job.to_temp_object) if has_data_to_store?
+        self.uid = app.datastore.store(job.result) if has_data_to_store?
       end
       
       def to_value

@@ -14,7 +14,7 @@ module Dragonfly
     include Loggable
     
     extend Forwardable
-    def_delegators :to_temp_object, :data, :file, :tempfile, :path, :to_file, :size, :ext, :name
+    def_delegators :result, :data, :file, :tempfile, :path, :to_file, :size, :ext, :name
     def_delegators :steps, :any?, :empty?
     
     class Step
@@ -169,10 +169,10 @@ module Dragonfly
     end
     
     def analyse(method, *args)
-      unless to_temp_object
+      unless result
         raise NothingToAnalyse, "Can't analyse because temp object has not been initialized. Need to fetch first?"
       end
-      analyser.analyse(to_temp_object, method, *args)
+      analyser.analyse(result, method, *args)
     end
 
     def format
@@ -202,7 +202,7 @@ module Dragonfly
       self
     end
     
-    def to_temp_object
+    def result
       apply
       temp_object
     end
