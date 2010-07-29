@@ -114,10 +114,14 @@ module Dragonfly
         # Scale back down again
         image.scale!(1/s)
         
-        image.format = 'png'
+        format = opts[:format] || :png
+        image.format = format.to_s
 
         # Output image as string
-        image.to_blob
+        [
+          image.to_blob,
+          {:format => format, :name => "text.#{format}"}
+        ]
       end
       
       private
