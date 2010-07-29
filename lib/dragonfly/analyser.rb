@@ -3,6 +3,7 @@ module Dragonfly
     
     include Configurable
     configurable_attr :enable_cache, true
+    configurable_attr :cache_size, 1000
     
     def initialize
       super
@@ -15,14 +16,14 @@ module Dragonfly
         
       end
       @analysis_method_names = []
-      @cache = {}
     end
     
     attr_reader :analysis_methods, :analysis_method_names
     
     def analyse(temp_object, method, *args)
       if enable_cache
-        cache[[temp_object.object_id, method, *args]] ||= call_last(method, temp_object, *args)
+        key = [temp_object.object_id, method, *args]
+        cache[key] ||= call_last(method, temp_object, *args)
       else
         call_last(method, temp_object, *args)
       end
@@ -45,12 +46,14 @@ module Dragonfly
     end
     
     def clear_cache!
-      @cache = {}
+      @cache = nil
     end
     
     private
     
-    attr_reader :cache
+    def cache
+      @cache ||= SimpleCache.new(cache_size)
+    end
     
   end
 end

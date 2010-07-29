@@ -51,59 +51,72 @@ describe Dragonfly::Analyser do
   
   describe "cache" do
     before(:each) do
-      @proc = proc{}
-      @analyser.add(:blah, @proc)
       @temp_object = Dragonfly::TempObject.new('HELLO')
     end
 
+    def it_should_analyse_using(meth, temp_object, *args)
+      result = mock('result')
+      @analyser.should_receive(:call_last).with(meth, temp_object, *args).exactly(:once).and_return result
+      @analyser.analyse(temp_object, meth, *args).should == result
+      result
+    end
+
     it "should do the analysis the first time" do
-      @proc.should_receive(:call).with(@temp_object, :arg1).and_return(87)
-      @analyser.analyse(@temp_object, :blah, :arg1).should == 87
+      it_should_analyse_using(:blah, @temp_object, :arg1)
     end
 
     describe "when already called" do
       before(:each) do
-        @proc.should_receive(:call).with(@temp_object, :arg1).and_return(87)
-        @analyser.analyse(@temp_object, :blah, :arg1).should == 87
+        @result = it_should_analyse_using(:blah, @temp_object, :arg1)
       end
 
       it "should not do it subsequent times but still return the result" do
-        @proc.should_not_receive(:call)
-        @analyser.analyse(@temp_object, :blah, :arg1).should == 87
-        @analyser.analyse(@temp_object, :blah, :arg1).should == 87
+        @analyser.should_not_receive(:call_last)
+        @analyser.analyse(@temp_object, :blah, :arg1).should == @result
+        @analyser.analyse(@temp_object, :blah, :arg1).should == @result
       end
       
       it "should not use the cache if the temp_object is different" do
         temp_object = Dragonfly::TempObject.new('aaa')
-        @proc.should_receive(:call).with(temp_object, :arg1).and_return(41)
-        @analyser.analyse(temp_object, :blah, :arg1).should == 41
+        it_should_analyse_using(:blah, temp_object, :arg1)
       end
       
       it "should not use the cache if the method name is different" do
-        new_proc = proc{}
-        @analyser.add(:egghead, new_proc)
-        @proc.should_not_receive(:call)
-        new_proc.should_receive(:call).with(@temp_object, :arg1).and_return(88)
-        @analyser.analyse(@temp_object, :egghead, :arg1).should == 88
+        it_should_analyse_using(:egghead, @temp_object, :arg1)
       end
       
       it "should not use the cache if the args are different" do
-        @proc.should_receive(:call).with(@temp_object, :arg2).and_return(92)
-        @analyser.analyse(@temp_object, :blah, :arg2).should == 92
+        it_should_analyse_using(:blah, @temp_object, :arg2)
       end
       
       it "should do it again if the cache has been cleared" do
         @analyser.clear_cache!
-        @proc.should_receive(:call).with(@temp_object, :arg1).and_return(87)
-        @analyser.analyse(@temp_object, :blah, :arg1).should == 87
+        it_should_analyse_using(:blah, @temp_object, :arg1)
       end
 
       it "should not use the cache if it has been turned off" do
         @analyser.enable_cache = false
-        @proc.should_receive(:call).with(@temp_object, :arg1).and_return(87)
-        @analyser.analyse(@temp_object, :blah, :arg1).should == 87
+        it_should_analyse_using(:blah, @temp_object, :arg1)
+      end
+      
+    end
+
+    describe "cache size" do
+      it "should not exceed the cache size" do
+        @analyser.cache_size = 2
+
+        res1 = it_should_analyse_using(:blah, @temp_object, :arg1)
+        res2 = it_should_analyse_using(:blah, @temp_object, :arg2)
+        res3 = it_should_analyse_using(:blah, @temp_object, :arg3) # Should kick out first one
+        
+        it_should_analyse_using(:blah, @temp_object, :arg1)
+
+        # Third analysis should still be cached
+        @analyser.should_not_receive(:call_last)
+        @analyser.analyse(@temp_object, :blah, :arg3).should == res3
       end
     end
+
   end
   
 end
