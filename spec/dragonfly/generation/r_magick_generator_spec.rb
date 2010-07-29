@@ -7,15 +7,22 @@ describe Dragonfly::Generation::RMagickGenerator do
       @generator = Dragonfly::Generation::RMagickGenerator.new
     end
     
-    it "should generate an image with the given dimensions, defaulting to png format" do
-      image = @generator.plasma(23,12)
-      image.should have_width(23)
-      image.should have_height(12)
-      image.should have_format('png')
+    describe "generating an image with the given dimensions" do
+      before(:each) do
+        @image, @extra = @generator.plasma(23,12)
+      end
+      it {@image.should have_width(23)}
+      it {@image.should have_height(12)}
+      it {@image.should have_format('png')}
+      it {@extra.should == {:format => :png, :name => 'plasma.png'}}
     end
-    it "should allow specifying the format" do
-      image = @generator.plasma(23, 12, :gif)
-      image.should have_format('gif')
+    
+    describe "specifying the format" do
+      before(:each) do
+        @image, @extra = @generator.plasma(23, 12, :gif)
+      end
+      it {@image.should have_format('gif')}
+      it {@extra.should == {:format => :gif, :name => 'plasma.gif'}}
     end
   end
 
