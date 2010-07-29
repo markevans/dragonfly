@@ -15,7 +15,6 @@ module Dragonfly
     
     extend Forwardable
     def_delegators :result, :data, :file, :tempfile, :path, :to_file, :size, :ext, :name
-    def_delegators :steps, :any?, :empty?
     
     class Step
       
@@ -175,14 +174,6 @@ module Dragonfly
       analyser.analyse(result, method, *args)
     end
 
-    def format
-      encoding_steps.last.format if encoding_steps.any?
-    end
-
-    def mime_type
-      app.mime_type_for(format) if format
-    end
-
     def +(other_job)
       unless app == other_job.app
         raise AppDoesNotMatch, "Cannot add jobs belonging to different apps (#{app} is not #{other_job.app})"
@@ -245,12 +236,6 @@ module Dragonfly
 
     attr_writer :steps
     attr_accessor :next_step_index
-
-    private
-    
-    def encoding_steps
-      steps.select{|step| step.is_a?(Encode) }
-    end
 
   end
 end

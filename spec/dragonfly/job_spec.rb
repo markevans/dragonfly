@@ -458,7 +458,7 @@ describe Dragonfly::Job do
     
     it "should initialize an empty job if the array is empty" do
       job = Dragonfly::Job.from_a([], @app)
-      job.should be_empty
+      job.steps.should be_empty
     end
   end
   
@@ -485,38 +485,6 @@ describe Dragonfly::Job do
       endpoint = @job.to_app
       endpoint.should be_a(Dragonfly::JobEndpoint)
       endpoint.job.should == @job
-    end
-  end
-  
-  describe "format" do
-    before(:each) do
-      @app = mock_app
-      @job = Dragonfly::Job.new(@app)
-    end
-    it "should return nil if no encoding steps have been defined" do
-      @job.format.should be_nil
-    end
-    it "should return the format of the last encoding step" do
-      @job.encode! :gif
-      @job.process! :resize, '30x30'
-      @job.encode! :png
-      @job.process! :resize, '50x50'
-      @job.format.should == :png
-    end
-  end
-  
-  describe "mime_type" do
-    before(:each) do
-      @app = mock_app
-      @job = Dragonfly::Job.new(@app)
-    end
-    it "should return nil if no encoding steps have been defined" do
-      @job.mime_type.should be_nil
-    end
-    it "should get the mime_type of the last encoding step from the app" do
-      @job.encode! :png
-      @app.should_receive(:mime_type_for).with(:png).and_return 'image/png'
-      @job.mime_type.should == 'image/png'
     end
   end
   

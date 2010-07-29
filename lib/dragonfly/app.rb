@@ -49,6 +49,7 @@ module Dragonfly
     configurable_attr :secret
     configurable_attr :sha_length, 16
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
+    configurable_attr :infer_mime_type_from_file_ext, true
 
     attr_reader :analyser
     attr_reader :processor
@@ -119,6 +120,14 @@ module Dragonfly
       registered_mime_types[file_ext_string(format)]
     end
     
+    def resolve_mime_type(temp_object)
+      mime_type_for(temp_object.format)                                   ||
+        (mime_type_for(temp_object.ext) if infer_mime_type_from_file_ext) ||
+        analyser.analyse(temp_object, :mime_type)                         ||
+        mime_type_for(analyser.analyse(temp_object, :format))             ||
+        fallback_mime_type
+    end
+
     def mount_path
       path_prefix.blank? ? '/' : path_prefix
     end
