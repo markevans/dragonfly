@@ -15,6 +15,7 @@ module Dragonfly
       def initialize(app, parent_model, attribute_name)
         @app, @parent_model, @attribute_name = app, parent_model, attribute_name
         self.extend app.analyser.analysis_methods
+        self.extend app.job_definitions
         self.job = app.fetch(uid) if been_persisted?
       end
       
