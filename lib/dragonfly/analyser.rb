@@ -3,7 +3,7 @@ module Dragonfly
     
     include Configurable
     configurable_attr :enable_cache, true
-    configurable_attr :cache_size, 1000
+    configurable_attr :cache_size, 100
     
     def initialize
       super
