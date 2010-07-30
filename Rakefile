@@ -19,7 +19,6 @@ begin
     s.add_development_dependency 'cucumber-rails'
     s.add_development_dependency 'activerecord'
     s.add_development_dependency 'sqlite3-ruby'
-    s.add_development_dependency 'ginger'
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
@@ -72,13 +71,8 @@ rescue LoadError
   puts "Cucumber is not available. To run features, install it with: (sudo) gem install cucumber"
 end
 
-begin
-  require 'ginger'
-rescue LoadError
-  puts "To run 'rake', to test everything, you need the Ginger gem. Install it with: (sudo) gem install ginger"
-end
 task :default do
-  system 'ginger spec && cucumber features' # Don't want rake features because it invokes bundler, which hides rails 2.3.5
+  raise "TODO: run everything!"
 end
 
 desc 'Set up a Rails app ready for testing'
