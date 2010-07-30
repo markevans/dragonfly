@@ -10,8 +10,8 @@ describe Item do
     let(:app2){ Dragonfly[:videos] }
     
     it "should return the mapping of apps to attributes" do
-      Dragonfly.active_record_macro(:image, app1)
-      Dragonfly.active_record_macro(:video, app2)
+      set_up_accessor_macro(:image_accessor, app1)
+      set_up_accessor_macro(:video_accessor, app2)
       Item.class_eval do
         image_accessor :preview_image
         video_accessor :trailer_video
@@ -35,7 +35,7 @@ describe Item do
     
       before(:each) do
         @app = Dragonfly[:images]
-        Dragonfly.active_record_macro(:image, @app)
+        set_up_accessor_macro(:image_accessor, @app)
         Item.class_eval do
           image_accessor :preview_image
         end
@@ -94,10 +94,10 @@ describe Item do
           @item.preview_image = "DATASTRING"
         end
         it "the reader should return an attachment" do
-          @item.preview_image.should be_a(Dragonfly::ActiveRecordExtensions::Attachment)
+          @item.preview_image.should be_a(Dragonfly::ActiveModelExtensions::Attachment)
         end
         it "the uid should be a 'pending' object" do
-          @item.preview_image_uid.should be_a(Dragonfly::ActiveRecordExtensions::PendingUID)
+          @item.preview_image_uid.should be_a(Dragonfly::ActiveModelExtensions::PendingUID)
         end
         it "should store the image when saved" do
           @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING"))
@@ -181,7 +181,7 @@ describe Item do
             @item.preview_image = "ANEWDATASTRING"
           end
           it "should set the uid to pending" do
-            @item.preview_image_uid.should be_a(Dragonfly::ActiveRecordExtensions::PendingUID)
+            @item.preview_image_uid.should be_a(Dragonfly::ActiveModelExtensions::PendingUID)
           end
           it "should destroy the old data when saved" do
             @app.datastore.should_receive(:store).with(a_temp_object_with_data("ANEWDATASTRING")).once.and_return('some_uid')
@@ -242,7 +242,7 @@ describe Item do
 
     before(:all) do
       @app = Dragonfly[:images]
-      Dragonfly.active_record_macro(:image, @app)
+      set_up_accessor_macro(:image_accessor, @app)
     end
     
     describe "validates_presence_of" do
@@ -406,7 +406,7 @@ describe Item do
         def number_of_As(temp_object); temp_object.data.count('A'); end
       end
       @app.register_analyser(custom_analyser)
-      Dragonfly.active_record_macro(:image, @app)
+      set_up_accessor_macro(:image_accessor, @app)
       Item.class_eval do
         image_accessor :preview_image
       end
@@ -538,8 +538,8 @@ describe Item do
     before(:all) do
       @app = Dragonfly::App[:images]
       @app2 = Dragonfly::App[:egg]
-      Dragonfly.active_record_macro(:image, @app)
-      Dragonfly.active_record_macro(:egg, @app2)
+      set_up_accessor_macro(:image_accessor, @app)
+      set_up_accessor_macro(:egg_accessor, @app2)
       Car.class_eval do
         image_accessor :image
       end
