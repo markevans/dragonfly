@@ -1,7 +1,11 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-# if defined?(ActiveModel)
-#   require 'active_model_setup'
-# else
+begin
+  require 'active_model'
+rescue LoadError => e
+  # When there's NO active_model
   require File.dirname(__FILE__) + '/active_record_setup'
-# end
+else
+  # When there IS active model
+  require File.dirname(__FILE__) + '/active_record_setup'
+end

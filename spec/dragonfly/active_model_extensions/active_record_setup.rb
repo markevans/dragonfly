@@ -1,3 +1,10 @@
+# Seems to blow up on Rails 3 without this - only need temporarily
+begin
+  require 'active_support/all'
+rescue LoadError => e
+  puts "Couldn't load activesupport: #{e}"
+end
+
 require 'active_record'
 
 # --------------------------------------------------------------- #
