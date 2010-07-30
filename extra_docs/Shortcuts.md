@@ -2,7 +2,7 @@ Shortcuts
 =========
 
 When you call {Dragonfly::App#fetch fetch}, {Dragonfly::ExtendedTempObject#transform transform},
-{Dragonfly::UrlHandler#url_for url_for}, (or {Dragonfly::ActiveRecordExtensions::Attachment#url url} on an ActiveRecord attachment), you can specify all the job parameters
+{Dragonfly::UrlHandler#url_for url_for}, (or {Dragonfly::ActiveModelExtensions::Attachment#url url} on an ActiveRecord attachment), you can specify all the job parameters
 necessary to fetch the appropriate content.
 
 The parameters are the following:
@@ -113,6 +113,6 @@ then this will be used in these methods whenever that parameter is not given, su
 Avoiding processing/encoding
 ----------------------------
 If `:processing_method` is set to nil, then no processing takes place when methods like {Dragonfly::App#fetch fetch}, {Dragonfly::ExtendedTempObject#transform transform},
-{Dragonfly::UrlHandler#url_for url_for}, and {Dragonfly::ActiveRecordExtensions::Attachment#url url} are called.
+{Dragonfly::UrlHandler#url_for url_for}, and {Dragonfly::ActiveModelExtensions::Attachment#url url} are called.
 
 Similarly, if `:format` is set to nil, then no encoding takes place.

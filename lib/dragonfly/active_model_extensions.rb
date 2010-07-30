@@ -1,6 +1,6 @@
 module Dragonfly
 
-  module ActiveRecordExtensions
+  module ActiveModelExtensions
 
     def self.extended(klass)
       unless klass.include?(InstanceMethods)

@@ -53,7 +53,7 @@ We can use the attribute much like other other active record attributes:
     album.cover_image = File.new('path/to/my_image.png')  # ... or as a file...
     album.cover_image = some_tempfile                     # ... or as a tempfile
     
-    album.cover_image          # => #<Dragonfly::ActiveRecordExtensions::Attachment:0x103ef6128...
+    album.cover_image          # => #<Dragonfly::ActiveModelExtensions::Attachment:0x103ef6128...
     
     album.cover_image = nil
     album.cover_image          # => nil
@@ -120,7 +120,7 @@ The uid column is then filled in.
     album.cover_image_uid                                   # => nil
     
     album.cover_image = File.new('path/to/my_image.png')
-    album.cover_image_uid                                   # => 'PENDING' (actually a Dragonfly::ActiveRecordExtensions::PendingUID)
+    album.cover_image_uid                                   # => 'PENDING' (actually a Dragonfly::ActiveModelExtensions::PendingUID)
     
     album.save
     album.cover_image_uid                                   # => '2009/12/05/170406_file' (some unique uid, used by the datastore)
@@ -153,7 +153,7 @@ Validations
 
 The property argument of `validates_property` will generally be one of the registered analyser properties as described in {file:Analysers.md Analysers}.
 However it would actually work for arbitrary properties, including those of non-dragonfly model attributes.
-See {Dragonfly::ActiveRecordExtensions::Validations Validations} for more info.
+See {Dragonfly::ActiveModelExtensions::Validations Validations} for more info.
 
 Name and extension
 ------------------

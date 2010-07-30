@@ -1,7 +1,7 @@
 require 'forwardable'
 
 module Dragonfly
-  module ActiveRecordExtensions
+  module ActiveModelExtensions
     
     class PendingUID; def to_s; 'PENDING'; end; end
     

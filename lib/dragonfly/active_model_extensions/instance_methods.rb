@@ -1,5 +1,5 @@
 module Dragonfly
-  module ActiveRecordExtensions
+  module ActiveModelExtensions
     module InstanceMethods
       
       def attachments

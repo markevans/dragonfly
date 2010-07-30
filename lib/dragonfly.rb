@@ -52,9 +52,9 @@ module Dragonfly
     end
 
     def active_record_macro(prefix, app)
-      already_extended = (class << ActiveRecord::Base; self; end).included_modules.include?(ActiveRecordExtensions)
-      ActiveRecord::Base.extend(ActiveRecordExtensions) unless already_extended
-      ActiveRecord::Base.register_dragonfly_app(prefix, app)
+      already_extended = (class << ActiveRecord::Base; self; end).included_modules.include?(ActiveModelExtensions)
+      ActiveRecord::Base.extend(ActiveModelExtensions) unless already_extended
+      ActiveRecord::Base.register_dragonfly_app("#{prefix}_accessor", app)
     end
 
   end

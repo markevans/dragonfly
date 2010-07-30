@@ -1,15 +1,15 @@
 module Dragonfly
-  module ActiveRecordExtensions
+  module ActiveModelExtensions
     module ClassMethods
 
       include Validations
 
-      def register_dragonfly_app(accessor_prefix, app)
+      def register_dragonfly_app(macro_name, app)
         eigenclass = respond_to?(:metaclass) ? metaclass : singleton_class # Because rails changed the name from metaclass -> singleton_class
         eigenclass.class_eval do
     
           # Defines e.g. 'image_accessor' for any activerecord class body
-          define_method "#{accessor_prefix}_accessor" do |attribute|
+          define_method macro_name do |attribute|
       
             # Prior to activerecord 3, adding before callbacks more than once does add it more than once
             before_save :save_attachments unless respond_to?(:before_save_callback_chain) && before_save_callback_chain.find(:save_attachments)
