@@ -228,6 +228,13 @@ module Dragonfly
       app.url_for(self) unless steps.empty?
     end
 
+    def to_fetched_job(uid)
+      new_job = self.class.new(app, temp_object)
+      new_job.fetch!(uid)
+      new_job.next_step_index = 1
+      new_job
+    end
+
     def inspect
       to_s.sub(/>$/, " app=#{app}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >")
     end

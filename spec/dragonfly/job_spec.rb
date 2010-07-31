@@ -502,4 +502,17 @@ describe Dragonfly::Job do
     end
   end
   
+  describe "to_fetched_job" do
+    it "should maintain the same temp_object and be already applied" do
+      app = mock_app
+      job = Dragonfly::Job.new(app, Dragonfly::TempObject.new("HELLO"))
+      new_job = job.to_fetched_job('some_uid')
+      new_job.temp_object.data.should == 'HELLO'
+      new_job.to_a.should == [
+        [:f, 'some_uid']
+      ]
+      new_job.pending_steps.should be_empty
+    end
+  end
+  
 end
