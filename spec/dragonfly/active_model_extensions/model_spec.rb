@@ -4,7 +4,7 @@ describe Item do
 
   # See extra setup in models / initializer files
 
-  describe "registering dragonfly apps" do
+  describe "defining accessors" do
 
     let(:app1){ Dragonfly[:images] }
     let(:app2){ Dragonfly[:videos] }
@@ -19,58 +19,99 @@ describe Item do
       Item.dragonfly_apps_for_attributes.should == {:preview_image => app1, :trailer_video => app2}
     end
 
-  end
-  
-  describe "defining accessors" do
-
-    it "should raise an error if the wrong method prefix is used" do
-      lambda{
-        Item.class_eval do
-          dog_accessor :preview_image
-        end
-      }.should raise_error(NameError)
+    it "should work for included modules (e.g. Mongoid::Document)" do
+      mongoid_document = Module.new
+      app1.define_accessor_macro_on_include(mongoid_document, :dog_accessor)
+      model_class = Class.new do
+        def self.before_save(*args); end
+        def self.before_destroy(*args); end
+        include mongoid_document
+        dog_accessor :doogie
+      end
+      model_class.dragonfly_apps_for_attributes.should == {:doogie => app1}
     end
 
-    describe "correctly defined" do
+  end
+
+  describe "correctly defined" do
+  
+    before(:each) do
+      @app = Dragonfly[:images]
+      @app.define_accessor_macro(model_class, :image_accessor)
+      Item.class_eval do
+        image_accessor :preview_image
+      end
+      @item = Item.new
+    end    
+
+    it "should provide a reader" do
+      @item.should respond_to(:preview_image)
+    end
+
+    it "should provide a writer" do
+      @item.should respond_to(:preview_image=)
+    end
+
+    describe "when there has been nothing assigned" do
+      it "the reader should return nil" do
+        @item.preview_image.should be_nil
+      end
+      it "the uid should be nil" do
+        @item.preview_image_uid.should be_nil
+      end
+      it "should not try to store anything on save" do
+        @app.datastore.should_not_receive(:store)
+        @item.save!
+      end
+      it "should not try to destroy anything on save" do
+        @app.datastore.should_not_receive(:destroy)
+        @item.save!
+      end
+      it "should not try to destroy anything on destroy" do
+        @app.datastore.should_not_receive(:destroy)
+        @item.destroy
+      end
+    end
     
+    describe "when the uid is set manually" do
       before(:each) do
-        @app = Dragonfly[:images]
-        @app.define_accessor_macro(model_class, :image_accessor)
-        Item.class_eval do
-          image_accessor :preview_image
-        end
-        @item = Item.new
-      end    
-
-      it "should provide a reader" do
-        @item.should respond_to(:preview_image)
+        @item.preview_image_uid = 'some_known_uid'
       end
-
-      it "should provide a writer" do
-        @item.should respond_to(:preview_image=)
+      it "should not try to retrieve any data" do
+        @app.datastore.should_not_receive(:retrieve)
+        @item.save!
       end
-
-      describe "when there has been nothing assigned" do
-        it "the reader should return nil" do
-          @item.preview_image.should be_nil
-        end
-        it "the uid should be nil" do
-          @item.preview_image_uid.should be_nil
-        end
-        it "should not try to store anything on save" do
-          @app.datastore.should_not_receive(:store)
-          @item.save!
-        end
-        it "should not try to destroy anything on save" do
-          @app.datastore.should_not_receive(:destroy)
-          @item.save!
-        end
-        it "should not try to destroy anything on destroy" do
-          @app.datastore.should_not_receive(:destroy)
-          @item.destroy
-        end
+      it "should not try to destroy any data" do
+        @app.datastore.should_not_receive(:destroy)
+        @item.save!
       end
-      
+      it "should not try to store any data" do
+        @app.datastore.should_not_receive(:store)
+        @item.save!
+      end
+    end
+    
+    describe "when there has been some thing assigned but not saved" do
+      before(:each) do
+        @item.preview_image = "DATASTRING"
+      end
+      it "the reader should return an attachment" do
+        @item.preview_image.should be_a(Dragonfly::ActiveModelExtensions::Attachment)
+      end
+      it "the uid should be nil" do
+        @item.preview_image_uid.should be_nil
+      end
+      it "should store the image when saved" do
+        @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING"))
+        @item.save!
+      end
+      it "should not try to destroy anything on destroy" do
+        @app.datastore.should_not_receive(:destroy)
+        @item.destroy
+      end
+      it "should return nil for the url" do
+        @item.preview_image.url.should be_nil
+      end
       describe "when the uid is set manually" do
         before(:each) do
           @item.preview_image_uid = 'some_known_uid'
@@ -89,152 +130,112 @@ describe Item do
         end
       end
       
-      describe "when there has been some thing assigned but not saved" do
-        before(:each) do
-          @item.preview_image = "DATASTRING"
-        end
-        it "the reader should return an attachment" do
-          @item.preview_image.should be_a(Dragonfly::ActiveModelExtensions::Attachment)
-        end
-        it "the uid should be nil" do
-          @item.preview_image_uid.should be_nil
-        end
-        it "should store the image when saved" do
-          @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING"))
-          @item.save!
-        end
-        it "should not try to destroy anything on destroy" do
-          @app.datastore.should_not_receive(:destroy)
-          @item.destroy
-        end
-        it "should return nil for the url" do
-          @item.preview_image.url.should be_nil
-        end
-        describe "when the uid is set manually" do
-          before(:each) do
-            @item.preview_image_uid = 'some_known_uid'
-          end
-          it "should not try to retrieve any data" do
-            @app.datastore.should_not_receive(:retrieve)
-            @item.save!
-          end
-          it "should not try to destroy any data" do
-            @app.datastore.should_not_receive(:destroy)
-            @item.save!
-          end
-          it "should not try to store any data" do
-            @app.datastore.should_not_receive(:store)
-            @item.save!
-          end
-        end
-        
+    end
+    
+    describe "when something has been assigned and saved" do
+
+      before(:each) do
+        @item.preview_image = "DATASTRING"
+        @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING")).once.and_return('some_uid')
+        @item.save!
+      end
+      it "should have the correct uid" do
+        @item.preview_image_uid.should == 'some_uid'
+      end
+      it "should not try to store anything if saved again" do
+        @app.datastore.should_not_receive(:store)
+        @item.save!
+      end
+
+      it "should not try to destroy anything if saved again" do
+        @app.datastore.should_not_receive(:destroy)
+        @item.save!
       end
       
-      describe "when something has been assigned and saved" do
+      it "should destroy the data on destroy" do
+        @app.datastore.should_receive(:destroy).with('some_uid')
+        @item.destroy
+      end
 
+      it "should return the url for the data" do
+        @app.should_receive(:url_for).with(an_instance_of(Dragonfly::Job)).and_return('some.url')
+        @item.preview_image.url.should == 'some.url'
+      end
+      
+      it "should destroy the old data when the uid is set manually" do
+        @app.datastore.should_receive(:destroy).with('some_uid')
+        @item.preview_image_uid = 'some_known_uid'
+        @item.save!
+      end
+      
+      describe "when accessed by a new model object" do
         before(:each) do
-          @item.preview_image = "DATASTRING"
-          @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING")).once.and_return('some_uid')
-          @item.save!
+          @item = Item.find(@item.id)
         end
-        it "should have the correct uid" do
-          @item.preview_image_uid.should == 'some_uid'
-        end
-        it "should not try to store anything if saved again" do
-          @app.datastore.should_not_receive(:store)
-          @item.save!
-        end
-
-        it "should not try to destroy anything if saved again" do
-          @app.datastore.should_not_receive(:destroy)
-          @item.save!
-        end
-        
         it "should destroy the data on destroy" do
+          @app.datastore.should_receive(:destroy).with(@item.preview_image_uid)
+          @item.destroy
+        end
+      end
+
+      describe "when something new is assigned" do
+        before(:each) do
+          @item.preview_image = "ANEWDATASTRING"
+        end
+        it "should set the uid to nil" do
+          @item.preview_image_uid.should be_nil
+        end
+        it "should destroy the old data when saved" do
+          @app.datastore.should_receive(:store).with(a_temp_object_with_data("ANEWDATASTRING")).once.and_return('some_uid')
+          
+          @app.datastore.should_receive(:destroy).with('some_uid')
+          @item.save!
+        end
+        it "should store the new data when saved" do
+          @app.datastore.should_receive(:store).with(a_temp_object_with_data("ANEWDATASTRING"))
+          @item.save!
+        end
+        it "should destroy the old data on destroy" do
           @app.datastore.should_receive(:destroy).with('some_uid')
           @item.destroy
         end
-
-        it "should return the url for the data" do
-          @app.should_receive(:url_for).with(an_instance_of(Dragonfly::Job)).and_return('some.url')
-          @item.preview_image.url.should == 'some.url'
+        it "should return the new size" do
+          @item.preview_image.size.should == 14
         end
-        
-        it "should destroy the old data when the uid is set manually" do
-          @app.datastore.should_receive(:destroy).with('some_uid')
-          @item.preview_image_uid = 'some_known_uid'
-          @item.save!
+        it "should return the new data" do
+          @item.preview_image.data.should == 'ANEWDATASTRING'
         end
-        
-        describe "when accessed by a new model object" do
-          before(:each) do
-            @item = Item.find(@item.id)
-          end
-          it "should destroy the data on destroy" do
-            @app.datastore.should_receive(:destroy).with(@item.preview_image_uid)
-            @item.destroy
-          end
-        end
-
-        describe "when something new is assigned" do
-          before(:each) do
-            @item.preview_image = "ANEWDATASTRING"
-          end
-          it "should set the uid to nil" do
-            @item.preview_image_uid.should be_nil
-          end
-          it "should destroy the old data when saved" do
-            @app.datastore.should_receive(:store).with(a_temp_object_with_data("ANEWDATASTRING")).once.and_return('some_uid')
-            
-            @app.datastore.should_receive(:destroy).with('some_uid')
-            @item.save!
-          end
-          it "should store the new data when saved" do
-            @app.datastore.should_receive(:store).with(a_temp_object_with_data("ANEWDATASTRING"))
-            @item.save!
-          end
-          it "should destroy the old data on destroy" do
-            @app.datastore.should_receive(:destroy).with('some_uid')
-            @item.destroy
-          end
-          it "should return the new size" do
-            @item.preview_image.size.should == 14
-          end
-          it "should return the new data" do
-            @item.preview_image.data.should == 'ANEWDATASTRING'
-          end
-        end
-        
-        describe "when it is set to nil" do
-          before(:each) do
-            @item.preview_image = nil
-          end
-          it "should set the uid to nil" do
-            @item.preview_image_uid.should be_nil
-          end
-          it "should return the attribute as nil" do
-            @item.preview_image.should be_nil
-          end
-          it "should destroy the data on save" do
-            @app.datastore.should_receive(:destroy).with('some_uid')
-            @item.save!
-            @item.preview_image.should be_nil
-          end
-          it "should destroy the old data on destroy" do
-            @app.datastore.should_receive(:destroy).with('some_uid')
-            @item.destroy
-          end
-        end
-
-        describe "when the data can't be found" do
-          it "should log a warning if the data wasn't found on destroy" do
-            @app.datastore.should_receive(:destroy).with('some_uid').and_raise(Dragonfly::DataStorage::DataNotFound)
-            @app.log.should_receive(:warn)
-            @item.destroy
-          end 
-        end
-
       end
+      
+      describe "when it is set to nil" do
+        before(:each) do
+          @item.preview_image = nil
+        end
+        it "should set the uid to nil" do
+          @item.preview_image_uid.should be_nil
+        end
+        it "should return the attribute as nil" do
+          @item.preview_image.should be_nil
+        end
+        it "should destroy the data on save" do
+          @app.datastore.should_receive(:destroy).with('some_uid')
+          @item.save!
+          @item.preview_image.should be_nil
+        end
+        it "should destroy the old data on destroy" do
+          @app.datastore.should_receive(:destroy).with('some_uid')
+          @item.destroy
+        end
+      end
+
+      describe "when the data can't be found" do
+        it "should log a warning if the data wasn't found on destroy" do
+          @app.datastore.should_receive(:destroy).with('some_uid').and_raise(Dragonfly::DataStorage::DataNotFound)
+          @app.log.should_receive(:warn)
+          @item.destroy
+        end 
+      end
+
     end
   end
 
@@ -532,7 +533,7 @@ describe Item do
       end
     end
   end
-  
+
   describe "inheritance" do
     
     before(:all) do
