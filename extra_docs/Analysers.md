@@ -35,7 +35,7 @@ As the file command analyser is {Dragonfly::Configurable configurable}, we can c
       a.file_command = '/usr/bin/file'
     end
 
-The saved configuration {Dragonfly::Config::RMagickImages RMagickImages} registers the above two analysers automatically.
+The saved configuration {Dragonfly::Config::RMagick RMagick} registers the above two analysers automatically.
 
 Custom Analysers
 ----------------

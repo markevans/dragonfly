@@ -4,7 +4,7 @@ module Dragonfly
     module RailsImages
     
       def self.apply_configuration(app)
-        app.configure_with(RMagickImages)
+        app.configure_with(RMagick)
         app.configure_with(RailsDefaults)
       end
 

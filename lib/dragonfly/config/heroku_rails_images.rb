@@ -4,7 +4,7 @@ module Dragonfly
     module HerokuRailsImages
     
       def self.apply_configuration(app, bucket_name)
-        app.configure_with(RMagickImages)
+        app.configure_with(RMagick)
         app.configure_with(RailsDefaults) do |c|
           # Use S3 for production
           if ::Rails.env == 'production'

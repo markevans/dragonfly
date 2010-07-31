@@ -7,7 +7,7 @@ require File.dirname(__FILE__) + '/../../spec/image_matchers.rb'
 # A hash of <name for reference> => <dragonfly uid> pairs
 TEMP_FILES = {}
 
-Dragonfly::App[:images].configure_with(Dragonfly::Config::RMagickImages)
+Dragonfly::App[:images].configure_with(Dragonfly::Config::RMagick)
 Dragonfly::App[:files].configure do |c|
   c.register_analyser(Dragonfly::Analysis::FileCommandAnalyser)
 end

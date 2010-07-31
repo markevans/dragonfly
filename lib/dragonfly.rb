@@ -40,8 +40,8 @@ module Dragonfly
       case const
       when :RMagickConfiguration
         puts "WARNING: RMagickConfiguration is deprecated and will be removed in future "+
-             "versions of Dragonfly. Please change to Dragonfly::Config::RMagickImages"
-        const_set(:RMagickConfiguration, Config::RMagickImages)
+             "versions of Dragonfly. Please change to Dragonfly::Config::RMagick"
+        const_set(:RMagickConfiguration, Config::RMagick)
       else
         super
       end

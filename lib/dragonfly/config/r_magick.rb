@@ -1,13 +1,13 @@
 module Dragonfly
   module Config
     
-    # RMagickImages is a saved configuration for Dragonfly apps, which does the following:
+    # RMagick is a saved configuration for Dragonfly apps, which does the following:
     # - registers an rmagick analyser
     # - registers an rmagick processor
     # - registers an rmagick encoder
     # - adds parameter shortcuts like '280x140!', etc.
     # Look at the source code for apply_configuration to see exactly how it configures the app.
-    module RMagickImages
+    module RMagick
     
       def self.apply_configuration(app)
         app.configure do |c|

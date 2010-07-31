@@ -45,7 +45,7 @@ Example: Using to serve resized images
     require 'rack/cache'
 
     app = Dragonfly::App[:images]
-    app.configure_with(Dragonfly::Config::RMagickImages)
+    app.configure_with(Dragonfly::Config::RMagick)
 
     use Rack::Cache,
       :verbose     => true,
