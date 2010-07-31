@@ -143,19 +143,19 @@ module Dragonfly
       path
     end
 
-    def define_accessor_macro(mod, macro_name)
+    def define_macro(mod, macro_name)
       already_extended = (class << mod; self; end).included_modules.include?(ActiveModelExtensions)
       mod.extend(ActiveModelExtensions) unless already_extended
       mod.register_dragonfly_app(macro_name, self)
     end
 
-    def define_accessor_macro_on_include(mod, macro_name)
+    def define_macro_on_include(mod, macro_name)
       app = self
       (class << mod; self; end).class_eval do
         alias included_without_dragonfly included
         define_method :included_with_dragonfly do |mod|
           included_without_dragonfly(mod)
-          app.define_accessor_macro(mod, macro_name)
+          app.define_macro(mod, macro_name)
         end
         alias included included_with_dragonfly
       end

@@ -10,8 +10,8 @@ describe Item do
     let(:app2){ Dragonfly[:videos] }
     
     it "should return the mapping of apps to attributes" do
-      app1.define_accessor_macro(model_class, :image_accessor)
-      app2.define_accessor_macro(model_class, :video_accessor)
+      app1.define_macro(model_class, :image_accessor)
+      app2.define_macro(model_class, :video_accessor)
       Item.class_eval do
         image_accessor :preview_image
         video_accessor :trailer_video
@@ -21,7 +21,7 @@ describe Item do
 
     it "should work for included modules (e.g. Mongoid::Document)" do
       mongoid_document = Module.new
-      app1.define_accessor_macro_on_include(mongoid_document, :dog_accessor)
+      app1.define_macro_on_include(mongoid_document, :dog_accessor)
       model_class = Class.new do
         def self.before_save(*args); end
         def self.before_destroy(*args); end
@@ -37,7 +37,7 @@ describe Item do
   
     before(:each) do
       @app = Dragonfly[:images]
-      @app.define_accessor_macro(model_class, :image_accessor)
+      @app.define_macro(model_class, :image_accessor)
       Item.class_eval do
         image_accessor :preview_image
       end
@@ -243,7 +243,7 @@ describe Item do
 
     before(:all) do
       @app = Dragonfly[:images]
-      @app.define_accessor_macro(model_class, :image_accessor)
+      @app.define_macro(model_class, :image_accessor)
     end
     
     describe "validates_presence_of" do
@@ -407,7 +407,7 @@ describe Item do
         def number_of_As(temp_object); temp_object.data.count('A'); end
       end
       @app.register_analyser(custom_analyser)
-      @app.define_accessor_macro(model_class, :image_accessor)
+      @app.define_macro(model_class, :image_accessor)
       Item.class_eval do
         image_accessor :preview_image
       end
@@ -539,8 +539,8 @@ describe Item do
     before(:all) do
       @app = Dragonfly::App[:images]
       @app2 = Dragonfly::App[:egg]
-      @app.define_accessor_macro(model_class, :image_accessor)
-      @app2.define_accessor_macro(model_class, :egg_accessor)
+      @app.define_macro(model_class, :image_accessor)
+      @app2.define_macro(model_class, :egg_accessor)
       Car.class_eval do
         image_accessor :image
       end
