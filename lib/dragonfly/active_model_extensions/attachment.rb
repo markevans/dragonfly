@@ -3,54 +3,51 @@ require 'forwardable'
 module Dragonfly
   module ActiveModelExtensions
     
-    class PendingUID; def to_s; 'PENDING'; end; end
-    
     class Attachment
       
       extend Forwardable
       def_delegators :job,
         :data, :to_file, :file, :tempfile, :path,
-        :process, :encode, :analyse
+        :process, :encode, :analyse,
+        :url
       
       def initialize(app, parent_model, attribute_name)
         @app, @parent_model, @attribute_name = app, parent_model, attribute_name
         self.extend app.analyser.analysis_methods
         self.extend app.job_definitions
-        self.job = app.fetch(uid) if been_persisted?
+        self.uid = parent_uid
+        self.job = app.fetch(uid) if uid
       end
       
       def assign(value)
         if value.nil?
           self.job = nil
-          self.uid = nil
           reset_magic_attributes
         else
           self.job = Job.new(app, TempObject.new(value))
-          self.uid = PendingUID.new
           set_magic_attributes
         end
+        self.previous_uid = uid
+        set_uid_and_parent_uid(nil)
         value
       end
 
       def destroy!
-        app.datastore.destroy(previous_uid) if previous_uid
-      rescue DataStorage::DataNotFound => e
-        app.log.warn("*** WARNING ***: tried to destroy data with uid #{previous_uid}, but got error: #{e}")
+        destroy_content(previous_uid) if previous_uid
+        destroy_content(uid) if uid
       end
       
       def save!
-        destroy! if uid_changed?
-        self.uid = app.datastore.store(job.result) if has_data_to_store?
+        sync_with_parent!
+        destroy_content(previous_uid) if previous_uid
+        if job && !uid
+          set_uid_and_parent_uid app.datastore.store(job.result)
+          self.job = job.to_fetched_job(uid)
+        end
       end
       
       def to_value
-        self if been_assigned?
-      end
-      
-      def url
-        unless uid.nil? || uid.is_a?(PendingUID)
-          app.url_for(job)
-        end
+        self if job
       end
       
       def analyse(meth, *args)
@@ -65,45 +62,44 @@ module Dragonfly
       
       private
       
-      def been_assigned?
-        uid
+      def destroy_content(uid)
+        app.datastore.destroy(uid) if uid
+      rescue DataStorage::DataNotFound => e
+        app.log.warn("*** WARNING ***: tried to destroy data with uid #{uid}, but got error: #{e}")
       end
       
-      def been_persisted?
-        uid && !uid.is_a?(PendingUID)
+      def sync_with_parent!
+        # If the parent uid has been set manually
+        if uid != parent_uid
+          self.previous_uid = uid
+          self.uid = parent_uid
+        end
       end
       
-      def has_data_to_store?
-        uid.is_a?(PendingUID)
+      def set_uid_and_parent_uid(uid)
+        self.uid = uid
+        self.parent_uid = uid
       end
       
-      def uid_changed?
-        parent_model.send("#{attribute_name}_uid_changed?")
-      end
-      
-      def uid=(uid)
+      def parent_uid=(uid)
         parent_model.send("#{attribute_name}_uid=", uid)
       end
       
-      def uid
+      def parent_uid
         parent_model.send("#{attribute_name}_uid")
-      end
-      
-      def previous_uid
-        parent_model.send("#{attribute_name}_uid_was")
       end
       
       attr_reader :app, :parent_model, :attribute_name
       
-      attr_accessor :job
+      attr_accessor :job, :uid, :previous_uid
       
       def allowed_magic_attributes
         app.analyser.analysis_method_names + [:size, :ext, :name]
       end
       
       def magic_attributes
-        parent_model.class.column_names.select { |name|
-          name =~ /^#{attribute_name}_(.+)$/ && allowed_magic_attributes.include?($1.to_sym)
+        parent_model.public_methods.select { |name|
+          name.to_s =~ /^#{attribute_name}_(.+)$/ && allowed_magic_attributes.include?($1.to_sym)
         }
       end
       

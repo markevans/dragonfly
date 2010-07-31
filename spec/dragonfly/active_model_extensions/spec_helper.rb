@@ -7,5 +7,5 @@ rescue LoadError => e
   require File.dirname(__FILE__) + '/active_record_setup'
 else
   # When there IS active model
-  require File.dirname(__FILE__) + '/active_record_setup'
+  require File.dirname(__FILE__) + '/active_model_setup'
 end

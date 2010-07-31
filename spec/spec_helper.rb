@@ -24,8 +24,8 @@ def todo
 end
 
 require 'logger'
-def mock_app
-  mock('app',
+def mock_app(extra_stubs={})
+  mock('app', {
     :datastore => mock('datastore', :store => 'some_uid', :retrieve => ["SOME_DATA", {}], :destroy => nil),
     :processor => mock('processor', :process => "SOME_PROCESSED_DATA"),
     :encoder => mock('encoder', :encode => "SOME_ENCODED_DATA"),
@@ -34,6 +34,7 @@ def mock_app
     :log => Logger.new($stderr),
     :cache_duration => 10000,
     :job_definitions => Module.new
+  }.merge(extra_stubs)
   )
 end
 

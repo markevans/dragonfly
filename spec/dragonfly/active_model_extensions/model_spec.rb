@@ -96,8 +96,8 @@ describe Item do
         it "the reader should return an attachment" do
           @item.preview_image.should be_a(Dragonfly::ActiveModelExtensions::Attachment)
         end
-        it "the uid should be a 'pending' object" do
-          @item.preview_image_uid.should be_a(Dragonfly::ActiveModelExtensions::PendingUID)
+        it "the uid should be nil" do
+          @item.preview_image_uid.should be_nil
         end
         it "should store the image when saved" do
           @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING"))
@@ -180,8 +180,8 @@ describe Item do
           before(:each) do
             @item.preview_image = "ANEWDATASTRING"
           end
-          it "should set the uid to pending" do
-            @item.preview_image_uid.should be_a(Dragonfly::ActiveModelExtensions::PendingUID)
+          it "should set the uid to nil" do
+            @item.preview_image_uid.should be_nil
           end
           it "should destroy the old data when saved" do
             @app.datastore.should_receive(:store).with(a_temp_object_with_data("ANEWDATASTRING")).once.and_return('some_uid')
@@ -516,7 +516,7 @@ describe Item do
           end
           
           it "should load the content then delegate '#{attr}' if there is no magic attribute for it" do
-            Item.should_receive(:column_names).and_return(['preview_image_uid']) # no magic attributes
+            @item.should_receive(:public_methods).and_return(['preview_image_uid']) # no magic attributes
             @app.datastore.should_receive(:retrieve).with('my_uid').and_return(['DATASTRING', {}])
             @item.preview_image.send(attr).should == @item.preview_image.send(:job).send(attr)
           end
