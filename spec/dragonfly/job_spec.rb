@@ -15,7 +15,8 @@ describe Dragonfly::Job do
       Dragonfly::Job::Fetch => :fetch,
       Dragonfly::Job::Process => :process,
       Dragonfly::Job::Encode => :encode,
-      Dragonfly::Job::Generate => :generate
+      Dragonfly::Job::Generate => :generate,
+      Dragonfly::Job::FetchFile => :fetch_file
     }.each do |klass, step_name|
       it "should return the correct step name for #{klass}" do
         klass.step_name.should == step_name
@@ -26,7 +27,8 @@ describe Dragonfly::Job do
       Dragonfly::Job::Fetch => :f,
       Dragonfly::Job::Process => :p,
       Dragonfly::Job::Encode => :e,
-      Dragonfly::Job::Generate => :g
+      Dragonfly::Job::Generate => :g,
+      Dragonfly::Job::FetchFile => :ff
     }.each do |klass, abbreviation|
       it "should return the correct abbreviation for #{klass}" do
         klass.abbreviation.should == abbreviation
@@ -35,7 +37,7 @@ describe Dragonfly::Job do
     
     describe "step_names" do
       it "should return the available step names" do
-        Dragonfly::Job.step_names.should == [:fetch, :process, :encode, :generate]
+        Dragonfly::Job.step_names.should == [:fetch, :process, :encode, :generate, :fetch_file]
       end
     end
 
@@ -121,6 +123,20 @@ describe Dragonfly::Job do
         @job.temp_object.format.should == :png
         @job.temp_object.meta.should == {:a => :b}
       end
+    end
+
+    describe "fetch_file" do
+      before(:each) do
+        @job.fetch_file!(File.dirname(__FILE__) + '/../../samples/egg.png')
+      end
+
+      it { @job.steps.should match_steps([Dragonfly::Job::FetchFile]) }
+
+      it "should fetch the specified file when applied" do
+        @job.apply
+        @job.temp_object.size.should == 62664
+      end
+
     end
     
   end

@@ -37,7 +37,7 @@ module Dragonfly
     
     extend Forwardable
     def_delegator :datastore, :destroy
-    def_delegators :new_job, :fetch, :generate
+    def_delegators :new_job, :fetch, :generate, :fetch_file
     def_delegator :server, :call
     
     configurable_attr :datastore do DataStorage::FileDataStore.new end

@@ -93,11 +93,21 @@ module Dragonfly
       end
     end
 
+    class FetchFile < Step
+      def path
+        File.expand_path(args.first)
+      end
+      def apply(job)
+        job.temp_object = TempObject.new(File.new(path))
+      end
+    end
+
     STEPS = [
       Fetch,
       Process,
       Encode,
-      Generate
+      Generate,
+      FetchFile
     ]
     
     # Class methods
