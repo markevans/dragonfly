@@ -10,8 +10,8 @@ describe Item do
     let(:app2){ Dragonfly[:videos] }
     
     it "should return the mapping of apps to attributes" do
-      set_up_accessor_macro(:image_accessor, app1)
-      set_up_accessor_macro(:video_accessor, app2)
+      app1.define_accessor_macro(model_class, :image_accessor)
+      app2.define_accessor_macro(model_class, :video_accessor)
       Item.class_eval do
         image_accessor :preview_image
         video_accessor :trailer_video
@@ -35,7 +35,7 @@ describe Item do
     
       before(:each) do
         @app = Dragonfly[:images]
-        set_up_accessor_macro(:image_accessor, @app)
+        @app.define_accessor_macro(model_class, :image_accessor)
         Item.class_eval do
           image_accessor :preview_image
         end
@@ -242,7 +242,7 @@ describe Item do
 
     before(:all) do
       @app = Dragonfly[:images]
-      set_up_accessor_macro(:image_accessor, @app)
+      @app.define_accessor_macro(model_class, :image_accessor)
     end
     
     describe "validates_presence_of" do
@@ -406,7 +406,7 @@ describe Item do
         def number_of_As(temp_object); temp_object.data.count('A'); end
       end
       @app.register_analyser(custom_analyser)
-      set_up_accessor_macro(:image_accessor, @app)
+      @app.define_accessor_macro(model_class, :image_accessor)
       Item.class_eval do
         image_accessor :preview_image
       end
@@ -538,8 +538,8 @@ describe Item do
     before(:all) do
       @app = Dragonfly::App[:images]
       @app2 = Dragonfly::App[:egg]
-      set_up_accessor_macro(:image_accessor, @app)
-      set_up_accessor_macro(:egg_accessor, @app2)
+      @app.define_accessor_macro(model_class, :image_accessor)
+      @app2.define_accessor_macro(model_class, :egg_accessor)
       Car.class_eval do
         image_accessor :image
       end

@@ -92,6 +92,6 @@ end
 # --------------------------------------------------------------- #
 # HELPER METHODS
 # --------------------------------------------------------------- #
-def set_up_accessor_macro(macro_name, app)
-  app.define_accessor_macro(MyModel, macro_name)
+def model_class
+  MyModel
 end
