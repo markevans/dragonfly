@@ -1,5 +1,10 @@
 RAILS_APP_NAME = 'tmp_app'
-FIXTURES_PATH = File.expand_path(File.dirname(__FILE__) + "/../../fixtures")
+ROOT_PATH = File.expand_path(File.dirname(__FILE__) + "/../..")
+FIXTURES_PATH = ROOT_PATH + "/fixtures"
+GEMFILES = {
+  '2.3.5' => ROOT_PATH + '/Gemfile.rails.2.3.5',
+  '3.0.0.beta4' => ROOT_PATH + '/Gemfile',
+}
 
 def fixture_path(version)
   "#{FIXTURES_PATH}/rails_#{version}"
@@ -12,8 +17,8 @@ end
 ##############################################################################
 
 {
-  '2.3.5' => "rails _2.3.5_ #{RAILS_APP_NAME} -m template.rb",
-  '3.0.0.beta4' => "rails _3.0.0.beta4_ new #{RAILS_APP_NAME} -m template.rb"
+  '2.3.5' => "BUNDLE_GEMFILE=#{GEMFILES['2.3.5']} rails #{RAILS_APP_NAME} -m template.rb",
+  '3.0.0.beta4' => "BUNDLE_GEMFILE=#{GEMFILES['3.0.0.beta4']} rails new #{RAILS_APP_NAME} -m template.rb"
 }.each do |version, rails_command|
 
   Given /^a Rails #{version} application set up for using dragonfly$/ do
@@ -28,8 +33,8 @@ end
 Then /^the cucumber features in my Rails (.+) app should pass$/ do |version|
   puts "\n*** RUNNING FEATURES IN THE RAILS APP... ***\n"
   path = File.join(fixture_path(version), RAILS_APP_NAME)
-  `cd #{path} && RAILS_ENV=cucumber rake db:migrate`
-  features_passed = system "cd #{path} && cucumber features"
+  `cd #{path} && BUNDLE_GEMFILE=#{GEMFILES[version]} RAILS_ENV=cucumber rake db:migrate`
+  features_passed = system "cd #{path} && BUNDLE_GEMFILE=#{GEMFILES[version]} cucumber features"
   puts "\n*** FINISHED RUNNING FEATURES IN THE RAILS APP ***\n"
   raise "Features failed" unless features_passed
 end

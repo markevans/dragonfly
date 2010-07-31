@@ -12,7 +12,7 @@ gem 'rack', '~>1.1'
 gem 'rack-cache'
 gem 'rails', '3.0.0.beta4', :require => nil
 gem 'rake'
-gem 'rmagick'
+gem 'rmagick', :require => nil
 gem 'rspec', '~> 1.3'
 gem 'ruby-debug'
 gem 'sqlite3-ruby'
