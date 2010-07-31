@@ -225,7 +225,7 @@ module Dragonfly
     end
 
     def url
-      app.url_for(self)
+      app.url_for(self) unless steps.empty?
     end
 
     def inspect

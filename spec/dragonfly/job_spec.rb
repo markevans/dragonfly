@@ -488,4 +488,18 @@ describe Dragonfly::Job do
     end
   end
   
+  describe "url" do
+    before(:each) do
+      @app = mock_app(:url_for => 'hello')
+      @job = Dragonfly::Job.new(@app)
+    end
+    it "should return a url" do
+      @job.generate!(:plasma)
+      @job.url.should == 'hello'
+    end
+    it "should return nil if there are no steps" do
+      @job.url.should be_nil
+    end
+  end
+  
 end
