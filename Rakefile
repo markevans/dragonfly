@@ -50,17 +50,17 @@ end
 
 desc "Run all the specs"
 task :spec do
-  system "bundle exec spec --colour spec/dragonfly"
+  system "bundle exec spec -O .specopts spec/dragonfly"
 end
 
 desc "Run the active model specs"
 task :model_spec do
-  system "bundle exec spec --colour spec/dragonfly/active_model_extensions"
+  system "bundle exec spec -O .specopts spec/dragonfly/active_model_extensions"
 end
 
 desc "Run the active_record specs (AR 2.3)"
 task :model_spec_235 do
-  system "export BUNDLE_GEMFILE=Gemfile.rails.2.3.5 && bundle exec spec --colour spec/dragonfly/active_model_extensions"
+  system "export BUNDLE_GEMFILE=Gemfile.rails.2.3.5 && bundle exec spec -O .specopts spec/dragonfly/active_model_extensions"
 end
 
 task :features do
