@@ -6,7 +6,7 @@ app = Dragonfly::App[:images]
 app.configure_with(Dragonfly::Config::RailsImages)
 
 ### Extend active record ###
-Dragonfly.active_record_macro(:image_accessor, app)
+app.define_accessor_macro(ActiveRecord::Base, :image_accessor)
 
 ### Insert the middleware ###
 # Where the middleware is depends on the version of Rails
