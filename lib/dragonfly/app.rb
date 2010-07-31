@@ -143,6 +143,12 @@ module Dragonfly
       path
     end
 
+    def define_accessor_macro(mod, macro_name)
+      already_extended = (class << mod; self; end).included_modules.include?(ActiveModelExtensions)
+      mod.extend(ActiveModelExtensions) unless already_extended
+      mod.register_dragonfly_app(macro_name, self)
+    end
+
     private
     
     def file_ext_string(format)

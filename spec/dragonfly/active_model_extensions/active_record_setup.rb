@@ -81,5 +81,5 @@ end
 # HELPER METHODS
 # --------------------------------------------------------------- #
 def set_up_accessor_macro(macro_name, app)
-  Dragonfly.active_record_macro(macro_name, app)
+  app.define_accessor_macro(ActiveRecord::Base, macro_name)
 end
