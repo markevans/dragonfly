@@ -2,27 +2,15 @@ Dragonfly
 ===========
 
 Dragonfly is a <a href="http://rack.rubyforge.org">Rack</a> framework for on-the-fly processing and encoding.
-It includes an extension for Ruby on Rails to enable easy image handling.
+It can be used with ActiveRecord, Mongoid, or any ActiveModel compliant model for easy image handling in your web app.
 
-For the lazy Rails user
------------------------
-To use simply for image thumbnails etc. in Rails...
-
-**environment.rb** (Rails 2.3 only):
-
-    config.gem 'rmagick',    :lib => 'RMagick'
-    config.gem 'rack-cache', :lib => 'rack/cache'
-    config.gem 'dragonfly'
-
-**Gemfile** (Rails 3 only):
+For the lazy Rails 3 user...
+----------------------------
+**Gemfile**:
 
     gem 'rmagick',    :require => 'RMagick'
     gem 'rack-cache', :require => 'rack/cache'
     gem 'dragonfly'
-
-The above assumes that you have http://gemcutter.org as one of your gem sources.
-If not you should add it, e.g. `gem source --add http://gemcutter.org` from the command line,
-or add `source http://gemcutter.org` to your Gemfile.
 
 **Initializer** (e.g. config/initializers/dragonfly.rb):
 
@@ -47,15 +35,14 @@ or add `source http://gemcutter.org` to your Gemfile.
       ...
     <% end %>
 
+NB: REMEMBER THE MULTIPART BIT!!!
 
 **View** (to display):
 
-    <%= image_tag @album.cover_image.url(:gif) %>
-    <%= image_tag @album.cover_image.url('400x200') %>
-    <%= image_tag @album.cover_image.url('100x100!', :png) %>
-    <%= image_tag @album.cover_image.url('100x100#') %>
-    <%= image_tag @album.cover_image.url('50x50+30+30sw', :tiff) %>
-    <%= image_tag @album.cover_image.url(:rotate, 15) %>
+    <%= image_tag @album.cover_image.url %>
+    <%= image_tag @album.cover_image.thumb('400x200#').url %>
+    <%= image_tag @album.cover_image.jpg.url %>
+    <%= image_tag @album.cover_image.process(:greyscale).encode(:tiff).url %>
     ...etc.
 
 Using outside of rails, custom storage/processing/encoding/analysis, and more...
