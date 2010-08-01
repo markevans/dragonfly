@@ -26,7 +26,7 @@ config/initializers/dragonfly.rb:
 
     require 'dragonfly'
 
-    app = Dragonfly::App[:images]
+    app = Dragonfly[:images]
     app.configure_with(Dragonfly::Config::RailsImages)
     
     # Define the method 'image_accessor' in ActiveRecord models
@@ -75,7 +75,7 @@ Extra Config
 There are one or two config options you may commonly want to tweak.
 In this case, add something like the following to your initializer:
 
-    Dragonfly::App[:images].configure do |c|
+    Dragonfly[:images].configure do |c|
       c.path_prefix = '/attachments'   # configures where the Dragonfly app is served from - default '/media'
       c.secret = 'PUT A SECRET HERE!!' # for protecting from Denial-Of-Service attacks
     end

@@ -9,7 +9,7 @@ If you've used a rails generator, or required the file 'dragonfly/rails/images.r
 
 Suppose we have a dragonfly app
 
-    app = Dragonfly::App[:my_app_name]
+    app = Dragonfly[:my_app_name]
 
 We can define an accessor on ActiveRecord models using
 

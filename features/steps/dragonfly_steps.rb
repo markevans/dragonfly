@@ -1,7 +1,7 @@
 require 'tempfile'
 
 Given /^we are using the app for (\w+)$/ do |app_name|
-  $app = Dragonfly::App[app_name.to_sym]
+  $app = Dragonfly[app_name.to_sym]
 end
 
 Given /^a stored file "(.+?)"$/ do |name|

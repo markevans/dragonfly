@@ -1,4 +1,4 @@
 require File.dirname(__FILE__) + '/lib/dragonfly'
 
-APP = Dragonfly::App[:images]
+APP = Dragonfly[:images]
 APP.configure_with(Dragonfly::Config::RMagick)

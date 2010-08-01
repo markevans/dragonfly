@@ -20,7 +20,7 @@ describe Dragonfly::App do
     end
     
     it "should also work using square brackets" do
-      Dragonfly::App[:images].should == Dragonfly::App.instance(:images)
+      Dragonfly[:images].should == Dragonfly::App.instance(:images)
     end
     
   end
@@ -62,7 +62,7 @@ describe Dragonfly::App do
         @app.mime_type_for(:png).should == 'ping/pong'
       end
       it "should have a per-app mime-type configuration" do
-        other_app = Dragonfly::App[:other_app]
+        other_app = Dragonfly[:other_app]
         @app.register_mime_type(:mark, 'first/one')
         other_app.register_mime_type(:mark, 'second/one')
         @app.mime_type_for(:mark).should == 'first/one'

@@ -18,7 +18,7 @@ A basic rackup file `config.ru`:
     require 'rubygems'
     require 'dragonfly'
 
-    Dragonfly::App[:my_app_name].configure do |c|
+    Dragonfly[:my_app_name].configure do |c|
       # ...
       c.some_attribute = 'blah'
       # ...
@@ -32,8 +32,8 @@ processing, encoding, etc.), then running it.
 You can have multiple dragonfly apps, each with their own configuration.
 Each app has a name, and is referred to by that name.
 
-    Dragonfly::App[:images]    # ===> Creates an app called 'images'
-    Dragonfly::App[:images]    # ===> Refers to the already created app 'images'
+    Dragonfly[:images]    # ===> Creates an app called 'images'
+    Dragonfly[:images]    # ===> Refers to the already created app 'images'
 
 Example: Using to serve resized images
 --------------------------------------
@@ -44,7 +44,7 @@ Example: Using to serve resized images
     require 'dragonfly'
     require 'rack/cache'
 
-    app = Dragonfly::App[:images]
+    app = Dragonfly[:images]
     app.configure_with(Dragonfly::Config::RMagick)
 
     use Rack::Cache,
@@ -60,7 +60,7 @@ By default the {Dragonfly::DataStorage::FileDataStore file data store} is used.
 
 Elsewhere in our code:
 
-    app = Dragonfly::App[:images]
+    app = Dragonfly[:images]
     
     # Store
     uid = app.store(File.new('path/to/image.png'))   # ===> returns a unique uid for that image, "2009/11/29/145804_file"
@@ -97,7 +97,7 @@ etc.
 
 Therefore the app can protect the url by generating a unique sha from a secret specified by you
 
-    Dragonfly::App[:images].configure do |c|
+    Dragonfly[:images].configure do |c|
       c.protect_from_dos_attacks = true                           # Actually this is true by default
       c.secret = 'You should supply some random secret here'
     end

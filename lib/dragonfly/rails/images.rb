@@ -2,7 +2,7 @@ require 'dragonfly'
 require 'rack/cache'
 
 ### The dragonfly app ###
-app = Dragonfly::App[:images]
+app = Dragonfly[:images]
 app.configure_with(Dragonfly::Config::RailsImages)
 
 ### Extend active record ###

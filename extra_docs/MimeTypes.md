@@ -16,7 +16,7 @@ Registered mime-types default to the list given by Rack (see {http://rack.rubyfo
 
 To register a mime-type for the format 'egg', you can do the following:
 
-    Dragonfly::App[:my_app].register_mime_type(:egg, 'fried/egg')
+    Dragonfly[:my_app].register_mime_type(:egg, 'fried/egg')
 
 You can also do this inside a configuration block.
 
@@ -34,6 +34,6 @@ Fallback mime-type
 ------------------
 By default this is 'application/octet-stream', but it can be changed using the configuration method on the app
 
-    Dragonfly::App[:my_app].fallback_mime_type = 'meaty/beef'
+    Dragonfly[:my_app].fallback_mime_type = 'meaty/beef'
 
 This can also be done inside a configuration block.

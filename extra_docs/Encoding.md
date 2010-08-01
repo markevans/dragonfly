@@ -15,7 +15,7 @@ The encoder needs to implement a single method, `encode`, which takes a {Dragonf
 
 Let's say we register the {Dragonfly::Encoding::RMagickEncoder rmagick encoder} to our dragonfly app called 'images'
 
-    app = Dragonfly::App[:images]
+    app = Dragonfly[:images]
     app.register_encoder(Dragonfly::Encoding::RMagickEncoder)
 
 Then we can encode {Dragonfly::ExtendedTempObject temp_objects} to formats recognised by the RMagickEncoder

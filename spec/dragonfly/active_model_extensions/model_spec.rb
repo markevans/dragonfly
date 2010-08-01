@@ -537,8 +537,8 @@ describe Item do
   describe "inheritance" do
     
     before(:all) do
-      @app = Dragonfly::App[:images]
-      @app2 = Dragonfly::App[:egg]
+      @app = Dragonfly[:images]
+      @app2 = Dragonfly[:egg]
       @app.define_macro(model_class, :image_accessor)
       @app2.define_macro(model_class, :egg_accessor)
       Car.class_eval do

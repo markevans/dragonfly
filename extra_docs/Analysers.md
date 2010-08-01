@@ -5,7 +5,7 @@ Analysing data for things like width, mime_type, etc. come under the banner of A
 
 Let's say we have a dragonfly app called 'images'
 
-    app = Dragonfly::App[:images]
+    app = Dragonfly[:images]
 
 Data gets passed around between the datastore, processor, analyser, etc. in the form of an {Dragonfly::ExtendedTempObject ExtendedTempObject}.
 

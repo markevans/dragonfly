@@ -3,7 +3,7 @@ Data Storage
 
 Each dragonfly app has a datastore.
 
-    Dragonfly::App[:my_app_name].datastore
+    Dragonfly[:my_app_name].datastore
     
 By default it uses the file data store, but you can configure it to use
 a custom data store (e.g. S3, SQL, CouchDB, etc.) by registering one with the correct interface, namely
@@ -28,6 +28,6 @@ having `store`, `retrieve` and `destroy`.
 
 You can now configure the app to use this datastore like so
 
-    Dragonfly::App[:my_app_name].datastore = MyDataStore.new
+    Dragonfly[:my_app_name].datastore = MyDataStore.new
 
 If you want your datastore to be configurable, you can include the {Dragonfly::Configurable Configurable} module.

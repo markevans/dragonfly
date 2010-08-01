@@ -56,7 +56,7 @@ Apparently to use Bundler you need to switch to the 'Bamboo' stack - see {http:/
 Initializer (e.g. config/initializers/dragonfly.rb):
 
     require 'dragonfly'
-    app = Dragonfly::App[:images]
+    app = Dragonfly[:images]
     app.configure_with(Dragonfly::Config::HerokuRailsImages, 'my_bucket_name')
     Dragonfly.active_record_macro(:image, app)
 
@@ -93,7 +93,7 @@ Initializer, e.g. config/initializers/dragonfly.rb:
 
     require 'dragonfly'
 
-    app = Dragonfly::App[:attachments]
+    app = Dragonfly[:attachments]
     app.configure_with(Dragonfly::Config::RailsDefaults) do |c|
       c.register_analyser(Dragonfly::Analysis::FileCommandAnalyser)
       c.register_encoder(Dragonfly::Encoding::TransparentEncoder)
@@ -141,13 +141,13 @@ The actual generation is delegated to the registered processors (along with any 
 For example, if our app is registered with the {Dragonfly::Processing::RMagickProcessor RMagickProcessor} (which is already done if using with one of
 the RMagick/RailsImage configurations)
 
-    Dragonfly::App[:my_app].register_processor(Dragonfly::Processing::RMagickProcessor)
+    Dragonfly[:my_app].register_processor(Dragonfly::Processing::RMagickProcessor)
 
 then we can generate images of different sizes/formats):
 
-    image = Dragonfly::App[:my_app].generate(300, 200)       # creates a png image of size 300x200 (as an ExtendedTempObject)
+    image = Dragonfly[:my_app].generate(300, 200)       # creates a png image of size 300x200 (as an ExtendedTempObject)
     image.to_file('out.png')                                 # writes to file 'out.png'
-    image = Dragonfly::App[:my_app].generate(50, 50, :gif)   # creates a gif image of size 50x50
+    image = Dragonfly[:my_app].generate(50, 50, :gif)   # creates a gif image of size 50x50
 
 
 Text image replacement
@@ -159,7 +159,7 @@ We can easily use Dragonfly to do this on-the-fly.
 Configuration (e.g. initializer in Rails):
 
     require 'dragonfly'
-    Dragonfly::App[:text].configure_with(Dragonfly::Config::RMagickText) do |c|
+    Dragonfly[:text].configure_with(Dragonfly::Config::RMagickText) do |c|
       c.path_prefix = '/text'
     end
 
@@ -171,7 +171,7 @@ You probably will want to insert Rack::Cache too or use some other caching proxy
 
 Then when we visit a url like
 
-    url = Dragonfly::App[:text].url_for('some text', :text, :font_size => 30, :font_family => 'Monaco')
+    url = Dragonfly[:text].url_for('some text', :text, :font_size => 30, :font_family => 'Monaco')
 
 we get a png image of the text. We could easily wrap this in some kind of helper if we use it often.
 

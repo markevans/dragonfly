@@ -19,7 +19,7 @@ describe Dragonfly::Middleware do
   end
 
   it "should continue the calling chain if the app returns a 404 for that url" do
-    Dragonfly::App[:images].should_receive(:call).and_return(
+    Dragonfly[:images].should_receive(:call).and_return(
       [404, {"Content-Type" => 'text/plain'}, ['Not found']]
     )
     response = make_request(@stack, 'hello.png?howare=you')
@@ -28,7 +28,7 @@ describe Dragonfly::Middleware do
   end
 
   it "should return as per the dragonfly app if the app returns a 200" do
-    Dragonfly::App[:images].should_receive(:call).and_return(
+    Dragonfly[:images].should_receive(:call).and_return(
       [200, {"Content-Type" => 'text/plain'}, ['ABCD']]
     )
     response = make_request(@stack, 'hello.png?howare=you')
@@ -37,7 +37,7 @@ describe Dragonfly::Middleware do
   end
 
   it "should return as per the dragonfly app if the app returns a 400" do
-    Dragonfly::App[:images].should_receive(:call).and_return(
+    Dragonfly[:images].should_receive(:call).and_return(
       [400, {"Content-Type" => 'text/plain'}, ['ABCD']]
     )
     response = make_request(@stack, 'hello.png?howare=you')

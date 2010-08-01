@@ -8,7 +8,7 @@ All processing jobs are defined by a processing method and a processing options 
 
 Let's say we have a dragonfly app called 'images'
 
-    app = Dragonfly::App[:images]
+    app = Dragonfly[:images]
 
 Data gets passed around between the datastore, processor, analyser, etc. in the form of an {Dragonfly::ExtendedTempObject ExtendedTempObject}.
 
@@ -43,7 +43,7 @@ Each method takes the temp_object, and the (optional) processing options hash as
 
     end
 
-    app = Dragonfly::App[:images]
+    app = Dragonfly[:images]
     app.register_processor(MyProcessor)
 
 You can register multiple processors.
