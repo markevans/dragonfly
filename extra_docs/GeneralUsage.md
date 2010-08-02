@@ -26,6 +26,8 @@ A basic rackup file `config.ru`:
 
     run Dragonfly:App[:my_app_name]
 
+See {file:Configuration Configuration} for all configuration options.
+
 As you can see, this involves instantiating an app, configuring it (how data is stored,
 processing, encoding, etc.), then running it.
 
