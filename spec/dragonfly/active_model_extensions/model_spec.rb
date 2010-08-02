@@ -238,7 +238,7 @@ describe Item do
 
     end
 
-    describe "assigning with a job" do
+    describe "other types of assignment" do
       before(:each) do
         @app.generator.add :egg do
           "Gungedin"
@@ -246,18 +246,39 @@ describe Item do
         @app.processor.add :doogie do |temp_object|
           temp_object.data.upcase
         end
-        @job = @app.generate(:egg)
-        @item.preview_image = @job
       end
-      it "should work" do
-        @item.preview_image.data.should == 'Gungedin'
+
+      describe "assigning with a job" do
+        before(:each) do
+          @job = @app.generate(:egg)
+          @item.preview_image = @job
+        end
+
+        it "should work" do
+          @item.preview_image.data.should == 'Gungedin'
+        end
+
+        it "should not be affected by subsequent changes to the job" do
+          @job.process!(:doogie)
+          @item.preview_image.data.should == 'Gungedin'
+        end
       end
-      it "should not be affected by subsequent changes to the job" do
-        @job.process!(:doogie)
-        @item.preview_image.data.should == 'Gungedin'
+    
+      describe "assigning with another attachment" do
+        before(:each) do
+          Item.class_eval do
+            image_accessor :other_image
+          end
+        end
+        it "should work like assigning the job" do
+          @item.preview_image = 'eggheads'
+          @item.other_image = @item.preview_image
+          @item.preview_image = 'dogchin'
+          @item.other_image.data.should == 'eggheads'
+        end
       end
     end
-    
+
   end
 
   describe "validations" do

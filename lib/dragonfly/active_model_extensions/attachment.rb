@@ -26,6 +26,7 @@ module Dragonfly
         else
           self.job = case value
           when Job then value.dup
+          when self.class then value.job.dup
           else Job.new(app, TempObject.new(value))
           end
           set_magic_attributes
@@ -63,6 +64,10 @@ module Dragonfly
         end
       end
       
+      protected
+      
+      attr_reader :job
+      
       private
       
       def destroy_content(uid)
@@ -93,8 +98,8 @@ module Dragonfly
       end
       
       attr_reader :app, :parent_model, :attribute_name
-      
-      attr_accessor :job, :uid, :previous_uid
+      attr_writer :job
+      attr_accessor :uid, :previous_uid
       
       def allowed_magic_attributes
         app.analyser.analysis_method_names + [:size, :ext, :name]
