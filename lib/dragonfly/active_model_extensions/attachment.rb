@@ -24,7 +24,10 @@ module Dragonfly
           self.job = nil
           reset_magic_attributes
         else
-          self.job = Job.new(app, TempObject.new(value))
+          self.job = case value
+          when Job then value.dup
+          else Job.new(app, TempObject.new(value))
+          end
           set_magic_attributes
         end
         self.previous_uid = uid

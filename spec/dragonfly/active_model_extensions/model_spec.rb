@@ -237,6 +237,27 @@ describe Item do
       end
 
     end
+
+    describe "assigning with a job" do
+      before(:each) do
+        @app.generator.add :egg do
+          "Gungedin"
+        end
+        @app.processor.add :doogie do |temp_object|
+          temp_object.data.upcase
+        end
+        @job = @app.generate(:egg)
+        @item.preview_image = @job
+      end
+      it "should work" do
+        @item.preview_image.data.should == 'Gungedin'
+      end
+      it "should not be affected by subsequent changes to the job" do
+        @job.process!(:doogie)
+        @item.preview_image.data.should == 'Gungedin'
+      end
+    end
+    
   end
 
   describe "validations" do
