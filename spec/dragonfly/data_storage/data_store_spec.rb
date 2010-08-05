@@ -28,7 +28,7 @@ describe "data_store", :shared => true do
       end
       
       it { @extra_info[:name].should be_nil }
-      it { @extra_info[:meta].should == {} }
+      it { @extra_info[:meta].should be_a(Hash) }
     end
 
     describe "when extra info is given" do
@@ -42,7 +42,7 @@ describe "data_store", :shared => true do
       end
 
       it { @extra_info[:name].should == 'danny.boy' }
-      it { @extra_info[:meta].should == {:bitrate => '35'} }
+      it { @extra_info[:meta].should include_hash(:bitrate => '35') }
     end
 
     it "should raise an exception if the data doesn't exist" do

@@ -20,3 +20,9 @@ def match_ar_error(string)
     error == string
   end
 end
+
+def include_hash(hash)
+  simple_matcher("include hash #{hash}") do |given|
+    given.merge(hash) == given
+  end
+end
