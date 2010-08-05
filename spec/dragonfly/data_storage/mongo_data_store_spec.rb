@@ -7,9 +7,6 @@ describe Dragonfly::DataStorage::MongoDataStore do
     @data_store = Dragonfly::DataStorage::MongoDataStore.new
   end
   
-  after(:each) do
-  end
-  
   it_should_behave_like 'data_store'
 
 end

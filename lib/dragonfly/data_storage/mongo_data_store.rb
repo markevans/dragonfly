@@ -7,9 +7,13 @@ module Dragonfly
       include Configurable
       include Serializer
 
+      configurable_attr :host
+      configurable_attr :port
       configurable_attr :database, 'dragonfly'
 
       def initialize(opts={})
+        self.host = opts[:host]
+        self.port = opts[:port]
         self.database = opts[:database] if opts[:database]
       end
 
@@ -41,11 +45,16 @@ module Dragonfly
 
       private
       
+      def connection
+        @connection ||= Mongo::Connection.new(host, port)
+      end
+      
+      def db
+        @db ||= connection.db(database)
+      end
+      
       def grid
-        @grid ||= (
-          db = Mongo::Connection.new.db(database)
-          Mongo::Grid.new(db)
-        )
+        @grid ||= Mongo::Grid.new(db)
       end
       
       def bson_id(uid)
