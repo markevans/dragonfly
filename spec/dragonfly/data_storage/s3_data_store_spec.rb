@@ -29,8 +29,9 @@ describe Dragonfly::DataStorage::S3DataStore do
         end
       
         it "should work ok with files with funny names" do
-          temp_object = Dragonfly::TempObject.new('eggheads')
-          temp_object.name = 'A Picture with many spaces in its name (at 20:00 pm).png'
+          temp_object = Dragonfly::TempObject.new('eggheads',
+            :name =>  'A Picture with many spaces in its name (at 20:00 pm).png'
+          )
           uid = @data_store.store(temp_object)
           data, extra = @data_store.retrieve(uid)
           data.should == 'eggheads'
