@@ -63,18 +63,14 @@ module Dragonfly
         image.crop_resized(width, height, gravity).to_blob
       end
 
-      def rotate(temp_object, opts={})
-        if opts[:amount]
-          args = [opts[:amount].to_f]
-          args << opts[:qualifier] if opts[:qualifier]
-          image = rmagick_image(temp_object)
-          image.background_color = opts[:background_colour] if opts[:background_colour]
-          image.background_color = opts[:background_color] if opts[:background_color]
-          rotated_image = image.rotate(*args)
-          rotated_image ? rotated_image.to_blob : temp_object
-        else
-          temp_object
-        end
+      def rotate(temp_object, amount, opts={})
+        args = [amount.to_f]
+        args << opts[:qualifier] if opts[:qualifier]
+        image = rmagick_image(temp_object)
+        image.background_color = opts[:background_colour] if opts[:background_colour]
+        image.background_color = opts[:background_color] if opts[:background_color]
+        rotated_image = image.rotate(*args)
+        rotated_image ? rotated_image.to_blob : temp_object
       end
       
       def thumb(temp_object, geometry)
