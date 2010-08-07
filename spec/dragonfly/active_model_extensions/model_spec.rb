@@ -139,6 +139,7 @@ describe Item do
         @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING")).once.and_return('some_uid')
         @item.save!
       end
+
       it "should have the correct uid" do
         @item.preview_image_uid.should == 'some_uid'
       end
@@ -181,13 +182,17 @@ describe Item do
       describe "when something new is assigned" do
         before(:each) do
           @item.preview_image = "ANEWDATASTRING"
+          @app.datastore.stub!(:store).and_return('some_uid')
         end
         it "should set the uid to nil" do
           @item.preview_image_uid.should be_nil
         end
         it "should destroy the old data when saved" do
-          @app.datastore.should_receive(:store).with(a_temp_object_with_data("ANEWDATASTRING")).once.and_return('some_uid')
-          
+          @app.datastore.should_receive(:destroy).with('some_uid')
+          @item.save!
+        end
+        it "should destroy the old data when saved, even if yet another thing is assigned" do
+          @item.preview_image = "YET ANOTHER DATA STRING"
           @app.datastore.should_receive(:destroy).with('some_uid')
           @item.save!
         end
@@ -198,6 +203,16 @@ describe Item do
         it "should destroy the old data on destroy" do
           @app.datastore.should_receive(:destroy).with('some_uid')
           @item.destroy
+        end
+        it "should destroy the old data on destroy, even if yet another thing is assigned" do
+          @item.preview_image = "YET ANOTHER DATA STRING"
+          @app.datastore.should_receive(:destroy).with('some_uid')
+          @item.destroy
+        end
+        it "should destroy the old data when the uid has been set manually" do
+          @app.datastore.should_receive(:destroy).with('some_uid')
+          @item.preview_image_uid = 'some_known_uid'
+          @item.save!
         end
         it "should return the new size" do
           @item.preview_image.size.should == 14

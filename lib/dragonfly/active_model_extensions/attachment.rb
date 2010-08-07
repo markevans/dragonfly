@@ -31,7 +31,6 @@ module Dragonfly
           end
           set_magic_attributes
         end
-        self.previous_uid = uid
         set_uid_and_parent_uid(nil)
         value
       end
@@ -79,7 +78,6 @@ module Dragonfly
       def sync_with_parent!
         # If the parent uid has been set manually
         if uid != parent_uid
-          self.previous_uid = uid
           self.uid = parent_uid
         end
       end
@@ -99,7 +97,13 @@ module Dragonfly
       
       attr_reader :app, :parent_model, :attribute_name
       attr_writer :job
-      attr_accessor :uid, :previous_uid
+      attr_accessor :previous_uid
+      attr_reader :uid
+      
+      def uid=(uid)
+        self.previous_uid = @uid if @uid
+        @uid = uid
+      end
       
       def allowed_magic_attributes
         app.analyser.analysis_method_names + [:size, :ext, :name]
