@@ -17,7 +17,9 @@ describe Dragonfly::Serializer do
       b64_encode(string).should_not =~ /\n|=/
     end
     it "should correctly encode and decode #{string.inspect} to the same string" do
-      b64_decode(b64_encode(string)).should == string
+      str = b64_decode(b64_encode(string))
+      str.force_encoding('UTF-8') if str.respond_to?(:force_encoding)
+      str.should == string
     end
   end
   
