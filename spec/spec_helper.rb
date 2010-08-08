@@ -24,6 +24,8 @@ def todo
 end
 
 require 'logger'
+LOG_FILE = File.dirname(__FILE__) + '/spec.log'
+FileUtils.rm_rf(LOG_FILE)
 def mock_app(extra_stubs={})
   mock('app', {
     :datastore => mock('datastore', :store => 'some_uid', :retrieve => ["SOME_DATA", {}], :destroy => nil),
@@ -31,7 +33,7 @@ def mock_app(extra_stubs={})
     :encoder => mock('encoder', :encode => "SOME_ENCODED_DATA"),
     :analyser => mock('analyser', :analyse => "some_result", :analysis_methods => Module.new),
     :generator => mock('generator', :generate => "SOME_GENERATED_DATA"),
-    :log => Logger.new($stderr),
+    :log => Logger.new(LOG_FILE),
     :cache_duration => 10000,
     :job_definitions => Module.new
   }.merge(extra_stubs)

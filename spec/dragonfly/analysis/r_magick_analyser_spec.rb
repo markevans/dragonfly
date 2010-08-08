@@ -6,6 +6,7 @@ describe Dragonfly::Analysis::RMagickAnalyser do
     image_path = File.dirname(__FILE__) + '/../../../samples/beach.png'
     @beach = Dragonfly::TempObject.new(File.new(image_path))
     @analyser = Dragonfly::Analysis::RMagickAnalyser.new
+    @analyser.log = Logger.new(LOG_FILE)
   end
 
   it "should return the width" do

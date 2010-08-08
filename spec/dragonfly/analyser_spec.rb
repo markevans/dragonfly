@@ -4,6 +4,7 @@ describe Dragonfly::Analyser do
   
   before(:each) do
     @analyser = Dragonfly::Analyser.new
+    @analyser.log = Logger.new(LOG_FILE)
   end
   
   describe "analysis_methods module" do

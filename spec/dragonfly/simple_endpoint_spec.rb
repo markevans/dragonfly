@@ -9,7 +9,7 @@ describe Dragonfly::SimpleEndpoint do
 
   before(:each) do
     @app = test_app
-    @app.log = Logger.new($stderr)
+    @app.log = Logger.new(LOG_FILE)
     @uid = @app.store('HELLO THERE')
     @endpoint = Dragonfly::SimpleEndpoint.new(@app)
   end
