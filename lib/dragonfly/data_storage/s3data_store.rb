@@ -29,7 +29,7 @@ module Dragonfly
         uid = generate_uid(temp_object.basename || 'file')
         ensure_initialized
         object = use_filesystem ? temp_object.file : temp_object.data
-        extra_data = {:name => temp_object.name, :meta => temp_object.meta}
+        extra_data = temp_object.attributes
         S3Object.store(uid, object, bucket_name, s3_metadata_for(extra_data))
         object.close if use_filesystem
         uid

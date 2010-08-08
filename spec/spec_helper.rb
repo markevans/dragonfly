@@ -24,7 +24,7 @@ def todo
 end
 
 require 'logger'
-LOG_FILE = File.dirname(__FILE__) + '/spec.log'
+LOG_FILE = File.dirname(__FILE__) + '/spec.log' unless defined?(LOG_FILE)
 FileUtils.rm_rf(LOG_FILE)
 def mock_app(extra_stubs={})
   mock('app', {

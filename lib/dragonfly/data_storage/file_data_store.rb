@@ -73,10 +73,7 @@ module Dragonfly
       
       def store_extra_data(data_path, temp_object)
         File.open(extra_data_path(data_path), 'w') do |f|
-          f.write Marshal.dump(
-            :name => temp_object.name,
-            :meta => temp_object.meta
-          )
+          f.write Marshal.dump(temp_object.attributes)
         end
       end
       
