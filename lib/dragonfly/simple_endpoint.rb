@@ -19,6 +19,7 @@ module Dragonfly
     
     def initialize(app)
       @app = app
+      use_same_log_as(app)
     end
 
     def call(env)
