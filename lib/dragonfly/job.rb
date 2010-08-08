@@ -11,8 +11,6 @@ module Dragonfly
     class NothingToAnalyse < StandardError; end
     class InvalidArray < StandardError; end
     
-    include Loggable
-    
     extend Forwardable
     def_delegators :result, :data, :file, :tempfile, :path, :to_file, :size, :ext, :name
     
