@@ -2,14 +2,16 @@
 -e yard/setup.rb
 -
 README.md
-extra_docs/GettingStarted.md
+extra_docs/GeneralUsage.md
 extra_docs/UsingWithRails.md
-extra_docs/ActiveRecord.md
+extra_docs/ActiveModel.md
 extra_docs/DataStorage.md
-extra_docs/Shortcuts.md
 extra_docs/Analysers.md
 extra_docs/Processing.md
 extra_docs/Encoding.md
+extra_docs/Generators.md
+extra_docs/Configuration.md
+extra_docs/URLs.md
 extra_docs/MimeTypes.md
 extra_docs/ExampleUseCases.md
 LICENSE
