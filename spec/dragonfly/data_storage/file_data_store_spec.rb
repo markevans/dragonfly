@@ -48,6 +48,12 @@ describe Dragonfly::DataStorage::FileDataStore do
       @data_store.store(@temp_object)
     end
 
+    it "should get rid of funny characters in the temp_object name" do
+      @temp_object.should_receive(:name).at_least(:once).and_return('A Picture with many spaces in its name (at 20:00 pm).png')
+      it_should_write_to_file("#{@file_pattern_prefix}A_Picture_with_many_spaces_in_its_name_at_20_00_pm_.png", @temp_object)
+      @data_store.store(@temp_object)
+    end
+
     describe "when the filename already exists" do
 
       it "should use a different filename" do

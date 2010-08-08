@@ -68,7 +68,7 @@ module Dragonfly
       end
 
       def relative_path_for(filename)
-        "#{Time.now.strftime '%Y/%m/%d'}/#{filename}"
+        "#{Time.now.strftime '%Y/%m/%d'}/#{filename.gsub(/[^\w.]+/,'_')}"
       end
       
       def store_extra_data(data_path, temp_object)
