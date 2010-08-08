@@ -127,7 +127,7 @@ module Dragonfly
       end
       
       def has_magic_attribute_for?(property)
-        magic_attributes.include?("#{attribute_name}_#{property}")
+        magic_attributes.include?("#{attribute_name}_#{property}".to_method_name)
       end
       
       def magic_attribute_for(property)
