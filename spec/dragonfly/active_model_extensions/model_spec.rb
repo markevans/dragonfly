@@ -606,11 +606,13 @@ describe Item do
       end
 
       @base_class = Car
-      @subclass = Class.new(Car){ image_accessor :reliant_image }
-      @subclass_with_module = Class.new(Car) do
+      class ReliantRobin < Car; image_accessor :reliant_image; end
+      @subclass = ReliantRobin
+      class ReliantRobinWithModule < Car
         include Module.new
         image_accessor :reliant_image
       end
+      @subclass_with_module = ReliantRobinWithModule
       @unrelated_class = Photo
     end
 

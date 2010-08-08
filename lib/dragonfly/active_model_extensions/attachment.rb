@@ -117,7 +117,7 @@ module Dragonfly
       
       def set_magic_attributes
         magic_attributes.each do |attribute|
-          method = attribute.sub("#{attribute_name}_", '')
+          method = attribute.to_s.sub("#{attribute_name}_", '')
           parent_model.send("#{attribute}=", job.send(method))
         end
       end
