@@ -14,8 +14,8 @@ describe Dragonfly::DataStorage::S3DataStore do
         @data_store = Dragonfly::DataStorage::S3DataStore.new
         @data_store.configure do |d|
           d.bucket_name = 'dragonfly_test'
-          d.access_key_id = 'XXXXXXXXXXXXXX'
-          d.secret_access_key = 'XXXXXXXXXXXXX'
+          d.access_key_id = 'XXX'
+          d.secret_access_key = 'XXX'
         end
       end
     
@@ -33,6 +33,7 @@ describe Dragonfly::DataStorage::S3DataStore do
             :name =>  'A Picture with many spaces in its name (at 20:00 pm).png'
           )
           uid = @data_store.store(temp_object)
+          uid.should =~ /A_Picture_with_many_spaces_in_its_name_at_20_00_pm_\.png$/
           data, extra = @data_store.retrieve(uid)
           data.should == 'eggheads'
         end

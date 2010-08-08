@@ -26,7 +26,7 @@ module Dragonfly
       end
 
       def store(temp_object)
-        uid = generate_uid(temp_object.basename || 'file')
+        uid = generate_uid(temp_object.name || 'file')
         ensure_initialized
         object = use_filesystem ? temp_object.file : temp_object.data
         extra_data = temp_object.attributes
@@ -67,9 +67,8 @@ module Dragonfly
         end
       end
 
-      def generate_uid(suffix)
-        time = Time.now
-        "#{time.strftime '%Y/%m/%d/%H/%M/%S'}/#{rand(1000)}/#{suffix}"
+      def generate_uid(name)
+        "#{Time.now.strftime '%Y/%m/%d/%H/%M/%S'}/#{rand(1000)}/#{name.gsub(/[^\w.]+/, '_')}"
       end
 
       def s3_metadata_for(extra_data)
