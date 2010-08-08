@@ -41,6 +41,14 @@ module Dragonfly
         image.crop(gravity, x, y, width, height).to_blob
       end
       
+      def flip(temp_object)
+        rmagick_image(temp_object).flip.to_blob
+      end
+
+      def flop(temp_object)
+        rmagick_image(temp_object).flop.to_blob
+      end
+
       def greyscale(temp_object, opts={})
         depth = opts[:depth] || 256
         rmagick_image(temp_object).quantize(depth, Magick::GRAYColorspace).to_blob
