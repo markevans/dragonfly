@@ -22,7 +22,7 @@ module Dragonfly
       CROP_GEOMETRY           = /^(\d+)x(\d+)([+-]\d+)([+-]\d+)(\w{1,2})?$/ # e.g. '30x30+10+10ne'
       THUMB_GEOMETRY = Regexp.union RESIZE_GEOMETRY, CROPPED_RESIZE_GEOMETRY, CROP_GEOMETRY
       
-      # Processing methods
+      include RMagickUtils
       
       def crop(temp_object, opts={})
         x       = opts[:x].to_i
@@ -116,25 +116,6 @@ module Dragonfly
         rmagick_image(temp_object) do |image|
           image.vignette(x, y, radius, sigma)
         end
-      end
-      
-      private
-      
-      def rmagick_image(temp_object, &block)
-        image = Magick::Image.from_blob(temp_object.data).first
-        result = block[image]
-        case result
-        when Magick::Image, Magick::ImageList
-          content = result.to_blob
-          result.destroy!
-        else
-          content = result
-        end
-        image.destroy! unless image.destroyed?
-        content
-      rescue Magick::ImageMagickError => e
-        log.warn("Unable to handle content in #{self.class} - got:\n#{e}")
-        throw :unable_to_handle
       end
 
     end

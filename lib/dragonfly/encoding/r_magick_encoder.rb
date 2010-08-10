@@ -2,10 +2,10 @@ require 'RMagick'
 
 module Dragonfly
   module Encoding
-
     class RMagickEncoder
 
       include Configurable
+      include RMagickUtils
 
       configurable_attr :supported_formats, [
         :ai,
@@ -42,28 +42,19 @@ module Dragonfly
         :xwd
       ]
 
-      def encode(image, format, encoding={})
+      def encode(temp_object, format, encoding={})
         format = format.to_s.downcase
         throw :unable_to_handle unless supported_formats.include?(format.to_sym)
-        encoded_image = rmagick_image(image)
-        if encoded_image.format.downcase == format
-          image # do nothing
-        else
-          encoded_image.format = format
-          encoded_image.to_blob
+        rmagick_image(temp_object) do |image|
+          if image.format.downcase == format
+            temp_object # do nothing
+          else
+            image.format = format
+            image
+          end
         end
       end
 
-      private
-
-      def rmagick_image(temp_object)
-        Magick::Image.from_blob(temp_object.data).first
-      rescue Magick::ImageMagickError => e
-        log.warn("Unable to handle content in #{self.class} - got:\n#{e}")
-        throw :unable_to_handle
-      end
-
     end
-
   end
 end

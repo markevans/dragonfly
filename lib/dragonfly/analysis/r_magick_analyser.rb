@@ -5,40 +5,43 @@ module Dragonfly
     class RMagickAnalyser
 
       include Loggable
+      include RMagickUtils
 
-      def width(image)
-        rmagick_image(image).columns
+      def width(temp_object)
+        rmagick_image(temp_object) do |image|
+          image.columns
+        end
       end
       
-      def height(image)
-        rmagick_image(image).rows
+      def height(temp_object)
+        rmagick_image(temp_object) do |image|
+          image.rows
+        end
       end
       
-      def aspect_ratio(image)
-        rmagick_data = rmagick_image(image)
-        rmagick_data.columns.to_f / rmagick_data.rows
+      def aspect_ratio(temp_object)
+        rmagick_image(temp_object) do |image|
+          image.columns.to_f / image.rows
+        end
       end
       
-      def depth(image)
-        rmagick_image(image).depth
+      def depth(temp_object)
+        rmagick_image(temp_object) do |image|
+          image.depth
+        end
       end
       
-      def number_of_colours(image)
-        rmagick_image(image).number_colors
+      def number_of_colours(temp_object)
+        rmagick_image(temp_object) do |image|
+          image.number_colors
+        end
       end
       alias number_of_colors number_of_colours
 
-      def format(image)
-        rmagick_image(image).format.downcase.to_sym
-      end
-      
-      private
-      
-      def rmagick_image(image)
-        Magick::Image.from_blob(image.data).first
-      rescue Magick::ImageMagickError => e
-        log.warn("Unable to handle content in #{self.class} - got:\n#{e}")
-        throw :unable_to_handle
+      def format(temp_object)
+        rmagick_image(temp_object) do |image|
+          image.format.downcase.to_sym
+        end
       end
       
     end
