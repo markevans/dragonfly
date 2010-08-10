@@ -121,6 +121,11 @@ We can chain all these things much like ActiveRecord scopes:
 
     album.cover_image.png.thumb('300x200#ne).process(:greyscale).encode(:tiff)
 
+Because the processing/encoding methods are lazy, no actual processing or encoding is done until a method like `data`, `file`, `to_file`, `width`, etc. is called.
+You can force the processing to be done if you must by then calling `apply`.
+
+    album.cover_image.process(:greyscale).apply
+
 Persisting
 ----------
 When the model is saved, a before_save callback persists the data to the {Dragonfly::App App}'s configured datastore (see {file:DataStorage.md DataStorage})
@@ -131,21 +136,20 @@ The uid column is then filled in.
     album.cover_image_uid                                   # => nil
     
     album.cover_image = File.new('path/to/my_image.png')
-    album.cover_image_uid                                   # => 'PENDING' (actually a Dragonfly::ActiveModelExtensions::PendingUID)
+    album.cover_image_uid                                   # => nil
     
     album.save
-    album.cover_image_uid                                   # => '2009/12/05/170406_file' (some unique uid, used by the datastore)
+    album.cover_image_uid                                   # => '2009/12/05/file.png' (some unique uid, used by the datastore)
 
 URLs
 ----
-Once the model is saved, we can get a url for the image (which is served by the Dragonfly {Dragonfly::App App} itself):
+Once the model is saved, we can get a url for the image (which is served by the Dragonfly {Dragonfly::App App} itself), and for its processed/encoded versions:
 
-    album.cover_image.url                       # => '/media/2009/12/05/170406_file' (Note there is no extension)
-    album.cover_image.url(:png)                 # => '/media/2009/12/05/170406_file.png'
-    album.cover_image.url('300x200#nw', :gif)   # => '/media/2009/12/05/170406_file.tif?m=resize_and_crop&o[height]=...'
+    album.cover_image.url                           # => '/media/BAhbBlsHOgZmIhgy...'
+    album.cover_image.thumb('300x200#nw').url       # => '/media/BAhbB1sYusgZhgyM...'
+    album.cover_image.process(:greyscale).jpg.url   # => '/media/BnA6CnRodW1iIg8z...'
 
-Note that any arguments given to `url` are of the same form as those used for `transform`, i.e. those registered as shortcuts (see {file:Shortcuts.md Shortcuts})
-These urls are what you would use in, for example, html views.
+Because the processing/encoding methods (including shortcuts like `thumb` and `jpg`) are lazy, no processing or encoding is actually done.
 
 Validations
 -----------
@@ -157,7 +161,7 @@ Validations
       validates_presence_of :cover_image
       validates_size_of :cover_image, :maximum => 500.kilobytes
       validates_mime_type_of :cover_image, :in => %w(image/jpeg image/png image/gif)
-      validates_property :width, :of => :cover_image, :in => (0..400)
+      validates_property :width, :of => :cover_image, :in => (0..400), :message => "é demais cara!"
 
       # ...
     end
@@ -168,7 +172,7 @@ See {Dragonfly::ActiveModelExtensions::Validations Validations} for more info.
 
 Name and extension
 ------------------
-If the object assigned is a file, or responds to `original_filename` (as is the case with file uploads in Rails, etc.), then `name` and `ext` will be set.
+If the object assigned is a file, or responds to `original_filename` (as is the case with file uploads in Rails, etc.), then `name` will be set.
 
     album.cover_image = File.new('path/to/my_image.png')
     
@@ -178,30 +182,26 @@ If the object assigned is a file, or responds to `original_filename` (as is the 
 
 'Magic' Attributes
 ------------------
-The only model column necessary for the migration, as described above, is the uid column, e.g. `cover_image_uid`.
-However, in many cases you may want to record some other properties in the database, whether it be for using in sql queries, or
-for caching an attribute for performance reasons.
+An accessor like `cover_image` only relies on the accessor `cover_image_uid` to work.
+However, in some cases you may want to record some other properties, whether it be for using in queries, or
+for caching an attribute for performance reasons, etc.
 
 For the properties `name`, `ext`, `size` and any of the registered analysis methods (e.g. `width`, etc. in the examples above),
-this is done automatically for you, if the corresponding column exists.
-For example:
+this is done automatically for you, if the corresponding accessor exists.
 
-In the migration:
+For example - with ActiveRecord, given the migration:
 
-    add_column :albums, :cover_image_ext, :string
     add_column :albums, :cover_image_width, :integer
 
-These are automatically set when assigned:
+This will automatically be set when assigned:
 
     album.cover_image = File.new('path/to/my_image.png')
     
-    album.cover_image_ext    # => 'png'
     album.cover_image_width  # => 280
     
-They can be used to avoid retrieving data from the datastore for analysis (e.g. if you've used something like S3 to store data - see {file:DataStorage.md DataStorage})
+They can be used to avoid retrieving data from the datastore for analysis
 
     album = Album.first
-    
-    album.cover_image.ext       # => 'png'  - no need to retrieve data - takes it from `cover_image_ext`
+
     album.cover_image.width     # => 280    - no need to retrieve data - takes it from `cover_image_width`
     album.cover_image.size      # => 134507 - but it needs to retrieve data from the data store, then analyse
