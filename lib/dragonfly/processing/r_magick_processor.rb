@@ -31,54 +31,62 @@ module Dragonfly
         width   = opts[:width].to_i
         height  = opts[:height].to_i
 
-        image = rmagick_image(temp_object)
-
-        # RMagick throws an error if the cropping area is bigger than the image,
-        # when the gravity is something other than nw
-        width  = image.columns - x if x + width  > image.columns
-        height = image.rows    - y if y + height > image.rows
-
-        image.crop(gravity, x, y, width, height).to_blob
+        rmagick_image(temp_object) do |image|
+          # RMagick throws an error if the cropping area is bigger than the image,
+          # when the gravity is something other than nw
+          width  = image.columns - x if x + width  > image.columns
+          height = image.rows    - y if y + height > image.rows
+          image.crop(gravity, x, y, width, height)
+        end
       end
       
       def flip(temp_object)
-        rmagick_image(temp_object).flip.to_blob
+        rmagick_image(temp_object) do |image|
+          image.flip!
+        end
       end
 
       def flop(temp_object)
-        rmagick_image(temp_object).flop.to_blob
+        rmagick_image(temp_object) do |image|
+          image.flop!
+        end
       end
 
       def greyscale(temp_object, opts={})
         depth = opts[:depth] || 256
-        rmagick_image(temp_object).quantize(depth, Magick::GRAYColorspace).to_blob
+        rmagick_image(temp_object) do |image|
+          image.quantize(depth, Magick::GRAYColorspace)
+        end
       end
       alias grayscale greyscale
       
       def resize(temp_object, geometry)
-        rmagick_image(temp_object).change_geometry!(geometry) do |cols, rows, img|
-         img.resize!(cols, rows)
-        end.to_blob
+        rmagick_image(temp_object) do |image|
+          image.change_geometry!(geometry) do |cols, rows, img|
+           img.resize!(cols, rows)
+          end
+        end
       end
 
       def resize_and_crop(temp_object, opts={})
-        image = rmagick_image(temp_object)
+        rmagick_image(temp_object) do |image|
         
-        width   = opts[:width] ? opts[:width].to_i : image.columns
-        height  = opts[:height] ? opts[:height].to_i : image.rows
-        gravity = GRAVITIES[opts[:gravity]] || Magick::CenterGravity
+          width   = opts[:width] ? opts[:width].to_i : image.columns
+          height  = opts[:height] ? opts[:height].to_i : image.rows
+          gravity = GRAVITIES[opts[:gravity]] || Magick::CenterGravity
 
-        image.crop_resized(width, height, gravity).to_blob
+          image.crop_resized(width, height, gravity)
+        end
       end
 
       def rotate(temp_object, amount, opts={})
         args = [amount.to_f]
         args << opts[:qualifier] if opts[:qualifier]
-        image = rmagick_image(temp_object)
-        image.background_color = opts[:background_colour] if opts[:background_colour]
-        image.background_color = opts[:background_color] if opts[:background_color]
-        rotated_image = image.rotate(*args)
-        rotated_image ? rotated_image.to_blob : temp_object
+        rmagick_image(temp_object) do |image|
+          image.background_color = opts[:background_colour] if opts[:background_colour]
+          image.background_color = opts[:background_color] if opts[:background_color]
+          image.rotate(*args) || temp_object
+        end
       end
       
       def thumb(temp_object, geometry)
@@ -105,13 +113,25 @@ module Dragonfly
         radius = opts[:radius].to_f ||  0.0
         sigma  = opts[:sigma].to_f  || 10.0
 
-        rmagick_image(temp_object).vignette(x, y, radius, sigma).to_blob
+        rmagick_image(temp_object) do |image|
+          image.vignette(x, y, radius, sigma)
+        end
       end
       
       private
       
-      def rmagick_image(temp_object)
-        Magick::Image.from_blob(temp_object.data).first
+      def rmagick_image(temp_object, &block)
+        image = Magick::Image.from_blob(temp_object.data).first
+        result = block[image]
+        case result
+        when Magick::Image, Magick::ImageList
+          content = result.to_blob
+          result.destroy!
+        else
+          content = result
+        end
+        image.destroy! unless image.destroyed?
+        content
       rescue Magick::ImageMagickError => e
         log.warn("Unable to handle content in #{self.class} - got:\n#{e}")
         throw :unable_to_handle
