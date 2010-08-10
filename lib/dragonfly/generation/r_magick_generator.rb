@@ -120,8 +120,10 @@ module Dragonfly
         image.format = format.to_s
 
         # Output image as string
+        data = image.to_blob
+        image.destroy!
         [
-          image.to_blob,
+          data,
           {:format => format, :name => "text.#{format}"}
         ]
       end
