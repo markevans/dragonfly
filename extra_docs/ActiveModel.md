@@ -1,21 +1,35 @@
-ActiveRecord Extensions
-=======================
+Using with ActiveModel
+======================
 
-Dragonfly provides a module that extends ActiveRecord so that you can access Dragonfly objects as if they were just another model attribute.
+You can extend ActiveModel-compatible models to make working with content such as images
+as easy as working with strings or numbers!
 
-Registering with ActiveRecord
------------------------------
-If you've used a rails generator, or required the file 'dragonfly/rails/images.rb', then this step will be already done for you.
+The examples below assume an initialized Dragonfly app, e.g.
 
-Suppose we have a dragonfly app
+    app = Dragonfly[:images]
 
-    app = Dragonfly[:my_app_name]
+ActiveRecord
+------------
+If you've required 'dragonfly/rails/images', then the following step will be already done for you.
+Otherwise:
 
-We can define an accessor on ActiveRecord models using
+    app.define_macro(ActiveRecord::Base, :image_accessor)
 
-    Dragonfly.active_record_macro(:image, app)
+defines the macro `image_accessor` on any ActiveRecord models.
 
-The first argument is the prefix for the accessor macro (in this case 'image').
+Mongoid
+-------
+
+    app.define_macro_on_include(Mongoid::Document, :image_accessor)
+
+defines the macro `image_accessor` on any models that include `Mongoid::Document`
+
+Custom Model
+------------
+
+    app.define_macro(MyModel, :image_accessor)
+
+defines the macro `image_accessor` on your custom model class `MyModel`.
 
 Adding accessors
 ----------------
@@ -26,7 +40,10 @@ Now we have the method `image_accessor` available in our model classes, which we
       image_accessor :band_photo  # Note: this is a different image altogether, not a thumbnail of cover_image
     end
 
-For each accessor, we need a database field ..._uid, as a string, so in our migrations:
+Each accessor (e.g. `cover_image`) depends on a string field to actually hold the datastore uid,
+named by appending the suffix `_uid` (e.g. `cover_image_uid`).
+
+For example, ActiveRecord models need a migration such as:
 
     class MyMigration < ActiveRecord::Migration
 
@@ -45,13 +62,14 @@ For each accessor, we need a database field ..._uid, as a string, so in our migr
 Using the accessors
 -------------------
 
-We can use the attribute much like other other active record attributes:
+We can use the attribute much like other other model attributes:
 
     album = Album.new
     
     album.cover_image = "\377???JFIF\000\..."             # can assign as a string...
     album.cover_image = File.new('path/to/my_image.png')  # ... or as a file...
-    album.cover_image = some_tempfile                     # ... or as a tempfile
+    album.cover_image = some_tempfile                     # ... or as a tempfile...
+    album.cover_image = album.band_photo                  # ... or as another Dragonfly attachment
     
     album.cover_image          # => #<Dragonfly::ActiveModelExtensions::Attachment:0x103ef6128...
     
@@ -62,7 +80,7 @@ We can inspect properties of the attribute
 
     album.cover_image.width                          # => 280
     album.cover_image.height                         # => 140
-    album.cover_image.number_of_colours              # => 34703 (can also use American spelling)
+    album.cover_image.number_of_colours              # => 34703
     album.cover_image.mime_type                      # => 'image/png'
     
 The properties available (i.e. 'width', etc.) come from the app's registered analysers - see {file:Analysers.md Analysers}.
@@ -81,34 +99,27 @@ We can play around with the data
 
 We can process the data
 
-    temp_object = album.cover_image.process(:resize, :geometry => '20x20')   # returns an ExtendedTempObject, with similar properties
-    temp_object.width                                                        # => 20
-    album.cover_image.width                                                  # => 280 (no change)
-    
-    album.cover_image.process!(:resize, :geometry => '20x20')                # (operates on self)
-    album.cover_image.width                                                  # => 20
+    image = album.cover_image.process(:thumb, '20x20')   # returns a 'Job' object, with similar properties
+    image.width                                          # => 20
+    album.cover_image.width                              # => 280 (no change)
 
-The available processing methods available (i.e. 'resize', etc.) come from the {Dragonfly} app's registered processors - see {file:Processing.md Processing}
+The available processing methods available (i.e. 'thumb', etc.) come from the {Dragonfly} app's registered processors - see {file:Processing.md Processing}
 
 We can encode the data
 
-    temp_object = album.cover_image.encode(:gif)   # returns an ExtendedTempObject, with similar properties
-    temp_object.mime_type                          # => 'image/gif'
-    album.cover_image.mime_type                    # => 'image/png' (no change)
-    
-    album.cover_image.encode!(:gif)                # (operates on self)
-    album.cover_image.mime_type                    # => 'image/gif'
+    image = album.cover_image.encode(:gif)   # returns a 'Job' object, with similar properties
+    image.format                             # => :gif
+    album.cover_image.format                 # => :png (no change)
 
 The encoding is implemented by the {Dragonfly} app's registered encoders (which will usually just be one) - see {file:Encoding.md Encoding}
 
-If we have a combination of processing and encoding that we often use, e.g.
+We can use configured shortcuts for processing/encoding (see {file:GeneralUsage.md GeneralUsage}), and chain them:
 
-    album.cover_image.process(:resize_and_crop, :width => 300, :height => 200, :gravity => 'nw').encode(:gif)
+    album.cover_image.thumb('300x200#ne')     # => returns a 'Job' object, with similar properties
 
-then we can register a shortcut (see {file:Shortcuts.md Shortcuts}) and use that with `transform`, e.g.
+We can chain all these things much like ActiveRecord scopes:
 
-    album.cover_image.transform('300x200#nw', :gif)           # returns an ExtendedTempObject, like process and encode above
-    album.cover_image.transform!('300x200#nw', :gif)          # (operates on self)
+    album.cover_image.png.thumb('300x200#ne).process(:greyscale).encode(:tiff)
 
 Persisting
 ----------
