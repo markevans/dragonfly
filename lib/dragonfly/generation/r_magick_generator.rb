@@ -59,8 +59,10 @@ module Dragonfly
       def plasma(width, height, format='png')
         image = Magick::Image.read("plasma:fractal"){self.size = "#{width}x#{height}"}.first
         image.format = format.to_s
+        data = image.to_blob
+        image.destroy!
         [
-          image.to_blob,
+          data,
           {:format => format.to_sym, :name => "plasma.#{format}"}
         ]
       end
