@@ -79,7 +79,7 @@ describe Dragonfly::App do
         @app.analyser.add :mime_type do |temp_object|
           'image/jpeg'
         end
-        @app.encoder.add :encode do |temp_object|
+        @app.encoder.add do |temp_object|
           'ENCODED DATA YO'
         end
       end
