@@ -36,13 +36,13 @@ module Dragonfly
       end
 
       def destroy!
-        destroy_content(previous_uid) if previous_uid
+        destroy_previous!
         destroy_content(uid) if uid
       end
       
       def save!
         sync_with_parent!
-        destroy_content(previous_uid) if previous_uid
+        destroy_previous!
         if job && !uid
           set_uid_and_parent_uid app.datastore.store(job.result)
           self.job = job.to_fetched_job(uid)
@@ -73,6 +73,13 @@ module Dragonfly
         app.datastore.destroy(uid)
       rescue DataStorage::DataNotFound => e
         app.log.warn("*** WARNING ***: tried to destroy data with uid #{uid}, but got error: #{e}")
+      end
+      
+      def destroy_previous!
+        if previous_uid
+          destroy_content(previous_uid)
+          self.previous_uid = nil
+        end
       end
       
       def sync_with_parent!

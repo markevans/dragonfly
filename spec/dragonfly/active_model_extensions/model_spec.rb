@@ -191,6 +191,12 @@ describe Item do
           @app.datastore.should_receive(:destroy).with('some_uid')
           @item.save!
         end
+        it "should not try to destroy the old data if saved again" do
+          @app.datastore.should_receive(:destroy).with('some_uid')
+          @item.save!
+          @app.datastore.should_not_receive(:destroy).with('some_uid')
+          @item.save!
+        end
         it "should destroy the old data when saved, even if yet another thing is assigned" do
           @item.preview_image = "YET ANOTHER DATA STRING"
           @app.datastore.should_receive(:destroy).with('some_uid')
