@@ -3,10 +3,17 @@ Analysers
 
 Analysing data for things like width, mime_type, etc. come under the banner of Analysis.
 
-Let's say we have a Dragonfly app and an image object (actually a {Dragonfly::Job Job} object):
+Let's say we have a Dragonfly app
 
     app = Dragonfly[:images]
+
+and an image object (actually a {Dragonfly::Job Job} object)...
+
     image = app.fetch('some/uid')
+
+...OR a Dragonfly model accessor...
+
+    image = @album.cover_image
 
 We can analyse it using any analysis methods that have been registered with the analyser.
 
@@ -62,7 +69,7 @@ You can create a class like the RMagick one above, in which case all public meth
 Each method takes the temp_object as its argument.
 
     class MyAnalyser
-    
+
       def coolness(temp_object)
         temp_object.size / 30
       end
@@ -70,13 +77,13 @@ Each method takes the temp_object as its argument.
       def uglyness(temp_object)
         `ugly -i #{temp_object.path}`
       end
-      
+
       private
-      
+
       def my_helper_method
         # do stuff
       end
-      
+
     end
 
     app.analyser.register(MyAnalyser)
@@ -85,4 +92,3 @@ Each method takes the temp_object as its argument.
     image.uglyness    # => "VERY"
 
 You can register as many analysers as you like.
-    
