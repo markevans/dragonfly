@@ -6,8 +6,9 @@ module Dragonfly
       def self.apply_configuration(app)
         app.configure do |c|
           c.log = ::Rails.logger
-          c.datastore.root_path = "#{::Rails.root}/public/system/dragonfly/#{::Rails.env}"
+          c.datastore.root_path = "#{::Rails.root}/public/system/dragonfly/#{::Rails.env}" if c.datastore.is_a?(DataStorage::FileDataStore)
           c.path_prefix = '/media'
+          c.register_analyser(Analysis::FileCommandAnalyser)
         end
       end
 
