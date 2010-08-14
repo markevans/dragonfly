@@ -182,9 +182,17 @@ describe Dragonfly::Processing::RMagickProcessor do
       @processor.should_receive(:resize_and_crop).with(@image, :width => '30', :height => '40', :gravity => 'se').and_return(image = mock)
       @processor.thumb(@image, '30x40#se').should == image
     end
-    it "should call crop if the correct string given" do
-      @processor.should_receive(:crop).with(@image, :width => '30', :height => '40', :x => '+10', :y => '+20', :gravity => 'ne').and_return(image = mock)
-      @processor.thumb(@image, '30x40+10+20ne').should == image
+    it "should call crop if x and y given" do
+      @processor.should_receive(:crop).with(@image, :width => '30', :height => '40', :x => '+10', :y => '+20', :gravity => nil).and_return(image = mock)
+      @processor.thumb(@image, '30x40+10+20').should == image
+    end
+    it "should call crop if just gravity given" do
+      @processor.should_receive(:crop).with(@image, :width => '30', :height => '40', :x => nil, :y => nil, :gravity => 'sw').and_return(image = mock)
+      @processor.thumb(@image, '30x40sw').should == image
+    end
+    it "should call crop if x, y and gravity given" do
+      @processor.should_receive(:crop).with(@image, :width => '30', :height => '40', :x => '-10', :y => '-20', :gravity => 'se').and_return(image = mock)
+      @processor.thumb(@image, '30x40-10-20se').should == image
     end
     it "should raise an argument error if an unrecognized string is given" do
       lambda{ @processor.thumb(@image, '30x40#ne!') }.should raise_error(ArgumentError)

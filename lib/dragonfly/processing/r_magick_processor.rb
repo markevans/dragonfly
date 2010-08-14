@@ -3,7 +3,7 @@ require 'RMagick'
 module Dragonfly
   module Processing
     class RMagickProcessor
-      
+
       GRAVITIES = {
         'nw' => Magick::NorthWestGravity,
         'n'  => Magick::NorthGravity,
@@ -19,11 +19,11 @@ module Dragonfly
       # Geometry string patterns
       RESIZE_GEOMETRY         = /^\d*x\d*[><%^!]?$|^\d+@$/ # e.g. '300x200!'
       CROPPED_RESIZE_GEOMETRY = /^(\d+)x(\d+)#(\w{1,2})?$/ # e.g. '20x50#ne'
-      CROP_GEOMETRY           = /^(\d+)x(\d+)([+-]\d+)([+-]\d+)(\w{1,2})?$/ # e.g. '30x30+10+10ne'
+      CROP_GEOMETRY           = /^(\d+)x(\d+)([+-]\d+)?([+-]\d+)?(\w{1,2})?$/ # e.g. '30x30+10+10'
       THUMB_GEOMETRY = Regexp.union RESIZE_GEOMETRY, CROPPED_RESIZE_GEOMETRY, CROP_GEOMETRY
-      
+
       include RMagickUtils
-      
+
       def crop(temp_object, opts={})
         x       = opts[:x].to_i
         y       = opts[:y].to_i
@@ -39,7 +39,7 @@ module Dragonfly
           image.crop(gravity, x, y, width, height)
         end
       end
-      
+
       def flip(temp_object)
         rmagick_image(temp_object) do |image|
           image.flip!
@@ -59,7 +59,7 @@ module Dragonfly
         end
       end
       alias grayscale greyscale
-      
+
       def resize(temp_object, geometry)
         rmagick_image(temp_object) do |image|
           image.change_geometry!(geometry) do |cols, rows, img|
@@ -70,7 +70,7 @@ module Dragonfly
 
       def resize_and_crop(temp_object, opts={})
         rmagick_image(temp_object) do |image|
-        
+
           width   = opts[:width] ? opts[:width].to_i : image.columns
           height  = opts[:height] ? opts[:height].to_i : image.rows
           gravity = GRAVITIES[opts[:gravity]] || Magick::CenterGravity
@@ -88,7 +88,7 @@ module Dragonfly
           image.rotate(*args) || temp_object
         end
       end
-      
+
       def thumb(temp_object, geometry)
         case geometry
         when RESIZE_GEOMETRY
