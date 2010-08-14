@@ -16,7 +16,7 @@ end
 ##############################################################################
 
 {
-  '2.3.5' => "BUNDLE_GEMFILE=#{GEMFILES['2.3.5']} bundle exec rails #{RAILS_APP_NAME} -m template.rb",
+  '2.3.5' => "BUNDLE_GEMFILE=#{GEMFILES['2.3.5']} rails #{RAILS_APP_NAME} -m template.rb",
   '3.0.0.beta4' => "BUNDLE_GEMFILE=#{GEMFILES['3.0.0.beta4']} bundle exec rails new #{RAILS_APP_NAME} -m template.rb"
 }.each do |version, rails_command|
 
