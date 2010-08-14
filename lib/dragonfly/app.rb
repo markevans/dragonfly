@@ -84,8 +84,8 @@ module Dragonfly
       )
     end
 
-    def new_job(content=nil)
-      content ? Job.new(self, TempObject.new(content)) : Job.new(self)
+    def new_job(content=nil, opts={})
+      content ? Job.new(self, TempObject.new(content, opts)) : Job.new(self)
     end
 
     def endpoint(job=nil, &block)
