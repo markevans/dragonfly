@@ -3,7 +3,7 @@ require 'pathname'
 module Dragonfly
   module DataStorage
 
-    class FileDataStore < Base
+    class FileDataStore
 
       include Configurable
 

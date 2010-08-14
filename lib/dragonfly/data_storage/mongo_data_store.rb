@@ -2,7 +2,7 @@ require 'mongo'
 
 module Dragonfly
   module DataStorage
-    class MongoDataStore < Base
+    class MongoDataStore
 
       include Configurable
       include Serializer

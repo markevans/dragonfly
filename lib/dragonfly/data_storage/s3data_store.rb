@@ -3,8 +3,8 @@ require 'aws/s3'
 module Dragonfly
   module DataStorage
 
-    class S3DataStore < Base
-  
+    class S3DataStore
+
       include Configurable
       include AWS::S3
       include Serializer
