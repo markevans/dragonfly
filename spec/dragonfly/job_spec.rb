@@ -8,9 +8,9 @@ def match_steps(steps)
 end
 
 describe Dragonfly::Job do
-  
+
   describe "Step types" do
-    
+
     {
       Dragonfly::Job::Fetch => :fetch,
       Dragonfly::Job::Process => :process,
@@ -34,7 +34,7 @@ describe Dragonfly::Job do
         klass.abbreviation.should == abbreviation
       end
     end
-    
+
     describe "step_names" do
       it "should return the available step names" do
         Dragonfly::Job.step_names.should == [:fetch, :process, :encode, :generate, :fetch_file]
@@ -42,7 +42,7 @@ describe Dragonfly::Job do
     end
 
   end
-  
+
   describe "without temp_object" do
 
     before(:each) do
@@ -76,7 +76,7 @@ describe Dragonfly::Job do
         @job.temp_object.meta.should == {1 => 2}
       end
     end
-    
+
     describe "process" do
       it "should raise an error when applying" do
         @job.process!(:resize, '20x30')
@@ -94,7 +94,7 @@ describe Dragonfly::Job do
         }.should raise_error(Dragonfly::Job::NothingToEncode)
       end
     end
-    
+
     describe "analyse" do
       it "should raise an error" do
         lambda{
@@ -102,7 +102,7 @@ describe Dragonfly::Job do
         }.should raise_error(Dragonfly::Job::NothingToAnalyse)
       end
     end
-    
+
     describe "generate" do
       before(:each) do
         @job.generate!(:plasma, 20, 30)
@@ -138,24 +138,24 @@ describe Dragonfly::Job do
       end
 
     end
-    
+
   end
-  
+
   describe "with temp_object already there" do
-    
+
     before(:each) do
       @app = mock_app
       @temp_object = Dragonfly::TempObject.new('HELLO', :name => 'hello.txt', :meta => {:a => :b}, :format => :txt)
       @job = Dragonfly::Job.new(@app)
       @job.temp_object = @temp_object
     end
-    
+
     describe "apply" do
       it "should return itself" do
         @job.apply.should == @job
       end
     end
-    
+
     describe "process" do
       before(:each) do
         @job.process!(:resize, '20x30')
@@ -197,14 +197,14 @@ describe Dragonfly::Job do
         temp_object.name.should == 'hello.txt'
         temp_object.meta.should == {:a => :b}
       end
-      
+
       it "should update the format" do
         @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
         @job.apply.temp_object.format.should == :gif
       end
     end
   end
-  
+
   describe "analysis" do
     before(:each) do
       @app = test_app
@@ -232,11 +232,11 @@ describe Dragonfly::Job do
   end
 
   describe "adding jobs" do
-    
+
     before(:each) do
       @app = mock_app
     end
-    
+
     it "should raise an error if the app is different" do
       job1 = Dragonfly::Job.new(@app)
       job2 = Dragonfly::Job.new(mock_app)
@@ -252,7 +252,7 @@ describe Dragonfly::Job do
         @job2 = Dragonfly::Job.new(@app, Dragonfly::TempObject.new('hola'))
         @job2.encode! :png
       end
-      
+
       it "should concatenate jobs" do
         job3 = @job1 + @job2
         job3.steps.should match_steps([
@@ -260,32 +260,32 @@ describe Dragonfly::Job do
           Dragonfly::Job::Encode
         ])
       end
-    
+
       it "should raise an error if the second job has applied steps" do
         @job2.apply
         lambda {
           @job1 + @job2
         }.should raise_error(Dragonfly::Job::JobAlreadyApplied)
       end
-      
+
       it "should not raise an error if the first job has applied steps" do
         @job1.apply
         lambda {
           @job1 + @job2
         }.should_not raise_error
       end
-      
+
       it "should have the first job's temp_object" do
         (@job1 + @job2).temp_object.data.should == 'hello'
       end
-      
+
       it "should have the correct applied steps" do
         @job1.apply
         (@job1 + @job2).applied_steps.should match_steps([
           Dragonfly::Job::Process
         ])
       end
-      
+
       it "should have the correct pending steps" do
         @job1.apply
         (@job1 + @job2).pending_steps.should match_steps([
@@ -295,7 +295,7 @@ describe Dragonfly::Job do
     end
 
   end
-  
+
   describe "defining extra steps after applying" do
     before(:each) do
       @app = mock_app
@@ -382,7 +382,7 @@ describe Dragonfly::Job do
       it "should return the correct data for the new job" do
         @job2.data.should == 'SOME_PROCESSED_DATA'
       end
-      
+
       it "should not affect the other one when one is applied" do
         @job.apply
         @job.applied_steps.should match_steps([
@@ -402,7 +402,7 @@ describe Dragonfly::Job do
     end
 
   end
-  
+
   describe "to_a" do
     before(:each) do
       @app = mock_app
@@ -421,13 +421,13 @@ describe Dragonfly::Job do
       ]
     end
   end
-  
+
   describe "from_a" do
-    
+
     before(:each) do
       @app = mock_app
     end
-    
+
     describe "a well-defined array" do
       before(:each) do
         @job = Dragonfly::Job.from_a([
@@ -458,7 +458,7 @@ describe Dragonfly::Job do
         @job.steps.should == @job.pending_steps
       end
     end
-    
+
     [
       :f,
       [:f],
@@ -471,13 +471,13 @@ describe Dragonfly::Job do
         }.should raise_error(Dragonfly::Job::InvalidArray)
       end
     end
-    
+
     it "should initialize an empty job if the array is empty" do
       job = Dragonfly::Job.from_a([], @app)
       job.steps.should be_empty
     end
   end
-  
+
   describe "serialization" do
     before(:each) do
       @app = mock_app
@@ -491,7 +491,7 @@ describe Dragonfly::Job do
       new_job.to_a.should == @job.to_a
     end
   end
-  
+
   describe "to_app" do
     before(:each) do
       @app = mock_app
@@ -503,7 +503,7 @@ describe Dragonfly::Job do
       endpoint.job.should == @job
     end
   end
-  
+
   describe "url" do
     before(:each) do
       @app = mock_app(:url_for => 'hello')
@@ -517,7 +517,7 @@ describe Dragonfly::Job do
       @job.url.should be_nil
     end
   end
-  
+
   describe "to_fetched_job" do
     it "should maintain the same temp_object and be already applied" do
       app = mock_app
@@ -530,5 +530,33 @@ describe Dragonfly::Job do
       new_job.pending_steps.should be_empty
     end
   end
-  
+
+  describe "format" do
+    before(:each) do
+      @app = test_app
+    end
+    it "should default to nil" do
+      job = @app.new_job("HELLO")
+      job.format.should be_nil
+    end
+    it "should use the temp_object format if it exists" do
+      job = @app.new_job("HELLO", :format => :txt)
+      job.format.should == :txt
+    end
+    it "should use the analyser format if it exists" do
+      @app.analyser.add :format do |temp_object|
+        :egg
+      end
+      job = @app.new_job("HELLO")
+      job.format.should == :egg
+    end
+    it "should prefer the temp_object format if both exist" do
+      @app.analyser.add :format do |temp_object|
+        :egg
+      end
+      job = @app.new_job("HELLO", :format => :txt)
+      job.format.should == :txt
+    end
+  end
+
 end

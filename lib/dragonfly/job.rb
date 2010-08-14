@@ -10,12 +10,12 @@ module Dragonfly
     class NothingToEncode < StandardError; end
     class NothingToAnalyse < StandardError; end
     class InvalidArray < StandardError; end
-    
+
     extend Forwardable
-    def_delegators :result, :data, :file, :tempfile, :path, :to_file, :size, :ext, :name
-    
+    def_delegators :result, :data, :file, :tempfile, :path, :to_file, :size, :ext, :name, :meta, :format, :_format
+
     class Step
-      
+
       class << self
         # Dragonfly::Job::Fetch -> 'Fetch'
         def basename
@@ -30,7 +30,7 @@ module Dragonfly
           @abbreviation ||= basename.scan(/[A-Z]/).join.downcase.to_sym
         end
       end
-      
+
       def initialize(*args)
         @args = args
       end
@@ -49,7 +49,7 @@ module Dragonfly
         job.temp_object = TempObject.new(content, (extra || {}))
       end
     end
-    
+
     class Process < Step
       def name
         args.first
@@ -66,7 +66,7 @@ module Dragonfly
         )
       end
     end
-    
+
     class Encode < Step
       def format
         args.first
@@ -107,10 +107,10 @@ module Dragonfly
       Generate,
       FetchFile
     ]
-    
+
     # Class methods
     class << self
-      
+
       def from_a(steps_array, app)
         unless steps_array.is_a?(Array) &&
                steps_array.all?{|s| s.is_a?(Array) && step_abbreviations[s.first] }
@@ -123,15 +123,15 @@ module Dragonfly
         end
         job
       end
-      
+
       def deserialize(string, app)
         from_a(Serializer.marshal_decode(string), app)
       end
-      
+
       def step_abbreviations
         @step_abbreviations ||= STEPS.inject({}){|hash, step_class| hash[step_class.abbreviation] = step_class; hash }
       end
-      
+
       def step_names
         @step_names ||= STEPS.map{|step_class| step_class.step_name }
       end
@@ -148,14 +148,14 @@ module Dragonfly
       @next_step_index = 0
       @temp_object = temp_object
     end
-    
+
     # Used by 'dup' and 'clone'
     def initialize_copy(other)
       self.steps = other.steps.dup
       self.extend app.analyser.analysis_methods
       self.extend app.job_definitions
     end
-    
+
     attr_accessor :temp_object
     attr_reader :app, :steps
 
@@ -167,19 +167,24 @@ module Dragonfly
           new_job.steps << #{step_class}.new(*args)
           new_job
         end
-        
+
         def #{step_class.step_name}!(*args)
           steps << #{step_class}.new(*args)
           self
         end
       )
     end
-    
+
     def analyse(method, *args)
       unless result
         raise NothingToAnalyse, "Can't analyse because temp object has not been initialized. Need to fetch first?"
       end
-      analyser.analyse(result, method, *args)
+      # Hacky - wish there was a nicer way to do this without extending with yet another module
+      if method == :format
+        _format || analyser.analyse(result, method, *args)
+      else
+        analyser.analyse(result, method, *args)
+      end
     end
 
     def +(other_job)
@@ -194,22 +199,22 @@ module Dragonfly
       new_job.next_step_index = next_step_index
       new_job
     end
-    
+
     def apply
       pending_steps.each{|step| step.apply(self) }
       self.next_step_index = steps.length
       self
     end
-    
+
     def result
       apply
       temp_object
     end
-    
+
     def applied_steps
       steps[0...next_step_index]
     end
-    
+
     def pending_steps
       steps[next_step_index..-1]
     end
@@ -227,7 +232,7 @@ module Dragonfly
     def to_app
       JobEndpoint.new(self)
     end
-    
+
     def to_response
       to_app.call
     end

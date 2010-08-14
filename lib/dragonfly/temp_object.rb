@@ -29,17 +29,17 @@ module Dragonfly
   # are ever called, then the filesystem will never be hit.
   #
   class TempObject
-  
+
     # Class configuration
     class << self
-      
+
       include Configurable
       configurable_attr :block_size, 8192
-      
+
     end
-  
+
     # Instance Methods
-    
+
     def initialize(obj, opts={})
       initialize_from_object!(obj)
       validate_options!(opts)
@@ -47,7 +47,7 @@ module Dragonfly
       self.meta = opts[:meta] || {}
       self.format = opts[:format]
     end
-    
+
     def data
       @data ||= initialized_data || file.read
     end
@@ -78,11 +78,11 @@ module Dragonfly
       end
       ret
     end
-    
+
     def path
       tempfile.path
     end
-    
+
     def size
       if initialized_data
         initialized_data.bytesize
@@ -90,17 +90,18 @@ module Dragonfly
         File.size(path)
       end
     end
-    
+
     attr_reader :name, :meta, :format
+    alias _format format
 
     def basename
       File.basename(name, '.*') if name
     end
-    
+
     def ext
       File.extname(name)[/\.(.*)/, 1] if name
     end
-    
+
     def each(&block)
       to_io do |io|
         while part = io.read(block_size)
@@ -108,7 +109,7 @@ module Dragonfly
         end
       end
     end
-    
+
     def to_file(path)
       if initialized_data
         File.open(path, 'w'){|f| f.write(initialized_data) }
@@ -117,7 +118,7 @@ module Dragonfly
       end
       File.new(path)
     end
-    
+
     def to_io(&block)
       if initialized_data
         StringIO.open(initialized_data, &block)
@@ -146,13 +147,13 @@ module Dragonfly
     end
 
     protected
-    
+
     attr_accessor :initialized_data, :initialized_tempfile, :initialized_file
-    
+
     private
-    
+
     attr_writer :name, :meta, :format
-    
+
     def initialize_from_object!(obj)
       case obj
       when TempObject
@@ -171,7 +172,7 @@ module Dragonfly
       end
       self.name = obj.original_filename if obj.respond_to?(:original_filename)
     end
-    
+
     def initialized_with
       if initialized_tempfile
         :tempfile
@@ -181,22 +182,22 @@ module Dragonfly
         :file
       end
     end
-    
+
     def block_size
       self.class.block_size
     end
-    
+
     def copy_to_tempfile(path)
       tempfile = Tempfile.new('dragonfly')
       FileUtils.cp File.expand_path(path), tempfile.path
       tempfile
     end
-    
+
     def validate_options!(opts)
       valid_keys = [:name, :meta, :format]
       invalid_keys = opts.keys - valid_keys
       raise ArgumentError, "Unrecognised options #{invalid_keys.inspect}" if invalid_keys.any?
     end
-    
+
   end
 end
