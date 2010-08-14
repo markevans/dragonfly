@@ -14,6 +14,12 @@ module Dragonfly
       configurable_attr :secret_access_key
       configurable_attr :use_filesystem, true
 
+      def initialize(opts={})
+        self.bucket_name = opts[:bucket_name]
+        self.access_key_id = opts[:access_key_id]
+        self.secret_access_key = opts[:secret_access_key]
+      end
+
       def connect!
         AWS::S3::Base.establish_connection!(
           :access_key_id => access_key_id,
@@ -45,7 +51,7 @@ module Dragonfly
       rescue AWS::S3::NoSuchKey => e
         raise DataNotFound, "#{e} - #{uid}"
       end
-  
+
       def destroy(uid)
         ensure_initialized
         S3Object.delete(uid, bucket_name)
