@@ -33,6 +33,7 @@ module Dragonfly
       end
 
       def configure_with(configurer, *args, &block)
+        configurer = configurer_for(configurer) if configurer.is_a?(Symbol)
         configurer.apply_configuration(self, *args)
         configure(&block) if block
         self
