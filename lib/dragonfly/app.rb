@@ -41,7 +41,6 @@ module Dragonfly
     def_delegator :server, :call
     
     configurable_attr :datastore do DataStorage::FileDataStore.new end
-    configurable_attr :default_format
     configurable_attr :cache_duration, 3600*24*365 # (1 year)
     configurable_attr :fallback_mime_type, 'application/octet-stream'
     configurable_attr :path_prefix
@@ -134,13 +133,16 @@ module Dragonfly
     
     def url_for(job)
       path = "#{path_prefix}#{SimpleEndpoint.job_to_path(job)}"
-      if protect_from_dos_attacks
-        query_string = DosProtector.required_params_for(path, secret, :sha_length => sha_length).map{|k,v|
-          "#{k}=#{v}"
-        }.join('&')
-        path << "?#{query_string}"
-      end
+      path << "?#{dos_protection_query_string(path)}" if protect_from_dos_attacks
       path
+    end
+    
+    def dos_protection_params(path)
+      DosProtector.required_params_for(path, secret, :sha_length => sha_length)
+    end
+
+    def dos_protection_query_string(path)
+      dos_protection_params(path).map{|k,v| "#{k}=#{v}" }.join('&')
     end
 
     def define_macro(mod, macro_name)
