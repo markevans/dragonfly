@@ -3,7 +3,8 @@ require 'rack/cache'
 
 ### The dragonfly app ###
 app = Dragonfly[:images]
-app.configure_with(Dragonfly::Config::RailsImages)
+app.configure_with(Dragonfly::Config::Rails)
+app.configure_with(Dragonfly::Config::RMagick)
 
 ### Extend active record ###
 app.define_macro(ActiveRecord::Base, :image_accessor)
