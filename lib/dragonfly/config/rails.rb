@@ -1,8 +1,8 @@
 module Dragonfly
   module Config
-    
-    module RailsDefaults
-    
+
+    module Rails
+
       def self.apply_configuration(app)
         app.configure do |c|
           c.log = ::Rails.logger
