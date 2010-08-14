@@ -21,9 +21,13 @@ We can also save metadata at the same time, and give it a name and format (if yo
 We can get content with
 
     content = app.fetch(uid)
+    content.data         # "SOME CONTENT"
 
-As outlined in {file:GeneralUsage}, `content` here is a {Dragonfly::Job Job} object, which we can process, encode, call `data`, `file`,
-`url`, `meta`, `name`, `format`, etc. on.
+We can also get the extra saved attributes
+
+    content.meta         # {:time => Sat Aug 14 12:04:13 +0100 2010}
+    content.name         # 'great_content.txt'
+    content.format       # :txt
 
 We can destroy it with
 
