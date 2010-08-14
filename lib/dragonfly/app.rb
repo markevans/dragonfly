@@ -4,25 +4,25 @@ require 'rack'
 
 module Dragonfly
   class App
-    
+
     class << self
-      
+
       private :new # Hide 'new' - need to use 'instance'
 
       def instance(name)
         apps[name] ||= new
       end
-      
+
       alias [] instance
-      
+
       private
-      
+
       def apps
         @apps ||= {}
       end
-    
+
     end
-    
+
     def initialize
       @analyser, @processor, @encoder, @generator = Analyser.new, Processor.new, Encoder.new, Generator.new
       @analyser.use_same_log_as(self)
@@ -32,14 +32,14 @@ module Dragonfly
       @dos_protector = DosProtector.new(self, 'this is a secret yo')
       @job_definitions = JobDefinitions.new
     end
-    
+
     include Configurable
-    
+
     extend Forwardable
     def_delegator :datastore, :destroy
     def_delegators :new_job, :fetch, :generate, :fetch_file
     def_delegator :server, :call
-    
+
     configurable_attr :datastore do DataStorage::FileDataStore.new end
     configurable_attr :cache_duration, 3600*24*365 # (1 year)
     configurable_attr :fallback_mime_type, 'application/octet-stream'
@@ -54,8 +54,23 @@ module Dragonfly
     attr_reader :processor
     attr_reader :encoder
     attr_reader :generator
-    
+
     attr_accessor :job_definitions
+
+    SAVED_CONFIGS = {
+      :rmagick => 'RMagick',
+      :r_magick => 'RMagick',
+      :rails => 'Rails',
+      :heroku => 'Heroku'
+    }
+
+    def configurer_for(symbol)
+      class_name = SAVED_CONFIGS[symbol]
+      if class_name.nil?
+        raise ArgumentError, "#{symbol.inspect} is not a known configuration - try one of #{SAVED_CONFIGS.keys.join(', ')}"
+      end
+      Config.const_get(class_name)
+    end
 
     def server
       @server ||= (
@@ -114,11 +129,11 @@ module Dragonfly
     def registered_mime_types
       @registered_mime_types ||= Rack::Mime::MIME_TYPES.dup
     end
-    
+
     def mime_type_for(format)
       registered_mime_types[file_ext_string(format)]
     end
-    
+
     def resolve_mime_type(temp_object)
       mime_type_for(temp_object.format)                                   ||
         (mime_type_for(temp_object.ext) if infer_mime_type_from_file_ext) ||
@@ -130,13 +145,13 @@ module Dragonfly
     def mount_path
       path_prefix.blank? ? '/' : path_prefix
     end
-    
+
     def url_for(job)
       path = "#{path_prefix}#{SimpleEndpoint.job_to_path(job)}"
       path << "?#{dos_protection_query_string(path)}" if protect_from_dos_attacks
       path
     end
-    
+
     def dos_protection_params(path)
       DosProtector.required_params_for(path, secret, :sha_length => sha_length)
     end
@@ -164,7 +179,7 @@ module Dragonfly
     end
 
     private
-    
+
     def file_ext_string(format)
       '.' + format.to_s.downcase.sub(/^.*\./,'')
     end

@@ -180,4 +180,28 @@ describe Dragonfly::App do
     end
   end
 
+  describe "configuring with saved configurations" do
+    before(:each) do
+      @app = test_app
+    end
+    
+    {
+      :rmagick => Dragonfly::Config::RMagick,
+      :r_magick => Dragonfly::Config::RMagick,
+      :rails => Dragonfly::Config::Rails,
+      :heroku => Dragonfly::Config::Heroku,
+    }.each do |key, klass|
+      it "should map #{key} to #{klass}" do
+        klass.should_receive(:apply_configuration).with(@app)
+        @app.configure_with(key)
+      end
+    end
+
+    it "should description" do
+      lambda {
+        @app.configure_with(:eggs)
+      }.should raise_error(ArgumentError)
+    end
+  end
+
 end
