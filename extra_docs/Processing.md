@@ -67,7 +67,7 @@ Below are some examples of geometry strings:
 Lazy evaluation
 ---------------
 
-    image.process(:some_method)
+    new_image = image.process(:some_method)
 
 doesn't actually do anything until you call something on the returned {Dragonfly::Job Job} object, like `url`, `data`, etc.
 
@@ -83,25 +83,25 @@ Custom Processors
 
 To register a single custom processor:
 
-    app.processor.add :watermark do |temp_object|
+    app.processor.add :watermark do |temp_object, *args|
       # use temp_object.data, temp_object.path, temp_object.file, etc.
       SomeLibrary.add_watermark(temp_object.data, 'some/watermark/file.png')
       # return a String, File or Tempfile
     end
 
-    image.process(:watermark)
+    new_image = image.process(:watermark)
 
 You can create a class like the RMagick one above, in which case all public methods will be counted as processing methods.
-Each method takes the temp_object as its argument.
+Each method takes the temp_object as its argument, plus any other args.
 
     class MyProcessor
 
-      def coolify(temp_object)
-        SomeLib.coolify(temp_object.data)
+      def coolify(temp_object, opts={})
+        SomeLib.coolify(temp_object.data, opts)
       end
 
-      def uglify(temp_object)
-        `uglify -i #{temp_object.path}`
+      def uglify(temp_object, ugliness)
+        `uglify -i #{temp_object.path} -u #{ugliness}`
       end
 
       private
@@ -114,7 +114,8 @@ Each method takes the temp_object as its argument.
 
     app.processor.register(MyProcessor)
 
-    image.coolify
-    image.uglyness
+    new_image = image.coolify(:some => :args)
+
+    new_image = image.uglify(:loads)
 
 You can register as many processors as you like.
