@@ -4,6 +4,8 @@ require 'spec/expectations'
 require 'test/unit/assertions'
 require File.dirname(__FILE__) + '/../../spec/image_matchers.rb'
 
+ROOT_PATH = File.expand_path(File.dirname(__FILE__) + "/../..")
+
 # A hash of <name for reference> => <dragonfly uid> pairs
 TEMP_FILES = {}
 
@@ -20,6 +22,10 @@ Before do
     $app.datastore.destroy(uid)
     TEMP_FILES.delete(name)
   end
+end
+
+AfterStep do |scenario|
+  FileUtils.rm_f("#{ROOT_PATH}/Gemfile.lock")
 end
 
 module MyHelpers

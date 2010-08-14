@@ -1,5 +1,4 @@
 RAILS_APP_NAME = 'tmp_app'
-ROOT_PATH = File.expand_path(File.dirname(__FILE__) + "/../..")
 FIXTURES_PATH = ROOT_PATH + "/fixtures"
 GEMFILES = {
   '2.3.5' => ROOT_PATH + '/Gemfile.rails.2.3.5',
@@ -17,8 +16,8 @@ end
 ##############################################################################
 
 {
-  '2.3.5' => "BUNDLE_GEMFILE=#{GEMFILES['2.3.5']} rails #{RAILS_APP_NAME} -m template.rb",
-  '3.0.0.beta4' => "BUNDLE_GEMFILE=#{GEMFILES['3.0.0.beta4']} rails new #{RAILS_APP_NAME} -m template.rb"
+  '2.3.5' => "BUNDLE_GEMFILE=#{GEMFILES['2.3.5']} bundle exec rails #{RAILS_APP_NAME} -m template.rb",
+  '3.0.0.beta4' => "BUNDLE_GEMFILE=#{GEMFILES['3.0.0.beta4']} bundle exec rails new #{RAILS_APP_NAME} -m template.rb"
 }.each do |version, rails_command|
 
   Given /^a Rails #{version} application set up for using dragonfly$/ do

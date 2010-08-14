@@ -8,6 +8,8 @@ require 'argument_matchers'
 require 'simple_matchers'
 require 'image_matchers'
 
+ROOT_PATH = File.expand_path(File.dirname(__FILE__) + "/..") unless defined?(ROOT_PATH)
+
 # A hack as system calls weren't using my path
 extra_paths = %w(/opt/local/bin)
 ENV['PATH'] ||= ''
@@ -15,8 +17,8 @@ ENV['PATH'] += ':' + extra_paths.join(':')
 
 SAMPLES_DIR = File.expand_path(File.dirname(__FILE__) + '/../samples') unless defined?(SAMPLES_DIR)
 
-Spec::Runner.configure do |config|
-  
+Spec::Runner.configure do |c|
+  c.after(:all){ FileUtils.rm_f("#{ROOT_PATH}/Gemfile.lock") }
 end
 
 def todo
