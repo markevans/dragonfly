@@ -425,7 +425,7 @@ describe Dragonfly::Job do
   describe "from_a" do
 
     before(:each) do
-      @app = mock_app
+      @app = test_app
     end
 
     describe "a well-defined array" do
@@ -480,7 +480,7 @@ describe Dragonfly::Job do
 
   describe "serialization" do
     before(:each) do
-      @app = mock_app
+      @app = test_app
       @job = Dragonfly::Job.new(@app).fetch('mumma').process(:resize, '1x50')
     end
     it "should serialize itself" do
@@ -494,7 +494,7 @@ describe Dragonfly::Job do
 
   describe "to_app" do
     before(:each) do
-      @app = mock_app
+      @app = test_app
       @job = Dragonfly::Job.new(@app)
     end
     it "should return an endpoint" do
