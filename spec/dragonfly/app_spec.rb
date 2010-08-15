@@ -204,4 +204,26 @@ describe Dragonfly::App do
     end
   end
 
+  describe "#store" do
+    before(:each) do
+      @app = test_app
+    end
+    it "should allow just storing content" do
+      @app.datastore.should_receive(:store).with(a_temp_object_with_data("HELLO"), {})
+      @app.store("HELLO")
+    end
+    it "should allow storing using a TempObject" do
+      temp_object = Dragonfly::TempObject.new("HELLO")
+      @app.datastore.should_receive(:store).with(temp_object, {})
+      @app.store(temp_object)
+    end
+    it "should allow storing with extra stuff" do
+      @app.datastore.should_receive(:store).with(
+        a_temp_object_with_data("HELLO", :meta => {:egg => :head}),
+        {:option => :blarney}
+      )
+      @app.store("HELLO", :meta => {:egg => :head}, :option => :blarney)
+    end
+  end
+
 end

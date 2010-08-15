@@ -98,7 +98,9 @@ module Dragonfly
     configuration_method :job
 
     def store(object, opts={})
-      datastore.store(TempObject.new(object, opts))
+      temp_object = object.is_a?(TempObject) ? object : TempObject.new(object)
+      temp_object.extract_attributes_from(opts)
+      datastore.store(temp_object, opts)
     end
 
     def register_analyser(*args, &block)

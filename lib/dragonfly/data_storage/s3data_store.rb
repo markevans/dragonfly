@@ -31,7 +31,7 @@ module Dragonfly
         Bucket.create(bucket_name) unless bucket_names.include?(bucket_name)
       end
 
-      def store(temp_object)
+      def store(temp_object, opts={})
         uid = generate_uid(temp_object.name || 'file')
         ensure_initialized
         object = use_filesystem ? temp_object.file : temp_object.data

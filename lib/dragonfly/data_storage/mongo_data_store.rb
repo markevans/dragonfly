@@ -17,7 +17,7 @@ module Dragonfly
         self.database = opts[:database] if opts[:database]
       end
 
-      def store(temp_object)
+      def store(temp_object, opts={})
         temp_object.file do |f|
           mongo_id = grid.put(f, :metadata => marshal_encode(temp_object.attributes))
           mongo_id.to_s
@@ -43,23 +43,23 @@ module Dragonfly
       end
 
       private
-      
+
       def connection
         @connection ||= Mongo::Connection.new(host, port)
       end
-      
+
       def db
         @db ||= connection.db(database)
       end
-      
+
       def grid
         @grid ||= Mongo::Grid.new(db)
       end
-      
+
       def bson_id(uid)
         BSON::ObjectID.from_string(uid)
       end
-      
+
     end
   end
 end

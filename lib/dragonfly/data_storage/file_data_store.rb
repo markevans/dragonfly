@@ -9,7 +9,7 @@ module Dragonfly
 
       configurable_attr :root_path, '/var/tmp/dragonfly'
 
-      def store(temp_object)
+      def store(temp_object, opts={})
         filename = temp_object.name || 'file'
 
         relative_path = relative_path_for(filename)
