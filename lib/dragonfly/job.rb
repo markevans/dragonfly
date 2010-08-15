@@ -116,7 +116,7 @@ module Dragonfly
                steps_array.all?{|s| s.is_a?(Array) && step_abbreviations[s.first] }
           raise InvalidArray, "can't define a job from #{steps_array.inspect}"
         end
-        job = Job.new(app)
+        job = app.new_job
         steps_array.each do |step_array|
           step_class = step_abbreviations[step_array.shift]
           job.steps << step_class.new(*step_array)
