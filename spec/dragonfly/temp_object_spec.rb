@@ -311,5 +311,25 @@ describe Dragonfly::TempObject do
       temp_object.format.should == :jpg
     end
   end
+  
+  describe "extract_attributes_from" do
+    before(:each) do
+      @temp_object = Dragonfly::TempObject.new("ne'er gonna give you up",
+        :meta => {:a => 4},
+        :name => 'fred.txt'
+      )
+      @attributes = {:meta => {:b => 5}, :ogle => 'bogle'}
+      @temp_object.extract_attributes_from(@attributes)
+    end
+    it "should overwrite its own attributes if specified" do
+      @temp_object.meta.should == {:b => 5}
+    end
+    it "should leave non-specified attributes untouched" do
+      @temp_object.name.should == 'fred.txt'
+    end
+    it "should remove attributes from the hash" do
+      @attributes.should == {:ogle => 'bogle'}
+    end
+  end
 
 end

@@ -43,9 +43,7 @@ module Dragonfly
     def initialize(obj, opts={})
       initialize_from_object!(obj)
       validate_options!(opts)
-      self.name = opts[:name] unless opts[:name].blank?
-      self.meta = opts[:meta] || {}
-      self.format = opts[:format]
+      extract_attributes_from(opts)
     end
 
     def data
@@ -91,8 +89,12 @@ module Dragonfly
       end
     end
 
-    attr_reader :name, :meta, :format
+    attr_reader :name, :format
     alias _format format
+
+    def meta
+      @meta ||= {}
+    end
 
     def basename
       File.basename(name, '.*') if name
@@ -133,6 +135,12 @@ module Dragonfly
         :meta => meta,
         :format => format
       }
+    end
+
+    def extract_attributes_from(hash)
+      self.name   = hash.delete(:name)   unless hash[:name].blank?
+      self.meta   = hash.delete(:meta)   unless hash[:meta].blank?
+      self.format = hash.delete(:format) unless hash[:format].blank?
     end
 
     def inspect
