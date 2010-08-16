@@ -228,6 +228,7 @@ module Dragonfly
     def serialize
       Serializer.marshal_encode(to_a)
     end
+    alias unique_signature serialize
 
     def to_app
       JobEndpoint.new(self)

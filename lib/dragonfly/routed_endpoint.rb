@@ -12,7 +12,7 @@ module Dragonfly
 
     def call(env)
       job = @block.call(@app, routing_params(env))
-      response_for_job(job)
+      response_for_job(job, env)
     end
 
     private

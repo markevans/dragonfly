@@ -24,7 +24,7 @@ module Dragonfly
 
     def call(env)
       job = self.class.path_to_job(env['PATH_INFO'], @app)
-      response_for_job(job)
+      response_for_job(job, env)
     rescue Serializer::BadString, Job::InvalidArray => e
       log.warn(e.message)
       [404, {'Content-Type' => 'text/plain'}, ['Not found']]
