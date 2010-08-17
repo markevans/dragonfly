@@ -1,17 +1,15 @@
-Getting Started
-===============
-
-Below is a general guide for setting up and using Dragonfly.
+General Usage
+=============
 
 For setting up with Ruby on Rails, see {file:UsingWithRails UsingWithRails}.
 
 For more info about using Rack applications, see the docs at {http://rack.rubyforge.org/}
 
-Running as a Standalone Rack Application
-----------------------------------------
+Rack App
+--------
 
-Basic usage of a dragonfly app involves storing data (e.g. images),
-then serving that data, either in its original form, processed, encoded or both.
+Basic usage involves storing data (e.g. images),
+then serving it, either in its original form, or processed in some way.
 
 A basic rackup file `config.ru`:
 
@@ -19,17 +17,14 @@ A basic rackup file `config.ru`:
     require 'dragonfly'
 
     Dragonfly[:my_app_name].configure do |c|
-      # ...
-      c.some_attribute = 'blah'
-      # ...
+      # ... configuration here
     end
 
     run Dragonfly:App[:my_app_name]
 
-See {file:Configuration Configuration} for all configuration options.
+See {file:Configuration} for more details.
 
-As you can see, this involves instantiating an app, configuring it (how data is stored,
-processing, encoding, etc.), then running it.
+The basic flow is instantiate an app -> configure it -> run it.
 
 You can have multiple dragonfly apps, each with their own configuration.
 Each app has a name, and is referred to by that name.
@@ -44,73 +39,131 @@ Example: Using to serve resized images
 
     require 'rubygems'
     require 'dragonfly'
-    require 'rack/cache'
 
     app = Dragonfly[:images]
-    app.configure_with(Dragonfly::Config::RMagick)
-
-    use Rack::Cache,
-      :verbose     => true,
-      :metastore   => 'file:/var/cache/rack/meta',
-      :entitystore => 'file:/var/cache/rack/body'
+    app.configure_with(:rmagick)
 
     run app
 
-This configures the app to use the RMagick {Dragonfly::Processing::RMagickProcessor processor},
-{Dragonfly::Encoding::RMagickEncoder encoder} and {Dragonfly::Analysis::RMagickAnalyser analyser}.
+This enables the app to use all the RMagick goodies provided by Dragonfly (see {file:Configuration}).
 By default the {Dragonfly::DataStorage::FileDataStore file data store} is used.
 
 Elsewhere in our code:
 
     app = Dragonfly[:images]
-    
+
     # Store
-    uid = app.store(File.new('path/to/image.png'))   # ===> returns a unique uid for that image, "2009/11/29/145804_file"
-    
+    uid = app.store(File.new('path/to/image.png'))      # ===> unique uid
+
     # Get the url for a thumbnail
-    url = app.url_for(uid, '30x30', :gif)            # ===> "/2009/11/29/145804_file.gif?m=resize&o[geometry]=30x30"
+    url = app.fetch(uid).thumb('400x300').url           # ===> "/media/BAhbBlsHOgZmIg9hc..."
 
-Now when we visit the url `/2009/11/29/145804_file.gif?m=resize&o[geometry]=30x30` in the browser, we get the resized
-image!
+Now when we visit the url `/media/BAhbBlsHOgZmIg9hc...` in the browser, we get a resized image!
 
-Caching
--------
-Processing and encoding can be an expensive operation. The first time we visit the url,
-the image is processed, and there might be a short delay and getting the response.
+Getting/generating content
+--------------------------
+Three methods can be used to get content:
 
-However, dragonfly apps send `Cache-Control` and `ETag` headers in the response, so we can easily put a caching
-proxy like {http://varnish.projects.linpro.no Varnish}, {http://www.squid-cache.org Squid},
-{http://tomayko.com/src/rack-cache/ Rack::Cache}, etc. in front of the app.
+    app.fetch('some_uid')                   # Fetch from datastore (default filesystem)
 
-In the example above, we've put the middleware {http://tomayko.com/src/rack-cache/ Rack::Cache} in front of the app.
-So although the first time we access the url the content is processed, every time after that it is received from the
-cache, and is served super quick!
+    app.fetch_file('~/path/to/file.png')    # Fetch from a local file
 
-Avoiding Denial-of-service attacks
-----------------------------------
-The url given above, `/2009/11/29/145804_file.gif?m=resize&o[geometry]=30x30`, could easily be modified to
-generate all different sizes of thumbnails, just by changing the size, e.g.
+    app.generate(:plasma, 400, 300)         # Generates using a method from the configured
+                                            # generator (in this case a plasma image)
 
-`/2009/11/29/145804_file.gif?m=resize&o[geometry]=30x31`,
+These all return {Dragonfly::Job Job} objects. These objects are lazy - they don't do any fetching/generating until
+some other method is called on them.
 
-`/2009/11/29/145804_file.gif?m=resize&o[geometry]=30x32`,
+Using the content
+-----------------
+Once we have a {Dragonfly::Job Job} object:
 
-etc.
+    image = app.fetch('some_uid')
 
-Therefore the app can protect the url by generating a unique sha from a secret specified by you
+We can get the data a number of ways...
 
-    Dragonfly[:images].configure do |c|
-      c.protect_from_dos_attacks = true                           # Actually this is true by default
-      c.secret = 'You should supply some random secret here'
+    image.data                           # => "\377???JFIF\000\..."
+    image.to_file('out.png')             # writes to file 'out.png' and returns a readable file object
+    image.tempfile                       # => #<File:/var/folders/st/strHv74sH044JPabSiODz... a closed Tempfile object
+    image.file                           # => #<File:/var/folders/st/strHv74sH044JPabSiODz... a readable (open) File object
+    image.file do |f|                    # Yields an open file object, returns the return value of
+      data = f.read(256)                 #  the block, and closes the file object
+    end
+    image.path                           # => '/var/folders/st/strHv74sH044JPabSiODz...' i.e. the path of the tempfile
+    image.size                           # => 134507 (size in bytes)
+
+We can get its url...
+
+    image.url                            # => "/media/BAhbBlsHOgZmIg9hc..."
+
+We can analyse it (see {file:Analysers} for more info) ...
+
+    image.width                          # => 280
+
+We can process it (see {file:Processing} for more info) ...
+
+    new_image = image.process(:thumb, '40x30')    # returns another 'Job' object
+
+We can encode it (see {file:Encoding} for more info) ...
+
+    new_image = image.encode(:gif)                # returns another 'Job' object
+
+Chaining
+--------
+Because the methods
+
+  - `fetch`
+
+  - `fetch_file`
+
+  - `generate`
+
+  - `process`
+
+  - `encode`
+
+all return {Dragonfly::Job Job} objects, we can chain them as much as we want...
+
+    image = app.fetch('some_uid').process(:greyscale).process(:thumb, '40x20#').encode(:gif)
+
+... and because they're lazy, we don't actually do any processing/encoding until either `apply` is called
+
+    image.apply              # actually 'does' the processing and returns self
+
+... or a method is called like `data`, `to_file`, etc.
+
+This means we can cheaply generate urls for processed data without doing any fetching or processing:
+
+    url = app.fetch('some_uid').process(:thumb, '40x20#').encode(:gif).url
+
+and then visit that url in a browser to get the actual processed image.
+
+Shortcuts
+---------
+Commonly used processing/encoding steps can be shortened, so instead of
+
+    app.fetch('some_uid').process(:greyscale).process(:thumb, '40x20#').encode(:jpg)
+
+we could use something like
+
+    app.fetch('some_uid').grey('40x20#')
+
+This does exactly the same, returning a {Dragonfly::Job Job} object.
+
+To define this shortcut:
+
+    app.configure do |c|
+      c.job :grey do |size|
+        process :greyscale
+        process :thumb, size
+        encode :jpg
+      end
+      # ...
     end
 
-Then the required urls become something more like
+The {Dragonfly::Config::RMagick RMagick} configuration comes with the pre-defined shortcuts:
 
-`/2009/12/10/215214_file.gif?m=resize&o[geometry]=30x30&s=aa78e877ad3f6bc9`,
-
-with a sha parameter on the end.
-If we try to hack this url to get a different thumbnail,
-
-`/2009/12/10/215214_file.gif?m=resize&o[geometry]=30x31&s=aa78e877ad3f6bc9`,
-
-then we get a 400 (bad parameters) error.
+    image.thumb('40x30')   # same as image.process(:thumb, '40x30')
+    image.jpg              # same as image.encode(:jpg)
+    image.png              # same as image.encode(:png)
+    image.gif              # same as image.encode(:gif)
