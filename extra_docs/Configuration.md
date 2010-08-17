@@ -48,6 +48,11 @@ Here is an example of an app with many attributes configured:
       end
     end
 
+Where is configuration done?
+----------------------------
+In Rails, it should be done in an initializer, e.g. 'config/initializers/dragonfly.rb'.
+Otherwise it should be done anywhere where general setup is done, early on.
+
 Saved configurations
 ====================
 Saved configurations are useful if you often configure the app the same way.
