@@ -21,6 +21,14 @@ describe Dragonfly::Analysis::RMagickAnalyser do
     @analyser.aspect_ratio(@beach).should == (280.0/355.0)
   end
   
+  it "should say if it's portrait" do
+    @analyser.portrait?(@beach).should be_true
+  end
+  
+  it "should say if it's landscape" do
+    @analyser.landscape?(@beach).should be_false
+  end
+  
   it "should return the number of colours" do
     @analyser.number_of_colours(@beach).should == 34703
   end
@@ -33,7 +41,7 @@ describe Dragonfly::Analysis::RMagickAnalyser do
     @analyser.format(@beach).should == :png
   end
   
-  %w(width height aspect_ratio number_of_colours depth format).each do |meth|
+  %w(width height aspect_ratio number_of_colours depth format portrait? landscape?).each do |meth|
     it "should throw unable_to_handle in #{meth.inspect} if it's not an image file" do
       temp_object = Dragonfly::TempObject.new('blah')
       lambda{

@@ -30,6 +30,8 @@ gives us these methods:
     image.width               # => 280
     image.height              # => 355
     image.aspect_ratio        # => 0.788732394366197
+    image.portrait?           # => true
+    image.landscape?          # => false
     image.depth               # => 8
     image.number_of_colours   # => 34703
     image.format              # => :png

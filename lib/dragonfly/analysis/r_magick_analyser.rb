@@ -12,25 +12,37 @@ module Dragonfly
           image.columns
         end
       end
-      
+
       def height(temp_object)
         rmagick_image(temp_object) do |image|
           image.rows
         end
       end
-      
+
       def aspect_ratio(temp_object)
         rmagick_image(temp_object) do |image|
           image.columns.to_f / image.rows
         end
       end
-      
+
+      def portrait?(temp_object)
+        rmagick_image(temp_object) do |image|
+          image.columns <= image.rows
+        end
+      end
+
+      def landscape?(temp_object)
+        rmagick_image(temp_object) do |image|
+          image.columns >= image.rows
+        end
+      end
+
       def depth(temp_object)
         rmagick_image(temp_object) do |image|
           image.depth
         end
       end
-      
+
       def number_of_colours(temp_object)
         rmagick_image(temp_object) do |image|
           image.number_colors
@@ -43,7 +55,7 @@ module Dragonfly
           image.format.downcase.to_sym
         end
       end
-      
+
     end
   end
 end
