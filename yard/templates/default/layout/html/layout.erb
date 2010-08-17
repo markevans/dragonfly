@@ -5,7 +5,7 @@
     <%= erb(:headers) %>
   </head>
   <body>
-    
+
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -21,21 +21,21 @@
 
     </script>
     <!-- *************** -->
-    
+
     <script type="text/javascript" charset="utf-8">
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
-    
+
     <div id="header" class="clearfix">
       <%#= erb(:breadcrumb) %>
       <div id="logo">DRAGONFLY (v <%= DRAGONFLY_VERSION %>)</div>
       <%= erb(:search) %>
     </div>
-    
+
     <div>
       <iframe id="search_frame"></iframe>
     </div>
-    
+
     <div id="content" class="clearfix">
       <div class="col1">
         <%= yieldall %>
@@ -55,6 +55,7 @@
             ['Configuration', 'Configuration'],
             ['URLs', 'URLs'],
             ['MimeTypes', 'Mime Types'],
+            ['Caching', 'Caching'],
             ['ExampleUseCases', 'Example use cases'],
             ['History', 'History'],
           ].map{|(file, text)|
@@ -64,7 +65,7 @@
         </ul>
       </div>
     </div>
-    
+
     <%= erb(:footer) %>
   </body>
 </html>

@@ -12,6 +12,7 @@ extra_docs/Encoding.md
 extra_docs/Generators.md
 extra_docs/Configuration.md
 extra_docs/URLs.md
+extra_docs/Caching.md
 extra_docs/MimeTypes.md
 extra_docs/ExampleUseCases.md
 LICENSE
