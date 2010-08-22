@@ -13,3 +13,9 @@ rake 'db:migrate'
 # Copy over all files from the template dir
 files_dir = File.expand_path(File.dirname(__FILE__) + '/../files')
 run "cp -r #{files_dir}/** ."
+
+route <<ROUTES
+  match '/text/:text/:size' => Dragonfly[:images].endpoint{|app, params|
+    app.generate(:text, params[:text]).thumb(params[:size])
+  }
+ROUTES
