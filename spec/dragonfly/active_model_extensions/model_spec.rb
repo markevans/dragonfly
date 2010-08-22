@@ -9,7 +9,7 @@ describe Item do
 
     let(:app1){ Dragonfly[:images] }
     let(:app2){ Dragonfly[:videos] }
-    
+
     it "should return the mapping of apps to attributes" do
       app1.define_macro(model_class, :image_accessor)
       app2.define_macro(model_class, :video_accessor)
@@ -35,7 +35,7 @@ describe Item do
   end
 
   describe "correctly defined" do
-  
+
     before(:each) do
       @app = Dragonfly[:images]
       @app.define_macro(model_class, :image_accessor)
@@ -43,7 +43,7 @@ describe Item do
         image_accessor :preview_image
       end
       @item = Item.new
-    end    
+    end
 
     it "should provide a reader" do
       @item.should respond_to(:preview_image)
@@ -73,7 +73,7 @@ describe Item do
         @item.destroy
       end
     end
-    
+
     describe "when the uid is set manually" do
       before(:each) do
         @item.preview_image_uid = 'some_known_uid'
@@ -91,7 +91,7 @@ describe Item do
         @item.save!
       end
     end
-    
+
     describe "when there has been some thing assigned but not saved" do
       before(:each) do
         @item.preview_image = "DATASTRING"
@@ -130,9 +130,9 @@ describe Item do
           @item.save!
         end
       end
-      
+
     end
-    
+
     describe "when something has been assigned and saved" do
 
       before(:each) do
@@ -153,7 +153,7 @@ describe Item do
         @app.datastore.should_not_receive(:destroy)
         @item.save!
       end
-      
+
       it "should destroy the data on destroy" do
         @app.datastore.should_receive(:destroy).with('some_uid')
         @item.destroy
@@ -163,13 +163,13 @@ describe Item do
         @app.should_receive(:url_for).with(an_instance_of(Dragonfly::Job)).and_return('some.url')
         @item.preview_image.url.should == 'some.url'
       end
-      
+
       it "should destroy the old data when the uid is set manually" do
         @app.datastore.should_receive(:destroy).with('some_uid')
         @item.preview_image_uid = 'some_known_uid'
         @item.save!
       end
-      
+
       describe "when accessed by a new model object" do
         before(:each) do
           @item = Item.find(@item.id)
@@ -228,7 +228,7 @@ describe Item do
           @item.preview_image.data.should == 'ANEWDATASTRING'
         end
       end
-      
+
       describe "when it is set to nil" do
         before(:each) do
           @item.preview_image = nil
@@ -255,7 +255,7 @@ describe Item do
           @app.datastore.should_receive(:destroy).with('some_uid').and_raise(Dragonfly::DataStorage::DataNotFound)
           @app.log.should_receive(:warn)
           @item.destroy
-        end 
+        end
       end
 
     end
@@ -285,7 +285,7 @@ describe Item do
           @item.preview_image.data.should == 'Gungedin'
         end
       end
-    
+
       describe "assigning with another attachment" do
         before(:each) do
           Item.class_eval do
@@ -309,7 +309,7 @@ describe Item do
       @app = Dragonfly[:images]
       @app.define_macro(model_class, :image_accessor)
     end
-    
+
     describe "validates_presence_of" do
 
       before(:all) do
@@ -328,9 +328,9 @@ describe Item do
       end
 
     end
-    
+
     describe "validates_size_of" do
-      
+
       before(:all) do
         Item.class_eval do
           image_accessor :preview_image
@@ -345,9 +345,9 @@ describe Item do
       it "should be invalid if too small" do
         Item.new(:preview_image => "12345").should_not be_valid
       end
-      
+
     end
-    
+
     describe "validates_property" do
 
       before(:each) do
@@ -369,7 +369,7 @@ describe Item do
           end
         end
         @app.register_analyser(custom_analyser)
-        
+
         Item.class_eval do
           validates_property :mime_type, :of => :preview_image, :in => ['how/special', 'how/crazy'], :if => :its_friday
           validates_property :mime_type, :of => [:other_image, :yet_another_image], :as => 'how/special'
@@ -387,12 +387,12 @@ describe Item do
 
         end
       end
-    
+
       it "should be valid if nil, if not validated on presence (even with validates_property)" do
         @item.other_image = nil
         @item.should be_valid
       end
-    
+
       it "should be invalid if the property is nil" do
         @item.preview_image = "OTHER TYPE"
         @item.should_not be_valid
@@ -404,7 +404,7 @@ describe Item do
         @item.should_not be_valid
         @item.errors[:preview_image].should match_ar_error("mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was 'wrong/type'")
       end
-      
+
       it "should work for a range" do
         @item.preview_image = "GOOGLE GUM"
         @item.should_not be_valid
@@ -424,7 +424,7 @@ describe Item do
         @item.preview_image = "WRONG TYPE"
         @item.should be_valid
       end
-    
+
       it "should require either :as or :in as an argument" do
         lambda{
           Item.class_eval do
@@ -449,15 +449,6 @@ describe Item do
 
     end
 
-    describe "validates_mime_type_of" do
-      it "should provide validates_mime_type as a convenience wrapper for validates_property" do
-        Item.should_receive(:validates_property).with(:mime_type, :of => :preview_image, :in => ['how/special', 'how/crazy'], :if => :its_friday)
-        Item.class_eval do
-          validates_mime_type_of :preview_image, :in => ['how/special', 'how/crazy'], :if => :its_friday
-        end
-      end
-    end
-
   end
 
   describe "extra properties" do
@@ -477,48 +468,48 @@ describe Item do
       end
       @item = Item.new
     end
-    
+
     describe "magic attributes" do
-    
+
       it "should default the magic attribute as nil" do
         @item.preview_image_some_analyser_method.should be_nil
       end
-    
+
       it "should set the magic attribute when assigned" do
         @item.preview_image = '123'
         @item.preview_image_some_analyser_method.should == 'abc1'
       end
-    
+
       it "should not set non-magic attributes with the same prefix when assigned" do
         @item.preview_image_blah_blah = 'wassup'
         @item.preview_image = '123'
         @item.preview_image_blah_blah.should == 'wassup'
       end
-    
+
       it "should update the magic attribute when something else is assigned" do
         @item.preview_image = '123'
         @item.preview_image = '456'
         @item.preview_image_some_analyser_method.should == 'abc4'
       end
-    
+
       it "should reset the magic attribute when set to nil" do
         @item.preview_image = '123'
         @item.preview_image = nil
         @item.preview_image_some_analyser_method.should be_nil
       end
-    
+
       it "should not reset non-magic attributes with the same prefix when set to nil" do
         @item.preview_image_blah_blah = 'wassup'
         @item.preview_image = '123'
         @item.preview_image = nil
         @item.preview_image_blah_blah.should == 'wassup'
       end
-    
+
       it "should work for size too" do
         @item.preview_image = '123'
         @item.preview_image_size.should == 3
       end
-    
+
       it "should store the original file extension if it exists" do
         data = 'jasdlkf sadjl'
         data.stub!(:original_filename).and_return('hello.png')
@@ -533,8 +524,8 @@ describe Item do
         @item.preview_image_name.should == 'hello.png'
       end
     end
-  
-  
+
+
     describe "delegating methods to the job" do
       before(:each) do
         @item.preview_image = "DATASTRING"
@@ -551,7 +542,7 @@ describe Item do
       it "should include analyser methods in public_methods" do
         @item.preview_image.public_methods.include?('number_of_As'.to_method_name).should be_true
       end
-      
+
       it "should update when something new is assigned" do
         @item.preview_image = 'ANEWDATASTRING'
         @item.preview_image.number_of_As.should == 3
@@ -572,23 +563,23 @@ describe Item do
           @item.should_receive(:preview_image_some_analyser_method).and_return('result yo')
           @item.preview_image.some_analyser_method.should == 'result yo'
         end
-        
+
         %w(size name ext).each do |attr|
           it "should use the magic attribute for #{attr} if there is one, and not load the content" do
             @app.datastore.should_not_receive(:retrieve)
             @item.should_receive("preview_image_#{attr}".to_sym).and_return('result yo')
             @item.preview_image.send(attr).should == 'result yo'
           end
-          
+
           it "should load the content then delegate '#{attr}' if there is no magic attribute for it" do
             @item.should_receive(:public_methods).and_return(['preview_image_uid']) # no magic attributes
             @app.datastore.should_receive(:retrieve).with('my_uid').and_return(['DATASTRING', {}])
             @item.preview_image.send(attr).should == @item.preview_image.send(:job).send(attr)
           end
         end
-        
+
       end
-    
+
       it "should not raise an error if a non-existent method is called" do
         # Just checking method missing works ok
         lambda{
@@ -599,7 +590,7 @@ describe Item do
   end
 
   describe "inheritance" do
-    
+
     before(:all) do
       @app = Dragonfly[:images]
       @app2 = Dragonfly[:egg]

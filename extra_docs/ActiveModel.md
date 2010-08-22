@@ -153,14 +153,17 @@ Because the processing/encoding methods (including shortcuts like `thumb` and `j
 
 Validations
 -----------
-`validates_presence_of` and `validates_size_of` work out of the box, and Dragonfly provides two more,
-`validates_property` and `validates_mime_type_of` (which is actually just a thin wrapper around `validates_property`).
+`validates_presence_of` and `validates_size_of` work out of the box, and Dragonfly also provides `validates_property`.
 
     class Album
 
       validates_presence_of :cover_image
       validates_size_of :cover_image, :maximum => 500.kilobytes
-      validates_mime_type_of :cover_image, :in => %w(image/jpeg image/png image/gif)
+      
+      validates_property :format, :of => :cover_image :in => [:jpeg, :png, :gif]
+      # ..or..
+      validates_property :mime_type, :of => :cover_image :in => %w(image/jpeg image/png image/gif)
+
       validates_property :width, :of => :cover_image, :in => (0..400), :message => "é demais cara!"
 
       # ...
