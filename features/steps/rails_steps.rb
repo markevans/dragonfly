@@ -29,11 +29,11 @@ end
   
 end
 
-Then /^the cucumber features in my Rails (.+) app should pass$/ do |version|
+Then /^the (.+) cucumber features in my Rails (.+) app should pass$/ do |filename, version|
   puts "\n*** RUNNING FEATURES IN THE RAILS APP... ***\n"
   path = File.join(fixture_path(version), RAILS_APP_NAME)
   `cd #{path} && BUNDLE_GEMFILE=#{GEMFILES[version]} RAILS_ENV=cucumber rake db:migrate`
-  features_passed = system "cd #{path} && BUNDLE_GEMFILE=#{GEMFILES[version]} cucumber features"
+  features_passed = system "cd #{path} && BUNDLE_GEMFILE=#{GEMFILES[version]} cucumber features/#{filename}.feature"
   puts "\n*** FINISHED RUNNING FEATURES IN THE RAILS APP ***\n"
   raise "Features failed" unless features_passed
 end
