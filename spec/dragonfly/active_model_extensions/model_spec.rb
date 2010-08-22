@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/spec_helper'
+require 'active_support/core_ext/hash/except' # Needed for Rails 3.0.0.rc but subsequently fixed - TODO: remove when gem is updated
 
 describe Item do
 
