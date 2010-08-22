@@ -154,11 +154,6 @@ describe Dragonfly::App do
       @app = test_app
       @app.configure{|c| c.path_prefix = '/media' }
     end
-    it "should return a 404 and X-Cascade if the path prefix doesn't match" do
-      response = request(@app, '/abc')
-      response.status.should == 404
-      response.headers['X-Cascade'].should == 'pass'
-    end
     it "should add the path prefix to the url" do
       job = Dragonfly::Job.new(@app)
       @app.url_for(job).should =~ %r{/media/(\w+)}
