@@ -24,13 +24,6 @@ Mongoid
 
 defines the macro `image_accessor` on any models that include `Mongoid::Document`
 
-Custom Model
-------------
-
-    app.define_macro(MyModel, :image_accessor)
-
-defines the macro `image_accessor` on your custom model class `MyModel`.
-
 Adding accessors
 ----------------
 Now we have the method `image_accessor` available in our model classes, which we can use as many times as we like
@@ -159,7 +152,7 @@ Validations
 
       validates_presence_of :cover_image
       validates_size_of :cover_image, :maximum => 500.kilobytes
-      
+
       validates_property :format, :of => :cover_image :in => [:jpeg, :png, :gif]
       # ..or..
       validates_property :mime_type, :of => :cover_image :in => %w(image/jpeg image/png image/gif)
@@ -208,3 +201,52 @@ They can be used to avoid retrieving data from the datastore for analysis
 
     @album.cover_image.width     # => 280    - no need to retrieve data - takes it from `cover_image_width`
     @album.cover_image.size      # => 134507 - but it needs to retrieve data from the data store, then analyse
+
+
+Custom Model
+------------
+The accessors only require that your model class implements `before_save`, `before_destroy` and `validates_each`
+(if using validations), as well as of course the `..._uid` field for storing the datastore uid.
+
+Here is an example of a minimal ActiveModel `Album` model:
+
+    class CustomModel::Base
+
+      extend ActiveModel::Callbacks
+      define_model_callbacks :save, :destroy
+
+      include ActiveModel::Validations   # if needed
+
+      def save
+        _run_save_callbacks {
+          # do some saving!
+        }
+      end
+
+      def destroy
+        _run_destroy_callbacks {
+          # do some destroying!
+        }
+      end
+
+    end
+
+Define our `image_accessor` macro...
+
+    app.define_macro(CustomModel::Base, :image_accessor)
+
+...which is used by `Album`:
+
+    class Album < CustomModel::Base
+
+      def cover_image_uid=
+        # ...
+      end
+
+      def cover_image_uid
+        # ...
+      end
+
+      image_accessor :cover_image
+
+    end
