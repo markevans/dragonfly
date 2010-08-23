@@ -1,4 +1,4 @@
-<% form_for @album, :html => {:multipart => true} do |f| %>
-    <%= f.file_field :cover_image %>
-    <%= f.submit 'Create' %>
-<% end %>
+<form action="/albums" enctype="multipart/form-data" method="post">
+  <input name="album[cover_image]" type="file" /> 
+  <input type="submit" value="Create" /> 
+</form>

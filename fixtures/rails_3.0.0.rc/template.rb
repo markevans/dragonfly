@@ -1,5 +1,5 @@
 gem 'rack-cache', :require => 'rack/cache'
-gem 'rmagick', :require => 'RMagick'
+gem 'rmagick', '2.12.2', :require => 'RMagick'
 
 gem 'capybara'
 gem 'cucumber-rails'
