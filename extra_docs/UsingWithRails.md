@@ -32,7 +32,7 @@ config/initializers/dragonfly.rb:
 
 environment.rb (application.rb in Rails 3):
 
-    config.middleware.insert 0, 'Dragonfly::Middleware', :images
+    config.middleware.insert 0, 'Dragonfly::Middleware', :images, '/media'
     config.middleware.insert 0, 'Rack::Cache', {
       :verbose     => true,
       :metastore   => "file:#{Rails.root}/tmp/dragonfly/cache/meta",
