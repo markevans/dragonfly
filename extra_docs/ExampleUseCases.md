@@ -80,7 +80,7 @@ a path segment.
 or you can mount as a middleware, like in rails:
 
     Dragonfly[:images].configure_with(:rmagick) do |c|
-      c.path_prefix = '/media'
+      c.url_path_prefix = '/media'
     end
 
     use Dragonfly::Middleware, :images, '/media'

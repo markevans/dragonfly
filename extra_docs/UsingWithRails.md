@@ -57,4 +57,4 @@ In Rails 3, instead of mounting as a middleware, you could skip that bit and mou
 
     match '/media(/:dragonfly)', :to => Dragonfly[:images]
 
-Make sure the the path prefix matches the Dragonfly app's configured path_prefix (which is /media by default for Rails).
+Make sure the the path prefix matches the Dragonfly app's configured url_path_prefix (which is /media by default for Rails).

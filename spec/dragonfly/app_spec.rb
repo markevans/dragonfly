@@ -152,7 +152,7 @@ describe Dragonfly::App do
   describe "path prefix" do
     before(:each) do
       @app = test_app
-      @app.configure{|c| c.path_prefix = '/media' }
+      @app.configure{|c| c.url_path_prefix = '/media' }
     end
     it "should add the path prefix to the url" do
       job = Dragonfly::Job.new(@app)

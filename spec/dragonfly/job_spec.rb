@@ -489,12 +489,12 @@ describe Dragonfly::Job do
     it "should work with no slash" do
       Dragonfly::Job.from_path(@serialized, @app).should be_a(Dragonfly::Job)
     end
-    it "should ignore the app's path_prefix" do
-      @app.path_prefix = '/images/yo'
+    it "should ignore the app's url_path_prefix" do
+      @app.url_path_prefix = '/images/yo'
       Dragonfly::Job.from_path("/images/yo/#{@serialized}", @app).should be_a(Dragonfly::Job)
     end
-    it "should not work with an incorrect path_prefix" do
-      @app.path_prefix = '/images/yo'
+    it "should not work with an incorrect url_path_prefix" do
+      @app.url_path_prefix = '/images/yo'
       lambda{
         Dragonfly::Job.from_path("/images/#{@serialized}", @app).should be_a(Dragonfly::Job)
       }.should raise_error(Dragonfly::Serializer::BadString)

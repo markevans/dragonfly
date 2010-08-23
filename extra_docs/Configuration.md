@@ -8,13 +8,13 @@ Given a Dragonfly app
 Configuration can either be done like so...
 
     app.configure do |c|
-      c.path_prefix = '/media'
+      c.url_path_prefix = '/media'
       # ...
     end
 
 ...or directly like so...
 
-    app.path_prefix = '/media'
+    app.url_path_prefix = '/media'
 
 The defaults should be fairly sensible, but you can tweak a number of things if you wish.
 Here is an example of an app with many attributes configured:
@@ -24,7 +24,7 @@ Here is an example of an app with many attributes configured:
 
       c.cache_duration = 3600*24*365*2                      # defaults to 1 year # (1 year)
       c.fallback_mime_type = 'something/mental'             # defaults to application/octet-stream
-      c.path_prefix = '/images'                             # defaults to none
+      c.url_path_prefix = '/images'                         # defaults to none
       c.log = Logger.new($stdout)                           # defaults to Logger.new('/var/tmp/dragonfly.log')
       c.infer_mime_type_from_file_ext = false               # defaults to true
 
@@ -71,7 +71,7 @@ Rails
 
     app.configure_with(:rails)
 
-This points the log to the Rails logger, configures the file data store root path, sets the path_prefix to /media, and
+This points the log to the Rails logger, configures the file data store root path, sets the url_path_prefix to /media, and
 registers the {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} for helping with mime_type validations.
 
 Heroku
@@ -90,7 +90,7 @@ You can create your own saved configuration with any object that responds to 'ap
 
       def self.apply_configuration(app, *args)
         app.configure do |c|
-          c.path_prefix = '/hello/beans'
+          c.url_path_prefix = '/hello/beans'
           c.processor.register(MyProcessor)
           # ...
         end
