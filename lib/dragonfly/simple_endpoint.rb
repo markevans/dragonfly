@@ -12,9 +12,13 @@ module Dragonfly
     end
 
     def call(env)
-      return dragonfly_response if env['PATH_INFO'] =~ /^\/?$/
-      job = Job.from_path(env['PATH_INFO'], @app)
-      response_for_job(job, env)
+      case env['PATH_INFO']
+      when '', '/'
+        dragonfly_response
+      else
+        job = Job.from_path(env['PATH_INFO'], @app)
+        response_for_job(job, env)
+      end
     rescue Serializer::BadString, Job::InvalidArray => e
       log.warn(e.message)
       [404, {'Content-Type' => 'text/plain'}, ['Not found']]
