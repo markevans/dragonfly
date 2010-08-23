@@ -4,17 +4,6 @@ module Dragonfly
     include Endpoint
     include Loggable
 
-    # Class methods
-    class << self
-      def path_to_job(path, app)
-        Job.deserialize(path.sub('/',''), app)
-      end
-
-      def job_to_path(job)
-        "/#{job.serialize}"
-      end
-    end
-
     # Instance methods
 
     def initialize(app)
@@ -24,7 +13,7 @@ module Dragonfly
 
     def call(env)
       return dragonfly_response if env['PATH_INFO'] == '/'
-      job = self.class.path_to_job(env['PATH_INFO'], @app)
+      job = Job.from_path(env['PATH_INFO'], @app)
       response_for_job(job, env)
     rescue Serializer::BadString, Job::InvalidArray => e
       log.warn(e.message)

@@ -124,6 +124,10 @@ module Dragonfly
         job
       end
 
+      def from_path(path, app)
+        deserialize(path.sub('/',''), app)
+      end
+
       def deserialize(string, app)
         from_a(Serializer.marshal_decode(string), app)
       end
@@ -247,6 +251,10 @@ module Dragonfly
       new_job.fetch!(uid)
       new_job.next_step_index = 1
       new_job
+    end
+
+    def to_path
+      "/#{serialize}"
     end
 
     def inspect

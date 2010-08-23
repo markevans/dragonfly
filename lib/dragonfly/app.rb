@@ -147,7 +147,7 @@ module Dragonfly
     end
 
     def url_for(job)
-      path = "#{path_prefix}#{SimpleEndpoint.job_to_path(job)}"
+      path = "#{path_prefix}#{job.to_path}"
       path << "?#{dos_protection_query_string(path)}" if protect_from_dos_attacks
       path
     end
