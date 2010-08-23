@@ -598,7 +598,7 @@ describe Dragonfly::Job do
       }.should raise_error(Dragonfly::Job::IncorrectSHA)
     end
     it "should return self if ok" do
-      @job.validate_sha!('c4b6af1d').should == @job
+      @job.validate_sha!(@job.sha).should == @job
     end
   end
 
