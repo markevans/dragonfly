@@ -76,7 +76,10 @@ module Dragonfly
       @server ||= (
         app = self
         Rack::Builder.new do
-          use Dragonfly::DosProtector, app.secret, :sha_length => app.sha_length if app.protect_from_dos_attacks
+          if app.protect_from_dos_attacks
+            use Dragonfly::DosProtector, app.secret,
+                  :sha_length => app.sha_length,
+                  :path_info => %r{\w+}
           run Dragonfly::SimpleEndpoint.new(app)
         end.to_app
       )

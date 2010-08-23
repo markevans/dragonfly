@@ -62,4 +62,23 @@ describe Dragonfly::DosProtector do
   end
 
 
+  describe "with constraints" do
+    before(:each) do
+      @app = Rack::Builder.new do
+        use Dragonfly::DosProtector, 'mysecret', :path_info => %r{^/doogie}
+        run lambda{|env| [200, {"Content-Type" => "text/plain"}, ["Hi everyone!"]] }
+      end
+    end
+
+    it "should work on urls that match the constraint" do
+      response = make_request(@app, 'http://example.com/doogie/bugs')
+      response.status.should == 400
+    end
+
+    it "should do nothing on urls that don't match the constraint" do
+      response = make_request(@app, 'http://example.com/dofogie/bugs')
+      response.status.should == 200
+    end
+  end
+
 end
