@@ -582,4 +582,24 @@ describe Dragonfly::Job do
     end
   end
 
+  describe "validate_sha!" do
+    before(:each) do
+      @app = test_app
+      @job = @app.fetch('eggs')
+    end
+    it "should raise an error if nothing is given" do
+      lambda{
+        @job.validate_sha!(nil)
+      }.should raise_error(Dragonfly::Job::NoSHAGiven)
+    end
+    it "should raise an error if the wrong SHA is given" do
+      lambda{
+        @job.validate_sha!('asdf')
+      }.should raise_error(Dragonfly::Job::IncorrectSHA)
+    end
+    it "should return self if ok" do
+      @job.validate_sha!('c4b6af1d').should == @job
+    end
+  end
+
 end

@@ -1,4 +1,5 @@
 require 'forwardable'
+require 'digest/sha1'
 
 module Dragonfly
   class Job
@@ -10,6 +11,8 @@ module Dragonfly
     class NothingToEncode < StandardError; end
     class NothingToAnalyse < StandardError; end
     class InvalidArray < StandardError; end
+    class NoSHAGiven < StandardError; end
+    class IncorrectSHA < StandardError; end
 
     extend Forwardable
     def_delegators :result, :data, :file, :tempfile, :path, :to_file, :size, :ext, :name, :meta, :format, :_format
@@ -235,6 +238,21 @@ module Dragonfly
       Serializer.marshal_encode(to_a)
     end
     alias unique_signature serialize
+
+    def sha
+      Digest::SHA1.hexdigest("#{serialize}#{app.secret}")[0...8]
+    end
+
+    def validate_sha!(sha)
+      case sha
+      when nil
+        raise NoSHAGiven
+      when self.sha
+        self
+      else
+        raise IncorrectSHA, sha
+      end
+    end
 
     def to_app
       JobEndpoint.new(self)

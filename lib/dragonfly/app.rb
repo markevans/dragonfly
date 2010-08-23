@@ -29,8 +29,8 @@ module Dragonfly
       @processor.use_same_log_as(self)
       @encoder.use_same_log_as(self)
       @generator.use_same_log_as(self)
-      @dos_protector = DosProtector.new(self, 'this is a secret yo')
       @job_definitions = JobDefinitions.new
+      @server = Dragonfly::SimpleEndpoint.new(self)
     end
 
     include Configurable
@@ -54,6 +54,7 @@ module Dragonfly
     attr_reader :processor
     attr_reader :encoder
     attr_reader :generator
+    attr_reader :server
 
     attr_accessor :job_definitions
 
@@ -70,19 +71,6 @@ module Dragonfly
         raise ArgumentError, "#{symbol.inspect} is not a known configuration - try one of #{SAVED_CONFIGS.keys.join(', ')}"
       end
       Config.const_get(class_name)
-    end
-
-    def server
-      @server ||= (
-        app = self
-        Rack::Builder.new do
-          if app.protect_from_dos_attacks
-            use Dragonfly::DosProtector, app.secret,
-                  :sha_length => app.sha_length,
-                  :path_info => %r{\w+}
-          run Dragonfly::SimpleEndpoint.new(app)
-        end.to_app
-      )
     end
 
     def new_job(content=nil, opts={})
@@ -151,16 +139,8 @@ module Dragonfly
 
     def url_for(job)
       path = "#{path_prefix}#{job.to_path}"
-      path << "?#{dos_protection_query_string(path)}" if protect_from_dos_attacks
+      path << "?#{dos_protection_query_string(job)}" if protect_from_dos_attacks
       path
-    end
-
-    def dos_protection_params(path)
-      DosProtector.required_params_for(path, secret, :sha_length => sha_length)
-    end
-
-    def dos_protection_query_string(path)
-      dos_protection_params(path).map{|k,v| "#{k}=#{v}" }.join('&')
     end
 
     def define_macro(mod, macro_name)
@@ -185,6 +165,10 @@ module Dragonfly
 
     def file_ext_string(format)
       '.' + format.to_s.downcase.sub(/^.*\./,'')
+    end
+
+    def dos_protection_query_string(job)
+      server.required_params_for(job).map{|k,v| "#{k}=#{v}" }.join('&')
     end
 
   end

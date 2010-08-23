@@ -12,19 +12,32 @@ module Dragonfly
     end
 
     def call(env)
-      case env['PATH_INFO']
+      request = Rack::Request.new(env)
+
+      case request.path_info
       when '', '/'
         dragonfly_response
       else
-        job = Job.from_path(env['PATH_INFO'], @app)
+        job = Job.from_path(request.path_info, app)
+        job.validate_sha!(request['s']) if app.protect_from_dos_attacks
         response_for_job(job, env)
       end
     rescue Serializer::BadString, Job::InvalidArray => e
       log.warn(e.message)
       [404, {'Content-Type' => 'text/plain'}, ['Not found']]
+    rescue Job::NoSHAGiven => e
+      [400, {"Content-Type" => 'text/plain'}, ["You need to give a SHA parameter"]]
+    rescue Job::IncorrectSHA => e
+      [400, {"Content-Type" => 'text/plain'}, ["The SHA parameter you gave (#{e}) is incorrect"]]
+    end
+
+    def required_params_for(job)
+      {'s' => job.sha}
     end
 
     private
+
+    attr_reader :app
 
     def dragonfly_response
       body = <<-DRAGONFLY

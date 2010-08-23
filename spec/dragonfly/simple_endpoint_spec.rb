@@ -9,7 +9,7 @@ describe Dragonfly::SimpleEndpoint do
 
   before(:each) do
     @app = test_app
-    @app.log = Logger.new(LOG_FILE)
+    @app.protect_from_dos_attacks = false
     @uid = @app.store('HELLO THERE')
     @endpoint = Dragonfly::SimpleEndpoint.new(@app)
   end
@@ -24,6 +24,20 @@ describe Dragonfly::SimpleEndpoint do
     response.status.should == 200
     response.body.should == 'HELLO THERE'
     response.content_type.should == 'application/octet-stream'
+  end
+
+  it "should return a 400 if no sha given but protection on" do
+    @app.protect_from_dos_attacks = true
+    url = "/#{@app.fetch(@uid).serialize}"
+    response = request(@endpoint, url)
+    response.status.should == 400
+  end
+  
+  it "should return a 400 if wrong sha given and protection on" do
+    @app.protect_from_dos_attacks = true
+    url = "/#{@app.fetch(@uid).serialize}?s=asdfs"
+    response = request(@endpoint, url)
+    response.status.should == 400
   end
   
   it "should return a 404 when the url isn't known" do
