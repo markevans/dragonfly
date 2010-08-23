@@ -160,7 +160,7 @@ describe Item do
       end
 
       it "should return the url for the data" do
-        @app.should_receive(:url_for).with(an_instance_of(Dragonfly::Job)).and_return('some.url')
+        @app.should_receive(:url_for).with(an_instance_of(Dragonfly::Job), {}).and_return('some.url')
         @item.preview_image.url.should == 'some.url'
       end
 
