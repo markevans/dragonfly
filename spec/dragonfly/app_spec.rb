@@ -149,18 +149,39 @@ describe Dragonfly::App do
     end
   end
 
-  describe "prefix and host" do
+  describe "url_path_prefix" do
     before(:each) do
       @app = test_app
       @job = Dragonfly::Job.new(@app)
     end
-    it "should add the path prefix to the url" do
+    it "should add the path prefix to the url if configured" do
       @app.url_path_prefix = '/media'
-      @app.url_for(@job).should =~ %r{/media/(\w+)}
+      @app.url_for(@job).should =~ %r{^/media/\w+$}
     end
-    it "should add the host to the url" do
+    it "should add the path prefix to the url if passed in" do
+      @app.url_for(@job, :path_prefix => '/eggs').should =~ %r{^/eggs/\w+$}
+    end
+    it "should favour the passed in one" do
+      @app.url_path_prefix = '/media'
+      @app.url_for(@job, :path_prefix => '/bacon').should =~ %r{^/bacon/\w+$}
+    end
+  end
+
+  describe "url_host" do
+    before(:each) do
+      @app = test_app
+      @job = Dragonfly::Job.new(@app)
+    end
+    it "should add the host to the url if configured" do
       @app.url_host = 'http://some.server:4000'
-      @app.url_for(@job).should =~ %r{^http://some.server:4000/(\w+)}
+      @app.url_for(@job).should =~ %r{^http://some\.server:4000/\w+$}
+    end
+    it "should add the host to the url if passed in" do
+      @app.url_for(@job, :host => 'https://bungle.com').should =~ %r{^https://bungle\.com/\w+$}
+    end
+    it "should favour the passed in one" do
+      @app.url_host = 'http://some.server:4000'
+      @app.url_for(@job, :host => 'https://smeedy').should =~ %r{^https://smeedy/\w+$}
     end
   end
   

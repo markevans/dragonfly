@@ -137,8 +137,10 @@ module Dragonfly
       url_path_prefix.blank? ? '/' : url_path_prefix
     end
 
-    def url_for(job)
-      path = "#{url_host}#{url_path_prefix}#{job.to_path}"
+    def url_for(job, opts={})
+      host = opts[:host] || url_host
+      path_prefix = opts[:path_prefix] || url_path_prefix
+      path = "#{host}#{path_prefix}#{job.to_path}"
       path << "?#{dos_protection_query_string(job)}" if protect_from_dos_attacks
       path
     end
