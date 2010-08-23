@@ -33,7 +33,7 @@ gives us:
     image.encode(:png)
     image.encode(:tiff)
 
-and various other formats (see {Dragonfly::Config::RMagickEncoder RMagickEncoder})
+and various other formats (see {Dragonfly::Encoding::RMagickEncoder RMagickEncoder})
 
 Lazy evaluation
 ---------------
