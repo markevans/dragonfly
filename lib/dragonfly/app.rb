@@ -44,7 +44,7 @@ module Dragonfly
     configurable_attr :cache_duration, 3600*24*365 # (1 year)
     configurable_attr :fallback_mime_type, 'application/octet-stream'
     configurable_attr :path_prefix
-    configurable_attr :protect_from_dos_attacks, true
+    configurable_attr :protect_from_dos_attacks, false
     configurable_attr :secret
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
     configurable_attr :infer_mime_type_from_file_ext, true
