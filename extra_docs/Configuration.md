@@ -24,9 +24,11 @@ Here is an example of an app with many attributes configured:
 
       c.cache_duration = 3600*24*365*2                      # defaults to 1 year # (1 year)
       c.fallback_mime_type = 'something/mental'             # defaults to application/octet-stream
-      c.url_path_prefix = '/images'                         # defaults to none
       c.log = Logger.new($stdout)                           # defaults to Logger.new('/var/tmp/dragonfly.log')
       c.infer_mime_type_from_file_ext = false               # defaults to true
+
+      c.url_path_prefix = '/images'                         # defaults to nil
+      c.url_host = 'http://some.domain.com:4000'            # defaults to nil
 
       c.protect_from_dos_attacks = true                     # defaults to true - adds a SHA parameter on the end of urls
       c.secret = 'This is my secret yeh!!'                  # should set this if concerned about DOS attacks

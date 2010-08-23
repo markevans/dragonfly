@@ -149,14 +149,18 @@ describe Dragonfly::App do
     end
   end
 
-  describe "path prefix" do
+  describe "prefix and host" do
     before(:each) do
       @app = test_app
-      @app.configure{|c| c.url_path_prefix = '/media' }
+      @job = Dragonfly::Job.new(@app)
     end
     it "should add the path prefix to the url" do
-      job = Dragonfly::Job.new(@app)
-      @app.url_for(job).should =~ %r{/media/(\w+)}
+      @app.url_path_prefix = '/media'
+      @app.url_for(@job).should =~ %r{/media/(\w+)}
+    end
+    it "should add the host to the url" do
+      @app.url_host = 'http://some.server:4000'
+      @app.url_for(@job).should =~ %r{^http://some.server:4000/(\w+)}
     end
   end
   

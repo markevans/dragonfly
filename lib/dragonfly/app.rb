@@ -44,6 +44,7 @@ module Dragonfly
     configurable_attr :cache_duration, 3600*24*365 # (1 year)
     configurable_attr :fallback_mime_type, 'application/octet-stream'
     configurable_attr :url_path_prefix
+    configurable_attr :url_host
     configurable_attr :protect_from_dos_attacks, false
     configurable_attr :secret
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
@@ -137,7 +138,7 @@ module Dragonfly
     end
 
     def url_for(job)
-      path = "#{url_path_prefix}#{job.to_path}"
+      path = "#{url_host}#{url_path_prefix}#{job.to_path}"
       path << "?#{dos_protection_query_string(job)}" if protect_from_dos_attacks
       path
     end
