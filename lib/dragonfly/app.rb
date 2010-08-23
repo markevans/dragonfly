@@ -46,7 +46,6 @@ module Dragonfly
     configurable_attr :path_prefix
     configurable_attr :protect_from_dos_attacks, true
     configurable_attr :secret
-    configurable_attr :sha_length, 16
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
     configurable_attr :infer_mime_type_from_file_ext, true
 

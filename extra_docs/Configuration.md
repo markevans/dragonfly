@@ -30,7 +30,6 @@ Here is an example of an app with many attributes configured:
 
       c.protect_from_dos_attacks = true                     # defaults to true - adds a SHA parameter on the end of urls
       c.secret = 'This is my secret yeh!!'                  # should set this if concerned about DOS attacks
-      c.sha_length = 4                                      # defaults to 16
 
       c.analyser.register(MyAnalyser)                       # See 'Analysers' for more details
       c.processor.register(MyProcessor, :type => :fig)      # See 'Processing' for more details
