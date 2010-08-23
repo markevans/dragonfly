@@ -27,8 +27,8 @@ config/initializers/dragonfly.rb:
     app = Dragonfly[:images]
     app.configure_with(:rmagick)
     app.configure_with(:rails)
-    
-    Dragonfly.define_macro(ActiveRecord::Base, :image_accessor)
+
+    app.define_macro(ActiveRecord::Base, :image_accessor)
 
 environment.rb (application.rb in Rails 3):
 

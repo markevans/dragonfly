@@ -31,7 +31,7 @@ Initializer (e.g. config/initializers/dragonfly.rb):
     app.configure_with(:rails)
     app.configure_with(:heroku, 'my_bucket_name') if Rails.env.production?
 
-    Dragonfly.define_macro(ActiveRecord::Base, :image_accessor)
+    app.define_macro(ActiveRecord::Base, :image_accessor)
 
 The datastore remains as the {Dragonfly::DataStorage::FileDataStore FileDataStore} for non-production environments.
 
