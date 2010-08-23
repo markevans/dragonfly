@@ -54,4 +54,11 @@ describe Dragonfly::SimpleEndpoint do
     response.body.should == 'HELLO THERE'
   end
 
+  it "should return a simple text response at the root" do
+    response = request(@endpoint, '/')
+    response.status.should == 200
+    response.body.length.should > 0
+    response.content_type.should == 'text/plain'
+  end
+
 end
