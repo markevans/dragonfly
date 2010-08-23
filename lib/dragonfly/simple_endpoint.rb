@@ -15,7 +15,7 @@ module Dragonfly
       request = Rack::Request.new(env)
 
       case request.path_info
-      when '', '/'
+      when '', '/', app.path_prefix
         dragonfly_response
       else
         job = Job.from_path(request.path_info, app)
