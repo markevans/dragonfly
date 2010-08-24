@@ -6,17 +6,21 @@ end
 
 describe Dragonfly::RoutedEndpoint do
 
+  def env_for(url, opts={})
+    Rack::MockRequest.env_for(url, opts)
+  end
+
   before(:each) do
     @app = test_app
     @endpoint = Dragonfly::RoutedEndpoint.new(@app) {|params, app|
-      app.fetch(params[:uid])
+      app.fetch(params['uid'])
     }
     @app.datastore.stub!(:retrieve).with('some_uid').and_return Dragonfly::TempObject.new('wassup')
   end
 
   it "should raise an error when there are no routing parameters" do
     lambda{
-      @endpoint.call({})
+      @endpoint.call(env_for('/blah'))
     }.should raise_error(Dragonfly::RoutedEndpoint::NoRoutingParams)
   end
 
@@ -29,10 +33,16 @@ describe Dragonfly::RoutedEndpoint do
   }.each do |name, key|
 
     it "should work with #{name} routing args" do
-      response = response_for @endpoint.call(key => {:uid => 'some_uid'})
+      response = response_for @endpoint.call(env_for('/blah', key => {'uid' => 'some_uid'}))
       response.body.should == 'wassup'
     end
     
+  end
+
+  it "should merge with query parameters" do
+    env = Rack::MockRequest.env_for('/big/buns?uid=some_uid', 'dragonfly.params' => {:something => 'else'})
+    response = response_for @endpoint.call(env)
+    response.body.should == 'wassup'
   end
 
 end
