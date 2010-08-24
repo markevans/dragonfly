@@ -37,17 +37,6 @@ require File.dirname(__FILE__) + '/dragonfly/core_ext/symbol'
 module Dragonfly
   class << self
 
-    def const_missing(const)
-      case const
-      when :RMagickConfiguration
-        puts "WARNING: RMagickConfiguration is deprecated and will be removed in future "+
-             "versions of Dragonfly. Please change to Dragonfly::Config::RMagick (or just :rmagick)"
-        const_set(:RMagickConfiguration, Config::RMagick)
-      else
-        super
-      end
-    end
-
     def [](*args)
       App[*args]
     end
