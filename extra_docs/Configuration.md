@@ -17,7 +17,7 @@ Configuration can either be done like so...
     app.url_path_prefix = '/media'
 
 The defaults should be fairly sensible, but you can tweak a number of things if you wish.
-Here is an example of an app with many attributes configured:
+Here is an example of an app with all attributes configured:
 
     app.configure do |c|
       c.datastore = SomeCustomDataStore.new :egg => 'head'  # defaults to FileDataStore
