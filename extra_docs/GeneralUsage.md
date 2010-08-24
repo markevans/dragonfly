@@ -1,64 +1,13 @@
 General Usage
 =============
 
-For setting up with Ruby on Rails, see {file:UsingWithRails UsingWithRails}.
-
-For more info about using Rack applications, see the docs at {http://rack.rubyforge.org/}
-
-Rack App
---------
-
-Basic usage involves storing data (e.g. images),
-then serving it, either in its original form, or processed in some way.
-
-A basic rackup file `config.ru`:
-
-    require 'rubygems'
-    require 'dragonfly'
-
-    Dragonfly[:my_app_name].configure do |c|
-      # ... configuration here
-    end
-
-    run Dragonfly:App[:my_app_name]
-
-See {file:Configuration} for more details.
-
-The basic flow is instantiate an app -> configure it -> run it.
-
 You can have multiple dragonfly apps, each with their own configuration.
 Each app has a name, and is referred to by that name.
 
     Dragonfly[:images]    # ===> Creates an app called 'images'
     Dragonfly[:images]    # ===> Refers to the already created app 'images'
 
-Example: Using to serve resized images
---------------------------------------
-
-`config.ru`:
-
-    require 'rubygems'
-    require 'dragonfly'
-
     app = Dragonfly[:images]
-    app.configure_with(:rmagick)
-
-    run app
-
-This enables the app to use all the RMagick goodies provided by Dragonfly (see {file:Configuration}).
-By default the {Dragonfly::DataStorage::FileDataStore file data store} is used.
-
-Elsewhere in our code:
-
-    app = Dragonfly[:images]
-
-    # Store
-    uid = app.store(File.new('path/to/image.png'))      # ===> unique uid
-
-    # Get the url for a thumbnail
-    url = app.fetch(uid).thumb('400x300').url           # ===> "/media/BAhbBlsHOgZmIg9hc..."
-
-Now when we visit the url `/media/BAhbBlsHOgZmIg9hc...` in the browser, we get a resized image!
 
 Getting/generating content
 --------------------------
