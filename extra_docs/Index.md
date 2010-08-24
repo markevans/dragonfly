@@ -1,9 +1,12 @@
 Dragonfly Documentation
 =======================
-Dragonfly is a {http://rack.rubyforge.org Rack} framework for on-the-fly processing and encoding in Ruby.
+Dragonfly is a {http://rack.rubyforge.org Rack} framework for on-the-fly image handling in Ruby.
 
-It includes an extension for ActiveModel-compatible models to enable easy image handling in web applications.
-It is customizable, and is not limited to images, but any data type that could suit on-the-fly processing/encoding.
+It is suitable for using with web frameworks such as Rails, Sinatra, etc.
+
+I actually lied about image handling - it can be used for any type of content.
+
+See the links on the right for more info.
 
 Installation
 ------------
@@ -20,8 +23,9 @@ Suggestions/Questions
 
 Credits
 -------
-- <a href="http://github.com/markevans">Mark Evans</a> (author)
+- <a href="http://github.com/markevans">Mark Evans</a>
+- Loads of helpful comments, issues, questions, suggestions and insults from others - you know who you are!
 
 Copyright
 ---------
-Copyright (c) 2009 Mark Evans. See LICENSE for details.
+Copyright (c) 2009-2010 Mark Evans. See LICENSE for details.
