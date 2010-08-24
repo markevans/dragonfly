@@ -23,16 +23,20 @@ config/initializers/dragonfly.rb:
 
 environment.rb:
 
-    config.gem 'dragonfly', '~>0.7.0'
-    config.gem 'rmagick', :lib => 'RMagick'
-    config.gem 'rack-cache', :lib => 'rack/cache'
-
     config.middleware.insert 0, 'Dragonfly::Middleware', :images, '/media'
     config.middleware.insert 0, 'Rack::Cache', {
       :verbose     => true,
       :metastore   => "file:#{Rails.root}/tmp/dragonfly/cache/meta",
       :entitystore => "file:#{Rails.root}/tmp/dragonfly/cache/body"
     }
+
+Gems
+----
+environment.rb
+
+    config.gem 'dragonfly', '~>0.7.0'
+    config.gem 'rmagick', :lib => 'RMagick'
+    config.gem 'rack-cache', :lib => 'rack/cache'
 
 Use it!
 -------
