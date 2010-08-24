@@ -37,7 +37,7 @@ gives us these methods:
 
     image.process(:greyscale, :depth => 128)     # default depth 256
 
-    image.process(:resize '40x40')
+    image.process(:resize, '40x40')
     image.process(:resize_and_crop, :width => 40, :height=> 50, :gravity => 'ne')
 
     image.process(:rotate, 45, :background_colour => 'transparent')   # default bg black

@@ -64,7 +64,7 @@ RMagick
 
     app.configure_with(:rmagick)
 
-This registers the app with the {Dragonfly::Analysis::RMagickAnalyser RMagickAnalyser}, {Dragonfly::Processing::RMagickProcessor RMagickProcessor},
+The {Dragonfly::Config::RMagick RMagick configuration} registers the app with the {Dragonfly::Analysis::RMagickAnalyser RMagickAnalyser}, {Dragonfly::Processing::RMagickProcessor RMagickProcessor},
 {Dragonfly::Encoding::RMagickEncoder RMagickEncoder} and {Dragonfly::Generation::RMagickGenerator RMagickGenerator}, and adds the 'job shortcuts'
 `thumb`, `jpg`, `png` and `gif` (see {file:GeneralUsage}).
 
@@ -75,7 +75,7 @@ Rails
 
     app.configure_with(:rails)
 
-This points the log to the Rails logger, configures the file data store root path, sets the url_path_prefix to /media, and
+The {Dragonfly::Config::Rails Rails configuration} points the log to the Rails logger, configures the file data store root path, sets the url_path_prefix to /media, and
 registers the {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} for helping with mime_type validations.
 
 The file 'dragonfly/rails/images' does this for you.
@@ -85,7 +85,7 @@ Heroku
 
     app.configure_with(:heroku, 's3_bucket_name')
 
-This configures it to use the {Dragonfly::DataStorage::S3DataStore}, using Heroku's config attributes.
+The {Dragonfly::Config::Heroku Heroku configuration} configures it to use the {Dragonfly::DataStorage::S3DataStore}, using Heroku's config attributes.
 See {file:ExampleUseCases} for more info.
 
 Custom Saved Configuration

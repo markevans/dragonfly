@@ -85,7 +85,7 @@ or you can mount as a middleware, like in rails:
 
     use Dragonfly::Middleware, :images, '/media'
 
-    get '/' do
+    get '/' #... do
       # ...
 
 Attachments with no processing or encoding

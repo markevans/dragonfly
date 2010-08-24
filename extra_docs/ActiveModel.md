@@ -112,7 +112,7 @@ We can use configured shortcuts for processing/encoding (see {file:GeneralUsage.
 
 We can chain all these things much like ActiveRecord scopes:
 
-    @album.cover_image.png.thumb('300x200#ne).process(:greyscale).encode(:tiff)
+    @album.cover_image.png.thumb('300x200#ne').process(:greyscale).encode(:tiff)
 
 Because the processing/encoding methods are lazy, no actual processing or encoding is done until a method like `data`, `file`, `to_file`, `width`, etc. is called.
 You can force the processing to be done if you must by then calling `apply`.
@@ -153,9 +153,9 @@ Validations
       validates_presence_of :cover_image
       validates_size_of :cover_image, :maximum => 500.kilobytes
 
-      validates_property :format, :of => :cover_image :in => [:jpeg, :png, :gif]
+      validates_property :format, :of => :cover_image, :in => [:jpeg, :png, :gif]
       # ..or..
-      validates_property :mime_type, :of => :cover_image :in => %w(image/jpeg image/png image/gif)
+      validates_property :mime_type, :of => :cover_image, :in => %w(image/jpeg image/png image/gif)
 
       validates_property :width, :of => :cover_image, :in => (0..400), :message => "é demais cara!"
 
@@ -164,7 +164,6 @@ Validations
 
 The property argument of `validates_property` will generally be one of the registered analyser properties as described in {file:Analysers.md Analysers}.
 However it would actually work for arbitrary properties, including those of non-dragonfly model attributes.
-See {Dragonfly::ActiveModelExtensions::Validations Validations} for more info.
 
 Name and extension
 ------------------
@@ -200,7 +199,7 @@ They can be used to avoid retrieving data from the datastore for analysis
     @album = Album.first
 
     @album.cover_image.width     # => 280    - no need to retrieve data - takes it from `cover_image_width`
-    @album.cover_image.size      # => 134507 - but it needs to retrieve data from the data store, then analyse
+    @album.cover_image.size      # => 134507 - but this needs to retrieve data from the data store, then analyse
 
 
 Custom Model

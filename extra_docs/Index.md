@@ -1,19 +1,14 @@
 Dragonfly Documentation
 =======================
+Dragonfly is a {http://rack.rubyforge.org Rack} framework for on-the-fly processing and encoding in Ruby.
 
-Welcome to the documentation for Dragonfly!
-
-Dragonfly is a {http://rack.rubyforge.org Rack} framework for on-the-fly processing and encoding.
-
-It includes an extension for Ruby on Rails to enable easy image handling.
-It is intended to be highly customizable, and is not limited to images, but any data type that could suit on-the-fly processing/encoding.
-
-Use the dropdowns at the top-right to navigate around the code, or jump straight to one of the guides on the right.
+It includes an extension for ActiveModel-compatible models to enable easy image handling in web applications.
+It is customizable, and is not limited to images, but any data type that could suit on-the-fly processing/encoding.
 
 Installation
 ------------
 
-    gem install dragonfly --source=http://gemcutter.org
+    gem install dragonfly
 
 Issues
 ------

@@ -4,8 +4,8 @@ Dragonfly
 Dragonfly is a <a href="http://rack.rubyforge.org">Rack</a> framework for on-the-fly processing and encoding.
 It can be used with ActiveRecord, Mongoid, or any ActiveModel compliant model for easy image handling in your web app.
 
-For the lazy Rails 3 user...
-----------------------------
+For the lazy Rails user...
+--------------------------
 **Gemfile**:
 
     gem 'rmagick',    :require => 'RMagick'
