@@ -68,6 +68,8 @@ This registers the app with the {Dragonfly::Analysis::RMagickAnalyser RMagickAna
 {Dragonfly::Encoding::RMagickEncoder RMagickEncoder} and {Dragonfly::Generation::RMagickGenerator RMagickGenerator}, and adds the 'job shortcuts'
 `thumb`, `jpg`, `png` and `gif` (see {file:GeneralUsage}).
 
+The file 'dragonfly/rails/images' does this for you.
+
 Rails
 -----
 
@@ -75,6 +77,8 @@ Rails
 
 This points the log to the Rails logger, configures the file data store root path, sets the url_path_prefix to /media, and
 registers the {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} for helping with mime_type validations.
+
+The file 'dragonfly/rails/images' does this for you.
 
 Heroku
 ------
