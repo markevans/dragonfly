@@ -8,7 +8,7 @@ describe Dragonfly::RoutedEndpoint do
 
   before(:each) do
     @app = test_app
-    @endpoint = Dragonfly::RoutedEndpoint.new(@app) {|app, params|
+    @endpoint = Dragonfly::RoutedEndpoint.new(@app) {|params, app|
       app.fetch(params[:uid])
     }
     @app.datastore.stub!(:retrieve).with('some_uid').and_return Dragonfly::TempObject.new('wassup')

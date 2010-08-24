@@ -11,7 +11,7 @@ module Dragonfly
     end
 
     def call(env)
-      job = @block.call(@app, routing_params(env))
+      job = @block.call(routing_params(env), @app)
       response_for_job(job, env)
     rescue Job::NoSHAGiven => e
       [400, {"Content-Type" => 'text/plain'}, ["You need to give a SHA parameter"]]

@@ -15,7 +15,7 @@ files_dir = File.expand_path(File.dirname(__FILE__) + '/../files')
 run "cp -r #{files_dir}/** ."
 
 route <<ROUTES
-  match '/text/:text/:size' => Dragonfly[:images].endpoint{|app, params|
+  match '/text/:text/:size' => Dragonfly[:images].endpoint{|params, app|
     app.generate(:text, params[:text]).thumb(params[:size])
   }
 ROUTES
