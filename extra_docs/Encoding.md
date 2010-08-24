@@ -1,58 +1,83 @@
 Encoding
 ========
 
-'Encoding' encapsulates the idea of a format (e.g. 'png', 'jpeg', 'doc', 'txt', etc.), and any encoding options
-(e.g. bit_rate, etc.).
+Changing the format of data, but not changing the data itself,
+e.g. converting to gif format, comes under the banner of Encoding.
 
-It is up to the encoder to modify the data according to the requested format (note the format is not the same as the mime-type;
-the mime-type is detected by the analyser).
+You can register as many encoders as you like.
 
-The encoder needs to implement a single method, `encode`, which takes a {Dragonfly::ExtendedTempObject temp_object}, a format, and encoding options as arguments.
+Let's say we have a Dragonfly app
 
-    def encode(temp_object, format, encoding={})
-      #... encode and return a String, File, Tempfile or TempObject
-    end
+    app = Dragonfly[:images]
 
-Let's say we register the {Dragonfly::Encoding::RMagickEncoder rmagick encoder} to our dragonfly app called 'images'
+and an image object (actually a {Dragonfly::Job Job} object)...
 
-    app = Dragonfly::App[:images]
-    app.register_encoder(Dragonfly::Encoding::RMagickEncoder)
+    image = app.fetch('some/uid')
 
-Then we can encode {Dragonfly::ExtendedTempObject temp_objects} to formats recognised by the RMagickEncoder
+...OR a Dragonfly model accessor...
 
-    temp_object = app.create_object(File.new('path/to/image.png'))
+    image = @album.cover_image
 
-    temp_object.encode(:png)    # => returns a new temp_object with data encoded as 'png'
-    temp_object.encode!(:gif)   # => encodes its own data as a 'png'
+We can encode it to any format registered with the encoder.
 
-    temp_object.encode(:doc)    # => throws :unable_to_handle
+RMagickEncoder
+----------------
+The {Dragonfly::Encoding::RMagickEncoder RMagickEncoder} is registered by default by
+the {Dragonfly::Config::RMagick RMagick configuration} used by 'dragonfly/rails/images'.
 
-The saved configuration {Dragonfly::Config::RMagickImages RMagickImages} registers the above encoder automatically.
+If not already registered:
+
+    app.encoder.register(Dragonfly::Encoding::RMagickEncoder)
+
+gives us:
+
+    image.encode(:jpg)
+    image.encode(:gif)
+    image.encode(:png)
+    image.encode(:tiff)
+
+and various other formats (see {Dragonfly::Encoding::RMagickEncoder RMagickEncoder})
+
+Lazy evaluation
+---------------
+
+    gif_image = image.encode(:gif)
+
+doesn't actually do anything until you call something on the returned {Dragonfly::Job Job} object, like `url`, `data`, etc.
+
+Bang method
+-----------
+
+    image.encode!(:gif)
+
+modifies the image object itself, rather than returning a new object.
 
 Custom Encoders
 ---------------
 
-To register a custom encoder, derive from {Dragonfly::Encoding::Base Encoding::Base} and register.
-As described above, you need to implement the `encode` method.
-If the encoder can't handle a format, it should throw `:unable_to_handle`, and control will pass to the previously
-registered encoder, and so on.
+To register a custom encoder, for e.g. pdf format:
 
-    class MyEncoder < Dragonfly::Encoding::Base
-    
-      def encode(temp_object, format, encoding={})
-        if format.to_s == 'yo'
-          #... encode and return a String, File, Tempfile or TempObject
-        else
-          throw :unable_to_handle
-        end
+    app.encoder.add do |temp_object, format|
+      throw :unable_to_handle unless format == :pdf
+      # use temp_object.data, temp_object.path, temp_object.file, etc.
+      SomeLibrary.convert_to_pdf(temp_object.data)
+      # return a String, File or Tempfile
+    end
+
+    pdf_image = image.encode(:pdf)
+
+If `:unable_to_handle` is thrown, the next most recently registered encoder is used, and so on.
+
+Alternatively you can create a class like the RMagick one above, which implements the method `encode`, and register this.
+
+    class MyEncoder
+
+      def encode(temp_object, format, *args)
+        SomeLib.encode(temp_object.data, format, *args)
       end
-    
-    end
-    
-    app.register_encoder(MyEncoder)
 
-If the encoder is {Dragonfly::Configurable configurable}, we can configure it as we register it if we need to
-
-    app.register_encoder(MyEncoder) do |e|
-      e.some_attribute = 'hello'
     end
+
+    app.encoder.register(MyEncoder)
+
+    pdf_image = image.encode(:pdf, :some => :args)

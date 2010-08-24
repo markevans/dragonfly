@@ -1,98 +1,122 @@
 Processing
 ==========
 
-Processing is changing content in some way, and does not involve encoding.
-For example, resizing an image is classed as processing, whereas converting it from 'png' to 'jpeg' is classed as encoding.
+Changing data in some way, e.g. resizing an image, comes under the banner of Processing.
 
-All processing jobs are defined by a processing method and a processing options hash (which is passed to the method).
+You can register as many processors as you like.
 
-Let's say we have a dragonfly app called 'images'
+Let's say we have a Dragonfly app
 
-    app = Dragonfly::App[:images]
+    app = Dragonfly[:images]
 
-Data gets passed around between the datastore, processor, analyser, etc. in the form of an {Dragonfly::ExtendedTempObject ExtendedTempObject}.
+and an image object (actually a {Dragonfly::Job Job} object)...
 
-    temp_object = app.create_object(File.new('path/to/image.png'))
+    image = app.fetch('some/uid')
 
-We can process this object with any of the methods which have been registered with the app's processor.
-For example, registering the {Dragonfly::Processing::RMagickProcessor rmagick processor}
+...OR a Dragonfly model accessor...
 
-    app.register_processor(Dragonfly::Processing::RMagickProcessor)
+    image = @album.cover_image
 
-give us the processing methods `resize`, `crop`, `resize_and_crop`, `rotate`, etc.
+We can process it using any processing methods that have been registered with the processor.
 
-    temp_object.process(:resize, :geometry => '30x30!')        # => returns a new temp_object with width x height = 30x30
-    temp_object.process!(:resize, :geometry => '30x30!')       # => resizes its own data
+RMagickProcessor
+----------------
+The {Dragonfly::Processing::RMagickProcessor RMagickProcessor} is registered by default by
+the {Dragonfly::Config::RMagick RMagick configuration} used by 'dragonfly/rails/images'.
 
-The saved configuration {Dragonfly::Config::RMagickImages RMagickImages} registers the above processor automatically.
+If not already registered:
 
-Custom Processing
+    app.processor.register(Dragonfly::Processing::RMagickProcessor)
+
+gives us these methods:
+
+    image.process(:thumb, '400x300#')            # see below
+
+    image.process(:crop, :width => 40, :height => 50, :x => 20, :y => 30)
+    image.process(:crop, :width => 40, :height => 50, :gravity => 'ne')
+
+    image.process(:flip)                         # flips it vertically
+    image.process(:flop)                         # flips it horizontally
+
+    image.process(:greyscale, :depth => 128)     # default depth 256
+
+    image.process(:resize, '40x40')
+    image.process(:resize_and_crop, :width => 40, :height=> 50, :gravity => 'ne')
+
+    image.process(:rotate, 45, :background_colour => 'transparent')   # default bg black
+
+    image.process(:vignette)                     # options :x, :y, :radius, :sigma
+
+The method `thumb` takes a geometry string and calls `resize`, `resize_and_crop` or `crop` accordingly.
+
+    image.process(:thumb, '400x300')             # calls resize
+
+Below are some examples of geometry strings:
+
+    '400x300'            # resize, maintain aspect ratio
+    '400x300!'           # force resize, don't maintain aspect ratio
+    '400x'               # resize width, maintain aspect ratio
+    'x300'               # resize height, maintain aspect ratio
+    '400x300>'           # resize only if the image is larger than this
+    '400x300<'           # resize only if the image is smaller than this
+    '50x50%'             # resize width and height to 50%
+    '400x300^'           # resize width, height to minimum 400,300, maintain aspect ratio
+    '2000@'              # resize so max area in pixels is 2000
+    '400x300#'           # resize, crop if necessary to maintain aspect ratio (centre gravity)
+    '400x300#ne'         # as above, north-east gravity
+    '400x300se'          # crop, with south-east gravity
+    '400x300+50+100'     # crop from the point 50,100 with width, height 400,300
+
+Lazy evaluation
+---------------
+
+    new_image = image.process(:some_method)
+
+doesn't actually do anything until you call something on the returned {Dragonfly::Job Job} object, like `url`, `data`, etc.
+
+Bang method
+-----------
+
+    image.process!(:some_method)
+
+modifies the image object itself, rather than returning a new object.
+
+Custom Processors
 -----------------
 
-To register a custom processor, derive from {Dragonfly::Processing::Base Processing::Base} and register.
-Each method takes the temp_object, and the (optional) processing options hash as its argument.
+To register a single custom processor:
 
-    class MyProcessor < Dragonfly::Processing::Base
-    
-      def black_and_white(temp_object, opts={})
-        # use temp_object.data, temp_object.path, etc...
-        # ...process and return a String, File, Tempfile or TempObject
+    app.processor.add :watermark do |temp_object, *args|
+      # use temp_object.data, temp_object.path, temp_object.file, etc.
+      SomeLibrary.add_watermark(temp_object.data, 'some/watermark/file.png')
+      # return a String, File or Tempfile
+    end
+
+    new_image = image.process(:watermark)
+
+You can create a class like the RMagick one above, in which case all public methods will be counted as processing methods.
+Each method takes the temp_object as its argument, plus any other args.
+
+    class MyProcessor
+
+      def coolify(temp_object, opts={})
+        SomeLib.coolify(temp_object.data, opts)
       end
 
-      # ... add as many methods as you wish
+      def uglify(temp_object, ugliness)
+        `uglify -i #{temp_object.path} -u #{ugliness}`
+      end
+
+      private
+
+      def my_helper_method
+        # do stuff
+      end
 
     end
 
-    app = Dragonfly::App[:images]
-    app.register_processor(MyProcessor)
+    app.processor.register(MyProcessor)
 
-You can register multiple processors.
+    new_image = image.coolify(:some => :args)
 
-As with analysers and encoders, if the processor is {Dragonfly::Configurable configurable}, we can configure it as we register it if we need to
-
-    app.register_processor(MyProcessor) do |p|
-      p.some_attribute = 'hello'
-    end
-
-Your new processing method is now available to use:
-    
-    temp_object = app.create_object(File.new('path/to/image.png'))
-    temp_object.process(:black_and_white, :some => 'option')         # processed temp_object
-
-To get the url for content processed by your custom processor, the long way is using something like:
-
-    app.url_for('some_uid',
-      :processing_method => :black_and_white,
-      :processing_options => {:size => '30x30'},
-      :format => :png
-    )
-
-or if using an activerecord model,
-
-    my_model.preview_image.url('some_uid',
-      :processing_method => :black_and_white,
-      :processing_options => {:size => '30x30'},
-      :format => :png
-    )
-
-However, this could soon get tedious if using more than once, so the best thing is to register a shortcut for it.
-So in your configuration of the Dragonfly app (or in an initializer if using 'dragonfly/rails/images') you
-could do something like:
-
-    app.parameters.add_shortcut(/^bw-(\d*x\d*)$/) do |string, match_data|
-      {
-        :processing_method => :black_and_white,
-        :processing_options => {:size => match_data[1]},
-        :format => :png
-      }
-    end
-    
-Now you can get urls by using the shortcut:
-
-    app.url_for('some_uid', 'bw-30x30')
-
-or with activerecord:
-
-    my_model.preview_image.url('bw-30x30')
-
-For more information about shortcuts, see {file:Shortcuts}.
+    new_image = image.uglify(:loads)

@@ -9,4 +9,4 @@ Feature: champion adds cover images to his albums
     Then I should see "successfully created"
     And I should see "Look at this cover image!"
     When I look at the generated beach image
-    And I should see a JPEG image of size 200x100
+    And I should see a PNG image of size 200x100

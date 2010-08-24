@@ -3,61 +3,97 @@ Analysers
 
 Analysing data for things like width, mime_type, etc. come under the banner of Analysis.
 
-Let's say we have a dragonfly app called 'images'
+You can register as many analysers as you like.
 
-    app = Dragonfly::App[:images]
+Let's say we have a Dragonfly app
 
-Data gets passed around between the datastore, processor, analyser, etc. in the form of an {Dragonfly::ExtendedTempObject ExtendedTempObject}.
+    app = Dragonfly[:images]
 
-    temp_object = app.create_object(File.new('path/to/image.png'))
+and an image object (actually a {Dragonfly::Job Job} object)...
 
-This object will have any methods which have been registered with the analyser. For example, registering
-the {Dragonfly::Analysis::RMagickAnalyser rmagick analyser}
+    image = app.fetch('some/uid')
 
-    app.register_analyser(Dragonfly::Analysis::RMagickAnalyser)
+...OR a Dragonfly model accessor...
 
-give us the methods `width`, `height`, `depth` and `number_of_colours` (or `number_of_colors`).
+    image = @album.cover_image
 
-    temp_object.width        # => 280
-    # ...etc.
+We can analyse it using any analysis methods that have been registered with the analyser.
 
-Registering the {Dragonfly::Analysis::FileCommandAnalyser 'file' command analyser}
+RMagickAnalyser
+---------------
+The {Dragonfly::Analysis::RMagickAnalyser RMagickAnalyser} is registered by default by the
+{Dragonfly::Config::RMagick RMagick configuration} used by 'dragonfly/rails/images'.
 
-    app.register_analyser(Dragonfly::Analysis::FileCommandAnalyser)
+If not already registered:
 
-gives us the method `mime_type`, which is necessary for the app to serve the file properly.
+    app.analyser.register(Dragonfly::Analysis::RMagickAnalyser)
 
-    temp_object.mime_type    # => 'image/png'
+gives us these methods:
 
-As the file command analyser is {Dragonfly::Configurable configurable}, we can configure it as we register it if we need to
+    image.width               # => 280
+    image.height              # => 355
+    image.aspect_ratio        # => 0.788732394366197
+    image.portrait?           # => true
+    image.landscape?          # => false
+    image.depth               # => 8
+    image.number_of_colours   # => 34703
+    image.format              # => :png
 
-    app.register_analyser(Dragonfly::Analysis::FileCommandAnalyser) do |a|
-      a.file_command = '/usr/bin/file'
+FileCommandAnalyser
+-------------------
+The {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} is registered by default by the
+{Dragonfly::Config::Rails Rails configuration} used by 'dragonfly/rails/images'.
+
+As the name suggests, it uses the UNIX 'file' command.
+
+If not already registered:
+
+    app.analyser.register(Dragonfly::Analysis::FileCommandAnalyser)
+
+gives us:
+
+    image.mime_type    # => 'image/png'
+
+It doesn't use the filesystem by default (it operates on in-memory strings), but we can make it do so by using
+
+    app.analyser.register(Dragonfly::Analysis::FileCommandAnalyser) do |a|
+      a.use_filesystem = true
     end
-
-The saved configuration {Dragonfly::Config::RMagickImages RMagickImages} registers the above two analysers automatically.
 
 Custom Analysers
 ----------------
 
-To register a custom analyser, derive from {Dragonfly::Analysis::Base Analysis::Base} and register.
+To register a single custom analyser:
+
+    app.analyser.add :wobbliness do |temp_object|
+      # can use temp_object.data, temp_object.path, temp_object.file, etc.
+      SomeLibrary.assess_wobbliness(temp_object.data)
+    end
+
+    image.wobbliness    # => 71
+
+You can create a class like the RMagick one above, in which case all public methods will be counted as analysis methods.
 Each method takes the temp_object as its argument.
 
-    class MyAnalyser < Dragonfly::Analysis::Base
-    
+    class MyAnalyser
+
       def coolness(temp_object)
-        # use temp_object.data, temp_object.path, etc...
         temp_object.size / 30
       end
 
-      # ... add as many methods as you wish
+      def uglyness(temp_object)
+        `ugly -i #{temp_object.path}`
+      end
+
+      private
+
+      def my_helper_method
+        # do stuff
+      end
 
     end
 
-    app.register_analyser(MyAnalyser)
-    
-    temp_object = app.create_object(File.new('path/to/image.png'))
-    
-    temp_object.coolness     # => 2067
+    app.analyser.register(MyAnalyser)
 
-You can register multiple analysers.
+    image.coolness    # => -4.1
+    image.uglyness    # => "VERY"

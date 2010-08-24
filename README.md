@@ -1,28 +1,17 @@
 Dragonfly
 ===========
 
-Dragonfly is a <a href="http://rack.rubyforge.org">Rack</a> framework for on-the-fly processing and encoding.
-It includes an extension for Ruby on Rails to enable easy image handling.
+Dragonfly is a <a href="http://rack.rubyforge.org">Rack</a> framework for on-the-fly image handling.
 
-For the lazy Rails user
------------------------
-To use simply for image thumbnails etc. in Rails...
+Ideal for using with Ruby on Rails (2.3 and 3), Sinatra and all that gubbins.
 
-**environment.rb** (Rails 2.3 only):
-
-    config.gem 'rmagick',    :lib => 'RMagick'
-    config.gem 'rack-cache', :lib => 'rack/cache'
-    config.gem 'dragonfly',  :version => '~>0.6.2'
-
-**Gemfile** (Rails 3 only):
+For the lazy Rails user...
+--------------------------
+**Gemfile**:
 
     gem 'rmagick',    :require => 'RMagick'
     gem 'rack-cache', :require => 'rack/cache'
-    gem 'dragonfly', '~>0.6.2'
-
-The above assumes that you have http://gemcutter.org as one of your gem sources.
-If not you should add it, e.g. `gem source --add http://gemcutter.org` from the command line,
-or add `source http://gemcutter.org` to your Gemfile.
+    gem 'dragonfly', '~>0.7.0'
 
 **Initializer** (e.g. config/initializers/dragonfly.rb):
 
@@ -35,7 +24,8 @@ or add `source http://gemcutter.org` to your Gemfile.
 **Model**:
 
     class Album < ActiveRecord::Base
-      image_accessor :cover_image            # Defines reader/writer for cover_image
+      image_accessor :cover_image            # 'image_accessor' is provided by Dragonfly
+                                             # this defines a reader/writer for cover_image
       # ...
     end
 
@@ -47,24 +37,23 @@ or add `source http://gemcutter.org` to your Gemfile.
       ...
     <% end %>
 
+NB: REMEMBER THE MULTIPART BIT!!!
 
 **View** (to display):
 
-    <%= image_tag @album.cover_image.url(:gif) %>
-    <%= image_tag @album.cover_image.url('400x200') %>
-    <%= image_tag @album.cover_image.url('100x100!', :png) %>
-    <%= image_tag @album.cover_image.url('100x100#') %>
-    <%= image_tag @album.cover_image.url('50x50+30+30sw', :tiff) %>
-    <%= image_tag @album.cover_image.url(:rotate, 15) %>
+    <%= image_tag @album.cover_image.url %>
+    <%= image_tag @album.cover_image.thumb('400x200#').url %>
+    <%= image_tag @album.cover_image.jpg.url %>
+    <%= image_tag @album.cover_image.process(:greyscale).encode(:tiff).url %>
     ...etc.
 
 Using outside of rails, custom storage/processing/encoding/analysis, and more...
 --------------------------------------------------------------------------------
-Dragonfly is primarily a Rack app, the Rails part of it being nothing more than a separate layer on top of the main code, which means you can use it as a standalone app, or with Sinatra, Merb, etc.
+Dragonfly is primarily a Rack app, so you can use it as a standalone app, or with Sinatra, Merb, etc.
 
-It is intended to be highly customizable, and is not limited to images, but any data type that could suit on-the-fly processing/encoding.
+It's highly customizable, and works with any data type (not just images).
 
-For more info, consult the <a href="http://markevans.github.com/dragonfly">DOCUMENTATION</a>
+For more info, consult the <a href="http://markevans.github.com/dragonfly"><big><strong>DOCUMENTATION</strong></big></a>
 
 Issues
 ======
@@ -76,7 +65,8 @@ Suggestions/Questions
 
 Credits
 =======
-- <a href="http://github.com/markevans">Mark Evans</a> (author)
+- [Mark Evans](http://github.com/markevans) (author)
+
 
 Copyright
 ========

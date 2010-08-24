@@ -5,7 +5,7 @@
     <%= erb(:headers) %>
   </head>
   <body>
-    
+
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -21,21 +21,21 @@
 
     </script>
     <!-- *************** -->
-    
+
     <script type="text/javascript" charset="utf-8">
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
-    
+
     <div id="header" class="clearfix">
       <%#= erb(:breadcrumb) %>
       <div id="logo">DRAGONFLY (v <%= DRAGONFLY_VERSION %>)</div>
       <%= erb(:search) %>
     </div>
-    
+
     <div>
       <iframe id="search_frame"></iframe>
     </div>
-    
+
     <div id="content" class="clearfix">
       <div class="col1">
         <%= yieldall %>
@@ -43,17 +43,24 @@
       <div class="col2">
         <ul class="main_files clearfix">
           <%= [
+            ['Index', 'Home'],
             ['README', 'Quick start for Rails (README)'],
-            ['GettingStarted', 'Getting started'],
-            ['UsingWithRails', 'Using with Rails'],
-            ['ActiveRecord', 'Using with ActiveRecord'],
+            ['GeneralUsage', 'General usage'],
+            ['Rails2', 'Rails 2.3'],
+            ['Rails3', 'Rails 3'],
+            ['Models', 'Models (ActiveRecord, ActiveModel, etc.)'],
+            ['Rack', 'Rack'],
+            ['Sinatra', 'Sinatra'],
+            ['Heroku', 'Heroku'],
             ['DataStorage', 'Data Storage'],
             ['Analysers', 'Analysers'],
             ['Processing', 'Processing'],
             ['Encoding', 'Encoding'],
-            ['Shortcuts', 'Shortcuts for processing and encoding'],
+            ['Generators', 'Generators'],
+            ['Configuration', 'Configuration'],
+            ['URLs', 'URLs'],
             ['MimeTypes', 'Mime Types'],
-            ['ExampleUseCases', 'Example use cases'],
+            ['Caching', 'Caching'],
             ['History', 'History'],
           ].map{|(file, text)|
             "<li>#{link_file(file, text)}</li>"
@@ -62,7 +69,7 @@
         </ul>
       </div>
     </div>
-    
+
     <%= erb(:footer) %>
   </body>
 </html>

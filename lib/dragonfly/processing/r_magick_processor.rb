@@ -2,8 +2,8 @@ require 'RMagick'
 
 module Dragonfly
   module Processing
-    class RMagickProcessor < Base
-      
+    class RMagickProcessor
+
       GRAVITIES = {
         'nw' => Magick::NorthWestGravity,
         'n'  => Magick::NorthGravity,
@@ -16,14 +16,14 @@ module Dragonfly
         'se' => Magick::SouthEastGravity
       }
 
-      def generate(width, height, format='png')
-        image = Magick::Image.read("plasma:fractal"){self.size = "#{width}x#{height}"}.first
-        image.format = format.to_s
-        image.to_blob
-      end
-      
-      # Processing methods
-      
+      # Geometry string patterns
+      RESIZE_GEOMETRY         = /^\d*x\d*[><%^!]?$|^\d+@$/ # e.g. '300x200!'
+      CROPPED_RESIZE_GEOMETRY = /^(\d+)x(\d+)#(\w{1,2})?$/ # e.g. '20x50#ne'
+      CROP_GEOMETRY           = /^(\d+)x(\d+)([+-]\d+)?([+-]\d+)?(\w{1,2})?$/ # e.g. '30x30+10+10'
+      THUMB_GEOMETRY = Regexp.union RESIZE_GEOMETRY, CROPPED_RESIZE_GEOMETRY, CROP_GEOMETRY
+
+      include RMagickUtils
+
       def crop(temp_object, opts={})
         x       = opts[:x].to_i
         y       = opts[:y].to_i
@@ -31,49 +31,79 @@ module Dragonfly
         width   = opts[:width].to_i
         height  = opts[:height].to_i
 
-        image = rmagick_image(temp_object)
-
-        # RMagick throws an error if the cropping area is bigger than the image,
-        # when the gravity is something other than nw
-        width  = image.columns - x if x + width  > image.columns
-        height = image.rows    - y if y + height > image.rows
-
-        image.crop(gravity, x, y, width, height).to_blob
+        rmagick_image(temp_object) do |image|
+          # RMagick throws an error if the cropping area is bigger than the image,
+          # when the gravity is something other than nw
+          width  = image.columns - x if x + width  > image.columns
+          height = image.rows    - y if y + height > image.rows
+          image.crop(gravity, x, y, width, height)
+        end
       end
-      
+
+      def flip(temp_object)
+        rmagick_image(temp_object) do |image|
+          image.flip!
+        end
+      end
+
+      def flop(temp_object)
+        rmagick_image(temp_object) do |image|
+          image.flop!
+        end
+      end
+
       def greyscale(temp_object, opts={})
         depth = opts[:depth] || 256
-        rmagick_image(temp_object).quantize(depth, Magick::GRAYColorspace).to_blob
+        rmagick_image(temp_object) do |image|
+          image.quantize(depth, Magick::GRAYColorspace)
+        end
       end
       alias grayscale greyscale
-      
-      def resize(temp_object, opts={})
-        rmagick_image(temp_object).change_geometry!(opts[:geometry]) do |cols, rows, img|
-         img.resize!(cols, rows)
-        end.to_blob
+
+      def resize(temp_object, geometry)
+        rmagick_image(temp_object) do |image|
+          image.change_geometry!(geometry) do |cols, rows, img|
+           img.resize!(cols, rows)
+          end
+        end
       end
 
       def resize_and_crop(temp_object, opts={})
-        image = rmagick_image(temp_object)
-        
-        width   = opts[:width] ? opts[:width].to_i : image.columns
-        height  = opts[:height] ? opts[:height].to_i : image.rows
-        gravity = GRAVITIES[opts[:gravity]] || Magick::CenterGravity
+        rmagick_image(temp_object) do |image|
 
-        image.crop_resized(width, height, gravity).to_blob
+          width   = opts[:width] ? opts[:width].to_i : image.columns
+          height  = opts[:height] ? opts[:height].to_i : image.rows
+          gravity = GRAVITIES[opts[:gravity]] || Magick::CenterGravity
+
+          image.crop_resized(width, height, gravity)
+        end
       end
 
-      def rotate(temp_object, opts={})
-        if opts[:amount]
-          args = [opts[:amount].to_f]
-          args << opts[:qualifier] if opts[:qualifier]
-          image = rmagick_image(temp_object)
+      def rotate(temp_object, amount, opts={})
+        args = [amount.to_f]
+        args << opts[:qualifier] if opts[:qualifier]
+        rmagick_image(temp_object) do |image|
           image.background_color = opts[:background_colour] if opts[:background_colour]
           image.background_color = opts[:background_color] if opts[:background_color]
-          rotated_image = image.rotate(*args)
-          rotated_image ? rotated_image.to_blob : temp_object
-        else
-          temp_object
+          image.rotate(*args) || temp_object
+        end
+      end
+
+      def thumb(temp_object, geometry)
+        case geometry
+        when RESIZE_GEOMETRY
+          resize(temp_object, geometry)
+        when CROPPED_RESIZE_GEOMETRY
+          resize_and_crop(temp_object, :width => $1, :height => $2, :gravity => $3)
+        when CROP_GEOMETRY
+          crop(temp_object,
+            :width => $1,
+            :height => $2,
+            :x => $3,
+            :y => $4,
+            :gravity => $5
+          )
+        else raise ArgumentError, "Didn't recognise the geometry string #{geometry}"
         end
       end
 
@@ -83,16 +113,9 @@ module Dragonfly
         radius = opts[:radius].to_f ||  0.0
         sigma  = opts[:sigma].to_f  || 10.0
 
-        rmagick_image(temp_object).vignette(x, y, radius, sigma).to_blob
-      end
-      
-      private
-      
-      def rmagick_image(temp_object)
-        Magick::Image.from_blob(temp_object.data).first
-      rescue Magick::ImageMagickError => e
-        log.warn("Unable to handle content in #{self.class} - got:\n#{e}")
-        throw :unable_to_handle
+        rmagick_image(temp_object) do |image|
+          image.vignette(x, y, radius, sigma)
+        end
       end
 
     end

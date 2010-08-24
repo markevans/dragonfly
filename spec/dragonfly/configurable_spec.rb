@@ -54,6 +54,10 @@ describe Dragonfly::Configurable do
         end
       }.should raise_error(Dragonfly::Configurable::BadConfigAttribute)
     end
+    
+    it "should return itself" do
+      @car.configure{|c|}.should == @car
+    end
   end
   
   describe "getting configuration" do
@@ -202,6 +206,16 @@ describe Dragonfly::Configurable do
         c.colour = 'branco'
       end
       @car.colour.should == 'branco'
+    end
+    
+    it "should return itself" do
+      @car.configure_with(@cool_configuration).should == @car
+    end
+    
+    it "should ask the object which object to configure with if a symbol is given" do
+      @car.should_receive(:configurer_for).with(:cool).and_return(@cool_configuration)
+      @car.configure_with(:cool)
+      @car.colour.should == 'vermelho'
     end
   end
   

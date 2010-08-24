@@ -1,19 +1,17 @@
 Dragonfly Documentation
 =======================
+Dragonfly is a {http://rack.rubyforge.org Rack} framework for on-the-fly image handling in Ruby.
 
-Welcome to the documentation for Dragonfly!
+It is suitable for using with web frameworks such as Rails(2.3 and 3), Sinatra, etc.
 
-Dragonfly is a {http://rack.rubyforge.org Rack} framework for on-the-fly processing and encoding.
+I actually lied about image handling - it can be used for any type of content.
 
-It includes an extension for Ruby on Rails to enable easy image handling.
-It is intended to be highly customizable, and is not limited to images, but any data type that could suit on-the-fly processing/encoding.
-
-Use the dropdowns at the top-right to navigate around the code, or jump straight to one of the guides on the right.
+See the links on the right for more info.
 
 Installation
 ------------
 
-    gem install dragonfly --source=http://gemcutter.org
+    gem install dragonfly
 
 Issues
 ------
@@ -25,8 +23,9 @@ Suggestions/Questions
 
 Credits
 -------
-- <a href="http://github.com/markevans">Mark Evans</a> (author)
+- [Mark Evans](http://github.com/markevans) (author)
+- Loads of helpful comments, issues, questions, suggestions and insults from others - you know who you are!
 
 Copyright
 ---------
-Copyright (c) 2009 Mark Evans. See LICENSE for details.
+Copyright (c) 2009-2010 Mark Evans. See LICENSE for details.

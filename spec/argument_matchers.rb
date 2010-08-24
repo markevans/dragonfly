@@ -3,27 +3,17 @@ def string_matching(regexp)
 end
 
 class TempObjectArgumentMatcher
-  def initialize(data)
+  def initialize(data, opts)
     @data = data
+    @opts = opts
   end
   def ==(actual)
-    actual.is_a?(Dragonfly::TempObject) && actual.data == @data
+    actual.is_a?(Dragonfly::TempObject) &&
+      actual.data == @data &&
+      @opts.all?{|k,v| actual.send(k) == v }
   end
 end
 
-def a_temp_object_with_data(data)
-  TempObjectArgumentMatcher.new(data)
-end
-
-class ParametersArgumentMatcher
-  def initialize(hash)
-    @hash = hash
-  end
-  def ==(actual)
-    actual.to_hash.reject{|k,v| v.nil? || v.respond_to?(:empty?) && v.empty?} == @hash
-  end
-end
-
-def parameters_matching(hash)
-  ParametersArgumentMatcher.new(hash)
+def a_temp_object_with_data(data, opts={})
+  TempObjectArgumentMatcher.new(data, opts)
 end

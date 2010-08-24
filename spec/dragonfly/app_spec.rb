@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 require 'rack/mock'
 
-describe Dragonfly::App do
+def request(app, path)
+  Rack::MockRequest.new(app).get(path)
+end
 
-  def make_request(app, url)
-    Rack::MockRequest.new(app).get(url)
-  end
+describe Dragonfly::App do
 
   describe ".instance" do
     
@@ -20,7 +20,7 @@ describe Dragonfly::App do
     end
     
     it "should also work using square brackets" do
-      Dragonfly::App[:images].should == Dragonfly::App.instance(:images)
+      Dragonfly[:images].should == Dragonfly::App.instance(:images)
     end
     
   end
@@ -32,45 +32,11 @@ describe Dragonfly::App do
       }.should raise_error(NoMethodError)
     end
   end
-  
-  describe "errors" do
-
-    before(:each) do
-      @app = Dragonfly::App[:images]
-    end
-
-    it "should return 400 if UrlHandler::IncorrectSHA is raised" do
-      @app.url_handler.should_receive(:url_to_parameters).and_raise(Dragonfly::UrlHandler::IncorrectSHA)
-      response = make_request(@app, '/some_uid.png?s=sadfas')
-      response.status.should == 400
-    end
-    
-    it "should return 400 if UrlHandler::SHANotGiven is raised" do
-      @app.url_handler.should_receive(:url_to_parameters).and_raise(Dragonfly::UrlHandler::SHANotGiven)
-      response = make_request(@app, '/some_uid.png?s=asdfghsg')
-      response.status.should == 400
-    end
-    
-    it "should return 404 if url handler raises an unknown url exception" do
-      @app.url_handler.should_receive(:url_to_parameters).and_raise(Dragonfly::UrlHandler::UnknownUrl)
-      response = make_request(@app, '/')
-      response.status.should == 404
-    end
-
-    it "should return 404 if the datastore raises data not found" do
-      @app.url_handler.protect_from_dos_attacks = false
-      @app.should_receive(:fetch).and_raise(Dragonfly::DataStorage::DataNotFound)
-      response = make_request(@app, '/hello.png')
-      response.status.should == 404
-    end
-
-  end
 
   describe "mime types" do
     describe "#mime_type_for" do
       before(:each) do
-        Dragonfly::App.send(:apps)[:images] = nil # A Hack to get rspec to reset stuff in between tests
-        @app = Dragonfly::App[:images]
+        @app = test_app
       end
       it "should return the correct mime type for a symbol" do
         @app.mime_type_for(:png).should == 'image/png'
@@ -84,23 +50,19 @@ describe Dragonfly::App do
       it "should work with a dot" do
         @app.mime_type_for('.png').should == 'image/png'
       end
-      it "should return the fallback mime_type if not known" do
-        @app.mime_type_for(:mark).should == 'application/octet-stream'
-      end
-      it "should return the fallback mime_type if not known" do
-        @app.configure{|c| c.fallback_mime_type = 'egg/nog'}
-        @app.mime_type_for(:mark).should == 'egg/nog'
+      it "should return nil if not known" do
+        @app.mime_type_for(:mark).should be_nil
       end
       it "should allow for configuring extra mime types" do
-        @app.configure{|c| c.register_mime_type 'mark', 'application/mark'}
+        @app.register_mime_type 'mark', 'application/mark'
         @app.mime_type_for(:mark).should == 'application/mark'
       end
       it "should override existing mime types when registered" do
-        @app.configure{|c| c.register_mime_type :png, 'ping/pong'}
+        @app.register_mime_type :png, 'ping/pong'
         @app.mime_type_for(:png).should == 'ping/pong'
       end
       it "should have a per-app mime-type configuration" do
-        other_app = Dragonfly::App[:other_app]
+        other_app = Dragonfly[:other_app]
         @app.register_mime_type(:mark, 'first/one')
         other_app.register_mime_type(:mark, 'second/one')
         @app.mime_type_for(:mark).should == 'first/one'
@@ -108,31 +70,175 @@ describe Dragonfly::App do
       end
     end
     
-    describe "Content-Type header" do
+    describe "#resolve_mime_type" do
       before(:each) do
-        Dragonfly::App.send(:apps)[:test] = nil # A Hack to get rspec to reset stuff in between tests
-        @app = Dragonfly::App[:test]
-        @app.url_handler.protect_from_dos_attacks = false
-        @app.datastore = Dragonfly::DataStorage::TransparentDataStore.new
-        @app.register_encoder(Dragonfly::Encoding::TransparentEncoder)
-        @analyser = Class.new(Dragonfly::Analysis::Base){ def mime_type(*args); 'analyser/mime-type'; end }
+        @app = test_app
+        @app.analyser.add :format do |temp_object|
+          :png
+        end
+        @app.analyser.add :mime_type do |temp_object|
+          'image/jpeg'
+        end
+        @app.encoder.add do |temp_object|
+          'ENCODED DATA YO'
+        end
       end
-      it "should return the fallback mime_type if none registered and no mime_type analyser" do
-        make_request(@app, '/some_uid.gog').headers['Content-Type'].should == 'application/octet-stream'
+
+      it "should return the correct mime_type if the temp_object has a format" do
+        temp_object = Dragonfly::TempObject.new("HIMATE", :format => :tiff, :name => 'test.pdf')
+        @app.resolve_mime_type(temp_object).should == 'image/tiff'
       end
-      it "should return the analysed mime-type if an analyser is registered" do
-        @app.register_analyser(@analyser)
-        make_request(@app, '/some_uid.gog').headers['Content-Type'].should == 'analyser/mime-type'
+
+      it "should use the file extension if it has no format" do
+        temp_object = Dragonfly::TempObject.new("HIMATE", :name => 'test.pdf')
+        @app.resolve_mime_type(temp_object).should == 'application/pdf'
       end
-      it "should return the registered mime_type over the analysed one" do
-        @app.register_analyser(@analyser)
-        @app.register_mime_type(:gog, 'numb/nut')
-        make_request(@app, '/some_uid.gog').headers['Content-Type'].should == 'numb/nut'
+
+      it "should not use the file extension if it's been switched off (fall back to mime_type analyser)" do
+        @app.infer_mime_type_from_file_ext = false
+        temp_object = Dragonfly::TempObject.new("HIMATE", :name => 'test.pdf')
+        @app.resolve_mime_type(temp_object).should == 'image/jpeg'
       end
-      it "should use the fallback mime-type if the registered analyser doesn't respond to 'mime-type'" do
-        @app.register_analyser(Class.new(Dragonfly::Analysis::Base))
-        make_request(@app, '/some_uid.gog').headers['Content-Type'].should == 'application/octet-stream'
+
+      it "should fall back to the mime_type analyser if the temp_object has no ext" do
+        temp_object = Dragonfly::TempObject.new("HIMATE", :name => 'test')
+        @app.resolve_mime_type(temp_object).should == 'image/jpeg'
       end
+
+      describe "when the temp_object has no name" do
+
+        before(:each) do
+          @temp_object = Dragonfly::TempObject.new("HIMATE")
+        end
+
+        it "should fall back to the mime_type analyser" do
+          @app.resolve_mime_type(@temp_object).should == 'image/jpeg'
+        end
+
+        it "should fall back to the format analyser if the mime_type analyser doesn't exist" do
+          @app.analyser.functions.delete(:mime_type)
+          @app.resolve_mime_type(@temp_object).should == 'image/png'
+        end
+
+        it "should fall back to the app's fallback mime_type if no mime_type/format analyser exists" do
+          @app.analyser.functions.delete(:mime_type)
+          @app.analyser.functions.delete(:format)
+          @app.resolve_mime_type(@temp_object).should == 'application/octet-stream'
+        end
+
+      end
+
+    end
+    
+  end
+
+  describe "without path prefix or DOS protection" do
+    before(:each) do
+      @app = test_app
+      @job = Dragonfly::Job.new(@app).fetch('some_uid')
+      @app.datastore.stub!(:retrieve).with('some_uid').and_return "Hi there"
+      @app.configure{|c| c.protect_from_dos_attacks = false }
+    end
+    it "should correctly respond with the job data" do
+      response = request(@app, "/#{@job.serialize}")
+      response.status.should == 200
+      response.body.should == "Hi there"
+    end
+    it "should generate the correct url" do
+      @app.url_for(@job).should == "/#{@job.serialize}"
+    end
+  end
+
+  describe "url_path_prefix" do
+    before(:each) do
+      @app = test_app
+      @job = Dragonfly::Job.new(@app)
+    end
+    it "should add the path prefix to the url if configured" do
+      @app.url_path_prefix = '/media'
+      @app.url_for(@job).should =~ %r{^/media/\w+$}
+    end
+    it "should add the path prefix to the url if passed in" do
+      @app.url_for(@job, :path_prefix => '/eggs').should =~ %r{^/eggs/\w+$}
+    end
+    it "should favour the passed in one" do
+      @app.url_path_prefix = '/media'
+      @app.url_for(@job, :path_prefix => '/bacon').should =~ %r{^/bacon/\w+$}
+    end
+  end
+
+  describe "url_host" do
+    before(:each) do
+      @app = test_app
+      @job = Dragonfly::Job.new(@app)
+    end
+    it "should add the host to the url if configured" do
+      @app.url_host = 'http://some.server:4000'
+      @app.url_for(@job).should =~ %r{^http://some\.server:4000/\w+$}
+    end
+    it "should add the host to the url if passed in" do
+      @app.url_for(@job, :host => 'https://bungle.com').should =~ %r{^https://bungle\.com/\w+$}
+    end
+    it "should favour the passed in one" do
+      @app.url_host = 'http://some.server:4000'
+      @app.url_for(@job, :host => 'https://smeedy').should =~ %r{^https://smeedy/\w+$}
+    end
+  end
+  
+  describe "Denial of Service protection" do
+    before(:each) do
+      @app = test_app
+      @app.protect_from_dos_attacks = true
+      @job = Dragonfly::Job.new(@app).fetch('some_uid')
+    end
+    it "should generate the correct url" do
+      @app.url_for(@job).should == "/#{@job.serialize}?s=#{@job.sha}"
+    end
+  end
+
+  describe "configuring with saved configurations" do
+    before(:each) do
+      @app = test_app
+    end
+    
+    {
+      :rmagick => Dragonfly::Config::RMagick,
+      :r_magick => Dragonfly::Config::RMagick,
+      :rails => Dragonfly::Config::Rails,
+      :heroku => Dragonfly::Config::Heroku,
+    }.each do |key, klass|
+      it "should map #{key} to #{klass}" do
+        klass.should_receive(:apply_configuration).with(@app)
+        @app.configure_with(key)
+      end
+    end
+
+    it "should description" do
+      lambda {
+        @app.configure_with(:eggs)
+      }.should raise_error(ArgumentError)
+    end
+  end
+
+  describe "#store" do
+    before(:each) do
+      @app = test_app
+    end
+    it "should allow just storing content" do
+      @app.datastore.should_receive(:store).with(a_temp_object_with_data("HELLO"), {})
+      @app.store("HELLO")
+    end
+    it "should allow storing using a TempObject" do
+      temp_object = Dragonfly::TempObject.new("HELLO")
+      @app.datastore.should_receive(:store).with(temp_object, {})
+      @app.store(temp_object)
+    end
+    it "should allow storing with extra stuff" do
+      @app.datastore.should_receive(:store).with(
+        a_temp_object_with_data("HELLO", :meta => {:egg => :head}),
+        {:option => :blarney}
+      )
+      @app.store("HELLO", :meta => {:egg => :head}, :option => :blarney)
     end
   end
 

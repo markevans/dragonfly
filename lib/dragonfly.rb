@@ -1,4 +1,4 @@
-# AUTOLOAD EVERYTHING IN THE IMAGETASTIC DIRECTORY TREE
+# AUTOLOAD EVERYTHING IN THE DRAGONFLY DIRECTORY TREE
 
 # The convention is that dirs are modules
 # so declare them here and autoload any modules/classes inside them
@@ -17,6 +17,7 @@ def autoload_files_in_dir(path, namespace)
   eval("module #{namespace}; end")
   # Autoload modules/classes in that module
   Dir.glob("#{path}/*.rb").each do |file|
+    file = File.expand_path(file)
     sub_const_name = camelize( File.basename(file, '.rb') )
     eval("#{namespace}.autoload('#{sub_const_name}', '#{file}')")
   end
@@ -40,17 +41,15 @@ module Dragonfly
       case const
       when :RMagickConfiguration
         puts "WARNING: RMagickConfiguration is deprecated and will be removed in future "+
-             "versions of Dragonfly. Please change to Dragonfly::Config::RMagickImages"
-        const_set(:RMagickConfiguration, Config::RMagickImages)
+             "versions of Dragonfly. Please change to Dragonfly::Config::RMagick (or just :rmagick)"
+        const_set(:RMagickConfiguration, Config::RMagick)
       else
         super
       end
     end
 
-    def active_record_macro(prefix, app)
-      already_extended = (class << ActiveRecord::Base; self; end).included_modules.include?(ActiveRecordExtensions)
-      ActiveRecord::Base.extend(ActiveRecordExtensions) unless already_extended
-      ActiveRecord::Base.register_dragonfly_app(prefix, app)
+    def [](*args)
+      App[*args]
     end
 
   end

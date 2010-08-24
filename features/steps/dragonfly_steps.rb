@@ -1,5 +1,7 @@
+require 'tempfile'
+
 Given /^we are using the app for (\w+)$/ do |app_name|
-  $app = Dragonfly::App[app_name.to_sym]
+  $app = Dragonfly[app_name.to_sym]
 end
 
 Given /^a stored file "(.+?)"$/ do |name|
@@ -16,23 +18,23 @@ Given /^a stored image "(.+?)" with dimensions (\d+)x(\d+)$/ do |name, width, he
 end
 
 When /^I go to the url for "(.+?)"$/ do |name|
-  make_request name
+  uid = TEMP_FILES[name]
+  make_request $app.fetch(uid)
 end
 
-When /^I go to the url for "(.+?)", with format '([^']+?)'$/ do |name, ext|
-  make_request name, :format => ext
+When /^I go to the url for "(.+?)", with format '([^']+?)'$/ do |name, format|
+  uid = TEMP_FILES[name]
+  make_request $app.fetch(uid).encode(format)
 end
 
-When /^I go to the url for "(.+?)", with format '(.+?)' and resize geometry '(.+?)'$/ do |name, ext, geometry|
-  make_request(name,
-    :format => ext,
-    :processing_method => :resize,
-    :processing_options => {:geometry => geometry}
-  )
+When /^I go to the url for "(.+?)", with format '(.+?)' and resize geometry '(.+?)'$/ do |name, format, geometry|
+  uid = TEMP_FILES[name]
+  make_request $app.fetch(uid).process(:resize, geometry).encode(format)
 end
 
-When /^I go to the url for "(.+?)", with shortcut '([^']+?)'$/ do |name, arg1|
-  make_request name, arg1
+When /^I go to the url for "(.+?)", with shortcut '([^']+?)'$/ do |name, geometry|
+  uid = TEMP_FILES[name]
+  make_request $app.fetch(uid).thumb(geometry)
 end
 
 Then "the response should be OK" do

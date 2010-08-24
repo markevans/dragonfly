@@ -20,3 +20,25 @@ def match_ar_error(string)
     error == string
   end
 end
+
+def include_hash(hash)
+  simple_matcher("include hash #{hash}") do |given|
+    given.merge(hash) == given
+  end
+end
+
+def memory_usage
+  GC.start # Garbage collect
+  `ps -o rss= -p #{$$}`.strip.to_i
+end
+
+def leak_memory
+  simple_matcher("leak memory") do |given|
+    memory_before = memory_usage
+    given.call
+    memory_after = memory_usage
+    result = memory_after > memory_before
+    puts "#{memory_after} > #{memory_before}" if result
+    result
+  end
+end

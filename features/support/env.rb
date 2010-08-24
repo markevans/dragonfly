@@ -4,18 +4,14 @@ require 'spec/expectations'
 require 'test/unit/assertions'
 require File.dirname(__FILE__) + '/../../spec/image_matchers.rb'
 
-# A hack as system calls weren't using my path
-extra_paths = %w(/opt/local/bin)
-ENV['PATH'] ||= ''
-ENV['PATH'] += ':' + extra_paths.join(':')
+ROOT_PATH = File.expand_path(File.dirname(__FILE__) + "/../..")
 
 # A hash of <name for reference> => <dragonfly uid> pairs
 TEMP_FILES = {}
 
-Dragonfly::App[:images].configure_with(Dragonfly::Config::RMagickImages)
-Dragonfly::App[:files].configure do |c|
-  c.register_analyser(Dragonfly::Analysis::FileCommandAnalyser)
-  c.register_encoder(Dragonfly::Encoding::TransparentEncoder)
+Dragonfly[:images].configure_with(:rmagick)
+Dragonfly[:files].configure do |c|
+  c.analyser.register(Dragonfly::Analysis::FileCommandAnalyser)
 end
 
 SAMPLE_IMAGE_PATH = File.dirname(__FILE__)+'/../../samples/beach.png'
@@ -28,12 +24,15 @@ Before do
   end
 end
 
+AfterStep do |scenario|
+  FileUtils.rm_f("#{ROOT_PATH}/Gemfile.lock")
+end
+
 module MyHelpers
   
-  def make_request(name, *args)
+  def make_request(job)
     request = Rack::MockRequest.new($app)
-    url = $app.url_for(TEMP_FILES[name], *args)
-    @response = request.get(url)
+    @response = request.get(job.url)
   end
   
 end

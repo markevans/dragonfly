@@ -1,27 +1,34 @@
 module Dragonfly
-
   class Middleware
-    
-    def initialize(app, dragonfly_app_name)
+
+    def initialize(app, dragonfly_app_name, path_prefix)
       @app = app
-      @dragonfly_app_name = dragonfly_app_name
+      @endpoint = Rack::Builder.new {
+        map path_prefix do
+          run Dragonfly[dragonfly_app_name]
+        end
+      }.to_app
     end
-    
+
     def call(env)
-      response = endpoint.call(env)
-      if response[0] == 404
+      response = @endpoint.call(env)
+      if route_not_found?(response)
         @app.call(env)
       else
         response
       end
     end
-    
-    private
-    
-    def endpoint
-      App[@dragonfly_app_name]
-    end
-    
-  end
 
+    private
+
+    def route_not_found?(response)
+      response[1]['X-Cascade'] == 'pass' ||
+        (rack_version_doesnt_support_x_cascade? && response[0] == 404)
+    end
+
+    def rack_version_doesnt_support_x_cascade?
+      Rack.version < '1.1'
+    end
+
+  end
 end

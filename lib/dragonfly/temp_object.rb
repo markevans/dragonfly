@@ -29,41 +29,36 @@ module Dragonfly
   # are ever called, then the filesystem will never be hit.
   #
   class TempObject
-  
+
     # Class configuration
     class << self
-      
+
       include Configurable
       configurable_attr :block_size, 8192
-      
+
     end
-  
+
     # Instance Methods
-    
-    def initialize(obj)
+
+    def initialize(obj, opts={})
       initialize_from_object!(obj)
+      validate_options!(opts)
+      extract_attributes_from(opts)
     end
-    
-    def modify_self!(obj)
-      unless obj == self
-        reset!
-        initialize_from_object!(obj)
-      end
-      self
-    end
-    
+
     def data
       @data ||= initialized_data || file.read
     end
 
     def tempfile
       @tempfile ||= begin
-        if initialized_tempfile
+        case initialized_with
+        when :tempfile
           @tempfile = initialized_tempfile
-        elsif initialized_data
+        when :data
           @tempfile = Tempfile.new('dragonfly')
           @tempfile.write(initialized_data)
-        elsif initialized_file
+        when :file
           @tempfile = copy_to_tempfile(initialized_file.path)
         end
         @tempfile.close
@@ -81,11 +76,11 @@ module Dragonfly
       end
       ret
     end
-    
+
     def path
       tempfile.path
     end
-    
+
     def size
       if initialized_data
         initialized_data.bytesize
@@ -93,24 +88,22 @@ module Dragonfly
         File.size(path)
       end
     end
-    
-    attr_writer :name
-    
-    def name
-      @name unless @name.blank?
+
+    attr_reader :name, :format
+    alias _format format
+
+    def meta
+      @meta ||= {}
     end
-    
+
     def basename
-      return unless name
-      name.sub(/\.[^.]+$/,'')
+      File.basename(name, '.*') if name
     end
-    
+
     def ext
-      return unless name
-      bits = name.split('.')
-      bits.last if bits.size > 1
+      File.extname(name)[/\.(.*)/, 1] if name
     end
-    
+
     def each(&block)
       to_io do |io|
         while part = io.read(block_size)
@@ -118,7 +111,7 @@ module Dragonfly
         end
       end
     end
-    
+
     def to_file(path)
       if initialized_data
         File.open(path, 'w'){|f| f.write(initialized_data) }
@@ -127,7 +120,7 @@ module Dragonfly
       end
       File.new(path)
     end
-    
+
     def to_io(&block)
       if initialized_data
         StringIO.open(initialized_data, &block)
@@ -136,16 +129,39 @@ module Dragonfly
       end
     end
 
-    protected
-    
-    attr_accessor :initialized_data, :initialized_tempfile, :initialized_file
-    
-    private
-    
-    def reset!
-      @data = @tempfile = @initialized_data = @initialized_file = @initialized_tempfile = nil
+    def attributes
+      {
+        :name => name,
+        :meta => meta,
+        :format => format
+      }
     end
-    
+
+    def extract_attributes_from(hash)
+      self.name   = hash.delete(:name)   unless hash[:name].blank?
+      self.meta   = hash.delete(:meta)   unless hash[:meta].blank?
+      self.format = hash.delete(:format) unless hash[:format].blank?
+    end
+
+    def inspect
+      content_string = case initialized_with
+      when :data
+        data_string = size > 20 ? "#{initialized_data[0..20]}..." : initialized_data
+        "data=#{data_string.inspect}"
+      when :file then "file=#{initialized_file.inspect}"
+      when :tempfile then "tempfile=#{initialized_tempfile.inspect}"
+      end
+      to_s.sub(/>$/, " #{content_string}, @meta=#{@meta.inspect}, @name=#{@name.inspect} >")
+    end
+
+    protected
+
+    attr_accessor :initialized_data, :initialized_tempfile, :initialized_file
+
+    private
+
+    attr_writer :name, :meta, :format
+
     def initialize_from_object!(obj)
       case obj
       when TempObject
@@ -164,16 +180,32 @@ module Dragonfly
       end
       self.name = obj.original_filename if obj.respond_to?(:original_filename)
     end
-    
+
+    def initialized_with
+      if initialized_tempfile
+        :tempfile
+      elsif initialized_data
+        :data
+      elsif initialized_file
+        :file
+      end
+    end
+
     def block_size
       self.class.block_size
     end
-    
+
     def copy_to_tempfile(path)
       tempfile = Tempfile.new('dragonfly')
       FileUtils.cp File.expand_path(path), tempfile.path
       tempfile
     end
-    
+
+    def validate_options!(opts)
+      valid_keys = [:name, :meta, :format]
+      invalid_keys = opts.keys - valid_keys
+      raise ArgumentError, "Unrecognised options #{invalid_keys.inspect}" if invalid_keys.any?
+    end
+
   end
 end
