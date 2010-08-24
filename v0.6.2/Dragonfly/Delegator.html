@@ -1,0 +1,617 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
+<title>Module: Dragonfly::Delegator</title>
+<link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+  </head>
+  <body>
+    
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+    
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+    </div>
+    
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+    
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <h1>Module: Dragonfly::Delegator
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+      <dt class="r1">Includes:</dt>
+      <dd class="r1"><a href="BelongsToApp.html" title="Dragonfly::BelongsToApp (module)">BelongsToApp</a></dd>
+      
+    
+  
+  
+    <dt class="r2">Included in:</dt>
+    <dd class="r2"><a href="AnalyserList.html" title="Dragonfly::AnalyserList (class)">AnalyserList</a>, <a href="EncoderList.html" title="Dragonfly::EncoderList (class)">EncoderList</a>, <a href="ProcessorList.html" title="Dragonfly::ProcessorList (class)">ProcessorList</a></dd>
+    
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/dragonfly/delegator.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+   
+    
+   
+    
+      <strong class="classes">Classes:</strong> <a href="Delegator/UnableToHandle.html" title="Dragonfly::Delegator::UnableToHandle (class)">UnableToHandle</a>
+    
+  
+</p>
+
+
+  
+  
+  
+  
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#registered_objects-instance_method" title="#registered_objects (instance method)">- (Object) <strong>registered_objects</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delegatable_methods-instance_method" title="#delegatable_methods (instance method)">- (Object) <strong>delegatable_methods</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delegate-instance_method" title="#delegate (instance method)">- (Object) <strong>delegate</strong>(meth, *args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_delegatable_method%3F-instance_method" title="#has_delegatable_method? (instance method)">- (Boolean) <strong>has_delegatable_method?</strong>(method) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#register-instance_method" title="#register (instance method)">- (Object) <strong>register</strong>(klass, *args, &amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unregister-instance_method" title="#unregister (instance method)">- (Object) <strong>unregister</strong>(klass) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unregister_all-instance_method" title="#unregister_all (instance method)">- (Object) <strong>unregister_all</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <a href="BelongsToApp.html" title="Dragonfly::BelongsToApp (module)">BelongsToApp</a></h3>
+  <p class="inherited"><a href="BelongsToApp.html#app_set%3F-instance_method" title="Dragonfly::BelongsToApp#app_set? (method)">#app_set?</a>, <a href="BelongsToApp.html#log-instance_method" title="Dragonfly::BelongsToApp#log (method)">#log</a></p>
+<div id="method_missing_details" class="method_details_list">
+  <h2>Dynamic Method Handling</h2>
+  <p class="notice this">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+  
+    <div class="method_details first">
+  <p class="signature first" id="method_missing-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>method_missing</strong>(meth, *args)  <span class="extras">(private)</span>
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+53
+54
+55
+56
+57
+58
+59</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/delegator.rb', line 53</span>
+
+<span class='kw'>def</span> <span class='id method_missing'>method_missing</span><span class='lparen'>(</span><span class='id meth'>meth</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id has_delegatable_method?'>has_delegatable_method?</span><span class='lparen'>(</span><span class='id meth'>meth</span><span class='rparen'>)</span>
+    <span class='id delegate'>delegate</span><span class='lparen'>(</span><span class='id meth'>meth</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='kw'>super</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="registered_objects=-instance_method"></span>
+      <span id="registered_objects-instance_method"></span>
+      <div class="method_details first">
+  <p class="signature first" id="registered_objects-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>registered_objects</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/delegator.rb', line 26</span>
+
+<span class='kw'>def</span> <span class='id registered_objects'>registered_objects</span>
+  <span class='ivar'>@registered_objects</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="delegatable_methods-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>delegatable_methods</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/delegator.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id delegatable_methods'>delegatable_methods</span>
+  <span class='id registered_objects'>registered_objects</span><span class='period'>.</span><span class='id map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id a'>a</span><span class='op'>|</span> <span class='id a'>a</span><span class='period'>.</span><span class='id delegatable_methods'>delegatable_methods</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id flatten'>flatten</span><span class='period'>.</span><span class='id uniq'>uniq</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="delegate-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>delegate</strong>(meth, *args) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Raises:</h3>
+<ul class="raise">
+  
+    <li>
+      
+        <span class='type'>(<tt><a href="Delegator/UnableToHandle.html" title="Dragonfly::Delegator::UnableToHandle (class)">UnableToHandle</a></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/delegator.rb', line 30</span>
+
+<span class='kw'>def</span> <span class='id delegate'>delegate</span><span class='lparen'>(</span><span class='id meth'>meth</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='id registered_objects'>registered_objects</span><span class='period'>.</span><span class='id reverse'>reverse</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id object'>object</span><span class='op'>|</span>
+    <span class='id catch'>catch</span> <span class='symbol'>:unable_to_handle</span> <span class='kw'>do</span>
+      <span class='kw'>return</span> <span class='id object'>object</span><span class='period'>.</span><span class='id send'>send</span><span class='lparen'>(</span><span class='id meth'>meth</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id object'>object</span><span class='period'>.</span><span class='id respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id meth'>meth</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='comment'># If the code gets here, then none of the registered objects were able to handle the method call
+</span>  <span class='id raise'>raise</span> <span class='const'>UnableToHandle</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>None of the objects registered with </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='rbrace'>}</span><span class='tstring_content'> were able to deal with the method call </span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id meth'>meth</span><span class='rbrace'>}</span><span class='tstring_content'>(</span><span class='embexpr_beg'>#{</span><span class='id args'>args</span><span class='period'>.</span><span class='id map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id a'>a</span><span class='op'>|</span> <span class='id a'>a</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='int'>100</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>,</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>). You need to register one that can.</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="has_delegatable_method?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_delegatable_method?</strong>(method) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+45
+46
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/delegator.rb', line 45</span>
+
+<span class='kw'>def</span> <span class='id has_delegatable_method?'>has_delegatable_method?</span><span class='lparen'>(</span><span class='id method'>method</span><span class='rparen'>)</span>
+  <span class='id delegatable_methods'>delegatable_methods</span><span class='period'>.</span><span class='id include?'>include?</span><span class='lparen'>(</span><span class='id method'>method</span><span class='period'>.</span><span class='id to_method_name'>to_method_name</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="register-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>register</strong>(klass, *args, &amp;block) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+10
+11
+12
+13
+14
+15
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/delegator.rb', line 10</span>
+
+<span class='kw'>def</span> <span class='id register'>register</span><span class='lparen'>(</span><span class='id klass'>klass</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='id object'>object</span> <span class='op'>=</span> <span class='id klass'>klass</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='id object'>object</span><span class='period'>.</span><span class='id configure'>configure</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id block'>block</span>
+  <span class='id object'>object</span><span class='period'>.</span><span class='id app'>app</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id app'>app</span> <span class='kw'>if</span> <span class='id app_set?'>app_set?</span> <span class='op'>&amp;&amp;</span> <span class='id object'>object</span><span class='period'>.</span><span class='id is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>BelongsToApp</span><span class='rparen'>)</span>
+  <span class='id registered_objects'>registered_objects</span> <span class='op'>&lt;&lt;</span> <span class='id object'>object</span>
+  <span class='id object'>object</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="unregister-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>unregister</strong>(klass) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+18
+19
+20</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/delegator.rb', line 18</span>
+
+<span class='kw'>def</span> <span class='id unregister'>unregister</span><span class='lparen'>(</span><span class='id klass'>klass</span><span class='rparen'>)</span>
+  <span class='id registered_objects'>registered_objects</span><span class='period'>.</span><span class='id delete_if'>delete_if</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id obj'>obj</span><span class='op'>|</span> <span class='id obj'>obj</span><span class='period'>.</span><span class='id is_a?'>is_a?</span><span class='lparen'>(</span><span class='id klass'>klass</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="unregister_all-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>unregister_all</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+22
+23
+24</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/delegator.rb', line 22</span>
+
+<span class='kw'>def</span> <span class='id unregister_all'>unregister_all</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id registered_objects'>registered_objects</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div id="footer">
+  Generated on Wed Aug 25 00:53:44 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.8 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

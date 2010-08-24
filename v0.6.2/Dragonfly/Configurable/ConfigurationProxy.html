@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
+<title>Class: Dragonfly::Configurable::ConfigurationProxy</title>
+<link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '../..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+  </head>
+  <body>
+    
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+    
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+    </div>
+    
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+    
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <h1>Class: Dragonfly::Configurable::ConfigurationProxy
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><a href="../../Object.html" title="Object (class)">Object</a></span>
+      
+        <ul class="fullTree">
+          <li><a href="../../Object.html" title="Object (class)">Object</a></li>
+          
+            <li class="next">Dragonfly::Configurable::ConfigurationProxy</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/dragonfly/configurable.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#owner-instance_method" title="#owner (instance method)">- (Object) <strong>owner</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title readonly">readonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute owner.
+</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (ConfigurationProxy) <strong>initialize</strong>(owner) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+A new instance of ConfigurationProxy.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#method_missing-instance_method" title="#method_missing (instance method)">- (Object) <strong>method_missing</strong>(method_name, *args, &amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    - (<tt><a href="" title="Dragonfly::Configurable::ConfigurationProxy (class)">ConfigurationProxy</a></tt>) <strong>initialize</strong>(owner) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+A new instance of ConfigurationProxy
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+89
+90
+91</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 89</span>
+
+<span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id owner'>owner</span><span class='rparen'>)</span>
+  <span class='ivar'>@owner</span> <span class='op'>=</span> <span class='id owner'>owner</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+<div id="method_missing_details" class="method_details_list">
+  <h2>Dynamic Method Handling</h2>
+  <p class="notice this">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+  
+    <div class="method_details first">
+  <p class="signature first" id="method_missing-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>method_missing</strong>(method_name, *args, &amp;block) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+93
+94
+95
+96
+97
+98
+99
+100
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 93</span>
+
+<span class='kw'>def</span> <span class='id method_missing'>method_missing</span><span class='lparen'>(</span><span class='id method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id owner'>owner</span><span class='period'>.</span><span class='id has_configuration_method?'>has_configuration_method?</span><span class='lparen'>(</span><span class='id method_name'>method_name</span><span class='rparen'>)</span>
+    <span class='id owner'>owner</span><span class='period'>.</span><span class='id send'>send</span><span class='lparen'>(</span><span class='id method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>elsif</span> <span class='id nested_configurable?'>nested_configurable?</span><span class='lparen'>(</span><span class='id method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+    <span class='id owner'>owner</span><span class='period'>.</span><span class='id send'>send</span><span class='lparen'>(</span><span class='id method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id raise'>raise</span> <span class='const'>BadConfigAttribute</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You tried to configure using '</span><span class='embexpr_beg'>#{</span><span class='id method_name'>method_name</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>',  but the valid config attributes are </span><span class='embexpr_beg'>#{</span><span class='id owner'>owner</span><span class='period'>.</span><span class='id configuration_methods'>configuration_methods</span><span class='period'>.</span><span class='id map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id a'>a</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>'</span><span class='embexpr_beg'>#{</span><span class='id a'>a</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>'</span><span class='tstring_end'>)</span></span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id sort'>sort</span><span class='period'>.</span><span class='id join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>, </span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <span id="owner-instance_method"></span>
+      <div class="method_details first">
+  <p class="signature first" id="owner-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>owner</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute owner
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+105
+106
+107</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 105</span>
+
+<span class='kw'>def</span> <span class='id owner'>owner</span>
+  <span class='ivar'>@owner</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div id="footer">
+  Generated on Wed Aug 25 00:53:45 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.8 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

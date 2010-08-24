@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
+<title>Class: Object</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  </head>
+  <body>
+    
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+    
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+    </div>
+    
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+    
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <h1>Class: Object
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">BasicObject</span>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/dragonfly/core_ext/object.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#blank%3F-instance_method" title="#blank? (instance method)">- (Boolean) <strong>blank?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Will eventually get this by cherry-picking from activesupport.
+</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="blank?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>blank?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Will eventually get this by cherry-picking from activesupport
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+4
+5
+6</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/core_ext/object.rb', line 4</span>
+
+<span class='kw'>def</span> <span class='id blank?'>blank?</span>
+  <span class='id respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:empty?</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id empty?'>empty?</span> <span class='op'>:</span> <span class='op'>!</span><span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div id="footer">
+  Generated on Wed Aug 25 00:53:45 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.8 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

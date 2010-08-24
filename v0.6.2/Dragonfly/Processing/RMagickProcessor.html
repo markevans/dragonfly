@@ -1,0 +1,635 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
+<title>Class: Dragonfly::Processing::RMagickProcessor</title>
+<link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '../..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+  </head>
+  <body>
+    
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+    
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+    </div>
+    
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+    
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <h1>Class: Dragonfly::Processing::RMagickProcessor
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><a href="Base.html" title="Dragonfly::Processing::Base (class)">Base</a></span>
+      
+        <ul class="fullTree">
+          <li><a href="../../Object.html" title="Object (class)">Object</a></li>
+          
+            <li class="next"><a href="Base.html" title="Dragonfly::Processing::Base (class)">Base</a></li>
+          
+            <li class="next">Dragonfly::Processing::RMagickProcessor</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/dragonfly/processing/r_magick_processor.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="GRAVITIES-constant" class="">GRAVITIES =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>nw</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>NorthWestGravity</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>n</span><span class='tstring_end'>'</span></span>  <span class='op'>=&gt;</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>NorthGravity</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ne</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>NorthEastGravity</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>w</span><span class='tstring_end'>'</span></span>  <span class='op'>=&gt;</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>WestGravity</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>c</span><span class='tstring_end'>'</span></span>  <span class='op'>=&gt;</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>CenterGravity</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>e</span><span class='tstring_end'>'</span></span>  <span class='op'>=&gt;</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>EastGravity</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>sw</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>SouthWestGravity</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>s</span><span class='tstring_end'>'</span></span>  <span class='op'>=&gt;</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>SouthGravity</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>se</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>SouthEastGravity</span>
+<span class='rbrace'>}</span></pre></dd>
+      
+    </dl>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#crop-instance_method" title="#crop (instance method)">- (Object) <strong>crop</strong>(temp_object, opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Processing methods.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#generate-instance_method" title="#generate (instance method)">- (Object) <strong>generate</strong>(width, height, format = 'png') </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#greyscale-instance_method" title="#greyscale (instance method)">- (Object) <strong>greyscale</strong>(temp_object, opts = {}) </a>
+    
+
+    
+      (also: #grayscale)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#resize-instance_method" title="#resize (instance method)">- (Object) <strong>resize</strong>(temp_object, opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#resize_and_crop-instance_method" title="#resize_and_crop (instance method)">- (Object) <strong>resize_and_crop</strong>(temp_object, opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#rotate-instance_method" title="#rotate (instance method)">- (Object) <strong>rotate</strong>(temp_object, opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#vignette-instance_method" title="#vignette (instance method)">- (Object) <strong>vignette</strong>(temp_object, opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <a href="../BelongsToApp.html" title="Dragonfly::BelongsToApp (module)">Dragonfly::BelongsToApp</a></h3>
+  <p class="inherited"><a href="../BelongsToApp.html#app_set%3F-instance_method" title="Dragonfly::BelongsToApp#app_set? (method)">#app_set?</a>, <a href="../BelongsToApp.html#log-instance_method" title="Dragonfly::BelongsToApp#log (method)">#log</a></p>
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <a href="../Delegatable.html" title="Dragonfly::Delegatable (module)">Dragonfly::Delegatable</a></h3>
+  <p class="inherited"><a href="../Delegatable.html#delegatable_methods-instance_method" title="Dragonfly::Delegatable#delegatable_methods (method)">#delegatable_methods</a></p>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="crop-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>crop</strong>(temp_object, opts = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Processing methods
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/r_magick_processor.rb', line 27</span>
+
+<span class='kw'>def</span> <span class='id crop'>crop</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id x'>x</span>       <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:x</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span>
+  <span class='id y'>y</span>       <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:y</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span>
+  <span class='id gravity'>gravity</span> <span class='op'>=</span> <span class='const'>GRAVITIES</span><span class='lbracket'>[</span><span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:gravity</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>ForgetGravity</span>
+  <span class='id width'>width</span>   <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:width</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span>
+  <span class='id height'>height</span>  <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:height</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span>
+
+  <span class='id image'>image</span> <span class='op'>=</span> <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+
+  <span class='comment'># RMagick throws an error if the cropping area is bigger than the image,
+</span>  <span class='comment'># when the gravity is something other than nw
+</span>  <span class='id width'>width</span>  <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id columns'>columns</span> <span class='op'>-</span> <span class='id x'>x</span> <span class='kw'>if</span> <span class='id x'>x</span> <span class='op'>+</span> <span class='id width'>width</span>  <span class='op'>&gt;</span> <span class='id image'>image</span><span class='period'>.</span><span class='id columns'>columns</span>
+  <span class='id height'>height</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id rows'>rows</span>    <span class='op'>-</span> <span class='id y'>y</span> <span class='kw'>if</span> <span class='id y'>y</span> <span class='op'>+</span> <span class='id height'>height</span> <span class='op'>&gt;</span> <span class='id image'>image</span><span class='period'>.</span><span class='id rows'>rows</span>
+
+  <span class='id image'>image</span><span class='period'>.</span><span class='id crop'>crop</span><span class='lparen'>(</span><span class='id gravity'>gravity</span><span class='comma'>,</span> <span class='id x'>x</span><span class='comma'>,</span> <span class='id y'>y</span><span class='comma'>,</span> <span class='id width'>width</span><span class='comma'>,</span> <span class='id height'>height</span><span class='rparen'>)</span><span class='period'>.</span><span class='id to_blob'>to_blob</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="generate-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>generate</strong>(width, height, format = 'png') 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+19
+20
+21
+22
+23</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/r_magick_processor.rb', line 19</span>
+
+<span class='kw'>def</span> <span class='id generate'>generate</span><span class='lparen'>(</span><span class='id width'>width</span><span class='comma'>,</span> <span class='id height'>height</span><span class='comma'>,</span> <span class='id format'>format</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='id image'>image</span> <span class='op'>=</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>Image</span><span class='period'>.</span><span class='id read'>read</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>plasma:fractal</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='kw'>self</span><span class='period'>.</span><span class='id size'>size</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id width'>width</span><span class='rbrace'>}</span><span class='tstring_content'>x</span><span class='embexpr_beg'>#{</span><span class='id height'>height</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='period'>.</span><span class='id first'>first</span>
+  <span class='id image'>image</span><span class='period'>.</span><span class='id format'>format</span> <span class='op'>=</span> <span class='id format'>format</span><span class='period'>.</span><span class='id to_s'>to_s</span>
+  <span class='id image'>image</span><span class='period'>.</span><span class='id to_blob'>to_blob</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="greyscale-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>greyscale</strong>(temp_object, opts = {}) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='grayscale-instance_method'>grayscale</span></span>
+    </span>
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+44
+45
+46
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/r_magick_processor.rb', line 44</span>
+
+<span class='kw'>def</span> <span class='id greyscale'>greyscale</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id depth'>depth</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:depth</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='int'>256</span>
+  <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span><span class='period'>.</span><span class='id quantize'>quantize</span><span class='lparen'>(</span><span class='id depth'>depth</span><span class='comma'>,</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>GRAYColorspace</span><span class='rparen'>)</span><span class='period'>.</span><span class='id to_blob'>to_blob</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="resize-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>resize</strong>(temp_object, opts = {}) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+50
+51
+52
+53
+54</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/r_magick_processor.rb', line 50</span>
+
+<span class='kw'>def</span> <span class='id resize'>resize</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span><span class='period'>.</span><span class='id change_geometry!'>change_geometry!</span><span class='lparen'>(</span><span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:geometry</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id cols'>cols</span><span class='comma'>,</span> <span class='id rows'>rows</span><span class='comma'>,</span> <span class='id img'>img</span><span class='op'>|</span>
+   <span class='id img'>img</span><span class='period'>.</span><span class='id resize!'>resize!</span><span class='lparen'>(</span><span class='id cols'>cols</span><span class='comma'>,</span> <span class='id rows'>rows</span><span class='rparen'>)</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id to_blob'>to_blob</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="resize_and_crop-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>resize_and_crop</strong>(temp_object, opts = {}) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+56
+57
+58
+59
+60
+61
+62
+63
+64</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/r_magick_processor.rb', line 56</span>
+
+<span class='kw'>def</span> <span class='id resize_and_crop'>resize_and_crop</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id image'>image</span> <span class='op'>=</span> <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  
+  <span class='id width'>width</span>   <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:width</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:width</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span> <span class='op'>:</span> <span class='id image'>image</span><span class='period'>.</span><span class='id columns'>columns</span>
+  <span class='id height'>height</span>  <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:height</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:height</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span> <span class='op'>:</span> <span class='id image'>image</span><span class='period'>.</span><span class='id rows'>rows</span>
+  <span class='id gravity'>gravity</span> <span class='op'>=</span> <span class='const'>GRAVITIES</span><span class='lbracket'>[</span><span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:gravity</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>CenterGravity</span>
+
+  <span class='id image'>image</span><span class='period'>.</span><span class='id crop_resized'>crop_resized</span><span class='lparen'>(</span><span class='id width'>width</span><span class='comma'>,</span> <span class='id height'>height</span><span class='comma'>,</span> <span class='id gravity'>gravity</span><span class='rparen'>)</span><span class='period'>.</span><span class='id to_blob'>to_blob</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="rotate-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>rotate</strong>(temp_object, opts = {}) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/r_magick_processor.rb', line 66</span>
+
+<span class='kw'>def</span> <span class='id rotate'>rotate</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:amount</span><span class='rbracket'>]</span>
+    <span class='id args'>args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:amount</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_f'>to_f</span><span class='rbracket'>]</span>
+    <span class='id args'>args</span> <span class='op'>&lt;&lt;</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:qualifier</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:qualifier</span><span class='rbracket'>]</span>
+    <span class='id image'>image</span> <span class='op'>=</span> <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+    <span class='id image'>image</span><span class='period'>.</span><span class='id background_color'>background_color</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:background_colour</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:background_colour</span><span class='rbracket'>]</span>
+    <span class='id image'>image</span><span class='period'>.</span><span class='id background_color'>background_color</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:background_color</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:background_color</span><span class='rbracket'>]</span>
+    <span class='id rotated_image'>rotated_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id rotate'>rotate</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+    <span class='id rotated_image'>rotated_image</span> <span class='op'>?</span> <span class='id rotated_image'>rotated_image</span><span class='period'>.</span><span class='id to_blob'>to_blob</span> <span class='op'>:</span> <span class='id temp_object'>temp_object</span>
+  <span class='kw'>else</span>
+    <span class='id temp_object'>temp_object</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="vignette-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>vignette</strong>(temp_object, opts = {}) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+80
+81
+82
+83
+84
+85
+86
+87</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/r_magick_processor.rb', line 80</span>
+
+<span class='kw'>def</span> <span class='id vignette'>vignette</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id x'>x</span>      <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:x</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_f'>to_f</span>      <span class='op'>||</span> <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id width'>width</span>  <span class='op'>*</span> <span class='float'>0.1</span>
+  <span class='id y'>y</span>      <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:y</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_f'>to_f</span>      <span class='op'>||</span> <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id height'>height</span> <span class='op'>*</span> <span class='float'>0.1</span>
+  <span class='id radius'>radius</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:radius</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_f'>to_f</span> <span class='op'>||</span>  <span class='float'>0.0</span>
+  <span class='id sigma'>sigma</span>  <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:sigma</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_f'>to_f</span>  <span class='op'>||</span> <span class='float'>10.0</span>
+
+  <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span><span class='period'>.</span><span class='id vignette'>vignette</span><span class='lparen'>(</span><span class='id x'>x</span><span class='comma'>,</span> <span class='id y'>y</span><span class='comma'>,</span> <span class='id radius'>radius</span><span class='comma'>,</span> <span class='id sigma'>sigma</span><span class='rparen'>)</span><span class='period'>.</span><span class='id to_blob'>to_blob</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div id="footer">
+  Generated on Wed Aug 25 00:53:45 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.8 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

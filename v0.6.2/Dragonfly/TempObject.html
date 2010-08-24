@@ -1,0 +1,1191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
+<title>Class: Dragonfly::TempObject</title>
+<link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+  </head>
+  <body>
+    
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+    
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+    </div>
+    
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+    
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <h1>Class: Dragonfly::TempObject
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><a href="../Object.html" title="Object (class)">Object</a></span>
+      
+        <ul class="fullTree">
+          <li><a href="../Object.html" title="Object (class)">Object</a></li>
+          
+            <li class="next">Dragonfly::TempObject</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+      <dt class="r2">Extended by:</dt>
+      <dd class="r2"><a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></dd>
+      
+    
+  
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/dragonfly/temp_object.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>
+A TempObject is used for HOLDING DATA. It&#8217;s the thing that is passed
+between the datastore, the processor and the encoder, and is useful for
+separating how the data was created and how it is later accessed.
+</p>
+<p>
+You can initialize it various ways:
+</p>
+<pre class="code">
+  <span class='id temp_object'>temp_object</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>TempObject</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>this is the content</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>           <span class='comment'># with a String
+</span>  <span class='id temp_object'>temp_object</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>TempObject</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>path/to/content</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span>     <span class='comment'># with a File
+</span>  <span class='id temp_object'>temp_object</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>TempObject</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id some_tempfile'>some_tempfile</span><span class='rparen'>)</span>                   <span class='comment'># with a Tempfile
+</span>  <span class='id temp_object'>temp_object</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>TempObject</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id some_other_temp_object'>some_other_temp_object</span><span class='rparen'>)</span>          <span class='comment'># with another TempObject
+</span></pre>
+<p>
+However, no matter how it was initialized, you can always access the data a
+number of ways:
+</p>
+<pre class="code">
+  <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span>      <span class='comment'># returns a data string
+</span>  <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id file'>file</span>      <span class='comment'># returns a file object holding the data
+</span>  <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id path'>path</span>      <span class='comment'># returns a path for the file
+</span></pre>
+<p>
+The data/file are created lazily, something which you may wish to take
+advantage of.
+</p>
+<p>
+For example, if a TempObject is initialized with a file, and
+temp_object.data is never called, then the data string will never be loaded
+into memory.
+</p>
+<p>
+Conversely, if the TempObject is initialized with a data string, and
+neither temp_object.file nor temp_object.path are ever called, then the
+filesystem will never be hit.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><a href="ExtendedTempObject.html" title="Dragonfly::ExtendedTempObject (class)">ExtendedTempObject</a></p>
+</div>
+
+
+  
+  
+  
+  
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialized_data-instance_method" title="#initialized_data (instance method)">- (Object) <strong>initialized_data</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute initialized_data.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialized_file-instance_method" title="#initialized_file (instance method)">- (Object) <strong>initialized_file</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute initialized_file.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialized_tempfile-instance_method" title="#initialized_tempfile (instance method)">- (Object) <strong>initialized_tempfile</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute initialized_tempfile.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#name-instance_method" title="#name (instance method)">- (Object) <strong>name</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+<h2>Configuration Summary</h2>
+<h3>Configurable attributes</h3>
+Configurable attributes for an object in general <code>object</code> can be configured either by using something like
+<pre class="code">
+  object.configure <span class="kw">do</span> |c|
+    c.some_configurable_attribute = <span class="string val">"some value"</span>
+    c.some_other_configurable_attribute = <span class="integer val">42</span>
+    ...
+  <span class="kw">end</span>
+</pre>
+or
+<pre class="code">
+  object.some_configurable_attribute = <span class="string val">"some value"</span>
+</pre>
+<h4>Configurable attributes for instances of Dragonfly::TempObject</h4>
+<ul>
+  
+  <li>
+    <code>block_size</code>
+    
+     - default <code><span class="integer val">8192</span></code>
+    
+    
+  </li>
+  
+</ul>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#basename-instance_method" title="#basename (instance method)">- (Object) <strong>basename</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#data-instance_method" title="#data (instance method)">- (Object) <strong>data</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each-instance_method" title="#each (instance method)">- (Object) <strong>each</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ext-instance_method" title="#ext (instance method)">- (Object) <strong>ext</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#file-instance_method" title="#file (instance method)">- (Object) <strong>file</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (TempObject) <strong>initialize</strong>(obj) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Instance Methods.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#modify_self%21-instance_method" title="#modify_self! (instance method)">- (Object) <strong>modify_self!</strong>(obj) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#path-instance_method" title="#path (instance method)">- (Object) <strong>path</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#size-instance_method" title="#size (instance method)">- (Object) <strong>size</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tempfile-instance_method" title="#tempfile (instance method)">- (Object) <strong>tempfile</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_file-instance_method" title="#to_file (instance method)">- (Object) <strong>to_file</strong>(path) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_io-instance_method" title="#to_io (instance method)">- (Object) <strong>to_io</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></h3>
+  <p class="inherited"><a href="Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    - (<tt><a href="" title="Dragonfly::TempObject (class)">TempObject</a></tt>) <strong>initialize</strong>(obj) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Instance Methods
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 43</span>
+
+<span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id obj'>obj</span><span class='rparen'>)</span>
+  <span class='id initialize_from_object!'>initialize_from_object!</span><span class='lparen'>(</span><span class='id obj'>obj</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="initialized_data=-instance_method"></span>
+      <span id="initialized_data-instance_method"></span>
+      <div class="method_details first">
+  <p class="signature first" id="initialized_data-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>initialized_data</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute initialized_data
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+141
+142
+143</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 141</span>
+
+<span class='kw'>def</span> <span class='id initialized_data'>initialized_data</span>
+  <span class='ivar'>@initialized_data</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="initialized_file=-instance_method"></span>
+      <span id="initialized_file-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="initialized_file-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>initialized_file</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute initialized_file
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+141
+142
+143</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 141</span>
+
+<span class='kw'>def</span> <span class='id initialized_file'>initialized_file</span>
+  <span class='ivar'>@initialized_file</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="initialized_tempfile=-instance_method"></span>
+      <span id="initialized_tempfile-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="initialized_tempfile-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>initialized_tempfile</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute initialized_tempfile
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+141
+142
+143</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 141</span>
+
+<span class='kw'>def</span> <span class='id initialized_tempfile'>initialized_tempfile</span>
+  <span class='ivar'>@initialized_tempfile</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="name=-instance_method"></span>
+      <span id="name-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="name-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>name</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+99
+100
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 99</span>
+
+<span class='kw'>def</span> <span class='id name'>name</span>
+  <span class='ivar'>@name</span> <span class='kw'>unless</span> <span class='ivar'>@name</span><span class='period'>.</span><span class='id blank?'>blank?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="basename-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>basename</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+103
+104
+105
+106</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 103</span>
+
+<span class='kw'>def</span> <span class='id basename'>basename</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id name'>name</span>
+  <span class='id name'>name</span><span class='period'>.</span><span class='id sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.[^.]+$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="data-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>data</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+55
+56
+57</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 55</span>
+
+<span class='kw'>def</span> <span class='id data'>data</span>
+  <span class='ivar'>@data</span> <span class='op'>||=</span> <span class='id initialized_data'>initialized_data</span> <span class='op'>||</span> <span class='id file'>file</span><span class='period'>.</span><span class='id read'>read</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="each-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>each</strong>(&amp;block) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+114
+115
+116
+117
+118
+119
+120</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 114</span>
+
+<span class='kw'>def</span> <span class='id each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='id to_io'>to_io</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id io'>io</span><span class='op'>|</span>
+    <span class='kw'>while</span> <span class='id part'>part</span> <span class='op'>=</span> <span class='id io'>io</span><span class='period'>.</span><span class='id read'>read</span><span class='lparen'>(</span><span class='id block_size'>block_size</span><span class='rparen'>)</span>
+      <span class='kw'>yield</span> <span class='id part'>part</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="ext-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>ext</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+108
+109
+110
+111
+112</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 108</span>
+
+<span class='kw'>def</span> <span class='id ext'>ext</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id name'>name</span>
+  <span class='id bits'>bits</span> <span class='op'>=</span> <span class='id name'>name</span><span class='period'>.</span><span class='id split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='id bits'>bits</span><span class='period'>.</span><span class='id last'>last</span> <span class='kw'>if</span> <span class='id bits'>bits</span><span class='period'>.</span><span class='id size'>size</span> <span class='op'>&gt;</span> <span class='int'>1</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="file-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>file</strong>(&amp;block) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 74</span>
+
+<span class='kw'>def</span> <span class='id file'>file</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='id f'>f</span> <span class='op'>=</span> <span class='id tempfile'>tempfile</span><span class='period'>.</span><span class='id open'>open</span>
+  <span class='kw'>if</span> <span class='id block_given?'>block_given?</span>
+    <span class='id ret'>ret</span> <span class='op'>=</span> <span class='kw'>yield</span> <span class='id f'>f</span>
+    <span class='id f'>f</span><span class='period'>.</span><span class='id close'>close</span>
+  <span class='kw'>else</span>
+    <span class='id ret'>ret</span> <span class='op'>=</span> <span class='id f'>f</span>
+  <span class='kw'>end</span>
+  <span class='id ret'>ret</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="modify_self!-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>modify_self!</strong>(obj) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47
+48
+49
+50
+51
+52
+53</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 47</span>
+
+<span class='kw'>def</span> <span class='id modify_self!'>modify_self!</span><span class='lparen'>(</span><span class='id obj'>obj</span><span class='rparen'>)</span>
+  <span class='kw'>unless</span> <span class='id obj'>obj</span> <span class='op'>==</span> <span class='kw'>self</span>
+    <span class='id reset!'>reset!</span>
+    <span class='id initialize_from_object!'>initialize_from_object!</span><span class='lparen'>(</span><span class='id obj'>obj</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="path-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>path</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+85
+86
+87</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 85</span>
+
+<span class='kw'>def</span> <span class='id path'>path</span>
+  <span class='id tempfile'>tempfile</span><span class='period'>.</span><span class='id path'>path</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="size-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>size</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+89
+90
+91
+92
+93
+94
+95</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 89</span>
+
+<span class='kw'>def</span> <span class='id size'>size</span>
+  <span class='kw'>if</span> <span class='id initialized_data'>initialized_data</span>
+    <span class='id initialized_data'>initialized_data</span><span class='period'>.</span><span class='id bytesize'>bytesize</span>
+  <span class='kw'>else</span>
+    <span class='const'>File</span><span class='period'>.</span><span class='id size'>size</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="tempfile-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>tempfile</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 59</span>
+
+<span class='kw'>def</span> <span class='id tempfile'>tempfile</span>
+  <span class='ivar'>@tempfile</span> <span class='op'>||=</span> <span class='kw'>begin</span>
+    <span class='kw'>if</span> <span class='id initialized_tempfile'>initialized_tempfile</span>
+      <span class='ivar'>@tempfile</span> <span class='op'>=</span> <span class='id initialized_tempfile'>initialized_tempfile</span>
+    <span class='kw'>elsif</span> <span class='id initialized_data'>initialized_data</span>
+      <span class='ivar'>@tempfile</span> <span class='op'>=</span> <span class='const'>Tempfile</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+      <span class='ivar'>@tempfile</span><span class='period'>.</span><span class='id write'>write</span><span class='lparen'>(</span><span class='id initialized_data'>initialized_data</span><span class='rparen'>)</span>
+    <span class='kw'>elsif</span> <span class='id initialized_file'>initialized_file</span>
+      <span class='ivar'>@tempfile</span> <span class='op'>=</span> <span class='id copy_to_tempfile'>copy_to_tempfile</span><span class='lparen'>(</span><span class='id initialized_file'>initialized_file</span><span class='period'>.</span><span class='id path'>path</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='ivar'>@tempfile</span><span class='period'>.</span><span class='id close'>close</span>
+    <span class='ivar'>@tempfile</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_file-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>to_file</strong>(path) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+122
+123
+124
+125
+126
+127
+128
+129</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 122</span>
+
+<span class='kw'>def</span> <span class='id to_file'>to_file</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id initialized_data'>initialized_data</span>
+    <span class='const'>File</span><span class='period'>.</span><span class='id open'>open</span><span class='lparen'>(</span><span class='id path'>path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>w</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id f'>f</span><span class='op'>|</span> <span class='id f'>f</span><span class='period'>.</span><span class='id write'>write</span><span class='lparen'>(</span><span class='id initialized_data'>initialized_data</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='kw'>else</span>
+    <span class='const'>FileUtils</span><span class='period'>.</span><span class='id cp'>cp</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id path'>path</span><span class='comma'>,</span> <span class='id path'>path</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_io-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>to_io</strong>(&amp;block) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+131
+132
+133
+134
+135
+136
+137</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 131</span>
+
+<span class='kw'>def</span> <span class='id to_io'>to_io</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id initialized_data'>initialized_data</span>
+    <span class='const'>StringIO</span><span class='period'>.</span><span class='id open'>open</span><span class='lparen'>(</span><span class='id initialized_data'>initialized_data</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id file'>file</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div id="footer">
+  Generated on Wed Aug 25 00:53:44 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.8 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

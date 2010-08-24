@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
+<title>File: UsingWithRails</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  </head>
+  <body>
+    
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+    
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+    </div>
+    
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+    
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <div id='filecontents'><h1>Using With Rails</h1>
+
+<p>Dragonfly works with both Rails 2.3 and Rails 3.</p>
+
+<p>The main way to use Dragonfly with Rails is as a <tt><a href="Dragonfly/Middleware.html" title="Dragonfly::Middleware (class)">middleware</a></tt>.</p>
+
+<h2>1. Setting up</h2>
+
+<h2>The quick way</h2>
+
+<p>There is a ready-made file which sets up Dragonfly for image processing for your rails app.
+If image resizing, etc. is all you want to do, then put this in an initializer, e.g config/initializers/dragonfly.rb:</p>
+
+<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly/rails/images</span><span class='tstring_end'>'</span></span>
+</pre>
+
+<p>This file initializes a dragonfly app, configures it to use rmagick processing, encoding, etc.,
+registers the app so that you can use ActiveRecord accessors, and inserts it into the Rails middleware stack.</p>
+
+<h2>The more explicit way</h2>
+
+<p>You can do the above explicitly.</p>
+
+<p>config/initializers/dragonfly.rb:</p>
+
+<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span>
+
+<span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>App</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
+<span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Config</span><span class='op'>::</span><span class='const'>RailsImages</span><span class='rparen'>)</span>
+
+<span class='comment'># Define the method 'image_accessor' in ActiveRecord models
+</span><span class='const'>Dragonfly</span><span class='period'>.</span><span class='id active_record_macro'>active_record_macro</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='comma'>,</span> <span class='id app'>app</span><span class='rparen'>)</span>
+</pre>
+
+<p>environment.rb (application.rb in Rails 3):</p>
+
+<pre class="code"><span class='id config'>config</span><span class='period'>.</span><span class='id middleware'>middleware</span><span class='period'>.</span><span class='id insert_after'>insert_after</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Rack::Lock</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Dragonfly::Middleware</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:images</span>
+<span class='id config'>config</span><span class='period'>.</span><span class='id middleware'>middleware</span><span class='period'>.</span><span class='id insert_before'>insert_before</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Dragonfly::Middleware</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Rack::Cache</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='lbrace'>{</span>
+  <span class='symbol'>:verbose</span>     <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='symbol'>:metastore</span>   <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>file:</span><span class='embexpr_beg'>#{</span><span class='const'>Rails</span><span class='period'>.</span><span class='id root'>root</span><span class='rbrace'>}</span><span class='tstring_content'>/tmp/dragonfly/cache/meta</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='symbol'>:entitystore</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>file:</span><span class='embexpr_beg'>#{</span><span class='const'>Rails</span><span class='period'>.</span><span class='id root'>root</span><span class='rbrace'>}</span><span class='tstring_content'>/tmp/dragonfly/cache/body</span><span class='tstring_end'>&quot;</span></span>
+<span class='rbrace'>}</span>
+</pre>
+
+<h2>2. Gem dependencies</h2>
+
+<p>Tell Rails about the gem dependencies in the usual way:</p>
+
+<p>For Rails 2.3 add this to config/environment.rb:</p>
+
+<pre class="code"><span class='id config'>config</span><span class='period'>.</span><span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rmagick</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>    <span class='symbol'>:lib</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>RMagick</span><span class='tstring_end'>'</span></span>      <span class='comment'># only if used
+</span><span class='id config'>config</span><span class='period'>.</span><span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rack-cache</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:lib</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rack/cache</span><span class='tstring_end'>'</span></span>   <span class='comment'># only if used
+</span><span class='id config'>config</span><span class='period'>.</span><span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span>
+</pre>
+
+<p>For Rails 3 add it to the Gemfile, e.g.:</p>
+
+<pre class="code"><span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rmagick</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>    <span class='symbol'>:require</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>RMagick</span><span class='tstring_end'>'</span></span>         <span class='comment'># only if used
+</span><span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rack-cache</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:require</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rack/cache</span><span class='tstring_end'>'</span></span>      <span class='comment'># only if used
+</span><span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span>
+</pre>
+
+<p>You only need the lines above for <a href="http://tomayko.com/src/rack-cache/" target="_parent" title="rack-cache">rack-cache</a> and
+<a href="http://rmagick.rubyforge.org/" target="_parent" title="rmagick">rmagick</a> if you've used the file 'dragonfly/rails/images', or manually used them yourself.</p>
+
+<h2>3. Use it!</h2>
+
+<p>Now that you have a parasitic Dragonfly app living inside your Rails app, you can upload media to your models, display/play around with them, etc.</p>
+
+<p>To see what you can do with the active record accessors, see <a href="file.ActiveRecord.html" title="ActiveRecord">ActiveRecord</a>.</p>
+
+<p>For more info about general Dragonfly setup, including avoiding denial-of-service attacks, see <a href="file.GettingStarted.html" title="GettingStarted">GettingStarted</a>.</p>
+
+<h2>Extra Config</h2>
+
+<p>There are one or two config options you may commonly want to tweak.
+In this case, add something like the following to your initializer:</p>
+
+<pre class="code"><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>App</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id url_handler'>url_handler</span><span class='period'>.</span><span class='id path_prefix'>path_prefix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/attachments</span><span class='tstring_end'>'</span></span>   <span class='comment'># configures where the Dragonfly app is served from - default '/media'
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id url_handler'>url_handler</span><span class='period'>.</span><span class='id secret'>secret</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>PUT A SECRET HERE!!</span><span class='tstring_end'>'</span></span> <span class='comment'># for protecting from Denial-Of-Service attacks
+</span><span class='kw'>end</span>
+</pre></div>
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div id="footer">
+  Generated on Wed Aug 25 00:53:43 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.8 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

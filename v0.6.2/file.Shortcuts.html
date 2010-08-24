@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
+<title>File: Shortcuts</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  </head>
+  <body>
+    
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+    
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+    </div>
+    
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+    
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <div id='filecontents'><h1>Shortcuts</h1>
+
+<p>When you call <tt><a href="Dragonfly/App.html#fetch-instance_method" title="Dragonfly::App#fetch (method)">fetch</a></tt>, <tt><a href="Dragonfly/ExtendedTempObject.html#transform-instance_method" title="Dragonfly::ExtendedTempObject#transform (method)">transform</a></tt>,
+<tt><a href="Dragonfly/UrlHandler.html#url_for-instance_method" title="Dragonfly::UrlHandler#url_for (method)">url_for</a></tt>, (or <tt><a href="Dragonfly/ActiveRecordExtensions/Attachment.html#url-instance_method" title="Dragonfly::ActiveRecordExtensions::Attachment#url (method)">url</a></tt> on an ActiveRecord attachment), you can specify all the job parameters
+necessary to fetch the appropriate content.</p>
+
+<p>The parameters are the following:</p>
+
+<ul>
+<li><code>:uid</code> - the uid used by the datastore to retrieve the data (was returned when stored)</li>
+<li><code>:processing_method</code> - the method used to do the processing</li>
+<li><code>:processing_options</code> - options hash passed to the processing method</li>
+<li><code>:format</code> - the format to encode the data with, e.g. 'png'</li>
+<li><code>:encoding</code> - an options hash passed to the encoder for other options, e.g. bitrate, etc.</li>
+</ul>
+
+
+<p>Say we have an app configured with the <tt><a href="Dragonfly/Config/RMagickImages.html" title="Dragonfly::Config::RMagickImages (module)">RMagickImages</a></tt></p>
+
+<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>App</span><span class='lbracket'>[</span><span class='symbol'>:my_app</span><span class='rbracket'>]</span>
+<span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Config</span><span class='op'>::</span><span class='const'>RMagickImages</span><span class='rparen'>)</span>
+</pre>
+
+<p>we can call things like</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some_uid</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='symbol'>:processing_method</span> <span class='op'>=&gt;</span> <span class='symbol'>:resize_and_crop</span><span class='comma'>,</span>
+  <span class='symbol'>:processing_options</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='symbol'>:width</span> <span class='op'>=&gt;</span> <span class='int'>100</span><span class='comma'>,</span> <span class='symbol'>:height</span> <span class='op'>=&gt;</span> <span class='int'>50</span><span class='comma'>,</span> <span class='symbol'>:gravity</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ne</span><span class='tstring_end'>'</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='symbol'>:format</span> <span class='op'>=&gt;</span> <span class='symbol'>:jpg</span><span class='comma'>,</span>
+  <span class='symbol'>:encoding</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='symbol'>:some</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>option</span><span class='tstring_end'>'</span></span><span class='rbrace'>}</span>           <span class='comment'># =&gt; gets a processed and encoded temp_object
+</span>
+<span class='id app'>app</span><span class='period'>.</span><span class='id url_for'>url_for</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some_uid</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='symbol'>:processing_method</span> <span class='op'>=&gt;</span> <span class='symbol'>:resize_and_crop</span><span class='comma'>,</span>
+  <span class='symbol'>:processing_options</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='symbol'>:width</span> <span class='op'>=&gt;</span> <span class='int'>100</span><span class='comma'>,</span> <span class='symbol'>:height</span> <span class='op'>=&gt;</span> <span class='int'>50</span><span class='comma'>,</span> <span class='symbol'>:gravity</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ne</span><span class='tstring_end'>'</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='symbol'>:format</span> <span class='op'>=&gt;</span> <span class='symbol'>:jpg</span><span class='comma'>,</span>
+  <span class='symbol'>:encoding</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='symbol'>:some</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>option</span><span class='tstring_end'>'</span></span><span class='rbrace'>}</span>           <span class='comment'># =&gt; &quot;/images/some_uid.tif?m=resize_and_crop&amp;o[width]=....&quot;
+</span></pre>
+
+<p>YIKES!!!!!</p>
+
+<p>That's an awful lot of code every time, especially if we reuse the same parameters over and over.
+That's why for the arguments after the uid, you can register <tt><a href="Dragonfly/Parameters.html" title="Dragonfly::Parameters (class)">parameter shortcuts</a></tt>.</p>
+
+<h2>Simple shortcuts</h2>
+
+<p>If we were to use the parameters in the example above a number of times, we could register a simple named shortcut, say 'thumb', using a symbol.</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id parameters'>parameters</span><span class='period'>.</span><span class='id add_shortcut'>add_shortcut</span><span class='lparen'>(</span><span class='symbol'>:thumb</span><span class='comma'>,</span>
+  <span class='symbol'>:processing_method</span> <span class='op'>=&gt;</span> <span class='symbol'>:resize_and_crop</span><span class='comma'>,</span>
+  <span class='symbol'>:processing_options</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='symbol'>:width</span> <span class='op'>=&gt;</span> <span class='int'>100</span><span class='comma'>,</span> <span class='symbol'>:height</span> <span class='op'>=&gt;</span> <span class='int'>50</span><span class='comma'>,</span> <span class='symbol'>:gravity</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ne</span><span class='tstring_end'>'</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='symbol'>:format</span> <span class='op'>=&gt;</span> <span class='symbol'>:jpg</span><span class='comma'>,</span>
+  <span class='symbol'>:encoding</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='symbol'>:some</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>option</span><span class='tstring_end'>'</span></span><span class='rbrace'>}</span>
+<span class='rparen'>)</span>
+</pre>
+
+<p>We can now use this named shortcut, <code>:thumb</code>, in place of the parameters elsewhere</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some_uid</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:thumb</span>           <span class='comment'># =&gt; gets a processed and encoded temp_object as before    
+</span><span class='id app'>app</span><span class='period'>.</span><span class='id url_for'>url_for</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some_uid</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:thumb</span>         <span class='comment'># =&gt; &quot;/images/some_uid.tif?m=resize_and_crop&amp;o[width]=....&quot;, as before
+</span></pre>
+
+<h2>Complex shortcuts</h2>
+
+<p>Rather than create a new named shortcut for every different set of parameters, we can make life easier by defining shortcuts
+which match a set of arguments, then form parameters from them.</p>
+
+<p>For example, take the shortcut</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id parameters'>parameters</span><span class='period'>.</span><span class='id add_shortcut'>add_shortcut</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\d+x\d+</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='const'>Symbol</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id geometry'>geometry</span><span class='comma'>,</span> <span class='id format'>format</span><span class='op'>|</span>
+  <span class='lbrace'>{</span>
+    <span class='symbol'>:processing_method</span> <span class='op'>=&gt;</span> <span class='symbol'>:my_resize_method</span><span class='comma'>,</span>
+    <span class='symbol'>:processing_options</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='symbol'>:geometry</span> <span class='op'>=&gt;</span> <span class='id geometry'>geometry</span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='symbol'>:format</span> <span class='op'>=&gt;</span> <span class='id format'>format</span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span>
+</pre>
+
+<p>It will match where there are two arguments, a string matching <code>/\d+x\d+/</code> and a symbol, and convert to a hash of job parameters.
+Note that the matching arguments are yielded to the block.
+So, for example,</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id url_for'>url_for</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some_uid</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>100x50</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:jpg</span><span class='rparen'>)</span>
+</pre>
+
+<p>generates the same url as if we'd used</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id url_for'>url_for</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some_uid</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='symbol'>:processing_method</span> <span class='op'>=&gt;</span> <span class='symbol'>:my_resize_method</span><span class='comma'>,</span>
+  <span class='symbol'>:processing_options</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='symbol'>:geometry</span> <span class='op'>=&gt;</span> <span class='int'>100</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='symbol'>:format</span> <span class='op'>=&gt;</span> <span class='symbol'>:jpg</span>
+</pre>
+
+<p>The following examples would not match</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id url_for'>url_for</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some_uid</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>100xg50</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:jpg</span><span class='rparen'>)</span>           <span class='comment'># '100xg50' doesn't match /\d+x\d+/
+</span><span class='id app'>app</span><span class='period'>.</span><span class='id url_for'>url_for</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some_uid</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>100x50</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>jpg</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>           <span class='comment'># 'jpg' is not a Symbol
+</span><span class='id app'>app</span><span class='period'>.</span><span class='id url_for'>url_for</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some_uid</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>100x50</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>                  <span class='comment'># not enough arguments
+</span><span class='id app'>app</span><span class='period'>.</span><span class='id url_for'>url_for</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some_uid</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>100x50</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:jpg</span><span class='comma'>,</span> <span class='int'>4</span><span class='rparen'>)</span>         <span class='comment'># too many arguments
+</span></pre>
+
+<p>The arguments are matched using the <code>===</code> operator (as used in <code>case</code> statements), which is why, for example, <code>:jpg</code> matches <code>Symbol</code>.</p>
+
+<h2>Regexp shortcuts</h2>
+
+<p>If we register a complex shortcut as a single regexp, then the match data is also yielded, for convenience.</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id parameters'>parameters</span><span class='period'>.</span><span class='id add_shortcut'>add_shortcut</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(\d+)x(\d+)</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id geometry'>geometry</span><span class='comma'>,</span> <span class='id match_data'>match_data</span><span class='op'>|</span>
+  <span class='lbrace'>{</span>
+    <span class='symbol'>:processing_method</span> <span class='op'>=&gt;</span> <span class='symbol'>:my_resize_method</span><span class='comma'>,</span>
+    <span class='symbol'>:processing_options</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='symbol'>:width</span> <span class='op'>=&gt;</span> <span class='id match_data'>match_data</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='symbol'>:height</span> <span class='op'>=&gt;</span> <span class='id match_data'>match_data</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='rbrace'>}</span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span>
+</pre>
+
+<h2>Default parameters</h2>
+
+<p>If we've configured a default parameter, e.g.</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id parameters'>parameters</span><span class='period'>.</span><span class='id default_format'>default_format</span> <span class='op'>=</span> <span class='symbol'>:jpg</span>
+</pre>
+
+<p>then this will be used in these methods whenever that parameter is not given, such as in the example above.</p>
+
+<h2>Avoiding processing/encoding</h2>
+
+<p>If <code>:processing_method</code> is set to nil, then no processing takes place when methods like <tt><a href="Dragonfly/App.html#fetch-instance_method" title="Dragonfly::App#fetch (method)">fetch</a></tt>, <tt><a href="Dragonfly/ExtendedTempObject.html#transform-instance_method" title="Dragonfly::ExtendedTempObject#transform (method)">transform</a></tt>,
+<tt><a href="Dragonfly/UrlHandler.html#url_for-instance_method" title="Dragonfly::UrlHandler#url_for (method)">url_for</a></tt>, and <tt><a href="Dragonfly/ActiveRecordExtensions/Attachment.html#url-instance_method" title="Dragonfly::ActiveRecordExtensions::Attachment#url (method)">url</a></tt> are called.</p>
+
+<p>Similarly, if <code>:format</code> is set to nil, then no encoding takes place.</p></div>
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div id="footer">
+  Generated on Wed Aug 25 00:53:43 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.8 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

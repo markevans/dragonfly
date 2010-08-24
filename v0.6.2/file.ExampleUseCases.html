@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
+<title>File: ExampleUseCases</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  </head>
+  <body>
+    
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+    
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+    </div>
+    
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+    
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <div id='filecontents'><h1>Example Use Cases</h1>
+
+<p>This document is concerned with different Dragonfly configurations, for various use cases.</p>
+
+<p>In a Rails app the configuration would generally be done in an initializer.</p>
+
+<p>In other Rack-based apps it could be config.ru, or anywhere where the application is generally set up.</p>
+
+<h2>Image thumbnails in Rails</h2>
+
+<p>See <a href="file.UsingWithRails.html" title="UsingWithRails">UsingWithRails</a></p>
+
+<h2>Image thumbnails in Rails, hosted on Heroku with S3 storage</h2>
+
+<p><a href="http://heroku.com" target="_parent" title="Heroku">Heroku</a> is a commonly used platform for hosting Rack-based websites.
+The following assumes your site is set up for deployment onto Heroku.</p>
+
+<p>The default configuration won't work out of the box for Heroku, because</p>
+
+<ul>
+<li>Heroku doesn't allow saving files to the filesystem (although it does use tempfiles)</li>
+<li>We won't need <a href="http://tomayko.com/src/rack-cache/" target="_parent" title="Rack::Cache">Rack::Cache</a> on Heroku because it already uses the caching proxy <a href="http://varnish.projects.linpro.no/" target="_parent" title="Varnish">Varnish</a>, which we can make use of</li>
+</ul>
+
+
+<p>Instead of the normal <tt><a href="Dragonfly/DataStorage/FileDataStore.html" title="Dragonfly::DataStorage::FileDataStore (class)">FileDataStore</a></tt>, we can use the <tt><a href="Dragonfly/DataStorage/S3DataStore.html" title="Dragonfly::DataStorage::S3DataStore (class)">S3DataStore</a></tt>.
+Amazon's <a href="http://aws.amazon.com/s3" target="_parent" title="S3">S3</a> is a commonly used platform for storing data.</p>
+
+<p>The following assumes you have an S3 account set up, and know your provided 'access key' and 'secret'.</p>
+
+<h3>Rails 2.3</h3>
+
+<p>environment.rb:</p>
+
+<pre class="code"><span class='id config'>config</span><span class='period'>.</span><span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rmagick</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:lib</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>RMagick</span><span class='tstring_end'>'</span></span>
+<span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>aws-s3</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:lib</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>aws/s3</span><span class='tstring_end'>'</span></span>
+<span class='id config'>config</span><span class='period'>.</span><span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span>
+</pre>
+
+<p>and
+.gems:</p>
+
+<pre class="code"><span class='id dragonfly'>dragonfly</span>
+<span class='id aws'>aws</span><span class='op'>-</span><span class='id s3'>s3</span>
+</pre>
+
+<h3>Rails 3</h3>
+
+<p>Gemfile:</p>
+
+<pre class="code"><span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rmagick</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>2.12.2</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:require</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>RMagick</span><span class='tstring_end'>'</span></span>
+<span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>aws-s3</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:require</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>aws/s3</span><span class='tstring_end'>'</span></span>
+<span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span>
+</pre>
+
+<p>Apparently to use Bundler you need to switch to the 'Bamboo' stack - see <a href="http://docs.heroku.com/bamboo" target="_parent" title="http://docs.heroku.com/bamboo">http://docs.heroku.com/bamboo</a></p>
+
+<h3>All versions</h3>
+
+<p>Initializer (e.g. config/initializers/dragonfly.rb):</p>
+
+<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span>
+<span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>App</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
+<span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Config</span><span class='op'>::</span><span class='const'>HerokuRailsImages</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>my_bucket_name</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<span class='const'>Dragonfly</span><span class='period'>.</span><span class='id active_record_macro'>active_record_macro</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='comma'>,</span> <span class='id app'>app</span><span class='rparen'>)</span>
+</pre>
+
+<p>The datastore remains as the <tt><a href="Dragonfly/DataStorage/FileDataStore.html" title="Dragonfly::DataStorage::FileDataStore (class)">FileDataStore</a></tt> for non-production environments.</p>
+
+<p>environment.rb (application.rb in Rails 3):</p>
+
+<pre class="code"><span class='id config'>config</span><span class='period'>.</span><span class='id middleware'>middleware</span><span class='period'>.</span><span class='id insert_after'>insert_after</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Rack::Lock</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Dragonfly::Middleware</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:images</span>
+</pre>
+
+<p>We don't store the S3 access key and secret in the repository, rather we use Heroku's
+<a href="http://docs.heroku.com/config-vars" target="_parent" title="config variables">config variables</a> using the command line (we only have to do this once).</p>
+
+<p>From your app's directory:</p>
+
+<pre class="code">heroku config:add S3_KEY=XXXXXXXXX S3_SECRET=XXXXXXXXXX
+</pre>
+
+<p>Obviously you replace 'XXXXXXXXX' with your access key and secret.</p>
+
+<p>Now you can benefit use Dragonfly in the normal way, benefitting from super-fast images served straight from Heroku's cache!</p>
+
+<p>NOTE: HEROKU'S CACHE IS CLEARED EVERY TIME YOU DEPLOY.
+If this is an issue you may want to look into using something like a Memcached add-on, or maybe an after-deploy hook for hitting specific Dragonfly urls you want to cache, etc.
+It won't be a problem for most sites though.</p>
+
+<h2>Attaching files to ActiveRecord models with no processing or encoding</h2>
+
+<p>Although Dragonfly is normally concerned with processing and encoding, you may want to just use it with arbitrary uploaded files
+(e.g. .doc, .xls, .pdf files, etc.) without processing or encoding them, so as to still benefit from the <a href="file.ActiveRecord.html" title="ActiveRecord Extensions">ActiveRecord Extensions</a> API.</p>
+
+<p>The below shows how to do it in Rails, but the principles are the same in any context.</p>
+
+<p>Initializer, e.g. config/initializers/dragonfly.rb:</p>
+
+<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span>
+
+<span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>App</span><span class='lbracket'>[</span><span class='symbol'>:attachments</span><span class='rbracket'>]</span>
+<span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Config</span><span class='op'>::</span><span class='const'>RailsDefaults</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id register_analyser'>register_analyser</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Analysis</span><span class='op'>::</span><span class='const'>FileCommandAnalyser</span><span class='rparen'>)</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id register_encoder'>register_encoder</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>TransparentEncoder</span><span class='rparen'>)</span>
+<span class='kw'>end</span>
+<span class='const'>Dragonfly</span><span class='period'>.</span><span class='id active_record_macro'>active_record_macro</span><span class='lparen'>(</span><span class='symbol'>:attachment</span><span class='comma'>,</span> <span class='id app'>app</span><span class='rparen'>)</span>
+</pre>
+
+<p>The <tt><a href="Dragonfly/Analysis/FileCommandAnalyser.html" title="Dragonfly::Analysis::FileCommandAnalyser (class)">FileCommandAnalyser</a></tt> is needed to know the mime-type of the content,
+and the <tt><a href="Dragonfly/Encoding/TransparentEncoder.html" title="Dragonfly::Encoding::TransparentEncoder (class)">TransparentEncoder</a></tt> is like a 'dummy' encoder which does nothing
+(the way to switch off encoding will be simplified in future versions of Dragonfly).</p>
+
+<p>environment.rb (application.rb in Rails 3):</p>
+
+<pre class="code"><span class='id config'>config</span><span class='period'>.</span><span class='id middleware'>middleware</span><span class='period'>.</span><span class='id insert_after'>insert_after</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Rack::Lock</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Dragonfly::Middleware</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:attachments</span>
+</pre>
+
+<p>If a user uploads a file called 'report.pdf', then normally the original file extension will be lost.
+Thankfully, to record it is as easy as adding an 'ext' column as well as the usual uid column to our migration
+(see <a href="file.ActiveRecord.html" title="ActiveRecord">ActiveRecord</a> for more info about 'magic attributes'):</p>
+
+<pre class="code"><span class='id add_column'>add_column</span> <span class='symbol'>:my_models</span><span class='comma'>,</span> <span class='symbol'>:attachment_uid</span><span class='comma'>,</span> <span class='symbol'>:string</span>
+<span class='id add_column'>add_column</span> <span class='symbol'>:my_models</span><span class='comma'>,</span> <span class='symbol'>:attachment_ext</span><span class='comma'>,</span> <span class='symbol'>:string</span>
+</pre>
+
+<p>Then we include a helper method in our model for setting the correct file extension when we link to the attachment:</p>
+
+<pre class="code"><span class='kw'>class</span> <span class='const'>MyModel</span> <span class='op'>&lt;</span> <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Base</span>
+
+  <span class='id attachment_accessor'>attachment_accessor</span> <span class='symbol'>:attachment</span>
+
+  <span class='kw'>def</span> <span class='id url_for_attachment'>url_for_attachment</span>
+    <span class='id attachment'>attachment</span><span class='period'>.</span><span class='id url'>url</span> <span class='symbol'>:format</span> <span class='op'>=&gt;</span> <span class='id attachment_ext'>attachment_ext</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</pre>
+
+<p>Now we can add links to the attached file in our views:</p>
+
+<pre class="code">&lt;%= link_to 'Attachment', @my_model.url_for_attachment %&gt;
+</pre>
+
+<h2>Generating test data</h2>
+
+<p>We may want to generate a load of test data in a test / populate script.</p>
+
+<p>Each <tt><a href="Dragonfly/App.html" title="Dragonfly::App (class)">Dragonfly App</a></tt> has a 'generate' method, which returns an <tt><a href="Dragonfly/ExtendedTempObject.html" title="Dragonfly::ExtendedTempObject (class)">ExtendedTempObject</a></tt> with generated data.
+The actual generation is delegated to the registered processors (along with any args passed in).</p>
+
+<p>For example, if our app is registered with the <tt><a href="Dragonfly/Processing/RMagickProcessor.html" title="Dragonfly::Processing::RMagickProcessor (class)">RMagickProcessor</a></tt> (which is already done if using with one of
+the RMagick/RailsImage configurations)</p>
+
+<pre class="code"><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>App</span><span class='lbracket'>[</span><span class='symbol'>:my_app</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id register_processor'>register_processor</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Processing</span><span class='op'>::</span><span class='const'>RMagickProcessor</span><span class='rparen'>)</span>
+</pre>
+
+<p>then we can generate images of different sizes/formats):</p>
+
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>App</span><span class='lbracket'>[</span><span class='symbol'>:my_app</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='int'>300</span><span class='comma'>,</span> <span class='int'>200</span><span class='rparen'>)</span>       <span class='comment'># creates a png image of size 300x200 (as an ExtendedTempObject)
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id to_file'>to_file</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>out.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>                                 <span class='comment'># writes to file 'out.png'
+</span><span class='id image'>image</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>App</span><span class='lbracket'>[</span><span class='symbol'>:my_app</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='int'>50</span><span class='comma'>,</span> <span class='int'>50</span><span class='comma'>,</span> <span class='symbol'>:gif</span><span class='rparen'>)</span>   <span class='comment'># creates a gif image of size 50x50
+</span></pre>
+
+<h2>Text image replacement</h2>
+
+<p>A common technique for making sure a specific font is displayed on a website is replacing text with images.</p>
+
+<p>We can easily use Dragonfly to do this on-the-fly.</p>
+
+<p>Configuration (e.g. initializer in Rails):</p>
+
+<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span>
+<span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>App</span><span class='lbracket'>[</span><span class='symbol'>:text</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Config</span><span class='op'>::</span><span class='const'>RMagickText</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id url_handler'>url_handler</span><span class='period'>.</span><span class='id path_prefix'>path_prefix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/text</span><span class='tstring_end'>'</span></span>
+<span class='kw'>end</span>
+</pre>
+
+<p>If using Rails, then in environment.rb (application.rb in Rails 3):</p>
+
+<pre class="code"><span class='id config'>config</span><span class='period'>.</span><span class='id middleware'>middleware</span><span class='period'>.</span><span class='id insert_after'>insert_after</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Rack::Lock</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Dragonfly::Middleware</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:text</span>
+</pre>
+
+<p>You probably will want to insert Rack::Cache too or use some other caching proxy - see <a href="file.UsingWithRails.html" title="UsingWithRails">UsingWithRails</a>.</p>
+
+<p>Then when we visit a url like</p>
+
+<pre class="code"><span class='id url'>url</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>App</span><span class='lbracket'>[</span><span class='symbol'>:text</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id url_for'>url_for</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some text</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:text</span><span class='comma'>,</span> <span class='symbol'>:font_size</span> <span class='op'>=&gt;</span> <span class='int'>30</span><span class='comma'>,</span> <span class='symbol'>:font_family</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Monaco</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+</pre>
+
+<p>we get a png image of the text. We could easily wrap this in some kind of helper if we use it often.</p>
+
+<p>This configuration uses the <tt><a href="Dragonfly/Processing/RMagickTextProcessor.html" title="Dragonfly::Processing::RMagickTextProcessor (class)">RMagickTextProcessor</a></tt> processor.
+Options can be specified either css-like (e.g. <code>'font-family' =&gt; 'Helvetica'</code>), or with underscore-style symbols
+(e.g. <code>:font_family =&gt; 'Helvetica'</code>).</p>
+
+<p>Available options are <code>font</code> (see <a href="http://www.imagemagick.org/RMagick/doc/draw.html#font" target="_parent" title="http://www.imagemagick.org/RMagick/doc/draw.html#font">http://www.imagemagick.org/RMagick/doc/draw.html#font</a>),
+<code>'font-family'</code>,
+<code>'stroke_color'</code>,
+<code>'color'</code>,
+<code>'font_style'</code>,
+<code>'font_stretch'</code>,
+<code>'font_weight'</code> and
+<code>'padding'</code> (or <code>'padding-left'</code>, <code>'padding-top'</code>, etc.)</p></div>
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div id="footer">
+  Generated on Wed Aug 25 00:53:44 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.8 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

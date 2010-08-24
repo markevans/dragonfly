@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
+<title>File: History</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  </head>
+  <body>
+    
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+    
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+    </div>
+    
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+    
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <div id='filecontents'><h1>0.6.2 (2010-06-24)</h1>
+
+<h2>Features</h2>
+
+<ul>
+<li>Added ability for custom error messages in validations</li>
+</ul>
+
+
+<h1>0.6.1 (2010-05-16)</h1>
+
+<h2>Fixes</h2>
+
+<ul>
+<li>STI was breaking when the model had a mixin too</li>
+</ul>
+
+
+<h1>0.6.0 (2010-05-11)</h1>
+
+<h2>Features</h2>
+
+<ul>
+<li>Added 'scale factor' for text generation, which gives better quality font rendering for smaller fonts</li>
+<li>Configurable objects allow for passing args, and passing a block for extra config</li>
+<li>Added more 'saved configurations', for easier setting up on e.g. Heroku</li>
+<li>Added RMagickAnalyser#format</li>
+<li>Added greyscale to RMagickProcessor</li>
+<li>S3DataStore is configurable as to whether it uses the filesystem or not (to save a tempfile)</li>
+</ul>
+
+
+<h2>Fixes</h2>
+
+<ul>
+<li>Some specs refactoring, including making text processing specs less brittle</li>
+<li>RMagickEncoder::SUPPORTED_FORMATS was proving problematic - now we use a configurable list instead</li>
+<li>Got Rails 3 beta3 cucumber features working</li>
+<li>Added check to see if bucket already exists in S3DataStore - apparently this was problematic in EU</li>
+</ul>
+
+
+<h2>Changes</h2>
+
+<ul>
+<li>temp_object.tempfile now returns a closed tempfile, which temp_object.file returns an open file.
+Can also pass a block to temp_object.file which closes the file automatically</li>
+<li>Processors/Analysers/Encoders know about app now so can log to app's log</li>
+<li>Imagemagick errors in RMagick processor/analyser/encoder now throw unable_to_handle and log a warning</li>
+<li>Removed Rails generators - better being more explicit with saved configurations which are more concise now</li>
+</ul>
+
+
+<h1>0.5.7 (2010-04-18)</h1>
+
+<h2>Fixes</h2>
+
+<ul>
+<li>Strip file command mime_type value because some versions of file command were appending a line-break</li>
+</ul>
+
+
+<h1>0.5.6 (2010-04-13)</h1>
+
+<h2>Fixes</h2>
+
+<ul>
+<li>Wasn't working properly with Single-Table Inheritance</li>
+</ul>
+
+
+<h1>0.5.5 (2010-04-13)</h1>
+
+<h2>Fixes</h2>
+
+<ul>
+<li>Rails 3 has changed 'metaclass' -> 'singleton_class' so adapt accordingly</li>
+</ul>
+
+
+<h1>0.5.4 (2010-04-12)</h1>
+
+<h2>Features</h2>
+
+<ul>
+<li>Allow setting the uid manually</li>
+</ul>
+
+
+<h2>Fixes</h2>
+
+<ul>
+<li>Assigning an accessor to nil wasn't working properly</li>
+</ul>
+
+
+<h1>0.5.3 (2010-03-27)</h1>
+
+<h2>Fixes</h2>
+
+<ul>
+<li>Assigning an accessor to nil wasn't working properly</li>
+</ul>
+
+
+<h1>0.5.2 (2010-03-04)</h1>
+
+<h2>Features</h2>
+
+<ul>
+<li>Added 'registered mime-types'</li>
+<li>Enhanced docs</li>
+</ul>
+
+
+<h2>Fixes</h2>
+
+<ul>
+<li>RMagickEncoder only encodes if not already in that format</li>
+</ul>
+
+
+<h1>0.5.1 (2010-02-20)</h1>
+
+<h2>Fixes</h2>
+
+<ul>
+<li>Fixed 'broken pipe' errors in FileCommandAnalyser due to outputting loads of stuff to the command line stdin</li>
+</ul>
+
+
+<h1>0.5.0 (2010-02-20)</h1>
+
+<h2>Added support</h2>
+
+<ul>
+<li>support for Rails 3</li>
+</ul>
+
+
+<h1>0.4.4 (2010-02-16)</h1>
+
+<p>Better late than never to start logging change history...</p>
+
+<h2>New features</h2>
+
+<ul>
+<li>added aspect_ratio to rmagick_analyser</li>
+</ul>
+
+
+<h2>Added support</h2>
+
+<ul>
+<li>support for ruby 1.9</li>
+<li>added development dependencies to gemspec for easier setting up</li>
+</ul>
+</div>
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div id="footer">
+  Generated on Wed Aug 25 00:53:44 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.8 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>
