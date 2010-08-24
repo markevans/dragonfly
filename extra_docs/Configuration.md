@@ -86,7 +86,7 @@ Heroku
     app.configure_with(:heroku, 's3_bucket_name')
 
 The {Dragonfly::Config::Heroku Heroku configuration} configures it to use the {Dragonfly::DataStorage::S3DataStore}, using Heroku's config attributes.
-See {file:ExampleUseCases} for more info.
+See {file:Heroku} for more info.
 
 Custom Saved Configuration
 --------------------------
