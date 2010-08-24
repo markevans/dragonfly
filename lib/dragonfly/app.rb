@@ -56,6 +56,11 @@ module Dragonfly
     attr_reader :generator
     attr_reader :server
 
+    configuration_method :analyser
+    configuration_method :processor
+    configuration_method :encoder
+    configuration_method :generator
+
     attr_accessor :job_definitions
 
     SAVED_CONFIGS = {
@@ -91,26 +96,6 @@ module Dragonfly
       temp_object.extract_attributes_from(opts)
       datastore.store(temp_object, opts)
     end
-
-    def register_analyser(*args, &block)
-      analyser.register(*args, &block)
-    end
-    configuration_method :register_analyser
-
-    def register_processor(*args, &block)
-      processor.register(*args, &block)
-    end
-    configuration_method :register_processor
-
-    def register_encoder(*args, &block)
-      encoder.register(*args, &block)
-    end
-    configuration_method :register_encoder
-
-    def register_generator(*args, &block)
-      generator.register(*args, &block)
-    end
-    configuration_method :register_generator
 
     def register_mime_type(format, mime_type)
       registered_mime_types[file_ext_string(format)] = mime_type

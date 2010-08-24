@@ -11,10 +11,10 @@ module Dragonfly
 
       def self.apply_configuration(app)
         app.configure do |c|
-          c.register_analyser(Analysis::RMagickAnalyser)
-          c.register_processor(Processing::RMagickProcessor)
-          c.register_encoder(Encoding::RMagickEncoder)
-          c.register_generator(Generation::RMagickGenerator)
+          c.analyser.register(Analysis::RMagickAnalyser)
+          c.processor.register(Processing::RMagickProcessor)
+          c.encoder.register(Encoding::RMagickEncoder)
+          c.generator.register(Generation::RMagickGenerator)
           c.job :thumb do |geometry, format|
             process :thumb, geometry
             encode format if format

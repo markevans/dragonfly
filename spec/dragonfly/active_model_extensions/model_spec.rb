@@ -368,7 +368,7 @@ describe Item do
             temp_object.data.count('G')
           end
         end
-        @app.register_analyser(custom_analyser)
+        @app.analyser.register(custom_analyser)
 
         Item.class_eval do
           validates_property :mime_type, :of => :preview_image, :in => ['how/special', 'how/crazy'], :if => :its_friday
@@ -461,7 +461,7 @@ describe Item do
         end
         def number_of_As(temp_object); temp_object.data.count('A'); end
       end
-      @app.register_analyser(custom_analyser)
+      @app.analyser.register(custom_analyser)
       @app.define_macro(model_class, :image_accessor)
       Item.class_eval do
         image_accessor :preview_image

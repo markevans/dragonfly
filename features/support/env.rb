@@ -11,7 +11,7 @@ TEMP_FILES = {}
 
 Dragonfly[:images].configure_with(:rmagick)
 Dragonfly[:files].configure do |c|
-  c.register_analyser(Dragonfly::Analysis::FileCommandAnalyser)
+  c.analyser.register(Dragonfly::Analysis::FileCommandAnalyser)
 end
 
 SAMPLE_IMAGE_PATH = File.dirname(__FILE__)+'/../../samples/beach.png'
