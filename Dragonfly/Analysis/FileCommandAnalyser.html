@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
 <title>Class: Dragonfly::Analysis::FileCommandAnalyser</title>
 <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -16,7 +16,7 @@
 
   </head>
   <body>
-    
+
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -32,14 +32,14 @@
 
     </script>
     <!-- *************** -->
-    
+
     <script type="text/javascript" charset="utf-8">
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
-    
+
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="logo">DRAGONFLY (v 0.7.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -47,14 +47,15 @@
 </div>
 
     </div>
-    
+
     <div>
       <iframe id="search_frame"></iframe>
     </div>
-    
+
     <div id="content" class="clearfix">
       <div class="col1">
-        <h1>Class: Dragonfly::Analysis::FileCommandAnalyser 
+        <h1>Class: Dragonfly::Analysis::FileCommandAnalyser
+  
   
   
 </h1>
@@ -63,12 +64,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="Base.html" title="Dragonfly::Analysis::Base (class)">Base</a></span>
+      <span class="inheritName"><a href="../../Object.html" title="Object (class)">Object</a></span>
       
         <ul class="fullTree">
           <li><a href="../../Object.html" title="Object (class)">Object</a></li>
-          
-            <li class="next"><a href="Base.html" title="Dragonfly::Analysis::Base (class)">Base</a></li>
           
             <li class="next">Dragonfly::Analysis::FileCommandAnalyser</li>
           
@@ -88,6 +87,7 @@
     
   
   
+  
     <dt class="r1 last">Defined in:</dt>
     <dd class="r1 last">lib/dragonfly/analysis/file_command_analyser.rb</dd>
   
@@ -96,18 +96,6 @@
 
 
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   
   
@@ -158,11 +146,15 @@ or
 </ul>
 
 
-  <h2>Instance Method Summary</h2>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
 
-  <ul class="summary">
-    
-      <li class="public ">
+    <ul class="summary">
+      
+        <li class="public ">
   <span class="summary_signature">
     
       <a href="#mime_type-instance_method" title="#mime_type (instance method)">- (Object) <strong>mime_type</strong>(temp_object) </a>
@@ -175,15 +167,20 @@ or
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
-    
-  </ul>
+      
+    </ul>
+  
 
+
+  
+  
   
   
   
@@ -191,27 +188,6 @@ or
   
   <h3 class="inherited">Methods included from <a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></h3>
   <p class="inherited"><a href="../Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></p>
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <a href="../BelongsToApp.html" title="Dragonfly::BelongsToApp (module)">Dragonfly::BelongsToApp</a></h3>
-  <p class="inherited"><a href="../BelongsToApp.html#app_set%3F-instance_method" title="Dragonfly::BelongsToApp#app_set? (method)">#app_set?</a>, <a href="../BelongsToApp.html#log-instance_method" title="Dragonfly::BelongsToApp#log (method)">#log</a></p>
-
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <a href="../Delegatable.html" title="Dragonfly::Delegatable (module)">Dragonfly::Delegatable</a></h3>
-  <p class="inherited"><a href="../Delegatable.html#delegatable_methods-instance_method" title="Dragonfly::Delegatable#delegatable_methods (method)">#delegatable_methods</a></p>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -251,23 +227,22 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/file_command_analyser.rb', line 12</span>
 
-<span class='def def kw'>def</span> <span class='mime_type identifier id'>mime_type</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='use_filesystem identifier id'>use_filesystem</span>
-    <span class='dxstring node'>`#{file_command} -b --mime '#{temp_object.path}'`</span>
-  <span class='else else kw'>else</span>
-    <span class='IO constant id'>IO</span><span class='dot token'>.</span><span class='popen identifier id'>popen</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{file_command} -b --mime -&quot;</span><span class='comma token'>,</span> <span class='string val'>'r+'</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='io identifier id'>io</span><span class='bitor op'>|</span>
-      <span class='if if kw'>if</span> <span class='num_bytes_to_check identifier id'>num_bytes_to_check</span>
-        <span class='io identifier id'>io</span><span class='dot token'>.</span><span class='write identifier id'>write</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='num_bytes_to_check identifier id'>num_bytes_to_check</span><span class='rbrack token'>]</span>
-      <span class='else else kw'>else</span>
-        <span class='io identifier id'>io</span><span class='dot token'>.</span><span class='write identifier id'>write</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span> 
-      <span class='end end kw'>end</span>
-      <span class='io identifier id'>io</span><span class='dot token'>.</span><span class='close_write identifier id'>close_write</span>
-      <span class='io identifier id'>io</span><span class='dot token'>.</span><span class='read identifier id'>read</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>';'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
-  <span class='content_type identifier id'>content_type</span><span class='dot token'>.</span><span class='strip identifier id'>strip</span> <span class='if if_mod kw'>if</span> <span class='content_type identifier id'>content_type</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id mime_type'>mime_type</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id content_type'>content_type</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id use_filesystem'>use_filesystem</span>
+    <span class='backtick'>`</span><span class='embexpr_beg'>#{</span><span class='id file_command'>file_command</span><span class='rbrace'>}</span><span class='tstring_content'> -b --mime '</span><span class='embexpr_beg'>#{</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id path'>path</span><span class='rbrace'>}</span><span class='tstring_content'>'</span><span class='tstring_end'>`</span></span>
+  <span class='kw'>else</span>
+    <span class='const'>IO</span><span class='period'>.</span><span class='id popen'>popen</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id file_command'>file_command</span><span class='rbrace'>}</span><span class='tstring_content'> -b --mime -</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>r+</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id io'>io</span><span class='op'>|</span>
+      <span class='kw'>if</span> <span class='id num_bytes_to_check'>num_bytes_to_check</span>
+        <span class='id io'>io</span><span class='period'>.</span><span class='id write'>write</span> <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span><span class='lbracket'>[</span><span class='int'>0</span><span class='comma'>,</span> <span class='id num_bytes_to_check'>num_bytes_to_check</span><span class='rbracket'>]</span>
+      <span class='kw'>else</span>
+        <span class='id io'>io</span><span class='period'>.</span><span class='id write'>write</span> <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span> 
+      <span class='kw'>end</span>
+      <span class='id io'>io</span><span class='period'>.</span><span class='id close_write'>close_write</span>
+      <span class='id io'>io</span><span class='period'>.</span><span class='id read'>read</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>;</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id first'>first</span>
+  <span class='id content_type'>content_type</span><span class='period'>.</span><span class='id strip'>strip</span> <span class='kw'>if</span> <span class='id content_type'>content_type</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -279,15 +254,15 @@ or
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
+          <li><a href="../../file.Index.html" title="Home">Home</a></li><li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../../file.Rack.html" title="Rack">Rack</a></li><li><a href="../../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Generators.html" title="Generators">Generators</a></li><li><a href="../../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../../file.URLs.html" title="URLs">URLs</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.Caching.html" title="Caching">Caching</a></li><li><a href="../../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
-    
+
     <div id="footer">
-  Generated on Tue Jul 13 13:01:45 2010 by 
+  Generated on Wed Aug 25 00:49:01 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.3 (ruby-1.8.7).
+  0.5.8 (ruby-1.9.2).
 </div>
 
   </body>

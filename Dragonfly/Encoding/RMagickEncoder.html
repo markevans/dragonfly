@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
 <title>Class: Dragonfly::Encoding::RMagickEncoder</title>
 <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -16,7 +16,7 @@
 
   </head>
   <body>
-    
+
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -32,14 +32,14 @@
 
     </script>
     <!-- *************** -->
-    
+
     <script type="text/javascript" charset="utf-8">
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
-    
+
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="logo">DRAGONFLY (v 0.7.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -47,14 +47,15 @@
 </div>
 
     </div>
-    
+
     <div>
       <iframe id="search_frame"></iframe>
     </div>
-    
+
     <div id="content" class="clearfix">
       <div class="col1">
-        <h1>Class: Dragonfly::Encoding::RMagickEncoder 
+        <h1>Class: Dragonfly::Encoding::RMagickEncoder
+  
   
   
 </h1>
@@ -63,12 +64,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="Base.html" title="Dragonfly::Encoding::Base (class)">Base</a></span>
+      <span class="inheritName"><a href="../../Object.html" title="Object (class)">Object</a></span>
       
         <ul class="fullTree">
           <li><a href="../../Object.html" title="Object (class)">Object</a></li>
-          
-            <li class="next"><a href="Base.html" title="Dragonfly::Encoding::Base (class)">Base</a></li>
           
             <li class="next">Dragonfly::Encoding::RMagickEncoder</li>
           
@@ -83,9 +82,10 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2"><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></dd>
+      <dd class="r2"><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a>, <a href="../RMagickUtils.html" title="Dragonfly::RMagickUtils (module)">Dragonfly::RMagickUtils</a></dd>
       
     
+  
   
   
     <dt class="r1 last">Defined in:</dt>
@@ -96,14 +96,6 @@
 
 
 
-  
-  
-  
-  
-  
-  
-  
-  
   
   
   
@@ -134,7 +126,7 @@ or
   <li>
     <code>supported_formats</code>
     
-     - default <code>aibmpepsgifgif87icoj2cjp2jpegjpgpbmpcdpctpcxpdfpictpjpegpngpng24png32png8pnmppmpspsdrastgatiffwbmpxbmxpmxwd</code>
+     - default <code>[:ai, :bmp, :eps, :gif, :gif87, :ico, :j2c, :jp2, :jpeg, :jpg, :pbm, :pcd, :pct, :pcx, :pdf, :pict, :pjpeg, :png, :png24, :png32, :png8, :pnm, :ppm, :ps, :psd, :ras, :tga, :tiff, :wbmp, :xbm, :xpm, :xwd]</code>
     
     
   </li>
@@ -142,14 +134,18 @@ or
 </ul>
 
 
-  <h2>Instance Method Summary</h2>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
 
-  <ul class="summary">
-    
-      <li class="public ">
+    <ul class="summary">
+      
+        <li class="public ">
   <span class="summary_signature">
     
-      <a href="#encode-instance_method" title="#encode (instance method)">- (Object) <strong>encode</strong>(image, format, encoding = {}) </a>
+      <a href="#encode-instance_method" title="#encode (instance method)">- (Object) <strong>encode</strong>(temp_object, format, encoding = {}) </a>
     
 
     
@@ -159,15 +155,20 @@ or
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
-    
-  </ul>
+      
+    </ul>
+  
 
+
+  
+  
   
   
   
@@ -181,22 +182,6 @@ or
   
   
   
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <a href="../BelongsToApp.html" title="Dragonfly::BelongsToApp (module)">Dragonfly::BelongsToApp</a></h3>
-  <p class="inherited"><a href="../BelongsToApp.html#app_set%3F-instance_method" title="Dragonfly::BelongsToApp#app_set? (method)">#app_set?</a>, <a href="../BelongsToApp.html#log-instance_method" title="Dragonfly::BelongsToApp#log (method)">#log</a></p>
-
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <a href="../Delegatable.html" title="Dragonfly::Delegatable (module)">Dragonfly::Delegatable</a></h3>
-  <p class="inherited"><a href="../Delegatable.html#delegatable_methods-instance_method" title="Dragonfly::Delegatable#delegatable_methods (method)">#delegatable_methods</a></p>
-
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -205,7 +190,7 @@ or
       <div class="method_details first">
   <p class="signature first" id="encode-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>encode</strong>(image, format, encoding = {}) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>encode</strong>(temp_object, format, encoding = {}) 
   
 
   
@@ -225,23 +210,24 @@ or
 52
 53
 54
-55</pre>
+55
+56</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/encoding/r_magick_encoder.rb', line 45</span>
 
-<span class='def def kw'>def</span> <span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='encoding identifier id'>encoding</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span>
-  <span class='throw identifier id'>throw</span> <span class='symbol val'>:unable_to_handle</span> <span class='unless unless_mod kw'>unless</span> <span class='supported_formats identifier id'>supported_formats</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
-  <span class='encoded_image identifier id'>encoded_image</span> <span class='assign token'>=</span> <span class='rmagick_image identifier id'>rmagick_image</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='encoded_image identifier id'>encoded_image</span><span class='dot token'>.</span><span class='format identifier id'>format</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span> <span class='eq op'>==</span> <span class='format identifier id'>format</span>
-    <span class='image identifier id'>image</span> <span class='comment val'># do nothing</span>
-  <span class='else else kw'>else</span>
-    <span class='encoded_image identifier id'>encoded_image</span><span class='dot token'>.</span><span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='format identifier id'>format</span>
-    <span class='encoded_image identifier id'>encoded_image</span><span class='dot token'>.</span><span class='to_blob identifier id'>to_blob</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id encode'>encode</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id format'>format</span><span class='comma'>,</span> <span class='id encoding'>encoding</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id format'>format</span> <span class='op'>=</span> <span class='id format'>format</span><span class='period'>.</span><span class='id to_s'>to_s</span><span class='period'>.</span><span class='id downcase'>downcase</span>
+  <span class='id throw'>throw</span> <span class='symbol'>:unable_to_handle</span> <span class='kw'>unless</span> <span class='id supported_formats'>supported_formats</span><span class='period'>.</span><span class='id include?'>include?</span><span class='lparen'>(</span><span class='id format'>format</span><span class='period'>.</span><span class='id to_sym'>to_sym</span><span class='rparen'>)</span>
+  <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id image'>image</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='id image'>image</span><span class='period'>.</span><span class='id format'>format</span><span class='period'>.</span><span class='id downcase'>downcase</span> <span class='op'>==</span> <span class='id format'>format</span>
+      <span class='id temp_object'>temp_object</span> <span class='comment'># do nothing
+</span>    <span class='kw'>else</span>
+      <span class='id image'>image</span><span class='period'>.</span><span class='id format'>format</span> <span class='op'>=</span> <span class='id format'>format</span>
+      <span class='id image'>image</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -253,15 +239,15 @@ or
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
+          <li><a href="../../file.Index.html" title="Home">Home</a></li><li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../../file.Rack.html" title="Rack">Rack</a></li><li><a href="../../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Generators.html" title="Generators">Generators</a></li><li><a href="../../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../../file.URLs.html" title="URLs">URLs</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.Caching.html" title="Caching">Caching</a></li><li><a href="../../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
-    
+
     <div id="footer">
-  Generated on Tue Jul 13 13:01:48 2010 by 
+  Generated on Wed Aug 25 00:49:01 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.3 (ruby-1.8.7).
+  0.5.8 (ruby-1.9.2).
 </div>
 
   </body>

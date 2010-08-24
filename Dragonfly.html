@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
 <title>Module: Dragonfly</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -16,7 +16,7 @@
 
   </head>
   <body>
-    
+
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -32,14 +32,14 @@
 
     </script>
     <!-- *************** -->
-    
+
     <script type="text/javascript" charset="utf-8">
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
-    
+
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="logo">DRAGONFLY (v 0.7.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -47,14 +47,15 @@
 </div>
 
     </div>
-    
+
     <div>
       <iframe id="search_frame"></iframe>
     </div>
-    
+
     <div id="content" class="clearfix">
       <div class="col1">
-        <h1>Module: Dragonfly 
+        <h1>Module: Dragonfly
+  
   
   
 </h1>
@@ -67,9 +68,10 @@
     
   
   
+  
     <dt class="r1 last">Defined in:</dt>
     <dd class="r1 last">lib/dragonfly.rb<span class="defines">,<br />
-  lib/dragonfly/app.rb,<br /> lib/dragonfly/delegator.rb,<br /> lib/dragonfly/middleware.rb,<br /> lib/dragonfly/parameters.rb,<br /> lib/dragonfly/temp_object.rb,<br /> lib/dragonfly/delegatable.rb,<br /> lib/dragonfly/url_handler.rb,<br /> lib/dragonfly/encoder_list.rb,<br /> lib/dragonfly/data_storage.rb,<br /> lib/dragonfly/configurable.rb,<br /> lib/dragonfly/encoding/base.rb,<br /> lib/dragonfly/analysis/base.rb,<br /> lib/dragonfly/analyser_list.rb,<br /> lib/dragonfly/processor_list.rb,<br /> lib/dragonfly/belongs_to_app.rb,<br /> lib/dragonfly/processing/base.rb,<br /> lib/dragonfly/data_storage/base.rb,<br /> lib/dragonfly/config/rails_images.rb,<br /> lib/dragonfly/config/r_magick_text.rb,<br /> lib/dragonfly/extended_temp_object.rb,<br /> lib/dragonfly/config/rails_defaults.rb,<br /> lib/dragonfly/config/r_magick_images.rb,<br /> lib/dragonfly/active_record_extensions.rb,<br /> lib/dragonfly/data_storage/s3data_store.rb,<br /> lib/dragonfly/encoding/r_magick_encoder.rb,<br /> lib/dragonfly/analysis/r_magick_analyser.rb,<br /> lib/dragonfly/config/heroku_rails_images.rb,<br /> lib/dragonfly/encoding/transparent_encoder.rb,<br /> lib/dragonfly/data_storage/file_data_store.rb,<br /> lib/dragonfly/processing/r_magick_processor.rb,<br /> lib/dragonfly/analysis/file_command_analyser.rb,<br /> lib/dragonfly/data_storage/base64_data_store.rb,<br /> lib/dragonfly/processing/r_magick_text_processor.rb,<br /> lib/dragonfly/data_storage/transparent_data_store.rb,<br /> lib/dragonfly/active_record_extensions/attachment.rb,<br /> lib/dragonfly/active_record_extensions/validations.rb,<br /> lib/dragonfly/active_record_extensions/class_methods.rb,<br /> lib/dragonfly/active_record_extensions/instance_methods.rb</span>
+  lib/dragonfly/job.rb,<br /> lib/dragonfly/app.rb,<br /> lib/dragonfly/encoder.rb,<br /> lib/dragonfly/endpoint.rb,<br /> lib/dragonfly/analyser.rb,<br /> lib/dragonfly/loggable.rb,<br /> lib/dragonfly/processor.rb,<br /> lib/dragonfly/generator.rb,<br /> lib/dragonfly/serializer.rb,<br /> lib/dragonfly/middleware.rb,<br /> lib/dragonfly/temp_object.rb,<br /> lib/dragonfly/job_builder.rb,<br /> lib/dragonfly/data_storage.rb,<br /> lib/dragonfly/configurable.rb,<br /> lib/dragonfly/config/rails.rb,<br /> lib/dragonfly/job_endpoint.rb,<br /> lib/dragonfly/simple_cache.rb,<br /> lib/dragonfly/config/heroku.rb,<br /> lib/dragonfly/r_magick_utils.rb,<br /> lib/dragonfly/routed_endpoint.rb,<br /> lib/dragonfly/simple_endpoint.rb,<br /> lib/dragonfly/config/r_magick.rb,<br /> lib/dragonfly/job_definitions.rb,<br /> lib/dragonfly/function_manager.rb,<br /> lib/dragonfly/active_model_extensions.rb,<br /> lib/dragonfly/data_storage/s3data_store.rb,<br /> lib/dragonfly/encoding/r_magick_encoder.rb,<br /> lib/dragonfly/analysis/r_magick_analyser.rb,<br /> lib/dragonfly/data_storage/file_data_store.rb,<br /> lib/dragonfly/data_storage/mongo_data_store.rb,<br /> lib/dragonfly/generation/r_magick_generator.rb,<br /> lib/dragonfly/processing/r_magick_processor.rb,<br /> lib/dragonfly/analysis/file_command_analyser.rb,<br /> lib/dragonfly/active_model_extensions/attachment.rb,<br /> lib/dragonfly/active_model_extensions/validations.rb,<br /> lib/dragonfly/active_model_extensions/class_methods.rb,<br /> lib/dragonfly/active_model_extensions/instance_methods.rb</span>
 </dd>
   
 </dl>
@@ -79,11 +81,11 @@
 <p class="children">
    
     
-      <strong class="modules">Modules:</strong> <a href="Dragonfly/ActiveRecordExtensions.html" title="Dragonfly::ActiveRecordExtensions (module)">ActiveRecordExtensions</a>, <a href="Dragonfly/Analysis.html" title="Dragonfly::Analysis (module)">Analysis</a>, <a href="Dragonfly/BelongsToApp.html" title="Dragonfly::BelongsToApp (module)">BelongsToApp</a>, <a href="Dragonfly/Config.html" title="Dragonfly::Config (module)">Config</a>, <a href="Dragonfly/Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a>, <a href="Dragonfly/DataStorage.html" title="Dragonfly::DataStorage (module)">DataStorage</a>, <a href="Dragonfly/Delegatable.html" title="Dragonfly::Delegatable (module)">Delegatable</a>, <a href="Dragonfly/Delegator.html" title="Dragonfly::Delegator (module)">Delegator</a>, <a href="Dragonfly/Encoding.html" title="Dragonfly::Encoding (module)">Encoding</a>, <a href="Dragonfly/Processing.html" title="Dragonfly::Processing (module)">Processing</a>
+      <strong class="modules">Modules:</strong> <a href="Dragonfly/ActiveModelExtensions.html" title="Dragonfly::ActiveModelExtensions (module)">ActiveModelExtensions</a>, <a href="Dragonfly/Analysis.html" title="Dragonfly::Analysis (module)">Analysis</a>, <a href="Dragonfly/Config.html" title="Dragonfly::Config (module)">Config</a>, <a href="Dragonfly/Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a>, <a href="Dragonfly/DataStorage.html" title="Dragonfly::DataStorage (module)">DataStorage</a>, <a href="Dragonfly/Encoding.html" title="Dragonfly::Encoding (module)">Encoding</a>, <a href="Dragonfly/Endpoint.html" title="Dragonfly::Endpoint (module)">Endpoint</a>, <a href="Dragonfly/Generation.html" title="Dragonfly::Generation (module)">Generation</a>, <a href="Dragonfly/Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a>, <a href="Dragonfly/Processing.html" title="Dragonfly::Processing (module)">Processing</a>, <a href="Dragonfly/RMagickUtils.html" title="Dragonfly::RMagickUtils (module)">RMagickUtils</a>, <a href="Dragonfly/Serializer.html" title="Dragonfly::Serializer (module)">Serializer</a>
     
    
     
-      <strong class="classes">Classes:</strong> <a href="Dragonfly/AnalyserList.html" title="Dragonfly::AnalyserList (class)">AnalyserList</a>, <a href="Dragonfly/App.html" title="Dragonfly::App (class)">App</a>, <a href="Dragonfly/EncoderList.html" title="Dragonfly::EncoderList (class)">EncoderList</a>, <a href="Dragonfly/ExtendedTempObject.html" title="Dragonfly::ExtendedTempObject (class)">ExtendedTempObject</a>, <a href="Dragonfly/Middleware.html" title="Dragonfly::Middleware (class)">Middleware</a>, <a href="Dragonfly/Parameters.html" title="Dragonfly::Parameters (class)">Parameters</a>, <a href="Dragonfly/ProcessorList.html" title="Dragonfly::ProcessorList (class)">ProcessorList</a>, <a href="Dragonfly/TempObject.html" title="Dragonfly::TempObject (class)">TempObject</a>, <a href="Dragonfly/UrlHandler.html" title="Dragonfly::UrlHandler (class)">UrlHandler</a>
+      <strong class="classes">Classes:</strong> <a href="Dragonfly/Analyser.html" title="Dragonfly::Analyser (class)">Analyser</a>, <a href="Dragonfly/App.html" title="Dragonfly::App (class)">App</a>, <a href="Dragonfly/Encoder.html" title="Dragonfly::Encoder (class)">Encoder</a>, <a href="Dragonfly/FunctionManager.html" title="Dragonfly::FunctionManager (class)">FunctionManager</a>, <a href="Dragonfly/Generator.html" title="Dragonfly::Generator (class)">Generator</a>, <a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a>, <a href="Dragonfly/JobBuilder.html" title="Dragonfly::JobBuilder (class)">JobBuilder</a>, <a href="Dragonfly/JobDefinitions.html" title="Dragonfly::JobDefinitions (class)">JobDefinitions</a>, <a href="Dragonfly/JobEndpoint.html" title="Dragonfly::JobEndpoint (class)">JobEndpoint</a>, <a href="Dragonfly/Middleware.html" title="Dragonfly::Middleware (class)">Middleware</a>, <a href="Dragonfly/Processor.html" title="Dragonfly::Processor (class)">Processor</a>, <a href="Dragonfly/RoutedEndpoint.html" title="Dragonfly::RoutedEndpoint (class)">RoutedEndpoint</a>, <a href="Dragonfly/SimpleCache.html" title="Dragonfly::SimpleCache (class)">SimpleCache</a>, <a href="Dragonfly/SimpleEndpoint.html" title="Dragonfly::SimpleEndpoint (class)">SimpleEndpoint</a>, <a href="Dragonfly/TempObject.html" title="Dragonfly::TempObject (class)">TempObject</a>
     
   
 </p>
@@ -92,14 +94,18 @@
 
 
 
-  <h2>Class Method Summary</h2>
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
 
-  <ul class="summary">
-    
-      <li class="public ">
+    <ul class="summary">
+      
+        <li class="public ">
   <span class="summary_signature">
     
-      <a href="#active_record_macro-class_method" title="active_record_macro (class method)">+ (Object) <strong>active_record_macro</strong>(prefix, app) </a>
+      <a href="#%5B%5D-class_method" title="[] (class method)">+ (Object) <strong>[]</strong>(*args) </a>
     
 
     
@@ -109,34 +115,17 @@
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#const_missing-class_method" title="const_missing (class method)">+ (Object) <strong>const_missing</strong>(const) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
+      
+    </ul>
   
 
-  
-    <span class="summary_desc"></span>
-  
-</li>
-
-    
-  </ul>
 
 
   <div id="class_method_details" class="method_details_list">
@@ -144,42 +133,9 @@
     
     
       <div class="method_details first">
-  <p class="signature first" id="active_record_macro-class_method">
+  <p class="signature first" id="[]-class_method">
   
-    + (<tt><a href="Object.html" title="Object (class)">Object</a></tt>) <strong>active_record_macro</strong>(prefix, app) 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-50
-51
-52
-53
-54</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly.rb', line 50</span>
-
-<span class='def def kw'>def</span> <span class='active_record_macro identifier id'>active_record_macro</span><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='rparen token'>)</span>
-  <span class='already_extended identifier id'>already_extended</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='semicolon token'>;</span> <span class='self self kw'>self</span><span class='semicolon token'>;</span> <span class='end end kw'>end</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='included_modules identifier id'>included_modules</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='ActiveRecordExtensions constant id'>ActiveRecordExtensions</span><span class='rparen token'>)</span>
-  <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span><span class='lparen token'>(</span><span class='ActiveRecordExtensions constant id'>ActiveRecordExtensions</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='already_extended identifier id'>already_extended</span>
-  <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='dot token'>.</span><span class='register_dragonfly_app identifier id'>register_dragonfly_app</span><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="const_missing-class_method">
-  
-    + (<tt><a href="Object.html" title="Object (class)">Object</a></tt>) <strong>const_missing</strong>(const) 
+    + (<tt><a href="Object.html" title="Object (class)">Object</a></tt>) <strong>[]</strong>(*args) 
   
 
   
@@ -189,31 +145,16 @@
       <pre class="lines">
 
 
-39
 40
 41
-42
-43
-44
-45
-46
-47
-48</pre>
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly.rb', line 40</span>
 
-<span class='def def kw'>def</span> <span class='const_missing identifier id'>const_missing</span><span class='lparen token'>(</span><span class='const identifier id'>const</span><span class='rparen token'>)</span>
-  <span class='case case kw'>case</span> <span class='const identifier id'>const</span>
-  <span class='when when kw'>when</span> <span class='symbol val'>:RMagickConfiguration</span>
-    <span class='puts identifier id'>puts</span> <span class='string val'>&quot;WARNING: RMagickConfiguration is deprecated and will be removed in future &quot;</span><span class='plus op'>+</span>
-         <span class='string val'>&quot;versions of Dragonfly. Please change to Dragonfly::Config::RMagickImages&quot;</span>
-    <span class='const_set identifier id'>const_set</span><span class='lparen token'>(</span><span class='symbol val'>:RMagickConfiguration</span><span class='comma token'>,</span> <span class='Config constant id'>Config</span><span class='colon2 op'>::</span><span class='RMagickImages constant id'>RMagickImages</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='super super kw'>super</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='op'>[]</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='const'>App</span><span class='lbracket'>[</span><span class='op'>*</span><span class='id args'>args</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -225,15 +166,15 @@
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="file.History.html" title="History">History</a></li>
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs">URLs</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
-    
+
     <div id="footer">
-  Generated on Tue Jul 13 13:01:46 2010 by 
+  Generated on Wed Aug 25 00:48:59 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.3 (ruby-1.8.7).
+  0.5.8 (ruby-1.9.2).
 </div>
 
   </body>

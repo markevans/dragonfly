@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
 <title>Class: Dragonfly::DataStorage::FileDataStore</title>
 <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -16,7 +16,7 @@
 
   </head>
   <body>
-    
+
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -32,14 +32,14 @@
 
     </script>
     <!-- *************** -->
-    
+
     <script type="text/javascript" charset="utf-8">
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
-    
+
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="logo">DRAGONFLY (v 0.7.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -47,14 +47,15 @@
 </div>
 
     </div>
-    
+
     <div>
       <iframe id="search_frame"></iframe>
     </div>
-    
+
     <div id="content" class="clearfix">
       <div class="col1">
-        <h1>Class: Dragonfly::DataStorage::FileDataStore 
+        <h1>Class: Dragonfly::DataStorage::FileDataStore
+  
   
   
 </h1>
@@ -63,12 +64,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="Base.html" title="Dragonfly::DataStorage::Base (class)">Base</a></span>
+      <span class="inheritName"><a href="../../Object.html" title="Object (class)">Object</a></span>
       
         <ul class="fullTree">
           <li><a href="../../Object.html" title="Object (class)">Object</a></li>
-          
-            <li class="next"><a href="Base.html" title="Dragonfly::DataStorage::Base (class)">Base</a></li>
           
             <li class="next">Dragonfly::DataStorage::FileDataStore</li>
           
@@ -88,6 +87,7 @@
     
   
   
+  
     <dt class="r1 last">Defined in:</dt>
     <dd class="r1 last">lib/dragonfly/data_storage/file_data_store.rb</dd>
   
@@ -96,14 +96,6 @@
 
 
 
-  
-  
-  
-  
-  
-  
-  
-  
   
   
   
@@ -138,11 +130,15 @@ or
 </ul>
 
 
-  <h2>Instance Method Summary</h2>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
 
-  <ul class="summary">
-    
-      <li class="public ">
+    <ul class="summary">
+      
+        <li class="public ">
   <span class="summary_signature">
     
       <a href="#destroy-instance_method" title="#destroy (instance method)">- (Object) <strong>destroy</strong>(relative_path) </a>
@@ -155,14 +151,36 @@ or
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
+      
+        <li class="public ">
+  <span class="summary_signature">
     
-      <li class="public ">
+      <a href="#disambiguate-instance_method" title="#disambiguate (instance method)">- (Object) <strong>disambiguate</strong>(filename) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
   <span class="summary_signature">
     
       <a href="#retrieve-instance_method" title="#retrieve (instance method)">- (Object) <strong>retrieve</strong>(relative_path) </a>
@@ -175,17 +193,18 @@ or
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
-    
-      <li class="public ">
+      
+        <li class="public ">
   <span class="summary_signature">
     
-      <a href="#store-instance_method" title="#store (instance method)">- (Object) <strong>store</strong>(temp_object) </a>
+      <a href="#store-instance_method" title="#store (instance method)">- (Object) <strong>store</strong>(temp_object, opts = {}) </a>
     
 
     
@@ -195,15 +214,20 @@ or
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
-    
-  </ul>
+      
+    </ul>
+  
 
+
+  
+  
   
   
   
@@ -211,19 +235,6 @@ or
   
   <h3 class="inherited">Methods included from <a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></h3>
   <p class="inherited"><a href="../Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></p>
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <a href="../BelongsToApp.html" title="Dragonfly::BelongsToApp (module)">Dragonfly::BelongsToApp</a></h3>
-  <p class="inherited"><a href="../BelongsToApp.html#app_set%3F-instance_method" title="Dragonfly::BelongsToApp#app_set? (method)">#app_set?</a>, <a href="../BelongsToApp.html#log-instance_method" title="Dragonfly::BelongsToApp#log (method)">#log</a></p>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -264,31 +275,58 @@ or
       <pre class="lines">
 
 
-36
-37
-38
-39
-40
 41
 42
 43
 44
-45</pre>
+45
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 41</span>
 
-<span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
-  <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rm identifier id'>rm</span> <span class='absolute_storage_path identifier id'>absolute_storage_path</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
-  <span class='containing_directory identifier id'>containing_directory</span> <span class='assign token'>=</span> <span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='dirname identifier id'>dirname</span>
-  <span class='containing_directory identifier id'>containing_directory</span><span class='dot token'>.</span><span class='ascend identifier id'>ascend</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='relative_dir identifier id'>relative_dir</span><span class='bitor op'>|</span>
-    <span class='dir identifier id'>dir</span> <span class='assign token'>=</span> <span class='absolute_storage_path identifier id'>absolute_storage_path</span><span class='lparen token'>(</span><span class='relative_dir identifier id'>relative_dir</span><span class='rparen token'>)</span>
-    <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rmdir identifier id'>rmdir</span> <span class='dir identifier id'>dir</span> <span class='if if_mod kw'>if</span> <span class='directory_empty? fid id'>directory_empty?</span><span class='lparen token'>(</span><span class='dir identifier id'>dir</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='rescue rescue kw'>rescue</span> <span class='Errno constant id'>Errno</span><span class='colon2 op'>::</span><span class='ENOENT constant id'>ENOENT</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
-  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='message identifier id'>message</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id destroy'>destroy</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span>
+  <span class='id path'>path</span> <span class='op'>=</span> <span class='id absolute_path'>absolute_path</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span>
+  <span class='const'>FileUtils</span><span class='period'>.</span><span class='id rm'>rm</span> <span class='id path'>path</span>
+  <span class='const'>FileUtils</span><span class='period'>.</span><span class='id rm'>rm</span> <span class='id extra_data_path'>extra_data_path</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
+  <span class='id purge_empty_directories'>purge_empty_directories</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>ENOENT</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
+  <span class='id raise'>raise</span> <span class='const'>DataNotFound</span><span class='comma'>,</span> <span class='id e'>e</span><span class='period'>.</span><span class='id message'>message</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="disambiguate-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>disambiguate</strong>(filename) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+50
+51
+52
+53
+54</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 50</span>
+
+<span class='kw'>def</span> <span class='id disambiguate'>disambiguate</span><span class='lparen'>(</span><span class='id filename'>filename</span><span class='rparen'>)</span>
+  <span class='id basename'>basename</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id basename'>basename</span><span class='lparen'>(</span><span class='id filename'>filename</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.*</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='id extname'>extname</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id extname'>extname</span><span class='lparen'>(</span><span class='id filename'>filename</span><span class='rparen'>)</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id basename'>basename</span><span class='rbrace'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='const'>Time</span><span class='period'>.</span><span class='id now'>now</span><span class='period'>.</span><span class='id usec'>usec</span><span class='period'>.</span><span class='id to_s'>to_s</span><span class='lparen'>(</span><span class='int'>32</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id extname'>extname</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -328,21 +366,28 @@ or
       <pre class="lines">
 
 
-30
 31
 32
 33
-34</pre>
+34
+35
+36
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 31</span>
 
-<span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
-  <span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='absolute_storage_path identifier id'>absolute_storage_path</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-<span class='rescue rescue kw'>rescue</span> <span class='Errno constant id'>Errno</span><span class='colon2 op'>::</span><span class='ENOENT constant id'>ENOENT</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
-  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='message identifier id'>message</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id retrieve'>retrieve</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span>
+  <span class='id path'>path</span> <span class='op'>=</span> <span class='id absolute_path'>absolute_path</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span>
+  <span class='lbracket'>[</span>
+    <span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='id retrieve_extra_data'>retrieve_extra_data</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
+  <span class='rbracket'>]</span>
+<span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>ENOENT</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
+  <span class='id raise'>raise</span> <span class='const'>DataNotFound</span><span class='comma'>,</span> <span class='id e'>e</span><span class='period'>.</span><span class='id message'>message</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -351,7 +396,7 @@ or
       <div class="method_details ">
   <p class="signature " id="store-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>store</strong>(temp_object) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>store</strong>(temp_object, opts = {}) 
   
 
   
@@ -377,29 +422,30 @@ or
 25
 26
 27
-28</pre>
+28
+29</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 12</span>
 
-<span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
+<span class='kw'>def</span> <span class='id store'>store</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id filename'>filename</span> <span class='op'>=</span> <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id name'>name</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>file</span><span class='tstring_end'>'</span></span>
 
-  <span class='relative_path identifier id'>relative_path</span> <span class='assign token'>=</span> <span class='relative_storage_path identifier id'>relative_storage_path</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span> <span class='orop op'>||</span> <span class='string val'>'file'</span><span class='rparen token'>)</span>
+  <span class='id relative_path'>relative_path</span> <span class='op'>=</span> <span class='id relative_path_for'>relative_path_for</span><span class='lparen'>(</span><span class='id filename'>filename</span><span class='rparen'>)</span>
+  <span class='kw'>begin</span>
+    <span class='kw'>while</span> <span class='const'>File</span><span class='period'>.</span><span class='id exist?'>exist?</span><span class='lparen'>(</span><span class='id path'>path</span> <span class='op'>=</span> <span class='id absolute_path'>absolute_path</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id filename'>filename</span> <span class='op'>=</span> <span class='id disambiguate'>disambiguate</span><span class='lparen'>(</span><span class='id filename'>filename</span><span class='rparen'>)</span>
+      <span class='id relative_path'>relative_path</span> <span class='op'>=</span> <span class='id relative_path_for'>relative_path_for</span><span class='lparen'>(</span><span class='id filename'>filename</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='id prepare_path'>prepare_path</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
+    <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id to_file'>to_file</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id close'>close</span>
+    <span class='id store_extra_data'>store_extra_data</span><span class='lparen'>(</span><span class='id path'>path</span><span class='comma'>,</span> <span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EACCES</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
+    <span class='id raise'>raise</span> <span class='const'>UnableToStore</span><span class='comma'>,</span> <span class='id e'>e</span><span class='period'>.</span><span class='id message'>message</span>
+  <span class='kw'>end</span>
 
-  <span class='begin begin kw'>begin</span>
-    <span class='while while kw'>while</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='exist? fid id'>exist?</span><span class='lparen token'>(</span><span class='storage_path identifier id'>storage_path</span> <span class='assign token'>=</span> <span class='absolute_storage_path identifier id'>absolute_storage_path</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-      <span class='relative_path identifier id'>relative_path</span> <span class='assign token'>=</span> <span class='increment_path identifier id'>increment_path</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
-    <span class='end end kw'>end</span>
-    <span class='storage_dir identifier id'>storage_dir</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='dirname identifier id'>dirname</span><span class='lparen token'>(</span><span class='storage_path identifier id'>storage_path</span><span class='rparen token'>)</span>
-    <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='mkdir_p identifier id'>mkdir_p</span><span class='lparen token'>(</span><span class='storage_dir identifier id'>storage_dir</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='exist? fid id'>exist?</span><span class='lparen token'>(</span><span class='storage_dir identifier id'>storage_dir</span><span class='rparen token'>)</span>
-    <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='cp identifier id'>cp</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='storage_path identifier id'>storage_path</span>
-  <span class='rescue rescue kw'>rescue</span> <span class='Errno constant id'>Errno</span><span class='colon2 op'>::</span><span class='EACCES constant id'>EACCES</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
-    <span class='raise identifier id'>raise</span> <span class='UnableToStore constant id'>UnableToStore</span><span class='comma token'>,</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='message identifier id'>message</span>
-  <span class='end end kw'>end</span>
-
-  <span class='relative_path identifier id'>relative_path</span>
-<span class='end end kw'>end</span>
-</pre>
+  <span class='id relative_path'>relative_path</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -411,15 +457,15 @@ or
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
+          <li><a href="../../file.Index.html" title="Home">Home</a></li><li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../../file.Rack.html" title="Rack">Rack</a></li><li><a href="../../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Generators.html" title="Generators">Generators</a></li><li><a href="../../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../../file.URLs.html" title="URLs">URLs</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.Caching.html" title="Caching">Caching</a></li><li><a href="../../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
-    
+
     <div id="footer">
-  Generated on Tue Jul 13 13:01:48 2010 by 
+  Generated on Wed Aug 25 00:49:01 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.3 (ruby-1.8.7).
+  0.5.8 (ruby-1.9.2).
 </div>
 
   </body>

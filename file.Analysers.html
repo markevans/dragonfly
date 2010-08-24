@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
 <title>File: Analysers</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -16,7 +16,7 @@
 
   </head>
   <body>
-    
+
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -32,14 +32,14 @@
 
     </script>
     <!-- *************** -->
-    
+
     <script type="text/javascript" charset="utf-8">
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
-    
+
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="logo">DRAGONFLY (v 0.7.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -47,95 +47,132 @@
 </div>
 
     </div>
-    
+
     <div>
       <iframe id="search_frame"></iframe>
     </div>
-    
+
     <div id="content" class="clearfix">
       <div class="col1">
         <div id='filecontents'><h1>Analysers</h1>
 
 <p>Analysing data for things like width, mime_type, etc. come under the banner of Analysis.</p>
 
-<p>Let's say we have a dragonfly app called 'images'</p>
+<p>You can register as many analysers as you like.</p>
 
-<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+<p>Let's say we have a Dragonfly app</p>
+
+<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
 </pre>
 
-<p>Data gets passed around between the datastore, processor, analyser, etc. in the form of an <tt><a href="Dragonfly/ExtendedTempObject.html" title="Dragonfly::ExtendedTempObject (class)">ExtendedTempObject</a></tt>.</p>
+<p>and an image object (actually a <tt><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></tt> object)...</p>
 
-<pre class="code"><span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='create_object identifier id'>create_object</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/image.png'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 </pre>
 
-<p>This object will have any methods which have been registered with the analyser. For example, registering
-the <tt><a href="Dragonfly/Analysis/RMagickAnalyser.html" title="Dragonfly::Analysis::RMagickAnalyser (class)">rmagick analyser</a></tt></p>
+<p>...OR a Dragonfly model accessor...</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='register_analyser identifier id'>register_analyser</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='RMagickAnalyser constant id'>RMagickAnalyser</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span>
 </pre>
 
-<p>give us the methods <code>width</code>, <code>height</code>, <code>depth</code> and <code>number_of_colours</code> (or <code>number_of_colors</code>).</p>
+<p>We can analyse it using any analysis methods that have been registered with the analyser.</p>
 
-<pre class="code"><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='width identifier id'>width</span>        <span class='comment val'># =&gt; 280</span>
-<span class='comment val'># ...etc.</span>
+<h2>RMagickAnalyser</h2>
+
+<p>The <tt><a href="Dragonfly/Analysis/RMagickAnalyser.html" title="Dragonfly::Analysis::RMagickAnalyser (class)">RMagickAnalyser</a></tt> is registered by default by the
+<tt><a href="Dragonfly/Config/RMagick.html" title="Dragonfly::Config::RMagick (module)">RMagick configuration</a></tt> used by 'dragonfly/rails/images'.</p>
+
+<p>If not already registered:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Analysis</span><span class='op'>::</span><span class='const'>RMagickAnalyser</span><span class='rparen'>)</span>
 </pre>
 
-<p>Registering the <tt><a href="Dragonfly/Analysis/FileCommandAnalyser.html" title="Dragonfly::Analysis::FileCommandAnalyser (class)">'file' command analyser</a></tt></p>
+<p>gives us these methods:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='register_analyser identifier id'>register_analyser</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='FileCommandAnalyser constant id'>FileCommandAnalyser</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id width'>width</span>               <span class='comment'># =&gt; 280
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id height'>height</span>              <span class='comment'># =&gt; 355
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id aspect_ratio'>aspect_ratio</span>        <span class='comment'># =&gt; 0.788732394366197
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id portrait?'>portrait?</span>           <span class='comment'># =&gt; true
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id landscape?'>landscape?</span>          <span class='comment'># =&gt; false
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id depth'>depth</span>               <span class='comment'># =&gt; 8
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id number_of_colours'>number_of_colours</span>   <span class='comment'># =&gt; 34703
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id format'>format</span>              <span class='comment'># =&gt; :png
+</span></pre>
+
+<h2>FileCommandAnalyser</h2>
+
+<p>The <tt><a href="Dragonfly/Analysis/FileCommandAnalyser.html" title="Dragonfly::Analysis::FileCommandAnalyser (class)">FileCommandAnalyser</a></tt> is registered by default by the
+<tt><a href="Dragonfly/Config/Rails.html" title="Dragonfly::Config::Rails (module)">Rails configuration</a></tt> used by 'dragonfly/rails/images'.</p>
+
+<p>As the name suggests, it uses the UNIX 'file' command.</p>
+
+<p>If not already registered:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Analysis</span><span class='op'>::</span><span class='const'>FileCommandAnalyser</span><span class='rparen'>)</span>
 </pre>
 
-<p>gives us the method <code>mime_type</code>, which is necessary for the app to serve the file properly.</p>
+<p>gives us:</p>
 
-<pre class="code"><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='mime_type identifier id'>mime_type</span>    <span class='comment val'># =&gt; 'image/png'</span>
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id mime_type'>mime_type</span>    <span class='comment'># =&gt; 'image/png'
+</span></pre>
+
+<p>It doesn't use the filesystem by default (it operates on in-memory strings), but we can make it do so by using</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Analysis</span><span class='op'>::</span><span class='const'>FileCommandAnalyser</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id a'>a</span><span class='op'>|</span>
+  <span class='id a'>a</span><span class='period'>.</span><span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='kw'>true</span>
+<span class='kw'>end</span>
 </pre>
-
-<p>As the file command analyser is <tt><a href="Dragonfly/Configurable.html" title="Dragonfly::Configurable (module)">configurable</a></tt>, we can configure it as we register it if we need to</p>
-
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='register_analyser identifier id'>register_analyser</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='FileCommandAnalyser constant id'>FileCommandAnalyser</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span>
-  <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='file_command identifier id'>file_command</span> <span class='assign token'>=</span> <span class='string val'>'/usr/bin/file'</span>
-<span class='end end kw'>end</span>
-</pre>
-
-<p>The saved configuration <tt><a href="Dragonfly/Config/RMagickImages.html" title="Dragonfly::Config::RMagickImages (module)">RMagickImages</a></tt> registers the above two analysers automatically.</p>
 
 <h2>Custom Analysers</h2>
 
-<p>To register a custom analyser, derive from <tt><a href="Dragonfly/Analysis/Base.html" title="Dragonfly::Analysis::Base (class)">Analysis::Base</a></tt> and register.
+<p>To register a single custom analyser:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id add'>add</span> <span class='symbol'>:wobbliness</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id temp_object'>temp_object</span><span class='op'>|</span>
+  <span class='comment'># can use temp_object.data, temp_object.path, temp_object.file, etc.
+</span>  <span class='const'>SomeLibrary</span><span class='period'>.</span><span class='id assess_wobbliness'>assess_wobbliness</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span><span class='rparen'>)</span>
+<span class='kw'>end</span>
+
+<span class='id image'>image</span><span class='period'>.</span><span class='id wobbliness'>wobbliness</span>    <span class='comment'># =&gt; 71
+</span></pre>
+
+<p>You can create a class like the RMagick one above, in which case all public methods will be counted as analysis methods.
 Each method takes the temp_object as its argument.</p>
 
-<pre class="code"><span class='class class kw'>class</span> <span class='MyAnalyser constant id'>MyAnalyser</span> <span class='lt op'>&lt;</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+<pre class="code"><span class='kw'>class</span> <span class='const'>MyAnalyser</span>
 
-  <span class='def def kw'>def</span> <span class='coolness identifier id'>coolness</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-    <span class='comment val'># use temp_object.data, temp_object.path, etc...</span>
-    <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='div op'>/</span> <span class='integer val'>30</span>
-  <span class='end end kw'>end</span>
+  <span class='kw'>def</span> <span class='id coolness'>coolness</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+    <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id size'>size</span> <span class='op'>/</span> <span class='int'>30</span>
+  <span class='kw'>end</span>
 
-  <span class='comment val'># ... add as many methods as you wish</span>
+  <span class='kw'>def</span> <span class='id uglyness'>uglyness</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+    <span class='backtick'>`</span><span class='tstring_content'>ugly -i </span><span class='embexpr_beg'>#{</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id path'>path</span><span class='rbrace'>}</span><span class='tstring_end'>`</span></span>
+  <span class='kw'>end</span>
 
-<span class='end end kw'>end</span>
+  <span class='id private'>private</span>
 
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='register_analyser identifier id'>register_analyser</span><span class='lparen token'>(</span><span class='MyAnalyser constant id'>MyAnalyser</span><span class='rparen token'>)</span>
+  <span class='kw'>def</span> <span class='id my_helper_method'>my_helper_method</span>
+    <span class='comment'># do stuff
+</span>  <span class='kw'>end</span>
 
-<span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='create_object identifier id'>create_object</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/image.png'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='kw'>end</span>
 
-<span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='coolness identifier id'>coolness</span>     <span class='comment val'># =&gt; 2067</span>
-</pre>
+<span class='id app'>app</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyAnalyser</span><span class='rparen'>)</span>
 
-<p>You can register multiple analysers.</p>
-</div>
+<span class='id image'>image</span><span class='period'>.</span><span class='id coolness'>coolness</span>    <span class='comment'># =&gt; -4.1
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id uglyness'>uglyness</span>    <span class='comment'># =&gt; &quot;VERY&quot;
+</span></pre></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="file.History.html" title="History">History</a></li>
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs">URLs</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
-    
+
     <div id="footer">
-  Generated on Tue Jul 13 13:01:41 2010 by 
+  Generated on Wed Aug 25 00:48:59 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.3 (ruby-1.8.7).
+  0.5.8 (ruby-1.9.2).
 </div>
 
   </body>

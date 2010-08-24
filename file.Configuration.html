@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
+<title>File: Configuration</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  </head>
+  <body>
+
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.7.0)</div>
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+    </div>
+
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <div id='filecontents'><h1>Configuration</h1>
+
+<p>Given a Dragonfly app</p>
+
+<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:app_name</span><span class='rbracket'>]</span>
+</pre>
+
+<p>Configuration can either be done like so...</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id url_path_prefix'>url_path_prefix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/media</span><span class='tstring_end'>'</span></span>
+  <span class='comment'># ...
+</span><span class='kw'>end</span>
+</pre>
+
+<p>...or directly like so...</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id url_path_prefix'>url_path_prefix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/media</span><span class='tstring_end'>'</span></span>
+</pre>
+
+<p>The defaults should be fairly sensible, but you can tweak a number of things if you wish.
+Here is an example of an app with all attributes configured:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id datastore'>datastore</span> <span class='op'>=</span> <span class='const'>SomeCustomDataStore</span><span class='period'>.</span><span class='id new'>new</span> <span class='symbol'>:egg</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>head</span><span class='tstring_end'>'</span></span>  <span class='comment'># defaults to FileDataStore
+</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id cache_duration'>cache_duration</span> <span class='op'>=</span> <span class='int'>3600</span><span class='op'>*</span><span class='int'>24</span><span class='op'>*</span><span class='int'>365</span><span class='op'>*</span><span class='int'>2</span>                      <span class='comment'># defaults to 1 year # (1 year)
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id fallback_mime_type'>fallback_mime_type</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>something/mental</span><span class='tstring_end'>'</span></span>             <span class='comment'># defaults to application/octet-stream
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id log'>log</span> <span class='op'>=</span> <span class='const'>Logger</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='gvar'>$stdout</span><span class='rparen'>)</span>                           <span class='comment'># defaults to Logger.new('/var/tmp/dragonfly.log')
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id infer_mime_type_from_file_ext'>infer_mime_type_from_file_ext</span> <span class='op'>=</span> <span class='kw'>false</span>               <span class='comment'># defaults to true
+</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id url_path_prefix'>url_path_prefix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/images</span><span class='tstring_end'>'</span></span>                         <span class='comment'># defaults to nil
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id url_host'>url_host</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>http://some.domain.com:4000</span><span class='tstring_end'>'</span></span>            <span class='comment'># defaults to nil
+</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id protect_from_dos_attacks'>protect_from_dos_attacks</span> <span class='op'>=</span> <span class='kw'>true</span>                     <span class='comment'># defaults to false - adds a SHA parameter on the end of urls
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id secret'>secret</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>This is my secret yeh!!</span><span class='tstring_end'>'</span></span>                  <span class='comment'># should set this if concerned about DOS attacks
+</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyAnalyser</span><span class='rparen'>)</span>                       <span class='comment'># See 'Analysers' for more details
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id processor'>processor</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyProcessor</span><span class='comma'>,</span> <span class='symbol'>:type</span> <span class='op'>=&gt;</span> <span class='symbol'>:fig</span><span class='rparen'>)</span>      <span class='comment'># See 'Processing' for more details
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyEncoder</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id e'>e</span><span class='op'>|</span>                  <span class='comment'># See 'Encoding' for more details
+</span>    <span class='id e'>e</span><span class='period'>.</span><span class='id some_value'>some_value</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>geg</span><span class='tstring_end'>'</span></span>
+  <span class='kw'>end</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id generator'>generator</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyGenerator</span><span class='rparen'>)</span>                     <span class='comment'># See 'Generators' for more details
+</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id register_mime_type'>register_mime_type</span><span class='lparen'>(</span><span class='symbol'>:egg</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>fried/egg</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>               <span class='comment'># See 'MimeTypes' for more details
+</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id job'>job</span> <span class='symbol'>:black_and_white</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id size'>size</span><span class='op'>|</span>                      <span class='comment'># Job shortcut - lets you do image.black_and_white('30x30')
+</span>    <span class='id process'>process</span> <span class='symbol'>:greyscale</span>
+    <span class='id process'>process</span> <span class='symbol'>:thumb</span><span class='comma'>,</span> <span class='id size'>size</span>
+    <span class='id encode'>encode</span>  <span class='symbol'>:gif</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</pre>
+
+<h2>Where is configuration done?</h2>
+
+<p>In Rails, it should be done in an initializer, e.g. 'config/initializers/dragonfly.rb'.
+Otherwise it should be done anywhere where general setup is done, early on.</p>
+
+<h1>Saved configurations</h1>
+
+<p>Saved configurations are useful if you often configure the app the same way.
+There are a number that are provided with Dragonfly:</p>
+
+<h2>RMagick</h2>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:rmagick</span><span class='rparen'>)</span>
+</pre>
+
+<p>The <tt><a href="Dragonfly/Config/RMagick.html" title="Dragonfly::Config::RMagick (module)">RMagick configuration</a></tt> registers the app with the <tt><a href="Dragonfly/Analysis/RMagickAnalyser.html" title="Dragonfly::Analysis::RMagickAnalyser (class)">RMagickAnalyser</a></tt>, <tt><a href="Dragonfly/Processing/RMagickProcessor.html" title="Dragonfly::Processing::RMagickProcessor (class)">RMagickProcessor</a></tt>,
+<tt><a href="Dragonfly/Encoding/RMagickEncoder.html" title="Dragonfly::Encoding::RMagickEncoder (class)">RMagickEncoder</a></tt> and <tt><a href="Dragonfly/Generation/RMagickGenerator.html" title="Dragonfly::Generation::RMagickGenerator (class)">RMagickGenerator</a></tt>, and adds the 'job shortcuts'
+<code>thumb</code>, <code>jpg</code>, <code>png</code> and <code>gif</code>.</p>
+
+<p>The file 'dragonfly/rails/images' does this for you.</p>
+
+<h2>Rails</h2>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:rails</span><span class='rparen'>)</span>
+</pre>
+
+<p>The <tt><a href="Dragonfly/Config/Rails.html" title="Dragonfly::Config::Rails (module)">Rails configuration</a></tt> points the log to the Rails logger, configures the file data store root path, sets the url_path_prefix to /media, and
+registers the <tt><a href="Dragonfly/Analysis/FileCommandAnalyser.html" title="Dragonfly::Analysis::FileCommandAnalyser (class)">FileCommandAnalyser</a></tt> for helping with mime_type validations.</p>
+
+<p>The file 'dragonfly/rails/images' does this for you.</p>
+
+<h2>Heroku</h2>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:heroku</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>s3_bucket_name</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+</pre>
+
+<p>The <tt><a href="Dragonfly/Config/Heroku.html" title="Dragonfly::Config::Heroku (module)">Heroku configuration</a></tt> configures it to use the <tt><a href="Dragonfly/DataStorage/S3DataStore.html" title="Dragonfly::DataStorage::S3DataStore (class)">Dragonfly::DataStorage::S3DataStore</a></tt>, using Heroku's config attributes.
+See <a href="file.Heroku.html" title="Heroku">Heroku</a> for more info.</p>
+
+<h2>Custom Saved Configuration</h2>
+
+<p>You can create your own saved configuration with any object that responds to 'apply_configuration':</p>
+
+<pre class="code"><span class='kw'>module</span> <span class='const'>MyConfiguration</span>
+
+  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id apply_configuration'>apply_configuration</span><span class='lparen'>(</span><span class='id app'>app</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+    <span class='id app'>app</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
+      <span class='id c'>c</span><span class='period'>.</span><span class='id url_path_prefix'>url_path_prefix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/hello/beans</span><span class='tstring_end'>'</span></span>
+      <span class='id c'>c</span><span class='period'>.</span><span class='id processor'>processor</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyProcessor</span><span class='rparen'>)</span>
+      <span class='comment'># ...
+</span>    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+<span class='kw'>end</span>
+</pre>
+
+<p>Then to configure:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='const'>MyConfiguration</span><span class='comma'>,</span> <span class='symbol'>:any_other</span> <span class='op'>=&gt;</span> <span class='symbol'>:args</span><span class='rparen'>)</span>     <span class='comment'># other args get passed through to apply_configuration
+</span></pre>
+
+<p>You can also carry on configuring by passing a block</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='const'>MyConfiguration</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id any_extra'>any_extra</span> <span class='op'>=</span> <span class='symbol'>:config_here</span>
+  <span class='comment'># ...
+</span><span class='kw'>end</span>
+</pre></div>
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs">URLs</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="footer">
+  Generated on Wed Aug 25 00:48:59 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.8 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

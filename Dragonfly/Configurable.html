@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
 <title>Module: Dragonfly::Configurable</title>
 <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -16,7 +16,7 @@
 
   </head>
   <body>
-    
+
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -32,14 +32,14 @@
 
     </script>
     <!-- *************** -->
-    
+
     <script type="text/javascript" charset="utf-8">
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
-    
+
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="logo">DRAGONFLY (v 0.7.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -47,14 +47,15 @@
 </div>
 
     </div>
-    
+
     <div>
       <iframe id="search_frame"></iframe>
     </div>
-    
+
     <div id="content" class="clearfix">
       <div class="col1">
-        <h1>Module: Dragonfly::Configurable 
+        <h1>Module: Dragonfly::Configurable
+  
   
   
 </h1>
@@ -67,8 +68,13 @@
     
   
   
-    <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/dragonfly/configurable.rb</dd>
+    <dt class="r1">Included in:</dt>
+    <dd class="r1"><a href="Analyser.html" title="Dragonfly::Analyser (class)">Analyser</a>, <a href="Analysis/FileCommandAnalyser.html" title="Dragonfly::Analysis::FileCommandAnalyser (class)">Analysis::FileCommandAnalyser</a>, <a href="App.html" title="Dragonfly::App (class)">App</a>, <a href="DataStorage/FileDataStore.html" title="Dragonfly::DataStorage::FileDataStore (class)">DataStorage::FileDataStore</a>, <a href="DataStorage/MongoDataStore.html" title="Dragonfly::DataStorage::MongoDataStore (class)">DataStorage::MongoDataStore</a>, <a href="DataStorage/S3DataStore.html" title="Dragonfly::DataStorage::S3DataStore (class)">DataStorage::S3DataStore</a>, <a href="Encoding/RMagickEncoder.html" title="Dragonfly::Encoding::RMagickEncoder (class)">Encoding::RMagickEncoder</a>, <a href="TempObject.html" title="Dragonfly::TempObject (class)">TempObject</a></dd>
+    
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/dragonfly/configurable.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -90,11 +96,15 @@
 
 
 
-  <h2>Class Method Summary</h2>
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
 
-  <ul class="summary">
-    
-      <li class="public ">
+    <ul class="summary">
+      
+        <li class="public ">
   <span class="summary_signature">
     
       <a href="#included-class_method" title="included (class method)">+ (Object) <strong>included</strong>(klass) </a>
@@ -107,14 +117,17 @@
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
-    
-  </ul>
+      
+    </ul>
+  
+
 
 
   <div id="class_method_details" class="method_details_list">
@@ -166,27 +179,26 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 7</span>
 
-<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='included identifier id'>included</span><span class='lparen token'>(</span><span class='klass identifier id'>klass</span><span class='rparen token'>)</span>
-  <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
-    <span class='include identifier id'>include</span> <span class='Configurable constant id'>Configurable</span><span class='colon2 op'>::</span><span class='InstanceMethods constant id'>InstanceMethods</span>
-    <span class='extend identifier id'>extend</span> <span class='Configurable constant id'>Configurable</span><span class='colon2 op'>::</span><span class='ClassMethods constant id'>ClassMethods</span>
-    
-    <span class='comment val'># These aren't included in InstanceMethods because we need access to 'klass'</span>
-    <span class='comment val'># We can't just put them into InstanceMethods and use 'self.class' because</span>
-    <span class='comment val'># this won't always point to the class in which we've included Configurable,</span>
-    <span class='comment val'># e.g. if we've included it in an eigenclasse</span>
-    <span class='define_method identifier id'>define_method</span> <span class='symbol val'>:configuration_hash</span> <span class='do do kw'>do</span>
-      <span class='@configuration_hash ivar id'>@configuration_hash</span> <span class='opasgn op'>||=</span> <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='default_configuration identifier id'>default_configuration</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
-    <span class='end end kw'>end</span>
-    <span class='private identifier id'>private</span> <span class='symbol val'>:configuration_hash</span>
-    
-    <span class='define_method identifier id'>define_method</span> <span class='symbol val'>:configuration_methods</span> <span class='do do kw'>do</span>
-      <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='configuration_methods identifier id'>configuration_methods</span>
-    <span class='end end kw'>end</span>
-    
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id included'>included</span><span class='lparen'>(</span><span class='id klass'>klass</span><span class='rparen'>)</span>
+  <span class='id klass'>klass</span><span class='period'>.</span><span class='id class_eval'>class_eval</span> <span class='kw'>do</span>
+    <span class='id include'>include</span> <span class='const'>Configurable</span><span class='op'>::</span><span class='const'>InstanceMethods</span>
+    <span class='id extend'>extend</span> <span class='const'>Configurable</span><span class='op'>::</span><span class='const'>ClassMethods</span>
+
+    <span class='comment'># These aren't included in InstanceMethods because we need access to 'klass'
+</span>    <span class='comment'># We can't just put them into InstanceMethods and use 'self.class' because
+</span>    <span class='comment'># this won't always point to the class in which we've included Configurable,
+</span>    <span class='comment'># e.g. if we've included it in an eigenclasse
+</span>    <span class='id define_method'>define_method</span> <span class='symbol'>:configuration_hash</span> <span class='kw'>do</span>
+      <span class='ivar'>@configuration_hash</span> <span class='op'>||=</span> <span class='id klass'>klass</span><span class='period'>.</span><span class='id default_configuration'>default_configuration</span><span class='period'>.</span><span class='id dup'>dup</span>
+    <span class='kw'>end</span>
+    <span class='id private'>private</span> <span class='symbol'>:configuration_hash</span>
+
+    <span class='id define_method'>define_method</span> <span class='symbol'>:configuration_methods</span> <span class='kw'>do</span>
+      <span class='id klass'>klass</span><span class='period'>.</span><span class='id configuration_methods'>configuration_methods</span>
+    <span class='kw'>end</span>
+
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -198,15 +210,15 @@
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../file.History.html" title="History">History</a></li>
+          <li><a href="../file.Index.html" title="Home">Home</a></li><li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../file.Rack.html" title="Rack">Rack</a></li><li><a href="../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Generators.html" title="Generators">Generators</a></li><li><a href="../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../file.URLs.html" title="URLs">URLs</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.Caching.html" title="Caching">Caching</a></li><li><a href="../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
-    
+
     <div id="footer">
-  Generated on Tue Jul 13 13:01:48 2010 by 
+  Generated on Wed Aug 25 00:49:00 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.3 (ruby-1.8.7).
+  0.5.8 (ruby-1.9.2).
 </div>
 
   </body>

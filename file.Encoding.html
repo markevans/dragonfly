@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
 <title>File: Encoding</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -16,7 +16,7 @@
 
   </head>
   <body>
-    
+
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -32,14 +32,14 @@
 
     </script>
     <!-- *************** -->
-    
+
     <script type="text/javascript" charset="utf-8">
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
-    
+
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="logo">DRAGONFLY (v 0.7.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -47,87 +47,113 @@
 </div>
 
     </div>
-    
+
     <div>
       <iframe id="search_frame"></iframe>
     </div>
-    
+
     <div id="content" class="clearfix">
       <div class="col1">
         <div id='filecontents'><h1>Encoding</h1>
 
-<p>'Encoding' encapsulates the idea of a format (e.g. 'png', 'jpeg', 'doc', 'txt', etc.), and any encoding options
-(e.g. bit_rate, etc.).</p>
+<p>Changing the format of data, but not changing the data itself,
+e.g. converting to gif format, comes under the banner of Encoding.</p>
 
-<p>It is up to the encoder to modify the data according to the requested format (note the format is not the same as the mime-type;
-the mime-type is detected by the analyser).</p>
+<p>You can register as many encoders as you like.</p>
 
-<p>The encoder needs to implement a single method, <code>encode</code>, which takes a <tt><a href="Dragonfly/ExtendedTempObject.html" title="Dragonfly::ExtendedTempObject (class)">temp_object</a></tt>, a format, and encoding options as arguments.</p>
+<p>Let's say we have a Dragonfly app</p>
 
-<pre class="code"><span class='def def kw'>def</span> <span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='encoding identifier id'>encoding</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='comment val'>#... encode and return a String, File, Tempfile or TempObject</span>
-<span class='end end kw'>end</span>
+<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
 </pre>
 
-<p>Let's say we register the <tt><a href="Dragonfly/Encoding/RMagickEncoder.html" title="Dragonfly::Encoding::RMagickEncoder (class)">rmagick encoder</a></tt> to our dragonfly app called 'images'</p>
+<p>and an image object (actually a <tt><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></tt> object)...</p>
 
-<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='register_encoder identifier id'>register_encoder</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='RMagickEncoder constant id'>RMagickEncoder</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 </pre>
 
-<p>Then we can encode <tt><a href="Dragonfly/ExtendedTempObject.html" title="Dragonfly::ExtendedTempObject (class)">temp_objects</a></tt> to formats recognised by the RMagickEncoder</p>
+<p>...OR a Dragonfly model accessor...</p>
 
-<pre class="code"><span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='create_object identifier id'>create_object</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/image.png'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-
-<span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:png</span><span class='rparen token'>)</span>    <span class='comment val'># =&gt; returns a new temp_object with data encoded as 'png'</span>
-<span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='encode! fid id'>encode!</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>   <span class='comment val'># =&gt; encodes its own data as a 'png'</span>
-
-<span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:doc</span><span class='rparen token'>)</span>    <span class='comment val'># =&gt; throws :unable_to_handle</span>
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span>
 </pre>
 
-<p>The saved configuration <tt><a href="Dragonfly/Config/RMagickImages.html" title="Dragonfly::Config::RMagickImages (module)">RMagickImages</a></tt> registers the above encoder automatically.</p>
+<p>We can encode it to any format registered with the encoder.</p>
+
+<h2>RMagickEncoder</h2>
+
+<p>The <tt><a href="Dragonfly/Encoding/RMagickEncoder.html" title="Dragonfly::Encoding::RMagickEncoder (class)">RMagickEncoder</a></tt> is registered by default by
+the <tt><a href="Dragonfly/Config/RMagick.html" title="Dragonfly::Config::RMagick (module)">RMagick configuration</a></tt> used by 'dragonfly/rails/images'.</p>
+
+<p>If not already registered:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>RMagickEncoder</span><span class='rparen'>)</span>
+</pre>
+
+<p>gives us:</p>
+
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:jpg</span><span class='rparen'>)</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:gif</span><span class='rparen'>)</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:png</span><span class='rparen'>)</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:tiff</span><span class='rparen'>)</span>
+</pre>
+
+<p>and various other formats (see <tt><a href="Dragonfly/Encoding/RMagickEncoder.html" title="Dragonfly::Encoding::RMagickEncoder (class)">RMagickEncoder</a></tt>)</p>
+
+<h2>Lazy evaluation</h2>
+
+<pre class="code"><span class='id gif_image'>gif_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:gif</span><span class='rparen'>)</span>
+</pre>
+
+<p>doesn't actually do anything until you call something on the returned <tt><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></tt> object, like <code>url</code>, <code>data</code>, etc.</p>
+
+<h2>Bang method</h2>
+
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id encode!'>encode!</span><span class='lparen'>(</span><span class='symbol'>:gif</span><span class='rparen'>)</span>
+</pre>
+
+<p>modifies the image object itself, rather than returning a new object.</p>
 
 <h2>Custom Encoders</h2>
 
-<p>To register a custom encoder, derive from <tt><a href="Dragonfly/Encoding/Base.html" title="Dragonfly::Encoding::Base (class)">Encoding::Base</a></tt> and register.
-As described above, you need to implement the <code>encode</code> method.
-If the encoder can't handle a format, it should throw <code>:unable_to_handle</code>, and control will pass to the previously
-registered encoder, and so on.</p>
+<p>To register a custom encoder, for e.g. pdf format:</p>
 
-<pre class="code"><span class='class class kw'>class</span> <span class='MyEncoder constant id'>MyEncoder</span> <span class='lt op'>&lt;</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id add'>add</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id format'>format</span><span class='op'>|</span>
+  <span class='id throw'>throw</span> <span class='symbol'>:unable_to_handle</span> <span class='kw'>unless</span> <span class='id format'>format</span> <span class='op'>==</span> <span class='symbol'>:pdf</span>
+  <span class='comment'># use temp_object.data, temp_object.path, temp_object.file, etc.
+</span>  <span class='const'>SomeLibrary</span><span class='period'>.</span><span class='id convert_to_pdf'>convert_to_pdf</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span><span class='rparen'>)</span>
+  <span class='comment'># return a String, File or Tempfile
+</span><span class='kw'>end</span>
 
-  <span class='def def kw'>def</span> <span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='encoding identifier id'>encoding</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-    <span class='if if kw'>if</span> <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='eq op'>==</span> <span class='string val'>'yo'</span>
-      <span class='comment val'>#... encode and return a String, File, Tempfile or TempObject</span>
-    <span class='else else kw'>else</span>
-      <span class='throw identifier id'>throw</span> <span class='symbol val'>:unable_to_handle</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
-
-<span class='end end kw'>end</span>
-
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='register_encoder identifier id'>register_encoder</span><span class='lparen token'>(</span><span class='MyEncoder constant id'>MyEncoder</span><span class='rparen token'>)</span>
+<span class='id pdf_image'>pdf_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:pdf</span><span class='rparen'>)</span>
 </pre>
 
-<p>If the encoder is <tt><a href="Dragonfly/Configurable.html" title="Dragonfly::Configurable (module)">configurable</a></tt>, we can configure it as we register it if we need to</p>
+<p>If <code>:unable_to_handle</code> is thrown, the next most recently registered encoder is used, and so on.</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='register_encoder identifier id'>register_encoder</span><span class='lparen token'>(</span><span class='MyEncoder constant id'>MyEncoder</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span>
-  <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='some_attribute identifier id'>some_attribute</span> <span class='assign token'>=</span> <span class='string val'>'hello'</span>
-<span class='end end kw'>end</span>
-</pre>
-</div>
+<p>Alternatively you can create a class like the RMagick one above, which implements the method <code>encode</code>, and register this.</p>
+
+<pre class="code"><span class='kw'>class</span> <span class='const'>MyEncoder</span>
+
+  <span class='kw'>def</span> <span class='id encode'>encode</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id format'>format</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+    <span class='const'>SomeLib</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span><span class='comma'>,</span> <span class='id format'>format</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+<span class='kw'>end</span>
+
+<span class='id app'>app</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyEncoder</span><span class='rparen'>)</span>
+
+<span class='id pdf_image'>pdf_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:pdf</span><span class='comma'>,</span> <span class='symbol'>:some</span> <span class='op'>=&gt;</span> <span class='symbol'>:args</span><span class='rparen'>)</span>
+</pre></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="file.History.html" title="History">History</a></li>
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs">URLs</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
-    
+
     <div id="footer">
-  Generated on Tue Jul 13 13:01:42 2010 by 
+  Generated on Wed Aug 25 00:48:59 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.3 (ruby-1.8.7).
+  0.5.8 (ruby-1.9.2).
 </div>
 
   </body>

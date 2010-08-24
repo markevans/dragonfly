@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
 <title>File: DataStorage</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -16,7 +16,7 @@
 
   </head>
   <body>
-    
+
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -32,14 +32,14 @@
 
     </script>
     <!-- *************** -->
-    
+
     <script type="text/javascript" charset="utf-8">
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
-    
+
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="logo">DRAGONFLY (v 0.7.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -47,61 +47,169 @@
 </div>
 
     </div>
-    
+
     <div>
       <iframe id="search_frame"></iframe>
     </div>
-    
+
     <div id="content" class="clearfix">
       <div class="col1">
         <div id='filecontents'><h1>Data Storage</h1>
 
-<p>Each dragonfly app has a datastore.</p>
+<p>Each dragonfly app has a key-value datastore to store the content.
+Lets say we have an app</p>
 
-<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app_name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span>
+<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:my_app_name</span><span class='rbracket'>]</span>
 </pre>
 
-<p>By default it uses the file data store, but you can configure it to use
-a custom data store (e.g. S3, SQL, CouchDB, etc.) by registering one with the correct interface, namely
-having <code>store</code>, <code>retrieve</code> and <code>destroy</code>.</p>
+<p>Then we can store data like so:</p>
 
-<pre class="code"><span class='class class kw'>class</span> <span class='MyDataStore constant id'>MyDataStore</span> <span class='lt op'>&lt;</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+<pre class="code"><span class='id uid'>uid</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id store'>store</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>SOME CONTENT</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>       <span class='comment'># Can pass in a String, File or Tempfile
+</span></pre>
 
-  <span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-    <span class='comment val'># ... use temp_object.data, temp_object.file, or temp_object.path and store</span>
-    <span class='string val'>'return_some_unique_uid'</span>
-  <span class='end end kw'>end</span>
+<p>We can also save metadata at the same time, and give it a name and format (if you pass in a File object the filename is used by default)</p>
 
-  <span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
-    <span class='comment val'># find the content and return either a data string, a file, a tempfile or a Dragonfly::TempObject</span>
-  <span class='end end kw'>end</span>
-
-  <span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
-    <span class='comment val'># find the content and destroy</span>
-  <span class='end end kw'>end</span>
-
-<span class='end end kw'>end</span>
+<pre class="code"><span class='id uid'>uid</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id store'>store</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>SOME CONTENT</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='symbol'>:meta</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='symbol'>:time</span> <span class='op'>=&gt;</span> <span class='const'>Time</span><span class='period'>.</span><span class='id now'>now</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>great_content.txt</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='symbol'>:format</span> <span class='op'>=&gt;</span> <span class='symbol'>:txt</span>
+<span class='rparen'>)</span>
 </pre>
 
-<p>You can now configure the app to use this datastore like so</p>
+<p>We can get content with</p>
 
-<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app_name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='MyDataStore constant id'>MyDataStore</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<pre class="code"><span class='id content'>content</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span>
+<span class='id content'>content</span><span class='period'>.</span><span class='id data'>data</span>         <span class='comment'># &quot;SOME CONTENT&quot;
+</span></pre>
+
+<p>We can also get the extra saved attributes</p>
+
+<pre class="code"><span class='id content'>content</span><span class='period'>.</span><span class='id meta'>meta</span>         <span class='comment'># {:time =&gt; Sat Aug 14 12:04:13 +0100 2010}
+</span><span class='id content'>content</span><span class='period'>.</span><span class='id name'>name</span>         <span class='comment'># 'great_content.txt'
+</span><span class='id content'>content</span><span class='period'>.</span><span class='id format'>format</span>       <span class='comment'># :txt
+</span></pre>
+
+<p>We can destroy it with</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id destroy'>destroy</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span>
 </pre>
 
-<p>If you want your datastore to be configurable, you can include the <tt><a href="Dragonfly/Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></tt> module.</p>
-</div>
+<p>You can create your own datastore, or use one of the provided ones as outlined below.</p>
+
+<h2>File datastore</h2>
+
+<p>The <tt><a href="Dragonfly/DataStorage/FileDataStore.html" title="Dragonfly::DataStorage::FileDataStore (class)">FileDataStore</a></tt> stores data on the local filesystem.</p>
+
+<p>It is used by default.</p>
+
+<p>If for whatever reason you need to configure it again:</p>
+
+<pre class="code"><span class='comment'># shouldn't need this - it is the default
+</span><span class='id app'>app</span><span class='period'>.</span><span class='id datastore'>datastore</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>DataStorage</span><span class='op'>::</span><span class='const'>FileDataStore</span><span class='period'>.</span><span class='id new'>new</span>
+
+<span class='id app'>app</span><span class='period'>.</span><span class='id datastore'>datastore</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id d'>d</span><span class='op'>|</span>
+  <span class='id d'>d</span><span class='period'>.</span><span class='id root_path'>root_path</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/my/custom/path</span><span class='tstring_end'>'</span></span>              <span class='comment'># defaults to /var/tmp/dragonfly
+</span><span class='kw'>end</span>
+</pre>
+
+<h2>S3 datastore</h2>
+
+<p>To configure with the <tt><a href="Dragonfly/DataStorage/S3DataStore.html" title="Dragonfly::DataStorage::S3DataStore (class)">S3DataStore</a></tt>:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id datastore'>datastore</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>DataStorage</span><span class='op'>::</span><span class='const'>S3DataStore</span><span class='period'>.</span><span class='id new'>new</span>
+
+<span class='id app'>app</span><span class='period'>.</span><span class='id datastore'>datastore</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id d'>d</span><span class='op'>|</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id bucket_name'>bucket_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>my_bucket</span><span class='tstring_end'>'</span></span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id access_key_id'>access_key_id</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>salfjasd34u23</span><span class='tstring_end'>'</span></span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id secret_access_key'>secret_access_key</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>8u2u3rhkhfo23...</span><span class='tstring_end'>'</span></span>
+<span class='kw'>end</span>
+</pre>
+
+<p>You can also pass these options to <code>S3DataStore.new</code> as an options hash.</p>
+
+<h2>Mongo datastore</h2>
+
+<p>To configure with the <tt><a href="Dragonfly/DataStorage/MongoDataStore.html" title="Dragonfly::DataStorage::MongoDataStore (class)">MongoDataStore</a></tt>:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id datastore'>datastore</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>DataStorage</span><span class='op'>::</span><span class='const'>MongoDataStore</span><span class='period'>.</span><span class='id new'>new</span>
+</pre>
+
+<p>It won't normally need configuring, but if you wish to:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id datastore'>datastore</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id d'>d</span><span class='op'>|</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id host'>host</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>http://egg.heads:5000</span><span class='tstring_end'>'</span></span>                <span class='comment'># defaults to localhost
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id port'>port</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>27018</span><span class='tstring_end'>'</span></span>                                <span class='comment'># defaults to mongo default (27017)
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id database'>database</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>my_database</span><span class='tstring_end'>'</span></span>                      <span class='comment'># defaults to 'dragonfly'
+</span><span class='kw'>end</span>
+</pre>
+
+<p>You can also pass these options to <code>MongoDataStore.new</code> as an options hash.</p>
+
+<h2>Custom datastore</h2>
+
+<p>Data stores are key-value in nature, and need to implement 3 methods: <code>store</code>, <code>retrieve</code> and <code>destroy</code>.</p>
+
+<pre class="code"><span class='kw'>class</span> <span class='const'>MyDataStore</span>
+
+  <span class='kw'>def</span> <span class='id store'>store</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='comment'># ... use temp_object.data, temp_object.file, temp_object.path, etc. ...
+</span>    <span class='comment'># ... can also make use of temp_object.name, temp_object.format, temp_object.meta
+</span>    <span class='comment'># store and return the uid
+</span>    <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>return_some_unique_uid</span><span class='tstring_end'>'</span></span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>def</span> <span class='id retrieve'>retrieve</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span>
+    <span class='comment'># return an array containing
+</span>    <span class='lbracket'>[</span>
+      <span class='id content'>content</span><span class='comma'>,</span>            <span class='comment'># either a File, String or Tempfile
+</span>      <span class='id extra_data'>extra_data</span>          <span class='comment'># Hash with optional keys :meta, :name, :format
+</span>    <span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>def</span> <span class='id destroy'>destroy</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span>
+    <span class='comment'># find the content and destroy
+</span>  <span class='kw'>end</span>
+
+<span class='kw'>end</span>
+</pre>
+
+<p>You can now configure the app to use your datastore:</p>
+
+<pre class="code"><span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:my_app_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id datastore'>datastore</span> <span class='op'>=</span> <span class='const'>MyDataStore</span><span class='period'>.</span><span class='id new'>new</span>
+</pre>
+
+<p>Notice that <code>store</code> takes a second <code>opts</code> argument.
+Any options other than <code>meta</code>, <code>name</code> and <code>format</code> get passed through to here, so calling</p>
+
+<pre class="code"><span class='id uid'>uid</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id store'>store</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>SOME CONTENT</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>great_content.txt</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='symbol'>:some_other</span> <span class='op'>=&gt;</span> <span class='symbol'>:option</span>
+<span class='rparen'>)</span>
+</pre>
+
+<p>will be split inside <code>store</code> like so:</p>
+
+<pre class="code"><span class='kw'>def</span> <span class='id store'>store</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span>             <span class='comment'># &quot;SOME CONTENT&quot;
+</span>  <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id name'>name</span>             <span class='comment'># 'great_content.txt'
+</span>  <span class='id opts'>opts</span>                         <span class='comment'># {:some_other =&gt; :option}
+</span>  <span class='comment'># ...
+</span><span class='kw'>end</span>
+
+<span class='comment'># ...
+</span></pre></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="file.History.html" title="History">History</a></li>
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs">URLs</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
-    
+
     <div id="footer">
-  Generated on Tue Jul 13 13:01:40 2010 by 
+  Generated on Wed Aug 25 00:48:59 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.3 (ruby-1.8.7).
+  0.5.8 (ruby-1.9.2).
 </div>
 
   </body>

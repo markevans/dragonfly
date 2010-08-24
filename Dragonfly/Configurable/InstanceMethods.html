@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
 <title>Module: Dragonfly::Configurable::InstanceMethods</title>
 <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -16,7 +16,7 @@
 
   </head>
   <body>
-    
+
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -32,14 +32,14 @@
 
     </script>
     <!-- *************** -->
-    
+
     <script type="text/javascript" charset="utf-8">
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
-    
+
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="logo">DRAGONFLY (v 0.7.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -47,14 +47,15 @@
 </div>
 
     </div>
-    
+
     <div>
       <iframe id="search_frame"></iframe>
     </div>
-    
+
     <div id="content" class="clearfix">
       <div class="col1">
-        <h1>Module: Dragonfly::Configurable::InstanceMethods 
+        <h1>Module: Dragonfly::Configurable::InstanceMethods
+  
   
   
 </h1>
@@ -65,6 +66,7 @@
     
   
     
+  
   
   
     <dt class="r1 last">Defined in:</dt>
@@ -78,11 +80,15 @@
 
 
 
-  <h2>Instance Method Summary</h2>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
 
-  <ul class="summary">
-    
-      <li class="public ">
+    <ul class="summary">
+      
+        <li class="public ">
   <span class="summary_signature">
     
       <a href="#configuration-instance_method" title="#configuration (instance method)">- (Object) <strong>configuration</strong> </a>
@@ -95,17 +101,18 @@
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
-    
-      <li class="public ">
+      
+        <li class="public ">
   <span class="summary_signature">
     
-      <a href="#configure-instance_method" title="#configure (instance method)">- (Object) <strong>configure</strong>(&amp;block) {|ConfigurationProxy.new(self)| ... }</a>
+      <a href="#configure-instance_method" title="#configure (instance method)">- (Object) <strong>configure</strong> {|ConfigurationProxy.new(self)| ... }</a>
     
 
     
@@ -115,14 +122,15 @@
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
-    
-      <li class="public ">
+      
+        <li class="public ">
   <span class="summary_signature">
     
       <a href="#configure_with-instance_method" title="#configure_with (instance method)">- (Object) <strong>configure_with</strong>(configurer, *args, &amp;block) </a>
@@ -135,14 +143,15 @@
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
-    
-      <li class="public ">
+      
+        <li class="public ">
   <span class="summary_signature">
     
       <a href="#has_configuration_method%3F-instance_method" title="#has_configuration_method? (instance method)">- (Boolean) <strong>has_configuration_method?</strong>(method_name) </a>
@@ -155,14 +164,17 @@
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
-    
-  </ul>
+      
+    </ul>
+  
+
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -182,17 +194,16 @@
       <pre class="lines">
 
 
-39
-40
-41</pre>
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 42</span>
 
-<span class='def def kw'>def</span> <span class='configuration identifier id'>configuration</span>
-  <span class='configuration_hash identifier id'>configuration_hash</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id configuration'>configuration</span>
+  <span class='id configuration_hash'>configuration_hash</span><span class='period'>.</span><span class='id dup'>dup</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -201,7 +212,7 @@
       <div class="method_details ">
   <p class="signature " id="configure-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>configure</strong>(&amp;block) {|ConfigurationProxy.new(self)| ... }
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>configure</strong> {|ConfigurationProxy.new(self)| ... }
   
 
   
@@ -234,15 +245,16 @@
 
 30
 31
-32</pre>
+32
+33</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 30</span>
 
-<span class='def def kw'>def</span> <span class='configure identifier id'>configure</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='yield yield kw'>yield</span> <span class='ConfigurationProxy constant id'>ConfigurationProxy</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id configure'>configure</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>yield</span> <span class='const'>ConfigurationProxy</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -261,19 +273,22 @@
       <pre class="lines">
 
 
-34
 35
 36
-37</pre>
+37
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 35</span>
 
-<span class='def def kw'>def</span> <span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='configurer identifier id'>configurer</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='configurer identifier id'>configurer</span><span class='dot token'>.</span><span class='apply_configuration identifier id'>apply_configuration</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='configure identifier id'>configure</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='block identifier id'>block</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='id configurer'>configurer</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='id configurer'>configurer</span> <span class='op'>=</span> <span class='id configurer_for'>configurer_for</span><span class='lparen'>(</span><span class='id configurer'>configurer</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id configurer'>configurer</span><span class='period'>.</span><span class='id is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Symbol</span><span class='rparen'>)</span>
+  <span class='id configurer'>configurer</span><span class='period'>.</span><span class='id apply_configuration'>apply_configuration</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='id configure'>configure</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id block'>block</span>
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -313,17 +328,16 @@
       <pre class="lines">
 
 
-43
-44
-45</pre>
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 46</span>
 
-<span class='def def kw'>def</span> <span class='has_configuration_method? fid id'>has_configuration_method?</span><span class='lparen token'>(</span><span class='method_name identifier id'>method_name</span><span class='rparen token'>)</span>
-  <span class='configuration_methods identifier id'>configuration_methods</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='method_name identifier id'>method_name</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id has_configuration_method?'>has_configuration_method?</span><span class='lparen'>(</span><span class='id method_name'>method_name</span><span class='rparen'>)</span>
+  <span class='id configuration_methods'>configuration_methods</span><span class='period'>.</span><span class='id include?'>include?</span><span class='lparen'>(</span><span class='id method_name'>method_name</span><span class='period'>.</span><span class='id to_sym'>to_sym</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -335,15 +349,15 @@
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
+          <li><a href="../../file.Index.html" title="Home">Home</a></li><li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../../file.Rack.html" title="Rack">Rack</a></li><li><a href="../../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Generators.html" title="Generators">Generators</a></li><li><a href="../../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../../file.URLs.html" title="URLs">URLs</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.Caching.html" title="Caching">Caching</a></li><li><a href="../../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
-    
+
     <div id="footer">
-  Generated on Tue Jul 13 13:01:47 2010 by 
+  Generated on Wed Aug 25 00:49:00 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.3 (ruby-1.8.7).
+  0.5.8 (ruby-1.9.2).
 </div>
 
   </body>

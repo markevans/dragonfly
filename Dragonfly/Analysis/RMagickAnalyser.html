@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
 <title>Class: Dragonfly::Analysis::RMagickAnalyser</title>
 <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -16,7 +16,7 @@
 
   </head>
   <body>
-    
+
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -32,14 +32,14 @@
 
     </script>
     <!-- *************** -->
-    
+
     <script type="text/javascript" charset="utf-8">
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
-    
+
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="logo">DRAGONFLY (v 0.7.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -47,14 +47,15 @@
 </div>
 
     </div>
-    
+
     <div>
       <iframe id="search_frame"></iframe>
     </div>
-    
+
     <div id="content" class="clearfix">
       <div class="col1">
-        <h1>Class: Dragonfly::Analysis::RMagickAnalyser 
+        <h1>Class: Dragonfly::Analysis::RMagickAnalyser
+  
   
   
 </h1>
@@ -63,12 +64,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="Base.html" title="Dragonfly::Analysis::Base (class)">Base</a></span>
+      <span class="inheritName"><a href="../../Object.html" title="Object (class)">Object</a></span>
       
         <ul class="fullTree">
           <li><a href="../../Object.html" title="Object (class)">Object</a></li>
-          
-            <li class="next"><a href="Base.html" title="Dragonfly::Analysis::Base (class)">Base</a></li>
           
             <li class="next">Dragonfly::Analysis::RMagickAnalyser</li>
           
@@ -82,10 +81,15 @@
     
   
     
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><a href="../Loggable.html" title="Dragonfly::Loggable (module)">Dragonfly::Loggable</a>, <a href="../RMagickUtils.html" title="Dragonfly::RMagickUtils (module)">Dragonfly::RMagickUtils</a></dd>
+      
+    
   
   
-    <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/dragonfly/analysis/r_magick_analyser.rb</dd>
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/dragonfly/analysis/r_magick_analyser.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -100,21 +104,21 @@
   
   
   
-  
-  
-  
-  
 
 
 
-  <h2>Instance Method Summary</h2>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
 
-  <ul class="summary">
-    
-      <li class="public ">
+    <ul class="summary">
+      
+        <li class="public ">
   <span class="summary_signature">
     
-      <a href="#aspect_ratio-instance_method" title="#aspect_ratio (instance method)">- (Object) <strong>aspect_ratio</strong>(image) </a>
+      <a href="#aspect_ratio-instance_method" title="#aspect_ratio (instance method)">- (Object) <strong>aspect_ratio</strong>(temp_object) </a>
     
 
     
@@ -124,17 +128,18 @@
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
-    
-      <li class="public ">
+      
+        <li class="public ">
   <span class="summary_signature">
     
-      <a href="#depth-instance_method" title="#depth (instance method)">- (Object) <strong>depth</strong>(image) </a>
+      <a href="#depth-instance_method" title="#depth (instance method)">- (Object) <strong>depth</strong>(temp_object) </a>
     
 
     
@@ -144,17 +149,18 @@
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
-    
-      <li class="public ">
+      
+        <li class="public ">
   <span class="summary_signature">
     
-      <a href="#format-instance_method" title="#format (instance method)">- (Object) <strong>format</strong>(image) </a>
+      <a href="#format-instance_method" title="#format (instance method)">- (Object) <strong>format</strong>(temp_object) </a>
     
 
     
@@ -164,17 +170,18 @@
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
-    
-      <li class="public ">
+      
+        <li class="public ">
   <span class="summary_signature">
     
-      <a href="#height-instance_method" title="#height (instance method)">- (Object) <strong>height</strong>(image) </a>
+      <a href="#height-instance_method" title="#height (instance method)">- (Object) <strong>height</strong>(temp_object) </a>
     
 
     
@@ -184,17 +191,39 @@
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
-    
-      <li class="public ">
+      
+        <li class="public ">
   <span class="summary_signature">
     
-      <a href="#number_of_colours-instance_method" title="#number_of_colours (instance method)">- (Object) <strong>number_of_colours</strong>(image) </a>
+      <a href="#landscape%3F-instance_method" title="#landscape? (instance method)">- (Boolean) <strong>landscape?</strong>(temp_object) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#number_of_colours-instance_method" title="#number_of_colours (instance method)">- (Object) <strong>number_of_colours</strong>(temp_object) </a>
     
 
     
@@ -206,17 +235,18 @@
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
-    
-      <li class="public ">
+      
+        <li class="public ">
   <span class="summary_signature">
     
-      <a href="#width-instance_method" title="#width (instance method)">- (Object) <strong>width</strong>(image) </a>
+      <a href="#portrait%3F-instance_method" title="#portrait? (instance method)">- (Boolean) <strong>portrait?</strong>(temp_object) </a>
     
 
     
@@ -226,14 +256,38 @@
   
   
   
+  
 
   
-    <span class="summary_desc"></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
+      
+        <li class="public ">
+  <span class="summary_signature">
     
-  </ul>
+      <a href="#width-instance_method" title="#width (instance method)">- (Object) <strong>width</strong>(temp_object) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
 
   
   
@@ -242,20 +296,14 @@
   
   
   
-  
-  
-  
-  <h3 class="inherited">Methods included from <a href="../BelongsToApp.html" title="Dragonfly::BelongsToApp (module)">Dragonfly::BelongsToApp</a></h3>
-  <p class="inherited"><a href="../BelongsToApp.html#app_set%3F-instance_method" title="Dragonfly::BelongsToApp#app_set? (method)">#app_set?</a>, <a href="../BelongsToApp.html#log-instance_method" title="Dragonfly::BelongsToApp#log (method)">#log</a></p>
+  <h3 class="inherited">Methods included from <a href="../Loggable.html" title="Dragonfly::Loggable (module)">Dragonfly::Loggable</a></h3>
+  <p class="inherited"><a href="../Loggable.html#log-instance_method" title="Dragonfly::Loggable#log (method)">#log</a>, <a href="../Loggable.html#log%3D-instance_method" title="Dragonfly::Loggable#log= (method)">#log=</a>, <a href="../Loggable.html#use_same_log_as-instance_method" title="Dragonfly::Loggable#use_same_log_as (method)">#use_same_log_as</a></p>
 
   
   
   
   
   
-  <h3 class="inherited">Methods included from <a href="../Delegatable.html" title="Dragonfly::Delegatable (module)">Dragonfly::Delegatable</a></h3>
-  <p class="inherited"><a href="../Delegatable.html#delegatable_methods-instance_method" title="Dragonfly::Delegatable#delegatable_methods (method)">#delegatable_methods</a></p>
-
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -264,7 +312,103 @@
       <div class="method_details first">
   <p class="signature first" id="aspect_ratio-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>aspect_ratio</strong>(image) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>aspect_ratio</strong>(temp_object) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+22
+23
+24
+25
+26</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/r_magick_analyser.rb', line 22</span>
+
+<span class='kw'>def</span> <span class='id aspect_ratio'>aspect_ratio</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id image'>image</span><span class='op'>|</span>
+    <span class='id image'>image</span><span class='period'>.</span><span class='id columns'>columns</span><span class='period'>.</span><span class='id to_f'>to_f</span> <span class='op'>/</span> <span class='id image'>image</span><span class='period'>.</span><span class='id rows'>rows</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="depth-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>depth</strong>(temp_object) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42
+43
+44</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/r_magick_analyser.rb', line 40</span>
+
+<span class='kw'>def</span> <span class='id depth'>depth</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id image'>image</span><span class='op'>|</span>
+    <span class='id image'>image</span><span class='period'>.</span><span class='id depth'>depth</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="format-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>format</strong>(temp_object) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+53
+54
+55
+56
+57</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/r_magick_analyser.rb', line 53</span>
+
+<span class='kw'>def</span> <span class='id format'>format</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id image'>image</span><span class='op'>|</span>
+    <span class='id image'>image</span><span class='period'>.</span><span class='id format'>format</span><span class='period'>.</span><span class='id downcase'>downcase</span><span class='period'>.</span><span class='id to_sym'>to_sym</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="height-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>height</strong>(temp_object) 
   
 
   
@@ -277,103 +421,70 @@
 16
 17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/r_magick_analyser.rb', line 16</span>
 
-<span class='def def kw'>def</span> <span class='aspect_ratio identifier id'>aspect_ratio</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span>
-  <span class='rmagick_data identifier id'>rmagick_data</span> <span class='assign token'>=</span> <span class='rmagick_image identifier id'>rmagick_image</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span>
-  <span class='rmagick_data identifier id'>rmagick_data</span><span class='dot token'>.</span><span class='columns identifier id'>columns</span><span class='dot token'>.</span><span class='to_f identifier id'>to_f</span> <span class='div op'>/</span> <span class='rmagick_data identifier id'>rmagick_data</span><span class='dot token'>.</span><span class='rows identifier id'>rows</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id height'>height</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id image'>image</span><span class='op'>|</span>
+    <span class='id image'>image</span><span class='period'>.</span><span class='id rows'>rows</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="depth-instance_method">
+  <p class="signature " id="landscape?-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>depth</strong>(image) 
+    - (<tt>Boolean</tt>) <strong>landscape?</strong>(temp_object) 
   
 
   
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-21
-22
-23</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/r_magick_analyser.rb', line 21</span>
-
-<span class='def def kw'>def</span> <span class='depth identifier id'>depth</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span>
-  <span class='rmagick_image identifier id'>rmagick_image</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='depth identifier id'>depth</span>
-<span class='end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
+</p><div class="docstring">
+  <div class="discussion">
     
-      <div class="method_details ">
-  <p class="signature " id="format-instance_method">
-  
-    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>format</strong>(image) 
-  
 
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-30
-31
-32</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/r_magick_analyser.rb', line 30</span>
-
-<span class='def def kw'>def</span> <span class='format identifier id'>format</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span>
-  <span class='rmagick_image identifier id'>rmagick_image</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='format identifier id'>format</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
-<span class='end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
+  </div>
 </div>
-    
-      <div class="method_details ">
-  <p class="signature " id="height-instance_method">
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
   
-    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>height</strong>(image) 
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
   
+</ul>
 
-  
-</p><table class="source_code">
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-12
-13
-14</pre>
+34
+35
+36
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/r_magick_analyser.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/r_magick_analyser.rb', line 34</span>
 
-<span class='def def kw'>def</span> <span class='height identifier id'>height</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span>
-  <span class='rmagick_image identifier id'>rmagick_image</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rows identifier id'>rows</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id landscape?'>landscape?</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id image'>image</span><span class='op'>|</span>
+    <span class='id image'>image</span><span class='period'>.</span><span class='id columns'>columns</span> <span class='op'>&gt;=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id rows'>rows</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -382,7 +493,7 @@
       <div class="method_details ">
   <p class="signature " id="number_of_colours-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>number_of_colours</strong>(image) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>number_of_colours</strong>(temp_object) 
   
 
   
@@ -396,17 +507,73 @@
       <pre class="lines">
 
 
-25
-26
-27</pre>
+46
+47
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/r_magick_analyser.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/r_magick_analyser.rb', line 46</span>
 
-<span class='def def kw'>def</span> <span class='number_of_colours identifier id'>number_of_colours</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span>
-  <span class='rmagick_image identifier id'>rmagick_image</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='number_colors identifier id'>number_colors</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id number_of_colours'>number_of_colours</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id image'>image</span><span class='op'>|</span>
+    <span class='id image'>image</span><span class='period'>.</span><span class='id number_colors'>number_colors</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="portrait?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>portrait?</strong>(temp_object) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+28
+29
+30
+31
+32</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/r_magick_analyser.rb', line 28</span>
+
+<span class='kw'>def</span> <span class='id portrait?'>portrait?</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id image'>image</span><span class='op'>|</span>
+    <span class='id image'>image</span><span class='period'>.</span><span class='id columns'>columns</span> <span class='op'>&lt;=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id rows'>rows</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -415,7 +582,7 @@
       <div class="method_details ">
   <p class="signature " id="width-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>width</strong>(image) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>width</strong>(temp_object) 
   
 
   
@@ -425,17 +592,20 @@
       <pre class="lines">
 
 
-8
-9
-10</pre>
+10
+11
+12
+13
+14</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/r_magick_analyser.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/r_magick_analyser.rb', line 10</span>
 
-<span class='def def kw'>def</span> <span class='width identifier id'>width</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span>
-  <span class='rmagick_image identifier id'>rmagick_image</span><span class='lparen token'>(</span><span class='image identifier id'>image</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='columns identifier id'>columns</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id width'>width</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id image'>image</span><span class='op'>|</span>
+    <span class='id image'>image</span><span class='period'>.</span><span class='id columns'>columns</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -447,15 +617,15 @@
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="../../file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="../../file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
+          <li><a href="../../file.Index.html" title="Home">Home</a></li><li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../../file.Rack.html" title="Rack">Rack</a></li><li><a href="../../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Generators.html" title="Generators">Generators</a></li><li><a href="../../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../../file.URLs.html" title="URLs">URLs</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.Caching.html" title="Caching">Caching</a></li><li><a href="../../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
-    
+
     <div id="footer">
-  Generated on Tue Jul 13 13:01:47 2010 by 
+  Generated on Wed Aug 25 00:49:01 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.3 (ruby-1.8.7).
+  0.5.8 (ruby-1.9.2).
 </div>
 
   </body>

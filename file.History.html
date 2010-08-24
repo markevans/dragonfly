@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
 <title>File: History</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -16,7 +16,7 @@
 
   </head>
   <body>
-    
+
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -32,14 +32,14 @@
 
     </script>
     <!-- *************** -->
-    
+
     <script type="text/javascript" charset="utf-8">
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
-    
+
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="logo">DRAGONFLY (v 0.7.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -47,14 +47,69 @@
 </div>
 
     </div>
-    
+
     <div>
       <iframe id="search_frame"></iframe>
     </div>
-    
+
     <div id="content" class="clearfix">
       <div class="col1">
-        <div id='filecontents'><h1>0.6.2 (2010-06-24)</h1>
+        <div id='filecontents'><h1>0.7.0 (2010-08-25)</h1>
+
+<h2>Features</h2>
+
+<ul>
+<li>Ability to chain processing, encoding</li>
+<li>Added Generators for arbitrary content generation</li>
+<li>'fetch_file' method for easily getting local files</li>
+<li>ActiveModel support</li>
+<li>Mongoid support</li>
+<li>Better Sinatra, etc. support (using 'to_response')</li>
+<li>Data stores now store meta, name and format information too</li>
+<li>Added Mongo Data Store</li>
+<li>temp_objects maintain name, meta, etc. across processing, encoding, etc.</li>
+<li>added portrait? and landscape? to RMagick analyser</li>
+<li>Ability to add single custom processor/encoder/analyser/generator</li>
+<li>added flip and flop to RMagick processor</li>
+<li>ability to configure whether it trusts the file extension</li>
+<li>nice text response for root path</li>
+<li>ability to configure url host</li>
+<li>ability to override path_prefix/host when calling url</li>
+<li>routed endpoints</li>
+<li>simple endpoints</li>
+<li>more intelligent working out of Content-Type to send back</li>
+</ul>
+
+
+<h2>Fixes</h2>
+
+<ul>
+<li>proper use of ETags</li>
+<li>remove whitespace from file/s3 datastore uids</li>
+<li>dragonfly/rails/images url-encodes rack-cache config for windows users</li>
+</ul>
+
+
+<h2>Changes</h2>
+
+<ul>
+<li>Dragonfly::App[:images] -> Dragonfly[:images]</li>
+<li>Moved text/plasma generation into Generator</li>
+<li>Use of lazy 'Job' objects</li>
+<li>simplified shortcuts interface</li>
+<li>changed interface for attaching to ActiveRecord</li>
+<li>simplified saved configurations and allow referring to them as symbols</li>
+<li>Removed need for Base class for datastores, processors, analysers and encoders</li>
+<li>FileCommandAnalyser included in Rails config, not RMagick</li>
+<li>better use of logging module for sharing logs between classes</li>
+<li>mounting the app is down the middleware/elsewhere, not the app itself</li>
+<li>DOS protection off by default</li>
+<li>encoded urls</li>
+<li>got rid of unnecessary configurable sha_length</li>
+</ul>
+
+
+<h1>0.6.2 (2010-06-24)</h1>
 
 <h2>Features</h2>
 
@@ -211,20 +266,19 @@ Can also pass a block to temp_object.file which closes the file automatically</l
 <li>support for ruby 1.9</li>
 <li>added development dependencies to gemspec for easier setting up</li>
 </ul>
-
 </div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="file.History.html" title="History">History</a></li>
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs">URLs</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
-    
+
     <div id="footer">
-  Generated on Tue Jul 13 13:01:42 2010 by 
+  Generated on Wed Aug 25 00:48:59 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.3 (ruby-1.8.7).
+  0.5.8 (ruby-1.9.2).
 </div>
 
   </body>

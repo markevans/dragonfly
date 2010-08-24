@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
 <title>File: Processing</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -16,7 +16,7 @@
 
   </head>
   <body>
-    
+
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -32,14 +32,14 @@
 
     </script>
     <!-- *************** -->
-    
+
     <script type="text/javascript" charset="utf-8">
       if (window.top.frames.main) document.body.className = 'frames';
     </script>
-    
+
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.6.2)</div>
+      <div id="logo">DRAGONFLY (v 0.7.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -47,134 +47,154 @@
 </div>
 
     </div>
-    
+
     <div>
       <iframe id="search_frame"></iframe>
     </div>
-    
+
     <div id="content" class="clearfix">
       <div class="col1">
         <div id='filecontents'><h1>Processing</h1>
 
-<p>Processing is changing content in some way, and does not involve encoding.
-For example, resizing an image is classed as processing, whereas converting it from 'png' to 'jpeg' is classed as encoding.</p>
+<p>Changing data in some way, e.g. resizing an image, comes under the banner of Processing.</p>
 
-<p>All processing jobs are defined by a processing method and a processing options hash (which is passed to the method).</p>
+<p>You can register as many processors as you like.</p>
 
-<p>Let's say we have a dragonfly app called 'images'</p>
+<p>Let's say we have a Dragonfly app</p>
 
-<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
 </pre>
 
-<p>Data gets passed around between the datastore, processor, analyser, etc. in the form of an <tt><a href="Dragonfly/ExtendedTempObject.html" title="Dragonfly::ExtendedTempObject (class)">ExtendedTempObject</a></tt>.</p>
+<p>and an image object (actually a <tt><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></tt> object)...</p>
 
-<pre class="code"><span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='create_object identifier id'>create_object</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/image.png'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 </pre>
 
-<p>We can process this object with any of the methods which have been registered with the app's processor.
-For example, registering the <tt><a href="Dragonfly/Processing/RMagickProcessor.html" title="Dragonfly::Processing::RMagickProcessor (class)">rmagick processor</a></tt></p>
+<p>...OR a Dragonfly model accessor...</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='register_processor identifier id'>register_processor</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Processing constant id'>Processing</span><span class='colon2 op'>::</span><span class='RMagickProcessor constant id'>RMagickProcessor</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span>
 </pre>
 
-<p>give us the processing methods <code>resize</code>, <code>crop</code>, <code>resize_and_crop</code>, <code>rotate</code>, etc.</p>
+<p>We can process it using any processing methods that have been registered with the processor.</p>
 
-<pre class="code"><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:resize</span><span class='comma token'>,</span> <span class='symbol val'>:geometry</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'30x30!'</span><span class='rparen token'>)</span>        <span class='comment val'># =&gt; returns a new temp_object with width x height = 30x30</span>
-<span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='symbol val'>:resize</span><span class='comma token'>,</span> <span class='symbol val'>:geometry</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'30x30!'</span><span class='rparen token'>)</span>       <span class='comment val'># =&gt; resizes its own data</span>
+<h2>RMagickProcessor</h2>
+
+<p>The <tt><a href="Dragonfly/Processing/RMagickProcessor.html" title="Dragonfly::Processing::RMagickProcessor (class)">RMagickProcessor</a></tt> is registered by default by
+the <tt><a href="Dragonfly/Config/RMagick.html" title="Dragonfly::Config::RMagick (module)">RMagick configuration</a></tt> used by 'dragonfly/rails/images'.</p>
+
+<p>If not already registered:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id processor'>processor</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Processing</span><span class='op'>::</span><span class='const'>RMagickProcessor</span><span class='rparen'>)</span>
 </pre>
 
-<p>The saved configuration <tt><a href="Dragonfly/Config/RMagickImages.html" title="Dragonfly::Config::RMagickImages (module)">RMagickImages</a></tt> registers the above processor automatically.</p>
+<p>gives us these methods:</p>
 
-<h2>Custom Processing</h2>
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:thumb</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300#</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>            <span class='comment'># see below
+</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:crop</span><span class='comma'>,</span> <span class='symbol'>:width</span> <span class='op'>=&gt;</span> <span class='int'>40</span><span class='comma'>,</span> <span class='symbol'>:height</span> <span class='op'>=&gt;</span> <span class='int'>50</span><span class='comma'>,</span> <span class='symbol'>:x</span> <span class='op'>=&gt;</span> <span class='int'>20</span><span class='comma'>,</span> <span class='symbol'>:y</span> <span class='op'>=&gt;</span> <span class='int'>30</span><span class='rparen'>)</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:crop</span><span class='comma'>,</span> <span class='symbol'>:width</span> <span class='op'>=&gt;</span> <span class='int'>40</span><span class='comma'>,</span> <span class='symbol'>:height</span> <span class='op'>=&gt;</span> <span class='int'>50</span><span class='comma'>,</span> <span class='symbol'>:gravity</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ne</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 
-<p>To register a custom processor, derive from <tt><a href="Dragonfly/Processing/Base.html" title="Dragonfly::Processing::Base (class)">Processing::Base</a></tt> and register.
-Each method takes the temp_object, and the (optional) processing options hash as its argument.</p>
+<span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:flip</span><span class='rparen'>)</span>                         <span class='comment'># flips it vertically
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:flop</span><span class='rparen'>)</span>                         <span class='comment'># flips it horizontally
+</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:greyscale</span><span class='comma'>,</span> <span class='symbol'>:depth</span> <span class='op'>=&gt;</span> <span class='int'>128</span><span class='rparen'>)</span>     <span class='comment'># default depth 256
+</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:resize</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>40x40</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:resize_and_crop</span><span class='comma'>,</span> <span class='symbol'>:width</span> <span class='op'>=&gt;</span> <span class='int'>40</span><span class='comma'>,</span> <span class='symbol'>:height</span><span class='op'>=&gt;</span> <span class='int'>50</span><span class='comma'>,</span> <span class='symbol'>:gravity</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ne</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 
-<pre class="code"><span class='class class kw'>class</span> <span class='MyProcessor constant id'>MyProcessor</span> <span class='lt op'>&lt;</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Processing constant id'>Processing</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:rotate</span><span class='comma'>,</span> <span class='int'>45</span><span class='comma'>,</span> <span class='symbol'>:background_colour</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>transparent</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>   <span class='comment'># default bg black
+</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:vignette</span><span class='rparen'>)</span>                     <span class='comment'># options :x, :y, :radius, :sigma
+</span></pre>
 
-  <span class='def def kw'>def</span> <span class='black_and_white identifier id'>black_and_white</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-    <span class='comment val'># use temp_object.data, temp_object.path, etc...</span>
-    <span class='comment val'># ...process and return a String, File, Tempfile or TempObject</span>
-  <span class='end end kw'>end</span>
+<p>The method <code>thumb</code> takes a geometry string and calls <code>resize</code>, <code>resize_and_crop</code> or <code>crop</code> accordingly.</p>
 
-  <span class='comment val'># ... add as many methods as you wish</span>
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:thumb</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>             <span class='comment'># calls resize
+</span></pre>
 
-<span class='end end kw'>end</span>
+<p>Below are some examples of geometry strings:</p>
 
-<span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='register_processor identifier id'>register_processor</span><span class='lparen token'>(</span><span class='MyProcessor constant id'>MyProcessor</span><span class='rparen token'>)</span>
+<pre class="code"><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300</span><span class='tstring_end'>'</span></span>            <span class='comment'># resize, maintain aspect ratio
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300!</span><span class='tstring_end'>'</span></span>           <span class='comment'># force resize, don't maintain aspect ratio
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x</span><span class='tstring_end'>'</span></span>               <span class='comment'># resize width, maintain aspect ratio
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>x300</span><span class='tstring_end'>'</span></span>               <span class='comment'># resize height, maintain aspect ratio
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300&gt;</span><span class='tstring_end'>'</span></span>           <span class='comment'># resize only if the image is larger than this
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300&lt;</span><span class='tstring_end'>'</span></span>           <span class='comment'># resize only if the image is smaller than this
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>50x50%</span><span class='tstring_end'>'</span></span>             <span class='comment'># resize width and height to 50%
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300^</span><span class='tstring_end'>'</span></span>           <span class='comment'># resize width, height to minimum 400,300, maintain aspect ratio
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>2000@</span><span class='tstring_end'>'</span></span>              <span class='comment'># resize so max area in pixels is 2000
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300#</span><span class='tstring_end'>'</span></span>           <span class='comment'># resize, crop if necessary to maintain aspect ratio (centre gravity)
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300#ne</span><span class='tstring_end'>'</span></span>         <span class='comment'># as above, north-east gravity
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300se</span><span class='tstring_end'>'</span></span>          <span class='comment'># crop, with south-east gravity
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300+50+100</span><span class='tstring_end'>'</span></span>     <span class='comment'># crop from the point 50,100 with width, height 400,300
+</span></pre>
+
+<h2>Lazy evaluation</h2>
+
+<pre class="code"><span class='id new_image'>new_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:some_method</span><span class='rparen'>)</span>
 </pre>
 
-<p>You can register multiple processors.</p>
+<p>doesn't actually do anything until you call something on the returned <tt><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></tt> object, like <code>url</code>, <code>data</code>, etc.</p>
 
-<p>As with analysers and encoders, if the processor is <tt><a href="Dragonfly/Configurable.html" title="Dragonfly::Configurable (module)">configurable</a></tt>, we can configure it as we register it if we need to</p>
+<h2>Bang method</h2>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='register_processor identifier id'>register_processor</span><span class='lparen token'>(</span><span class='MyProcessor constant id'>MyProcessor</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span>
-  <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='some_attribute identifier id'>some_attribute</span> <span class='assign token'>=</span> <span class='string val'>'hello'</span>
-<span class='end end kw'>end</span>
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id process!'>process!</span><span class='lparen'>(</span><span class='symbol'>:some_method</span><span class='rparen'>)</span>
 </pre>
 
-<p>Your new processing method is now available to use:</p>
+<p>modifies the image object itself, rather than returning a new object.</p>
 
-<pre class="code"><span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='create_object identifier id'>create_object</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/image.png'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-<span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:black_and_white</span><span class='comma token'>,</span> <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rparen token'>)</span>         <span class='comment val'># processed temp_object</span>
+<h2>Custom Processors</h2>
+
+<p>To register a single custom processor:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id processor'>processor</span><span class='period'>.</span><span class='id add'>add</span> <span class='symbol'>:watermark</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='op'>|</span>
+  <span class='comment'># use temp_object.data, temp_object.path, temp_object.file, etc.
+</span>  <span class='const'>SomeLibrary</span><span class='period'>.</span><span class='id add_watermark'>add_watermark</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/watermark/file.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='comment'># return a String, File or Tempfile
+</span><span class='kw'>end</span>
+
+<span class='id new_image'>new_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:watermark</span><span class='rparen'>)</span>
 </pre>
 
-<p>To get the url for content processed by your custom processor, the long way is using something like:</p>
+<p>You can create a class like the RMagick one above, in which case all public methods will be counted as processing methods.
+Each method takes the temp_object as its argument, plus any other args.</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='comma token'>,</span>
-  <span class='symbol val'>:processing_method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:black_and_white</span><span class='comma token'>,</span>
-  <span class='symbol val'>:processing_options</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:size</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'30x30'</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
-  <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:png</span>
-<span class='rparen token'>)</span>
-</pre>
+<pre class="code"><span class='kw'>class</span> <span class='const'>MyProcessor</span>
 
-<p>or if using an activerecord model,</p>
+  <span class='kw'>def</span> <span class='id coolify'>coolify</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='const'>SomeLib</span><span class='period'>.</span><span class='id coolify'>coolify</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
-<pre class="code"><span class='my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='preview_image identifier id'>preview_image</span><span class='dot token'>.</span><span class='url identifier id'>url</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='comma token'>,</span>
-  <span class='symbol val'>:processing_method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:black_and_white</span><span class='comma token'>,</span>
-  <span class='symbol val'>:processing_options</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:size</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'30x30'</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
-  <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:png</span>
-<span class='rparen token'>)</span>
-</pre>
+  <span class='kw'>def</span> <span class='id uglify'>uglify</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id ugliness'>ugliness</span><span class='rparen'>)</span>
+    <span class='backtick'>`</span><span class='tstring_content'>uglify -i </span><span class='embexpr_beg'>#{</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id path'>path</span><span class='rbrace'>}</span><span class='tstring_content'> -u </span><span class='embexpr_beg'>#{</span><span class='id ugliness'>ugliness</span><span class='rbrace'>}</span><span class='tstring_end'>`</span></span>
+  <span class='kw'>end</span>
 
-<p>However, this could soon get tedious if using more than once, so the best thing is to register a shortcut for it.
-So in your configuration of the Dragonfly app (or in an initializer if using 'dragonfly/rails/images') you
-could do something like:</p>
+  <span class='id private'>private</span>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='parameters identifier id'>parameters</span><span class='dot token'>.</span><span class='add_shortcut identifier id'>add_shortcut</span><span class='lparen token'>(</span><span class='regexp val'>/^bw-(\d*x\d*)$/</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='match_data identifier id'>match_data</span><span class='bitor op'>|</span>
-  <span class='lbrace token'>{</span>
-    <span class='symbol val'>:processing_method</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:black_and_white</span><span class='comma token'>,</span>
-    <span class='symbol val'>:processing_options</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:size</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='match_data identifier id'>match_data</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
-    <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:png</span>
-  <span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
-</pre>
+  <span class='kw'>def</span> <span class='id my_helper_method'>my_helper_method</span>
+    <span class='comment'># do stuff
+</span>  <span class='kw'>end</span>
 
-<p>Now you can get urls by using the shortcut:</p>
+<span class='kw'>end</span>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='comma token'>,</span> <span class='string val'>'bw-30x30'</span><span class='rparen token'>)</span>
-</pre>
+<span class='id app'>app</span><span class='period'>.</span><span class='id processor'>processor</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyProcessor</span><span class='rparen'>)</span>
 
-<p>or with activerecord:</p>
+<span class='id new_image'>new_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id coolify'>coolify</span><span class='lparen'>(</span><span class='symbol'>:some</span> <span class='op'>=&gt;</span> <span class='symbol'>:args</span><span class='rparen'>)</span>
 
-<pre class="code"><span class='my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='preview_image identifier id'>preview_image</span><span class='dot token'>.</span><span class='url identifier id'>url</span><span class='lparen token'>(</span><span class='string val'>'bw-30x30'</span><span class='rparen token'>)</span>
-</pre>
-
-<p>For more information about shortcuts, see <a href="file.Shortcuts.html" title="Shortcuts">Shortcuts</a>.</p>
-</div>
+<span class='id new_image'>new_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id uglify'>uglify</span><span class='lparen'>(</span><span class='symbol'>:loads</span><span class='rparen'>)</span>
+</pre></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GettingStarted.html" title="Getting started">Getting started</a></li><li><a href="file.UsingWithRails.html" title="Using with Rails">Using with Rails</a></li><li><a href="file.ActiveRecord.html" title="Using with ActiveRecord">Using with ActiveRecord</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Shortcuts.html" title="Shortcuts for processing and encoding">Shortcuts for processing and encoding</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.ExampleUseCases.html" title="Example use cases">Example use cases</a></li><li><a href="file.History.html" title="History">History</a></li>
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs">URLs</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
-    
+
     <div id="footer">
-  Generated on Tue Jul 13 13:01:41 2010 by 
+  Generated on Wed Aug 25 00:48:59 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.3 (ruby-1.8.7).
+  0.5.8 (ruby-1.9.2).
 </div>
 
   </body>
