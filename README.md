@@ -1,8 +1,9 @@
 Dragonfly
 ===========
 
-Dragonfly is a <a href="http://rack.rubyforge.org">Rack</a> framework for on-the-fly processing and encoding.
-It can be used with ActiveRecord, Mongoid, or any ActiveModel compliant model for easy image handling in your web app.
+Dragonfly is a <a href="http://rack.rubyforge.org">Rack</a> framework for on-the-fly image handling.
+
+Ideal for using with Ruby on Rails (2.3 and 3), Sinatra and all that gubbins.
 
 For the lazy Rails user...
 --------------------------
@@ -47,11 +48,11 @@ NB: REMEMBER THE MULTIPART BIT!!!
 
 Using outside of rails, custom storage/processing/encoding/analysis, and more...
 --------------------------------------------------------------------------------
-Dragonfly is primarily a Rack app, the Rails part of it being nothing more than a separate layer on top of the main code, which means you can use it as a standalone app, or with Sinatra, Merb, etc.
+Dragonfly is primarily a Rack app, so you can use it as a standalone app, or with Sinatra, Merb, etc.
 
-It is intended to be highly customizable, and is not limited to images, but any data type that could suit on-the-fly processing/encoding.
+It's highly customizable, and works with any data type (not just images).
 
-For more info, consult the <a href="http://markevans.github.com/dragonfly">DOCUMENTATION</a>
+For more info, consult the <a href="http://markevans.github.com/dragonfly"><big><strong>DOCUMENTATION</strong></big></a>
 
 Issues
 ======
@@ -63,7 +64,8 @@ Suggestions/Questions
 
 Credits
 =======
-- <a href="http://github.com/markevans">Mark Evans</a> (author)
+- [Mark Evans](http://github.com/markevans) (author)
+
 
 Copyright
 ========
