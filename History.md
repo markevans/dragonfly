@@ -1,3 +1,52 @@
+0.7.0 (2010-08-25)
+==================
+
+Features
+--------
+- Ability to chain processing, encoding
+- Added Generators for arbitrary content generation
+- 'fetch_file' method for easily getting local files
+- ActiveModel support
+- Mongoid support
+- Better Sinatra, etc. support (using 'to_response')
+- Data stores now store meta, name and format information too
+- Added Mongo Data Store
+- temp_objects maintain name, meta, etc. across processing, encoding, etc.
+- added portrait? and landscape? to RMagick analyser
+- Ability to add single custom processor/encoder/analyser/generator
+- added flip and flop to RMagick processor
+- ability to configure whether it trusts the file extension
+- nice text response for root path
+- ability to configure url host
+- ability to override path_prefix/host when calling url
+- routed endpoints
+- simple endpoints
+- more intelligent working out of Content-Type to send back
+
+Fixes
+-----
+- proper use of ETags
+- remove whitespace from file/s3 datastore uids
+- dragonfly/rails/images url-encodes rack-cache config for windows users
+
+Changes
+-------
+- Dragonfly::App[:images] -> Dragonfly[:images]
+- Moved text/plasma generation into Generator
+- Use of lazy 'Job' objects
+- simplified shortcuts interface
+- changed interface for attaching to ActiveRecord
+- simplified saved configurations and allow referring to them as symbols
+- Removed need for Base class for datastores, processors, analysers and encoders
+- FileCommandAnalyser included in Rails config, not RMagick
+- better use of logging module for sharing logs between classes
+- mounting the app is down the middleware/elsewhere, not the app itself
+- DOS protection off by default
+- encoded urls
+- got rid of unnecessary configurable sha_length
+
+
+
 0.6.2 (2010-06-24)
 ==================
 Features
