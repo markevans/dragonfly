@@ -45,6 +45,10 @@ module Dragonfly
       end
     end
 
+    def inspect
+      to_s.sub(/>$/, " with functions: #{functions.keys.map{|k| k.to_s }.sort.join(', ')} >")
+    end
+
     private
     
     def methods_to_add(obj)
