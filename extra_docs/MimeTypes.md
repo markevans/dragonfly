@@ -3,7 +3,7 @@ Mime Types
 
 Responses from the Dragonfly app have the HTTP 'Content-Type' header set.
 
-This is decided by the first relevant of the following:
+This is decided by the first found from:
 
 1. The requested format (e.g. when encode is specifically called)
 2. The original file extension (you can configure it to ignore this if you wish)
