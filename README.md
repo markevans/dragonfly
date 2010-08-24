@@ -24,7 +24,8 @@ For the lazy Rails user...
 **Model**:
 
     class Album < ActiveRecord::Base
-      image_accessor :cover_image            # Defines reader/writer for cover_image
+      image_accessor :cover_image            # 'image_accessor' is provided by Dragonfly
+                                             # this defines a reader/writer for cover_image
       # ...
     end
 
