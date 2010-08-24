@@ -19,10 +19,11 @@ and an image object (actually a {Dragonfly::Job Job} object)...
 
 We can process it using any processing methods that have been registered with the processor.
 
-If you use the {Dragonfly::Config::RMagick RMagick configuration} (this is used by the file 'dragonfly/rails/images'), it will register the {Dragonfly::Processing::RMagickProcessor RMagickProcessor} for you.
-
 RMagickProcessor
 ----------------
+The {Dragonfly::Processing::RMagickProcessor RMagickProcessor} is registered by default by
+the {Dragonfly::Config::RMagick RMagick configuration} used by 'dragonfly/rails/images'.
+
 If not already registered:
 
     app.processor.register(Dragonfly::Processing::RMagickProcessor)

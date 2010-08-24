@@ -19,10 +19,11 @@ and an image object (actually a {Dragonfly::Job Job} object)...
 
 We can analyse it using any analysis methods that have been registered with the analyser.
 
-If you use the {Dragonfly::Config::RMagick RMagick configuration} (this is used by the file 'dragonfly/rails/images'), it will register the {Dragonfly::Analysis::RMagickAnalyser RMagickAnalyser} for you.
-
 RMagickAnalyser
 ---------------
+The {Dragonfly::Analysis::RMagickAnalyser RMagickAnalyser} is registered by default by the
+{Dragonfly::Config::RMagick RMagick configuration} used by 'dragonfly/rails/images'.
+
 If not already registered:
 
     app.analyser.register(Dragonfly::Analysis::RMagickAnalyser)

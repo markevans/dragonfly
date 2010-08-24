@@ -20,10 +20,11 @@ and an image object (actually a {Dragonfly::Job Job} object)...
 
 We can encode it to any format registered with the encoder.
 
-If you use the {Dragonfly::Config::RMagick RMagick configuration} (this is used by the file 'dragonfly/rails/images'), it will register the {Dragonfly::Encoding::RMagickEncoder RMagickEncoder} for you.
-
 RMagickEncoder
 ----------------
+The {Dragonfly::Encoding::RMagickEncoder RMagickEncoder} is registered by default by
+the {Dragonfly::Config::RMagick RMagick configuration} used by 'dragonfly/rails/images'.
+
 If not already registered:
 
     app.encoder.register(Dragonfly::Encoding::RMagickEncoder)
