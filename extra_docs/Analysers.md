@@ -41,8 +41,10 @@ gives us these methods:
 
 FileCommandAnalyser
 -------------------
+The {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} is registered by default by the
+{Dragonfly::Config::Rails Rails configuration} used by 'dragonfly/rails/images'.
 
-As the name suggests, the {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} uses the UNIX 'file' command.
+As the name suggests, it uses the UNIX 'file' command.
 
 If not already registered:
 
