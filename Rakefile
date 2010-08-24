@@ -4,21 +4,13 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
     s.name = "dragonfly"
-    s.summary = %Q{Dragonfly is an on-the-fly Rack processing/encoding framework.
-    It includes an extension for Ruby on Rails for easy image handling}
+    s.summary = %Q{Dragonfly is an on-the-fly Rack-based image handling framework.
+    It is suitable for use with Rails, Sinatra and other web frameworks. Although it's mainly used for images,
+    it can handle any content type.}
     s.email = "mark@new-bamboo.co.uk"
     s.homepage = "http://github.com/markevans/dragonfly"
     s.authors = ["Mark Evans"]
     s.add_dependency('rack')
-    s.add_development_dependency 'jeweler'
-    s.add_development_dependency 'yard'
-    s.add_development_dependency 'rmagick'
-    s.add_development_dependency 'aws-s3'
-    s.add_development_dependency 'rspec'
-    s.add_development_dependency 'cucumber'
-    s.add_development_dependency 'cucumber-rails'
-    s.add_development_dependency 'activerecord'
-    s.add_development_dependency 'sqlite3-ruby'
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
@@ -79,7 +71,7 @@ end
 
 desc 'Set up a Rails app ready for testing'
 namespace :rails do
-  
+
   task :setup do
     version = ENV['RAILS_VERSION']
     raise "Please give a RAILS_VERSION, e.g. RAILS_VERSION=2.3.5" unless version
