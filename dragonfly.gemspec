@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.6.2"
+  s.version = "0.7.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2010-06-24}
+  s.date = %q{2010-08-25}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -17,31 +17,39 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".gitignore",
+     ".specopts",
      ".yardopts",
+     "Gemfile",
+     "Gemfile.rails.2.3.5",
      "History.md",
      "LICENSE",
      "README.md",
      "Rakefile",
      "VERSION",
-     "config.rb",
      "config.ru",
      "docs.watchr",
      "dragonfly.gemspec",
-     "extra_docs/ActiveRecord.md",
      "extra_docs/Analysers.md",
+     "extra_docs/Caching.md",
+     "extra_docs/Configuration.md",
      "extra_docs/DataStorage.md",
      "extra_docs/Encoding.md",
-     "extra_docs/ExampleUseCases.md",
-     "extra_docs/GettingStarted.md",
+     "extra_docs/GeneralUsage.md",
+     "extra_docs/Generators.md",
+     "extra_docs/Heroku.md",
      "extra_docs/Index.md",
      "extra_docs/MimeTypes.md",
+     "extra_docs/Models.md",
      "extra_docs/Processing.md",
-     "extra_docs/Shortcuts.md",
-     "extra_docs/UsingWithRails.md",
+     "extra_docs/Rack.md",
+     "extra_docs/Rails2.md",
+     "extra_docs/Rails3.md",
+     "extra_docs/Sinatra.md",
+     "extra_docs/URLs.md",
      "features/images.feature",
      "features/no_processing.feature",
      "features/rails_2.3.5.feature",
-     "features/rails_3.0.0.beta3.feature",
+     "features/rails_3.0.0.rc.feature",
      "features/steps/common_steps.rb",
      "features/steps/dragonfly_steps.rb",
      "features/steps/rails_steps.rb",
@@ -51,87 +59,91 @@ Gem::Specification.new do |s|
      "fixtures/files/app/views/albums/show.html.erb",
      "fixtures/files/config/initializers/dragonfly.rb",
      "fixtures/files/features/manage_album_images.feature",
-     "fixtures/files/features/step_definitions/album_steps.rb",
+     "fixtures/files/features/step_definitions/image_steps.rb",
      "fixtures/files/features/support/paths.rb",
+     "fixtures/files/features/text_images.feature",
      "fixtures/rails_2.3.5/template.rb",
-     "fixtures/rails_3.0.0.beta3/template.rb",
+     "fixtures/rails_3.0.0.rc/template.rb",
      "irbrc.rb",
      "lib/dragonfly.rb",
-     "lib/dragonfly/active_record_extensions.rb",
-     "lib/dragonfly/active_record_extensions/attachment.rb",
-     "lib/dragonfly/active_record_extensions/class_methods.rb",
-     "lib/dragonfly/active_record_extensions/instance_methods.rb",
-     "lib/dragonfly/active_record_extensions/validations.rb",
-     "lib/dragonfly/analyser_list.rb",
-     "lib/dragonfly/analysis/base.rb",
+     "lib/dragonfly/active_model_extensions.rb",
+     "lib/dragonfly/active_model_extensions/attachment.rb",
+     "lib/dragonfly/active_model_extensions/class_methods.rb",
+     "lib/dragonfly/active_model_extensions/instance_methods.rb",
+     "lib/dragonfly/active_model_extensions/validations.rb",
+     "lib/dragonfly/analyser.rb",
      "lib/dragonfly/analysis/file_command_analyser.rb",
      "lib/dragonfly/analysis/r_magick_analyser.rb",
      "lib/dragonfly/app.rb",
-     "lib/dragonfly/belongs_to_app.rb",
-     "lib/dragonfly/config/heroku_rails_images.rb",
-     "lib/dragonfly/config/r_magick_images.rb",
-     "lib/dragonfly/config/r_magick_text.rb",
-     "lib/dragonfly/config/rails_defaults.rb",
-     "lib/dragonfly/config/rails_images.rb",
+     "lib/dragonfly/config/heroku.rb",
+     "lib/dragonfly/config/r_magick.rb",
+     "lib/dragonfly/config/rails.rb",
      "lib/dragonfly/configurable.rb",
      "lib/dragonfly/core_ext/object.rb",
      "lib/dragonfly/core_ext/string.rb",
      "lib/dragonfly/core_ext/symbol.rb",
      "lib/dragonfly/data_storage.rb",
-     "lib/dragonfly/data_storage/base.rb",
-     "lib/dragonfly/data_storage/base64_data_store.rb",
      "lib/dragonfly/data_storage/file_data_store.rb",
+     "lib/dragonfly/data_storage/mongo_data_store.rb",
      "lib/dragonfly/data_storage/s3data_store.rb",
-     "lib/dragonfly/data_storage/transparent_data_store.rb",
-     "lib/dragonfly/delegatable.rb",
-     "lib/dragonfly/delegator.rb",
-     "lib/dragonfly/encoder_list.rb",
-     "lib/dragonfly/encoding/base.rb",
+     "lib/dragonfly/encoder.rb",
      "lib/dragonfly/encoding/r_magick_encoder.rb",
-     "lib/dragonfly/encoding/transparent_encoder.rb",
-     "lib/dragonfly/extended_temp_object.rb",
+     "lib/dragonfly/endpoint.rb",
+     "lib/dragonfly/function_manager.rb",
+     "lib/dragonfly/generation/r_magick_generator.rb",
+     "lib/dragonfly/generator.rb",
+     "lib/dragonfly/job.rb",
+     "lib/dragonfly/job_builder.rb",
+     "lib/dragonfly/job_definitions.rb",
+     "lib/dragonfly/job_endpoint.rb",
+     "lib/dragonfly/loggable.rb",
      "lib/dragonfly/middleware.rb",
-     "lib/dragonfly/parameters.rb",
-     "lib/dragonfly/processing/base.rb",
      "lib/dragonfly/processing/r_magick_processor.rb",
-     "lib/dragonfly/processing/r_magick_text_processor.rb",
-     "lib/dragonfly/processor_list.rb",
+     "lib/dragonfly/processor.rb",
+     "lib/dragonfly/r_magick_utils.rb",
      "lib/dragonfly/rails/images.rb",
+     "lib/dragonfly/routed_endpoint.rb",
+     "lib/dragonfly/serializer.rb",
+     "lib/dragonfly/simple_cache.rb",
+     "lib/dragonfly/simple_endpoint.rb",
      "lib/dragonfly/temp_object.rb",
-     "lib/dragonfly/url_handler.rb",
      "samples/beach.png",
      "samples/egg.png",
      "samples/round.gif",
      "samples/sample.docx",
      "samples/taj.jpg",
      "spec/argument_matchers.rb",
-     "spec/dragonfly/active_record_extensions/attachment_spec.rb",
-     "spec/dragonfly/active_record_extensions/migration.rb",
-     "spec/dragonfly/active_record_extensions/model_spec.rb",
-     "spec/dragonfly/active_record_extensions/models.rb",
-     "spec/dragonfly/active_record_extensions/spec_helper.rb",
+     "spec/dragonfly/active_model_extensions/active_model_setup.rb",
+     "spec/dragonfly/active_model_extensions/active_record_setup.rb",
+     "spec/dragonfly/active_model_extensions/model_spec.rb",
+     "spec/dragonfly/active_model_extensions/spec_helper.rb",
+     "spec/dragonfly/analyser_spec.rb",
      "spec/dragonfly/analysis/file_command_analyser_spec.rb",
      "spec/dragonfly/analysis/r_magick_analyser_spec.rb",
      "spec/dragonfly/app_spec.rb",
-     "spec/dragonfly/belongs_to_app_spec.rb",
      "spec/dragonfly/configurable_spec.rb",
      "spec/dragonfly/core_ext/string_spec.rb",
      "spec/dragonfly/core_ext/symbol_spec.rb",
      "spec/dragonfly/data_storage/data_store_spec.rb",
      "spec/dragonfly/data_storage/file_data_store_spec.rb",
+     "spec/dragonfly/data_storage/mongo_data_store_spec.rb",
      "spec/dragonfly/data_storage/s3_data_store_spec.rb",
-     "spec/dragonfly/delegatable_spec.rb",
-     "spec/dragonfly/delegator_spec.rb",
+     "spec/dragonfly/deprecation_spec.rb",
      "spec/dragonfly/encoding/r_magick_encoder_spec.rb",
-     "spec/dragonfly/extended_temp_object_spec.rb",
+     "spec/dragonfly/function_manager_spec.rb",
+     "spec/dragonfly/generation/r_magick_generator_spec.rb",
+     "spec/dragonfly/job_builder_spec.rb",
+     "spec/dragonfly/job_definitions_spec.rb",
+     "spec/dragonfly/job_endpoint_spec.rb",
+     "spec/dragonfly/job_spec.rb",
+     "spec/dragonfly/loggable_spec.rb",
      "spec/dragonfly/middleware_spec.rb",
-     "spec/dragonfly/parameters_spec.rb",
      "spec/dragonfly/processing/r_magick_processor_spec.rb",
-     "spec/dragonfly/processing/r_magick_text_processor_spec.rb",
+     "spec/dragonfly/routed_endpoint_spec.rb",
+     "spec/dragonfly/serializer_spec.rb",
+     "spec/dragonfly/simple_cache_spec.rb",
+     "spec/dragonfly/simple_endpoint_spec.rb",
      "spec/dragonfly/temp_object_spec.rb",
-     "spec/dragonfly/url_handler_spec.rb",
-     "spec/dragonfly_spec.rb",
-     "spec/ginger_scenarios.rb",
      "spec/image_matchers.rb",
      "spec/simple_matchers.rb",
      "spec/spec_helper.rb",
@@ -145,37 +157,41 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/markevans/dragonfly}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
-  s.summary = %q{Dragonfly is an on-the-fly Rack processing/encoding framework. It includes an extension for Ruby on Rails for easy image handling}
+  s.rubygems_version = %q{1.3.7}
+  s.summary = %q{Dragonfly is an on-the-fly Rack-based image handling framework. It is suitable for use with Rails, Sinatra and other web frameworks. Although it's mainly used for images, it can handle any content type.}
   s.test_files = [
     "spec/argument_matchers.rb",
-     "spec/dragonfly/active_record_extensions/attachment_spec.rb",
-     "spec/dragonfly/active_record_extensions/migration.rb",
-     "spec/dragonfly/active_record_extensions/model_spec.rb",
-     "spec/dragonfly/active_record_extensions/models.rb",
-     "spec/dragonfly/active_record_extensions/spec_helper.rb",
+     "spec/dragonfly/active_model_extensions/active_model_setup.rb",
+     "spec/dragonfly/active_model_extensions/active_record_setup.rb",
+     "spec/dragonfly/active_model_extensions/model_spec.rb",
+     "spec/dragonfly/active_model_extensions/spec_helper.rb",
+     "spec/dragonfly/analyser_spec.rb",
      "spec/dragonfly/analysis/file_command_analyser_spec.rb",
      "spec/dragonfly/analysis/r_magick_analyser_spec.rb",
      "spec/dragonfly/app_spec.rb",
-     "spec/dragonfly/belongs_to_app_spec.rb",
      "spec/dragonfly/configurable_spec.rb",
      "spec/dragonfly/core_ext/string_spec.rb",
      "spec/dragonfly/core_ext/symbol_spec.rb",
      "spec/dragonfly/data_storage/data_store_spec.rb",
      "spec/dragonfly/data_storage/file_data_store_spec.rb",
+     "spec/dragonfly/data_storage/mongo_data_store_spec.rb",
      "spec/dragonfly/data_storage/s3_data_store_spec.rb",
-     "spec/dragonfly/delegatable_spec.rb",
-     "spec/dragonfly/delegator_spec.rb",
+     "spec/dragonfly/deprecation_spec.rb",
      "spec/dragonfly/encoding/r_magick_encoder_spec.rb",
-     "spec/dragonfly/extended_temp_object_spec.rb",
+     "spec/dragonfly/function_manager_spec.rb",
+     "spec/dragonfly/generation/r_magick_generator_spec.rb",
+     "spec/dragonfly/job_builder_spec.rb",
+     "spec/dragonfly/job_definitions_spec.rb",
+     "spec/dragonfly/job_endpoint_spec.rb",
+     "spec/dragonfly/job_spec.rb",
+     "spec/dragonfly/loggable_spec.rb",
      "spec/dragonfly/middleware_spec.rb",
-     "spec/dragonfly/parameters_spec.rb",
      "spec/dragonfly/processing/r_magick_processor_spec.rb",
-     "spec/dragonfly/processing/r_magick_text_processor_spec.rb",
+     "spec/dragonfly/routed_endpoint_spec.rb",
+     "spec/dragonfly/serializer_spec.rb",
+     "spec/dragonfly/simple_cache_spec.rb",
+     "spec/dragonfly/simple_endpoint_spec.rb",
      "spec/dragonfly/temp_object_spec.rb",
-     "spec/dragonfly/url_handler_spec.rb",
-     "spec/dragonfly_spec.rb",
-     "spec/ginger_scenarios.rb",
      "spec/image_matchers.rb",
      "spec/simple_matchers.rb",
      "spec/spec_helper.rb"
@@ -185,43 +201,13 @@ Gem::Specification.new do |s|
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rack>, [">= 0"])
-      s.add_development_dependency(%q<jeweler>, [">= 0"])
-      s.add_development_dependency(%q<yard>, [">= 0"])
-      s.add_development_dependency(%q<rmagick>, [">= 0"])
-      s.add_development_dependency(%q<aws-s3>, [">= 0"])
-      s.add_development_dependency(%q<rspec>, [">= 0"])
-      s.add_development_dependency(%q<cucumber>, [">= 0"])
-      s.add_development_dependency(%q<cucumber-rails>, [">= 0"])
-      s.add_development_dependency(%q<activerecord>, [">= 0"])
-      s.add_development_dependency(%q<sqlite3-ruby>, [">= 0"])
-      s.add_development_dependency(%q<ginger>, [">= 0"])
     else
       s.add_dependency(%q<rack>, [">= 0"])
-      s.add_dependency(%q<jeweler>, [">= 0"])
-      s.add_dependency(%q<yard>, [">= 0"])
-      s.add_dependency(%q<rmagick>, [">= 0"])
-      s.add_dependency(%q<aws-s3>, [">= 0"])
-      s.add_dependency(%q<rspec>, [">= 0"])
-      s.add_dependency(%q<cucumber>, [">= 0"])
-      s.add_dependency(%q<cucumber-rails>, [">= 0"])
-      s.add_dependency(%q<activerecord>, [">= 0"])
-      s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
-      s.add_dependency(%q<ginger>, [">= 0"])
     end
   else
     s.add_dependency(%q<rack>, [">= 0"])
-    s.add_dependency(%q<jeweler>, [">= 0"])
-    s.add_dependency(%q<yard>, [">= 0"])
-    s.add_dependency(%q<rmagick>, [">= 0"])
-    s.add_dependency(%q<aws-s3>, [">= 0"])
-    s.add_dependency(%q<rspec>, [">= 0"])
-    s.add_dependency(%q<cucumber>, [">= 0"])
-    s.add_dependency(%q<cucumber-rails>, [">= 0"])
-    s.add_dependency(%q<activerecord>, [">= 0"])
-    s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
-    s.add_dependency(%q<ginger>, [">= 0"])
   end
 end
 
