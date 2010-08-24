@@ -49,6 +49,7 @@ Note that the options are meant to resemble css as much as possible. You can als
 You can use `padding-top`, `padding-left`, etc., as well as the standard css shortcuts for `padding` (it assumes unit is px).
 
 An alternative for `:font_family` is `:font` (see {http://www.imagemagick.org/RMagick/doc/draw.html#font}), which could be a complete filename.
+Available fonts are those available on your system.
 
 Custom Generators
 -----------------
