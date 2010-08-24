@@ -23,7 +23,7 @@ Suggestions/Questions
 
 Credits
 -------
-- <a href="http://github.com/markevans">Mark Evans</a>
+- [Mark Evans](http://github.com/markevans) (author)
 - Loads of helpful comments, issues, questions, suggestions and insults from others - you know who you are!
 
 Copyright
