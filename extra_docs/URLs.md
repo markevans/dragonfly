@@ -1,3 +1,39 @@
+URLs
+====
+
+Due to the lazy nature of {Dragonfly::Job Job} objects (see {file:GeneralUsage}), and model accessors which have
+similar behaviour (see {file:ActiveModel}), we can get urls for any kind of job:
+
+    app = Dragonfly[:images]
+
+    app.fetch('my_uid').process(:flip).url                    # "/BAhbBlsH..."
+    app.generate(:text, 'hello').thumb('500x302').gif.url     # "/BAhbCFsHOgZ..."
+
+Path prefix
+-----------
+If the app is mounted with a path prefix (such as when using in Rails), then we need to add this prefix
+to the urls:
+
+    app.url_path_prefix = '/media'
+
+(or done in a configuration block).
+
+    app.fetch('my_uid').url                               # "/media/BAhbBlsH..."
+
+This is done for you when using {file:Configuration Rails defaults}.
+
+You can override it using
+
+    app.fetch('my_uid').url(:path_prefix => '/images')    # "/images/BAhbBlsH..."
+
+Host
+----
+You can also set a host for the urls
+
+    app.url_host = 'http://some.host'
+    app.fetch('my_uid').url                                  # "http://some.host/BAhb..."
+
+    app.fetch('my_uid').url(:host => 'http://localhost:80')  # "http://localhost:80/BAh..."
 
 Avoiding Denial-of-service attacks
 ----------------------------------
