@@ -6,7 +6,7 @@ extra_docs/GeneralUsage.md
 extra_docs/Rails2.md
 extra_docs/Rails3.md
 extra_docs/Rack.md
-extra_docs/ActiveModel.md
+extra_docs/Models.md
 extra_docs/DataStorage.md
 extra_docs/Analysers.md
 extra_docs/Processing.md

@@ -40,7 +40,7 @@ Gemfile
 Use it!
 -------
 
-To see what you can do with the model accessors, see {file:ActiveModel}.
+To see what you can do with the model accessors, see {file:Models}.
 
 Mounting in routes.rb
 ---------------------
