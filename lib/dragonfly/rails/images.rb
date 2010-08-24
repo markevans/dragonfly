@@ -1,5 +1,6 @@
 require 'dragonfly'
 require 'rack/cache'
+require 'uri'
 
 ### The dragonfly app ###
 app = Dragonfly[:images]
@@ -16,6 +17,6 @@ middleware = Rails.respond_to?(:application) ? Rails.application.middleware : Ac
 middleware.insert 0, Dragonfly::Middleware, :images, app.url_path_prefix
 middleware.insert 0, Rack::Cache, {
   :verbose     => true,
-  :metastore   => "file:#{Rails.root}/tmp/dragonfly/cache/meta",
-  :entitystore => "file:#{Rails.root}/tmp/dragonfly/cache/body"
+  :metastore   => URI.encode("file:#{Rails.root}/tmp/dragonfly/cache/meta"), # URI encoded because Windows
+  :entitystore => URI.encode("file:#{Rails.root}/tmp/dragonfly/cache/body")  # has problems with spaces
 }
