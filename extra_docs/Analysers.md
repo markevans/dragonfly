@@ -3,6 +3,8 @@ Analysers
 
 Analysing data for things like width, mime_type, etc. come under the banner of Analysis.
 
+You can register as many analysers as you like.
+
 Let's say we have a Dragonfly app
 
     app = Dragonfly[:images]
@@ -92,5 +94,3 @@ Each method takes the temp_object as its argument.
 
     image.coolness    # => -4.1
     image.uglyness    # => "VERY"
-
-You can register as many analysers as you like.

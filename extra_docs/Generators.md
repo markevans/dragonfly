@@ -3,6 +3,8 @@ Generators
 
 Unlike processors and encoders, generators create content out of nothing, rather than modifying already existing content, for example text image generation.
 
+You can register as many generators as you like.
+
 Given a Dragonfly app
 
     app = Dragonfly[:images]
@@ -86,5 +88,3 @@ Or create a class like the RMagick one above, in which case all public methods w
 
     app.generate(:top_left_corner, :colour => 'green')
     app.generate(:bottom_right_corner, :colour => 'mauve')
-
-You can register as many generators as you like.

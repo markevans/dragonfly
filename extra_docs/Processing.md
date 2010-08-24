@@ -3,6 +3,8 @@ Processing
 
 Changing data in some way, e.g. resizing an image, comes under the banner of Processing.
 
+You can register as many processors as you like.
+
 Let's say we have a Dragonfly app
 
     app = Dragonfly[:images]
@@ -117,5 +119,3 @@ Each method takes the temp_object as its argument, plus any other args.
     new_image = image.coolify(:some => :args)
 
     new_image = image.uglify(:loads)
-
-You can register as many processors as you like.

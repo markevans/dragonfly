@@ -1,5 +1,5 @@
-Using with ActiveModel
-======================
+Using with Models
+=================
 
 You can extend ActiveModel-compatible models to make working with content such as images
 as easy as working with strings or numbers!

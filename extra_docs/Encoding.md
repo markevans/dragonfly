@@ -4,6 +4,8 @@ Encoding
 Changing the format of data, but not changing the data itself,
 e.g. converting to gif format, comes under the banner of Encoding.
 
+You can register as many encoders as you like.
+
 Let's say we have a Dragonfly app
 
     app = Dragonfly[:images]
@@ -78,5 +80,3 @@ Alternatively you can create a class like the RMagick one above, which implement
     app.encoder.register(MyEncoder)
 
     pdf_image = image.encode(:pdf, :some => :args)
-
-You can register as many encoders as you like.
