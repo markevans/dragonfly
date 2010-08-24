@@ -137,12 +137,27 @@ module Dragonfly
       url_path_prefix.blank? ? '/' : url_path_prefix
     end
 
-    def url_for(job, opts={})
-      host = opts[:host] || url_host
-      path_prefix = opts[:path_prefix] || url_path_prefix
-      path = "#{host}#{path_prefix}#{job.to_path}"
-      path << "?#{dos_protection_query_string(job)}" if protect_from_dos_attacks
-      path
+    def url_for(job, *args)
+      if (args.length == 1 && args.first.kind_of?(Hash)) || args.empty?
+        opts = args.first || {}
+        host = opts[:host] || url_host
+        path_prefix = opts[:path_prefix] || url_path_prefix
+        path = "#{host}#{path_prefix}#{job.to_path}"
+        path << "?#{dos_protection_query_string(job)}" if protect_from_dos_attacks
+        path
+      else
+        # Deprecation stuff - will be removed!!!
+        case args[0]
+        when /^(\d+)?x(\d+)?/
+          log.warn("DEPRECATED USE OF url_for and will be removed in the future - please use thumb(#{args.map{|a|a.inspect}.join(', ')}).url")
+          args[1] ? job.thumb(args[0], args[1]).url : job.thumb(args[0]).url
+        when :gif, :png, :jpg, :jpeg
+          log.warn("DEPRECATED USE OF url_for and will be removed in the future - please use encode(#{args.first.inspect}).url")
+          job.encode(args[0]).url
+        else
+          raise "DEPRECATED USE OF url_for - will be removed in future versions - please consult the docs"
+        end
+      end
     end
 
     def define_macro(mod, macro_name)

@@ -262,8 +262,8 @@ module Dragonfly
       to_app.call
     end
 
-    def url(opts={})
-      app.url_for(self, opts) unless steps.empty?
+    def url(*args)
+      app.url_for(self, *args) unless steps.empty?
     end
 
     def to_fetched_job(uid)
