@@ -1,8 +1,7 @@
 URLs
 ====
 
-Due to the lazy nature of {Dragonfly::Job Job} objects (see {file:GeneralUsage}), and model accessors which have
-similar behaviour (see {file:ActiveModel}), we can get urls for any kind of job:
+We can get urls for any kind of job:
 
     app = Dragonfly[:images]
 

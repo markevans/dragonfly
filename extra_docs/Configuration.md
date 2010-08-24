@@ -42,7 +42,7 @@ Here is an example of an app with many attributes configured:
 
       c.register_mime_type(:egg, 'fried/egg')               # See 'MimeTypes' for more details
 
-      c.job :black_and_white do |size|                      # Job shortcut - see GeneralUsage for more details
+      c.job :black_and_white do |size|                      # Job shortcut - lets you do image.black_and_white('30x30')
         process :greyscale
         process :thumb, size
         encode  :gif
@@ -66,7 +66,7 @@ RMagick
 
 The {Dragonfly::Config::RMagick RMagick configuration} registers the app with the {Dragonfly::Analysis::RMagickAnalyser RMagickAnalyser}, {Dragonfly::Processing::RMagickProcessor RMagickProcessor},
 {Dragonfly::Encoding::RMagickEncoder RMagickEncoder} and {Dragonfly::Generation::RMagickGenerator RMagickGenerator}, and adds the 'job shortcuts'
-`thumb`, `jpg`, `png` and `gif` (see {file:GeneralUsage}).
+`thumb`, `jpg`, `png` and `gif`.
 
 The file 'dragonfly/rails/images' does this for you.
 

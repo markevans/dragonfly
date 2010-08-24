@@ -106,7 +106,7 @@ We can encode the data
 
 The encoding is implemented by the {Dragonfly} app's registered encoders (which will usually just be one) - see {file:Encoding.md Encoding}
 
-We can use configured shortcuts for processing/encoding (see {file:GeneralUsage.md GeneralUsage}), and chain them:
+We can use configured shortcuts for processing/encoding, and chain them:
 
     @album.cover_image.thumb('300x200#ne')     # => returns a 'Job' object, with similar properties
 

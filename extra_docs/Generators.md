@@ -12,7 +12,6 @@ we can get generated content using
     image = app.generate(:some_method, :some => :args)
 
 where `:some_method` is added by the configured generators.
-This returns a {Dragonfly::Job Job} object (see {file:GeneralUsage}).
 
 The {Dragonfly::Config::RMagick RMagick configuration} (as used by the file 'dragonfly/rails/images'), registers the {Dragonfly::Generation::RMagickGenerator RMagickGenerator} for you.
 
