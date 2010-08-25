@@ -29,6 +29,7 @@ Fixes
 - remove whitespace from file/s3 datastore uids
 - dragonfly/rails/images url-encodes rack-cache config for windows users
 - Ruby 1.9.2 support
+- Better RMagick memory management using image.destroy!
 
 Changes
 -------
