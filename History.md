@@ -28,6 +28,7 @@ Fixes
 - proper use of ETags
 - remove whitespace from file/s3 datastore uids
 - dragonfly/rails/images url-encodes rack-cache config for windows users
+- Ruby 1.9.2 support
 
 Changes
 -------
