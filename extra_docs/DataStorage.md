@@ -1,7 +1,8 @@
 Data Storage
 ============
 
-Each dragonfly app has a key-value datastore to store the content.
+Each dragonfly app has a key-value datastore to store the content (originals only).
+
 Lets say we have an app
 
     app = Dragonfly[:my_app_name]
