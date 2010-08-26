@@ -82,7 +82,8 @@ module Dragonfly
       end
 
       def parse_s3_metadata(metadata)
-        marshal_decode(metadata['x-amz-meta-extra'])
+        extra_data = metadata['x-amz-meta-extra']
+        marshal_decode(extra_data) if extra_data
       end
 
     end
