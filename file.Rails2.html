@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.0)</div>
+      <div id="logo">DRAGONFLY (v 0.7.1)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -92,9 +92,22 @@
 
 <p>environment.rb</p>
 
-<pre class="code"><span class='id config'>config</span><span class='period'>.</span><span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>~&gt;0.7.0</span><span class='tstring_end'>'</span></span>
+<pre class="code"><span class='id config'>config</span><span class='period'>.</span><span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>~&gt;0.7.1</span><span class='tstring_end'>'</span></span>
 <span class='id config'>config</span><span class='period'>.</span><span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rmagick</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:lib</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>RMagick</span><span class='tstring_end'>'</span></span>
 <span class='id config'>config</span><span class='period'>.</span><span class='id gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rack-cache</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:lib</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rack/cache</span><span class='tstring_end'>'</span></span>
+</pre>
+
+<h2>Capistrano</h2>
+
+<p>If using Capistrano with the above, you probably will want to keep the cache between deploys, so in deploy.rb:</p>
+
+<pre class="code"><span class='id namespace'>namespace</span> <span class='symbol'>:dragonfly</span> <span class='kw'>do</span>
+  <span class='id desc'>desc</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Symlink the Rack::Cache files</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id task'>task</span> <span class='symbol'>:symlink</span><span class='comma'>,</span> <span class='symbol'>:roles</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='symbol'>:app</span><span class='rbracket'>]</span> <span class='kw'>do</span>
+    <span class='id run'>run</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>mkdir -p </span><span class='embexpr_beg'>#{</span><span class='id shared_path'>shared_path</span><span class='rbrace'>}</span><span class='tstring_content'>/tmp/dragonfly &amp;&amp; ln -nfs </span><span class='embexpr_beg'>#{</span><span class='id shared_path'>shared_path</span><span class='rbrace'>}</span><span class='tstring_content'>/tmp/dragonfly </span><span class='embexpr_beg'>#{</span><span class='id release_path'>release_path</span><span class='rbrace'>}</span><span class='tstring_content'>/tmp/dragonfly</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+<span class='id after'>after</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>deploy:update_code</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly:symlink</span><span class='tstring_end'>'</span></span>
 </pre>
 
 <h2>Use it!</h2>
@@ -103,13 +116,13 @@
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs">URLs</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
 
     <div id="footer">
-  Generated on Wed Aug 25 00:48:59 2010 by 
+  Generated on Thu Aug 26 11:44:33 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.8 (ruby-1.9.2).
 </div>

@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.0)</div>
+      <div id="logo">DRAGONFLY (v 0.7.1)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -567,8 +567,6 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;.
     
 
     
-      (also: #unique_signature)
-    
   </span>
   
   
@@ -691,7 +689,28 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#to_response-instance_method" title="#to_response (instance method)">- (Object) <strong>to_response</strong> </a>
+      <a href="#to_response-instance_method" title="#to_response (instance method)">- (Object) <strong>to_response</strong>(env = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unique_signature-instance_method" title="#unique_signature (instance method)">- (Object) <strong>unique_signature</strong> </a>
     
 
     
@@ -782,17 +801,17 @@ Instance methods
       <pre class="lines">
 
 
-152
 153
 154
 155
 156
 157
 158
-159</pre>
+159
+160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id app'>app</span><span class='comma'>,</span> <span class='id temp_object'>temp_object</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@app</span> <span class='op'>=</span> <span class='id app'>app</span>
@@ -839,12 +858,12 @@ Returns the value of attribute app
       <pre class="lines">
 
 
-169
 170
-171</pre>
+171
+172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 170</span>
 
 <span class='kw'>def</span> <span class='id app'>app</span>
   <span class='ivar'>@app</span>
@@ -881,12 +900,12 @@ Returns the value of attribute next_step_index
       <pre class="lines">
 
 
-287
-288
-289</pre>
+291
+292
+293</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 287</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 291</span>
 
 <span class='kw'>def</span> <span class='id next_step_index'>next_step_index</span>
   <span class='ivar'>@next_step_index</span>
@@ -923,12 +942,12 @@ Returns the value of attribute steps
       <pre class="lines">
 
 
-169
 170
-171</pre>
+171
+172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 170</span>
 
 <span class='kw'>def</span> <span class='id steps'>steps</span>
   <span class='ivar'>@steps</span>
@@ -965,12 +984,12 @@ Returns the value of attribute temp_object
       <pre class="lines">
 
 
-168
 169
-170</pre>
+170
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 169</span>
 
 <span class='kw'>def</span> <span class='id temp_object'>temp_object</span>
   <span class='ivar'>@temp_object</span>
@@ -1000,12 +1019,12 @@ Returns the value of attribute temp_object
       <pre class="lines">
 
 
-136
 137
-138</pre>
+138
+139</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 137</span>
 
 <span class='kw'>def</span> <span class='id deserialize'>deserialize</span><span class='lparen'>(</span><span class='id string'>string</span><span class='comma'>,</span> <span class='id app'>app</span><span class='rparen'>)</span>
   <span class='id from_a'>from_a</span><span class='lparen'>(</span><span class='const'>Serializer</span><span class='period'>.</span><span class='id marshal_decode'>marshal_decode</span><span class='lparen'>(</span><span class='id string'>string</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id app'>app</span><span class='rparen'>)</span>
@@ -1099,12 +1118,14 @@ Returns the value of attribute temp_object
 131
 132
 133
-134</pre>
+134
+135</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 130</span>
 
 <span class='kw'>def</span> <span class='id from_path'>from_path</span><span class='lparen'>(</span><span class='id path'>path</span><span class='comma'>,</span> <span class='id app'>app</span><span class='rparen'>)</span>
+  <span class='id path'>path</span> <span class='op'>=</span> <span class='id path'>path</span><span class='period'>.</span><span class='id dup'>dup</span>
   <span class='id path'>path</span><span class='period'>.</span><span class='id sub!'>sub!</span><span class='lparen'>(</span><span class='id app'>app</span><span class='period'>.</span><span class='id url_path_prefix'>url_path_prefix</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id app'>app</span><span class='period'>.</span><span class='id url_path_prefix'>url_path_prefix</span>
   <span class='id path'>path</span><span class='period'>.</span><span class='id sub!'>sub!</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
   <span class='id deserialize'>deserialize</span><span class='lparen'>(</span><span class='id path'>path</span><span class='comma'>,</span> <span class='id app'>app</span><span class='rparen'>)</span>
@@ -1127,12 +1148,12 @@ Returns the value of attribute temp_object
       <pre class="lines">
 
 
-140
 141
-142</pre>
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 141</span>
 
 <span class='kw'>def</span> <span class='id step_abbreviations'>step_abbreviations</span>
   <span class='ivar'>@step_abbreviations</span> <span class='op'>||=</span> <span class='const'>STEPS</span><span class='period'>.</span><span class='id inject'>inject</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id hash'>hash</span><span class='comma'>,</span> <span class='id step_class'>step_class</span><span class='op'>|</span> <span class='id hash'>hash</span><span class='lbracket'>[</span><span class='id step_class'>step_class</span><span class='period'>.</span><span class='id abbreviation'>abbreviation</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id step_class'>step_class</span><span class='semicolon'>;</span> <span class='id hash'>hash</span> <span class='rbrace'>}</span>
@@ -1155,12 +1176,12 @@ Returns the value of attribute temp_object
       <pre class="lines">
 
 
-144
 145
-146</pre>
+146
+147</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 145</span>
 
 <span class='kw'>def</span> <span class='id step_names'>step_names</span>
   <span class='ivar'>@step_names</span> <span class='op'>||=</span> <span class='const'>STEPS</span><span class='period'>.</span><span class='id map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id step_class'>step_class</span><span class='op'>|</span> <span class='id step_class'>step_class</span><span class='period'>.</span><span class='id step_name'>step_name</span> <span class='rbrace'>}</span>
@@ -1189,7 +1210,6 @@ Returns the value of attribute temp_object
       <pre class="lines">
 
 
-199
 200
 201
 202
@@ -1200,10 +1220,11 @@ Returns the value of attribute temp_object
 207
 208
 209
-210</pre>
+210
+211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 199</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 200</span>
 
 <span class='kw'>def</span> <span class='op'>+</span><span class='lparen'>(</span><span class='id other_job'>other_job</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='id app'>app</span> <span class='op'>==</span> <span class='id other_job'>other_job</span><span class='period'>.</span><span class='id app'>app</span>
@@ -1235,7 +1256,6 @@ Returns the value of attribute temp_object
       <pre class="lines">
 
 
-187
 188
 189
 190
@@ -1245,10 +1265,11 @@ Returns the value of attribute temp_object
 194
 195
 196
-197</pre>
+197
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 187</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 188</span>
 
 <span class='kw'>def</span> <span class='id analyse'>analyse</span><span class='lparen'>(</span><span class='id method'>method</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='id result'>result</span>
@@ -1279,12 +1300,12 @@ Returns the value of attribute temp_object
       <pre class="lines">
 
 
-223
 224
-225</pre>
+225
+226</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 223</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 224</span>
 
 <span class='kw'>def</span> <span class='id applied_steps'>applied_steps</span>
   <span class='id steps'>steps</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>...</span><span class='id next_step_index'>next_step_index</span><span class='rbracket'>]</span>
@@ -1307,14 +1328,14 @@ Returns the value of attribute temp_object
       <pre class="lines">
 
 
-212
 213
 214
 215
-216</pre>
+216
+217</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 212</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 213</span>
 
 <span class='kw'>def</span> <span class='id apply'>apply</span>
   <span class='id pending_steps'>pending_steps</span><span class='period'>.</span><span class='id each'>each</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id step'>step</span><span class='op'>|</span> <span class='id step'>step</span><span class='period'>.</span><span class='id apply'>apply</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -1350,14 +1371,14 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-162
 163
 164
 165
-166</pre>
+166
+167</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 163</span>
 
 <span class='kw'>def</span> <span class='id initialize_copy'>initialize_copy</span><span class='lparen'>(</span><span class='id other'>other</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id steps'>steps</span> <span class='op'>=</span> <span class='id other'>other</span><span class='period'>.</span><span class='id steps'>steps</span><span class='period'>.</span><span class='id dup'>dup</span>
@@ -1382,12 +1403,12 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-280
-281
-282</pre>
+284
+285
+286</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 280</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 284</span>
 
 <span class='kw'>def</span> <span class='id inspect'>inspect</span>
   <span class='id to_s'>to_s</span><span class='period'>.</span><span class='id sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>&gt;$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> app=</span><span class='embexpr_beg'>#{</span><span class='id app'>app</span><span class='rbrace'>}</span><span class='tstring_content'>, steps=</span><span class='embexpr_beg'>#{</span><span class='id steps'>steps</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>, temp_object=</span><span class='embexpr_beg'>#{</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>, steps applied:</span><span class='embexpr_beg'>#{</span><span class='id applied_steps'>applied_steps</span><span class='period'>.</span><span class='id length'>length</span><span class='rbrace'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id steps'>steps</span><span class='period'>.</span><span class='id length'>length</span><span class='rbrace'>}</span><span class='tstring_content'> &gt;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -1410,12 +1431,12 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-227
 228
-229</pre>
+229
+230</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 227</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='id pending_steps'>pending_steps</span>
   <span class='id steps'>steps</span><span class='lbracket'>[</span><span class='id next_step_index'>next_step_index</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span>
@@ -1438,13 +1459,13 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-218
 219
 220
-221</pre>
+221
+222</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 218</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 219</span>
 
 <span class='kw'>def</span> <span class='id result'>result</span>
   <span class='id apply'>apply</span>
@@ -1462,22 +1483,18 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
   
 
   
-    <span class="aliases">Also known as:
-    <span class="names"><span id='unique_signature-instance_method'>unique_signature</span></span>
-    </span>
-  
 </p><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-237
 238
-239</pre>
+239
+240</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 237</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 238</span>
 
 <span class='kw'>def</span> <span class='id serialize'>serialize</span>
   <span class='const'>Serializer</span><span class='period'>.</span><span class='id marshal_encode'>marshal_encode</span><span class='lparen'>(</span><span class='id to_a'>to_a</span><span class='rparen'>)</span>
@@ -1500,12 +1517,12 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-242
-243
-244</pre>
+246
+247
+248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 242</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 246</span>
 
 <span class='kw'>def</span> <span class='id sha'>sha</span>
   <span class='const'>Digest</span><span class='op'>::</span><span class='const'>SHA1</span><span class='period'>.</span><span class='id hexdigest'>hexdigest</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id serialize'>serialize</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id app'>app</span><span class='period'>.</span><span class='id secret'>secret</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>...</span><span class='int'>8</span><span class='rbracket'>]</span>
@@ -1528,14 +1545,14 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-231
 232
 233
 234
-235</pre>
+235
+236</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 232</span>
 
 <span class='kw'>def</span> <span class='id to_a'>to_a</span>
   <span class='id steps'>steps</span><span class='period'>.</span><span class='id map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id step'>step</span><span class='op'>|</span>
@@ -1560,12 +1577,12 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-257
-258
-259</pre>
+261
+262
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 257</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 261</span>
 
 <span class='kw'>def</span> <span class='id to_app'>to_app</span>
   <span class='const'>JobEndpoint</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
@@ -1588,15 +1605,15 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-269
-270
-271
-272
 273
-274</pre>
+274
+275
+276
+277
+278</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 269</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 273</span>
 
 <span class='kw'>def</span> <span class='id to_fetched_job'>to_fetched_job</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span>
   <span class='id new_job'>new_job</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id class'>class</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id app'>app</span><span class='comma'>,</span> <span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
@@ -1622,12 +1639,12 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-276
-277
-278</pre>
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 276</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 280</span>
 
 <span class='kw'>def</span> <span class='id to_path'>to_path</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id serialize'>serialize</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -1640,7 +1657,7 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <div class="method_details ">
   <p class="signature " id="to_response-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>to_response</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>to_response</strong>(env = {}) 
   
 
   
@@ -1650,15 +1667,43 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-261
-262
-263</pre>
+265
+266
+267</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 261</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 265</span>
 
-<span class='kw'>def</span> <span class='id to_response'>to_response</span>
-  <span class='id to_app'>to_app</span><span class='period'>.</span><span class='id call'>call</span>
+<span class='kw'>def</span> <span class='id to_response'>to_response</span><span class='lparen'>(</span><span class='id env'>env</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id to_app'>to_app</span><span class='period'>.</span><span class='id call'>call</span><span class='lparen'>(</span><span class='id env'>env</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="unique_signature-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>unique_signature</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+242
+243
+244</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 242</span>
+
+<span class='kw'>def</span> <span class='id unique_signature'>unique_signature</span>
+  <span class='const'>Digest</span><span class='op'>::</span><span class='const'>SHA1</span><span class='period'>.</span><span class='id hexdigest'>hexdigest</span><span class='lparen'>(</span><span class='id serialize'>serialize</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1678,12 +1723,12 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-265
-266
-267</pre>
+269
+270
+271</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 265</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 269</span>
 
 <span class='kw'>def</span> <span class='id url'>url</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
   <span class='id app'>app</span><span class='period'>.</span><span class='id url_for'>url_for</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id steps'>steps</span><span class='period'>.</span><span class='id empty?'>empty?</span>
@@ -1706,19 +1751,19 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-246
-247
-248
-249
 250
 251
 252
 253
 254
-255</pre>
+255
+256
+257
+258
+259</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 246</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 250</span>
 
 <span class='kw'>def</span> <span class='id validate_sha!'>validate_sha!</span><span class='lparen'>(</span><span class='id sha'>sha</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id sha'>sha</span>
@@ -1741,13 +1786,13 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../file.Index.html" title="Home">Home</a></li><li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../file.Rack.html" title="Rack">Rack</a></li><li><a href="../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Generators.html" title="Generators">Generators</a></li><li><a href="../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../file.URLs.html" title="URLs">URLs</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.Caching.html" title="Caching">Caching</a></li><li><a href="../file.History.html" title="History">History</a></li>
+          <li><a href="../file.Index.html" title="Home">Home</a></li><li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../file.Rack.html" title="Rack">Rack</a></li><li><a href="../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Generators.html" title="Generators">Generators</a></li><li><a href="../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.Caching.html" title="Caching">Caching</a></li><li><a href="../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
 
     <div id="footer">
-  Generated on Wed Aug 25 00:48:59 2010 by 
+  Generated on Thu Aug 26 11:44:34 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.8 (ruby-1.9.2).
 </div>
