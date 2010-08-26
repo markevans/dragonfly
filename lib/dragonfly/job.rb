@@ -262,8 +262,8 @@ module Dragonfly
       JobEndpoint.new(self)
     end
 
-    def to_response
-      to_app.call
+    def to_response(env={})
+      to_app.call(env)
     end
 
     def url(*args)
