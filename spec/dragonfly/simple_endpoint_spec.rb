@@ -78,7 +78,7 @@ describe Dragonfly::SimpleEndpoint do
 
   it "should return a cacheable response" do
     url = "/#{@app.fetch(@uid).serialize}"
-    cache = Rack::Cache.new(@endpoint, :entitystore => 'file:cache')
+    cache = Rack::Cache.new(@endpoint, :entitystore => 'heap:/')
     response = request(cache, url)
     response.status.should == 200
     response.headers['X-Rack-Cache'].should == "miss, store"
