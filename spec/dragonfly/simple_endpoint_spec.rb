@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 require 'rack/mock'
+require 'rack/cache'
 
 def request(app, path)
   Rack::MockRequest.new(app).get(path)
@@ -75,4 +76,14 @@ describe Dragonfly::SimpleEndpoint do
     response.content_type.should == 'text/plain'
   end
 
+  it "should return a cacheable response" do
+    url = "/#{@app.fetch(@uid).serialize}"
+    cache = Rack::Cache.new(@endpoint, :entitystore => 'file:cache')
+    response = request(cache, url)
+    response.status.should == 200
+    response.headers['X-Rack-Cache'].should == "miss, store"
+    response = request(cache, url)
+    response.status.should == 200
+    response.headers['X-Rack-Cache'].should == "fresh"
+  end
 end
