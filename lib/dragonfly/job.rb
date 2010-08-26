@@ -128,6 +128,7 @@ module Dragonfly
       end
 
       def from_path(path, app)
+        path = path.dup
         path.sub!(app.url_path_prefix, '') if app.url_path_prefix
         path.sub!('/', '')
         deserialize(path, app)

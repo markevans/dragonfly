@@ -18,7 +18,7 @@ module Dragonfly
       when '', '/', app.url_path_prefix
         dragonfly_response
       else
-        job = Job.from_path(request.path_info.dup, app)
+        job = Job.from_path(request.path_info, app)
         job.validate_sha!(request['s']) if app.protect_from_dos_attacks
         response_for_job(job, env)
       end
