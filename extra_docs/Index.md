@@ -8,6 +8,9 @@ I actually lied about image handling - it can be used for any type of content.
 
 See the links on the right for more info.
 
+**NOTE: the API has changed since v0.6.2!
+[Docs for v0.6.2 are here](v0.6.2/index.html) for a very limited time.**
+
 Installation
 ------------
 
