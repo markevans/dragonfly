@@ -18,7 +18,7 @@ ENV['PATH'] += ':' + extra_paths.join(':')
 SAMPLES_DIR = File.expand_path(File.dirname(__FILE__) + '/../samples') unless defined?(SAMPLES_DIR)
 
 Spec::Runner.configure do |c|
-  c.after(:all){ FileUtils.rm_f("#{ROOT_PATH}/Gemfile.lock") }
+  c.after(:all){ Dir["#{ROOT_PATH}/Gemfile*.lock"].each{|f| FileUtils.rm_f(f) } }
 end
 
 def todo

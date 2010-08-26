@@ -25,7 +25,7 @@ Before do
 end
 
 AfterStep do |scenario|
-  FileUtils.rm_f("#{ROOT_PATH}/Gemfile.lock")
+  Dir["#{ROOT_PATH}/Gemfile*.lock"].each{|f| FileUtils.rm_f(f) }
 end
 
 module MyHelpers
