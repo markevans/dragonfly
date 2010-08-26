@@ -47,6 +47,16 @@ NB: REMEMBER THE MULTIPART BIT!!!
     <%= image_tag @album.cover_image.process(:greyscale).encode(:tiff).url %>
     ...etc.
 
+If using Capistrano with the above, you probably will want to keep the cache between deploys, so in deploy.rb:
+
+    namespace :dragonfly do
+      desc "Symlink the Rack::Cache files"
+      task :symlink, :roles => [:app] do
+        run "mkdir -p #{shared_path}/tmp/dragonfly && ln -nfs #{shared_path}/tmp/dragonfly #{release_path}/tmp/dragonfly"
+      end
+    end
+    after 'deploy:update_code', 'dragonfly:symlink'
+
 Using outside of rails, custom storage/processing/encoding/analysis, and more...
 --------------------------------------------------------------------------------
 Dragonfly is primarily a Rack app, so you can use it as a standalone app, or with Sinatra, Merb, etc.

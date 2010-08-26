@@ -38,6 +38,18 @@ environment.rb
     config.gem 'rmagick', :lib => 'RMagick'
     config.gem 'rack-cache', :lib => 'rack/cache'
 
+Capistrano
+----------
+If using Capistrano with the above, you probably will want to keep the cache between deploys, so in deploy.rb:
+
+    namespace :dragonfly do
+      desc "Symlink the Rack::Cache files"
+      task :symlink, :roles => [:app] do
+        run "mkdir -p #{shared_path}/tmp/dragonfly && ln -nfs #{shared_path}/tmp/dragonfly #{release_path}/tmp/dragonfly"
+      end
+    end
+    after 'deploy:update_code', 'dragonfly:symlink'
+
 Use it!
 -------
 
