@@ -238,7 +238,10 @@ module Dragonfly
     def serialize
       Serializer.marshal_encode(to_a)
     end
-    alias unique_signature serialize
+
+    def unique_signature
+      Digest::SHA1.hexdigest(serialize)
+    end
 
     def sha
       Digest::SHA1.hexdigest("#{serialize}#{app.secret}")[0...8]

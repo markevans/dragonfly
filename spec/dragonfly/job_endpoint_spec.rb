@@ -56,7 +56,7 @@ describe Dragonfly::JobEndpoint do
       end
 
       it "should not have applied any steps if the correct ETag is specified in HTTP_IF_NONE_MATCH header" do
-        response = make_request(@job, 'HTTP_IF_NONE_MATCH' => @job.serialize)
+        response = make_request(@job, 'HTTP_IF_NONE_MATCH' => @job.unique_signature)
         @job.applied_steps.should be_empty
       end
     end
