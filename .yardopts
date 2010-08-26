@@ -8,6 +8,7 @@ extra_docs/Rails3.md
 extra_docs/Rack.md
 extra_docs/Sinatra.md
 extra_docs/Heroku.md
+extra_docs/Mongo.md
 extra_docs/Models.md
 extra_docs/DataStorage.md
 extra_docs/Analysers.md
