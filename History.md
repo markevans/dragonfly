@@ -1,3 +1,9 @@
+0.7.3 (2010-08-27)
+==================
+Fixes
+-----
+- Seems as though inserting after Rails' Rack::Lock was worth it after all
+
 0.7.2 (2010-08-27)
 ==================
 Fixes
