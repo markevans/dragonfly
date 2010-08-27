@@ -1,3 +1,9 @@
+0.7.2 (2010-08-27)
+==================
+Fixes
+-----
+- S3DataStore was breaking if previous data hadn't stored meta
+
 0.7.1 (2010-08-26)
 ==================
 Fixes
