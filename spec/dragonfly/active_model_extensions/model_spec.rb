@@ -299,6 +299,35 @@ describe Item do
           @item.other_image.data.should == 'eggheads'
         end
       end
+
+      describe "assigning by means of a bang method" do
+        before(:each) do
+          @app.processor.add :double do |temp_object|
+            temp_object.data * 2
+          end
+          @app.encoder.add do |temp_object, format|
+            temp_object.data.downcase + format.to_s
+          end
+          @item.preview_image = "HELLO"
+        end
+        it "should modify as if being assigned again" do
+          @item.preview_image.process!(:double)
+          @item.preview_image.data.should == 'HELLOHELLO'
+        end
+        it "should update the magic attributes" do
+          @item.preview_image.process!(:double)
+          @item.preview_image_size.should == 10
+        end
+        it "should work for encode" do
+          @item.preview_image.encode!(:egg)
+          @item.preview_image.data.should == 'helloegg'
+        end
+        it "should work repeatedly" do
+          @item.preview_image.process!(:double).encode!(:egg)
+          @item.preview_image.data.should == 'hellohelloegg'
+          @item.preview_image_size.should == 13
+        end
+      end
     end
 
   end

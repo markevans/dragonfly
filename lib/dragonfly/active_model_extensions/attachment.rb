@@ -63,6 +63,16 @@ module Dragonfly
         end
       end
 
+      def process!(*args)
+        assign(process(*args))
+        self
+      end
+
+      def encode!(*args)
+        assign(encode(*args))
+        self
+      end
+
       protected
 
       attr_reader :job
