@@ -1,3 +1,9 @@
+0.7.4 (2010-08-28)
+==================
+Features
+--------
+- Gave model accessors bang methods process! and encode!
+
 0.7.3 (2010-08-27)
 ==================
 Fixes
