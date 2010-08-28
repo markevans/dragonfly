@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.3)</div>
+      <div id="logo">DRAGONFLY (v 0.7.4)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -341,6 +341,27 @@ Returns the value of attribute uid.
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#encode%21-instance_method" title="#encode! (instance method)">- (Object) <strong>encode!</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#initialize-instance_method" title="#initialize (instance method)">- (Attachment) <strong>initialize</strong>(app, parent_model, attribute_name) </a>
     
 
@@ -360,6 +381,27 @@ Returns the value of attribute uid.
 A new instance of Attachment.
 </p>
 </div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#process%21-instance_method" title="#process! (instance method)">- (Object) <strong>process!</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -492,12 +534,12 @@ Returns the value of attribute app
       <pre class="lines">
 
 
-105
-106
-107</pre>
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 115</span>
 
 <span class='kw'>def</span> <span class='id app'>app</span>
   <span class='ivar'>@app</span>
@@ -534,12 +576,12 @@ Returns the value of attribute attribute_name
       <pre class="lines">
 
 
-105
-106
-107</pre>
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 115</span>
 
 <span class='kw'>def</span> <span class='id attribute_name'>attribute_name</span>
   <span class='ivar'>@attribute_name</span>
@@ -576,12 +618,12 @@ Returns the value of attribute job
       <pre class="lines">
 
 
-68
-69
-70</pre>
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 78</span>
 
 <span class='kw'>def</span> <span class='id job'>job</span>
   <span class='ivar'>@job</span>
@@ -618,12 +660,12 @@ Returns the value of attribute parent_model
       <pre class="lines">
 
 
-105
-106
-107</pre>
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 115</span>
 
 <span class='kw'>def</span> <span class='id parent_model'>parent_model</span>
   <span class='ivar'>@parent_model</span>
@@ -660,12 +702,12 @@ Returns the value of attribute previous_uid
       <pre class="lines">
 
 
-107
-108
-109</pre>
+117
+118
+119</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id previous_uid'>previous_uid</span>
   <span class='ivar'>@previous_uid</span>
@@ -702,12 +744,12 @@ Returns the value of attribute uid
       <pre class="lines">
 
 
-108
-109
-110</pre>
+118
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 118</span>
 
 <span class='kw'>def</span> <span class='id uid'>uid</span>
   <span class='ivar'>@uid</span>
@@ -835,6 +877,66 @@ Returns the value of attribute uid
 </div>
     
       <div class="method_details ">
+  <p class="signature " id="encode!-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>encode!</strong>(*args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+71
+72
+73
+74</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 71</span>
+
+<span class='kw'>def</span> <span class='id encode!'>encode!</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='id assign'>assign</span><span class='lparen'>(</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="process!-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>process!</strong>(*args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+66
+67
+68
+69</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 66</span>
+
+<span class='kw'>def</span> <span class='id process!'>process!</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='id assign'>assign</span><span class='lparen'>(</span><span class='id process'>process</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <p class="signature " id="save!-instance_method">
   
     - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>save!</strong> 
@@ -912,7 +1014,7 @@ Returns the value of attribute uid
     </div>
 
     <div id="footer">
-  Generated on Fri Aug 27 13:57:23 2010 by 
+  Generated on Sat Aug 28 10:38:07 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.8 (ruby-1.9.2).
 </div>
