@@ -70,6 +70,11 @@ The {Dragonfly::Config::RMagick RMagick configuration} registers the app with th
 
 The file 'dragonfly/rails/images' does this for you.
 
+By default the processor, analyser, encoder and generator pass data around using tempfiles.
+You can make it pass data around using in-memory strings using
+
+    app.configure_with(:rmagick, :use_filesystem => false)
+
 Rails
 -----
 
