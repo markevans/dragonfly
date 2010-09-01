@@ -11,7 +11,7 @@ For the lazy Rails user...
 
     gem 'rmagick',    :require => 'RMagick'
     gem 'rack-cache', :require => 'rack/cache'
-    gem 'dragonfly', '~>0.7.4'
+    gem 'dragonfly', '~>0.7.5'
 
 **Initializer** (e.g. config/initializers/dragonfly.rb):
 

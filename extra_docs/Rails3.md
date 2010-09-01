@@ -33,7 +33,7 @@ application.rb:
 Gemfile
 -------
 
-    gem 'dragonfly', '~>0.7.4'
+    gem 'dragonfly', '~>0.7.5'
     gem 'rmagick', :require => 'RMagick'
     gem 'rack-cache', :require => 'rack/cache'
 
