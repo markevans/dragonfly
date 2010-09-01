@@ -41,6 +41,7 @@ module Dragonfly
         :xpm,
         :xwd
       ]
+      configurable_attr :use_filesystem, :true
 
       def encode(temp_object, format, encoding={})
         format = format.to_s.downcase

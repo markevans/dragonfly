@@ -28,6 +28,13 @@ describe Dragonfly::Encoding::RMagickEncoder do
       image = @encoder.encode(@image, :png)
       image.should == @image
     end
+    
+    it "should work when not using the filesystem" do
+      @encoder.use_filesystem = false
+      image = @encoder.encode(@image, :gif)
+      image.should have_format('gif')
+    end
+
   end
   
 end

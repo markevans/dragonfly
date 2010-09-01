@@ -23,6 +23,9 @@ module Dragonfly
       THUMB_GEOMETRY = Regexp.union RESIZE_GEOMETRY, CROPPED_RESIZE_GEOMETRY, CROP_GEOMETRY
 
       include RMagickUtils
+      include Configurable
+      
+      configurable_attr :use_filesystem, :true
 
       def crop(temp_object, opts={})
         x       = opts[:x].to_i

@@ -1,11 +1,11 @@
 def image_properties(image)
-  data = case image
-  when Dragonfly::TempObject then image.data
-  when String then image
+  if image.is_a?(Tempfile)
+    tempfile = image
+  else
+    tempfile = Tempfile.new('image')
+    tempfile.write(image.is_a?(Dragonfly::TempObject) ? image.data : image)
+    tempfile.close
   end
-  tempfile = Tempfile.new('image')
-  tempfile.write(data)
-  tempfile.close
   details = `identify #{tempfile.path}`
   # example of details string:
   # myimage.png PNG 200x100 200x100+0+0 8-bit DirectClass 31.2kb
