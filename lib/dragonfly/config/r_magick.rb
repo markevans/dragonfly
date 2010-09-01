@@ -9,12 +9,21 @@ module Dragonfly
     # Look at the source code for apply_configuration to see exactly how it configures the app.
     module RMagick
 
-      def self.apply_configuration(app)
+      def self.apply_configuration(app, opts={})
+        use_filesystem = opts.has_key?(:use_filesystem) ? opts[:use_filesystem] : true
         app.configure do |c|
-          c.analyser.register(Analysis::RMagickAnalyser)
-          c.processor.register(Processing::RMagickProcessor)
-          c.encoder.register(Encoding::RMagickEncoder)
-          c.generator.register(Generation::RMagickGenerator)
+          c.analyser.register(Analysis::RMagickAnalyser) do |a|
+            a.use_filesystem = use_filesystem
+          end
+          c.processor.register(Processing::RMagickProcessor) do |p|
+            p.use_filesystem = use_filesystem
+          end
+          c.encoder.register(Encoding::RMagickEncoder) do |e|
+            e.use_filesystem = use_filesystem
+          end
+          c.generator.register(Generation::RMagickGenerator) do |g|
+            g.use_filesystem = use_filesystem
+          end
           c.job :thumb do |geometry, format|
             process :thumb, geometry
             encode format if format
