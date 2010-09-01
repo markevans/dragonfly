@@ -58,7 +58,7 @@ module Dragonfly
 
       include RMagickUtils
       include Configurable
-      configurable_attr :use_filesystem, :true
+      configurable_attr :use_filesystem, true
 
       def plasma(width, height, format='png')
         image = Magick::Image.read("plasma:fractal"){self.size = "#{width}x#{height}"}.first

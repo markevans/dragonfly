@@ -25,7 +25,7 @@ module Dragonfly
       include RMagickUtils
       include Configurable
       
-      configurable_attr :use_filesystem, :true
+      configurable_attr :use_filesystem, true
 
       def crop(temp_object, opts={})
         x       = opts[:x].to_i

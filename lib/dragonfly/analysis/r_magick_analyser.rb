@@ -8,7 +8,7 @@ module Dragonfly
       include RMagickUtils
       include Configurable
 
-      configurable_attr :use_filesystem, :true
+      configurable_attr :use_filesystem, true
 
       def width(temp_object)
         ping_rmagick_image(temp_object) do |image|
