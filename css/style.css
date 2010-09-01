@@ -23,19 +23,17 @@ h2 small { font-weight: normal; font-size: 0.7em; display: block; float: right; 
 .docstring h1 { font-size: 1.2em; }
 .docstring h2 { font-size: 1.1em; }
 .docstring h3, .docstring h4 { font-size: 1em; border-bottom: 0; padding-top: 10px; }
-.docstring .object_link { font-family: monospace; }
 
 .note { 
   color: #222;
   -moz-border-radius: 3px; -webkit-border-radius: 3px; 
   background: #e3e4e3; border: 1px solid #d5d5d5; padding: 7px 10px;
-  display: block;
 }
 .note.todo { background: #ffffc5; border-color: #ececaa; }
 .note.returns_void { background: #efefef; }
 .note.deprecated { background: #ffe5e5; border-color: #e9dada; }
 .note.private { background: #ffffc5; border-color: #ececaa; }
-.note.title { text-transform: lowercase; padding: 1px 5px; margin-left: 5px; font-size: 0.9em; font-family: "Lucida Sans", "Lucida Grande", Verdana, Arial, sans-serif; display: inline; }
+.note.title { text-transform: lowercase; padding: 1px 5px; margin-left: 5px; font-size: 0.9em; font-family: "Lucida Sans", "Lucida Grande", Verdana, Arial, sans-serif; }
 h1 .note.title { font-size: 0.5em; font-weight: normal; padding: 3px 5px; position: relative; top: -3px; text-transform: capitalize; }
 .note.title.constructor { color: #fff; background: #6a98d6; border-color: #6689d6; } 
 .note.title.writeonly { color: #fff; background: #45a638; border-color: #2da31d; } 
@@ -101,9 +99,7 @@ dl.constants dd { width: 75%; white-space: pre; font-family: monospace; margin-b
 
 .summary_desc { margin-left: 32px; display: block; font-family: sans-serif; }
 .summary_desc tt { font-size: 0.9em; }
-dl.constants .note { padding: 2px 6px; padding-right: 12px; margin-top: 6px; }
 dl.constants .docstring { margin-left: 32px; font-size: 0.9em; font-weight: normal; }
-dl.constants .tags { padding-left: 32px; font-size: 0.9em; line-height: 0.8em; }
 dl.constants .discussion *:first-child { margin-top: 0; }
 dl.constants .discussion *:last-child { margin-bottom: 0; }
 
@@ -189,14 +185,12 @@ ul.fullTree li.next:before { font-size: 1.2em; content: '\2B06'; color: #bbb; di
 #search { position: absolute; right: 14px; top: 0px; }
 #search a:link, #search a:visited { 
   display: block; float: left; margin-right: 4px;
-  padding: 8px 10px; text-decoration: none; color: #05a;
+  padding: 8px 10px; text-decoration: none; color: #05a; background: #eaeaff;
   border: 1px solid #d8d8e5;
   -moz-border-radius-bottomleft: 3px; -moz-border-radius-bottomright: 3px; 
   -webkit-border-bottom-left-radius: 3px; -webkit-border-bottom-right-radius: 3px;
-  background: #eaf0ff;
-  -webkit-box-shadow: -1px 1px 3px #ddd;
 }
-#search a:hover { background: #f5faff; color: #06b; }
+#search a:hover { background: #eef; color: #06b; }
 #search a.active { 
   background: #568; padding-bottom: 20px; color: #fff; border: 1px solid #457; 
   -moz-border-radius-topleft: 5px; -moz-border-radius-topright: 5px;
@@ -247,26 +241,6 @@ li.r2 { background: #fafafa; }
 
 #content ul.summary li.deprecated a:link, 
 #content ul.summary li.deprecated a:visited { text-decoration: line-through; font-style: italic; }
-
-#toc { 
-  padding: 20px; padding-right: 30px; border: 1px solid #ddd; float: right; background: #fff; margin-left: 20px; margin-bottom: 20px;
-  max-width: 300px;
-  -webkit-box-shadow: -2px 2px 6px #bbb;
-  -moz-box-shadow: -2px 2px 6px #bbb;
-  z-index: 9999;
-  position: relative;
-}
-#toc.nofloat { float: none; max-width: none; border: none; padding: 0; margin: 20px 0; -webkit-box-shadow: none; -moz-box-shadow: none; }
-#toc.nofloat.hidden { padding: 0; background: 0; margin-bottom: 5px; }
-#toc .title { margin: 0; }
-#toc ol { padding-left: 1.8em; }
-#toc li { font-size: 1.1em; line-height: 1.7em; }
-#toc > ol > li { font-size: 1.1em; font-weight: bold; }
-#toc ol > ol { font-size: 0.9em; }
-#toc ol ol > ol { padding-left: 2.3em; }
-#toc ol + li { margin-top: 0.3em; }
-#toc.hidden { padding: 10px; background: #f6f6f6; -webkit-box-shadow: none; -moz-box-shadow: none; }
-#filecontents h1 + #toc.nofloat { margin-top: 0; }
 
 /* syntax highlighting */
 .source_code { display: none; padding: 3px 8px; border-left: 8px solid #ddd; margin-top: 5px; }

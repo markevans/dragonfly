@@ -64,10 +64,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></span>
+      <span class="inheritName"><a href="../../Object.html" title="Object (class)">Object</a></span>
       
         <ul class="fullTree">
-          <li><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></li>
+          <li><a href="../../Object.html" title="Object (class)">Object</a></li>
           
             <li class="next">Dragonfly::DataStorage::FileDataStore</li>
           
@@ -82,7 +82,7 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2"><span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></span></dd>
+      <dd class="r2"><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></dd>
       
     
   
@@ -101,6 +101,33 @@
   
   
 
+
+<h2>Configuration Summary</h2>
+<h3>Configurable attributes</h3>
+Configurable attributes for an object in general <code>object</code> can be configured either by using something like
+<pre class="code">
+  object.configure <span class="kw">do</span> |c|
+    c.some_configurable_attribute = <span class="string val">"some value"</span>
+    c.some_other_configurable_attribute = <span class="integer val">42</span>
+    ...
+  <span class="kw">end</span>
+</pre>
+or
+<pre class="code">
+  object.some_configurable_attribute = <span class="string val">"some value"</span>
+</pre>
+<h4>Configurable attributes for instances of Dragonfly::DataStorage::FileDataStore</h4>
+<ul>
+  
+  <li>
+    <code>root_path</code>
+    
+     - default <code><span class="string val">"/var/tmp/dragonfly"</span></code>
+    
+    
+  </li>
+  
+</ul>
 
 
   
@@ -206,8 +233,8 @@
   
   
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></span></p>
+  <h3 class="inherited">Methods included from <a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></h3>
+  <p class="inherited"><a href="../Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></p>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -217,7 +244,7 @@
       <div class="method_details first">
   <p class="signature first" id="destroy-instance_method">
   
-    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>destroy</strong>(relative_path) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>destroy</strong>(relative_path) 
   
 
   
@@ -233,7 +260,7 @@
   
     <li>
       
-        <span class='type'>(<tt><span class='object_link'><a href="DataNotFound.html" title="Dragonfly::DataStorage::DataNotFound (class)">DataNotFound</a></span></tt>)</span>
+        <span class='type'>(<tt><a href="DataNotFound.html" title="Dragonfly::DataStorage::DataNotFound (class)">DataNotFound</a></tt>)</span>
       
       
       
@@ -276,7 +303,7 @@
       <div class="method_details ">
   <p class="signature " id="disambiguate-instance_method">
   
-    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>disambiguate</strong>(filename) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>disambiguate</strong>(filename) 
   
 
   
@@ -308,7 +335,7 @@
       <div class="method_details ">
   <p class="signature " id="retrieve-instance_method">
   
-    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>retrieve</strong>(relative_path) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>retrieve</strong>(relative_path) 
   
 
   
@@ -324,7 +351,7 @@
   
     <li>
       
-        <span class='type'>(<tt><span class='object_link'><a href="DataNotFound.html" title="Dragonfly::DataStorage::DataNotFound (class)">DataNotFound</a></span></tt>)</span>
+        <span class='type'>(<tt><a href="DataNotFound.html" title="Dragonfly::DataStorage::DataNotFound (class)">DataNotFound</a></tt>)</span>
       
       
       
@@ -369,7 +396,7 @@
       <div class="method_details ">
   <p class="signature " id="store-instance_method">
   
-    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>store</strong>(temp_object, opts = {}) 
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>store</strong>(temp_object, opts = {}) 
   
 
   
@@ -436,9 +463,9 @@
     </div>
 
     <div id="footer">
-  Generated on Wed Sep  1 13:03:20 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.0 (ruby-1.9.2).
+  Generated on Wed Sep  1 13:08:32 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.8 (ruby-1.9.2).
 </div>
 
   </body>

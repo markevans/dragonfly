@@ -158,7 +158,7 @@ named by appending the suffix <code>_uid</code> (e.g. <code>cover_image_uid</cod
 </span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id width'>width</span>                              <span class='comment'># =&gt; 280 (no change)
 </span></pre>
 
-<p>The available processing methods available (i.e. 'thumb', etc.) come from the <span class='object_link'><a href="Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span> app's registered processors - see <a href="file.Processing.html" title="Processing">Processing</a></p>
+<p>The available processing methods available (i.e. 'thumb', etc.) come from the <tt><a href="Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></tt> app's registered processors - see <a href="file.Processing.html" title="Processing">Processing</a></p>
 
 <p>We can encode the data</p>
 
@@ -167,7 +167,7 @@ named by appending the suffix <code>_uid</code> (e.g. <code>cover_image_uid</cod
 </span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id format'>format</span>                 <span class='comment'># =&gt; :png (no change)
 </span></pre>
 
-<p>The encoding is implemented by the <span class='object_link'><a href="Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span> app's registered encoders (which will usually just be one) - see <a href="file.Encoding.html" title="Encoding">Encoding</a></p>
+<p>The encoding is implemented by the <tt><a href="Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></tt> app's registered encoders (which will usually just be one) - see <a href="file.Encoding.html" title="Encoding">Encoding</a></p>
 
 <p>We can use configured shortcuts for processing/encoding, and chain them:</p>
 
@@ -187,7 +187,7 @@ You can force the processing to be done if you must by then calling <code>apply<
 
 <h2>Persisting</h2>
 
-<p>When the model is saved, a before_save callback persists the data to the <span class='object_link'><a href="Dragonfly/App.html" title="Dragonfly::App (class)">App</a></span>'s configured datastore (see <a href="file.DataStorage.html" title="DataStorage">DataStorage</a>)
+<p>When the model is saved, a before_save callback persists the data to the <tt><a href="Dragonfly/App.html" title="Dragonfly::App (class)">App</a></tt>'s configured datastore (see <a href="file.DataStorage.html" title="DataStorage">DataStorage</a>)
 The uid column is then filled in.</p>
 
 <pre class="code"><span class='ivar'>@album</span> <span class='op'>=</span> <span class='const'>Album</span><span class='period'>.</span><span class='id new'>new</span>
@@ -203,7 +203,7 @@ The uid column is then filled in.</p>
 
 <h2>URLs</h2>
 
-<p>Once the model is saved, we can get a url for the image (which is served by the Dragonfly <span class='object_link'><a href="Dragonfly/App.html" title="Dragonfly::App (class)">App</a></span> itself), and for its processed/encoded versions:</p>
+<p>Once the model is saved, we can get a url for the image (which is served by the Dragonfly <tt><a href="Dragonfly/App.html" title="Dragonfly::App (class)">App</a></tt> itself), and for its processed/encoded versions:</p>
 
 <pre class="code"><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id url'>url</span>                           <span class='comment'># =&gt; '/media/BAhbBlsHOgZmIhgy...'
 </span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id thumb'>thumb</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>300x200#nw</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>       <span class='comment'># =&gt; '/media/BAhbB1sYusgZhgyM...'
@@ -332,9 +332,9 @@ this is done automatically for you, if the corresponding accessor exists.</p>
     </div>
 
     <div id="footer">
-  Generated on Wed Sep  1 13:03:16 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.0 (ruby-1.9.2).
+  Generated on Wed Sep  1 13:08:28 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.8 (ruby-1.9.2).
 </div>
 
   </body>

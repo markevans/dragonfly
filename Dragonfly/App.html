@@ -64,10 +64,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></span>
+      <span class="inheritName"><a href="../Object.html" title="Object (class)">Object</a></span>
       
         <ul class="fullTree">
-          <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
+          <li><a href="../Object.html" title="Object (class)">Object</a></li>
           
             <li class="next">Dragonfly::App</li>
           
@@ -86,7 +86,7 @@
   
     
       <dt class="r1">Includes:</dt>
-      <dd class="r1"><span class='object_link'><a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span></dd>
+      <dd class="r1"><a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></dd>
       
     
   
@@ -290,6 +290,97 @@ Returns the value of attribute server.
   </ul>
 
 
+
+<h2>Configuration Summary</h2>
+<h3>Configurable attributes</h3>
+Configurable attributes for an object in general <code>object</code> can be configured either by using something like
+<pre class="code">
+  object.configure <span class="kw">do</span> |c|
+    c.some_configurable_attribute = <span class="string val">"some value"</span>
+    c.some_other_configurable_attribute = <span class="integer val">42</span>
+    ...
+  <span class="kw">end</span>
+</pre>
+or
+<pre class="code">
+  object.some_configurable_attribute = <span class="string val">"some value"</span>
+</pre>
+<h4>Configurable attributes for instances of Dragonfly::App</h4>
+<ul>
+  
+  <li>
+    <code>datastore</code>
+    
+     - default <code><span class="string val">"DataStorage::FileDataStore.new"</span></code> (evaluated lazily) 
+    
+    
+  </li>
+  
+  <li>
+    <code>cache_duration</code>
+    
+     - default <code><span class="integer val">31536000</span></code>
+    
+    - (1 year)
+  </li>
+  
+  <li>
+    <code>fallback_mime_type</code>
+    
+     - default <code><span class="string val">"application/octet-stream"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>url_path_prefix</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>url_host</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>protect_from_dos_attacks</code>
+    
+     - default <code><span class="kw">false</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>secret</code>
+    
+     - default <code><span class="string val">"secret yo"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>log</code>
+    
+     - default <code><span class="string val">"Logger.new('/var/tmp/dragonfly.log')"</span></code> (evaluated lazily) 
+    
+    
+  </li>
+  
+  <li>
+    <code>infer_mime_type_from_file_ext</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+</ul>
 
 
   
@@ -643,15 +734,15 @@ A new instance of App.
   
   
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></span></p>
+  <h3 class="inherited">Methods included from <a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></h3>
+  <p class="inherited"><a href="Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <p class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Dragonfly::App (class)">App</a></span></tt>) <strong>initialize</strong> 
+    - (<tt><a href="" title="Dragonfly::App (class)">App</a></tt>) <strong>initialize</strong> 
   
 
   
@@ -710,7 +801,7 @@ A new instance of App
       <div class="method_details first">
   <p class="signature first" id="analyser-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>analyser</strong>  <span class="extras">(readonly)</span>
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>analyser</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -752,7 +843,7 @@ Returns the value of attribute analyser
       <div class="method_details ">
   <p class="signature " id="encoder-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>encoder</strong>  <span class="extras">(readonly)</span>
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>encoder</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -794,7 +885,7 @@ Returns the value of attribute encoder
       <div class="method_details ">
   <p class="signature " id="generator-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>generator</strong>  <span class="extras">(readonly)</span>
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>generator</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -836,7 +927,7 @@ Returns the value of attribute generator
       <div class="method_details ">
   <p class="signature " id="job_definitions-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>job_definitions</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>job_definitions</strong> 
   
 
   
@@ -878,7 +969,7 @@ Returns the value of attribute job_definitions
       <div class="method_details ">
   <p class="signature " id="processor-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>processor</strong>  <span class="extras">(readonly)</span>
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>processor</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -920,7 +1011,7 @@ Returns the value of attribute processor
       <div class="method_details ">
   <p class="signature " id="server-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>server</strong>  <span class="extras">(readonly)</span>
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>server</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -966,7 +1057,7 @@ Returns the value of attribute server
       <div class="method_details first">
   <p class="signature first" id="instance-class_method">
   
-    + (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>instance</strong>(name) 
+    + (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>instance</strong>(name) 
   
 
   
@@ -1004,7 +1095,7 @@ Returns the value of attribute server
       <div class="method_details first">
   <p class="signature first" id="configurer_for-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>configurer_for</strong>(symbol) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>configurer_for</strong>(symbol) 
   
 
   
@@ -1040,7 +1131,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="define_macro-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>define_macro</strong>(mod, macro_name) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>define_macro</strong>(mod, macro_name) 
   
 
   
@@ -1072,7 +1163,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="define_macro_on_include-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>define_macro_on_include</strong>(mod, macro_name) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>define_macro_on_include</strong>(mod, macro_name) 
   
 
   
@@ -1116,7 +1207,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="endpoint-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>endpoint</strong>(job = nil, &amp;block) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>endpoint</strong>(job = nil, &amp;block) 
   
 
   
@@ -1144,7 +1235,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="job-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>job</strong>(name, &amp;block) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>job</strong>(name, &amp;block) 
   
 
   
@@ -1172,7 +1263,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="mime_type_for-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>mime_type_for</strong>(format) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>mime_type_for</strong>(format) 
   
 
   
@@ -1200,7 +1291,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="mount_path-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>mount_path</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>mount_path</strong> 
   
 
   
@@ -1228,7 +1319,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="new_job-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>new_job</strong>(content = nil, opts = {}) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>new_job</strong>(content = nil, opts = {}) 
   
 
   
@@ -1256,7 +1347,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="register_mime_type-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>register_mime_type</strong>(format, mime_type) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>register_mime_type</strong>(format, mime_type) 
   
 
   
@@ -1284,7 +1375,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="registered_mime_types-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>registered_mime_types</strong> 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>registered_mime_types</strong> 
   
 
   
@@ -1312,7 +1403,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="resolve_mime_type-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>resolve_mime_type</strong>(temp_object) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>resolve_mime_type</strong>(temp_object) 
   
 
   
@@ -1348,7 +1439,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="store-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>store</strong>(object, opts = {}) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>store</strong>(object, opts = {}) 
   
 
   
@@ -1380,7 +1471,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="url_for-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>url_for</strong>(job, *args) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>url_for</strong>(job, *args) 
   
 
   
@@ -1455,9 +1546,9 @@ Returns the value of attribute server
     </div>
 
     <div id="footer">
-  Generated on Wed Sep  1 13:03:18 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.0 (ruby-1.9.2).
+  Generated on Wed Sep  1 13:08:29 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.8 (ruby-1.9.2).
 </div>
 
   </body>
