@@ -4,7 +4,7 @@ function fullListSearch() {
     if (value == "") {
       $('#full_list').removeClass('insearch');
       $('#full_list li').each(function() {
-        var link = $(this).children('a:last');
+        var link = $(this).find('.object_link a');
         link.text(link.text()); 
       });
       if (clicked) {
@@ -17,7 +17,7 @@ function fullListSearch() {
     else {
       $('#full_list').addClass('insearch');
       $('#full_list li').each(function() {
-        var link = $(this).children('a:last');
+        var link = $(this).find('.object_link a');
         var text = link.text();
         if (text.toLowerCase().indexOf(value) == -1) {
           $(this).removeClass('found');
@@ -57,12 +57,7 @@ function linkList() {
       }
     }
     if (clicked) clicked.removeClass('clicked');
-    var win = window.parent;
-    if (window.top.frames.main) {
-      win = window.top.frames.main;
-      var title = $('html head title', win.document).text();
-      $('html head title', window.parent.document).text(title);
-    }
+    var win = window.top.frames.main ? window.top.frames.main : window.parent;
     if (this.tagName.toLowerCase() == "a") {
       clicked = $(this).parent('li').addClass('clicked');
       win.location = this.href;

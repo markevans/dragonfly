@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.4)</div>
+      <div id="logo">DRAGONFLY (v 0.7.5)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -125,7 +125,7 @@ configures the app.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#apply_configuration-class_method" title="apply_configuration (class method)">+ (Object) <strong>apply_configuration</strong>(app) </a>
+      <a href="#apply_configuration-class_method" title="apply_configuration (class method)">+ (Object) <strong>apply_configuration</strong>(app, opts = {}) </a>
     
 
     
@@ -155,7 +155,7 @@ configures the app.
       <div class="method_details first">
   <p class="signature first" id="apply_configuration-class_method">
   
-    + (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>apply_configuration</strong>(app) 
+    + (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>apply_configuration</strong>(app, opts = {}) 
   
 
   
@@ -186,17 +186,35 @@ configures the app.
 30
 31
 32
-33</pre>
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/config/r_magick.rb', line 12</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id apply_configuration'>apply_configuration</span><span class='lparen'>(</span><span class='id app'>app</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id apply_configuration'>apply_configuration</span><span class='lparen'>(</span><span class='id app'>app</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='period'>.</span><span class='id has_key?'>has_key?</span><span class='lparen'>(</span><span class='symbol'>:use_filesystem</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:use_filesystem</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='kw'>true</span>
   <span class='id app'>app</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
-    <span class='id c'>c</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Analysis</span><span class='op'>::</span><span class='const'>RMagickAnalyser</span><span class='rparen'>)</span>
-    <span class='id c'>c</span><span class='period'>.</span><span class='id processor'>processor</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Processing</span><span class='op'>::</span><span class='const'>RMagickProcessor</span><span class='rparen'>)</span>
-    <span class='id c'>c</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>RMagickEncoder</span><span class='rparen'>)</span>
-    <span class='id c'>c</span><span class='period'>.</span><span class='id generator'>generator</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Generation</span><span class='op'>::</span><span class='const'>RMagickGenerator</span><span class='rparen'>)</span>
+    <span class='id c'>c</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Analysis</span><span class='op'>::</span><span class='const'>RMagickAnalyser</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id a'>a</span><span class='op'>|</span>
+      <span class='id a'>a</span><span class='period'>.</span><span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='id use_filesystem'>use_filesystem</span>
+    <span class='kw'>end</span>
+    <span class='id c'>c</span><span class='period'>.</span><span class='id processor'>processor</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Processing</span><span class='op'>::</span><span class='const'>RMagickProcessor</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id p'>p</span><span class='op'>|</span>
+      <span class='id p'>p</span><span class='period'>.</span><span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='id use_filesystem'>use_filesystem</span>
+    <span class='kw'>end</span>
+    <span class='id c'>c</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>RMagickEncoder</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id e'>e</span><span class='op'>|</span>
+      <span class='id e'>e</span><span class='period'>.</span><span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='id use_filesystem'>use_filesystem</span>
+    <span class='kw'>end</span>
+    <span class='id c'>c</span><span class='period'>.</span><span class='id generator'>generator</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Generation</span><span class='op'>::</span><span class='const'>RMagickGenerator</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id g'>g</span><span class='op'>|</span>
+      <span class='id g'>g</span><span class='period'>.</span><span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='id use_filesystem'>use_filesystem</span>
+    <span class='kw'>end</span>
     <span class='id c'>c</span><span class='period'>.</span><span class='id job'>job</span> <span class='symbol'>:thumb</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id geometry'>geometry</span><span class='comma'>,</span> <span class='id format'>format</span><span class='op'>|</span>
       <span class='id process'>process</span> <span class='symbol'>:thumb</span><span class='comma'>,</span> <span class='id geometry'>geometry</span>
       <span class='id encode'>encode</span> <span class='id format'>format</span> <span class='kw'>if</span> <span class='id format'>format</span>
@@ -230,9 +248,9 @@ configures the app.
     </div>
 
     <div id="footer">
-  Generated on Sat Aug 28 10:38:06 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Wed Sep  1 13:03:19 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.0 (ruby-1.9.2).
 </div>
 
   </body>

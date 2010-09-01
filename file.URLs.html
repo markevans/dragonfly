@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.4)</div>
+      <div id="logo">DRAGONFLY (v 0.7.5)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -145,7 +145,7 @@ to the urls:</p>
 
 <h2>Simple Endpoints</h2>
 
-<p><tt><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></tt> objects can also be turned straight into Rack endpoints using <code>to_app</code>, e.g. in Rails 3:</p>
+<p><span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> objects can also be turned straight into Rack endpoints using <code>to_app</code>, e.g. in Rails 3:</p>
 
 <pre class="code"><span class='id match'>match</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/beach</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='id app'>app</span><span class='period'>.</span><span class='id fetch_file'>fetch_file</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>~/some/image.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id thumb'>thumb</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>100x100#</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id jpg'>jpg</span><span class='period'>.</span><span class='id to_app'>to_app</span>
 </pre>
@@ -190,9 +190,9 @@ work out how to generate urls to spam your server with heavy requests, e.g. resi
     </div>
 
     <div id="footer">
-  Generated on Sat Aug 28 10:38:04 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Wed Sep  1 13:03:17 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.0 (ruby-1.9.2).
 </div>
 
   </body>

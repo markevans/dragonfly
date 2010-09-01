@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.4)</div>
+      <div id="logo">DRAGONFLY (v 0.7.5)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -77,12 +77,12 @@ Each app has a name, and is referred to by that name.</p>
 </span>                                        <span class='comment'># generator (in this case a plasma image)
 </span></pre>
 
-<p>These all return <tt><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></tt> objects. These objects are lazy - they don't do any fetching/generating until
+<p>These all return <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> objects. These objects are lazy - they don't do any fetching/generating until
 some other method is called on them.</p>
 
 <h2>Using the content</h2>
 
-<p>Once we have a <tt><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></tt> object:</p>
+<p>Once we have a <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object:</p>
 
 <pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some_uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 </pre>
@@ -133,7 +133,7 @@ some other method is called on them.</p>
 </ul>
 
 
-<p>all return <tt><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></tt> objects, we can chain them as much as we want...</p>
+<p>all return <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> objects, we can chain them as much as we want...</p>
 
 <pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some_uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:greyscale</span><span class='rparen'>)</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:thumb</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>40x20#</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:gif</span><span class='rparen'>)</span>
 </pre>
@@ -164,7 +164,7 @@ some other method is called on them.</p>
 <pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some_uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id grey'>grey</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>40x20#</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 </pre>
 
-<p>This does exactly the same, returning a <tt><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></tt> object.</p>
+<p>This does exactly the same, returning a <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object.</p>
 
 <p>To define this shortcut:</p>
 
@@ -178,7 +178,7 @@ some other method is called on them.</p>
 </span><span class='kw'>end</span>
 </pre>
 
-<p>The <tt><a href="Dragonfly/Config/RMagick.html" title="Dragonfly::Config::RMagick (module)">RMagick</a></tt> configuration comes with the pre-defined shortcuts:</p>
+<p>The <span class='object_link'><a href="Dragonfly/Config/RMagick.html" title="Dragonfly::Config::RMagick (module)">RMagick</a></span> configuration comes with the pre-defined shortcuts:</p>
 
 <pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id thumb'>thumb</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>40x30</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>   <span class='comment'># same as image.process(:thumb, '40x30')
 </span><span class='id image'>image</span><span class='period'>.</span><span class='id jpg'>jpg</span>              <span class='comment'># same as image.encode(:jpg)
@@ -194,9 +194,9 @@ some other method is called on them.</p>
     </div>
 
     <div id="footer">
-  Generated on Sat Aug 28 10:38:04 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Wed Sep  1 13:03:16 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.0 (ruby-1.9.2).
 </div>
 
   </body>

@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.4)</div>
+      <div id="logo">DRAGONFLY (v 0.7.5)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -64,10 +64,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="../../Object.html" title="Object (class)">Object</a></span>
+      <span class="inheritName"><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></span>
       
         <ul class="fullTree">
-          <li><a href="../../Object.html" title="Object (class)">Object</a></li>
+          <li><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></li>
           
             <li class="next">Dragonfly::Encoding::RMagickEncoder</li>
           
@@ -82,7 +82,7 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2"><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a>, <a href="../RMagickUtils.html" title="Dragonfly::RMagickUtils (module)">Dragonfly::RMagickUtils</a></dd>
+      <dd class="r2"><span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></span>, <span class='object_link'><a href="../RMagickUtils.html" title="Dragonfly::RMagickUtils (module)">Dragonfly::RMagickUtils</a></span></dd>
       
     
   
@@ -105,33 +105,6 @@
   
   
 
-
-<h2>Configuration Summary</h2>
-<h3>Configurable attributes</h3>
-Configurable attributes for an object in general <code>object</code> can be configured either by using something like
-<pre class="code">
-  object.configure <span class="kw">do</span> |c|
-    c.some_configurable_attribute = <span class="string val">"some value"</span>
-    c.some_other_configurable_attribute = <span class="integer val">42</span>
-    ...
-  <span class="kw">end</span>
-</pre>
-or
-<pre class="code">
-  object.some_configurable_attribute = <span class="string val">"some value"</span>
-</pre>
-<h4>Configurable attributes for instances of Dragonfly::Encoding::RMagickEncoder</h4>
-<ul>
-  
-  <li>
-    <code>supported_formats</code>
-    
-     - default <code>[:ai, :bmp, :eps, :gif, :gif87, :ico, :j2c, :jp2, :jpeg, :jpg, :pbm, :pcd, :pct, :pcx, :pdf, :pict, :pjpeg, :png, :png24, :png32, :png8, :pnm, :ppm, :ps, :psd, :ras, :tga, :tiff, :wbmp, :xbm, :xpm, :xwd]</code>
-    
-    
-  </li>
-  
-</ul>
 
 
   
@@ -174,14 +147,14 @@ or
   
   
   
-  <h3 class="inherited">Methods included from <a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></h3>
-  <p class="inherited"><a href="../Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></p>
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></span></p>
 
-  
-  
-  
-  
-  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -190,7 +163,7 @@ or
       <div class="method_details first">
   <p class="signature first" id="encode-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>encode</strong>(temp_object, format, encoding = {}) 
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>encode</strong>(temp_object, format, encoding = {}) 
   
 
   
@@ -200,7 +173,6 @@ or
       <pre class="lines">
 
 
-45
 46
 47
 48
@@ -211,10 +183,11 @@ or
 53
 54
 55
-56</pre>
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/encoding/r_magick_encoder.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/encoding/r_magick_encoder.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id encode'>encode</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id format'>format</span><span class='comma'>,</span> <span class='id encoding'>encoding</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id format'>format</span> <span class='op'>=</span> <span class='id format'>format</span><span class='period'>.</span><span class='id to_s'>to_s</span><span class='period'>.</span><span class='id downcase'>downcase</span>
@@ -245,9 +218,9 @@ or
     </div>
 
     <div id="footer">
-  Generated on Sat Aug 28 10:38:07 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Wed Sep  1 13:03:20 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.0 (ruby-1.9.2).
 </div>
 
   </body>

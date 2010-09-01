@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.4)</div>
+      <div id="logo">DRAGONFLY (v 0.7.5)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -64,10 +64,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="../../Object.html" title="Object (class)">Object</a></span>
+      <span class="inheritName"><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></span>
       
         <ul class="fullTree">
-          <li><a href="../../Object.html" title="Object (class)">Object</a></li>
+          <li><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></li>
           
             <li class="next">Dragonfly::Generation::RMagickGenerator</li>
           
@@ -81,11 +81,15 @@
     
   
     
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></span>, <span class='object_link'><a href="../RMagickUtils.html" title="Dragonfly::RMagickUtils (module)">Dragonfly::RMagickUtils</a></span></dd>
+      
+    
   
   
   
-    <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/dragonfly/generation/r_magick_generator.rb</dd>
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/dragonfly/generation/r_magick_generator.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -96,7 +100,7 @@
     
    
     
-      <strong class="classes">Classes:</strong> <a href="RMagickGenerator/HashWithCssStyleKeys.html" title="Dragonfly::Generation::RMagickGenerator::HashWithCssStyleKeys (class)">HashWithCssStyleKeys</a>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="RMagickGenerator/HashWithCssStyleKeys.html" title="Dragonfly::Generation::RMagickGenerator::HashWithCssStyleKeys (class)">HashWithCssStyleKeys</a></span>
     
   
 </p>
@@ -152,6 +156,14 @@
   
 
 
+  
+  
+  
+  
+  
+  
+  
+  
 
 
 
@@ -209,6 +221,21 @@
   
 
 
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Dragonfly::Configurable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></span></p>
+
+  
+  
+  
+  
+  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -217,7 +244,7 @@
       <div class="method_details first">
   <p class="signature first" id="plasma-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>plasma</strong>(width, height, format = 'png') 
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>plasma</strong>(width, height, format = 'png') 
   
 
   
@@ -227,27 +254,27 @@
       <pre class="lines">
 
 
-59
-60
-61
-62
 63
 64
 65
 66
 67
-68</pre>
+68
+69
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/generation/r_magick_generator.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/generation/r_magick_generator.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id plasma'>plasma</span><span class='lparen'>(</span><span class='id width'>width</span><span class='comma'>,</span> <span class='id height'>height</span><span class='comma'>,</span> <span class='id format'>format</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
   <span class='id image'>image</span> <span class='op'>=</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>Image</span><span class='period'>.</span><span class='id read'>read</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>plasma:fractal</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='kw'>self</span><span class='period'>.</span><span class='id size'>size</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id width'>width</span><span class='rbrace'>}</span><span class='tstring_content'>x</span><span class='embexpr_beg'>#{</span><span class='id height'>height</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='period'>.</span><span class='id first'>first</span>
   <span class='id image'>image</span><span class='period'>.</span><span class='id format'>format</span> <span class='op'>=</span> <span class='id format'>format</span><span class='period'>.</span><span class='id to_s'>to_s</span>
-  <span class='id data'>data</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id to_blob'>to_blob</span>
+  <span class='id content'>content</span> <span class='op'>=</span> <span class='id use_filesystem'>use_filesystem</span> <span class='op'>?</span> <span class='id write_to_tempfile'>write_to_tempfile</span><span class='lparen'>(</span><span class='id image'>image</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id image'>image</span><span class='period'>.</span><span class='id to_blob'>to_blob</span>
   <span class='id image'>image</span><span class='period'>.</span><span class='id destroy!'>destroy!</span>
   <span class='lbracket'>[</span>
-    <span class='id data'>data</span><span class='comma'>,</span>
+    <span class='id content'>content</span><span class='comma'>,</span>
     <span class='lbrace'>{</span><span class='symbol'>:format</span> <span class='op'>=&gt;</span> <span class='id format'>format</span><span class='period'>.</span><span class='id to_sym'>to_sym</span><span class='comma'>,</span> <span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>plasma.</span><span class='embexpr_beg'>#{</span><span class='id format'>format</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
   <span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
@@ -259,7 +286,7 @@
       <div class="method_details ">
   <p class="signature " id="text-instance_method">
   
-    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>text</strong>(text_string, opts = {}) 
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>text</strong>(text_string, opts = {}) 
   
 
   
@@ -269,10 +296,6 @@
       <pre class="lines">
 
 
-70
-71
-72
-73
 74
 75
 76
@@ -328,18 +351,22 @@
 126
 127
 128
-129</pre>
+129
+130
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/generation/r_magick_generator.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/generation/r_magick_generator.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id text'>text</span><span class='lparen'>(</span><span class='id text_string'>text_string</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id opts'>opts</span> <span class='op'>=</span> <span class='const'>HashWithCssStyleKeys</span><span class='lbracket'>[</span><span class='id opts'>opts</span><span class='rbracket'>]</span>
-  
+
   <span class='id draw'>draw</span> <span class='op'>=</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>Draw</span><span class='period'>.</span><span class='id new'>new</span>
   <span class='id draw'>draw</span><span class='period'>.</span><span class='id gravity'>gravity</span> <span class='op'>=</span> <span class='const'>Magick</span><span class='op'>::</span><span class='const'>CenterGravity</span>
   <span class='id draw'>draw</span><span class='period'>.</span><span class='id text_antialias'>text_antialias</span> <span class='op'>=</span> <span class='kw'>true</span>
-  
+
   <span class='comment'># Font size
 </span>  <span class='id font_size'>font_size</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:font_size</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='int'>12</span><span class='rparen'>)</span><span class='period'>.</span><span class='id to_i'>to_i</span>
 
@@ -378,18 +405,18 @@
   <span class='rbrace'>}</span>
   <span class='comment'># Draw the text
 </span>  <span class='id draw'>draw</span><span class='period'>.</span><span class='id annotate'>annotate</span><span class='lparen'>(</span><span class='id image'>image</span><span class='comma'>,</span> <span class='id width'>width</span><span class='comma'>,</span> <span class='id height'>height</span><span class='comma'>,</span> <span class='id padding_left'>padding_left</span><span class='comma'>,</span> <span class='id padding_top'>padding_top</span><span class='comma'>,</span> <span class='id text_string'>text_string</span><span class='rparen'>)</span>
-  
+
   <span class='comment'># Scale back down again
 </span>  <span class='id image'>image</span><span class='period'>.</span><span class='id scale!'>scale!</span><span class='lparen'>(</span><span class='int'>1</span><span class='op'>/</span><span class='id s'>s</span><span class='rparen'>)</span>
-  
+
   <span class='id format'>format</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:format</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='symbol'>:png</span>
   <span class='id image'>image</span><span class='period'>.</span><span class='id format'>format</span> <span class='op'>=</span> <span class='id format'>format</span><span class='period'>.</span><span class='id to_s'>to_s</span>
 
-  <span class='comment'># Output image as string
-</span>  <span class='id data'>data</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id to_blob'>to_blob</span>
+  <span class='comment'># Output image either as a string or a tempfile
+</span>  <span class='id content'>content</span> <span class='op'>=</span> <span class='id use_filesystem'>use_filesystem</span> <span class='op'>?</span> <span class='id write_to_tempfile'>write_to_tempfile</span><span class='lparen'>(</span><span class='id image'>image</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id image'>image</span><span class='period'>.</span><span class='id to_blob'>to_blob</span>
   <span class='id image'>image</span><span class='period'>.</span><span class='id destroy!'>destroy!</span>
   <span class='lbracket'>[</span>
-    <span class='id data'>data</span><span class='comma'>,</span>
+    <span class='id content'>content</span><span class='comma'>,</span>
     <span class='lbrace'>{</span><span class='symbol'>:format</span> <span class='op'>=&gt;</span> <span class='id format'>format</span><span class='comma'>,</span> <span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>text.</span><span class='embexpr_beg'>#{</span><span class='id format'>format</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
   <span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
@@ -410,9 +437,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sat Aug 28 10:38:07 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Wed Sep  1 13:03:20 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.0 (ruby-1.9.2).
 </div>
 
   </body>

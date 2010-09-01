@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.4)</div>
+      <div id="logo">DRAGONFLY (v 0.7.5)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -76,17 +76,260 @@
 <p class="children">
    
     
-      <strong class="modules">Modules:</strong> <a href="Dragonfly.html" title="Dragonfly (module)">Dragonfly</a>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span>
     
    
     
-      <strong class="classes">Classes:</strong> <a href="Object.html" title="Object (class)">Object</a>, <a href="String.html" title="String (class)">String</a>, <a href="Symbol.html" title="Symbol (class)">Symbol</a>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span>, <span class='object_link'><a href="String.html" title="String (class)">String</a></span>, <span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span>
     
   
 </p>
 
 
 
+
+<h2>Configuration Summary</h2>
+<h3>Configurable attributes</h3>
+Configurable attributes for an object in general <code>object</code> can be configured either by using something like
+<pre class="code">
+  object.configure <span class="kw">do</span> |c|
+    c.some_configurable_attribute = <span class="string val">"some value"</span>
+    c.some_other_configurable_attribute = <span class="integer val">42</span>
+    ...
+  <span class="kw">end</span>
+</pre>
+or
+<pre class="code">
+  object.some_configurable_attribute = <span class="string val">"some value"</span>
+</pre>
+<h4>Configurable attributes for instances of root</h4>
+<ul>
+  
+  <li>
+    <code>datastore</code>
+    
+     - default <code><span class="string val">"DataStorage::FileDataStore.new"</span></code> (evaluated lazily) 
+    
+    
+  </li>
+  
+  <li>
+    <code>cache_duration</code>
+    
+     - default <code><span class="integer val">31536000</span></code>
+    
+    - (1 year)
+  </li>
+  
+  <li>
+    <code>fallback_mime_type</code>
+    
+     - default <code><span class="string val">"application/octet-stream"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>url_path_prefix</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>url_host</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>protect_from_dos_attacks</code>
+    
+     - default <code><span class="kw">false</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>secret</code>
+    
+     - default <code><span class="string val">"secret yo"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>log</code>
+    
+     - default <code><span class="string val">"Logger.new('/var/tmp/dragonfly.log')"</span></code> (evaluated lazily) 
+    
+    
+  </li>
+  
+  <li>
+    <code>infer_mime_type_from_file_ext</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>enable_cache</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>cache_size</code>
+    
+     - default <code><span class="integer val">100</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>block_size</code>
+    
+     - default <code><span class="integer val">8192</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>bucket_name</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>access_key_id</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>secret_access_key</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>use_filesystem</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>supported_formats</code>
+    
+     - default <code>[:ai, :bmp, :eps, :gif, :gif87, :ico, :j2c, :jp2, :jpeg, :jpg, :pbm, :pcd, :pct, :pcx, :pdf, :pict, :pjpeg, :png, :png24, :png32, :png8, :pnm, :ppm, :ps, :psd, :ras, :tga, :tiff, :wbmp, :xbm, :xpm, :xwd]</code>
+    
+    
+  </li>
+  
+  <li>
+    <code>use_filesystem</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>use_filesystem</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>root_path</code>
+    
+     - default <code><span class="string val">"/var/tmp/dragonfly"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>host</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>port</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>database</code>
+    
+     - default <code><span class="string val">"dragonfly"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>use_filesystem</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>use_filesystem</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>file_command</code>
+    
+     - default <code><span class="string val">"file"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>use_filesystem</code>
+    
+     - default <code><span class="kw">false</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>num_bytes_to_check</code>
+    
+     - default <code><span class="integer val">255</span></code>
+    
+    
+  </li>
+  
+</ul>
 
 
   
@@ -155,7 +398,7 @@ any modules/classes inside them All paths here are absolute.
       <div class="method_details first">
   <p class="signature first" id="autoload_files_in_dir-instance_method">
   
-    - (<tt><a href="Object.html" title="Object (class)">Object</a></tt>) <strong>autoload_files_in_dir</strong>(path, namespace) 
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>autoload_files_in_dir</strong>(path, namespace) 
   
 
   
@@ -207,7 +450,7 @@ any modules/classes inside them All paths here are absolute.
       <div class="method_details ">
   <p class="signature " id="camelize-instance_method">
   
-    - (<tt><a href="Object.html" title="Object (class)">Object</a></tt>) <strong>camelize</strong>(path) 
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>camelize</strong>(path) 
   
 
   
@@ -268,9 +511,9 @@ any modules/classes inside them All paths here are absolute
     </div>
 
     <div id="footer">
-  Generated on Sat Aug 28 10:38:07 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Wed Sep  1 13:03:20 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.0 (ruby-1.9.2).
 </div>
 
   </body>
