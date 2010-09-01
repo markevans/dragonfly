@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.7.4"
+  s.version = "0.7.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2010-08-28}
+  s.date = %q{2010-09-01}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -50,7 +50,7 @@ Gem::Specification.new do |s|
      "features/images.feature",
      "features/no_processing.feature",
      "features/rails_2.3.5.feature",
-     "features/rails_3.0.0.rc.feature",
+     "features/rails_3.0.0.feature",
      "features/steps/common_steps.rb",
      "features/steps/dragonfly_steps.rb",
      "features/steps/rails_steps.rb",
@@ -64,7 +64,7 @@ Gem::Specification.new do |s|
      "fixtures/files/features/support/paths.rb",
      "fixtures/files/features/text_images.feature",
      "fixtures/rails_2.3.5/template.rb",
-     "fixtures/rails_3.0.0.rc/template.rb",
+     "fixtures/rails_3.0.0/template.rb",
      "irbrc.rb",
      "lib/dragonfly.rb",
      "lib/dragonfly/active_model_extensions.rb",
@@ -122,6 +122,7 @@ Gem::Specification.new do |s|
      "spec/dragonfly/analysis/file_command_analyser_spec.rb",
      "spec/dragonfly/analysis/r_magick_analyser_spec.rb",
      "spec/dragonfly/app_spec.rb",
+     "spec/dragonfly/config/r_magick_spec.rb",
      "spec/dragonfly/configurable_spec.rb",
      "spec/dragonfly/core_ext/string_spec.rb",
      "spec/dragonfly/core_ext/symbol_spec.rb",
@@ -170,6 +171,7 @@ Gem::Specification.new do |s|
      "spec/dragonfly/analysis/file_command_analyser_spec.rb",
      "spec/dragonfly/analysis/r_magick_analyser_spec.rb",
      "spec/dragonfly/app_spec.rb",
+     "spec/dragonfly/config/r_magick_spec.rb",
      "spec/dragonfly/configurable_spec.rb",
      "spec/dragonfly/core_ext/string_spec.rb",
      "spec/dragonfly/core_ext/symbol_spec.rb",
