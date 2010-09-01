@@ -1,17 +1,17 @@
 module Dragonfly
   class FunctionManager
-    
+
     # Exceptions
     class NotDefined < NoMethodError; end
     class UnableToHandle < NotImplementedError; end
-    
+
     include Loggable
-    
+
     def initialize
       @functions = {}
       @objects = []
     end
-    
+
     def add(name, callable_obj=nil, &block)
       functions[name] ||= []
       functions[name] << (callable_obj || block)
@@ -29,7 +29,7 @@ module Dragonfly
       objects << obj
       obj
     end
-    
+
     def call_last(meth, *args)
       if functions[meth.to_sym]
         functions[meth.to_sym].reverse.each do |function|
@@ -45,12 +45,16 @@ module Dragonfly
       end
     end
 
+    def get_registered(klass)
+      objects.reverse.detect{|o| o.instance_of?(klass) }
+    end
+
     def inspect
       to_s.sub(/>$/, " with functions: #{functions.keys.map{|k| k.to_s }.sort.join(', ')} >")
     end
 
     private
-    
+
     def methods_to_add(obj)
       if obj.is_a?(Configurable)
         obj.public_methods(false) -
