@@ -9,36 +9,54 @@ describe Dragonfly::Analysis::RMagickAnalyser do
     @analyser.log = Logger.new(LOG_FILE)
   end
 
-  it "should return the width" do
-    @analyser.width(@beach).should == 280
+  describe "analysis methods", :shared => true do
+    
+    it "should return the width" do
+      @analyser.width(@beach).should == 280
+    end
+  
+    it "should return the height" do
+      @analyser.height(@beach).should == 355
+    end
+  
+    it "should return the aspect ratio" do
+      @analyser.aspect_ratio(@beach).should == (280.0/355.0)
+    end
+  
+    it "should say if it's portrait" do
+      @analyser.portrait?(@beach).should be_true
+    end
+  
+    it "should say if it's landscape" do
+      @analyser.landscape?(@beach).should be_false
+    end
+  
+    it "should return the number of colours" do
+      @analyser.number_of_colours(@beach).should == 34703
+    end
+  
+    it "should return the depth" do
+      @analyser.depth(@beach).should == 8
+    end
+  
+    it "should return the format" do
+      @analyser.format(@beach).should == :png
+    end
+    
   end
   
-  it "should return the height" do
-    @analyser.height(@beach).should == 355
+  describe "when using the filesystem" do
+    before(:each) do
+      @analyser.use_filesystem = true
+    end
+    it_should_behave_like "analysis methods"
   end
   
-  it "should return the aspect ratio" do
-    @analyser.aspect_ratio(@beach).should == (280.0/355.0)
-  end
-  
-  it "should say if it's portrait" do
-    @analyser.portrait?(@beach).should be_true
-  end
-  
-  it "should say if it's landscape" do
-    @analyser.landscape?(@beach).should be_false
-  end
-  
-  it "should return the number of colours" do
-    @analyser.number_of_colours(@beach).should == 34703
-  end
-  
-  it "should return the depth" do
-    @analyser.depth(@beach).should == 8
-  end
-  
-  it "should return the format" do
-    @analyser.format(@beach).should == :png
+  describe "when not using the filesystem" do
+    before(:each) do
+      @analyser.use_filesystem = false
+    end
+    it_should_behave_like "analysis methods"
   end
   
   %w(width height aspect_ratio number_of_colours depth format portrait? landscape?).each do |meth|
