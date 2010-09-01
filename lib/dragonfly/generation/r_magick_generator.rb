@@ -3,13 +3,13 @@ require 'RMagick'
 module Dragonfly
   module Generation
     class RMagickGenerator
-      
+
       FONT_STYLES = {
         'normal' => Magick::NormalStyle,
         'italic' => Magick::ItalicStyle,
         'oblique' => Magick::ObliqueStyle
       }
-      
+
       FONT_STRETCHES = {
         'normal'          => Magick::NormalStretch,
         'semi-condensed'  => Magick::SemiCondensedStretch,
@@ -21,7 +21,7 @@ module Dragonfly
         'extra-expanded'  => Magick::ExtraExpandedStretch,
         'ultra-expanded'  => Magick::UltraExpandedStretch
       }
-      
+
       FONT_WEIGHTS = {
         'normal'  => Magick::NormalWeight,
         'bold'    => Magick::BoldWeight,
@@ -37,7 +37,7 @@ module Dragonfly
         '800'     => 800,
         '900'     => 900
       }
-      
+
       # HashWithCssStyleKeys is solely for being able to access a hash
       # which has css-style keys (e.g. 'font-size') with the underscore
       # symbol version
@@ -55,25 +55,29 @@ module Dragonfly
           )
         end
       end
-      
+
+      include RMagickUtils
+      include Configurable
+      configurable_attr :use_filesystem, :true
+
       def plasma(width, height, format='png')
         image = Magick::Image.read("plasma:fractal"){self.size = "#{width}x#{height}"}.first
         image.format = format.to_s
-        data = image.to_blob
+        content = use_filesystem ? write_to_tempfile(image) : image.to_blob
         image.destroy!
         [
-          data,
+          content,
           {:format => format.to_sym, :name => "plasma.#{format}"}
         ]
       end
-      
+
       def text(text_string, opts={})
         opts = HashWithCssStyleKeys[opts]
-        
+
         draw = Magick::Draw.new
         draw.gravity = Magick::CenterGravity
         draw.text_antialias = true
-        
+
         # Font size
         font_size = (opts[:font_size] || 12).to_i
 
@@ -112,22 +116,22 @@ module Dragonfly
         }
         # Draw the text
         draw.annotate(image, width, height, padding_left, padding_top, text_string)
-        
+
         # Scale back down again
         image.scale!(1/s)
-        
+
         format = opts[:format] || :png
         image.format = format.to_s
 
-        # Output image as string
-        data = image.to_blob
+        # Output image either as a string or a tempfile
+        content = use_filesystem ? write_to_tempfile(image) : image.to_blob
         image.destroy!
         [
-          data,
+          content,
           {:format => format, :name => "text.#{format}"}
         ]
       end
-      
+
       private
 
       # Use css-style padding declaration, i.e.
@@ -152,7 +156,7 @@ module Dragonfly
         else raise ArgumentError, "Couldn't parse padding string '#{str}' - should be a css-style string"
         end
       end
-      
+
       def scale_factor_for(font_size)
         # Scale approximately to 64 if below
         min_size = 64

@@ -6,7 +6,7 @@ describe Dragonfly::Generation::RMagickGenerator do
     before(:each) do
       @generator = Dragonfly::Generation::RMagickGenerator.new
     end
-    
+
     describe "generating an image with the given dimensions" do
       before(:each) do
         @image, @extra = @generator.plasma(23,12)
@@ -16,13 +16,21 @@ describe Dragonfly::Generation::RMagickGenerator do
       it {@image.should have_format('png')}
       it {@extra.should == {:format => :png, :name => 'plasma.png'}}
     end
-    
+
     describe "specifying the format" do
       before(:each) do
         @image, @extra = @generator.plasma(23, 12, :gif)
       end
       it {@image.should have_format('gif')}
       it {@extra.should == {:format => :gif, :name => 'plasma.gif'}}
+    end
+
+    describe "when not using the filesystem" do
+      it "should still work" do
+        @generator.use_filesystem = false
+        image, extra = @generator.plasma(4, 6)
+        image.should have_width(4)
+      end
     end
   end
 
@@ -48,6 +56,14 @@ describe Dragonfly::Generation::RMagickGenerator do
       end
       it {@image.should have_format('gif')}
       it {@extra.should == {:format => :gif, :name => 'text.gif'}}
+    end
+
+    describe "when not using the filesystem" do
+      it "should still work" do
+        @generator.use_filesystem = false
+        image, extra = @generator.text(@text, :font_size => 12)
+        image.should have_width(20..40)
+      end
     end
 
     # it "should ignore percent characters used by rmagick"
