@@ -4,6 +4,7 @@ Changes
 --------
 - RMagick processor, encoder, analyser and generator all use the filesystem now
   They can be configured to use in-memory strings with the use_filesystem config option.
+- Upgraded support from Rails 3.0.0.rc -> Rails.3.0.0
 
 0.7.4 (2010-08-28)
 ==================
