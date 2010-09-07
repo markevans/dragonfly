@@ -2,6 +2,7 @@ require 'tempfile'
 
 module Dragonfly
   module RMagickUtils
+    include Loggable
 
     private
 
