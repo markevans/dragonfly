@@ -615,6 +615,30 @@ describe Item do
         }.should raise_error(NoMethodError)
       end
     end
+    
+    describe "setting things on the attachment" do
+      
+      before(:each) do
+        @item = Item.new
+      end
+
+      describe "name" do
+        before(:each) do
+          @item.preview_image = "Hello"
+          @item.preview_image.name = 'hello.there'
+        end
+        it "should allow for setting the name" do
+          @item.preview_image.name.should == 'hello.there'
+        end
+        it "should update the magic attribute" do
+          @item.preview_image_name.should == 'hello.there'
+        end
+        it "should return the name" do
+          (@item.preview_image.name = 'no.silly').should == 'no.silly'
+        end
+      end
+    end
+    
   end
 
   describe "inheritance" do

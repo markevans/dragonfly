@@ -63,6 +63,12 @@ module Dragonfly
         end
       end
 
+      def name=(name)
+        job.name = name
+        set_magic_attribute(:name, name) if has_magic_attribute_for?(:name)
+        name
+      end
+
       def process!(*args)
         assign(process(*args))
         self
@@ -127,24 +133,25 @@ module Dragonfly
       end
 
       def magic_attributes
-        parent_model.public_methods.select { |name|
+        @magic_attributes ||= parent_model.public_methods.select { |name|
           name.to_s =~ /^#{attribute_name}_(.+)$/ && allowed_magic_attributes.include?($1.to_sym)
-        }
+        }.map{|name| name.to_s.sub("#{attribute_name}_", '').to_sym }
+      end
+
+      def set_magic_attribute(property, value)
+        parent_model.send("#{attribute_name}_#{property}=", value)
       end
 
       def set_magic_attributes
-        magic_attributes.each do |attribute|
-          method = attribute.to_s.sub("#{attribute_name}_", '')
-          parent_model.send("#{attribute}=", job.send(method))
-        end
+        magic_attributes.each{|property| set_magic_attribute(property, job.send(property)) }
       end
 
       def reset_magic_attributes
-        magic_attributes.each{|attribute| parent_model.send("#{attribute}=", nil) }
+        magic_attributes.each{|property| set_magic_attribute(property, nil) }
       end
 
       def has_magic_attribute_for?(property)
-        magic_attributes.include?("#{attribute_name}_#{property}".to_method_name)
+        magic_attributes.include?(property.to_sym)
       end
 
       def magic_attribute_for(property)
