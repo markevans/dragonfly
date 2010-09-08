@@ -288,6 +288,10 @@ module Dragonfly
       app.store(result)
     end
 
+    def resolve_mime_type
+      app.resolve_mime_type(result)
+    end
+
     def inspect
       to_s.sub(/>$/, " app=#{app}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >")
     end

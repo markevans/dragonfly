@@ -34,7 +34,7 @@ module Dragonfly
 
     def success_headers(job)
       {
-        "Content-Type" => job.app.resolve_mime_type(job.result),
+        "Content-Type" => job.resolve_mime_type,
         "Content-Length" => job.size.to_s,
       }.merge(cache_headers(job))
     end
