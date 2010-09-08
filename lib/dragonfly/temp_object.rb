@@ -89,8 +89,9 @@ module Dragonfly
       end
     end
 
-    attr_reader :name, :format
+    attr_accessor :name, :format
     alias _format format
+    attr_writer :meta
 
     def meta
       @meta ||= {}
@@ -159,8 +160,6 @@ module Dragonfly
     attr_accessor :initialized_data, :initialized_tempfile, :initialized_file
 
     private
-
-    attr_writer :name, :meta, :format
 
     def initialize_from_object!(obj)
       case obj

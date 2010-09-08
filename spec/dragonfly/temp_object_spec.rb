@@ -256,6 +256,11 @@ describe Dragonfly::TempObject do
       temp_object = Dragonfly::TempObject.new('sdf', :name => '')
       temp_object.name.should be_nil
     end
+    it "should allow setting" do
+      temp_object = Dragonfly::TempObject.new('sdf')
+      temp_object.name = "jonny.briggs"
+      temp_object.name.should == 'jonny.briggs'
+    end
   end
   
   describe "ext" do
@@ -296,7 +301,7 @@ describe Dragonfly::TempObject do
       @temp_object.meta.should == {}
     end
     it "should allow setting" do
-      @temp_object.meta[:teeth] = 'many'
+      @temp_object.meta = {:teeth => 'many'}
       @temp_object.meta.should == {:teeth => 'many'}
     end
   end
@@ -309,6 +314,11 @@ describe Dragonfly::TempObject do
     it "should allow setting on initialize" do
       temp_object = Dragonfly::TempObject.new('wassin my belly??!', :format => :jpg)
       temp_object.format.should == :jpg
+    end
+    it "should allow setting" do
+      temp_object = Dragonfly::TempObject.new('jo*ida pero contenta')
+      temp_object.format = :tiff
+      temp_object.format.should == :tiff
     end
   end
   
