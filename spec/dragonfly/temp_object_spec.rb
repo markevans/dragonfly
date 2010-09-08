@@ -326,13 +326,17 @@ describe Dragonfly::TempObject do
     before(:each) do
       @temp_object = Dragonfly::TempObject.new("ne'er gonna give you up",
         :meta => {:a => 4},
-        :name => 'fred.txt'
+        :name => 'fred.txt',
+        :format => :txt
       )
-      @attributes = {:meta => {:b => 5}, :ogle => 'bogle'}
+      @attributes = {:meta => {:b => 5}, :ogle => 'bogle', :format => :dungbats}
       @temp_object.extract_attributes_from(@attributes)
     end
     it "should overwrite its own attributes if specified" do
-      @temp_object.meta.should == {:b => 5}
+      @temp_object.format.should == :dungbats
+    end
+    it "should merge its own meta if specified" do
+      @temp_object.meta.should == {:a => 4, :b => 5}
     end
     it "should leave non-specified attributes untouched" do
       @temp_object.name.should == 'fred.txt'

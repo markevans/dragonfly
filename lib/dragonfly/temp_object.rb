@@ -139,9 +139,9 @@ module Dragonfly
     end
 
     def extract_attributes_from(hash)
-      self.name   = hash.delete(:name)   unless hash[:name].blank?
-      self.meta   = hash.delete(:meta)   unless hash[:meta].blank?
-      self.format = hash.delete(:format) unless hash[:format].blank?
+      self.name   = hash.delete(:name)     unless hash[:name].blank?
+      self.format = hash.delete(:format)   unless hash[:format].blank?
+      self.meta.merge!(hash.delete(:meta)) unless hash[:meta].blank?
     end
 
     def inspect
