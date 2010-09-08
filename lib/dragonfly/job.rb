@@ -37,7 +37,15 @@ module Dragonfly
       def initialize(*args)
         @args = args
       end
+
       attr_reader :args
+
+      def update_temp_object(job, content, extra)
+        temp_object = TempObject.new(content, job.temp_object.attributes)
+        temp_object.extract_attributes_from(extra) if extra
+        job.temp_object = temp_object
+      end
+
       def inspect
         "#{self.class.step_name}(#{args.map{|a| a.inspect }.join(', ')})"
       end
@@ -62,11 +70,8 @@ module Dragonfly
       end
       def apply(job)
         raise NothingToProcess, "Can't process because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        old = job.temp_object
-        content, extra = job.app.processor.process(old, name, *arguments)
-        temp_object = TempObject.new(content, old.attributes)
-        temp_object.extract_attributes_from(extra) if extra
-        job.temp_object = temp_object
+        content, extra = job.app.processor.process(job.temp_object, name, *arguments)
+        update_temp_object(job, content, extra)
       end
     end
 
@@ -79,12 +84,9 @@ module Dragonfly
       end
       def apply(job)
         raise NothingToEncode, "Can't encode because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        old = job.temp_object
-        content, extra = job.app.encoder.encode(old, format, *arguments)
-        temp_object = TempObject.new(content, old.attributes)
-        temp_object.extract_attributes_from(extra) if extra
-        temp_object.format = format
-        job.temp_object = temp_object
+        content, extra = job.app.encoder.encode(job.temp_object, format, *arguments)
+        update_temp_object(job, content, extra)
+        job.temp_object.format = format
       end
     end
 
