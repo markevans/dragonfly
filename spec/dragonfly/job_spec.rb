@@ -654,4 +654,14 @@ describe Dragonfly::Job do
     end
   end
 
+  describe "b64_data" do
+    before(:each) do
+      @app = test_app
+    end
+    it "should return a string using the data:URI schema" do
+      job = @app.new_job("HELLO", :name => 'text.txt')
+      job.b64_data.should == "data:text/plain;base64,SEVMTE8=\n"
+    end
+  end
+
 end

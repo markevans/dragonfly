@@ -1,5 +1,6 @@
 require 'forwardable'
 require 'digest/sha1'
+require 'base64'
 
 module Dragonfly
   class Job
@@ -290,6 +291,10 @@ module Dragonfly
 
     def resolve_mime_type
       app.resolve_mime_type(result)
+    end
+
+    def b64_data
+      "data:#{resolve_mime_type};base64,#{Base64.encode64(data)}"
     end
 
     def inspect
