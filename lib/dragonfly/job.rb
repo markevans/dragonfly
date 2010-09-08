@@ -63,10 +63,10 @@ module Dragonfly
       def apply(job)
         raise NothingToProcess, "Can't process because temp object has not been initialized. Need to fetch first?" unless job.temp_object
         old = job.temp_object
-        job.temp_object = TempObject.new(
-          job.app.processor.process(old, name, *arguments),
-          old.attributes
-        )
+        content, extra = job.app.processor.process(old, name, *arguments)
+        temp_object = TempObject.new(content, old.attributes)
+        temp_object.extract_attributes_from(extra) if extra
+        job.temp_object = temp_object
       end
     end
 
@@ -80,10 +80,11 @@ module Dragonfly
       def apply(job)
         raise NothingToEncode, "Can't encode because temp object has not been initialized. Need to fetch first?" unless job.temp_object
         old = job.temp_object
-        job.temp_object = TempObject.new(
-          job.app.encoder.encode(old, format, *arguments),
-          old.attributes.merge(:format => format)
-        )
+        content, extra = job.app.encoder.encode(old, format, *arguments)
+        temp_object = TempObject.new(content, old.attributes)
+        temp_object.extract_attributes_from(extra) if extra
+        temp_object.format = format
+        job.temp_object = temp_object
       end
     end
 

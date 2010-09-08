@@ -176,6 +176,15 @@ describe Dragonfly::Job do
         temp_object.meta.should == {:a => :b}
         temp_object.format.should == :txt
       end
+      
+      it "should allow returning an array with extra attributes from the processor" do
+        @app.processor.should_receive(:process).with(@temp_object, :resize, '20x30').and_return(['hi', {:name => 'hello_20x30.txt', :meta => {:eggs => 'asdf'}}])
+        temp_object = @job.apply.temp_object
+        temp_object.data.should == 'hi'
+        temp_object.name.should == 'hello_20x30.txt'
+        temp_object.meta.should == {:a => :b, :eggs => 'asdf'}
+        temp_object.format.should == :txt
+      end
     end
 
     describe "encode" do
@@ -201,6 +210,20 @@ describe Dragonfly::Job do
       it "should update the format" do
         @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
         @job.apply.temp_object.format.should == :gif
+      end
+
+      it "should allow returning an array with extra attributes form the encoder" do
+        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return(['alo', {:name => 'doobie', :meta => {:eggs => 'fish'}}])
+        temp_object = @job.apply.temp_object
+        temp_object.data.should == 'alo'
+        temp_object.name.should == 'doobie'
+        temp_object.meta.should == {:a => :b, :eggs => 'fish'}
+      end
+
+      it "not allow overriding the format" do
+        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return(['alo', {:format => :png}])
+        temp_object = @job.apply.temp_object
+        temp_object.format.should == :gif
       end
     end
   end
