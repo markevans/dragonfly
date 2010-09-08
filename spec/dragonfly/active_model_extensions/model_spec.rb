@@ -640,7 +640,7 @@ describe Item do
 
       describe "meta" do
         before(:each) do
-          @item.preview_image = "Hello"
+          @item.preview_image = "Hello all"
           @item.preview_image.meta = {:slime => 'balls'}
         end
         it "should allow for setting the meta" do
