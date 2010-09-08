@@ -10,3 +10,4 @@ fixtures/*/tmp_app
 .ginger
 .bundle
 spec/spec.log
+Gemfile.lock
