@@ -41,6 +41,7 @@ module Dragonfly
     # Instance Methods
 
     def initialize(obj, opts={})
+      opts ||= {} # in case it's nil
       initialize_from_object!(obj)
       validate_options!(opts)
       extract_attributes_from(opts)
