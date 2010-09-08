@@ -11,6 +11,10 @@ module Dragonfly
       configurable_attr :port
       configurable_attr :database, 'dragonfly'
 
+      # Mongo gem deprecated ObjectID in favour of ObjectId
+      OBJECT_ID = defined?(BSON::ObjectId) ? BSON::ObjectId : BSON::ObjectID
+      INVALID_OBJECT_ID = defined?(BSON::InvalidObjectId) ? BSON::InvalidObjectId : BSON::InvalidObjectID
+
       def initialize(opts={})
         self.host = opts[:host]
         self.port = opts[:port]
@@ -32,13 +36,13 @@ module Dragonfly
           grid_io.read,
           extra
         ]
-      rescue Mongo::GridFileNotFound, BSON::InvalidObjectID => e
+      rescue Mongo::GridFileNotFound, INVALID_OBJECT_ID => e
         raise DataNotFound, "#{e} - #{uid}"
       end
 
       def destroy(uid)
         grid.delete(bson_id(uid))
-      rescue Mongo::GridFileNotFound, BSON::InvalidObjectID => e
+      rescue Mongo::GridFileNotFound, INVALID_OBJECT_ID => e
         raise DataNotFound, "#{e} - #{uid}"
       end
 
@@ -57,7 +61,7 @@ module Dragonfly
       end
 
       def bson_id(uid)
-        BSON::ObjectID.from_string(uid)
+        OBJECT_ID.from_string(uid)
       end
 
     end
