@@ -637,6 +637,29 @@ describe Item do
           (@item.preview_image.name = 'no.silly').should == 'no.silly'
         end
       end
+
+      describe "meta" do
+        before(:each) do
+          @item.preview_image = "Hello"
+          @item.preview_image.meta = {:slime => 'balls'}
+        end
+        it "should allow for setting the meta" do
+          @item.preview_image.meta.should == {:slime => 'balls'}
+        end
+        it "should allow for updating the meta" do
+          @item.preview_image.meta[:numb] = 'nuts'
+          @item.preview_image.meta.should == {:slime => 'balls', :numb => 'nuts'}
+        end
+        it "should return the meta" do
+          (@item.preview_image.meta = {:doogs => 'boogs'}).should == {:doogs => 'boogs'}
+        end
+        it "should save it correctly" do
+          @item.save!
+          item = Item.find(@item.id)
+          item.preview_image.meta.should == {:slime => 'balls'}
+        end
+      end
+
     end
     
   end

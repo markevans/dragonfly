@@ -9,6 +9,7 @@ module Dragonfly
       def_delegators :job,
         :data, :to_file, :file, :tempfile, :path,
         :process, :encode, :analyse,
+        :meta, :meta=,
         :url
 
       def initialize(app, parent_model, attribute_name)
