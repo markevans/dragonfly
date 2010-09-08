@@ -4,7 +4,6 @@ module Dragonfly
   module Analysis
     class RMagickAnalyser
 
-      include Loggable
       include RMagickUtils
       include Configurable
 

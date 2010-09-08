@@ -3,6 +3,8 @@ require 'tempfile'
 module Dragonfly
   module RMagickUtils
 
+    include Loggable
+
     private
 
     # Requires the extended object to respond to 'use_filesystem'
