@@ -522,6 +522,9 @@ describe Dragonfly::Job do
         Dragonfly::Job.from_path("/images/#{@serialized}", @app).should be_a(Dragonfly::Job)
       }.should raise_error(Dragonfly::Serializer::BadString)
     end
+    it "should ignore any suffix" do
+      Dragonfly::Job.from_path("/#{@serialized}asdfJASKLDF*()!@$%{}|/GGG/.png.your.mum", @app).should be_a(Dragonfly::Job)
+    end
   end
 
   describe "serialization" do
