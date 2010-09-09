@@ -290,7 +290,14 @@ module Dragonfly
       "/#{serialize}"
     end
 
-    # fetch-related stuff
+    def to_fetched_job(uid)
+      new_job = self.class.new(app, temp_object)
+      new_job.fetch!(uid)
+      new_job.next_step_index = 1
+      new_job
+    end
+
+    # Step inspection
 
     def fetch_step
       last_step_of_type(Fetch)
@@ -301,25 +308,13 @@ module Dragonfly
       step.uid if step
     end
 
-    def to_fetched_job(uid)
-      new_job = self.class.new(app, temp_object)
-      new_job.fetch!(uid)
-      new_job.next_step_index = 1
-      new_job
+    def generate_step
+      last_step_of_type(Generate)
     end
-
-    # fetch_file-related stuff
 
     def fetch_file_step
       last_step_of_type(FetchFile)
     end
-
-    def fetched_path
-      step = fetch_file_step
-      step.path if step
-    end
-
-    # encode-related stuff
 
     def encode_step
       last_step_of_type(Encode)

@@ -698,12 +698,15 @@ describe Dragonfly::Job do
         step.path.should == '/my/file.png'
       end
     end
-    describe "fetched_path" do
-      it "should return nil if there's no fetch_file step" do
-        @app.new_job('asdf').fetched_path.should be_nil
+
+    describe "generate_step" do
+      it "should return nil if it doesn't exist" do
+        @app.fetch('many/ponies').process(:jam).generate_step.should be_nil
       end
-      it "should return the fetched path if it exists" do
-        @app.fetch_file('/my/file.png').process(:roger).fetched_path.should == '/my/file.png'
+      it "should return the generate step otherwise" do
+        step = @app.generate(:ponies).process(:cheese).generate_step
+        step.should be_a(Dragonfly::Job::Generate)
+        step.args.should == [:ponies]
       end
     end
 
