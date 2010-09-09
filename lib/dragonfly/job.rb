@@ -303,17 +303,17 @@ module Dragonfly
       last_step_of_type(Fetch)
     end
 
-    def fetched_uid
+    def uid
       step = fetch_step
       step.uid if step
     end
 
-    def fetched_uid_basename
-      File.basename(fetched_uid, '.*') if fetched_uid
+    def uid_basename
+      File.basename(uid, '.*') if uid
     end
 
-    def fetched_uid_extname
-      File.extname(fetched_uid) if fetched_uid
+    def uid_extname
+      File.extname(uid) if uid
     end
 
     def generate_step

@@ -684,28 +684,28 @@ describe Dragonfly::Job do
         before(:each) do
           @job = @app.new_job("AGG")
         end
-        it "should return nil for fetched_uid" do
-          @job.fetched_uid.should be_nil
+        it "should return nil for uid" do
+          @job.uid.should be_nil
         end
-        it "should return nil for fetched_uid_basename" do
-          @job.fetched_uid_basename.should be_nil
+        it "should return nil for uid_basename" do
+          @job.uid_basename.should be_nil
         end
-        it "should return nil for fetched_uid_extname" do
-          @job.fetched_uid_extname.should be_nil
+        it "should return nil for uid_extname" do
+          @job.uid_extname.should be_nil
         end
       end
       describe "when there is a fetch step" do
         before(:each) do
           @job = @app.fetch('gungedin/innit.blud')
         end
-        it "should return the fetched_uid" do
-          @job.fetched_uid.should == 'gungedin/innit.blud'
+        it "should return the uid" do
+          @job.uid.should == 'gungedin/innit.blud'
         end
-        it "should return the fetched_uid_basename" do
-          @job.fetched_uid_basename.should == 'innit'
+        it "should return the uid_basename" do
+          @job.uid_basename.should == 'innit'
         end
-        it "should return the fetched_uid_extname" do
-          @job.fetched_uid_extname.should == '.blud'
+        it "should return the uid_extname" do
+          @job.uid_extname.should == '.blud'
         end
       end
     end

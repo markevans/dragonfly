@@ -202,7 +202,7 @@ describe Dragonfly::App do
       @app.url_for(@job, :suffix => '/howdy.pardner').should =~ /\w+\/howdy\.pardner$/
     end
     it "should accept a proc yielding the job" do
-      @app.url_suffix = proc{|job| job.fetched_uid }
+      @app.url_suffix = proc{|job| job.uid }
       @job.fetch!('some_uid')
       @app.url_for(@job).should =~ /\w+some_uid$/
     end
