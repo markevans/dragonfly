@@ -664,4 +664,28 @@ describe Dragonfly::Job do
     end
   end
 
+  describe "querying stuff without applying steps" do
+    before(:each) do
+      @app = test_app
+    end
+    describe "fetch_step" do
+      it "should return nil if it doesn't exist" do
+        @app.generate(:ponies).process(:jam).fetch_step.should be_nil
+      end
+      it "should return the fetch step otherwise" do
+        step = @app.fetch('hello').process(:cheese).fetch_step
+        step.should be_a(Dragonfly::Job::Fetch)
+        step.uid.should == 'hello'
+      end
+    end
+    describe "fetched_uid" do
+      it "should return nil if there's no fetch step" do
+        @app.new_job('asdf').fetched_uid.should be_nil
+      end
+      it "should return the fetched uid if it exists" do
+        @app.fetch('gungedin').process(:roger).fetched_uid.should == 'gungedin'
+      end
+    end
+  end
+
 end

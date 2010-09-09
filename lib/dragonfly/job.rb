@@ -274,6 +274,14 @@ module Dragonfly
       app.url_for(self, *args) unless steps.empty?
     end
 
+    def fetch_step
+      steps.select{|s| s.is_a?(Fetch) }.last
+    end
+
+    def fetched_uid
+      fetch_step.uid if fetch_step
+    end
+
     def to_fetched_job(uid)
       new_job = self.class.new(app, temp_object)
       new_job.fetch!(uid)
