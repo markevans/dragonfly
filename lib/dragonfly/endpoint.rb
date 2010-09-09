@@ -1,3 +1,5 @@
+require 'uri'
+
 module Dragonfly
   module Endpoint
 
@@ -36,7 +38,22 @@ module Dragonfly
       {
         "Content-Type" => job.resolve_mime_type,
         "Content-Length" => job.size.to_s,
+        "Content-Disposition" => content_disposition_header(job)
       }.merge(cache_headers(job))
+    end
+
+    def content_disposition_header(job)
+      header = "inline"
+      filename = filename_for(job)
+      header << %(; filename="#{URI.encode(filename)}") if filename
+      header
+    end
+
+    def filename_for(job)
+      if job.basename
+        extname = job.encoded_extname || (".#{job.ext}" if job.ext)
+        "#{job.basename}#{extname}"
+      end
     end
 
   end

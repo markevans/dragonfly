@@ -16,7 +16,7 @@ module Dragonfly
     class IncorrectSHA < StandardError; end
 
     extend Forwardable
-    def_delegators :result, :data, :file, :tempfile, :path, :to_file, :size, :ext, :name, :name=, :meta, :meta=, :format, :_format
+    def_delegators :result, :data, :file, :tempfile, :path, :to_file, :size, :ext, :name, :name=, :basename, :meta, :meta=, :format, :_format
 
     class Step
 
