@@ -8,23 +8,23 @@ end
 describe Dragonfly::App do
 
   describe ".instance" do
-    
+
     it "should create a new instance if it didn't already exist" do
       app = Dragonfly::App.instance(:images)
       app.should be_a(Dragonfly::App)
     end
-    
+
     it "should return an existing instance if called by name" do
       app = Dragonfly::App.instance(:images)
       Dragonfly::App.instance(:images).should == app
     end
-    
+
     it "should also work using square brackets" do
       Dragonfly[:images].should == Dragonfly::App.instance(:images)
     end
-    
+
   end
-  
+
   describe ".new" do
     it "should not be callable" do
       lambda{
@@ -69,7 +69,7 @@ describe Dragonfly::App do
         other_app.mime_type_for(:mark).should == 'second/one'
       end
     end
-    
+
     describe "#resolve_mime_type" do
       before(:each) do
         @app = test_app
@@ -129,7 +129,7 @@ describe Dragonfly::App do
       end
 
     end
-    
+
   end
 
   describe "without path prefix or DOS protection" do
@@ -184,7 +184,25 @@ describe Dragonfly::App do
       @app.url_for(@job, :host => 'https://smeedy').should =~ %r{^https://smeedy/\w+$}
     end
   end
-  
+
+  describe "url_suffix" do
+    before(:each) do
+      @app = test_app
+      @job = Dragonfly::Job.new(@app)
+    end
+    it "should add the suffix to the url if configured" do
+      @app.url_suffix = 'hellodudes'
+      @app.url_for(@job).should =~ /\w+hellodudes$/
+    end
+    it "should add the suffix to the url if passed in" do
+      @app.url_for(@job, :suffix => '/howdy.pardner').should =~ /\w+\/howdy\.pardner$/
+    end
+    it "should favour the passed in one" do
+      @app.url_suffix = 'hellodudes'
+      @app.url_for(@job, :suffix => '/howdy.pardner').should =~ /\w+\/howdy\.pardner$/
+    end
+  end
+
   describe "Denial of Service protection" do
     before(:each) do
       @app = test_app
@@ -200,7 +218,7 @@ describe Dragonfly::App do
     before(:each) do
       @app = test_app
     end
-    
+
     {
       :rmagick => Dragonfly::Config::RMagick,
       :r_magick => Dragonfly::Config::RMagick,

@@ -45,6 +45,7 @@ module Dragonfly
     configurable_attr :fallback_mime_type, 'application/octet-stream'
     configurable_attr :url_path_prefix
     configurable_attr :url_host
+    configurable_attr :url_suffix
     configurable_attr :protect_from_dos_attacks, false
     configurable_attr :secret, 'secret yo'
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
@@ -126,8 +127,9 @@ module Dragonfly
       if (args.length == 1 && args.first.kind_of?(Hash)) || args.empty?
         opts = args.first || {}
         host = opts[:host] || url_host
+        suffix = opts[:suffix] || url_suffix
         path_prefix = opts[:path_prefix] || url_path_prefix
-        path = "#{host}#{path_prefix}#{job.to_path}"
+        path = "#{host}#{path_prefix}#{job.to_path}#{suffix}"
         path << "?#{dos_protection_query_string(job)}" if protect_from_dos_attacks
         path
       else
