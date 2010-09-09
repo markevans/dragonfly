@@ -29,6 +29,7 @@ Here is an example of an app with all attributes configured:
 
       c.url_path_prefix = '/images'                         # defaults to nil
       c.url_host = 'http://some.domain.com:4000'            # defaults to nil
+      c.url_suffix = '.jpg'                                 # defaults to nil - has no effect other than change the url
 
       c.protect_from_dos_attacks = true                     # defaults to false - adds a SHA parameter on the end of urls
       c.secret = 'This is my secret yeh!!'                  # should set this if concerned about DOS attacks

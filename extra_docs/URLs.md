@@ -17,13 +17,13 @@ to the urls:
 
 (or done in a configuration block).
 
-    app.fetch('my_uid').url                               # "/media/BAhbBlsH..."
+    app.fetch('my_uid').url                                  # "/media/BAhbBlsH..."
 
 This is done for you when using {file:Configuration Rails defaults}.
 
 You can override it using
 
-    app.fetch('my_uid').url(:path_prefix => '/images')    # "/images/BAhbBlsH..."
+    app.fetch('my_uid').url(:path_prefix => '/images')       # "/images/BAhbBlsH..."
 
 Host
 ----
@@ -33,6 +33,28 @@ You can also set a host for the urls
     app.fetch('my_uid').url                                  # "http://some.host/BAhb..."
 
     app.fetch('my_uid').url(:host => 'http://localhost:80')  # "http://localhost:80/BAh..."
+
+Suffix
+------
+You can set a suffix for the urls (for example if some other component behaves badly with urls that have no file extension).
+
+Note that this has no effect on the response.
+
+    app.url_suffix = '.jpg'
+    app.fetch('some/uid').url                                # "...b21lL3VpZA.jpg"
+
+You can also pass it a block, that yields the {Dragonfly::Job Job}, for example:
+
+    app.url_suffix = proc{|job|
+      "/#{job.uid_basename}#{job.encoded_extname || job.uid_extname}"
+    }
+
+    app.fetch('2007/painting.pdf').url                       # "...eS5ib2R5/painting.pdf"
+    app.fetch('2007/painting.pdf').encode(:png).url          # "...gZlOgbmc/painting.png"
+
+And you can override it:
+
+    app.fetch('some/uid').url(:suffix => '/yellowbelly')     # "...b21lL3VpZA/yellowbelly"
 
 Routed Endpoints
 ----------------
