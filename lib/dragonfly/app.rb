@@ -128,6 +128,7 @@ module Dragonfly
         opts = args.first || {}
         host = opts[:host] || url_host
         suffix = opts[:suffix] || url_suffix
+        suffix = suffix.call(job) if suffix.respond_to?(:call)
         path_prefix = opts[:path_prefix] || url_path_prefix
         path = "#{host}#{path_prefix}#{job.to_path}#{suffix}"
         path << "?#{dos_protection_query_string(job)}" if protect_from_dos_attacks
