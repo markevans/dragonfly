@@ -297,7 +297,8 @@ module Dragonfly
     end
 
     def fetched_uid
-      fetch_step.uid if fetch_step
+      step = fetch_step
+      step.uid if step
     end
 
     def to_fetched_job(uid)
@@ -314,7 +315,8 @@ module Dragonfly
     end
 
     def fetched_path
-      fetch_file_step.path if fetch_file_step
+      step = fetch_file_step
+      step.path if step
     end
 
     # encode-related stuff
@@ -324,7 +326,13 @@ module Dragonfly
     end
 
     def encoded_format
-      encode_step.format if encode_step
+      step = encode_step
+      step.format if step
+    end
+
+    def encoded_extname
+      format = encoded_format
+      ".#{format}" if format
     end
 
     # Misc

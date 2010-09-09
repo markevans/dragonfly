@@ -725,6 +725,14 @@ describe Dragonfly::Job do
         @app.fetch('gungedin').encode(:a).encode(:b).encoded_format.should == :b
       end
     end
+    describe "encoded_extname" do
+      it "should return nil if there's no encode step" do
+        @app.new_job('asdf').encoded_extname.should be_nil
+      end
+      it "should return the last encoded format as an extname if it exists" do
+        @app.fetch('gungedin').encode(:a).encode(:b).encoded_extname.should == '.b'
+      end
+    end
   end
 
 end
