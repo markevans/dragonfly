@@ -679,12 +679,34 @@ describe Dragonfly::Job do
         step.uid.should == 'hello'
       end
     end
-    describe "fetched_uid" do
-      it "should return nil if there's no fetch step" do
-        @app.new_job('asdf').fetched_uid.should be_nil
+    describe "fetched uid" do
+      describe "when there's no fetch step" do
+        before(:each) do
+          @job = @app.new_job("AGG")
+        end
+        it "should return nil for fetched_uid" do
+          @job.fetched_uid.should be_nil
+        end
+        it "should return nil for fetched_uid_basename" do
+          @job.fetched_uid_basename.should be_nil
+        end
+        it "should return nil for fetched_uid_extname" do
+          @job.fetched_uid_extname.should be_nil
+        end
       end
-      it "should return the fetched uid if it exists" do
-        @app.fetch('gungedin').process(:roger).fetched_uid.should == 'gungedin'
+      describe "when there is a fetch step" do
+        before(:each) do
+          @job = @app.fetch('gungedin/innit.blud')
+        end
+        it "should return the fetched_uid" do
+          @job.fetched_uid.should == 'gungedin/innit.blud'
+        end
+        it "should return the fetched_uid_basename" do
+          @job.fetched_uid_basename.should == 'innit'
+        end
+        it "should return the fetched_uid_extname" do
+          @job.fetched_uid_extname.should == '.blud'
+        end
       end
     end
 

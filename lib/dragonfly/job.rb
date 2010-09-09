@@ -308,6 +308,14 @@ module Dragonfly
       step.uid if step
     end
 
+    def fetched_uid_basename
+      File.basename(fetched_uid, '.*') if fetched_uid
+    end
+
+    def fetched_uid_extname
+      File.extname(fetched_uid) if fetched_uid
+    end
+
     def generate_step
       last_step_of_type(Generate)
     end
