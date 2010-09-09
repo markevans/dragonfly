@@ -214,6 +214,8 @@ module Dragonfly
       new_job
     end
 
+    # Applying, etc.
+
     def apply
       pending_steps.each{|step| step.apply(self) }
       self.next_step_index = steps.length
@@ -239,6 +241,8 @@ module Dragonfly
       }
     end
 
+    # Serializing, etc.
+
     def serialize
       Serializer.marshal_encode(to_a)
     end
@@ -262,6 +266,18 @@ module Dragonfly
       end
     end
 
+    # URLs, etc.
+
+    def url(*args)
+      app.url_for(self, *args) unless steps.empty?
+    end
+
+    def b64_data
+      "data:#{resolve_mime_type};base64,#{Base64.encode64(data)}"
+    end
+
+    # to_stuff...
+
     def to_app
       JobEndpoint.new(self)
     end
@@ -270,9 +286,11 @@ module Dragonfly
       to_app.call(env)
     end
 
-    def url(*args)
-      app.url_for(self, *args) unless steps.empty?
+    def to_path
+      "/#{serialize}"
     end
+
+    # fetch-related stuff
 
     def fetch_step
       steps.select{|s| s.is_a?(Fetch) }.last
@@ -289,9 +307,17 @@ module Dragonfly
       new_job
     end
 
-    def to_path
-      "/#{serialize}"
+    # fetch_file-related stuff
+
+    def fetch_file_step
+      steps.select{|s| s.is_a?(FetchFile) }.last
     end
+
+    def fetched_path
+      fetch_file_step.path if fetch_file_step
+    end
+
+    # Misc
 
     def store
       app.store(result)
@@ -299,10 +325,6 @@ module Dragonfly
 
     def resolve_mime_type
       app.resolve_mime_type(result)
-    end
-
-    def b64_data
-      "data:#{resolve_mime_type};base64,#{Base64.encode64(data)}"
     end
 
     def inspect

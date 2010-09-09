@@ -176,7 +176,7 @@ describe Dragonfly::Job do
         temp_object.meta.should == {:a => :b}
         temp_object.format.should == :txt
       end
-      
+
       it "should allow returning an array with extra attributes from the processor" do
         @app.processor.should_receive(:process).with(@temp_object, :resize, '20x30').and_return(['hi', {:name => 'hello_20x30.txt', :meta => {:eggs => 'asdf'}}])
         temp_object = @job.apply.temp_object
@@ -684,6 +684,25 @@ describe Dragonfly::Job do
       end
       it "should return the fetched uid if it exists" do
         @app.fetch('gungedin').process(:roger).fetched_uid.should == 'gungedin'
+      end
+    end
+
+    describe "fetch_file_step" do
+      it "should return nil if it doesn't exist" do
+        @app.generate(:ponies).process(:jam).fetch_file_step.should be_nil
+      end
+      it "should return the fetch_file step otherwise" do
+        step = @app.fetch_file('/my/file.png').process(:cheese).fetch_file_step
+        step.should be_a(Dragonfly::Job::FetchFile)
+        step.path.should == '/my/file.png'
+      end
+    end
+    describe "fetched_path" do
+      it "should return nil if there's no fetch_file step" do
+        @app.new_job('asdf').fetched_path.should be_nil
+      end
+      it "should return the fetched path if it exists" do
+        @app.fetch_file('/my/file.png').process(:roger).fetched_path.should == '/my/file.png'
       end
     end
   end
