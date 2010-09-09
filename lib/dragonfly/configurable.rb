@@ -25,6 +25,8 @@ module Dragonfly
       end
     end
 
+    class DeferredBlock < Proc; end
+
     module InstanceMethods
 
       def configure(&block)
@@ -62,11 +64,11 @@ module Dragonfly
       private
 
       def configurable_attr attribute, default=nil, &blk
-        default_configuration[attribute] = blk || default
+        default_configuration[attribute] = blk ? DeferredBlock.new(&blk) : default
 
         # Define the reader
         define_method(attribute) do
-          if configuration_hash[attribute].respond_to? :call
+          if configuration_hash[attribute].is_a?(DeferredBlock)
             configuration_hash[attribute] = configuration_hash[attribute].call
           end
           configuration_hash[attribute]

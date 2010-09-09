@@ -108,11 +108,9 @@ describe Dragonfly::Configurable do
       @lazy.sound.should == 'mooo!'
       @lazy.sound.should == 'mooo!'
     end
-    it "should also call a block which has been set as part of the configuration" do
-      @cow.should_receive(:fart).exactly(:once).and_return('paaarrp!')
+    it "should not call an explicitly passed in proc" do
       @lazy.configure{|c| c.sound = lambda{ @cow.fart }}
-      @lazy.sound.should == 'paaarrp!'
-      @lazy.sound.should == 'paaarrp!'
+      @lazy.sound.should be_a(Proc)
     end
   end
   
