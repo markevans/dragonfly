@@ -668,6 +668,7 @@ describe Dragonfly::Job do
     before(:each) do
       @app = test_app
     end
+    
     describe "fetch_step" do
       it "should return nil if it doesn't exist" do
         @app.generate(:ponies).process(:jam).fetch_step.should be_nil
@@ -703,6 +704,25 @@ describe Dragonfly::Job do
       end
       it "should return the fetched path if it exists" do
         @app.fetch_file('/my/file.png').process(:roger).fetched_path.should == '/my/file.png'
+      end
+    end
+
+    describe "encode_step" do
+      it "should return nil if it doesn't exist" do
+        @app.generate(:ponies).encode_step.should be_nil
+      end
+      it "should return the last encode step otherwise" do
+        step = @app.fetch('hello').encode(:smells).encode(:cheese).encode_step
+        step.should be_a(Dragonfly::Job::Encode)
+        step.format.should == :cheese
+      end
+    end
+    describe "encoded_format" do
+      it "should return nil if there's no encode step" do
+        @app.new_job('asdf').encoded_format.should be_nil
+      end
+      it "should return the last encoded format if it exists" do
+        @app.fetch('gungedin').encode(:a).encode(:b).encoded_format.should == :b
       end
     end
   end

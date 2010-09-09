@@ -293,7 +293,7 @@ module Dragonfly
     # fetch-related stuff
 
     def fetch_step
-      steps.select{|s| s.is_a?(Fetch) }.last
+      last_step_of_type(Fetch)
     end
 
     def fetched_uid
@@ -310,11 +310,21 @@ module Dragonfly
     # fetch_file-related stuff
 
     def fetch_file_step
-      steps.select{|s| s.is_a?(FetchFile) }.last
+      last_step_of_type(FetchFile)
     end
 
     def fetched_path
       fetch_file_step.path if fetch_file_step
+    end
+
+    # encode-related stuff
+
+    def encode_step
+      last_step_of_type(Encode)
+    end
+
+    def encoded_format
+      encode_step.format if encode_step
     end
 
     # Misc
@@ -335,6 +345,12 @@ module Dragonfly
 
     attr_writer :steps
     attr_accessor :next_step_index
+
+    private
+
+    def last_step_of_type(type)
+      steps.select{|s| s.is_a?(type) }.last
+    end
 
   end
 end
