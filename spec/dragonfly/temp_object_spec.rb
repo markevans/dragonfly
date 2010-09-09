@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Dragonfly::TempObject do
-  
+
   ####### Helper Methods #######
 
   def sample_path(filename)
@@ -14,23 +14,23 @@ describe Dragonfly::TempObject do
     tempfile.rewind
     tempfile
   end
-  
+
   def new_file(data='HELLO')
     File.open('/tmp/test_file', 'w') do |f|
       f.write(data)
     end
     File.new('/tmp/test_file')
   end
-  
+
   def new_temp_object(data, opts={})
     klass = opts.delete(:class) || Dragonfly::TempObject
     klass.new(initialization_object(data), opts)
   end
-  
+
   def initialization_object(data)
     raise NotImplementedError, "This should be implemented in the describe block!"
   end
-  
+
   def get_parts(temp_object)
     parts = []
     temp_object.each do |bytes|
@@ -39,15 +39,15 @@ describe Dragonfly::TempObject do
     parts.length.should >= 2 # Sanity check to check that the sample file is adequate for this test
     parts
   end
-  
+
   ###############################
-  
+
   it "should raise an error if initialized with a non-string/file/tempfile" do
     lambda{
       Dragonfly::TempObject.new(3)
     }.should raise_error(ArgumentError)
   end
-  
+
   describe "common behaviour", :shared => true do
 
     describe "simple initialization" do
@@ -91,13 +91,13 @@ describe Dragonfly::TempObject do
           @temp_object.tempfile.open.read.should == 'HELLO'
         end
       end
-    
+
       describe "path" do
         it "should return the absolute file path" do
           @temp_object.path.should == @temp_object.tempfile.path
         end
       end
-    
+
       describe "size" do
         it "should return the size in bytes" do
           @temp_object.size.should == 5
@@ -126,7 +126,7 @@ describe Dragonfly::TempObject do
           file.read.should == 'HELLO'
         end
       end
-      
+
     end
 
     describe "initializing attributes too" do
@@ -169,10 +169,10 @@ describe Dragonfly::TempObject do
         parts.last.length.should <= 3001
       end
     end
-    
+
 
   end
-  
+
   describe "initializing from a string" do
 
     def initialization_object(data)
@@ -187,7 +187,7 @@ describe Dragonfly::TempObject do
       temp_object.each{}
     end
   end
-  
+
   describe "initializing from a tempfile" do
 
     def initialization_object(data)
@@ -202,7 +202,7 @@ describe Dragonfly::TempObject do
       temp_object.each{}
     end
   end
-  
+
   describe "initializing from a file" do
 
     def initialization_object(data)
@@ -217,7 +217,7 @@ describe Dragonfly::TempObject do
       temp_object.each{}
     end
   end
-  
+
   describe "initializing from another temp object" do
     before(:each) do
       @temp_object1 = Dragonfly::TempObject.new(new_tempfile('hello'))
@@ -233,7 +233,7 @@ describe Dragonfly::TempObject do
       @temp_object1.path.should_not == @temp_object2.path
     end
   end
-  
+
   describe "name" do
     before(:each) do
       @obj = new_tempfile
@@ -262,7 +262,7 @@ describe Dragonfly::TempObject do
       temp_object.name.should == 'jonny.briggs'
     end
   end
-  
+
   describe "ext" do
     it "should use the correct extension from name" do
       temp_object = Dragonfly::TempObject.new('asfsadf', :name => 'hello.there.mate')
@@ -292,7 +292,7 @@ describe Dragonfly::TempObject do
       temp_object.basename.should be_nil
     end
   end
-  
+
   describe "meta" do
     before(:each) do
       @temp_object = Dragonfly::TempObject.new('get outta here!')
@@ -305,7 +305,7 @@ describe Dragonfly::TempObject do
       @temp_object.meta.should == {:teeth => 'many'}
     end
   end
-  
+
   describe "format" do
     it "should return nil if not set" do
       temp_object = Dragonfly::TempObject.new('wassin my belly??!')
@@ -321,7 +321,7 @@ describe Dragonfly::TempObject do
       temp_object.format.should == :tiff
     end
   end
-  
+
   describe "extract_attributes_from" do
     before(:each) do
       @temp_object = Dragonfly::TempObject.new("ne'er gonna give you up",
