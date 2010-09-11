@@ -32,7 +32,7 @@ module Dragonfly
       end
 
       def store(temp_object, opts={})
-        uid = generate_uid(temp_object.name || 'file')
+        uid = opts[:path] || generate_uid(temp_object.name || 'file')
         ensure_initialized
         object = use_filesystem ? temp_object.file : temp_object.data
         extra_data = temp_object.attributes

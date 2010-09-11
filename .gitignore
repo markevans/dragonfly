@@ -11,3 +11,5 @@ fixtures/*/tmp_app
 .bundle
 spec/spec.log
 Gemfile.lock
+.s3_spec.yml
+
