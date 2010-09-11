@@ -10,7 +10,6 @@ module Dragonfly
       end
     }
 
-
     def initialize(job, env)
       @job, @env = job, env
       @app = @job.app
