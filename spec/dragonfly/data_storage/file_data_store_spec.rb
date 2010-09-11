@@ -58,7 +58,7 @@ describe Dragonfly::DataStorage::FileDataStore do
 
       it "should use a different filename" do
         touch_file("#{@file_pattern_prefix}file")
-        @data_store.should_receive(:disambiguate).with('file').and_return('file_2')
+        @data_store.should_receive(:disambiguate).with("#{@file_pattern_prefix}file").and_return("#{@file_pattern_prefix}file_2")
         it_should_write_to_file("#{@file_pattern_prefix}file_2", @temp_object)
         @data_store.store(@temp_object)
       end
@@ -66,17 +66,30 @@ describe Dragonfly::DataStorage::FileDataStore do
       it "should use a different filename taking into account the name and ext" do
         @temp_object.should_receive(:name).at_least(:once).and_return('hello.png')
         touch_file("#{@file_pattern_prefix}hello.png")
-        @data_store.should_receive(:disambiguate).with('hello.png').and_return('blah.png')
+        @data_store.should_receive(:disambiguate).with("#{@file_pattern_prefix}hello.png").and_return("#{@file_pattern_prefix}blah.png")
         @data_store.store(@temp_object)
       end
 
       it "should keep trying until it finds a free filename" do
         touch_file("#{@file_pattern_prefix}file")
         touch_file("#{@file_pattern_prefix}file_2")
-        @data_store.should_receive(:disambiguate).with('file').and_return('file_2')
-        @data_store.should_receive(:disambiguate).with('file_2').and_return('file_3')
+        @data_store.should_receive(:disambiguate).with("#{@file_pattern_prefix}file").and_return("#{@file_pattern_prefix}file_2")
+        @data_store.should_receive(:disambiguate).with("#{@file_pattern_prefix}file_2").and_return("#{@file_pattern_prefix}file_3")
         it_should_write_to_file("#{@file_pattern_prefix}file_3", @temp_object)
         @data_store.store(@temp_object)
+      end
+
+      describe "specifying the uid" do
+        it "should allow for specifying the path to use" do
+          it_should_write_to_file("#{@data_store.root_path}/hello/there/mate.png", @temp_object)
+          @data_store.store(@temp_object, :path => 'hello/there/mate.png')
+        end
+        it "should correctly disambiguate if the file exists" do
+          touch_file("#{@data_store.root_path}/hello/there/mate.png")
+          @data_store.should_receive(:disambiguate).with("#{@data_store.root_path}/hello/there/mate.png").and_return("#{@data_store.root_path}/hello/there/mate_2.png")
+          it_should_write_to_file("#{@data_store.root_path}/hello/there/mate_2.png", @temp_object)
+          @data_store.store(@temp_object, :path => 'hello/there/mate.png')
+        end
       end
 
     end
@@ -98,13 +111,13 @@ describe Dragonfly::DataStorage::FileDataStore do
   
   describe "disambiguate" do
     it "should add a suffix" do
-      @data_store.disambiguate('file').should =~ /^file_\w+$/
+      @data_store.disambiguate('/some/file').should =~ %r{^/some/file_\w+$}
     end
     it "should add a suffix to the basename" do
-      @data_store.disambiguate('file.png').should =~ /^file_\w+\.png$/
+      @data_store.disambiguate('/some/file.png').should =~ %r{^/some/file_\w+\.png$}
     end
     it "should be random(-ish)" do
-      @data_store.disambiguate('file').should_not == @data_store.disambiguate('file')
+      @data_store.disambiguate('/some/file').should_not == @data_store.disambiguate('/some/file')
     end
   end
   
