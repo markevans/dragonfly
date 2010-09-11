@@ -207,6 +207,16 @@ describe Dragonfly::App do
       @app.url_for(@job).should =~ /\w+some_uid$/
     end
   end
+  
+  describe "url params" do
+    before(:each) do
+      @app = test_app
+      @job = Dragonfly::Job.new(@app)
+    end
+    it "should add extra params to the url query string" do
+      @app.url_for(@job, :suffix => '/suffix', :a => 'thing', :b => 'nuther').should =~ /\w+\/suffix\?a=thing&b=nuther$/
+    end
+  end
 
   describe "Denial of Service protection" do
     before(:each) do

@@ -125,13 +125,15 @@ module Dragonfly
 
     def url_for(job, *args)
       if (args.length == 1 && args.first.kind_of?(Hash)) || args.empty?
-        opts = args.first || {}
-        host = opts[:host] || url_host
-        suffix = opts[:suffix] || url_suffix
+        opts = args.first ? args.first.dup : {}
+        host = opts.delete(:host) || url_host
+        suffix = opts.delete(:suffix) || url_suffix
         suffix = suffix.call(job) if suffix.respond_to?(:call)
-        path_prefix = opts[:path_prefix] || url_path_prefix
+        path_prefix = opts.delete(:path_prefix) || url_path_prefix
         path = "#{host}#{path_prefix}#{job.to_path}#{suffix}"
-        path << "?#{dos_protection_query_string(job)}" if protect_from_dos_attacks
+        query = opts
+        query.merge!(server.required_params_for(job)) if protect_from_dos_attacks
+        path << "?#{Rack::Utils.build_query(query)}" if query.any?
         path
       else
         # Deprecation stuff - will be removed!!!
@@ -170,10 +172,6 @@ module Dragonfly
 
     def file_ext_string(format)
       '.' + format.to_s.downcase.sub(/^.*\./,'')
-    end
-
-    def dos_protection_query_string(job)
-      server.required_params_for(job).map{|k,v| "#{k}=#{v}" }.join('&')
     end
 
   end
