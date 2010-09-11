@@ -54,13 +54,13 @@ module Dragonfly
 
     def content_disposition_header
       parts = []
-      parts << content_disposition.to_s if content_disposition
+      parts << content_disposition if content_disposition
       parts << %(filename="#{URI.encode(filename)}") if filename
       parts.any? ? {"Content-Disposition" => parts.join('; ')} : {}
     end
 
     def content_disposition
-      app.content_disposition
+      @content_disposition ||= evaluate(app.content_disposition)
     end
 
     def filename
@@ -70,6 +70,10 @@ module Dragonfly
           "#{job.basename}#{extname}"
         end
       )
+    end
+
+    def evaluate(attribute)
+      attribute.respond_to?(:call) ? attribute.call(job, request) : attribute
     end
 
   end

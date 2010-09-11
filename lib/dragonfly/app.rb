@@ -50,6 +50,7 @@ module Dragonfly
     configurable_attr :secret, 'secret yo'
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
     configurable_attr :infer_mime_type_from_file_ext, true
+    configurable_attr :content_disposition
 
     attr_reader :analyser
     attr_reader :processor

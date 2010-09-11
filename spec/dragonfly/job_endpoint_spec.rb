@@ -1,7 +1,7 @@
 # encoding: utf-8
 require File.dirname(__FILE__) + '/../spec_helper'
 
-## General tests for Endpoint module go here as it's a pretty simple wrapper around that
+## General tests for Response go here as it's a pretty simple wrapper around that
 
 describe Dragonfly::JobEndpoint do
 
@@ -23,7 +23,7 @@ describe Dragonfly::JobEndpoint do
     response['Cache-Control'].should == "public, max-age=31536000"
     response['Content-Type'].should == 'text/plain'
     response['Content-Length'].should == '6'
-    response['Content-Disposition'].should == 'inline; filename="gung.txt"'
+    response['Content-Disposition'].should == 'filename="gung.txt"'
     response.body.should == 'GUNGLE'
   end
 
@@ -67,23 +67,35 @@ describe Dragonfly::JobEndpoint do
     end
     it "should return the original name" do
       response = make_request(@job)
-      response['Content-Disposition'].should == 'inline; filename="gung.txt"'
+      response['Content-Disposition'].should == 'filename="gung.txt"'
     end
     it "should return a filename with a different extension if it's been encoded" do
       response = make_request(@job.encode(:doogs))
-      response['Content-Disposition'].should == 'inline; filename="gung.doogs"'
+      response['Content-Disposition'].should == 'filename="gung.doogs"'
     end
     it "should not have the filename if name doesn't exist" do
       response = make_request(@app.new_job("ADFSDF"))
-      response['Content-Disposition'].should == 'inline'
+      response['Content-Disposition'].should be_nil
     end
     it "should cope with filenames with no ext" do
       response = make_request(@app.new_job("ASDF", :name => 'asdf'))
-      response['Content-Disposition'].should == 'inline; filename="asdf"'
+      response['Content-Disposition'].should == 'filename="asdf"'
     end
     it "should uri encode funny characters" do
       response = make_request(@app.new_job("ASDF", :name => '£@$£ `'))
-      response['Content-Disposition'].should == 'inline; filename="%C2%A3@$%C2%A3%20%60"'
+      response['Content-Disposition'].should == 'filename="%C2%A3@$%C2%A3%20%60"'
+    end
+    it "should use the app's configured content-disposition" do
+      @app.content_disposition = :attachment
+      response = make_request(@job)
+      response['Content-Disposition'].should == 'attachment; filename="gung.txt"'
+    end
+    it "should allow using a block to set the content disposition" do
+      @app.content_disposition = proc{|job, request|
+        job.basename + request['blah']
+      }
+      response = make_request(@job, 'QUERY_STRING' => 'blah=yo')
+      response['Content-Disposition'].should == 'gungyo; filename="gung.txt"'
     end
   end
 
