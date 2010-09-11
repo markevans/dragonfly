@@ -344,8 +344,8 @@ module Dragonfly
 
     # Misc
 
-    def store
-      app.store(result)
+    def store(opts={})
+      app.store(result, opts)
     end
 
     def resolve_mime_type

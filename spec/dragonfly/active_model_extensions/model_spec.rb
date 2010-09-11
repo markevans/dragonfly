@@ -615,9 +615,9 @@ describe Item do
         }.should raise_error(NoMethodError)
       end
     end
-    
+
     describe "setting things on the attachment" do
-      
+
       before(:each) do
         @item = Item.new
       end
@@ -656,12 +656,17 @@ describe Item do
         it "should save it correctly" do
           @item.save!
           item = Item.find(@item.id)
-          item.preview_image.meta.should == {:slime => 'balls'}
+          item.preview_image.meta.should include_hash(:slime => 'balls')
+        end
+        it "should store meta info about the model" do
+          @item.save!
+          meta = {:model_class => 'Item', :model_attachment => :preview_image, :slime => 'balls'}
+          @app.fetch(@item.preview_image_uid).meta.should == meta
         end
       end
 
     end
-    
+
   end
 
   describe "inheritance" do

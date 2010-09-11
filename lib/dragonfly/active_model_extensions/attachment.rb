@@ -45,7 +45,12 @@ module Dragonfly
         sync_with_parent!
         destroy_previous!
         if job && !uid
-          set_uid_and_parent_uid job.store
+          set_uid_and_parent_uid job.store(
+            :meta => {
+              :model_class => parent_model.class.name,
+              :model_attachment => attribute_name
+            }
+          )
           self.job = job.to_fetched_job(uid)
         end
       end
