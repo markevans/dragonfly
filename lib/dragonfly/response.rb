@@ -3,6 +3,14 @@ require 'uri'
 module Dragonfly
   class Response
 
+    DEFAULT_FILENAME = proc{|job, request|
+      if job.basename
+        extname = job.encoded_extname || (".#{job.ext}" if job.ext)
+        "#{job.basename}#{extname}"
+      end
+    }
+
+
     def initialize(job, env)
       @job, @env = job, env
       @app = @job.app
@@ -64,12 +72,7 @@ module Dragonfly
     end
 
     def filename
-      @filename ||= (
-        if job.basename
-          extname = job.encoded_extname || (".#{job.ext}" if job.ext)
-          "#{job.basename}#{extname}"
-        end
-      )
+      @filename ||= evaluate(app.content_filename)
     end
 
     def evaluate(attribute)

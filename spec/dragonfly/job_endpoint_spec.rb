@@ -65,37 +65,55 @@ describe Dragonfly::JobEndpoint do
     before(:each) do
       @app.encoder.add{|temp_object, format| temp_object }
     end
-    it "should return the original name" do
-      response = make_request(@job)
-      response['Content-Disposition'].should == 'filename="gung.txt"'
+
+    describe "filename" do
+      it "should return the original name" do
+        response = make_request(@job)
+        response['Content-Disposition'].should == 'filename="gung.txt"'
+      end
+      it "should return a filename with a different extension if it's been encoded" do
+        response = make_request(@job.encode(:doogs))
+        response['Content-Disposition'].should == 'filename="gung.doogs"'
+      end
+      it "should not have the filename if name doesn't exist" do
+        response = make_request(@app.new_job("ADFSDF"))
+        response['Content-Disposition'].should be_nil
+      end
+      it "should cope with filenames with no ext" do
+        response = make_request(@app.new_job("ASDF", :name => 'asdf'))
+        response['Content-Disposition'].should == 'filename="asdf"'
+      end
+      it "should uri encode funny characters" do
+        response = make_request(@app.new_job("ASDF", :name => '£@$£ `'))
+        response['Content-Disposition'].should == 'filename="%C2%A3@$%C2%A3%20%60"'
+      end
+      it "should allow for setting the filename using a block" do
+        @app.content_filename = proc{|job, request|
+          job.basename.reverse.upcase + request['a']
+        }
+        response = make_request(@job, 'QUERY_STRING' => 'a=egg')
+        response['Content-Disposition'].should == 'filename="GNUGegg"'
+      end
+      it "should not include the filename if configured to be nil" do
+        @app.content_filename = nil
+        response = make_request(@job)
+        response['Content-Disposition'].should be_nil
+      end
     end
-    it "should return a filename with a different extension if it's been encoded" do
-      response = make_request(@job.encode(:doogs))
-      response['Content-Disposition'].should == 'filename="gung.doogs"'
-    end
-    it "should not have the filename if name doesn't exist" do
-      response = make_request(@app.new_job("ADFSDF"))
-      response['Content-Disposition'].should be_nil
-    end
-    it "should cope with filenames with no ext" do
-      response = make_request(@app.new_job("ASDF", :name => 'asdf'))
-      response['Content-Disposition'].should == 'filename="asdf"'
-    end
-    it "should uri encode funny characters" do
-      response = make_request(@app.new_job("ASDF", :name => '£@$£ `'))
-      response['Content-Disposition'].should == 'filename="%C2%A3@$%C2%A3%20%60"'
-    end
-    it "should use the app's configured content-disposition" do
-      @app.content_disposition = :attachment
-      response = make_request(@job)
-      response['Content-Disposition'].should == 'attachment; filename="gung.txt"'
-    end
-    it "should allow using a block to set the content disposition" do
-      @app.content_disposition = proc{|job, request|
-        job.basename + request['blah']
-      }
-      response = make_request(@job, 'QUERY_STRING' => 'blah=yo')
-      response['Content-Disposition'].should == 'gungyo; filename="gung.txt"'
+    
+    describe "content disposition" do
+      it "should use the app's configured content-disposition" do
+        @app.content_disposition = :attachment
+        response = make_request(@job)
+        response['Content-Disposition'].should == 'attachment; filename="gung.txt"'
+      end
+      it "should allow using a block to set the content disposition" do
+        @app.content_disposition = proc{|job, request|
+          job.basename + request['blah']
+        }
+        response = make_request(@job, 'QUERY_STRING' => 'blah=yo')
+        response['Content-Disposition'].should == 'gungyo; filename="gung.txt"'
+      end
     end
   end
 
