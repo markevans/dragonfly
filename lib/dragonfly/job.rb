@@ -324,6 +324,10 @@ module Dragonfly
       last_step_of_type(FetchFile)
     end
 
+    def process_steps
+      steps.select{|s| s.is_a?(Process) }
+    end
+
     def encode_step
       last_step_of_type(Encode)
     end

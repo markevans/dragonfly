@@ -731,6 +731,16 @@ describe Dragonfly::Job do
         step.args.should == [:ponies]
       end
     end
+    
+    describe "process_steps" do
+      it "should return the processing steps" do
+        job = @app.fetch('many/ponies').process(:jam).process(:eggs).encode(:gif)
+        job.process_steps.should match_steps([
+          Dragonfly::Job::Process,
+          Dragonfly::Job::Process
+        ])
+      end
+    end
 
     describe "encode_step" do
       it "should return nil if it doesn't exist" do
