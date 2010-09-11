@@ -58,6 +58,7 @@ module Dragonfly
           @tempfile = initialized_tempfile
         when :data
           @tempfile = Tempfile.new('dragonfly')
+          @tempfile.binmode
           @tempfile.write(initialized_data)
         when :file
           @tempfile = copy_to_tempfile(initialized_file.path)
