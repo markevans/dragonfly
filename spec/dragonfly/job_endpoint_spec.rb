@@ -1,3 +1,4 @@
+# encoding: utf-8
 require File.dirname(__FILE__) + '/../spec_helper'
 
 ## General tests for Endpoint module go here as it's a pretty simple wrapper around that
