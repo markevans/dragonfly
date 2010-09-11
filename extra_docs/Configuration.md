@@ -31,6 +31,11 @@ Here is an example of an app with all attributes configured:
       c.url_host = 'http://some.domain.com:4000'            # defaults to nil
       c.url_suffix = '.jpg'                                 # defaults to nil - has no effect other than change the url
 
+      c.content_filename = proc{|job, request|              # defaults to the original name, with modified ext if encoded
+        "file.#{job.ext}"
+      }
+      c.content_disposition = :attachment                   # defaults to nil (use the browser default)
+
       c.protect_from_dos_attacks = true                     # defaults to false - adds a SHA parameter on the end of urls
       c.secret = 'This is my secret yeh!!'                  # should set this if concerned about DOS attacks
 

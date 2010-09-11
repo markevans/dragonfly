@@ -56,6 +56,37 @@ And you can override it:
 
     app.fetch('some/uid').url(:suffix => '/yellowbelly')     # "...b21lL3VpZA/yellowbelly"
 
+Content-Disposition and downloaded filename
+-------------------------------------------
+You can manually set the content-disposition of the response:
+
+    app.content_disposition = :attachment    # should be :inline or :attachment (or :hidden)
+
+`:attachment` tells the browser to download it, `:inline` tells it to display in-browser if possible.
+
+You can also use a block:
+
+    app.content_disposition = proc{|job, request|
+      if job.format == :jpg || request['d'] == 'inline' # request is a Rack::Request object
+        :inline
+      else
+        :attachment
+      end
+    }
+
+To specify the filename the browser uses for 'Save As' dialogues:
+
+    app.content_filename = proc{|job, request|
+      "#{job.basename}_#{job.process_steps.first.name}.#{job.encoded_format || job.ext}"
+    }
+
+This will for example give the following filenames for the following jobs:
+
+    app.fetch('some/tree.png').process(:greyscale)      # -> 'tree_greyscale.png'
+    app.fetch('some/tree.png').process(:greyscale).gif  # -> 'tree_greyscale.gif'
+
+By default the original filename is used, with a modified extension if it's been encoded.
+
 Routed Endpoints
 ----------------
 You can also use a number of Rack-based routers and create Dragonfly endpoints.
