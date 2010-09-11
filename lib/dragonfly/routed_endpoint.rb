@@ -1,8 +1,6 @@
 module Dragonfly
   class RoutedEndpoint
 
-    include Endpoint
-
     class NoRoutingParams < RuntimeError; end
 
     def initialize(app, &block)
@@ -13,7 +11,7 @@ module Dragonfly
     def call(env)
       params = symbolize_keys_of Rack::Request.new(env).params
       job = @block.call(params.merge(routing_params(env)), @app)
-      response_for_job(job, env)
+      Response.new(job, env).to_response
     rescue Job::NoSHAGiven => e
       [400, {"Content-Type" => 'text/plain'}, ["You need to give a SHA parameter"]]
     rescue Job::IncorrectSHA => e

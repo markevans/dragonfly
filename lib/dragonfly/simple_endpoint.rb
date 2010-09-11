@@ -1,7 +1,6 @@
 module Dragonfly
   class SimpleEndpoint
 
-    include Endpoint
     include Loggable
 
     # Instance methods
@@ -20,7 +19,7 @@ module Dragonfly
       else
         job = Job.from_path(request.path_info, app)
         job.validate_sha!(request['s']) if app.protect_from_dos_attacks
-        response_for_job(job, env)
+        Response.new(job, env).to_response
       end
     rescue Serializer::BadString, Job::InvalidArray => e
       log.warn(e.message)
