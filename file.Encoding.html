@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=utf-8" />
+<title>File: Encoding</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  </head>
+  <body>
+
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.7.6)</div>
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+    </div>
+
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <div id='filecontents'><h1>Encoding</h1>
+
+<p>Changing the format of data, but not changing the data itself,
+e.g. converting to gif format, comes under the banner of Encoding.</p>
+
+<p>You can register as many encoders as you like.</p>
+
+<p>Let's say we have a Dragonfly app</p>
+
+<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
+</pre>
+
+<p>and an image object (actually a <tt><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></tt> object)...</p>
+
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+</pre>
+
+<p>...OR a Dragonfly model accessor...</p>
+
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span>
+</pre>
+
+<p>We can encode it to any format registered with the encoder.</p>
+
+<h2>RMagickEncoder</h2>
+
+<p>The <tt><a href="Dragonfly/Encoding/RMagickEncoder.html" title="Dragonfly::Encoding::RMagickEncoder (class)">RMagickEncoder</a></tt> is registered by default by
+the <tt><a href="Dragonfly/Config/RMagick.html" title="Dragonfly::Config::RMagick (module)">RMagick configuration</a></tt> used by 'dragonfly/rails/images'.</p>
+
+<p>If not already registered:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>RMagickEncoder</span><span class='rparen'>)</span>
+</pre>
+
+<p>gives us:</p>
+
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:jpg</span><span class='rparen'>)</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:gif</span><span class='rparen'>)</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:png</span><span class='rparen'>)</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:tiff</span><span class='rparen'>)</span>
+</pre>
+
+<p>and various other formats (see <tt><a href="Dragonfly/Encoding/RMagickEncoder.html" title="Dragonfly::Encoding::RMagickEncoder (class)">RMagickEncoder</a></tt>)</p>
+
+<h2>Lazy evaluation</h2>
+
+<pre class="code"><span class='id gif_image'>gif_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:gif</span><span class='rparen'>)</span>
+</pre>
+
+<p>doesn't actually do anything until you call something on the returned <tt><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></tt> object, like <code>url</code>, <code>data</code>, etc.</p>
+
+<h2>Bang method</h2>
+
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id encode!'>encode!</span><span class='lparen'>(</span><span class='symbol'>:gif</span><span class='rparen'>)</span>
+</pre>
+
+<p>modifies the image object itself, rather than returning a new object.</p>
+
+<h2>Custom Encoders</h2>
+
+<p>To register a custom encoder, for e.g. pdf format:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id add'>add</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id format'>format</span><span class='op'>|</span>
+  <span class='id throw'>throw</span> <span class='symbol'>:unable_to_handle</span> <span class='kw'>unless</span> <span class='id format'>format</span> <span class='op'>==</span> <span class='symbol'>:pdf</span>
+  <span class='comment'># use temp_object.data, temp_object.path, temp_object.file, etc.
+</span>  <span class='const'>SomeLibrary</span><span class='period'>.</span><span class='id convert_to_pdf'>convert_to_pdf</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span><span class='rparen'>)</span>
+  <span class='comment'># return a String, File or Tempfile
+</span><span class='kw'>end</span>
+
+<span class='id pdf_image'>pdf_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:pdf</span><span class='rparen'>)</span>
+</pre>
+
+<p>If <code>:unable_to_handle</code> is thrown, the next most recently registered encoder is used, and so on.</p>
+
+<p>Alternatively you can create a class like the RMagick one above, which implements the method <code>encode</code>, and register this.</p>
+
+<pre class="code"><span class='kw'>class</span> <span class='const'>MyEncoder</span>
+
+  <span class='kw'>def</span> <span class='id encode'>encode</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id format'>format</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+    <span class='const'>SomeLib</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span><span class='comma'>,</span> <span class='id format'>format</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+<span class='kw'>end</span>
+
+<span class='id app'>app</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyEncoder</span><span class='rparen'>)</span>
+
+<span class='id pdf_image'>pdf_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:pdf</span><span class='comma'>,</span> <span class='symbol'>:some</span> <span class='op'>=&gt;</span> <span class='symbol'>:args</span><span class='rparen'>)</span>
+</pre></div>
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="footer">
+  Generated on Sun Sep 12 18:38:31 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.8 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>
