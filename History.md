@@ -1,3 +1,26 @@
+0.7.6 (2010-09-12)
+==================
+Features
+--------
+- Added methods for querying job steps, and Job#uid, Job#uid_basename, etc.
+- Added Job#b64_data
+- Added configurable url_suffix
+- Added configurable content_disposition and content_filename
+- Can pass extra GET params to url_for
+- Can manually set uid on FileDataStore and S3DataStore
+    (not yet documented because attachments have no way to pass it on yet)
+- Model attachments store meta info about themselves
+
+Changes
+-------
+- Configurable module doesn't implicitly call 'call' if attribute set as proc
+- Refactored Endpoint module -> Response object
+
+Fixes
+-----
+- Ruby 1.9.2-p0 was raising encoding errors due to Tempfiles not being in binmode
+
+
 0.7.5 (2010-09-01)
 ==================
 Changes
