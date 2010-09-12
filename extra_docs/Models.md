@@ -174,6 +174,21 @@ If the object assigned is a file, or responds to `original_filename` (as is the 
     @album.cover_image.name    # => 'my_image.png'
     @album.cover_image.ext     # => 'png'
 
+Meta data
+---------
+You can store metadata along with the content data of your attachment:
+
+    @album.cover_image = File.new('path/to/my_image.png')
+    @album.cover_image.meta = {:taken => Date.yesterday}
+    @album.save!
+
+    @album.cover_image.meta      # => {:model_class=>"Album",
+                                 #     :model_attachment=>:cover_image,
+                                 #     :taken=>Sat, 11 Sep 2010}
+
+As you can see, a couple of things are added by the model. You can also access this directly on the {Dragonfly::Job Job} object.
+
+    app.fetch(@album.cover_image_uid).meta     # => {:model_class=>"Album", ...}
 
 'Magic' Attributes
 ------------------
