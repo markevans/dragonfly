@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta name="Content-Type" content="text/html; charset=utf-8" />
-<title>Class: Dragonfly::JobEndpoint</title>
+<title>Class: Dragonfly::Response</title>
 <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -54,7 +54,7 @@
 
     <div id="content" class="clearfix">
       <div class="col1">
-        <h1>Class: Dragonfly::JobEndpoint
+        <h1>Class: Dragonfly::Response
   
   
   
@@ -69,7 +69,7 @@
         <ul class="fullTree">
           <li><a href="../Object.html" title="Object (class)">Object</a></li>
           
-            <li class="next">Dragonfly::JobEndpoint</li>
+            <li class="next">Dragonfly::Response</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -85,15 +85,81 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/dragonfly/job_endpoint.rb</dd>
+    <dd class="r2 last">lib/dragonfly/response.rb</dd>
   
 </dl>
 <div class="clear"></div>
 
 
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="DEFAULT_FILENAME-constant" class="">DEFAULT_FILENAME =
+          
+        </dt>
+        <dd><pre class="code">proc{</pre></dd>
+      
+    </dl>
+  
+
 
   <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
   <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#app-instance_method" title="#app (instance method)">- (Object) <strong>app</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title readonly">readonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute app.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#env-instance_method" title="#env (instance method)">- (Object) <strong>env</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title readonly">readonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute env.
+</p>
+</div></span>
+  
+</li>
+
     
       <li class="public ">
   <span class="summary_signature">
@@ -138,7 +204,33 @@ Returns the value of attribute job.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#call-instance_method" title="#call (instance method)">- (Object) <strong>call</strong>(env = {}) </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Response) <strong>initialize</strong>(job, env) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+A new instance of Response.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_response-instance_method" title="#to_response (instance method)">- (Object) <strong>to_response</strong> </a>
     
 
     
@@ -156,32 +248,6 @@ Returns the value of attribute job.
 </li>
 
       
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (JobEndpoint) <strong>initialize</strong>(job) </a>
-    
-
-    
-  </span>
-  
-    <span class="note title constructor">constructor</span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>
-A new instance of JobEndpoint.
-</p>
-</div></span>
-  
-</li>
-
-      
     </ul>
   
 
@@ -191,14 +257,14 @@ A new instance of JobEndpoint.
     <div class="method_details first">
   <p class="signature first" id="initialize-instance_method">
   
-    - (<tt><a href="" title="Dragonfly::JobEndpoint (class)">JobEndpoint</a></tt>) <strong>initialize</strong>(job) 
+    - (<tt><a href="" title="Dragonfly::Response (class)">Response</a></tt>) <strong>initialize</strong>(job, env) 
   
 
   
 </p><div class="docstring">
   <div class="discussion">
     <p>
-A new instance of JobEndpoint
+A new instance of Response
 </p>
 
 
@@ -212,15 +278,17 @@ A new instance of JobEndpoint
       <pre class="lines">
 
 
-4
-5
-6</pre>
+13
+14
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job_endpoint.rb', line 4</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/response.rb', line 13</span>
 
-<span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id job'>job</span><span class='rparen'>)</span>
-  <span class='ivar'>@job</span> <span class='op'>=</span> <span class='id job'>job</span>
+<span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id job'>job</span><span class='comma'>,</span> <span class='id env'>env</span><span class='rparen'>)</span>
+  <span class='ivar'>@job</span><span class='comma'>,</span> <span class='ivar'>@env</span> <span class='op'>=</span> <span class='id job'>job</span><span class='comma'>,</span> <span class='id env'>env</span>
+  <span class='ivar'>@app</span> <span class='op'>=</span> <span class='ivar'>@job</span><span class='period'>.</span><span class='id app'>app</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -234,9 +302,93 @@ A new instance of JobEndpoint
     
       
       <span id=""></span>
-      <span id="job-instance_method"></span>
+      <span id="app-instance_method"></span>
       <div class="method_details first">
-  <p class="signature first" id="job-instance_method">
+  <p class="signature first" id="app-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>app</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute app
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/response.rb', line 32</span>
+
+<span class='kw'>def</span> <span class='id app'>app</span>
+  <span class='ivar'>@app</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <span id="env-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="env-instance_method">
+  
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>env</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute env
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/response.rb', line 32</span>
+
+<span class='kw'>def</span> <span class='id env'>env</span>
+  <span class='ivar'>@env</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <span id="job-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="job-instance_method">
   
     - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>job</strong>  <span class="extras">(readonly)</span>
   
@@ -259,12 +411,12 @@ Returns the value of attribute job
       <pre class="lines">
 
 
-12
-13
-14</pre>
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job_endpoint.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/response.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='id job'>job</span>
   <span class='ivar'>@job</span>
@@ -282,9 +434,9 @@ Returns the value of attribute job
     
     
       <div class="method_details first">
-  <p class="signature first" id="call-instance_method">
+  <p class="signature first" id="to_response-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>call</strong>(env = {}) 
+    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>to_response</strong> 
   
 
   
@@ -294,15 +446,31 @@ Returns the value of attribute job
       <pre class="lines">
 
 
-8
-9
-10</pre>
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job_endpoint.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/response.rb', line 18</span>
 
-<span class='kw'>def</span> <span class='id call'>call</span><span class='lparen'>(</span><span class='id env'>env</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='const'>Response</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id job'>job</span><span class='comma'>,</span> <span class='id env'>env</span><span class='rparen'>)</span><span class='period'>.</span><span class='id to_response'>to_response</span>
+<span class='kw'>def</span> <span class='id to_response'>to_response</span>
+  <span class='kw'>if</span> <span class='id etag_matches?'>etag_matches?</span>
+    <span class='comment'># Not Modified
+</span>    <span class='lbracket'>[</span><span class='int'>304</span><span class='comma'>,</span> <span class='id cache_headers'>cache_headers</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+  <span class='kw'>else</span>
+    <span class='comment'># Success
+</span>    <span class='lbracket'>[</span><span class='int'>200</span><span class='comma'>,</span> <span class='id success_headers'>success_headers</span><span class='period'>.</span><span class='id merge'>merge</span><span class='lparen'>(</span><span class='id cache_headers'>cache_headers</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id job'>job</span><span class='period'>.</span><span class='id result'>result</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>rescue</span> <span class='const'>DataStorage</span><span class='op'>::</span><span class='const'>DataNotFound</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
+  <span class='lbracket'>[</span><span class='int'>404</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>text/plain</span><span class='tstring_end'>'</span></span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id e'>e</span><span class='period'>.</span><span class='id message'>message</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -321,7 +489,7 @@ Returns the value of attribute job
     </div>
 
     <div id="footer">
-  Generated on Sun Sep 12 18:38:33 2010 by 
+  Generated on Sun Sep 12 18:38:32 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.8 (ruby-1.9.2).
 </div>

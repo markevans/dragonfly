@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.5)</div>
+      <div id="logo">DRAGONFLY (v 0.7.6)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -582,7 +582,7 @@ A new instance of S3DataStore
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id store'>store</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id uid'>uid</span> <span class='op'>=</span> <span class='id generate_uid'>generate_uid</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id name'>name</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>file</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='id uid'>uid</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:path</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id generate_uid'>generate_uid</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id name'>name</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>file</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
   <span class='id ensure_initialized'>ensure_initialized</span>
   <span class='id object'>object</span> <span class='op'>=</span> <span class='id use_filesystem'>use_filesystem</span> <span class='op'>?</span> <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id file'>file</span> <span class='op'>:</span> <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span>
   <span class='id extra_data'>extra_data</span> <span class='op'>=</span> <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id attributes'>attributes</span>
@@ -607,7 +607,7 @@ A new instance of S3DataStore
     </div>
 
     <div id="footer">
-  Generated on Wed Sep  1 13:12:04 2010 by 
+  Generated on Sun Sep 12 18:38:33 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.8 (ruby-1.9.2).
 </div>

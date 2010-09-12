@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.5)</div>
+      <div id="logo">DRAGONFLY (v 0.7.6)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -194,12 +194,12 @@
       <pre class="lines">
 
 
-42
-43
-44</pre>
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id configuration'>configuration</span>
   <span class='id configuration_hash'>configuration_hash</span><span class='period'>.</span><span class='id dup'>dup</span>
@@ -243,13 +243,13 @@
       <pre class="lines">
 
 
-30
-31
 32
-33</pre>
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='id configure'>configure</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
   <span class='kw'>yield</span> <span class='const'>ConfigurationProxy</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
@@ -273,15 +273,15 @@
       <pre class="lines">
 
 
-35
-36
 37
 38
 39
-40</pre>
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='id configurer'>configurer</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
   <span class='id configurer'>configurer</span> <span class='op'>=</span> <span class='id configurer_for'>configurer_for</span><span class='lparen'>(</span><span class='id configurer'>configurer</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id configurer'>configurer</span><span class='period'>.</span><span class='id is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Symbol</span><span class='rparen'>)</span>
@@ -328,12 +328,12 @@
       <pre class="lines">
 
 
-46
-47
-48</pre>
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id has_configuration_method?'>has_configuration_method?</span><span class='lparen'>(</span><span class='id method_name'>method_name</span><span class='rparen'>)</span>
   <span class='id configuration_methods'>configuration_methods</span><span class='period'>.</span><span class='id include?'>include?</span><span class='lparen'>(</span><span class='id method_name'>method_name</span><span class='period'>.</span><span class='id to_sym'>to_sym</span><span class='rparen'>)</span>
@@ -355,7 +355,7 @@
     </div>
 
     <div id="footer">
-  Generated on Wed Sep  1 13:12:03 2010 by 
+  Generated on Sun Sep 12 18:38:33 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.8 (ruby-1.9.2).
 </div>

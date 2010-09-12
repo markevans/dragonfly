@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.5)</div>
+      <div id="logo">DRAGONFLY (v 0.7.6)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -54,7 +54,38 @@
 
     <div id="content" class="clearfix">
       <div class="col1">
-        <div id='filecontents'><h1>0.7.5 (2010-09-01)</h1>
+        <div id='filecontents'><h1>0.7.6 (2010-09-12)</h1>
+
+<h2>Features</h2>
+
+<ul>
+<li>Added methods for querying job steps, and Job#uid, Job#uid_basename, etc.</li>
+<li>Added Job#b64_data</li>
+<li>Added configurable url_suffix</li>
+<li>Added configurable content_disposition and content_filename</li>
+<li>Can pass extra GET params to url_for</li>
+<li>Can manually set uid on FileDataStore and S3DataStore
+  (not yet documented because attachments have no way to pass it on yet)</li>
+<li>Model attachments store meta info about themselves</li>
+</ul>
+
+
+<h2>Changes</h2>
+
+<ul>
+<li>Configurable module doesn't implicitly call 'call' if attribute set as proc</li>
+<li>Refactored Endpoint module -> Response object</li>
+</ul>
+
+
+<h2>Fixes</h2>
+
+<ul>
+<li>Ruby 1.9.2-p0 was raising encoding errors due to Tempfiles not being in binmode</li>
+</ul>
+
+
+<h1>0.7.5 (2010-09-01)</h1>
 
 <h2>Changes</h2>
 
@@ -340,7 +371,7 @@ Can also pass a block to temp_object.file which closes the file automatically</l
     </div>
 
     <div id="footer">
-  Generated on Wed Sep  1 13:12:01 2010 by 
+  Generated on Sun Sep 12 18:38:31 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.8 (ruby-1.9.2).
 </div>

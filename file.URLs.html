@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.5)</div>
+      <div id="logo">DRAGONFLY (v 0.7.6)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -74,14 +74,14 @@ to the urls:</p>
 
 <p>(or done in a configuration block).</p>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>my_uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>                               <span class='comment'># &quot;/media/BAhbBlsH...&quot;
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>my_uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>                                  <span class='comment'># &quot;/media/BAhbBlsH...&quot;
 </span></pre>
 
 <p>This is done for you when using <a href="file.Configuration.html" title="Rails defaults">Rails defaults</a>.</p>
 
 <p>You can override it using</p>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>my_uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span><span class='lparen'>(</span><span class='symbol'>:path_prefix</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/images</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>    <span class='comment'># &quot;/images/BAhbBlsH...&quot;
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>my_uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span><span class='lparen'>(</span><span class='symbol'>:path_prefix</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/images</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>       <span class='comment'># &quot;/images/BAhbBlsH...&quot;
 </span></pre>
 
 <h2>Host</h2>
@@ -93,6 +93,66 @@ to the urls:</p>
 </span>
 <span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>my_uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span><span class='lparen'>(</span><span class='symbol'>:host</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>http://localhost:80</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>  <span class='comment'># &quot;http://localhost:80/BAh...&quot;
 </span></pre>
+
+<h2>Suffix</h2>
+
+<p>You can set a suffix for the urls (for example if some other component behaves badly with urls that have no file extension).</p>
+
+<p>Note that this has no effect on the response.</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id url_suffix'>url_suffix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.jpg</span><span class='tstring_end'>'</span></span>
+<span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>                                <span class='comment'># &quot;...b21lL3VpZA.jpg&quot;
+</span></pre>
+
+<p>You can also pass it a block, that yields the <tt><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></tt>, for example:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id url_suffix'>url_suffix</span> <span class='op'>=</span> <span class='id proc'>proc</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id job'>job</span><span class='op'>|</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id job'>job</span><span class='period'>.</span><span class='id uid_basename'>uid_basename</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id job'>job</span><span class='period'>.</span><span class='id encoded_extname'>encoded_extname</span> <span class='op'>||</span> <span class='id job'>job</span><span class='period'>.</span><span class='id uid_extname'>uid_extname</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='rbrace'>}</span>
+
+<span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>2007/painting.pdf</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>                       <span class='comment'># &quot;...eS5ib2R5/painting.pdf&quot;
+</span><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>2007/painting.pdf</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:png</span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>          <span class='comment'># &quot;...gZlOgbmc/painting.png&quot;
+</span></pre>
+
+<p>And you can override it:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span><span class='lparen'>(</span><span class='symbol'>:suffix</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/yellowbelly</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>     <span class='comment'># &quot;...b21lL3VpZA/yellowbelly&quot;
+</span></pre>
+
+<h2>Content-Disposition and downloaded filename</h2>
+
+<p>You can manually set the content-disposition of the response:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id content_disposition'>content_disposition</span> <span class='op'>=</span> <span class='symbol'>:attachment</span>    <span class='comment'># should be :inline or :attachment (or :hidden)
+</span></pre>
+
+<p><code>:attachment</code> tells the browser to download it, <code>:inline</code> tells it to display in-browser if possible.</p>
+
+<p>You can also use a block:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id content_disposition'>content_disposition</span> <span class='op'>=</span> <span class='id proc'>proc</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id job'>job</span><span class='comma'>,</span> <span class='id request'>request</span><span class='op'>|</span>
+  <span class='kw'>if</span> <span class='id job'>job</span><span class='period'>.</span><span class='id format'>format</span> <span class='op'>==</span> <span class='symbol'>:jpg</span> <span class='op'>||</span> <span class='id request'>request</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>d</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>inline</span><span class='tstring_end'>'</span></span> <span class='comment'># request is a Rack::Request object
+</span>    <span class='symbol'>:inline</span>
+  <span class='kw'>else</span>
+    <span class='symbol'>:attachment</span>
+  <span class='kw'>end</span>
+<span class='rbrace'>}</span>
+</pre>
+
+<p>To specify the filename the browser uses for 'Save As' dialogues:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id content_filename'>content_filename</span> <span class='op'>=</span> <span class='id proc'>proc</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id job'>job</span><span class='comma'>,</span> <span class='id request'>request</span><span class='op'>|</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id job'>job</span><span class='period'>.</span><span class='id basename'>basename</span><span class='rbrace'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id job'>job</span><span class='period'>.</span><span class='id process_steps'>process_steps</span><span class='period'>.</span><span class='id first'>first</span><span class='period'>.</span><span class='id name'>name</span><span class='rbrace'>}</span><span class='tstring_content'>.</span><span class='embexpr_beg'>#{</span><span class='id job'>job</span><span class='period'>.</span><span class='id encoded_format'>encoded_format</span> <span class='op'>||</span> <span class='id job'>job</span><span class='period'>.</span><span class='id ext'>ext</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='rbrace'>}</span>
+</pre>
+
+<p>This will for example give the following filenames for the following jobs:</p>
+
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/tree.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:greyscale</span><span class='rparen'>)</span>      <span class='comment'># -&gt; 'tree_greyscale.png'
+</span><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/tree.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:greyscale</span><span class='rparen'>)</span><span class='period'>.</span><span class='id gif'>gif</span>  <span class='comment'># -&gt; 'tree_greyscale.gif'
+</span></pre>
+
+<p>By default the original filename is used, with a modified extension if it's been encoded.</p>
 
 <h2>Routed Endpoints</h2>
 
@@ -190,7 +250,7 @@ work out how to generate urls to spam your server with heavy requests, e.g. resi
     </div>
 
     <div id="footer">
-  Generated on Wed Sep  1 13:12:01 2010 by 
+  Generated on Sun Sep 12 18:38:31 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.8 (ruby-1.9.2).
 </div>

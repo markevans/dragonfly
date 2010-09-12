@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.5)</div>
+      <div id="logo">DRAGONFLY (v 0.7.6)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -184,7 +184,7 @@
   
   
   <h3 class="inherited">Methods inherited from <a href="Step.html" title="Dragonfly::Job::Step (class)">Step</a></h3>
-  <p class="inherited"><a href="Step.html#abbreviation-class_method" title="Dragonfly::Job::Step.abbreviation (method)">abbreviation</a>, <a href="Step.html#basename-class_method" title="Dragonfly::Job::Step.basename (method)">basename</a>, <a href="Step.html#initialize-instance_method" title="Dragonfly::Job::Step#initialize (method)">#initialize</a>, <a href="Step.html#inspect-instance_method" title="Dragonfly::Job::Step#inspect (method)">#inspect</a>, <a href="Step.html#step_name-class_method" title="Dragonfly::Job::Step.step_name (method)">step_name</a></p>
+  <p class="inherited"><a href="Step.html#abbreviation-class_method" title="Dragonfly::Job::Step.abbreviation (method)">abbreviation</a>, <a href="Step.html#basename-class_method" title="Dragonfly::Job::Step.basename (method)">basename</a>, <a href="Step.html#initialize-instance_method" title="Dragonfly::Job::Step#initialize (method)">#initialize</a>, <a href="Step.html#inspect-instance_method" title="Dragonfly::Job::Step#inspect (method)">#inspect</a>, <a href="Step.html#step_name-class_method" title="Dragonfly::Job::Step.step_name (method)">step_name</a>, <a href="Step.html#update_temp_object-instance_method" title="Dragonfly::Job::Step#update_temp_object (method)">#update_temp_object</a></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -231,25 +231,21 @@
       <pre class="lines">
 
 
-80
-81
-82
-83
-84
-85
 86
-87</pre>
+87
+88
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='id apply'>apply</span><span class='lparen'>(</span><span class='id job'>job</span><span class='rparen'>)</span>
   <span class='id raise'>raise</span> <span class='const'>NothingToEncode</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Can't encode because temp object has not been initialized. Need to fetch first?</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id job'>job</span><span class='period'>.</span><span class='id temp_object'>temp_object</span>
-  <span class='id old'>old</span> <span class='op'>=</span> <span class='id job'>job</span><span class='period'>.</span><span class='id temp_object'>temp_object</span>
-  <span class='id job'>job</span><span class='period'>.</span><span class='id temp_object'>temp_object</span> <span class='op'>=</span> <span class='const'>TempObject</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span>
-    <span class='id job'>job</span><span class='period'>.</span><span class='id app'>app</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='id old'>old</span><span class='comma'>,</span> <span class='id format'>format</span><span class='comma'>,</span> <span class='op'>*</span><span class='id arguments'>arguments</span><span class='rparen'>)</span><span class='comma'>,</span>
-    <span class='id old'>old</span><span class='period'>.</span><span class='id attributes'>attributes</span><span class='period'>.</span><span class='id merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:format</span> <span class='op'>=&gt;</span> <span class='id format'>format</span><span class='rparen'>)</span>
-  <span class='rparen'>)</span>
+  <span class='id content'>content</span><span class='comma'>,</span> <span class='id extra'>extra</span> <span class='op'>=</span> <span class='id job'>job</span><span class='period'>.</span><span class='id app'>app</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='id job'>job</span><span class='period'>.</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id format'>format</span><span class='comma'>,</span> <span class='op'>*</span><span class='id arguments'>arguments</span><span class='rparen'>)</span>
+  <span class='id update_temp_object'>update_temp_object</span><span class='lparen'>(</span><span class='id job'>job</span><span class='comma'>,</span> <span class='id content'>content</span><span class='comma'>,</span> <span class='id extra'>extra</span><span class='rparen'>)</span>
+  <span class='id job'>job</span><span class='period'>.</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id format'>format</span> <span class='op'>=</span> <span class='id format'>format</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -269,12 +265,12 @@
       <pre class="lines">
 
 
-77
-78
-79</pre>
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id arguments'>arguments</span>
   <span class='id args'>args</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span>
@@ -297,12 +293,12 @@
       <pre class="lines">
 
 
-74
-75
-76</pre>
+80
+81
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id format'>format</span>
   <span class='id args'>args</span><span class='period'>.</span><span class='id first'>first</span>
@@ -324,7 +320,7 @@
     </div>
 
     <div id="footer">
-  Generated on Wed Sep  1 13:12:02 2010 by 
+  Generated on Sun Sep 12 18:38:32 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.8 (ruby-1.9.2).
 </div>

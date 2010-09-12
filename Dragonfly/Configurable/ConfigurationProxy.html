@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.5)</div>
+      <div id="logo">DRAGONFLY (v 0.7.6)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -212,12 +212,12 @@ A new instance of ConfigurationProxy
       <pre class="lines">
 
 
-92
-93
-94</pre>
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id owner'>owner</span><span class='rparen'>)</span>
   <span class='ivar'>@owner</span> <span class='op'>=</span> <span class='id owner'>owner</span>
@@ -248,18 +248,18 @@ A new instance of ConfigurationProxy
       <pre class="lines">
 
 
-96
-97
 98
 99
 100
 101
 102
 103
-104</pre>
+104
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 98</span>
 
 <span class='kw'>def</span> <span class='id method_missing'>method_missing</span><span class='lparen'>(</span><span class='id method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id owner'>owner</span><span class='period'>.</span><span class='id has_configuration_method?'>has_configuration_method?</span><span class='lparen'>(</span><span class='id method_name'>method_name</span><span class='rparen'>)</span>
@@ -307,12 +307,12 @@ Returns the value of attribute owner
       <pre class="lines">
 
 
-108
-109
-110</pre>
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 110</span>
 
 <span class='kw'>def</span> <span class='id owner'>owner</span>
   <span class='ivar'>@owner</span>
@@ -335,7 +335,7 @@ Returns the value of attribute owner
     </div>
 
     <div id="footer">
-  Generated on Wed Sep  1 13:12:03 2010 by 
+  Generated on Sun Sep 12 18:38:33 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.8 (ruby-1.9.2).
 </div>

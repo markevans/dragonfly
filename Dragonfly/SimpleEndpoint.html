@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.5)</div>
+      <div id="logo">DRAGONFLY (v 0.7.6)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -82,7 +82,7 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2"><a href="Endpoint.html" title="Dragonfly::Endpoint (module)">Endpoint</a>, <a href="Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></dd>
+      <dd class="r2"><a href="Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></dd>
       
     
   
@@ -96,10 +96,6 @@
 
 
 
-  
-  
-  
-  
   
   
   
@@ -226,11 +222,6 @@ Instance methods.
   
   
   
-  
-  
-  
-  
-  
   <h3 class="inherited">Methods included from <a href="Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></h3>
   <p class="inherited"><a href="Loggable.html#log-instance_method" title="Dragonfly::Loggable#log (method)">#log</a>, <a href="Loggable.html#log%3D-instance_method" title="Dragonfly::Loggable#log= (method)">#log=</a>, <a href="Loggable.html#use_same_log_as-instance_method" title="Dragonfly::Loggable#use_same_log_as (method)">#use_same_log_as</a></p>
 <div id="constructor_details" class="method_details_list">
@@ -260,13 +251,13 @@ Instance methods
       <pre class="lines">
 
 
+8
 9
 10
-11
-12</pre>
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_endpoint.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_endpoint.rb', line 8</span>
 
 <span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id app'>app</span><span class='rparen'>)</span>
   <span class='ivar'>@app</span> <span class='op'>=</span> <span class='id app'>app</span>
@@ -309,12 +300,12 @@ Returns the value of attribute app
       <pre class="lines">
 
 
+39
 40
-41
-42</pre>
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_endpoint.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_endpoint.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id app'>app</span>
   <span class='ivar'>@app</span>
@@ -344,6 +335,7 @@ Returns the value of attribute app
       <pre class="lines">
 
 
+13
 14
 15
 16
@@ -361,11 +353,10 @@ Returns the value of attribute app
 28
 29
 30
-31
-32</pre>
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_endpoint.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_endpoint.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id call'>call</span><span class='lparen'>(</span><span class='id env'>env</span><span class='rparen'>)</span>
   <span class='id request'>request</span> <span class='op'>=</span> <span class='const'>Rack</span><span class='op'>::</span><span class='const'>Request</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id env'>env</span><span class='rparen'>)</span>
@@ -376,7 +367,7 @@ Returns the value of attribute app
   <span class='kw'>else</span>
     <span class='id job'>job</span> <span class='op'>=</span> <span class='const'>Job</span><span class='period'>.</span><span class='id from_path'>from_path</span><span class='lparen'>(</span><span class='id request'>request</span><span class='period'>.</span><span class='id path_info'>path_info</span><span class='comma'>,</span> <span class='id app'>app</span><span class='rparen'>)</span>
     <span class='id job'>job</span><span class='period'>.</span><span class='id validate_sha!'>validate_sha!</span><span class='lparen'>(</span><span class='id request'>request</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>s</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id app'>app</span><span class='period'>.</span><span class='id protect_from_dos_attacks'>protect_from_dos_attacks</span>
-    <span class='id response_for_job'>response_for_job</span><span class='lparen'>(</span><span class='id job'>job</span><span class='comma'>,</span> <span class='id env'>env</span><span class='rparen'>)</span>
+    <span class='const'>Response</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id job'>job</span><span class='comma'>,</span> <span class='id env'>env</span><span class='rparen'>)</span><span class='period'>.</span><span class='id to_response'>to_response</span>
   <span class='kw'>end</span>
 <span class='kw'>rescue</span> <span class='const'>Serializer</span><span class='op'>::</span><span class='const'>BadString</span><span class='comma'>,</span> <span class='const'>Job</span><span class='op'>::</span><span class='const'>InvalidArray</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
   <span class='id log'>log</span><span class='period'>.</span><span class='id warn'>warn</span><span class='lparen'>(</span><span class='id e'>e</span><span class='period'>.</span><span class='id message'>message</span><span class='rparen'>)</span>
@@ -404,12 +395,12 @@ Returns the value of attribute app
       <pre class="lines">
 
 
+33
 34
-35
-36</pre>
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_endpoint.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_endpoint.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id required_params_for'>required_params_for</span><span class='lparen'>(</span><span class='id job'>job</span><span class='rparen'>)</span>
   <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>s</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='id job'>job</span><span class='period'>.</span><span class='id sha'>sha</span><span class='rbrace'>}</span>
@@ -431,7 +422,7 @@ Returns the value of attribute app
     </div>
 
     <div id="footer">
-  Generated on Wed Sep  1 13:12:03 2010 by 
+  Generated on Sun Sep 12 18:38:33 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.8 (ruby-1.9.2).
 </div>

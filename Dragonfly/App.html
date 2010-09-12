@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.5)</div>
+      <div id="logo">DRAGONFLY (v 0.7.6)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -349,6 +349,14 @@ or
   </li>
   
   <li>
+    <code>url_suffix</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
     <code>protect_from_dos_attacks</code>
     
      - default <code><span class="kw">false</span></code>
@@ -376,6 +384,14 @@ or
     <code>infer_mime_type_from_file_ext</code>
     
      - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>content_disposition</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
     
     
   </li>
@@ -822,12 +838,12 @@ Returns the value of attribute analyser
       <pre class="lines">
 
 
-53
-54
-55</pre>
+56
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id analyser'>analyser</span>
   <span class='ivar'>@analyser</span>
@@ -864,12 +880,12 @@ Returns the value of attribute encoder
       <pre class="lines">
 
 
-55
-56
-57</pre>
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id encoder'>encoder</span>
   <span class='ivar'>@encoder</span>
@@ -906,12 +922,12 @@ Returns the value of attribute generator
       <pre class="lines">
 
 
-56
-57
-58</pre>
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id generator'>generator</span>
   <span class='ivar'>@generator</span>
@@ -948,12 +964,12 @@ Returns the value of attribute job_definitions
       <pre class="lines">
 
 
-64
-65
-66</pre>
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 67</span>
 
 <span class='kw'>def</span> <span class='id job_definitions'>job_definitions</span>
   <span class='ivar'>@job_definitions</span>
@@ -990,12 +1006,12 @@ Returns the value of attribute processor
       <pre class="lines">
 
 
-54
-55
-56</pre>
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='id processor'>processor</span>
   <span class='ivar'>@processor</span>
@@ -1032,12 +1048,12 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-57
-58
-59</pre>
+60
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id server'>server</span>
   <span class='ivar'>@server</span>
@@ -1105,16 +1121,16 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-73
-74
-75
 76
 77
 78
-79</pre>
+79
+80
+81
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id configurer_for'>configurer_for</span><span class='lparen'>(</span><span class='id symbol'>symbol</span><span class='rparen'>)</span>
   <span class='id class_name'>class_name</span> <span class='op'>=</span> <span class='const'>SAVED_CONFIGS</span><span class='lbracket'>[</span><span class='id symbol'>symbol</span><span class='rbracket'>]</span>
@@ -1141,14 +1157,14 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-148
-149
-150
-151
-152</pre>
+155
+156
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 148</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id define_macro'>define_macro</span><span class='lparen'>(</span><span class='id mod'>mod</span><span class='comma'>,</span> <span class='id macro_name'>macro_name</span><span class='rparen'>)</span>
   <span class='id already_extended'>already_extended</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='kw'>class</span> <span class='op'>&lt;&lt;</span> <span class='id mod'>mod</span><span class='semicolon'>;</span> <span class='kw'>self</span><span class='semicolon'>;</span> <span class='kw'>end</span><span class='rparen'>)</span><span class='period'>.</span><span class='id included_modules'>included_modules</span><span class='period'>.</span><span class='id include?'>include?</span><span class='lparen'>(</span><span class='const'>ActiveModelExtensions</span><span class='rparen'>)</span>
@@ -1173,20 +1189,20 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-154
-155
-156
-157
-158
-159
-160
 161
 162
 163
-164</pre>
+164
+165
+166
+167
+168
+169
+170
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 154</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 161</span>
 
 <span class='kw'>def</span> <span class='id define_macro_on_include'>define_macro_on_include</span><span class='lparen'>(</span><span class='id mod'>mod</span><span class='comma'>,</span> <span class='id macro_name'>macro_name</span><span class='rparen'>)</span>
   <span class='id app'>app</span> <span class='op'>=</span> <span class='kw'>self</span>
@@ -1217,12 +1233,12 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-85
-86
-87</pre>
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id endpoint'>endpoint</span><span class='lparen'>(</span><span class='id job'>job</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
   <span class='id block'>block</span> <span class='op'>?</span> <span class='const'>RoutedEndpoint</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='const'>JobEndpoint</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id job'>job</span><span class='rparen'>)</span>
@@ -1245,12 +1261,12 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-89
-90
-91</pre>
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id job'>job</span><span class='lparen'>(</span><span class='id name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
   <span class='id job_definitions'>job_definitions</span><span class='period'>.</span><span class='id add'>add</span><span class='lparen'>(</span><span class='id name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
@@ -1273,12 +1289,12 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-109
-110
-111</pre>
+112
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='id mime_type_for'>mime_type_for</span><span class='lparen'>(</span><span class='id format'>format</span><span class='rparen'>)</span>
   <span class='id registered_mime_types'>registered_mime_types</span><span class='lbracket'>[</span><span class='id file_ext_string'>file_ext_string</span><span class='lparen'>(</span><span class='id format'>format</span><span class='rparen'>)</span><span class='rbracket'>]</span>
@@ -1301,12 +1317,12 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-121
-122
-123</pre>
+124
+125
+126</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 121</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 124</span>
 
 <span class='kw'>def</span> <span class='id mount_path'>mount_path</span>
   <span class='id url_path_prefix'>url_path_prefix</span><span class='period'>.</span><span class='id blank?'>blank?</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span> <span class='op'>:</span> <span class='id url_path_prefix'>url_path_prefix</span>
@@ -1329,12 +1345,12 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-81
-82
-83</pre>
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 84</span>
 
 <span class='kw'>def</span> <span class='id new_job'>new_job</span><span class='lparen'>(</span><span class='id content'>content</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id content'>content</span> <span class='op'>?</span> <span class='const'>Job</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='const'>TempObject</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id content'>content</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='const'>Job</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
@@ -1357,12 +1373,12 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-100
-101
-102</pre>
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id register_mime_type'>register_mime_type</span><span class='lparen'>(</span><span class='id format'>format</span><span class='comma'>,</span> <span class='id mime_type'>mime_type</span><span class='rparen'>)</span>
   <span class='id registered_mime_types'>registered_mime_types</span><span class='lbracket'>[</span><span class='id file_ext_string'>file_ext_string</span><span class='lparen'>(</span><span class='id format'>format</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id mime_type'>mime_type</span>
@@ -1385,12 +1401,12 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-105
-106
-107</pre>
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id registered_mime_types'>registered_mime_types</span>
   <span class='ivar'>@registered_mime_types</span> <span class='op'>||=</span> <span class='const'>Rack</span><span class='op'>::</span><span class='const'>Mime</span><span class='op'>::</span><span class='const'>MIME_TYPES</span><span class='period'>.</span><span class='id dup'>dup</span>
@@ -1413,16 +1429,16 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-113
-114
-115
 116
 117
 118
-119</pre>
+119
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 113</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id resolve_mime_type'>resolve_mime_type</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
   <span class='id mime_type_for'>mime_type_for</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id format'>format</span><span class='rparen'>)</span>                                   <span class='op'>||</span>
@@ -1449,14 +1465,14 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-94
-95
-96
 97
-98</pre>
+98
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id store'>store</span><span class='lparen'>(</span><span class='id object'>object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id temp_object'>temp_object</span> <span class='op'>=</span> <span class='id object'>object</span><span class='period'>.</span><span class='id is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>TempObject</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id object'>object</span> <span class='op'>:</span> <span class='const'>TempObject</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id object'>object</span><span class='rparen'>)</span>
@@ -1481,9 +1497,6 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-125
-126
-127
 128
 129
 130
@@ -1502,18 +1515,29 @@ Returns the value of attribute server
 143
 144
 145
-146</pre>
+146
+147
+148
+149
+150
+151
+152
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 125</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 128</span>
 
 <span class='kw'>def</span> <span class='id url_for'>url_for</span><span class='lparen'>(</span><span class='id job'>job</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='lparen'>(</span><span class='id args'>args</span><span class='period'>.</span><span class='id length'>length</span> <span class='op'>==</span> <span class='int'>1</span> <span class='op'>&amp;&amp;</span> <span class='id args'>args</span><span class='period'>.</span><span class='id first'>first</span><span class='period'>.</span><span class='id kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id args'>args</span><span class='period'>.</span><span class='id empty?'>empty?</span>
-    <span class='id opts'>opts</span> <span class='op'>=</span> <span class='id args'>args</span><span class='period'>.</span><span class='id first'>first</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-    <span class='id host'>host</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:host</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id url_host'>url_host</span>
-    <span class='id path_prefix'>path_prefix</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:path_prefix</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id url_path_prefix'>url_path_prefix</span>
-    <span class='id path'>path</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id host'>host</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id path_prefix'>path_prefix</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id job'>job</span><span class='period'>.</span><span class='id to_path'>to_path</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id path'>path</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>?</span><span class='embexpr_beg'>#{</span><span class='id dos_protection_query_string'>dos_protection_query_string</span><span class='lparen'>(</span><span class='id job'>job</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id protect_from_dos_attacks'>protect_from_dos_attacks</span>
+    <span class='id opts'>opts</span> <span class='op'>=</span> <span class='id args'>args</span><span class='period'>.</span><span class='id first'>first</span> <span class='op'>?</span> <span class='id args'>args</span><span class='period'>.</span><span class='id first'>first</span><span class='period'>.</span><span class='id dup'>dup</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+    <span class='id host'>host</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:host</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id url_host'>url_host</span>
+    <span class='id suffix'>suffix</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:suffix</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id url_suffix'>url_suffix</span>
+    <span class='id suffix'>suffix</span> <span class='op'>=</span> <span class='id suffix'>suffix</span><span class='period'>.</span><span class='id call'>call</span><span class='lparen'>(</span><span class='id job'>job</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id suffix'>suffix</span><span class='period'>.</span><span class='id respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:call</span><span class='rparen'>)</span>
+    <span class='id path_prefix'>path_prefix</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:path_prefix</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id url_path_prefix'>url_path_prefix</span>
+    <span class='id path'>path</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id host'>host</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id path_prefix'>path_prefix</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id job'>job</span><span class='period'>.</span><span class='id to_path'>to_path</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id suffix'>suffix</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id query'>query</span> <span class='op'>=</span> <span class='id opts'>opts</span>
+    <span class='id query'>query</span><span class='period'>.</span><span class='id merge!'>merge!</span><span class='lparen'>(</span><span class='id server'>server</span><span class='period'>.</span><span class='id required_params_for'>required_params_for</span><span class='lparen'>(</span><span class='id job'>job</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id protect_from_dos_attacks'>protect_from_dos_attacks</span>
+    <span class='id path'>path</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>?</span><span class='embexpr_beg'>#{</span><span class='const'>Rack</span><span class='op'>::</span><span class='const'>Utils</span><span class='period'>.</span><span class='id build_query'>build_query</span><span class='lparen'>(</span><span class='id query'>query</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id query'>query</span><span class='period'>.</span><span class='id any?'>any?</span>
     <span class='id path'>path</span>
   <span class='kw'>else</span>
     <span class='comment'># Deprecation stuff - will be removed!!!
@@ -1546,7 +1570,7 @@ Returns the value of attribute server
     </div>
 
     <div id="footer">
-  Generated on Wed Sep  1 13:12:02 2010 by 
+  Generated on Sun Sep 12 18:38:32 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.8 (ruby-1.9.2).
 </div>
