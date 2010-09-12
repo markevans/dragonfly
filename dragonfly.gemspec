@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.7.5"
+  s.version = "0.7.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2010-09-01}
+  s.date = %q{2010-09-12}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -89,7 +89,6 @@ Gem::Specification.new do |s|
      "lib/dragonfly/data_storage/s3data_store.rb",
      "lib/dragonfly/encoder.rb",
      "lib/dragonfly/encoding/r_magick_encoder.rb",
-     "lib/dragonfly/endpoint.rb",
      "lib/dragonfly/function_manager.rb",
      "lib/dragonfly/generation/r_magick_generator.rb",
      "lib/dragonfly/generator.rb",
@@ -103,6 +102,7 @@ Gem::Specification.new do |s|
      "lib/dragonfly/processor.rb",
      "lib/dragonfly/r_magick_utils.rb",
      "lib/dragonfly/rails/images.rb",
+     "lib/dragonfly/response.rb",
      "lib/dragonfly/routed_endpoint.rb",
      "lib/dragonfly/serializer.rb",
      "lib/dragonfly/simple_cache.rb",
