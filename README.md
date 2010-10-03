@@ -65,6 +65,10 @@ It's highly customizable, and works with any data type (not just images).
 
 For more info, consult the <a href="http://markevans.github.com/dragonfly"><big><strong>DOCUMENTATION</strong></big></a>
 
+Add-ons
+=======
+For third-party add-ons, see [the Add-ons wiki](http://github.com/markevans/dragonfly/wiki/Dragonfly-add-ons)
+
 Issues
 ======
 Please use the <a href="http://github.com/markevans/dragonfly/issues">github issue tracker</a> if you have any issues.
@@ -77,8 +81,6 @@ Credits
 =======
 - [Mark Evans](http://github.com/markevans) (author)
 
-
 Copyright
 ========
-
 Copyright (c) 2009-2010 Mark Evans. See LICENSE for details.
