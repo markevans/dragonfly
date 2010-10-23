@@ -22,14 +22,20 @@ def image_properties(image)
   }
 end
 
-def have_width(width)
-  simple_matcher("have width #{width}"){|given| width.should === image_properties(given)[:width].to_i }
+Spec::Matchers.define :have_width do |width|
+  match do |given|
+    width.should === image_properties(given)[:width].to_i
+  end
 end
 
-def have_height(height)
-  simple_matcher("have height #{height}"){|given| height.should === image_properties(given)[:height].to_i }
+Spec::Matchers.define :have_height do |height|
+  match do |given|
+    height.should === image_properties(given)[:height].to_i
+  end
 end
 
-def have_format(format)
-  simple_matcher("have format #{format}"){|given| image_properties(given)[:format].should == format }
+Spec::Matchers.define :have_format do |format|
+  match do |given|
+    image_properties(given)[:format].should == format
+  end
 end

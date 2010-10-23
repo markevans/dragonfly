@@ -1,8 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 # Matchers
-def match_steps(steps)
-  simple_matcher("match steps #{steps.inspect}") do |given|
+Spec::Matchers.define :match_steps do |steps|
+  match do |given|
     given.map{|step| step.class } == steps
   end
 end
