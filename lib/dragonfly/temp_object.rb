@@ -48,7 +48,7 @@ module Dragonfly
     end
 
     def data
-      @data ||= initialized_data || file.read
+      @data ||= initialized_data || file{|f| f.read }
     end
 
     def tempfile
