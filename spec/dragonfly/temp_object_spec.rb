@@ -80,6 +80,10 @@ describe Dragonfly::TempObject do
             'doogie'
           end.should == 'doogie'
         end
+        it "should enable reading the file twice" do
+          @temp_object.file{|f| f.read }.should == "HELLO"
+          @temp_object.file{|f| f.read }.should == "HELLO"
+        end
       end
 
       describe "tempfile" do
@@ -169,7 +173,6 @@ describe Dragonfly::TempObject do
         parts.last.length.should <= 3001
       end
     end
-
 
   end
 

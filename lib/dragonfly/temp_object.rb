@@ -71,7 +71,7 @@ module Dragonfly
       tempfile.binmode
       if block_given?
         ret = yield f
-        f.close
+        tempfile.close
       else
         ret = f
       end
