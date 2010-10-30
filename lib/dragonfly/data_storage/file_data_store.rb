@@ -34,8 +34,10 @@ module Dragonfly
 
       def retrieve(relative_path)
         path = absolute(relative_path)
+        file = File.new(path)
+        file.close
         [
-          File.new(path),
+          file,
           retrieve_extra_data(path)
         ]
       rescue Errno::ENOENT => e
