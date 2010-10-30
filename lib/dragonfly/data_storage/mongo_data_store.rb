@@ -53,8 +53,6 @@ module Dragonfly
         raise DataNotFound, "#{e} - #{uid}"
       end
 
-      private
-
       def connection
         @connection ||= Mongo::Connection.new(host, port)
       end
@@ -66,6 +64,8 @@ module Dragonfly
       def grid
         @grid ||= Mongo::Grid.new(db)
       end
+
+      private
 
       def ensure_authenticated!
         if username
