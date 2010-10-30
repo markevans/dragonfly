@@ -116,16 +116,16 @@ module Dragonfly
 
     def to_file(path)
       if initialized_data
-        File.open(path, 'w'){|f| f.write(initialized_data) }
+        File.open(path, 'wb'){|f| f.write(initialized_data) }
       else
         FileUtils.cp(self.path, path)
       end
-      File.new(path)
+      File.new(path, 'rb')
     end
 
     def to_io(&block)
       if initialized_data
-        StringIO.open(initialized_data, &block)
+        StringIO.open(initialized_data, 'rb', &block)
       else
         file(&block)
       end
