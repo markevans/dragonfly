@@ -56,14 +56,12 @@ module Dragonfly
         case initialized_with
         when :tempfile
           @tempfile = initialized_tempfile
+          @tempfile.close
         when :data
-          @tempfile = Tempfile.new('dragonfly')
-          @tempfile.binmode
-          @tempfile.write(initialized_data)
+          @tempfile = new_tempfile(initialized_data)
         when :file
           @tempfile = copy_to_tempfile(initialized_file.path)
         end
-        @tempfile.close
         @tempfile
       end
     end
@@ -209,9 +207,10 @@ module Dragonfly
       raise ArgumentError, "Unrecognised options #{invalid_keys.inspect}" if invalid_keys.any?
     end
 
-    def new_tempfile
+    def new_tempfile(content=nil)
       tempfile = Tempfile.new('dragonfly')
       tempfile.binmode
+      tempfile.write(content) if content
       tempfile.close
       tempfile
     end
