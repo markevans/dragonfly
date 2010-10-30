@@ -70,6 +70,7 @@ module Dragonfly
 
     def file(&block)
       f = tempfile.open
+      tempfile.binmode
       if block_given?
         ret = yield f
         f.close
@@ -197,7 +198,7 @@ module Dragonfly
     end
 
     def copy_to_tempfile(path)
-      tempfile = Tempfile.new('dragonfly')
+      tempfile = new_tempfile
       FileUtils.cp File.expand_path(path), tempfile.path
       tempfile
     end
@@ -206,6 +207,13 @@ module Dragonfly
       valid_keys = [:name, :meta, :format]
       invalid_keys = opts.keys - valid_keys
       raise ArgumentError, "Unrecognised options #{invalid_keys.inspect}" if invalid_keys.any?
+    end
+
+    def new_tempfile
+      tempfile = Tempfile.new('dragonfly')
+      tempfile.binmode
+      tempfile.close
+      tempfile
     end
 
   end
