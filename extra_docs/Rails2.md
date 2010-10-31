@@ -34,7 +34,7 @@ Gems
 ----
 environment.rb
 
-    config.gem 'dragonfly', '~>0.7.5'
+    config.gem 'dragonfly', '~>0.7.7'
     config.gem 'rmagick', :lib => 'RMagick'
     config.gem 'rack-cache', :lib => 'rack/cache'
 
