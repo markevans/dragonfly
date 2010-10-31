@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.6)</div>
+      <div id="logo">DRAGONFLY (v 0.7.7)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -175,6 +175,22 @@ or
     
   </li>
   
+  <li>
+    <code>username</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>password</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
 </ul>
 
 
@@ -189,7 +205,70 @@ or
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#connection-instance_method" title="#connection (instance method)">- (Object) <strong>connection</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#db-instance_method" title="#db (instance method)">- (Object) <strong>db</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#destroy-instance_method" title="#destroy (instance method)">- (Object) <strong>destroy</strong>(uid) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#grid-instance_method" title="#grid (instance method)">- (Object) <strong>grid</strong> </a>
     
 
     
@@ -325,19 +404,23 @@ A new instance of MongoDataStore
       <pre class="lines">
 
 
-18
-19
 20
 21
-22</pre>
+22
+23
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id host'>host</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:host</span><span class='rbracket'>]</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id port'>port</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:port</span><span class='rbracket'>]</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id database'>database</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:database</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:database</span><span class='rbracket'>]</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id username'>username</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:username</span><span class='rbracket'>]</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id password'>password</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:password</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -352,7 +435,63 @@ A new instance of MongoDataStore
     
     
       <div class="method_details first">
-  <p class="signature first" id="destroy-instance_method">
+  <p class="signature first" id="connection-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>connection</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+56
+57
+58</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 56</span>
+
+<span class='kw'>def</span> <span class='id connection'>connection</span>
+  <span class='ivar'>@connection</span> <span class='op'>||=</span> <span class='const'>Mongo</span><span class='op'>::</span><span class='const'>Connection</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id host'>host</span><span class='comma'>,</span> <span class='id port'>port</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="db-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>db</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id db'>db</span>
+  <span class='ivar'>@db</span> <span class='op'>||=</span> <span class='id connection'>connection</span><span class='period'>.</span><span class='id db'>db</span><span class='lparen'>(</span><span class='id database'>database</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="destroy-instance_method">
   
     - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>destroy</strong>(uid) 
   
@@ -385,19 +524,49 @@ A new instance of MongoDataStore
       <pre class="lines">
 
 
-43
-44
-45
-46
-47</pre>
+49
+50
+51
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id destroy'>destroy</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span>
+  <span class='id ensure_authenticated!'>ensure_authenticated!</span>
   <span class='id grid'>grid</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='id bson_id'>bson_id</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>rescue</span> <span class='const'>Mongo</span><span class='op'>::</span><span class='const'>GridFileNotFound</span><span class='comma'>,</span> <span class='const'>INVALID_OBJECT_ID</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
   <span class='id raise'>raise</span> <span class='const'>DataNotFound</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id e'>e</span><span class='rbrace'>}</span><span class='tstring_content'> - </span><span class='embexpr_beg'>#{</span><span class='id uid'>uid</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="grid-instance_method">
+  
+    - (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>grid</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+64
+65
+66</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 64</span>
+
+<span class='kw'>def</span> <span class='id grid'>grid</span>
+  <span class='ivar'>@grid</span> <span class='op'>||=</span> <span class='const'>Mongo</span><span class='op'>::</span><span class='const'>Grid</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id db'>db</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -438,22 +607,24 @@ A new instance of MongoDataStore
       <pre class="lines">
 
 
-31
-32
-33
-34
-35
 36
 37
 38
 39
 40
-41</pre>
+41
+42
+43
+44
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id retrieve'>retrieve</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span>
+  <span class='id ensure_authenticated!'>ensure_authenticated!</span>
   <span class='id grid_io'>grid_io</span> <span class='op'>=</span> <span class='id grid'>grid</span><span class='period'>.</span><span class='id get'>get</span><span class='lparen'>(</span><span class='id bson_id'>bson_id</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='id extra'>extra</span> <span class='op'>=</span> <span class='id marshal_decode'>marshal_decode</span><span class='lparen'>(</span><span class='id grid_io'>grid_io</span><span class='period'>.</span><span class='id metadata'>metadata</span><span class='rparen'>)</span>
   <span class='id extra'>extra</span><span class='lbracket'>[</span><span class='symbol'>:meta</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id merge!'>merge!</span><span class='lparen'>(</span><span class='symbol'>:stored_at</span> <span class='op'>=&gt;</span> <span class='id grid_io'>grid_io</span><span class='period'>.</span><span class='id upload_date'>upload_date</span><span class='rparen'>)</span>
@@ -482,17 +653,19 @@ A new instance of MongoDataStore
       <pre class="lines">
 
 
-24
-25
-26
-27
 28
-29</pre>
+29
+30
+31
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id store'>store</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id ensure_authenticated!'>ensure_authenticated!</span>
   <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id file'>file</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id f'>f</span><span class='op'>|</span>
     <span class='id mongo_id'>mongo_id</span> <span class='op'>=</span> <span class='id grid'>grid</span><span class='period'>.</span><span class='id put'>put</span><span class='lparen'>(</span><span class='id f'>f</span><span class='comma'>,</span> <span class='symbol'>:metadata</span> <span class='op'>=&gt;</span> <span class='id marshal_encode'>marshal_encode</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id attributes'>attributes</span><span class='rparen'>)</span><span class='rparen'>)</span>
     <span class='id mongo_id'>mongo_id</span><span class='period'>.</span><span class='id to_s'>to_s</span>
@@ -515,7 +688,7 @@ A new instance of MongoDataStore
     </div>
 
     <div id="footer">
-  Generated on Sun Oct  3 11:51:10 2010 by 
+  Generated on Sun Oct 31 01:10:41 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.8 (ruby-1.9.2).
 </div>

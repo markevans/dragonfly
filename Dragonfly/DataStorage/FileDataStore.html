@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.6)</div>
+      <div id="logo">DRAGONFLY (v 0.7.7)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -275,17 +275,17 @@ or
       <pre class="lines">
 
 
-45
-46
 47
 48
 49
 50
 51
-52</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id destroy'>destroy</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span>
   <span class='id path'>path</span> <span class='op'>=</span> <span class='id absolute'>absolute</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span>
@@ -313,15 +313,15 @@ or
       <pre class="lines">
 
 
-54
-55
 56
 57
 58
-59</pre>
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id disambiguate'>disambiguate</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
   <span class='id dirname'>dirname</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id dirname'>dirname</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
@@ -376,15 +376,19 @@ or
 40
 41
 42
-43</pre>
+43
+44
+45</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id retrieve'>retrieve</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span>
   <span class='id path'>path</span> <span class='op'>=</span> <span class='id absolute'>absolute</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span>
+  <span class='id file'>file</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
+  <span class='id file'>file</span><span class='period'>.</span><span class='id close'>close</span>
   <span class='lbracket'>[</span>
-    <span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='id file'>file</span><span class='comma'>,</span>
     <span class='id retrieve_extra_data'>retrieve_extra_data</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
   <span class='rbracket'>]</span>
 <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>ENOENT</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
@@ -473,7 +477,7 @@ or
     </div>
 
     <div id="footer">
-  Generated on Sun Oct  3 11:51:10 2010 by 
+  Generated on Sun Oct 31 01:10:41 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.8 (ruby-1.9.2).
 </div>

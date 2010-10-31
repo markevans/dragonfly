@@ -39,7 +39,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.7.6)</div>
+      <div id="logo">DRAGONFLY (v 0.7.7)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -745,12 +745,12 @@ Returns the value of attribute format
       <pre class="lines">
 
 
+93
 94
-95
-96</pre>
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 93</span>
 
 <span class='kw'>def</span> <span class='id format'>format</span>
   <span class='ivar'>@format</span>
@@ -787,12 +787,12 @@ Returns the value of attribute initialized_data
       <pre class="lines">
 
 
+161
 162
-163
-164</pre>
+163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 161</span>
 
 <span class='kw'>def</span> <span class='id initialized_data'>initialized_data</span>
   <span class='ivar'>@initialized_data</span>
@@ -829,12 +829,12 @@ Returns the value of attribute initialized_file
       <pre class="lines">
 
 
+161
 162
-163
-164</pre>
+163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 161</span>
 
 <span class='kw'>def</span> <span class='id initialized_file'>initialized_file</span>
   <span class='ivar'>@initialized_file</span>
@@ -871,12 +871,12 @@ Returns the value of attribute initialized_tempfile
       <pre class="lines">
 
 
+161
 162
-163
-164</pre>
+163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 161</span>
 
 <span class='kw'>def</span> <span class='id initialized_tempfile'>initialized_tempfile</span>
   <span class='ivar'>@initialized_tempfile</span>
@@ -902,12 +902,12 @@ Returns the value of attribute initialized_tempfile
       <pre class="lines">
 
 
+97
 98
-99
-100</pre>
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 98</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id meta'>meta</span>
   <span class='ivar'>@meta</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -944,12 +944,12 @@ Returns the value of attribute name
       <pre class="lines">
 
 
+93
 94
-95
-96</pre>
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 93</span>
 
 <span class='kw'>def</span> <span class='id name'>name</span>
   <span class='ivar'>@name</span>
@@ -979,16 +979,16 @@ Returns the value of attribute name
       <pre class="lines">
 
 
+134
 135
 136
 137
 138
 139
-140
-141</pre>
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 134</span>
 
 <span class='kw'>def</span> <span class='id attributes'>attributes</span>
   <span class='lbrace'>{</span>
@@ -1015,12 +1015,12 @@ Returns the value of attribute name
       <pre class="lines">
 
 
+101
 102
-103
-104</pre>
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='id basename'>basename</span>
   <span class='const'>File</span><span class='period'>.</span><span class='id basename'>basename</span><span class='lparen'>(</span><span class='id name'>name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.*</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id name'>name</span>
@@ -1051,7 +1051,7 @@ Returns the value of attribute name
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id data'>data</span>
-  <span class='ivar'>@data</span> <span class='op'>||=</span> <span class='id initialized_data'>initialized_data</span> <span class='op'>||</span> <span class='id file'>file</span><span class='period'>.</span><span class='id read'>read</span>
+  <span class='ivar'>@data</span> <span class='op'>||=</span> <span class='id initialized_data'>initialized_data</span> <span class='op'>||</span> <span class='id file'>file</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id f'>f</span><span class='op'>|</span> <span class='id f'>f</span><span class='period'>.</span><span class='id read'>read</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1071,16 +1071,16 @@ Returns the value of attribute name
       <pre class="lines">
 
 
+109
 110
 111
 112
 113
 114
-115
-116</pre>
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 109</span>
 
 <span class='kw'>def</span> <span class='id each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
   <span class='id to_io'>to_io</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id io'>io</span><span class='op'>|</span>
@@ -1107,12 +1107,12 @@ Returns the value of attribute name
       <pre class="lines">
 
 
+105
 106
-107
-108</pre>
+107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 105</span>
 
 <span class='kw'>def</span> <span class='id ext'>ext</span>
   <span class='const'>File</span><span class='period'>.</span><span class='id extname'>extname</span><span class='lparen'>(</span><span class='id name'>name</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.(.*)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id name'>name</span>
@@ -1135,14 +1135,14 @@ Returns the value of attribute name
       <pre class="lines">
 
 
+142
 143
 144
 145
-146
-147</pre>
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='id extract_attributes_from'>extract_attributes_from</span><span class='lparen'>(</span><span class='id hash'>hash</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id name'>name</span>   <span class='op'>=</span> <span class='id hash'>hash</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span>     <span class='kw'>unless</span> <span class='id hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id blank?'>blank?</span>
@@ -1167,6 +1167,8 @@ Returns the value of attribute name
       <pre class="lines">
 
 
+69
+70
 71
 72
 73
@@ -1175,17 +1177,17 @@ Returns the value of attribute name
 76
 77
 78
-79
-80</pre>
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='id file'>file</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
   <span class='id f'>f</span> <span class='op'>=</span> <span class='id tempfile'>tempfile</span><span class='period'>.</span><span class='id open'>open</span>
+  <span class='id tempfile'>tempfile</span><span class='period'>.</span><span class='id binmode'>binmode</span>
   <span class='kw'>if</span> <span class='id block_given?'>block_given?</span>
     <span class='id ret'>ret</span> <span class='op'>=</span> <span class='kw'>yield</span> <span class='id f'>f</span>
-    <span class='id f'>f</span><span class='period'>.</span><span class='id close'>close</span>
+    <span class='id tempfile'>tempfile</span><span class='period'>.</span><span class='id close'>close</span>
   <span class='kw'>else</span>
     <span class='id ret'>ret</span> <span class='op'>=</span> <span class='id f'>f</span>
   <span class='kw'>end</span>
@@ -1209,6 +1211,7 @@ Returns the value of attribute name
       <pre class="lines">
 
 
+148
 149
 150
 151
@@ -1217,11 +1220,10 @@ Returns the value of attribute name
 154
 155
 156
-157
-158</pre>
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 148</span>
 
 <span class='kw'>def</span> <span class='id inspect'>inspect</span>
   <span class='id content_string'>content_string</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id initialized_with'>initialized_with</span>
@@ -1251,12 +1253,12 @@ Returns the value of attribute name
       <pre class="lines">
 
 
+81
 82
-83
-84</pre>
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id path'>path</span>
   <span class='id tempfile'>tempfile</span><span class='period'>.</span><span class='id path'>path</span>
@@ -1279,16 +1281,16 @@ Returns the value of attribute name
       <pre class="lines">
 
 
+85
 86
 87
 88
 89
 90
-91
-92</pre>
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id size'>size</span>
   <span class='kw'>if</span> <span class='id initialized_data'>initialized_data</span>
@@ -1328,9 +1330,7 @@ Returns the value of attribute name
 64
 65
 66
-67
-68
-69</pre>
+67</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 54</span>
@@ -1340,14 +1340,12 @@ Returns the value of attribute name
     <span class='kw'>case</span> <span class='id initialized_with'>initialized_with</span>
     <span class='kw'>when</span> <span class='symbol'>:tempfile</span>
       <span class='ivar'>@tempfile</span> <span class='op'>=</span> <span class='id initialized_tempfile'>initialized_tempfile</span>
+      <span class='ivar'>@tempfile</span><span class='period'>.</span><span class='id close'>close</span>
     <span class='kw'>when</span> <span class='symbol'>:data</span>
-      <span class='ivar'>@tempfile</span> <span class='op'>=</span> <span class='const'>Tempfile</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-      <span class='ivar'>@tempfile</span><span class='period'>.</span><span class='id binmode'>binmode</span>
-      <span class='ivar'>@tempfile</span><span class='period'>.</span><span class='id write'>write</span><span class='lparen'>(</span><span class='id initialized_data'>initialized_data</span><span class='rparen'>)</span>
+      <span class='ivar'>@tempfile</span> <span class='op'>=</span> <span class='id new_tempfile'>new_tempfile</span><span class='lparen'>(</span><span class='id initialized_data'>initialized_data</span><span class='rparen'>)</span>
     <span class='kw'>when</span> <span class='symbol'>:file</span>
       <span class='ivar'>@tempfile</span> <span class='op'>=</span> <span class='id copy_to_tempfile'>copy_to_tempfile</span><span class='lparen'>(</span><span class='id initialized_file'>initialized_file</span><span class='period'>.</span><span class='id path'>path</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
-    <span class='ivar'>@tempfile</span><span class='period'>.</span><span class='id close'>close</span>
     <span class='ivar'>@tempfile</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -1369,25 +1367,25 @@ Returns the value of attribute name
       <pre class="lines">
 
 
+117
 118
 119
 120
 121
 122
 123
-124
-125</pre>
+124</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id to_file'>to_file</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id initialized_data'>initialized_data</span>
-    <span class='const'>File</span><span class='period'>.</span><span class='id open'>open</span><span class='lparen'>(</span><span class='id path'>path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>w</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id f'>f</span><span class='op'>|</span> <span class='id f'>f</span><span class='period'>.</span><span class='id write'>write</span><span class='lparen'>(</span><span class='id initialized_data'>initialized_data</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+    <span class='const'>File</span><span class='period'>.</span><span class='id open'>open</span><span class='lparen'>(</span><span class='id path'>path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>wb</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id f'>f</span><span class='op'>|</span> <span class='id f'>f</span><span class='period'>.</span><span class='id write'>write</span><span class='lparen'>(</span><span class='id initialized_data'>initialized_data</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>else</span>
     <span class='const'>FileUtils</span><span class='period'>.</span><span class='id cp'>cp</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id path'>path</span><span class='comma'>,</span> <span class='id path'>path</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
-  <span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
+  <span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id path'>path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rb</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1407,20 +1405,20 @@ Returns the value of attribute name
       <pre class="lines">
 
 
+126
 127
 128
 129
 130
 131
-132
-133</pre>
+132</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='id to_io'>to_io</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id initialized_data'>initialized_data</span>
-    <span class='const'>StringIO</span><span class='period'>.</span><span class='id open'>open</span><span class='lparen'>(</span><span class='id initialized_data'>initialized_data</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+    <span class='const'>StringIO</span><span class='period'>.</span><span class='id open'>open</span><span class='lparen'>(</span><span class='id initialized_data'>initialized_data</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
     <span class='id file'>file</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -1442,7 +1440,7 @@ Returns the value of attribute name
     </div>
 
     <div id="footer">
-  Generated on Sun Oct  3 11:51:09 2010 by 
+  Generated on Sun Oct 31 01:10:40 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.8 (ruby-1.9.2).
 </div>
