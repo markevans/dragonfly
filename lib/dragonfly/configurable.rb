@@ -25,7 +25,15 @@ module Dragonfly
       end
     end
 
-    class DeferredBlock < Proc; end
+    class DeferredBlock
+      def initialize(&blk)
+        @blk = blk
+      end
+
+      def call
+        @blk.call
+      end
+    end
 
     module InstanceMethods
 

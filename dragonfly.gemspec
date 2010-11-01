@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.7.6"
+  s.version = "0.7.7.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2010-09-12}
+  s.date = %q{2010-09-26}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
