@@ -1,5 +1,3 @@
-Dragonfly Documentation
-=======================
 Dragonfly is a {http://rack.rubyforge.org Rack} framework for on-the-fly image handling in Ruby.
 
 It is suitable for using with web frameworks such as Rails(2.3 and 3), Sinatra, etc.
@@ -15,6 +13,10 @@ Installation
 ------------
 
     gem install dragonfly
+
+Add-ons
+-------
+For third-party add-ons, see [the Add-ons wiki](http://github.com/markevans/dragonfly/wiki/Dragonfly-add-ons)
 
 Issues
 ------

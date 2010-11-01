@@ -1,3 +1,15 @@
+0.7.7 (2010-10-31)
+==================
+Features
+--------
+- Added username/password authentication to mongo data store
+
+Fixes
+-----
+- Fixes for Windows, inc. tempfile binmode and closing files
+- "IOError: closed stream" fix (hopefully!)
+
+
 0.7.6 (2010-09-12)
 ==================
 Features

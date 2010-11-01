@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-def have_keys(*keys)
-  simple_matcher("have keys #{keys.join(', ')}") do |given|
+Spec::Matchers.define :have_keys do |*keys|
+  match do |given|
     given.keys.map{|sym| sym.to_s }.sort == keys.map{|sym| sym.to_s }.sort
   end
 end

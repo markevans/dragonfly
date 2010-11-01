@@ -34,8 +34,10 @@ module Dragonfly
 
       def retrieve(relative_path)
         path = absolute(relative_path)
+        file = File.new(path)
+        file.close
         [
-          File.new(path),
+          file,
           retrieve_extra_data(path)
         ]
       rescue Errno::ENOENT => e
@@ -81,14 +83,14 @@ module Dragonfly
       end
 
       def store_extra_data(data_path, temp_object)
-        File.open(extra_data_path(data_path), 'w') do |f|
+        File.open(extra_data_path(data_path), 'wb') do |f|
           f.write Marshal.dump(temp_object.attributes)
         end
       end
 
       def retrieve_extra_data(data_path)
         path = extra_data_path(data_path)
-        File.exist?(path) ? Marshal.load(File.read(path)) : {}
+        File.exist?(path) ?  File.open(path,'rb'){|f| Marshal.load(f.read) } : {}
       end
 
       def prepare_path(path)

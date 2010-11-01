@@ -48,7 +48,7 @@ module Dragonfly
     end
 
     def data
-      @data ||= initialized_data || file.read
+      @data ||= initialized_data || file{|f| f.read }
     end
 
     def tempfile
@@ -56,23 +56,22 @@ module Dragonfly
         case initialized_with
         when :tempfile
           @tempfile = initialized_tempfile
+          @tempfile.close
         when :data
-          @tempfile = Tempfile.new('dragonfly')
-          @tempfile.binmode
-          @tempfile.write(initialized_data)
+          @tempfile = new_tempfile(initialized_data)
         when :file
           @tempfile = copy_to_tempfile(initialized_file.path)
         end
-        @tempfile.close
         @tempfile
       end
     end
 
     def file(&block)
       f = tempfile.open
+      tempfile.binmode
       if block_given?
         ret = yield f
-        f.close
+        tempfile.close
       else
         ret = f
       end
@@ -117,16 +116,16 @@ module Dragonfly
 
     def to_file(path)
       if initialized_data
-        File.open(path, 'w'){|f| f.write(initialized_data) }
+        File.open(path, 'wb'){|f| f.write(initialized_data) }
       else
         FileUtils.cp(self.path, path)
       end
-      File.new(path)
+      File.new(path, 'rb')
     end
 
     def to_io(&block)
       if initialized_data
-        StringIO.open(initialized_data, &block)
+        StringIO.open(initialized_data, 'rb', &block)
       else
         file(&block)
       end
@@ -197,7 +196,7 @@ module Dragonfly
     end
 
     def copy_to_tempfile(path)
-      tempfile = Tempfile.new('dragonfly')
+      tempfile = new_tempfile
       FileUtils.cp File.expand_path(path), tempfile.path
       tempfile
     end
@@ -206,6 +205,14 @@ module Dragonfly
       valid_keys = [:name, :meta, :format]
       invalid_keys = opts.keys - valid_keys
       raise ArgumentError, "Unrecognised options #{invalid_keys.inspect}" if invalid_keys.any?
+    end
+
+    def new_tempfile(content=nil)
+      tempfile = Tempfile.new('dragonfly')
+      tempfile.binmode
+      tempfile.write(content) if content
+      tempfile.close
+      tempfile
     end
 
   end

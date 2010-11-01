@@ -79,6 +79,8 @@ It won't normally need configuring, but if you wish to:
       c.host = 'http://egg.heads:5000'                # defaults to localhost
       c.port = '27018'                                # defaults to mongo default (27017)
       c.database = 'my_database'                      # defaults to 'dragonfly'
+      c.username = 'some_user'                        # only needed if mongo is running in auth mode
+      c.password = 'some_password'                    # only needed if mongo is running in auth mode
     end
 
 You can also pass these options to `MongoDataStore.new` as an options hash.
