@@ -14,9 +14,18 @@
 <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
 
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
   </head>
   <body>
-
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -82,21 +91,17 @@ RMagick is a saved configuration for Dragonfly apps, which does the
 following:
 </p>
 <ul>
-<li><p>
-registers an rmagick analyser
-</p>
+<li>registers an rmagick analyser
+
 </li>
-<li><p>
-registers an rmagick processor
-</p>
+<li>registers an rmagick processor
+
 </li>
-<li><p>
-registers an rmagick encoder
-</p>
+<li>registers an rmagick encoder
+
 </li>
-<li><p>
-adds thumb shortcuts like &#8216;280x140!&#8217;, etc.
-</p>
+<li>adds thumb shortcuts like &#8216;280x140!&#8217;, etc.
+
 </li>
 </ul>
 <p>
@@ -155,7 +160,7 @@ configures the app.
       <div class="method_details first">
   <p class="signature first" id="apply_configuration-class_method">
   
-    + (<tt><a href="../../Object.html" title="Object (class)">Object</a></tt>) <strong>apply_configuration</strong>(app, opts = {}) 
+    + (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>apply_configuration</strong>(app, opts = {}) 
   
 
   
@@ -200,37 +205,38 @@ configures the app.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/config/r_magick.rb', line 12</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id apply_configuration'>apply_configuration</span><span class='lparen'>(</span><span class='id app'>app</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='period'>.</span><span class='id has_key?'>has_key?</span><span class='lparen'>(</span><span class='symbol'>:use_filesystem</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:use_filesystem</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='kw'>true</span>
-  <span class='id app'>app</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
-    <span class='id c'>c</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Analysis</span><span class='op'>::</span><span class='const'>RMagickAnalyser</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id a'>a</span><span class='op'>|</span>
-      <span class='id a'>a</span><span class='period'>.</span><span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='id use_filesystem'>use_filesystem</span>
-    <span class='kw'>end</span>
-    <span class='id c'>c</span><span class='period'>.</span><span class='id processor'>processor</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Processing</span><span class='op'>::</span><span class='const'>RMagickProcessor</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id p'>p</span><span class='op'>|</span>
-      <span class='id p'>p</span><span class='period'>.</span><span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='id use_filesystem'>use_filesystem</span>
-    <span class='kw'>end</span>
-    <span class='id c'>c</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>RMagickEncoder</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id e'>e</span><span class='op'>|</span>
-      <span class='id e'>e</span><span class='period'>.</span><span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='id use_filesystem'>use_filesystem</span>
-    <span class='kw'>end</span>
-    <span class='id c'>c</span><span class='period'>.</span><span class='id generator'>generator</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Generation</span><span class='op'>::</span><span class='const'>RMagickGenerator</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id g'>g</span><span class='op'>|</span>
-      <span class='id g'>g</span><span class='period'>.</span><span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='id use_filesystem'>use_filesystem</span>
-    <span class='kw'>end</span>
-    <span class='id c'>c</span><span class='period'>.</span><span class='id job'>job</span> <span class='symbol'>:thumb</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id geometry'>geometry</span><span class='comma'>,</span> <span class='id format'>format</span><span class='op'>|</span>
-      <span class='id process'>process</span> <span class='symbol'>:thumb</span><span class='comma'>,</span> <span class='id geometry'>geometry</span>
-      <span class='id encode'>encode</span> <span class='id format'>format</span> <span class='kw'>if</span> <span class='id format'>format</span>
-    <span class='kw'>end</span>
-    <span class='id c'>c</span><span class='period'>.</span><span class='id job'>job</span> <span class='symbol'>:gif</span> <span class='kw'>do</span>
-      <span class='id encode'>encode</span> <span class='symbol'>:gif</span>
-    <span class='kw'>end</span>
-    <span class='id c'>c</span><span class='period'>.</span><span class='id job'>job</span> <span class='symbol'>:jpg</span> <span class='kw'>do</span>
-      <span class='id encode'>encode</span> <span class='symbol'>:jpg</span>
-    <span class='kw'>end</span>
-    <span class='id c'>c</span><span class='period'>.</span><span class='id job'>job</span> <span class='symbol'>:png</span> <span class='kw'>do</span>
-      <span class='id encode'>encode</span> <span class='symbol'>:png</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='apply_configuration identifier id'>apply_configuration</span><span class='lparen token'>(</span><span class='app identifier id'>app</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='symbol val'>:use_filesystem</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:use_filesystem</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='true true kw'>true</span>
+  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='RMagickAnalyser constant id'>RMagickAnalyser</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span>
+      <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='use_filesystem identifier id'>use_filesystem</span>
+    <span class='end end kw'>end</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Processing constant id'>Processing</span><span class='colon2 op'>::</span><span class='RMagickProcessor constant id'>RMagickProcessor</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span>
+      <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='use_filesystem identifier id'>use_filesystem</span>
+    <span class='end end kw'>end</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='RMagickEncoder constant id'>RMagickEncoder</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span>
+      <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='use_filesystem identifier id'>use_filesystem</span>
+    <span class='end end kw'>end</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='generator identifier id'>generator</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Generation constant id'>Generation</span><span class='colon2 op'>::</span><span class='RMagickGenerator constant id'>RMagickGenerator</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='g identifier id'>g</span><span class='bitor op'>|</span>
+      <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='use_filesystem identifier id'>use_filesystem</span>
+    <span class='end end kw'>end</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='symbol val'>:thumb</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='geometry identifier id'>geometry</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='bitor op'>|</span>
+      <span class='process identifier id'>process</span> <span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='geometry identifier id'>geometry</span>
+      <span class='encode identifier id'>encode</span> <span class='format identifier id'>format</span> <span class='if if_mod kw'>if</span> <span class='format identifier id'>format</span>
+    <span class='end end kw'>end</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='symbol val'>:gif</span> <span class='do do kw'>do</span>
+      <span class='encode identifier id'>encode</span> <span class='symbol val'>:gif</span>
+    <span class='end end kw'>end</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='symbol val'>:jpg</span> <span class='do do kw'>do</span>
+      <span class='encode identifier id'>encode</span> <span class='symbol val'>:jpg</span>
+    <span class='end end kw'>end</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='symbol val'>:png</span> <span class='do do kw'>do</span>
+      <span class='encode identifier id'>encode</span> <span class='symbol val'>:png</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
 
-<span class='kw'>end</span></pre>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -248,9 +254,9 @@ configures the app.
     </div>
 
     <div id="footer">
-  Generated on Sun Oct 31 01:10:41 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Tue Nov  2 13:23:27 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.1 (ruby-1.8.7).
 </div>
 
   </body>

@@ -14,9 +14,18 @@
 <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
 
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
   </head>
   <body>
-
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -69,7 +78,7 @@
   
   
     <dt class="r1">Included in:</dt>
-    <dd class="r1"><a href="ClassMethods.html" title="Dragonfly::ActiveModelExtensions::ClassMethods (module)">ClassMethods</a></dd>
+    <dd class="r1"><span class='object_link'><a href="ClassMethods.html" title="Dragonfly::ActiveModelExtensions::ClassMethods (module)">ClassMethods</a></span></dd>
     
   
   
@@ -96,9 +105,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Oct 31 01:10:42 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Tue Nov  2 13:23:22 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.1 (ruby-1.8.7).
 </div>
 
   </body>

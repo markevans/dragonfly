@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta name="Content-Type" content="text/html; charset=utf-8" />
-<title>Documentation by YARD 0.5.8</title>
+<title>Documentation by YARD 0.6.1</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -14,9 +14,20 @@
 <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
 
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+            $('#toc').hide();
+          
+        });
+      })(jQuery);
+    </script>
   </head>
   <body>
-
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -67,7 +78,7 @@
 
 <h2>Installation</h2>
 
-<pre class="code"><span class='id gem'>gem</span> <span class='id install'>install</span> <span class='id dragonfly'>dragonfly</span>
+<pre class="code"><span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='dragonfly identifier id'>dragonfly</span>
 </pre>
 
 <h2>Add-ons</h2>
@@ -102,9 +113,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Oct 31 01:10:39 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Tue Nov  2 13:23:17 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.1 (ruby-1.8.7).
 </div>
 
   </body>

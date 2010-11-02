@@ -14,9 +14,18 @@
 <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
 
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
   </head>
   <body>
-
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -78,15 +87,15 @@ Formats are mapped to mime-types using the app's registered list of mime-types.<
 
 <p>To register a mime-type for the format 'egg':</p>
 
-<pre class="code"><span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:my_app</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id register_mime_type'>register_mime_type</span><span class='lparen'>(</span><span class='symbol'>:egg</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>fried/egg</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='register_mime_type identifier id'>register_mime_type</span><span class='lparen token'>(</span><span class='symbol val'>:egg</span><span class='comma token'>,</span> <span class='string val'>'fried/egg'</span><span class='rparen token'>)</span>
 </pre>
 
 <p>You can also do this inside a configuration block.</p>
 
 <h2>Analysers</h2>
 
-<p>The <tt><a href="Dragonfly/Analysis/FileCommandAnalyser.html" title="Dragonfly::Analysis::FileCommandAnalyser (class)">FileCommandAnalyser</a></tt> has a <code>mime_type</code> method and the
-<tt><a href="Dragonfly/Analysis/RMagickAnalyser.html" title="Dragonfly::Analysis::RMagickAnalyser (class)">RMagickAnalyser</a></tt> has a <code>format</code> method.</p>
+<p>The <span class='object_link'><a href="Dragonfly/Analysis/FileCommandAnalyser.html" title="Dragonfly::Analysis::FileCommandAnalyser (class)">FileCommandAnalyser</a></span> has a <code>mime_type</code> method and the
+<span class='object_link'><a href="Dragonfly/Analysis/RMagickAnalyser.html" title="Dragonfly::Analysis::RMagickAnalyser (class)">RMagickAnalyser</a></span> has a <code>format</code> method.</p>
 
 <p>These are both registered by default when you use the preconfigured 'dragonfly/rails/images' file.</p>
 
@@ -94,7 +103,7 @@ Formats are mapped to mime-types using the app's registered list of mime-types.<
 
 <p>By default this is 'application/octet-stream', but it can be changed using</p>
 
-<pre class="code"><span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:my_app</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id fallback_mime_type'>fallback_mime_type</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>meaty/beef</span><span class='tstring_end'>'</span></span>
+<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='fallback_mime_type identifier id'>fallback_mime_type</span> <span class='assign token'>=</span> <span class='string val'>'meaty/beef'</span>
 </pre>
 
 <p>This can also be done inside a configuration block.</p></div>
@@ -107,9 +116,9 @@ Formats are mapped to mime-types using the app's registered list of mime-types.<
     </div>
 
     <div id="footer">
-  Generated on Sun Oct 31 01:10:39 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Tue Nov  2 13:23:18 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.1 (ruby-1.8.7).
 </div>
 
   </body>

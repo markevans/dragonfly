@@ -14,9 +14,18 @@
 <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
 
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
   </head>
   <body>
-
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -67,7 +76,7 @@
       <span class="inheritName">Module</span>
       
         <ul class="fullTree">
-          <li><a href="../Object.html" title="Object (class)">Object</a></li>
+          <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
           
             <li class="next">Module</li>
           
@@ -95,38 +104,6 @@
 
 
   
-  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
-  <ul class="summary">
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#job_definitions-instance_method" title="#job_definitions (instance method)">- (Object) <strong>job_definitions</strong> </a>
-    
-
-    
-  </span>
-  
-  
-    <span class="note title readonly">readonly</span>
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute job_definitions.
-</p>
-</div></span>
-  
-</li>
-
-    
-  </ul>
-
 
 
 
@@ -195,7 +172,7 @@ A new instance of JobDefinitions.
     <div class="method_details first">
   <p class="signature first" id="initialize-instance_method">
   
-    - (<tt><a href="" title="Dragonfly::JobDefinitions (class)">JobDefinitions</a></tt>) <strong>initialize</strong> 
+    - (<tt><span class='object_link'><a href="" title="Dragonfly::JobDefinitions (class)">JobDefinitions</a></span></tt>) <strong>initialize</strong> 
   
 
   
@@ -223,62 +200,16 @@ A new instance of JobDefinitions
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job_definitions.rb', line 4</span>
 
-<span class='kw'>def</span> <span class='id initialize'>initialize</span>
-  <span class='ivar'>@job_definitions</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
+  <span class='@job_definitions ivar id'>@job_definitions</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
 </div>
   
 </div>
-
-  <div id="instance_attr_details" class="attr_details">
-    <h2>Instance Attribute Details</h2>
-    
-      
-      <span id=""></span>
-      <span id="job_definitions-instance_method"></span>
-      <div class="method_details first">
-  <p class="signature first" id="job_definitions-instance_method">
-  
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>job_definitions</strong>  <span class="extras">(readonly)</span>
-  
-
-  
-</p><div class="docstring">
-  <div class="discussion">
-    <p>
-Returns the value of attribute job_definitions
-</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-23
-24
-25</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job_definitions.rb', line 23</span>
-
-<span class='kw'>def</span> <span class='id job_definitions'>job_definitions</span>
-  <span class='ivar'>@job_definitions</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -288,7 +219,7 @@ Returns the value of attribute job_definitions
       <div class="method_details first">
   <p class="signature first" id="add-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>add</strong>(name, &amp;definition_proc) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>add</strong>(name, &amp;definition_proc) 
   
 
   
@@ -314,18 +245,19 @@ Returns the value of attribute job_definitions
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job_definitions.rb', line 8</span>
 
-<span class='kw'>def</span> <span class='id add'>add</span><span class='lparen'>(</span><span class='id name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id definition_proc'>definition_proc</span><span class='rparen'>)</span>
-  <span class='id job_definitions'>job_definitions</span><span class='lbracket'>[</span><span class='id name'>name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>JobBuilder</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id definition_proc'>definition_proc</span><span class='rparen'>)</span>
-  <span class='id jd'>jd</span> <span class='op'>=</span> <span class='id job_definitions'>job_definitions</span> <span class='comment'># Needed because we're about to change 'self'
-</span>  
-  <span class='id define_method'>define_method</span> <span class='id name'>name</span> <span class='kw'>do</span> <span class='op'>|</span><span class='op'>*</span><span class='id args'>args</span><span class='op'>|</span>
-    <span class='id jd'>jd</span><span class='lbracket'>[</span><span class='id name'>name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id build'>build</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+<span class='def def kw'>def</span> <span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='definition_proc identifier id'>definition_proc</span><span class='rparen token'>)</span>
+  <span class='job_definitions identifier id'>job_definitions</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='JobBuilder constant id'>JobBuilder</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='definition_proc identifier id'>definition_proc</span><span class='rparen token'>)</span>
+  <span class='jd identifier id'>jd</span> <span class='assign token'>=</span> <span class='job_definitions identifier id'>job_definitions</span> <span class='comment val'># Needed because we're about to change 'self'</span>
   
-  <span class='id define_method'>define_method</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id name'>name</span><span class='rbrace'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='op'>*</span><span class='id args'>args</span><span class='op'>|</span>
-    <span class='id jd'>jd</span><span class='lbracket'>[</span><span class='id name'>name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id build!'>build!</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+  <span class='define_method identifier id'>define_method</span> <span class='name identifier id'>name</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='bitor op'>|</span>
+    <span class='jd identifier id'>jd</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='build identifier id'>build</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='define_method identifier id'>define_method</span> <span class='dstring node'>&quot;#{name}!&quot;</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='bitor op'>|</span>
+    <span class='jd identifier id'>jd</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='build! fid id'>build!</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -343,9 +275,9 @@ Returns the value of attribute job_definitions
     </div>
 
     <div id="footer">
-  Generated on Sun Oct 31 01:10:41 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Tue Nov  2 13:23:20 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.1 (ruby-1.8.7).
 </div>
 
   </body>

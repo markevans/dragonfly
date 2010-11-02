@@ -14,9 +14,18 @@
 <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
 
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
   </head>
   <body>
-
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -76,17 +85,292 @@
 <p class="children">
    
     
-      <strong class="modules">Modules:</strong> <a href="Dragonfly.html" title="Dragonfly (module)">Dragonfly</a>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span>
     
    
     
-      <strong class="classes">Classes:</strong> <a href="Object.html" title="Object (class)">Object</a>, <a href="String.html" title="String (class)">String</a>, <a href="Symbol.html" title="Symbol (class)">Symbol</a>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span>, <span class='object_link'><a href="String.html" title="String (class)">String</a></span>, <span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span>
     
   
 </p>
 
 
 
+
+<h2>Configuration Summary</h2>
+<h3>Configurable attributes</h3>
+Configurable attributes for an object in general <code>object</code> can be configured either by using something like
+<pre class="code">
+  object.configure <span class="kw">do</span> |c|
+    c.some_configurable_attribute = <span class="string val">"some value"</span>
+    c.some_other_configurable_attribute = <span class="integer val">42</span>
+    ...
+  <span class="kw">end</span>
+</pre>
+or
+<pre class="code">
+  object.some_configurable_attribute = <span class="string val">"some value"</span>
+</pre>
+<h4>Configurable attributes for instances of root</h4>
+<ul>
+  
+  <li>
+    <code>datastore</code>
+    
+     - default <code><span class="string val">"DataStorage::FileDataStore.new"</span></code> (evaluated lazily) 
+    
+    
+  </li>
+  
+  <li>
+    <code>cache_duration</code>
+    
+     - default <code><span class="integer val">31536000</span></code>
+    
+    - (1 year)
+  </li>
+  
+  <li>
+    <code>fallback_mime_type</code>
+    
+     - default <code><span class="string val">"application/octet-stream"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>url_path_prefix</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>url_host</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>url_suffix</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>protect_from_dos_attacks</code>
+    
+     - default <code><span class="kw">false</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>secret</code>
+    
+     - default <code><span class="string val">"secret yo"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>log</code>
+    
+     - default <code><span class="string val">"Logger.new('/var/tmp/dragonfly.log')"</span></code> (evaluated lazily) 
+    
+    
+  </li>
+  
+  <li>
+    <code>infer_mime_type_from_file_ext</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>content_disposition</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>enable_cache</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>cache_size</code>
+    
+     - default <code><span class="integer val">100</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>block_size</code>
+    
+     - default <code><span class="integer val">8192</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>bucket_name</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>access_key_id</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>secret_access_key</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>use_filesystem</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>supported_formats</code>
+    
+     - default <code>aibmpepsgifgif87icoj2cjp2jpegjpgpbmpcdpctpcxpdfpictpjpegpngpng24png32png8pnmppmpspsdrastgatiffwbmpxbmxpmxwd</code>
+    
+    
+  </li>
+  
+  <li>
+    <code>use_filesystem</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>use_filesystem</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>root_path</code>
+    
+     - default <code><span class="string val">"/var/tmp/dragonfly"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>host</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>port</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>database</code>
+    
+     - default <code><span class="string val">"dragonfly"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>username</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>password</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>use_filesystem</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>use_filesystem</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>file_command</code>
+    
+     - default <code><span class="string val">"file"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>use_filesystem</code>
+    
+     - default <code><span class="kw">false</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>num_bytes_to_check</code>
+    
+     - default <code><span class="integer val">255</span></code>
+    
+    
+  </li>
+  
+</ul>
 
 
   
@@ -155,7 +439,7 @@ any modules/classes inside them All paths here are absolute.
       <div class="method_details first">
   <p class="signature first" id="autoload_files_in_dir-instance_method">
   
-    - (<tt><a href="Object.html" title="Object (class)">Object</a></tt>) <strong>autoload_files_in_dir</strong>(path, namespace) 
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>autoload_files_in_dir</strong>(path, namespace) 
   
 
   
@@ -184,21 +468,22 @@ any modules/classes inside them All paths here are absolute.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly.rb', line 15</span>
 
-<span class='kw'>def</span> <span class='id autoload_files_in_dir'>autoload_files_in_dir</span><span class='lparen'>(</span><span class='id path'>path</span><span class='comma'>,</span> <span class='id namespace'>namespace</span><span class='rparen'>)</span>
-  <span class='comment'># Define the module
-</span>  <span class='id eval'>eval</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>module </span><span class='embexpr_beg'>#{</span><span class='id namespace'>namespace</span><span class='rbrace'>}</span><span class='tstring_content'>; end</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='comment'># Autoload modules/classes in that module
-</span>  <span class='const'>Dir</span><span class='period'>.</span><span class='id glob'>glob</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id path'>path</span><span class='rbrace'>}</span><span class='tstring_content'>/*.rb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id file'>file</span><span class='op'>|</span>
-    <span class='id file'>file</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id expand_path'>expand_path</span><span class='lparen'>(</span><span class='id file'>file</span><span class='rparen'>)</span>
-    <span class='id sub_const_name'>sub_const_name</span> <span class='op'>=</span> <span class='id camelize'>camelize</span><span class='lparen'>(</span> <span class='const'>File</span><span class='period'>.</span><span class='id basename'>basename</span><span class='lparen'>(</span><span class='id file'>file</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.rb</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='rparen'>)</span>
-    <span class='id eval'>eval</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id namespace'>namespace</span><span class='rbrace'>}</span><span class='tstring_content'>.autoload('</span><span class='embexpr_beg'>#{</span><span class='id sub_const_name'>sub_const_name</span><span class='rbrace'>}</span><span class='tstring_content'>', '</span><span class='embexpr_beg'>#{</span><span class='id file'>file</span><span class='rbrace'>}</span><span class='tstring_content'>')</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-  <span class='comment'># Recurse on subdirectories
-</span>  <span class='const'>Dir</span><span class='period'>.</span><span class='id glob'>glob</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id path'>path</span><span class='rbrace'>}</span><span class='tstring_content'>/*/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id dir'>dir</span><span class='op'>|</span>
-    <span class='id sub_namespace'>sub_namespace</span> <span class='op'>=</span> <span class='id camelize'>camelize</span><span class='lparen'>(</span> <span class='const'>File</span><span class='period'>.</span><span class='id basename'>basename</span><span class='lparen'>(</span><span class='id dir'>dir</span><span class='rparen'>)</span> <span class='rparen'>)</span>
-    <span class='id autoload_files_in_dir'>autoload_files_in_dir</span><span class='lparen'>(</span><span class='id dir'>dir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id namespace'>namespace</span><span class='rbrace'>}</span><span class='tstring_content'>::</span><span class='embexpr_beg'>#{</span><span class='id sub_namespace'>sub_namespace</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='autoload_files_in_dir identifier id'>autoload_files_in_dir</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='namespace identifier id'>namespace</span><span class='rparen token'>)</span>
+  <span class='comment val'># Define the module</span>
+  <span class='eval identifier id'>eval</span><span class='lparen token'>(</span><span class='dstring node'>&quot;module #{namespace}; end&quot;</span><span class='rparen token'>)</span>
+  <span class='comment val'># Autoload modules/classes in that module</span>
+  <span class='Dir constant id'>Dir</span><span class='dot token'>.</span><span class='glob identifier id'>glob</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{path}/*.rb&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='file identifier id'>file</span><span class='bitor op'>|</span>
+    <span class='file identifier id'>file</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='expand_path identifier id'>expand_path</span><span class='lparen token'>(</span><span class='file identifier id'>file</span><span class='rparen token'>)</span>
+    <span class='sub_const_name identifier id'>sub_const_name</span> <span class='assign token'>=</span> <span class='camelize identifier id'>camelize</span><span class='lparen token'>(</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span><span class='lparen token'>(</span><span class='file identifier id'>file</span><span class='comma token'>,</span> <span class='string val'>'.rb'</span><span class='rparen token'>)</span> <span class='rparen token'>)</span>
+    <span class='eval identifier id'>eval</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{namespace}.autoload('#{sub_const_name}', '#{file}')&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='comment val'># Recurse on subdirectories</span>
+  <span class='Dir constant id'>Dir</span><span class='dot token'>.</span><span class='glob identifier id'>glob</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{path}/*/&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='dir identifier id'>dir</span><span class='bitor op'>|</span>
+    <span class='sub_namespace identifier id'>sub_namespace</span> <span class='assign token'>=</span> <span class='camelize identifier id'>camelize</span><span class='lparen token'>(</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span><span class='lparen token'>(</span><span class='dir identifier id'>dir</span><span class='rparen token'>)</span> <span class='rparen token'>)</span>
+    <span class='autoload_files_in_dir identifier id'>autoload_files_in_dir</span><span class='lparen token'>(</span><span class='dir identifier id'>dir</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{namespace}::#{sub_namespace}&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -207,7 +492,7 @@ any modules/classes inside them All paths here are absolute.
       <div class="method_details ">
   <p class="signature " id="camelize-instance_method">
   
-    - (<tt><a href="Object.html" title="Object (class)">Object</a></tt>) <strong>camelize</strong>(path) 
+    - (<tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt>) <strong>camelize</strong>(path) 
   
 
   
@@ -242,15 +527,16 @@ any modules/classes inside them All paths here are absolute
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly.rb', line 6</span>
 
-<span class='kw'>def</span> <span class='id camelize'>camelize</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
-  <span class='comment'># e.g. 'test/this_one' =&gt; Test::ThisOne
-</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id path'>path</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span>
-    <span class='id chomp'>chomp</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span>
-    <span class='id gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>::</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span>
-    <span class='id gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>([^a-z])(\w)</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='backref'>$1</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='backref'>$2</span><span class='period'>.</span><span class='id upcase'>upcase</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='period'>.</span>
-    <span class='id gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>_</span><span class='tstring_end'>'</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span>
-    <span class='id sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^(\w)</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='lbrace'>{</span> <span class='backref'>$1</span><span class='period'>.</span><span class='id upcase'>upcase</span> <span class='rbrace'>}</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='camelize identifier id'>camelize</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='comment val'># e.g. 'test/this_one' =&gt; Test::ThisOne</span>
+  <span class='dstring node'>&quot;#{path}&quot;</span><span class='dot token'>.</span>
+    <span class='chomp identifier id'>chomp</span><span class='lparen token'>(</span><span class='string val'>'/'</span><span class='rparen token'>)</span><span class='dot token'>.</span>
+    <span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>'/'</span><span class='comma token'>,</span><span class='string val'>'::'</span><span class='rparen token'>)</span><span class='dot token'>.</span>
+    <span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/([^a-z])(\w)/</span><span class='rparen token'>)</span><span class='lbrace token'>{</span> <span class='dstring node'>&quot;#{$1}#{$2.upcase}&quot;</span> <span class='rbrace token'>}</span><span class='dot token'>.</span>
+    <span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>'_'</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span>
+    <span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/^(\w)/</span><span class='rparen token'>)</span><span class='lbrace token'>{</span> <span class='$1 nth_ref id'>$1</span><span class='dot token'>.</span><span class='upcase identifier id'>upcase</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -268,9 +554,9 @@ any modules/classes inside them All paths here are absolute
     </div>
 
     <div id="footer">
-  Generated on Sun Oct 31 01:10:42 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Tue Nov  2 13:23:28 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.1 (ruby-1.8.7).
 </div>
 
   </body>

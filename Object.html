@@ -14,9 +14,18 @@
 <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
 
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
   </head>
   <body>
-
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -172,9 +181,10 @@ Will eventually get this by cherry-picking from activesupport
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/core_ext/object.rb', line 4</span>
 
-<span class='kw'>def</span> <span class='id blank?'>blank?</span>
-  <span class='id respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:empty?</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id empty?'>empty?</span> <span class='op'>:</span> <span class='op'>!</span><span class='kw'>self</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='blank? fid id'>blank?</span>
+  <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:empty?</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='empty? fid id'>empty?</span> <span class='colon op'>:</span> <span class='notop op'>!</span><span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -192,9 +202,9 @@ Will eventually get this by cherry-picking from activesupport
     </div>
 
     <div id="footer">
-  Generated on Sun Oct 31 01:10:41 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Tue Nov  2 13:23:20 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.1 (ruby-1.8.7).
 </div>
 
   </body>

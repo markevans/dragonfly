@@ -14,9 +14,18 @@
 <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
 
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
   </head>
   <body>
-
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -64,10 +73,10 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><a href="../Object.html" title="Object (class)">Object</a></span>
+      <span class="inheritName"><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></span>
       
         <ul class="fullTree">
-          <li><a href="../Object.html" title="Object (class)">Object</a></li>
+          <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
           
             <li class="next">Dragonfly::App</li>
           
@@ -86,7 +95,7 @@
   
     
       <dt class="r1">Includes:</dt>
-      <dd class="r1"><a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></dd>
+      <dd class="r1"><span class='object_link'><a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span></dd>
       
     
   
@@ -106,12 +115,13 @@
         <dt id="SAVED_CONFIGS-constant" class="">SAVED_CONFIGS =
           
         </dt>
-        <dd><pre class="code"><span class='lbrace'>{</span>
-  <span class='symbol'>:rmagick</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>RMagick</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
-  <span class='symbol'>:r_magick</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>RMagick</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
-  <span class='symbol'>:rails</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Rails</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
-  <span class='symbol'>:heroku</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Heroku</span><span class='tstring_end'>'</span></span>
-<span class='rbrace'>}</span></pre></dd>
+        <dd><pre class="code"><span class='lbrace token'>{</span>
+  <span class='symbol val'>:rmagick</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'RMagick'</span><span class='comma token'>,</span>
+  <span class='symbol val'>:r_magick</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'RMagick'</span><span class='comma token'>,</span>
+  <span class='symbol val'>:rails</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Rails'</span><span class='comma token'>,</span>
+  <span class='symbol val'>:heroku</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Heroku'</span>
+<span class='rbrace token'>}</span>
+</pre></dd>
       
     </dl>
   
@@ -290,113 +300,6 @@ Returns the value of attribute server.
   </ul>
 
 
-
-<h2>Configuration Summary</h2>
-<h3>Configurable attributes</h3>
-Configurable attributes for an object in general <code>object</code> can be configured either by using something like
-<pre class="code">
-  object.configure <span class="kw">do</span> |c|
-    c.some_configurable_attribute = <span class="string val">"some value"</span>
-    c.some_other_configurable_attribute = <span class="integer val">42</span>
-    ...
-  <span class="kw">end</span>
-</pre>
-or
-<pre class="code">
-  object.some_configurable_attribute = <span class="string val">"some value"</span>
-</pre>
-<h4>Configurable attributes for instances of Dragonfly::App</h4>
-<ul>
-  
-  <li>
-    <code>datastore</code>
-    
-     - default <code><span class="string val">"DataStorage::FileDataStore.new"</span></code> (evaluated lazily) 
-    
-    
-  </li>
-  
-  <li>
-    <code>cache_duration</code>
-    
-     - default <code><span class="integer val">31536000</span></code>
-    
-    - (1 year)
-  </li>
-  
-  <li>
-    <code>fallback_mime_type</code>
-    
-     - default <code><span class="string val">"application/octet-stream"</span></code>
-    
-    
-  </li>
-  
-  <li>
-    <code>url_path_prefix</code>
-    
-     - default <code><span class="nil kw">nil</span></code>
-    
-    
-  </li>
-  
-  <li>
-    <code>url_host</code>
-    
-     - default <code><span class="nil kw">nil</span></code>
-    
-    
-  </li>
-  
-  <li>
-    <code>url_suffix</code>
-    
-     - default <code><span class="nil kw">nil</span></code>
-    
-    
-  </li>
-  
-  <li>
-    <code>protect_from_dos_attacks</code>
-    
-     - default <code><span class="kw">false</span></code>
-    
-    
-  </li>
-  
-  <li>
-    <code>secret</code>
-    
-     - default <code><span class="string val">"secret yo"</span></code>
-    
-    
-  </li>
-  
-  <li>
-    <code>log</code>
-    
-     - default <code><span class="string val">"Logger.new('/var/tmp/dragonfly.log')"</span></code> (evaluated lazily) 
-    
-    
-  </li>
-  
-  <li>
-    <code>infer_mime_type_from_file_ext</code>
-    
-     - default <code><span class="kw">true</span></code>
-    
-    
-  </li>
-  
-  <li>
-    <code>content_disposition</code>
-    
-     - default <code><span class="nil kw">nil</span></code>
-    
-    
-  </li>
-  
-</ul>
 
 
   
@@ -750,15 +653,15 @@ A new instance of App.
   
   
   
-  <h3 class="inherited">Methods included from <a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></h3>
-  <p class="inherited"><a href="Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></p>
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <p class="signature first" id="initialize-instance_method">
   
-    - (<tt><a href="" title="Dragonfly::App (class)">App</a></tt>) <strong>initialize</strong> 
+    - (<tt><span class='object_link'><a href="" title="Dragonfly::App (class)">App</a></span></tt>) <strong>initialize</strong> 
   
 
   
@@ -792,15 +695,16 @@ A new instance of App
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 26</span>
 
-<span class='kw'>def</span> <span class='id initialize'>initialize</span>
-  <span class='ivar'>@analyser</span><span class='comma'>,</span> <span class='ivar'>@processor</span><span class='comma'>,</span> <span class='ivar'>@encoder</span><span class='comma'>,</span> <span class='ivar'>@generator</span> <span class='op'>=</span> <span class='const'>Analyser</span><span class='period'>.</span><span class='id new'>new</span><span class='comma'>,</span> <span class='const'>Processor</span><span class='period'>.</span><span class='id new'>new</span><span class='comma'>,</span> <span class='const'>Encoder</span><span class='period'>.</span><span class='id new'>new</span><span class='comma'>,</span> <span class='const'>Generator</span><span class='period'>.</span><span class='id new'>new</span>
-  <span class='ivar'>@analyser</span><span class='period'>.</span><span class='id use_same_log_as'>use_same_log_as</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
-  <span class='ivar'>@processor</span><span class='period'>.</span><span class='id use_same_log_as'>use_same_log_as</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
-  <span class='ivar'>@encoder</span><span class='period'>.</span><span class='id use_same_log_as'>use_same_log_as</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
-  <span class='ivar'>@generator</span><span class='period'>.</span><span class='id use_same_log_as'>use_same_log_as</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
-  <span class='ivar'>@job_definitions</span> <span class='op'>=</span> <span class='const'>JobDefinitions</span><span class='period'>.</span><span class='id new'>new</span>
-  <span class='ivar'>@server</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>SimpleEndpoint</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
+  <span class='@analyser ivar id'>@analyser</span><span class='comma token'>,</span> <span class='@processor ivar id'>@processor</span><span class='comma token'>,</span> <span class='@encoder ivar id'>@encoder</span><span class='comma token'>,</span> <span class='@generator ivar id'>@generator</span> <span class='assign token'>=</span> <span class='Analyser constant id'>Analyser</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='comma token'>,</span> <span class='Processor constant id'>Processor</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='comma token'>,</span> <span class='Encoder constant id'>Encoder</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='comma token'>,</span> <span class='Generator constant id'>Generator</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='@analyser ivar id'>@analyser</span><span class='dot token'>.</span><span class='use_same_log_as identifier id'>use_same_log_as</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+  <span class='@processor ivar id'>@processor</span><span class='dot token'>.</span><span class='use_same_log_as identifier id'>use_same_log_as</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+  <span class='@encoder ivar id'>@encoder</span><span class='dot token'>.</span><span class='use_same_log_as identifier id'>use_same_log_as</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+  <span class='@generator ivar id'>@generator</span><span class='dot token'>.</span><span class='use_same_log_as identifier id'>use_same_log_as</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+  <span class='@job_definitions ivar id'>@job_definitions</span> <span class='assign token'>=</span> <span class='JobDefinitions constant id'>JobDefinitions</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='@server ivar id'>@server</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='SimpleEndpoint constant id'>SimpleEndpoint</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -817,7 +721,7 @@ A new instance of App
       <div class="method_details first">
   <p class="signature first" id="analyser-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>analyser</strong>  <span class="extras">(readonly)</span>
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>analyser</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -845,9 +749,10 @@ Returns the value of attribute analyser
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 56</span>
 
-<span class='kw'>def</span> <span class='id analyser'>analyser</span>
-  <span class='ivar'>@analyser</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='analyser identifier id'>analyser</span>
+  <span class='@analyser ivar id'>@analyser</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -859,7 +764,7 @@ Returns the value of attribute analyser
       <div class="method_details ">
   <p class="signature " id="encoder-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>encoder</strong>  <span class="extras">(readonly)</span>
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>encoder</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -887,9 +792,10 @@ Returns the value of attribute encoder
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 58</span>
 
-<span class='kw'>def</span> <span class='id encoder'>encoder</span>
-  <span class='ivar'>@encoder</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='encoder identifier id'>encoder</span>
+  <span class='@encoder ivar id'>@encoder</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -901,7 +807,7 @@ Returns the value of attribute encoder
       <div class="method_details ">
   <p class="signature " id="generator-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>generator</strong>  <span class="extras">(readonly)</span>
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>generator</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -929,9 +835,10 @@ Returns the value of attribute generator
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 59</span>
 
-<span class='kw'>def</span> <span class='id generator'>generator</span>
-  <span class='ivar'>@generator</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='generator identifier id'>generator</span>
+  <span class='@generator ivar id'>@generator</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -943,7 +850,7 @@ Returns the value of attribute generator
       <div class="method_details ">
   <p class="signature " id="job_definitions-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>job_definitions</strong> 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>job_definitions</strong> 
   
 
   
@@ -971,9 +878,10 @@ Returns the value of attribute job_definitions
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 67</span>
 
-<span class='kw'>def</span> <span class='id job_definitions'>job_definitions</span>
-  <span class='ivar'>@job_definitions</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='job_definitions identifier id'>job_definitions</span>
+  <span class='@job_definitions ivar id'>@job_definitions</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -985,7 +893,7 @@ Returns the value of attribute job_definitions
       <div class="method_details ">
   <p class="signature " id="processor-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>processor</strong>  <span class="extras">(readonly)</span>
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>processor</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -1013,9 +921,10 @@ Returns the value of attribute processor
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 57</span>
 
-<span class='kw'>def</span> <span class='id processor'>processor</span>
-  <span class='ivar'>@processor</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='processor identifier id'>processor</span>
+  <span class='@processor ivar id'>@processor</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1027,7 +936,7 @@ Returns the value of attribute processor
       <div class="method_details ">
   <p class="signature " id="server-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>server</strong>  <span class="extras">(readonly)</span>
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>server</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -1055,9 +964,10 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 60</span>
 
-<span class='kw'>def</span> <span class='id server'>server</span>
-  <span class='ivar'>@server</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='server identifier id'>server</span>
+  <span class='@server ivar id'>@server</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1073,7 +983,7 @@ Returns the value of attribute server
       <div class="method_details first">
   <p class="signature first" id="instance-class_method">
   
-    + (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>instance</strong>(name) 
+    + (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>instance</strong>(name) 
   
 
   
@@ -1094,9 +1004,10 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 12</span>
 
-<span class='kw'>def</span> <span class='id instance'>instance</span><span class='lparen'>(</span><span class='id name'>name</span><span class='rparen'>)</span>
-  <span class='id apps'>apps</span><span class='lbracket'>[</span><span class='id name'>name</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id new'>new</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='instance identifier id'>instance</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='apps identifier id'>apps</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='new identifier id'>new</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1111,7 +1022,7 @@ Returns the value of attribute server
       <div class="method_details first">
   <p class="signature first" id="configurer_for-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>configurer_for</strong>(symbol) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>configurer_for</strong>(symbol) 
   
 
   
@@ -1132,13 +1043,14 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 76</span>
 
-<span class='kw'>def</span> <span class='id configurer_for'>configurer_for</span><span class='lparen'>(</span><span class='id symbol'>symbol</span><span class='rparen'>)</span>
-  <span class='id class_name'>class_name</span> <span class='op'>=</span> <span class='const'>SAVED_CONFIGS</span><span class='lbracket'>[</span><span class='id symbol'>symbol</span><span class='rbracket'>]</span>
-  <span class='kw'>if</span> <span class='id class_name'>class_name</span><span class='period'>.</span><span class='id nil?'>nil?</span>
-    <span class='id raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id symbol'>symbol</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> is not a known configuration - try one of </span><span class='embexpr_beg'>#{</span><span class='const'>SAVED_CONFIGS</span><span class='period'>.</span><span class='id keys'>keys</span><span class='period'>.</span><span class='id join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>, </span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
-  <span class='const'>Config</span><span class='period'>.</span><span class='id const_get'>const_get</span><span class='lparen'>(</span><span class='id class_name'>class_name</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='configurer_for identifier id'>configurer_for</span><span class='lparen token'>(</span><span class='symbol identifier id'>symbol</span><span class='rparen token'>)</span>
+  <span class='class_name identifier id'>class_name</span> <span class='assign token'>=</span> <span class='SAVED_CONFIGS constant id'>SAVED_CONFIGS</span><span class='lbrack token'>[</span><span class='symbol identifier id'>symbol</span><span class='rbrack token'>]</span>
+  <span class='if if kw'>if</span> <span class='class_name identifier id'>class_name</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{symbol.inspect} is not a known configuration - try one of #{SAVED_CONFIGS.keys.join(', ')}&quot;</span>
+  <span class='end end kw'>end</span>
+  <span class='Config constant id'>Config</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='class_name identifier id'>class_name</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1147,7 +1059,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="define_macro-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>define_macro</strong>(mod, macro_name) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>define_macro</strong>(mod, macro_name) 
   
 
   
@@ -1166,11 +1078,12 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 155</span>
 
-<span class='kw'>def</span> <span class='id define_macro'>define_macro</span><span class='lparen'>(</span><span class='id mod'>mod</span><span class='comma'>,</span> <span class='id macro_name'>macro_name</span><span class='rparen'>)</span>
-  <span class='id already_extended'>already_extended</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='kw'>class</span> <span class='op'>&lt;&lt;</span> <span class='id mod'>mod</span><span class='semicolon'>;</span> <span class='kw'>self</span><span class='semicolon'>;</span> <span class='kw'>end</span><span class='rparen'>)</span><span class='period'>.</span><span class='id included_modules'>included_modules</span><span class='period'>.</span><span class='id include?'>include?</span><span class='lparen'>(</span><span class='const'>ActiveModelExtensions</span><span class='rparen'>)</span>
-  <span class='id mod'>mod</span><span class='period'>.</span><span class='id extend'>extend</span><span class='lparen'>(</span><span class='const'>ActiveModelExtensions</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id already_extended'>already_extended</span>
-  <span class='id mod'>mod</span><span class='period'>.</span><span class='id register_dragonfly_app'>register_dragonfly_app</span><span class='lparen'>(</span><span class='id macro_name'>macro_name</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='mod identifier id'>mod</span><span class='comma token'>,</span> <span class='macro_name identifier id'>macro_name</span><span class='rparen token'>)</span>
+  <span class='already_extended identifier id'>already_extended</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='mod identifier id'>mod</span><span class='semicolon token'>;</span> <span class='self self kw'>self</span><span class='semicolon token'>;</span> <span class='end end kw'>end</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='included_modules identifier id'>included_modules</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='ActiveModelExtensions constant id'>ActiveModelExtensions</span><span class='rparen token'>)</span>
+  <span class='mod identifier id'>mod</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span><span class='lparen token'>(</span><span class='ActiveModelExtensions constant id'>ActiveModelExtensions</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='already_extended identifier id'>already_extended</span>
+  <span class='mod identifier id'>mod</span><span class='dot token'>.</span><span class='register_dragonfly_app identifier id'>register_dragonfly_app</span><span class='lparen token'>(</span><span class='macro_name identifier id'>macro_name</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1179,7 +1092,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="define_macro_on_include-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>define_macro_on_include</strong>(mod, macro_name) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>define_macro_on_include</strong>(mod, macro_name) 
   
 
   
@@ -1204,17 +1117,18 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 161</span>
 
-<span class='kw'>def</span> <span class='id define_macro_on_include'>define_macro_on_include</span><span class='lparen'>(</span><span class='id mod'>mod</span><span class='comma'>,</span> <span class='id macro_name'>macro_name</span><span class='rparen'>)</span>
-  <span class='id app'>app</span> <span class='op'>=</span> <span class='kw'>self</span>
-  <span class='lparen'>(</span><span class='kw'>class</span> <span class='op'>&lt;&lt;</span> <span class='id mod'>mod</span><span class='semicolon'>;</span> <span class='kw'>self</span><span class='semicolon'>;</span> <span class='kw'>end</span><span class='rparen'>)</span><span class='period'>.</span><span class='id class_eval'>class_eval</span> <span class='kw'>do</span>
-    <span class='kw'>alias</span> <span class='id included_without_dragonfly'>included_without_dragonfly</span> <span class='id included'>included</span>
-    <span class='id define_method'>define_method</span> <span class='symbol'>:included_with_dragonfly</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id mod'>mod</span><span class='op'>|</span>
-      <span class='id included_without_dragonfly'>included_without_dragonfly</span><span class='lparen'>(</span><span class='id mod'>mod</span><span class='rparen'>)</span>
-      <span class='id app'>app</span><span class='period'>.</span><span class='id define_macro'>define_macro</span><span class='lparen'>(</span><span class='id mod'>mod</span><span class='comma'>,</span> <span class='id macro_name'>macro_name</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='kw'>alias</span> <span class='id included'>included</span> <span class='id included_with_dragonfly'>included_with_dragonfly</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='define_macro_on_include identifier id'>define_macro_on_include</span><span class='lparen token'>(</span><span class='mod identifier id'>mod</span><span class='comma token'>,</span> <span class='macro_name identifier id'>macro_name</span><span class='rparen token'>)</span>
+  <span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='self self kw'>self</span>
+  <span class='lparen token'>(</span><span class='class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='mod identifier id'>mod</span><span class='semicolon token'>;</span> <span class='self self kw'>self</span><span class='semicolon token'>;</span> <span class='end end kw'>end</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
+    <span class='alias alias kw'>alias</span> <span class='included_without_dragonfly identifier id'>included_without_dragonfly</span> <span class='included identifier id'>included</span>
+    <span class='define_method identifier id'>define_method</span> <span class='symbol val'>:included_with_dragonfly</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='mod identifier id'>mod</span><span class='bitor op'>|</span>
+      <span class='included_without_dragonfly identifier id'>included_without_dragonfly</span><span class='lparen token'>(</span><span class='mod identifier id'>mod</span><span class='rparen token'>)</span>
+      <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='mod identifier id'>mod</span><span class='comma token'>,</span> <span class='macro_name identifier id'>macro_name</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='alias alias kw'>alias</span> <span class='included identifier id'>included</span> <span class='included_with_dragonfly identifier id'>included_with_dragonfly</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1223,7 +1137,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="endpoint-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>endpoint</strong>(job = nil, &amp;block) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>endpoint</strong>(job = nil, &amp;block) 
   
 
   
@@ -1240,9 +1154,10 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 88</span>
 
-<span class='kw'>def</span> <span class='id endpoint'>endpoint</span><span class='lparen'>(</span><span class='id job'>job</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
-  <span class='id block'>block</span> <span class='op'>?</span> <span class='const'>RoutedEndpoint</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='const'>JobEndpoint</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id job'>job</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='endpoint identifier id'>endpoint</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='block identifier id'>block</span> <span class='integer val'>? </span><span class='RoutedEndpoint constant id'>RoutedEndpoint</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='JobEndpoint constant id'>JobEndpoint</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1251,7 +1166,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="job-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>job</strong>(name, &amp;block) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>job</strong>(name, &amp;block) 
   
 
   
@@ -1268,9 +1183,10 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 92</span>
 
-<span class='kw'>def</span> <span class='id job'>job</span><span class='lparen'>(</span><span class='id name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
-  <span class='id job_definitions'>job_definitions</span><span class='period'>.</span><span class='id add'>add</span><span class='lparen'>(</span><span class='id name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='job identifier id'>job</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='job_definitions identifier id'>job_definitions</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1279,7 +1195,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="mime_type_for-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>mime_type_for</strong>(format) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>mime_type_for</strong>(format) 
   
 
   
@@ -1296,9 +1212,10 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 112</span>
 
-<span class='kw'>def</span> <span class='id mime_type_for'>mime_type_for</span><span class='lparen'>(</span><span class='id format'>format</span><span class='rparen'>)</span>
-  <span class='id registered_mime_types'>registered_mime_types</span><span class='lbracket'>[</span><span class='id file_ext_string'>file_ext_string</span><span class='lparen'>(</span><span class='id format'>format</span><span class='rparen'>)</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='mime_type_for identifier id'>mime_type_for</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='rparen token'>)</span>
+  <span class='registered_mime_types identifier id'>registered_mime_types</span><span class='lbrack token'>[</span><span class='file_ext_string identifier id'>file_ext_string</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1307,7 +1224,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="mount_path-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>mount_path</strong> 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>mount_path</strong> 
   
 
   
@@ -1324,9 +1241,10 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 124</span>
 
-<span class='kw'>def</span> <span class='id mount_path'>mount_path</span>
-  <span class='id url_path_prefix'>url_path_prefix</span><span class='period'>.</span><span class='id blank?'>blank?</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span> <span class='op'>:</span> <span class='id url_path_prefix'>url_path_prefix</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='mount_path identifier id'>mount_path</span>
+  <span class='url_path_prefix identifier id'>url_path_prefix</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span> <span class='integer val'>? </span><span class='string val'>'/'</span> <span class='colon op'>:</span> <span class='url_path_prefix identifier id'>url_path_prefix</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1335,7 +1253,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="new_job-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>new_job</strong>(content = nil, opts = {}) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>new_job</strong>(content = nil, opts = {}) 
   
 
   
@@ -1352,9 +1270,10 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 84</span>
 
-<span class='kw'>def</span> <span class='id new_job'>new_job</span><span class='lparen'>(</span><span class='id content'>content</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id content'>content</span> <span class='op'>?</span> <span class='const'>Job</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='const'>TempObject</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id content'>content</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='const'>Job</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='new_job identifier id'>new_job</span><span class='lparen token'>(</span><span class='content identifier id'>content</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='content identifier id'>content</span> <span class='integer val'>? </span><span class='Job constant id'>Job</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='content identifier id'>content</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='Job constant id'>Job</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1363,7 +1282,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="register_mime_type-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>register_mime_type</strong>(format, mime_type) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>register_mime_type</strong>(format, mime_type) 
   
 
   
@@ -1380,9 +1299,10 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 103</span>
 
-<span class='kw'>def</span> <span class='id register_mime_type'>register_mime_type</span><span class='lparen'>(</span><span class='id format'>format</span><span class='comma'>,</span> <span class='id mime_type'>mime_type</span><span class='rparen'>)</span>
-  <span class='id registered_mime_types'>registered_mime_types</span><span class='lbracket'>[</span><span class='id file_ext_string'>file_ext_string</span><span class='lparen'>(</span><span class='id format'>format</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id mime_type'>mime_type</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='register_mime_type identifier id'>register_mime_type</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='mime_type identifier id'>mime_type</span><span class='rparen token'>)</span>
+  <span class='registered_mime_types identifier id'>registered_mime_types</span><span class='lbrack token'>[</span><span class='file_ext_string identifier id'>file_ext_string</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='rparen token'>)</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='mime_type identifier id'>mime_type</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1391,7 +1311,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="registered_mime_types-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>registered_mime_types</strong> 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>registered_mime_types</strong> 
   
 
   
@@ -1408,9 +1328,10 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 108</span>
 
-<span class='kw'>def</span> <span class='id registered_mime_types'>registered_mime_types</span>
-  <span class='ivar'>@registered_mime_types</span> <span class='op'>||=</span> <span class='const'>Rack</span><span class='op'>::</span><span class='const'>Mime</span><span class='op'>::</span><span class='const'>MIME_TYPES</span><span class='period'>.</span><span class='id dup'>dup</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='registered_mime_types identifier id'>registered_mime_types</span>
+  <span class='@registered_mime_types ivar id'>@registered_mime_types</span> <span class='opasgn op'>||=</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Mime constant id'>Mime</span><span class='colon2 op'>::</span><span class='MIME_TYPES constant id'>MIME_TYPES</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1419,7 +1340,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="resolve_mime_type-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>resolve_mime_type</strong>(temp_object) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>resolve_mime_type</strong>(temp_object) 
   
 
   
@@ -1440,13 +1361,14 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 116</span>
 
-<span class='kw'>def</span> <span class='id resolve_mime_type'>resolve_mime_type</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
-  <span class='id mime_type_for'>mime_type_for</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id format'>format</span><span class='rparen'>)</span>                                   <span class='op'>||</span>
-    <span class='lparen'>(</span><span class='id mime_type_for'>mime_type_for</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id ext'>ext</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id infer_mime_type_from_file_ext'>infer_mime_type_from_file_ext</span><span class='rparen'>)</span> <span class='op'>||</span>
-    <span class='id analyser'>analyser</span><span class='period'>.</span><span class='id analyse'>analyse</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='symbol'>:mime_type</span><span class='rparen'>)</span>                         <span class='op'>||</span>
-    <span class='id mime_type_for'>mime_type_for</span><span class='lparen'>(</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id analyse'>analyse</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='symbol'>:format</span><span class='rparen'>)</span><span class='rparen'>)</span>             <span class='op'>||</span>
-    <span class='id fallback_mime_type'>fallback_mime_type</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='resolve_mime_type identifier id'>resolve_mime_type</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
+  <span class='mime_type_for identifier id'>mime_type_for</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='format identifier id'>format</span><span class='rparen token'>)</span>                                   <span class='orop op'>||</span>
+    <span class='lparen token'>(</span><span class='mime_type_for identifier id'>mime_type_for</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='ext identifier id'>ext</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='infer_mime_type_from_file_ext identifier id'>infer_mime_type_from_file_ext</span><span class='rparen token'>)</span> <span class='orop op'>||</span>
+    <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='analyse identifier id'>analyse</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='symbol val'>:mime_type</span><span class='rparen token'>)</span>                         <span class='orop op'>||</span>
+    <span class='mime_type_for identifier id'>mime_type_for</span><span class='lparen token'>(</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='analyse identifier id'>analyse</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='symbol val'>:format</span><span class='rparen token'>)</span><span class='rparen token'>)</span>             <span class='orop op'>||</span>
+    <span class='fallback_mime_type identifier id'>fallback_mime_type</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1455,7 +1377,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="store-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>store</strong>(object, opts = {}) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>store</strong>(object, opts = {}) 
   
 
   
@@ -1474,11 +1396,12 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 97</span>
 
-<span class='kw'>def</span> <span class='id store'>store</span><span class='lparen'>(</span><span class='id object'>object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id temp_object'>temp_object</span> <span class='op'>=</span> <span class='id object'>object</span><span class='period'>.</span><span class='id is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>TempObject</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id object'>object</span> <span class='op'>:</span> <span class='const'>TempObject</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id object'>object</span><span class='rparen'>)</span>
-  <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id extract_attributes_from'>extract_attributes_from</span><span class='lparen'>(</span><span class='id opts'>opts</span><span class='rparen'>)</span>
-  <span class='id datastore'>datastore</span><span class='period'>.</span><span class='id store'>store</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='TempObject constant id'>TempObject</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='object identifier id'>object</span> <span class='colon op'>:</span> <span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='extract_attributes_from identifier id'>extract_attributes_from</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+  <span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1487,7 +1410,7 @@ Returns the value of attribute server
       <div class="method_details ">
   <p class="signature " id="url_for-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>url_for</strong>(job, *args) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>url_for</strong>(job, *args) 
   
 
   
@@ -1527,32 +1450,33 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 128</span>
 
-<span class='kw'>def</span> <span class='id url_for'>url_for</span><span class='lparen'>(</span><span class='id job'>job</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id args'>args</span><span class='period'>.</span><span class='id length'>length</span> <span class='op'>==</span> <span class='int'>1</span> <span class='op'>&amp;&amp;</span> <span class='id args'>args</span><span class='period'>.</span><span class='id first'>first</span><span class='period'>.</span><span class='id kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id args'>args</span><span class='period'>.</span><span class='id empty?'>empty?</span>
-    <span class='id opts'>opts</span> <span class='op'>=</span> <span class='id args'>args</span><span class='period'>.</span><span class='id first'>first</span> <span class='op'>?</span> <span class='id args'>args</span><span class='period'>.</span><span class='id first'>first</span><span class='period'>.</span><span class='id dup'>dup</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-    <span class='id host'>host</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:host</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id url_host'>url_host</span>
-    <span class='id suffix'>suffix</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:suffix</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id url_suffix'>url_suffix</span>
-    <span class='id suffix'>suffix</span> <span class='op'>=</span> <span class='id suffix'>suffix</span><span class='period'>.</span><span class='id call'>call</span><span class='lparen'>(</span><span class='id job'>job</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id suffix'>suffix</span><span class='period'>.</span><span class='id respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:call</span><span class='rparen'>)</span>
-    <span class='id path_prefix'>path_prefix</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:path_prefix</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id url_path_prefix'>url_path_prefix</span>
-    <span class='id path'>path</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id host'>host</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id path_prefix'>path_prefix</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id job'>job</span><span class='period'>.</span><span class='id to_path'>to_path</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id suffix'>suffix</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id query'>query</span> <span class='op'>=</span> <span class='id opts'>opts</span>
-    <span class='id query'>query</span><span class='period'>.</span><span class='id merge!'>merge!</span><span class='lparen'>(</span><span class='id server'>server</span><span class='period'>.</span><span class='id required_params_for'>required_params_for</span><span class='lparen'>(</span><span class='id job'>job</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id protect_from_dos_attacks'>protect_from_dos_attacks</span>
-    <span class='id path'>path</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>?</span><span class='embexpr_beg'>#{</span><span class='const'>Rack</span><span class='op'>::</span><span class='const'>Utils</span><span class='period'>.</span><span class='id build_query'>build_query</span><span class='lparen'>(</span><span class='id query'>query</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id query'>query</span><span class='period'>.</span><span class='id any?'>any?</span>
-    <span class='id path'>path</span>
-  <span class='kw'>else</span>
-    <span class='comment'># Deprecation stuff - will be removed!!!
-</span>    <span class='kw'>case</span> <span class='id args'>args</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
-    <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^(\d+)?x(\d+)?</span><span class='regexp_end'>/</span></span>
-      <span class='id log'>log</span><span class='period'>.</span><span class='id warn'>warn</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DEPRECATED USE OF url_for and will be removed in the future - please use thumb(</span><span class='embexpr_beg'>#{</span><span class='id args'>args</span><span class='period'>.</span><span class='id map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id a'>a</span><span class='op'>|</span><span class='id a'>a</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>, </span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>).url</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-      <span class='id args'>args</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='id job'>job</span><span class='period'>.</span><span class='id thumb'>thumb</span><span class='lparen'>(</span><span class='id args'>args</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id args'>args</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span> <span class='op'>:</span> <span class='id job'>job</span><span class='period'>.</span><span class='id thumb'>thumb</span><span class='lparen'>(</span><span class='id args'>args</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>
-    <span class='kw'>when</span> <span class='symbol'>:gif</span><span class='comma'>,</span> <span class='symbol'>:png</span><span class='comma'>,</span> <span class='symbol'>:jpg</span><span class='comma'>,</span> <span class='symbol'>:jpeg</span>
-      <span class='id log'>log</span><span class='period'>.</span><span class='id warn'>warn</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DEPRECATED USE OF url_for and will be removed in the future - please use encode(</span><span class='embexpr_beg'>#{</span><span class='id args'>args</span><span class='period'>.</span><span class='id first'>first</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>).url</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-      <span class='id job'>job</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='id args'>args</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>
-    <span class='kw'>else</span>
-      <span class='id raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DEPRECATED USE OF url_for - will be removed in future versions - please consult the docs</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='eq op'>==</span> <span class='integer val'>1</span> <span class='andop op'>&amp;&amp;</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+    <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span> <span class='integer val'>? </span><span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span> <span class='colon op'>:</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+    <span class='host identifier id'>host</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:host</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='url_host identifier id'>url_host</span>
+    <span class='suffix identifier id'>suffix</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:suffix</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='url_suffix identifier id'>url_suffix</span>
+    <span class='suffix identifier id'>suffix</span> <span class='assign token'>=</span> <span class='suffix identifier id'>suffix</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='suffix identifier id'>suffix</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:call</span><span class='rparen token'>)</span>
+    <span class='path_prefix identifier id'>path_prefix</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:path_prefix</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='url_path_prefix identifier id'>url_path_prefix</span>
+    <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{host}#{path_prefix}#{job.to_path}#{suffix}&quot;</span>
+    <span class='query identifier id'>query</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span>
+    <span class='query identifier id'>query</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='required_params_for identifier id'>required_params_for</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='protect_from_dos_attacks identifier id'>protect_from_dos_attacks</span>
+    <span class='path identifier id'>path</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;?#{Rack::Utils.build_query(query)}&quot;</span> <span class='if if_mod kw'>if</span> <span class='query identifier id'>query</span><span class='dot token'>.</span><span class='any? fid id'>any?</span>
+    <span class='path identifier id'>path</span>
+  <span class='else else kw'>else</span>
+    <span class='comment val'># Deprecation stuff - will be removed!!!</span>
+    <span class='case case kw'>case</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span>
+    <span class='when when kw'>when</span> <span class='regexp val'>/^(\d+)?x(\d+)?/</span>
+      <span class='log identifier id'>log</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span><span class='lparen token'>(</span><span class='dstring node'>&quot;DEPRECATED USE OF url_for and will be removed in the future - please use thumb(#{args.map{|a|a.inspect}.join(', ')}).url&quot;</span><span class='rparen token'>)</span>
+      <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='question op'>?</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span> <span class='colon op'>:</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span>
+    <span class='when when kw'>when</span> <span class='symbol val'>:gif</span><span class='comma token'>,</span> <span class='symbol val'>:png</span><span class='comma token'>,</span> <span class='symbol val'>:jpg</span><span class='comma token'>,</span> <span class='symbol val'>:jpeg</span>
+      <span class='log identifier id'>log</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span><span class='lparen token'>(</span><span class='dstring node'>&quot;DEPRECATED USE OF url_for and will be removed in the future - please use encode(#{args.first.inspect}).url&quot;</span><span class='rparen token'>)</span>
+      <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span>
+    <span class='else else kw'>else</span>
+      <span class='raise identifier id'>raise</span> <span class='string val'>&quot;DEPRECATED USE OF url_for - will be removed in future versions - please consult the docs&quot;</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -1570,9 +1494,9 @@ Returns the value of attribute server
     </div>
 
     <div id="footer">
-  Generated on Sun Oct 31 01:10:39 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Tue Nov  2 13:23:27 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.1 (ruby-1.8.7).
 </div>
 
   </body>

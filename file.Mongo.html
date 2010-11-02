@@ -14,9 +14,18 @@
 <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
 
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
   </head>
   <body>
-
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -59,7 +68,7 @@
 <p>Dragonfly can be used with any ActiveModel-compatible model, therefore libraries like <a href="http://mongoid.org">Mongoid</a> work out of the box.</p>
 
 <p>Furthermore, Mongo DB has support for storing blob-like objects directly in the database (using MongoDB 'GridFS'),
-so you can make use of this with the supplied <tt><a href="Dragonfly/DataStorage/MongoDataStore.html" title="Dragonfly::DataStorage::MongoDataStore (class)">MongoDataStore</a></tt>.</p>
+so you can make use of this with the supplied <span class='object_link'><a href="Dragonfly/DataStorage/MongoDataStore.html" title="Dragonfly::DataStorage::MongoDataStore (class)">MongoDataStore</a></span>.</p>
 
 <p>For more info about ActiveModel, see <a href="file.Models.html" title="Models">Models</a>.</p>
 
@@ -69,35 +78,35 @@ so you can make use of this with the supplied <tt><a href="Dragonfly/DataStorage
 
 <p>In config/initializers/dragonfly.rb:</p>
 
-<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span>
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
 
-<span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
+<span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
 
-<span class='comment'># Get database name from config/mongoid.yml
-</span><span class='id db'>db</span> <span class='op'>=</span> <span class='const'>YAML</span><span class='period'>.</span><span class='id load_file'>load_file</span><span class='lparen'>(</span><span class='const'>Rails</span><span class='period'>.</span><span class='id root'>root</span><span class='period'>.</span><span class='id join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>config/mongoid.yml</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='const'>Rails</span><span class='period'>.</span><span class='id env'>env</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>database</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='comment val'># Get database name from config/mongoid.yml</span>
+<span class='db identifier id'>db</span> <span class='assign token'>=</span> <span class='YAML constant id'>YAML</span><span class='dot token'>.</span><span class='load_file identifier id'>load_file</span><span class='lparen token'>(</span><span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='root identifier id'>root</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'config/mongoid.yml'</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='env identifier id'>env</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='string val'>'database'</span><span class='rbrack token'>]</span>
 
-<span class='comment'># Configure to use RMagick, Rails defaults, and the Mongo data store
-</span><span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:rmagick</span><span class='rparen'>)</span>
-<span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:rails</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
-  <span class='id c'>c</span><span class='period'>.</span><span class='id datastore'>datastore</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>DataStorage</span><span class='op'>::</span><span class='const'>MongoDataStore</span><span class='period'>.</span><span class='id new'>new</span> <span class='symbol'>:database</span> <span class='op'>=&gt;</span> <span class='id db'>db</span>
-<span class='kw'>end</span>
+<span class='comment val'># Configure to use RMagick, Rails defaults, and the Mongo data store</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rmagick</span><span class='rparen token'>)</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='MongoDataStore constant id'>MongoDataStore</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='symbol val'>:database</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='db identifier id'>db</span>
+<span class='end end kw'>end</span>
 
-<span class='comment'># Allow all mongoid models to use the macro 'image_accessor'
-</span><span class='id app'>app</span><span class='period'>.</span><span class='id define_macro_on_include'>define_macro_on_include</span><span class='lparen'>(</span><span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Document</span><span class='comma'>,</span> <span class='symbol'>:image_accessor</span><span class='rparen'>)</span>
+<span class='comment val'># Allow all mongoid models to use the macro 'image_accessor'</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='define_macro_on_include identifier id'>define_macro_on_include</span><span class='lparen token'>(</span><span class='Mongoid constant id'>Mongoid</span><span class='colon2 op'>::</span><span class='Document constant id'>Document</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
 
-<span class='comment'># ... any other setup, see Rails docs
-</span></pre>
+<span class='comment val'># ... any other setup, see Rails docs</span>
+</pre>
 
 <p>Then in models:</p>
 
-<pre class="code"><span class='kw'>class</span> <span class='const'>Album</span>
-  <span class='id include'>include</span> <span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Document</span>
+<pre class="code"><span class='class class kw'>class</span> <span class='Album constant id'>Album</span>
+  <span class='include identifier id'>include</span> <span class='Mongoid constant id'>Mongoid</span><span class='colon2 op'>::</span><span class='Document constant id'>Document</span>
 
-  <span class='id field'>field</span> <span class='symbol'>:cover_image_uid</span>
-  <span class='id image_accessor'>image_accessor</span> <span class='symbol'>:cover_image</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:cover_image_uid</span>
+  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:cover_image</span>
 
-  <span class='comment'># ...
-</span><span class='kw'>end</span>
+  <span class='comment val'># ...</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <p>See <a href="file.Models.html" title="Models">Models</a> for more info.</p></div>
@@ -110,9 +119,9 @@ so you can make use of this with the supplied <tt><a href="Dragonfly/DataStorage
     </div>
 
     <div id="footer">
-  Generated on Sun Oct 31 01:10:39 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Tue Nov  2 13:23:17 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.1 (ruby-1.8.7).
 </div>
 
   </body>

@@ -14,9 +14,18 @@
 <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
 
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
   </head>
   <body>
-
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -69,7 +78,7 @@
   
   
     <dt class="r1">Included in:</dt>
-    <dd class="r1"><a href="FunctionManager.html" title="Dragonfly::FunctionManager (class)">FunctionManager</a>, <a href="RMagickUtils.html" title="Dragonfly::RMagickUtils (module)">RMagickUtils</a>, <a href="SimpleEndpoint.html" title="Dragonfly::SimpleEndpoint (class)">SimpleEndpoint</a></dd>
+    <dd class="r1"><span class='object_link'><a href="FunctionManager.html" title="Dragonfly::FunctionManager (class)">FunctionManager</a></span>, <span class='object_link'><a href="RMagickUtils.html" title="Dragonfly::RMagickUtils (module)">RMagickUtils</a></span>, <span class='object_link'><a href="SimpleEndpoint.html" title="Dragonfly::SimpleEndpoint (class)">SimpleEndpoint</a></span></dd>
     
   
   
@@ -200,7 +209,7 @@ Returns the value of attribute log_object.
       <div class="method_details first">
   <p class="signature first" id="log_object-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>log_object</strong>  <span class="extras">(readonly)</span>
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>log_object</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -228,9 +237,10 @@ Returns the value of attribute log_object
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/loggable.rb', line 21</span>
 
-<span class='kw'>def</span> <span class='id log_object'>log_object</span>
-  <span class='ivar'>@log_object</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='log_object identifier id'>log_object</span>
+  <span class='@log_object ivar id'>@log_object</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -246,7 +256,7 @@ Returns the value of attribute log_object
       <div class="method_details first">
   <p class="signature first" id="log-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>log</strong> 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>log</strong> 
   
 
   
@@ -270,16 +280,17 @@ Returns the value of attribute log_object
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/loggable.rb', line 6</span>
 
-<span class='kw'>def</span> <span class='id log'>log</span>
-  <span class='kw'>case</span> <span class='ivar'>@log_object</span>
-  <span class='kw'>when</span> <span class='kw'>nil</span>
-    <span class='ivar'>@log_object</span> <span class='op'>=</span> <span class='const'>Logger</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='gvar'>$stdout</span><span class='rparen'>)</span>
-  <span class='kw'>when</span> <span class='const'>Proc</span>
-    <span class='ivar'>@log_object</span><span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='kw'>when</span> <span class='const'>Logger</span>
-    <span class='ivar'>@log_object</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='log identifier id'>log</span>
+  <span class='case case kw'>case</span> <span class='@log_object ivar id'>@log_object</span>
+  <span class='when when kw'>when</span> <span class='nil nil kw'>nil</span>
+    <span class='@log_object ivar id'>@log_object</span> <span class='assign token'>=</span> <span class='Logger constant id'>Logger</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='$stdout gvar id'>$stdout</span><span class='rparen token'>)</span>
+  <span class='when when kw'>when</span> <span class='Proc constant id'>Proc</span>
+    <span class='@log_object ivar id'>@log_object</span><span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='when when kw'>when</span> <span class='Logger constant id'>Logger</span>
+    <span class='@log_object ivar id'>@log_object</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -288,7 +299,7 @@ Returns the value of attribute log_object
       <div class="method_details ">
   <p class="signature " id="log=-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>log=</strong>(object) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>log=</strong>(object) 
   
 
   
@@ -305,9 +316,10 @@ Returns the value of attribute log_object
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/loggable.rb', line 17</span>
 
-<span class='kw'>def</span> <span class='id log='>log=</span><span class='lparen'>(</span><span class='id object'>object</span><span class='rparen'>)</span>
-  <span class='ivar'>@log_object</span> <span class='op'>=</span> <span class='id object'>object</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='log= identifier id'>log=</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+  <span class='@log_object ivar id'>@log_object</span> <span class='assign token'>=</span> <span class='object identifier id'>object</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -316,7 +328,7 @@ Returns the value of attribute log_object
       <div class="method_details ">
   <p class="signature " id="use_same_log_as-instance_method">
   
-    - (<tt><a href="../Object.html" title="Object (class)">Object</a></tt>) <strong>use_same_log_as</strong>(object) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>use_same_log_as</strong>(object) 
   
 
   
@@ -333,9 +345,10 @@ Returns the value of attribute log_object
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/loggable.rb', line 23</span>
 
-<span class='kw'>def</span> <span class='id use_same_log_as'>use_same_log_as</span><span class='lparen'>(</span><span class='id object'>object</span><span class='rparen'>)</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id log'>log</span> <span class='op'>=</span> <span class='id proc'>proc</span><span class='lbrace'>{</span> <span class='id object'>object</span><span class='period'>.</span><span class='id log'>log</span> <span class='rbrace'>}</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='use_same_log_as identifier id'>use_same_log_as</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='log identifier id'>log</span> <span class='assign token'>=</span> <span class='proc identifier id'>proc</span><span class='lbrace token'>{</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='log identifier id'>log</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -353,9 +366,9 @@ Returns the value of attribute log_object
     </div>
 
     <div id="footer">
-  Generated on Sun Oct 31 01:10:40 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Tue Nov  2 13:23:20 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.1 (ruby-1.8.7).
 </div>
 
   </body>

@@ -14,9 +14,18 @@
 <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
 
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
   </head>
   <body>
-
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 
@@ -67,13 +76,13 @@
   
     
       <dt class="r1">Includes:</dt>
-      <dd class="r1"><a href="Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></dd>
+      <dd class="r1"><span class='object_link'><a href="Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></dd>
       
     
   
   
     <dt class="r2">Included in:</dt>
-    <dd class="r2"><a href="Analysis/RMagickAnalyser.html" title="Dragonfly::Analysis::RMagickAnalyser (class)">Analysis::RMagickAnalyser</a>, <a href="Encoding/RMagickEncoder.html" title="Dragonfly::Encoding::RMagickEncoder (class)">Encoding::RMagickEncoder</a>, <a href="Generation/RMagickGenerator.html" title="Dragonfly::Generation::RMagickGenerator (class)">Generation::RMagickGenerator</a>, <a href="Processing/RMagickProcessor.html" title="Dragonfly::Processing::RMagickProcessor (class)">Processing::RMagickProcessor</a></dd>
+    <dd class="r2"><span class='object_link'><a href="Analysis/RMagickAnalyser.html" title="Dragonfly::Analysis::RMagickAnalyser (class)">Analysis::RMagickAnalyser</a></span>, <span class='object_link'><a href="Encoding/RMagickEncoder.html" title="Dragonfly::Encoding::RMagickEncoder (class)">Encoding::RMagickEncoder</a></span>, <span class='object_link'><a href="Generation/RMagickGenerator.html" title="Dragonfly::Generation::RMagickGenerator (class)">Generation::RMagickGenerator</a></span>, <span class='object_link'><a href="Processing/RMagickProcessor.html" title="Dragonfly::Processing::RMagickProcessor (class)">Processing::RMagickProcessor</a></span></dd>
     
   
   
@@ -100,8 +109,8 @@
   
   <h2>Method Summary</h2>
   
-  <h3 class="inherited">Methods included from <a href="Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></h3>
-  <p class="inherited"><a href="Loggable.html#log-instance_method" title="Dragonfly::Loggable#log (method)">#log</a>, <a href="Loggable.html#log%3D-instance_method" title="Dragonfly::Loggable#log= (method)">#log=</a>, <a href="Loggable.html#use_same_log_as-instance_method" title="Dragonfly::Loggable#use_same_log_as (method)">#use_same_log_as</a></p>
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Loggable.html#log-instance_method" title="Dragonfly::Loggable#log (method)">#log</a></span>, <span class='object_link'><a href="Loggable.html#log%3D-instance_method" title="Dragonfly::Loggable#log= (method)">#log=</a></span>, <span class='object_link'><a href="Loggable.html#use_same_log_as-instance_method" title="Dragonfly::Loggable#use_same_log_as (method)">#use_same_log_as</a></span></p>
 
 
 
@@ -114,9 +123,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Oct 31 01:10:41 2010 by 
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
-  0.5.8 (ruby-1.9.2).
+  Generated on Tue Nov  2 13:23:25 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.1 (ruby-1.8.7).
 </div>
 
   </body>
