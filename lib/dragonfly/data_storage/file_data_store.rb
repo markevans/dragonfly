@@ -67,7 +67,7 @@ module Dragonfly
       end
 
       def relative(absolute_path)
-        absolute_path[/^#{root_path}\/(.*)$/, 1]
+        absolute_path[/^#{root_path}\/?(.*)$/, 1]
       end
 
       def directory_empty?(path)
