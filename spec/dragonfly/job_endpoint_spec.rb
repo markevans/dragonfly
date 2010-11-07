@@ -7,7 +7,8 @@ describe Dragonfly::JobEndpoint do
 
   def make_request(job, opts={})
     endpoint = Dragonfly::JobEndpoint.new(job)
-    Rack::MockRequest.new(endpoint).get('', opts)
+    method = opts.delete(:method).to_s.upcase || 'GET'
+    Rack::MockRequest.new(endpoint).request(method, '', opts)
   end
 
   before(:each) do
@@ -16,7 +17,7 @@ describe Dragonfly::JobEndpoint do
     @job = Dragonfly::Job.new(@app).fetch('egg')
   end
 
-  it "should return a correct response if successful" do
+  it "should return a correct response to a successful GET request" do
     response = make_request(@job)
     response.status.should == 200
     response['ETag'].should =~ /^"\w+"$/
@@ -25,6 +26,17 @@ describe Dragonfly::JobEndpoint do
     response['Content-Length'].should == '6'
     response['Content-Disposition'].should == 'filename="gung.txt"'
     response.body.should == 'GUNGLE'
+  end
+
+  it "should return the correct headers and no content to a successful HEAD request" do
+    response = make_request(@job, :method => :head)
+    response.status.should == 200
+    response['ETag'].should =~ /^"\w+"$/
+    response['Cache-Control'].should == "public, max-age=31536000"
+    response['Content-Type'].should == 'text/plain'
+    response['Content-Length'].should == '6'
+    response['Content-Disposition'].should == 'filename="gung.txt"'
+    response.body.should == ''
   end
 
   it "should return 404 if the datastore raises data not found" do
@@ -100,7 +112,7 @@ describe Dragonfly::JobEndpoint do
         response['Content-Disposition'].should be_nil
       end
     end
-    
+
     describe "content disposition" do
       it "should use the app's configured content-disposition" do
         @app.content_disposition = :attachment
