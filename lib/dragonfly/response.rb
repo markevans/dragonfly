@@ -19,8 +19,9 @@ module Dragonfly
       if etag_matches?
         # Not Modified
         [304, cache_headers, []]
+      elsif request.head?
+        [200, success_headers.merge(cache_headers), []]
       else
-        # Success
         [200, success_headers.merge(cache_headers), job.result]
       end
     rescue DataStorage::DataNotFound => e
