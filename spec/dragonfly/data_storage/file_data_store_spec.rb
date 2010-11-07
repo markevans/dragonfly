@@ -136,11 +136,16 @@ describe Dragonfly::DataStorage::FileDataStore do
   end
   
   describe "retrieve" do
+    it "should return a closed file" do
+      uid = @data_store.store(@temp_object)
+      file, extra = @data_store.retrieve(uid)
+      file.should be_closed
+    end
     it "should be able to retrieve any file, stored or not (and without extra data)" do
       FileUtils.mkdir_p("#{@data_store.root_path}/jelly_beans/are")
       File.open("#{@data_store.root_path}/jelly_beans/are/good", 'w'){|f| f.write('hey dog') }
       file, meta = @data_store.retrieve("jelly_beans/are/good")
-      file.read.should == 'hey dog'
+      File.read(file.path).should == 'hey dog'
       meta.should == {}
     end
   end
