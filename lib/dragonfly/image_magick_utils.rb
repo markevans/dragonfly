@@ -23,10 +23,10 @@ module Dragonfly
       tempfile
     end
 
-    def identify(temp_object)
+    def identify(temp_object, args='')
       # example of details string:
       # myimage.png PNG 200x100 200x100+0+0 8-bit DirectClass 31.2kb
-      details = run "#{identify_command} #{temp_object.path}"
+      details = run "#{identify_command} #{args} #{temp_object.path}"
       filename, format, geometry, geometry_2, depth, image_class, size = details.split(' ')
       width, height = geometry.split('x')
       {
