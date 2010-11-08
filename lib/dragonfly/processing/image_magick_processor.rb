@@ -65,8 +65,8 @@ module Dragonfly
         gravity = GRAVITIES[opts[:gravity] || 'c']
 
         if width != current_width || height != current_height
-          scale = [width / current_width.to_f, height / current_height.to_f].max
-          temp_object = TempObject.new(resize(temp_object, "#{(scale * current_width + 0.5).to_i}x#{(scale * current_height + 0.5).to_i}"))
+          scale = [width.to_f / current_width, height.to_f / current_height].max
+          temp_object = TempObject.new(resize(temp_object, "#{(scale * current_width).ceil}x#{(scale * current_height).ceil}"))
         end
 
         crop(temp_object, :width => width, :height => height, :gravity => gravity)
