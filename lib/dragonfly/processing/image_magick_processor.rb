@@ -36,7 +36,7 @@ module Dragonfly
         y = '+' + y unless y[/^[+-]/]
       
         if gravity
-          convert(temp_object, "-crop #{width}x#{height} -gravity #{gravity}")
+          convert(temp_object, "-crop #{width}x#{height}#{x}#{y} -gravity #{gravity}")
         else
           convert(temp_object, "-crop #{width}x#{height}#{x}#{y}")
         end
