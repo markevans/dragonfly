@@ -56,7 +56,11 @@ module Dragonfly
       alias grayscale greyscale
       
       def resize_and_crop(temp_object, opts={})
-        raise "TODO!!!"
+        width   = opts[:width]
+        height  = opts[:height]
+        gravity = GRAVITIES[opts[:gravity]] || GRAVITIES['c']
+
+        crop(temp_object, :width => width, :height => height, :gravity => gravity)
       end
       
       def rotate(temp_object, amount, opts={})
