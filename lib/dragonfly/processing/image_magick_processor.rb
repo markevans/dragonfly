@@ -56,9 +56,18 @@ module Dragonfly
       alias grayscale greyscale
       
       def resize_and_crop(temp_object, opts={})
-        width   = opts[:width]
-        height  = opts[:height]
-        gravity = GRAVITIES[opts[:gravity]] || GRAVITIES['c']
+        attrs          = identify(temp_object)
+        current_width  = attrs[:width].to_i
+        current_height = attrs[:height].to_i
+        
+        width   = opts[:width]  ? opts[:width].to_i  : current_width
+        height  = opts[:height] ? opts[:height].to_i : current_height
+        gravity = GRAVITIES[opts[:gravity] || 'c']
+
+        if width != current_width || height != current_height
+          scale = [width / current_width.to_f, height / current_height.to_f].max
+          temp_object = TempObject.new(resize(temp_object, "#{(scale * current_width + 0.5).to_i}x#{(scale * current_height + 0.5).to_i}"))
+        end
 
         crop(temp_object, :width => width, :height => height, :gravity => gravity)
       end
