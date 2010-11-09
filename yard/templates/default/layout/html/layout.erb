@@ -3,9 +3,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <%= erb(:headers) %>
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          <% if options[:file] == 'extra_docs/Index.md' %>
+            $('#toc').hide();
+          <% end %>
+        });
+      })(jQuery);
+    </script>
   </head>
   <body>
-
     <!-- GOOGLE ANALYTICS -->
     <script type="text/javascript">
 

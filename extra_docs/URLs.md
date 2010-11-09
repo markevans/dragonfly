@@ -56,8 +56,8 @@ And you can override it:
 
     app.fetch('some/uid').url(:suffix => '/yellowbelly')     # "...b21lL3VpZA/yellowbelly"
 
-Content-Disposition and downloaded filename
--------------------------------------------
+Content-Disposition
+-------------------
 You can manually set the content-disposition of the response:
 
     app.content_disposition = :attachment    # should be :inline or :attachment (or :hidden)
@@ -74,6 +74,8 @@ You can also use a block:
       end
     }
 
+Downloaded filename
+-------------------
 To specify the filename the browser uses for 'Save As' dialogues:
 
     app.content_filename = proc{|job, request|

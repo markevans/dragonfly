@@ -63,9 +63,16 @@ ul.main_files li {
   margin:0;
   padding:0;
 }
+ul.main_files li:nth-child(odd) {
+  background-color:#fff;
+}
+ul.main_files li:nth-child(even) {
+  background-color:#eee;
+}
+
 ul.main_files li a {
-  margin: 5px;
-  padding:10px;
+  margin: 0;
+  padding:7px 12px;
   display:block;
 }
 

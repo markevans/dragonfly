@@ -190,7 +190,7 @@ As you can see, a couple of things are added by the model. You can also access t
 
     app.fetch(@album.cover_image_uid).meta     # => {:model_class=>"Album", ...}
 
-'Magic' Attributes
+"Magic" Attributes
 ------------------
 An accessor like `cover_image` only relies on the accessor `cover_image_uid` to work.
 However, in some cases you may want to record some other properties, whether it be for using in queries, or
