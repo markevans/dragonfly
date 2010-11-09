@@ -133,8 +133,8 @@ module Dragonfly
         suffix = suffix.call(job) if suffix.respond_to?(:call)
         path_prefix = opts.delete(:path_prefix) || url_path_prefix
         path = "#{host}#{path_prefix}#{job.to_path}#{suffix}"
+        server.prepare_path_for(path, job) if protect_from_dos_attacks
         query = opts
-        query.merge!(server.required_params_for(job)) if protect_from_dos_attacks
         path << "?#{Rack::Utils.build_query(query)}" if query.any?
         path
       else

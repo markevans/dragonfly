@@ -17,8 +17,16 @@ module Dragonfly
       when '', '/', app.url_path_prefix
         dragonfly_response
       else
-        job = Job.from_path(request.path_info, app)
-        job.validate_sha!(request['s']) if app.protect_from_dos_attacks
+        path, signature = if !app.protect_from_dos_attacks
+          [request.path_info, nil]
+        elsif request['s']
+          [request.path_info, request['s']]
+        else
+          [request.path_info.gsub(/\/([^\/]*)$/, ''), $1]
+        end
+
+        job = Job.from_path(path, app)
+        job.validate_sha!(signature) if app.protect_from_dos_attacks
         Response.new(job, env).to_response
       end
     rescue Serializer::BadString, Job::InvalidArray => e
@@ -30,8 +38,8 @@ module Dragonfly
       [400, {"Content-Type" => 'text/plain'}, ["The SHA parameter you gave (#{e}) is incorrect"]]
     end
 
-    def required_params_for(job)
-      {'s' => job.sha}
+    def prepare_path_for(path, job)
+      path << "/#{job.sha}"
     end
 
     private
