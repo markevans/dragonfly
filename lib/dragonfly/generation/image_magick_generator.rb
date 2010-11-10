@@ -75,7 +75,7 @@ module Dragonfly
         escaped_string = "\"#{string.gsub(/"/, '\"')}\""
 
         # Settings
-        args.push("-gravity Center")
+        args.push("-gravity NorthWest")
         args.push("-antialias")
         args.push("-pointsize #{font_size}")
         args.push("-font '#{opts[:font]}'") if opts[:font]
