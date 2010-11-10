@@ -5,7 +5,7 @@ require 'uri'
 ### The dragonfly app ###
 app = Dragonfly[:images]
 app.configure_with(:rails)
-app.configure_with(:rmagick)
+app.configure_with(:imagemagick)
 
 ### Extend active record ###
 app.define_macro(ActiveRecord::Base, :image_accessor)
