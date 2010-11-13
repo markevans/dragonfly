@@ -2,7 +2,7 @@ Sinatra
 =======
 You can use {Dragonfly::Job Job}'s `to_response` method like so:
 
-    app = Dragonfly[:images].configure_with(:rmagick)
+    app = Dragonfly[:images].configure_with(:imagemagick)
 
     get '/images/:size.:format' do |size, format|
       app.fetch_file('~/some/image.png').thumb(size).encode(format).to_response(env)
@@ -15,7 +15,7 @@ a path segment.
 
 or you can mount as a middleware, like in rails:
 
-    Dragonfly[:images].configure_with(:rmagick) do |c|
+    Dragonfly[:images].configure_with(:imagemagick) do |c|
       c.url_path_prefix = '/media'
     end
 

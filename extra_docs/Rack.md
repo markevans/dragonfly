@@ -29,11 +29,11 @@ Example: Using to serve resized images
     require 'dragonfly'
 
     app = Dragonfly[:images]
-    app.configure_with(:rmagick)
+    app.configure_with(:imagemagick)
 
     run app
 
-This enables the app to use all the RMagick goodies provided by Dragonfly (see {file:Configuration}).
+This enables the app to use all the ImageMagick goodies provided by Dragonfly (see {file:Configuration}).
 By default the {Dragonfly::DataStorage::FileDataStore file data store} is used.
 
 In the console:

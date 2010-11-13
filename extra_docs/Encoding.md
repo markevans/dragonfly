@@ -20,14 +20,14 @@ and an image object (actually a {Dragonfly::Job Job} object)...
 
 We can encode it to any format registered with the encoder.
 
-RMagickEncoder
-----------------
-The {Dragonfly::Encoding::RMagickEncoder RMagickEncoder} is registered by default by
-the {Dragonfly::Config::RMagick RMagick configuration} used by 'dragonfly/rails/images'.
+ImageMagickEncoder
+------------------
+The {Dragonfly::Encoding::ImageMagickEncoder ImageMagickEncoder} is registered by default by
+the {Dragonfly::Config::ImageMagick ImageMagick configuration} used by 'dragonfly/rails/images'.
 
 If not already registered:
 
-    app.encoder.register(Dragonfly::Encoding::RMagickEncoder)
+    app.encoder.register(Dragonfly::Encoding::ImageMagickEncoder)
 
 gives us:
 
@@ -36,7 +36,7 @@ gives us:
     image.encode(:png)
     image.encode(:tiff)
 
-and various other formats (see {Dragonfly::Encoding::RMagickEncoder RMagickEncoder})
+and various other formats (see {Dragonfly::Encoding::ImageMagickEncoder ImageMagickEncoder})
 
 Lazy evaluation
 ---------------
@@ -68,7 +68,7 @@ To register a custom encoder, for e.g. pdf format:
 
 If `:unable_to_handle` is thrown, the next most recently registered encoder is used, and so on.
 
-Alternatively you can create a class like the RMagick one above, which implements the method `encode`, and register this.
+Alternatively you can create a class like the ImageMagick one above, which implements the method `encode`, and register this.
 
     class MyEncoder
 

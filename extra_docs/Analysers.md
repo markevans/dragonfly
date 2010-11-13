@@ -21,12 +21,12 @@ We can analyse it using any analysis methods that have been registered with the 
 
 RMagickAnalyser
 ---------------
-The {Dragonfly::Analysis::RMagickAnalyser RMagickAnalyser} is registered by default by the
-{Dragonfly::Config::RMagick RMagick configuration} used by 'dragonfly/rails/images'.
+The {Dragonfly::Analysis::ImageMagickAnalyser ImageMagickAnalyser} is registered by default by the
+{Dragonfly::Config::ImageMagick ImageMagick configuration} used by 'dragonfly/rails/images'.
 
 If not already registered:
 
-    app.analyser.register(Dragonfly::Analysis::RMagickAnalyser)
+    app.analyser.register(Dragonfly::Analysis::ImageMagickAnalyser)
 
 gives us these methods:
 

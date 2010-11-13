@@ -1,7 +1,7 @@
 require "rubygems"
 require "bundler/setup"
 require File.dirname(__FILE__) + '/lib/dragonfly'
-APP = Dragonfly[:images].configure_with(:rmagick)
+APP = Dragonfly[:images].configure_with(:imagemagick)
 
 # available_uids = `find #{APP.datastore.root_path} ! -type d`.split("\n").map do |file|
 #   file.sub("#{APP.datastore.root_path}/", '')
