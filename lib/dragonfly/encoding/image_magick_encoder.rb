@@ -48,9 +48,7 @@ module Dragonfly
         if details[:format] == format
           temp_object
         else
-          tempfile = new_tempfile(format)
-          run "#{convert_command} #{temp_object.path} #{tempfile.path}"
-          tempfile
+          convert(temp_object, '', format.to_sym)
         end
       end
 
