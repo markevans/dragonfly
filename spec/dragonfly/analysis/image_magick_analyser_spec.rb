@@ -9,7 +9,7 @@ describe Dragonfly::Analysis::ImageMagickAnalyser do
     @analyser.log = Logger.new(LOG_FILE)
   end
 
-  describe "analysis methods", :shared => true do
+  describe "ImageMagick analysis methods", :shared => true do
     
     it "should return the width" do
       @analyser.width(@beach).should == 280
