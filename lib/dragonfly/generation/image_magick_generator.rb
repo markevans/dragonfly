@@ -3,8 +3,8 @@ module Dragonfly
     class ImageMagickGenerator
 
       FONT_STYLES = {
-        'normal' => 'normal',
-        'italic' => 'italic',
+        'normal'  => 'normal',
+        'italic'  => 'italic',
         'oblique' => 'oblique'
       }
 

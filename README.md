@@ -9,7 +9,6 @@ For the lazy Rails user...
 --------------------------
 **Gemfile**:
 
-    gem 'rmagick',    :require => 'RMagick'
     gem 'rack-cache', :require => 'rack/cache'
     gem 'dragonfly', '~>0.7.7'
 

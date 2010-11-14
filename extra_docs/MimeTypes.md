@@ -27,7 +27,7 @@ You can also do this inside a configuration block.
 Analysers
 ---------
 The {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} has a `mime_type` method and the
-{Dragonfly::Analysis::RMagickAnalyser RMagickAnalyser} has a `format` method.
+{Dragonfly::Analysis::ImageMagickAnalyser ImageMagickAnalyser} has a `format` method.
 
 These are both registered by default when you use the preconfigured 'dragonfly/rails/images' file.
 

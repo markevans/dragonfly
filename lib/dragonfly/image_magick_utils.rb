@@ -17,8 +17,8 @@ module Dragonfly
     
     private
 
-    def convert(temp_object, args)
-      tempfile = new_tempfile
+    def convert(temp_object, args='', ext=nil)
+      tempfile = new_tempfile(ext)
       run "#{convert_command} #{args} #{temp_object.path} #{tempfile.path}"
       tempfile
     end
