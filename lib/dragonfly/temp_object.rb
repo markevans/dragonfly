@@ -175,8 +175,10 @@ module Dragonfly
       when File
         @initialized_file = obj
         self.name = File.basename(obj.path)
+      when ::ActionDispatch::Http::UploadedFile
+        @initialized_tempfile = obj.tempfile
       else
-        raise ArgumentError, "#{self.class.name} must be initialized with a String, a File, a Tempfile, or another TempObject"
+        raise ArgumentError, "#{self.class.name} must be initialized with a String, a File, a Tempfile, an ActionDispatch::Http::UploadedFile or another TempObject"
       end
       self.name = obj.original_filename if obj.respond_to?(:original_filename)
     end
