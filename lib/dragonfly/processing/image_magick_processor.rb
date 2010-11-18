@@ -35,11 +35,7 @@ module Dragonfly
         y       = "#{opts[:y] || 0}"
         y = '+' + y unless y[/^[+-]/]
       
-        if gravity
-          convert(temp_object, "-crop #{width}x#{height}#{x}#{y} -gravity #{gravity}")
-        else
-          convert(temp_object, "-crop #{width}x#{height}#{x}#{y}")
-        end
+        convert(temp_object, "-crop #{width}x#{height}#{x}#{y}#{" -gravity #{gravity}" if gravity}")
       end
       
       def flip(temp_object)
