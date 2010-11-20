@@ -15,14 +15,14 @@ we can get generated content using
 
 where `:some_method` is added by the configured generators.
 
-RMagickGenerator
-----------------
-The {Dragonfly::Generation::RMagickGenerator RMagickGenerator} is registered by default by the
-{Dragonfly::Config::RMagick RMagick configuration} used by 'dragonfly/rails/images'.
+ImageMagickGenerator
+--------------------
+The {Dragonfly::Generation::ImageMagickGenerator ImageMagickGenerator} is registered by default by the
+{Dragonfly::Config::ImageMagick ImageMagick configuration} used by 'dragonfly/rails/images'.
 
 If not already registered:
 
-    app.generator.register(Dragonfly::Generation::RMagickGenerator)
+    app.generator.register(Dragonfly::Generation::ImageMagickGenerator)
 
 gives us these methods:
 

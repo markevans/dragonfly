@@ -1,15 +1,15 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe Dragonfly::Analysis::RMagickAnalyser do
+describe Dragonfly::Analysis::ImageMagickAnalyser do
   
   before(:each) do
     image_path = File.dirname(__FILE__) + '/../../../samples/beach.png'
     @beach = Dragonfly::TempObject.new(File.new(image_path))
-    @analyser = Dragonfly::Analysis::RMagickAnalyser.new
+    @analyser = Dragonfly::Analysis::ImageMagickAnalyser.new
     @analyser.log = Logger.new(LOG_FILE)
   end
 
-  describe "RMagick analysis methods", :shared => true do
+  describe "ImageMagick analysis methods", :shared => true do
     
     it "should return the width" do
       @analyser.width(@beach).should == 280
@@ -44,21 +44,7 @@ describe Dragonfly::Analysis::RMagickAnalyser do
     end
     
   end
-  
-  describe "when using the filesystem" do
-    before(:each) do
-      @analyser.use_filesystem = true
-    end
-    it_should_behave_like "RMagick analysis methods"
-  end
-  
-  describe "when not using the filesystem" do
-    before(:each) do
-      @analyser.use_filesystem = false
-    end
-    it_should_behave_like "RMagick analysis methods"
-  end
-  
+
   %w(width height aspect_ratio number_of_colours depth format portrait? landscape?).each do |meth|
     it "should throw unable_to_handle in #{meth.inspect} if it's not an image file" do
       temp_object = Dragonfly::TempObject.new('blah')
