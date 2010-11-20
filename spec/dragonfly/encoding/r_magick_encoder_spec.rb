@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
+require 'spec_helper'
 
 describe Dragonfly::Encoding::RMagickEncoder do
   
@@ -16,12 +16,9 @@ describe Dragonfly::Encoding::RMagickEncoder do
     end
     
     it "should throw :unable_to_handle if the format is not handleable" do
-      test_string = "I'm a string"
-      catch :unable_to_handle do
+      lambda{
         @encoder.encode(@image, :goofy)
-        test_string = "This line should not happen"
-      end
-      test_string.should == "I'm a string"
+      }.should throw_symbol(:unable_to_handle)
     end
     
     it "should do nothing if the image is already in the correct format" do

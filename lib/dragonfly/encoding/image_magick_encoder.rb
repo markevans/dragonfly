@@ -45,10 +45,10 @@ module Dragonfly
         throw :unable_to_handle unless supported_formats.include?(format.to_sym)
         details = identify(temp_object)
 
-        if details[:format] == format
+        if details[:format] == format.to_sym
           temp_object
         else
-          convert(temp_object, '', format.to_sym)
+          convert(temp_object, '', format)
         end
       end
 
