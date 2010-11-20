@@ -1,11 +1,3 @@
-# :filename => filename,
-# :format => format.downcase,
-# :width => width,
-# :height => height,
-# :depth => depth,
-# :image_class => image_class,
-# :size => size
-
 module Dragonfly
   module Analysis
     class ImageMagickAnalyser
