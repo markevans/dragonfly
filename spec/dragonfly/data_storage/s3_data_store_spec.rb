@@ -4,7 +4,10 @@ require 'yaml'
 
 describe Dragonfly::DataStorage::S3DataStore do
 
-  # Change this to test it with an actual internet connection
+  # To run these tests, put a file ".s3_spec.yml" in the dragonfly root dir, like this:
+  # key: XXXXXXXXXX
+  # secret: XXXXXXXXXX
+  # enabled: true
   if File.exist?(file = File.expand_path('../../../../.s3_spec.yml', __FILE__))
     config = YAML.load_file(file)
     KEY = config['key']
@@ -52,6 +55,13 @@ describe Dragonfly::DataStorage::S3DataStore do
           uid.should == 'hello/there'
           data, extra = @data_store.retrieve(uid)
           data.should == 'eggheads'
+        end
+        
+        it "should work fine when not using the filesystem" do
+          @data_store.use_filesystem = false
+          temp_object = Dragonfly::TempObject.new('gollum')
+          uid = @data_store.store(temp_object)
+          @data_store.retrieve(uid).should == ["gollum", {:meta=>{}, :format=>nil, :name=>nil}]
         end
       end
 
