@@ -23,10 +23,10 @@ module Dragonfly
       tempfile
     end
 
-    def identify(temp_object, args='')
+    def identify(temp_object)
       # example of details string:
       # myimage.png PNG 200x100 200x100+0+0 8-bit DirectClass 31.2kb
-      details = run "#{identify_command} #{args} #{temp_object.path}"
+      details = raw_identify(temp_object)
       filename, format, geometry, geometry_2, depth, image_class, size = details.split(' ')
       width, height = geometry.split('x')
       {
@@ -37,6 +37,10 @@ module Dragonfly
         :depth => depth.to_i,
         :image_class => image_class
       }
+    end
+    
+    def raw_identify(temp_object, args='')
+      run "#{identify_command} #{args} #{temp_object.path}"
     end
     
     def new_tempfile(ext=nil)
@@ -57,7 +61,9 @@ module Dragonfly
     def run(command)
       log.debug("Running command: #{command}") if ImageMagickUtils.log_commands
       result = `#{command}`
-      if !$?.success?
+      if $?.exitstatus == 1
+        throw :unable_to_handle
+      elsif !$?.success?
         raise ShellCommandFailed, "Command failed (#{command}) with exit status #{$?.exitstatus}"
       end
       result
