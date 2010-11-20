@@ -34,7 +34,7 @@ module Dragonfly
 
       def number_of_colours(temp_object)
         details = raw_identify(temp_object, '-verbose -unique')
-        details.match(/Colors: ([0-9]+)/)[1].to_i
+        details[/Colors: (\d+)/, 1].to_i
       end
       alias number_of_colors number_of_colours
 
