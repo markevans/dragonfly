@@ -6,30 +6,30 @@ module Dragonfly
       include Configurable
 
       def width(temp_object)
-        quiet_identify(temp_object)[:width].to_i
+        quiet_identify(temp_object)[:width]
       end
 
       def height(temp_object)
-        quiet_identify(temp_object)[:height].to_i
+        quiet_identify(temp_object)[:height]
       end
 
       def aspect_ratio(temp_object)
         attrs = quiet_identify(temp_object)
-        attrs[:width].to_f / attrs[:height].to_i
+        attrs[:width].to_f / attrs[:height]
       end
 
       def portrait?(temp_object)
         attrs = quiet_identify(temp_object)
-        attrs[:width].to_i <= attrs[:height].to_i
+        attrs[:width] <= attrs[:height]
       end
 
       def landscape?(temp_object)
         attrs = quiet_identify(temp_object)
-        attrs[:width].to_i >= attrs[:height].to_i
+        attrs[:width] >= attrs[:height]
       end
 
       def depth(temp_object)
-        quiet_identify(temp_object)[:depth].to_i
+        quiet_identify(temp_object)[:depth]
       end
 
       def number_of_colours(temp_object)

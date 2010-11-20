@@ -31,12 +31,11 @@ module Dragonfly
       width, height = geometry.split('x')
       {
         :filename => filename,
-        :format => format.downcase,
-        :width => width,
-        :height => height,
-        :depth => depth,
-        :image_class => image_class,
-        :size => size
+        :format => format.downcase.to_sym,
+        :width => width.to_i,
+        :height => height.to_i,
+        :depth => depth.to_i,
+        :image_class => image_class
       }
     end
     
