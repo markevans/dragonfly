@@ -1,3 +1,15 @@
+0.8.0 (2010-11-21)
+==================
+Features
+--------
+- New ImageMagick generator, processor, encoder and analyser, which are now defaults
+  (thanks to Henry Phan for work on this)
+  
+Fixes
+-----
+- Works with Rails 3.0.2 uploaded files (which has a changed API)
+
+
 0.7.7 (2010-10-31)
 ==================
 Features
