@@ -36,7 +36,20 @@ gives us:
     image.encode(:png)
     image.encode(:tiff)
 
-and various other formats (see {Dragonfly::Encoding::ImageMagickEncoder ImageMagickEncoder})
+and various other formats (see {Dragonfly::Encoding::ImageMagickEncoder ImageMagickEncoder}).
+
+You can also pass additional options to the imagemagick command line:
+
+    image.encode(:jpg, '-quality 10')
+
+RMagickEncoder
+--------------
+The {Dragonfly::Encoding::RMagickEncoder RMagickEncoder} uses the {http://rmagick.rubyforge.org RMagick} library to do similar things to the
+ImageMagickEncoder above.
+
+You can tell it not to use the file system when registering it using
+
+    app.encoder.register(Dragonfly::Encoding::RMagickEncoder){|e| e.use_filesystem = false }
 
 Lazy evaluation
 ---------------

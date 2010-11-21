@@ -46,9 +46,7 @@ The {Dragonfly::Analysis::RMagickAnalyser RMagickAnalyser} uses the {http://rmag
 
 You can tell it not to use the file system when registering it
 
-    app.analyser.register(Analysis::RMagickAnalyser) do |a|
-      a.use_filesystem = false
-    end
+    app.analyser.register(Dragonfly::Analysis::RMagickAnalyser){|a| a.use_filesystem = false }
 
 FileCommandAnalyser
 -------------------
