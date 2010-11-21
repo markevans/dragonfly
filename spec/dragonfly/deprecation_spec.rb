@@ -5,7 +5,7 @@ describe "Deprecated stuff" do
   describe "job urls" do
     
     before(:each) do
-      @app = test_app.configure_with(:rmagick) do |c|
+      @app = test_app.configure_with(:imagemagick) do |c|
         c.log = Logger.new($stdout)
       end
       @job = @app.fetch('eggs')
