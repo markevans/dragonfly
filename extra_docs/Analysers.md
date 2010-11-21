@@ -19,14 +19,14 @@ and an image object (actually a {Dragonfly::Job Job} object)...
 
 We can analyse it using any analysis methods that have been registered with the analyser.
 
-RMagickAnalyser
----------------
-The {Dragonfly::Analysis::RMagickAnalyser RMagickAnalyser} is registered by default by the
-{Dragonfly::Config::RMagick RMagick configuration} used by 'dragonfly/rails/images'.
+ImageMagickAnalyser
+-------------------
+The {Dragonfly::Analysis::ImageMagickAnalyser ImageMagickAnalyser} is registered by default by the
+{Dragonfly::Config::ImageMagick ImageMagick configuration} used by 'dragonfly/rails/images'.
 
 If not already registered:
 
-    app.analyser.register(Dragonfly::Analysis::RMagickAnalyser)
+    app.analyser.register(Dragonfly::Analysis::ImageMagickAnalyser)
 
 gives us these methods:
 
@@ -38,6 +38,15 @@ gives us these methods:
     image.depth               # => 8
     image.number_of_colours   # => 34703
     image.format              # => :png
+
+RMagickAnalyser
+-------------------
+The {Dragonfly::Analysis::RMagickAnalyser RMagickAnalyser} uses the {http://rmagick.rubyforge.org RMagick} library and provides methods `width`, `height`, `aspect_ratio`,
+`portrait?`, `landscape?`, `depth`, `number_of_colours` and `format` like the ImageMagickAnalyser.
+
+You can tell it not to use the file system when registering it
+
+    app.analyser.register(Dragonfly::Analysis::RMagickAnalyser){|a| a.use_filesystem = false }
 
 FileCommandAnalyser
 -------------------
@@ -72,7 +81,7 @@ To register a single custom analyser:
 
     image.wobbliness    # => 71
 
-You can create a class like the RMagick one above, in which case all public methods will be counted as analysis methods.
+You can create a class like the ImageMagick one above, in which case all public methods will be counted as analysis methods.
 Each method takes the temp_object as its argument.
 
     class MyAnalyser

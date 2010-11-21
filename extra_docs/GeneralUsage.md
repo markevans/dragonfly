@@ -110,9 +110,12 @@ To define this shortcut:
       # ...
     end
 
-The {Dragonfly::Config::RMagick RMagick} configuration comes with the pre-defined shortcuts:
+The {Dragonfly::Config::ImageMagick ImageMagick} configuration comes with the pre-defined shortcuts:
 
-    image.thumb('40x30')   # same as image.process(:thumb, '40x30')
-    image.jpg              # same as image.encode(:jpg)
-    image.png              # same as image.encode(:png)
-    image.gif              # same as image.encode(:gif)
+    image.thumb('40x30')              # same as image.process(:thumb, '40x30')
+    image.jpg                         # same as image.encode(:jpg)
+    image.png                         # same as image.encode(:png)
+    image.gif                         # same as image.encode(:gif)
+    image.convert('-scale 30x30')     # same as image.process(:convert, '-scale 30x30')
+
+`thumb` and `convert` can optionally take a format (e.g. :gif) as the second argument.

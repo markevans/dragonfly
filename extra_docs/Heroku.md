@@ -12,7 +12,6 @@ Assuming you have an S3 account set up...
 
 Gem dependencies:
 
-    - rmagick (require as 'RMagick')
     - aws-s3 (require as aws/s3)
     - dragonfly
 
@@ -21,7 +20,7 @@ Initializer (e.g. config/initializers/dragonfly.rb):
     require 'dragonfly'
     app = Dragonfly[:images]
 
-    app.configure_with(:rmagick)
+    app.configure_with(:imagemagick)
     app.configure_with(:rails)
     app.configure_with(:heroku, 'my_bucket_name') if Rails.env.production?
 

@@ -93,9 +93,9 @@ Routed Endpoints
 ----------------
 You can also use a number of Rack-based routers and create Dragonfly endpoints.
 
-If we have an app set up for using RMagick:
+If we have an app set up for using ImageMagick:
 
-    app = Dragonfly[:images].configure_with(:rmagick)
+    app = Dragonfly[:images].configure_with(:imagemagick)
 
 Then to get the url '/text/hello' to display the text "hello"...
 

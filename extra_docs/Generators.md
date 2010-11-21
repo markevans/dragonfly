@@ -15,14 +15,14 @@ we can get generated content using
 
 where `:some_method` is added by the configured generators.
 
-RMagickGenerator
-----------------
-The {Dragonfly::Generation::RMagickGenerator RMagickGenerator} is registered by default by the
-{Dragonfly::Config::RMagick RMagick configuration} used by 'dragonfly/rails/images'.
+ImageMagickGenerator
+--------------------
+The {Dragonfly::Generation::ImageMagickGenerator ImageMagickGenerator} is registered by default by the
+{Dragonfly::Config::ImageMagick ImageMagick configuration} used by 'dragonfly/rails/images'.
 
 If not already registered:
 
-    app.generator.register(Dragonfly::Generation::RMagickGenerator)
+    app.generator.register(Dragonfly::Generation::ImageMagickGenerator)
 
 gives us these methods:
 
@@ -48,8 +48,18 @@ Note that the options are meant to resemble css as much as possible. You can als
 
 You can use `padding-top`, `padding-left`, etc., as well as the standard css shortcuts for `padding` (it assumes unit is px).
 
-An alternative for `:font_family` is `:font` (see {http://www.imagemagick.org/RMagick/doc/draw.html#font}), which could be a complete filename.
+An alternative for `:font_family` is `:font` (see {http://www.imagemagick.org/script/command-line-options.php#font}), which could be a complete filename.
 Available fonts are those available on your system.
+
+RMagickGenerator
+----------------
+The {Dragonfly::Generation::RMagickGenerator RMagickGenerator} gives you `plasma` and `text` like the imagemagick generator above, using the
+{http://rmagick.rubyforge.org RMagick} library.
+
+You can tell it not to use the file system when registering it
+
+    app.generator.register(Dragonfly::Generation::RMagickGenerator){|g| g.use_filesystem = false }
+
 
 Custom Generators
 -----------------
@@ -62,7 +72,7 @@ To register a single custom generator:
     app.generate(:blank_image, 'red')      # => 'Job' object which we can get data, etc.
 
 
-Or create a class like the RMagick one above, in which case all public methods will be counted as generator methods.
+Or create a class like the ImageMagick one above, in which case all public methods will be counted as generator methods.
 
     class RoundedCornerGenerator
 

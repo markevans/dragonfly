@@ -19,14 +19,14 @@ and an image object (actually a {Dragonfly::Job Job} object)...
 
 We can process it using any processing methods that have been registered with the processor.
 
-RMagickProcessor
-----------------
-The {Dragonfly::Processing::RMagickProcessor RMagickProcessor} is registered by default by
-the {Dragonfly::Config::RMagick RMagick configuration} used by 'dragonfly/rails/images'.
+ImageMagickProcessor
+--------------------
+The {Dragonfly::Processing::ImageMagickProcessor ImageMagickProcessor} is registered by default by
+the {Dragonfly::Config::ImageMagick ImageMagick configuration} used by 'dragonfly/rails/images'.
 
 If not already registered:
 
-    app.processor.register(Dragonfly::Processing::RMagickProcessor)
+    app.processor.register(Dragonfly::Processing::ImageMagickProcessor)
 
 gives us these methods:
 
@@ -44,8 +44,6 @@ gives us these methods:
     image.process(:resize_and_crop, :width => 40, :height=> 50, :gravity => 'ne')
 
     image.process(:rotate, 45, :background_colour => 'transparent')   # default bg black
-
-    image.process(:vignette)                     # options :x, :y, :radius, :sigma
 
 The method `thumb` takes a geometry string and calls `resize`, `resize_and_crop` or `crop` accordingly.
 
@@ -66,6 +64,16 @@ Below are some examples of geometry strings:
     '400x300#ne'         # as above, north-east gravity
     '400x300se'          # crop, with south-east gravity
     '400x300+50+100'     # crop from the point 50,100 with width, height 400,300
+
+RMagickProcessor
+----------------
+The {Dragonfly::Processing::RMagickProcessor RMagickProcessor} uses the {http://rmagick.rubyforge.org RMagick} library and provides the methods
+`thumb`, `crop`, `flip`, `flop`, `greyscale`, `resize`, `resize_and_crop` and `rotate` like the ImageMagickProcessor above.
+
+You can tell it not to use the file system when registering it
+
+    app.processor.register(Dragonfly::Processing::RMagickProcessor){|p| p.use_filesystem = false }
+
 
 Lazy evaluation
 ---------------
