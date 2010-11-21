@@ -29,6 +29,9 @@ module Dragonfly
           c.job :png do
             encode :png
           end
+          c.job :convert do |args, format|
+            process :convert, args, format
+          end
         end
 
       end
