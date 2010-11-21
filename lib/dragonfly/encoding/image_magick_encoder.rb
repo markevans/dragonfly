@@ -40,15 +40,15 @@ module Dragonfly
         :xwd
       ]
 
-      def encode(temp_object, format, encoding={})
+      def encode(temp_object, format, args='')
         format = format.to_s.downcase
         throw :unable_to_handle unless supported_formats.include?(format.to_sym)
         details = identify(temp_object)
 
-        if details[:format] == format.to_sym
+        if details[:format] == format.to_sym && args.empty?
           temp_object
         else
-          convert(temp_object, '', format)
+          convert(temp_object, args, format)
         end
       end
 
