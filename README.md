@@ -46,6 +46,9 @@ NB: REMEMBER THE MULTIPART BIT!!!
     <%= image_tag @album.cover_image.process(:greyscale).encode(:tiff).url %>
     ...etc.
 
+The above relies on imagemagick being installed. Dragonfly doesn't depend on it per se, but the default configuration `'dragonfly/rails/images'`
+uses it. For alternative configurations, see below.
+
 If using Capistrano with the above, you probably will want to keep the cache between deploys, so in deploy.rb:
 
     namespace :dragonfly do
