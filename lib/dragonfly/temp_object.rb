@@ -163,22 +163,21 @@ module Dragonfly
     private
 
     def initialize_from_object!(obj)
-      case obj
-      when TempObject
+      if obj.is_a? TempObject
         @initialized_data = obj.initialized_data
         @initialized_tempfile = copy_to_tempfile(obj.initialized_tempfile.path) if obj.initialized_tempfile
         @initialized_file = obj.initialized_file
-      when String
+      elsif obj.is_a? String
         @initialized_data = obj
-      when Tempfile
+      elsif obj.is_a? Tempfile
         @initialized_tempfile = obj
-      when File
+      elsif obj.is_a? File
         @initialized_file = obj
         self.name = File.basename(obj.path)
-      when ::ActionDispatch::Http::UploadedFile
+      elsif obj.respond_to?(:tempfile)
         @initialized_tempfile = obj.tempfile
       else
-        raise ArgumentError, "#{self.class.name} must be initialized with a String, a File, a Tempfile, an ActionDispatch::Http::UploadedFile or another TempObject"
+        raise ArgumentError, "#{self.class.name} must be initialized with a String, a File, a Tempfile, another TempObject, or something that responds to .tempfile"
       end
       self.name = obj.original_filename if obj.respond_to?(:original_filename)
     end
