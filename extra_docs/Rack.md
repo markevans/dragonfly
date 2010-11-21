@@ -28,8 +28,7 @@ Example: Using to serve resized images
     require 'rubygems'
     require 'dragonfly'
 
-    app = Dragonfly[:images]
-    app.configure_with(:imagemagick)
+    app = Dragonfly[:images].configure_with(:imagemagick)
 
     run app
 
