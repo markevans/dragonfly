@@ -67,7 +67,7 @@
 
 <p>You can use <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span>'s <code>to_response</code> method like so:</p>
 
-<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rmagick</span><span class='rparen token'>)</span>
+<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
 
 <span class='get identifier id'>get</span> <span class='string val'>'/images/:size.:format'</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='size identifier id'>size</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='bitor op'>|</span>
   <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch_file identifier id'>fetch_file</span><span class='lparen token'>(</span><span class='string val'>'~/some/image.png'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='size identifier id'>size</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_response identifier id'>to_response</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
@@ -81,7 +81,7 @@ a path segment.</p>
 
 <p>or you can mount as a middleware, like in rails:</p>
 
-<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rmagick</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
   <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_path_prefix identifier id'>url_path_prefix</span> <span class='assign token'>=</span> <span class='string val'>'/media'</span>
 <span class='end end kw'>end</span>
 
@@ -89,7 +89,8 @@ a path segment.</p>
 
 <span class='get identifier id'>get</span> <span class='string val'>'/'</span> <span class='comment val'>#... do</span>
   <span class='comment val'># ...</span>
-</pre></div>
+</pre>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -99,9 +100,9 @@ a path segment.</p>
     </div>
 
     <div id="footer">
-  Generated on Tue Nov  2 13:23:17 2010 by 
+  Generated on Sun Nov 21 22:46:02 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.1 (ruby-1.8.7).
+  0.6.3 (ruby-1.8.7).
 </div>
 
   </body>

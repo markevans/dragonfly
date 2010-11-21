@@ -133,6 +133,19 @@ Otherwise it should be done anywhere where general setup is done, early on.</p>
 <p>Saved configurations are useful if you often configure the app the same way.
 There are a number that are provided with Dragonfly:</p>
 
+<h2>ImageMagick</h2>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
+</pre>
+
+<p>The <span class='object_link'><a href="Dragonfly/Config/ImageMagick.html" title="Dragonfly::Config::ImageMagick (module)">ImageMagick configuration</a></span> registers the app with the <span class='object_link'><a href="Dragonfly/Analysis/ImageMagickAnalyser.html" title="Dragonfly::Analysis::ImageMagickAnalyser (class)">ImageMagickAnalyser</a></span>, <span class='object_link'><a href="Dragonfly/Processing/ImageMagickProcessor.html" title="Dragonfly::Processing::ImageMagickProcessor (class)">ImageMagickProcessor</a></span>,
+<span class='object_link'><a href="Dragonfly/Encoding/ImageMagickEncoder.html" title="Dragonfly::Encoding::ImageMagickEncoder (class)">ImageMagickEncoder</a></span> and <span class='object_link'><a href="Dragonfly/Generation/ImageMagickGenerator.html" title="Dragonfly::Generation::ImageMagickGenerator (class)">ImageMagickGenerator</a></span>, and adds the 'job shortcuts'
+<code>thumb</code>, <code>jpg</code>, <code>png</code>, <code>gif</code> and <code>convert</code>.</p>
+
+<p>The file 'dragonfly/rails/images' does this for you.</p>
+
+<p>The processor, analyser, encoder and generator pass data around using tempfiles.</p>
+
 <h2>RMagick</h2>
 
 <pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rmagick</span><span class='rparen token'>)</span>
@@ -141,8 +154,6 @@ There are a number that are provided with Dragonfly:</p>
 <p>The <span class='object_link'><a href="Dragonfly/Config/RMagick.html" title="Dragonfly::Config::RMagick (module)">RMagick configuration</a></span> registers the app with the <span class='object_link'><a href="Dragonfly/Analysis/RMagickAnalyser.html" title="Dragonfly::Analysis::RMagickAnalyser (class)">RMagickAnalyser</a></span>, <span class='object_link'><a href="Dragonfly/Processing/RMagickProcessor.html" title="Dragonfly::Processing::RMagickProcessor (class)">RMagickProcessor</a></span>,
 <span class='object_link'><a href="Dragonfly/Encoding/RMagickEncoder.html" title="Dragonfly::Encoding::RMagickEncoder (class)">RMagickEncoder</a></span> and <span class='object_link'><a href="Dragonfly/Generation/RMagickGenerator.html" title="Dragonfly::Generation::RMagickGenerator (class)">RMagickGenerator</a></span>, and adds the 'job shortcuts'
 <code>thumb</code>, <code>jpg</code>, <code>png</code> and <code>gif</code>.</p>
-
-<p>The file 'dragonfly/rails/images' does this for you.</p>
 
 <p>By default the processor, analyser, encoder and generator pass data around using tempfiles.
 You can make it pass data around using in-memory strings using</p>
@@ -196,7 +207,8 @@ See <a href="file.Heroku.html" title="Heroku">Heroku</a> for more info.</p>
   <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='any_extra identifier id'>any_extra</span> <span class='assign token'>=</span> <span class='symbol val'>:config_here</span>
   <span class='comment val'># ...</span>
 <span class='end end kw'>end</span>
-</pre></div>
+</pre>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -206,9 +218,9 @@ See <a href="file.Heroku.html" title="Heroku">Heroku</a> for more info.</p>
     </div>
 
     <div id="footer">
-  Generated on Tue Nov  2 13:23:18 2010 by 
+  Generated on Sun Nov 21 22:46:04 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.1 (ruby-1.8.7).
+  0.6.3 (ruby-1.8.7).
 </div>
 
   </body>

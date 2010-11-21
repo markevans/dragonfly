@@ -86,14 +86,14 @@
 
 <p>We can process it using any processing methods that have been registered with the processor.</p>
 
-<h2>RMagickProcessor</h2>
+<h2>ImageMagickProcessor</h2>
 
-<p>The <span class='object_link'><a href="Dragonfly/Processing/RMagickProcessor.html" title="Dragonfly::Processing::RMagickProcessor (class)">RMagickProcessor</a></span> is registered by default by
-the <span class='object_link'><a href="Dragonfly/Config/RMagick.html" title="Dragonfly::Config::RMagick (module)">RMagick configuration</a></span> used by 'dragonfly/rails/images'.</p>
+<p>The <span class='object_link'><a href="Dragonfly/Processing/ImageMagickProcessor.html" title="Dragonfly::Processing::ImageMagickProcessor (class)">ImageMagickProcessor</a></span> is registered by default by
+the <span class='object_link'><a href="Dragonfly/Config/ImageMagick.html" title="Dragonfly::Config::ImageMagick (module)">ImageMagick configuration</a></span> used by 'dragonfly/rails/images'.</p>
 
 <p>If not already registered:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Processing constant id'>Processing</span><span class='colon2 op'>::</span><span class='RMagickProcessor constant id'>RMagickProcessor</span><span class='rparen token'>)</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Processing constant id'>Processing</span><span class='colon2 op'>::</span><span class='ImageMagickProcessor constant id'>ImageMagickProcessor</span><span class='rparen token'>)</span>
 </pre>
 
 <p>gives us these methods:</p>
@@ -112,8 +112,6 @@ the <span class='object_link'><a href="Dragonfly/Config/RMagick.html" title="Dra
 <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:resize_and_crop</span><span class='comma token'>,</span> <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>40</span><span class='comma token'>,</span> <span class='symbol val'>:height=</span><span class='gt op'>&gt;</span> <span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:gravity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ne'</span><span class='rparen token'>)</span>
 
 <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:rotate</span><span class='comma token'>,</span> <span class='integer val'>45</span><span class='comma token'>,</span> <span class='symbol val'>:background_colour</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'transparent'</span><span class='rparen token'>)</span>   <span class='comment val'># default bg black</span>
-
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:vignette</span><span class='rparen token'>)</span>                     <span class='comment val'># options :x, :y, :radius, :sigma</span>
 </pre>
 
 <p>The method <code>thumb</code> takes a geometry string and calls <code>resize</code>, <code>resize_and_crop</code> or <code>crop</code> accordingly.</p>
@@ -136,6 +134,16 @@ the <span class='object_link'><a href="Dragonfly/Config/RMagick.html" title="Dra
 <span class='string val'>'400x300#ne'</span>         <span class='comment val'># as above, north-east gravity</span>
 <span class='string val'>'400x300se'</span>          <span class='comment val'># crop, with south-east gravity</span>
 <span class='string val'>'400x300+50+100'</span>     <span class='comment val'># crop from the point 50,100 with width, height 400,300</span>
+</pre>
+
+<h2>RMagickProcessor</h2>
+
+<p>The <span class='object_link'><a href="Dragonfly/Processing/RMagickProcessor.html" title="Dragonfly::Processing::RMagickProcessor (class)">RMagickProcessor</a></span> uses the <a href="http://rmagick.rubyforge.org" target="_parent" title="RMagick">RMagick</a> library and provides the methods
+<code>thumb</code>, <code>crop</code>, <code>flip</code>, <code>flop</code>, <code>greyscale</code>, <code>resize</code>, <code>resize_and_crop</code> and <code>rotate</code> like the ImageMagickProcessor above.</p>
+
+<p>You can tell it not to use the file system when registering it</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Processing constant id'>Processing</span><span class='colon2 op'>::</span><span class='RMagickProcessor constant id'>RMagickProcessor</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='false false kw'>false</span> <span class='rbrace token'>}</span>
 </pre>
 
 <h2>Lazy evaluation</h2>
@@ -191,7 +199,8 @@ Each method takes the temp_object as its argument, plus any other args.</p>
 <span class='new_image identifier id'>new_image</span> <span class='assign token'>=</span> <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='coolify identifier id'>coolify</span><span class='lparen token'>(</span><span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>
 
 <span class='new_image identifier id'>new_image</span> <span class='assign token'>=</span> <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='uglify identifier id'>uglify</span><span class='lparen token'>(</span><span class='symbol val'>:loads</span><span class='rparen token'>)</span>
-</pre></div>
+</pre>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -201,9 +210,9 @@ Each method takes the temp_object as its argument, plus any other args.</p>
     </div>
 
     <div id="footer">
-  Generated on Tue Nov  2 13:23:18 2010 by 
+  Generated on Sun Nov 21 22:46:04 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.1 (ruby-1.8.7).
+  0.6.3 (ruby-1.8.7).
 </div>
 
   </body>

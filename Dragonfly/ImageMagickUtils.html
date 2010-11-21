@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta name="Content-Type" content="text/html; charset=utf-8" />
-<title>Module: Dragonfly::RMagickUtils</title>
+<title>Module: Dragonfly::ImageMagickUtils</title>
 <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -63,7 +63,7 @@
 
     <div id="content" class="clearfix">
       <div class="col1">
-        <h1>Module: Dragonfly::RMagickUtils
+        <h1>Module: Dragonfly::ImageMagickUtils
   
   
   
@@ -73,27 +73,45 @@
   
   
     
+      <dt class="r1">Extended by:</dt>
+      <dd class="r1"><span class='object_link'><a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span></dd>
+      
+    
   
     
-      <dt class="r1">Includes:</dt>
-      <dd class="r1"><span class='object_link'><a href="Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></dd>
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></dd>
       
     
   
   
-    <dt class="r2">Included in:</dt>
-    <dd class="r2"><span class='object_link'><a href="Analysis/RMagickAnalyser.html" title="Dragonfly::Analysis::RMagickAnalyser (class)">Analysis::RMagickAnalyser</a></span>, <span class='object_link'><a href="Encoding/RMagickEncoder.html" title="Dragonfly::Encoding::RMagickEncoder (class)">Encoding::RMagickEncoder</a></span>, <span class='object_link'><a href="Generation/RMagickGenerator.html" title="Dragonfly::Generation::RMagickGenerator (class)">Generation::RMagickGenerator</a></span>, <span class='object_link'><a href="Processing/RMagickProcessor.html" title="Dragonfly::Processing::RMagickProcessor (class)">Processing::RMagickProcessor</a></span></dd>
+    <dt class="r1">Included in:</dt>
+    <dd class="r1"><span class='object_link'><a href="Analysis/ImageMagickAnalyser.html" title="Dragonfly::Analysis::ImageMagickAnalyser (class)">Analysis::ImageMagickAnalyser</a></span>, <span class='object_link'><a href="Encoding/ImageMagickEncoder.html" title="Dragonfly::Encoding::ImageMagickEncoder (class)">Encoding::ImageMagickEncoder</a></span>, <span class='object_link'><a href="Generation/ImageMagickGenerator.html" title="Dragonfly::Generation::ImageMagickGenerator (class)">Generation::ImageMagickGenerator</a></span>, <span class='object_link'><a href="Processing/ImageMagickProcessor.html" title="Dragonfly::Processing::ImageMagickProcessor (class)">Processing::ImageMagickProcessor</a></span></dd>
     
   
   
-    <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/dragonfly/r_magick_utils.rb</dd>
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/dragonfly/image_magick_utils.rb</dd>
   
 </dl>
 <div class="clear"></div>
 
+<h2>Defined Under Namespace</h2>
+<p class="children">
+   
+    
+   
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="ImageMagickUtils/ShellCommandFailed.html" title="Dragonfly::ImageMagickUtils::ShellCommandFailed (class)">ShellCommandFailed</a></span>
+    
+  
+</p>
 
 
+  
+  
+  
+  
   
   
   
@@ -109,6 +127,16 @@
   
   <h2>Method Summary</h2>
   
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="Loggable.html#log-instance_method" title="Dragonfly::Loggable#log (method)">#log</a></span>, <span class='object_link'><a href="Loggable.html#log%3D-instance_method" title="Dragonfly::Loggable#log= (method)">#log=</a></span>, <span class='object_link'><a href="Loggable.html#use_same_log_as-instance_method" title="Dragonfly::Loggable#use_same_log_as (method)">#use_same_log_as</a></span></p>
 
@@ -123,7 +151,7 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Nov 21 22:46:05 2010 by 
+  Generated on Sun Nov 21 22:46:09 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.6.3 (ruby-1.8.7).
 </div>

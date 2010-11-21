@@ -116,6 +116,8 @@
           
         </dt>
         <dd><pre class="code"><span class='lbrace token'>{</span>
+  <span class='symbol val'>:imagemagick</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ImageMagick'</span><span class='comma token'>,</span>
+  <span class='symbol val'>:image_magick</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ImageMagick'</span><span class='comma token'>,</span>
   <span class='symbol val'>:rmagick</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'RMagick'</span><span class='comma token'>,</span>
   <span class='symbol val'>:r_magick</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'RMagick'</span><span class='comma token'>,</span>
   <span class='symbol val'>:rails</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Rails'</span><span class='comma token'>,</span>
@@ -1032,16 +1034,16 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-76
-77
 78
 79
 80
 81
-82</pre>
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 78</span>
 
 <span class='def def kw'>def</span> <span class='configurer_for identifier id'>configurer_for</span><span class='lparen token'>(</span><span class='symbol identifier id'>symbol</span><span class='rparen token'>)</span>
   <span class='class_name identifier id'>class_name</span> <span class='assign token'>=</span> <span class='SAVED_CONFIGS constant id'>SAVED_CONFIGS</span><span class='lbrack token'>[</span><span class='symbol identifier id'>symbol</span><span class='rbrack token'>]</span>
@@ -1069,14 +1071,14 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-155
-156
 157
 158
-159</pre>
+159
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 157</span>
 
 <span class='def def kw'>def</span> <span class='define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='mod identifier id'>mod</span><span class='comma token'>,</span> <span class='macro_name identifier id'>macro_name</span><span class='rparen token'>)</span>
   <span class='already_extended identifier id'>already_extended</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='mod identifier id'>mod</span><span class='semicolon token'>;</span> <span class='self self kw'>self</span><span class='semicolon token'>;</span> <span class='end end kw'>end</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='included_modules identifier id'>included_modules</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='ActiveModelExtensions constant id'>ActiveModelExtensions</span><span class='rparen token'>)</span>
@@ -1102,8 +1104,6 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-161
-162
 163
 164
 165
@@ -1112,10 +1112,12 @@ Returns the value of attribute server
 168
 169
 170
-171</pre>
+171
+172
+173</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 161</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 163</span>
 
 <span class='def def kw'>def</span> <span class='define_macro_on_include identifier id'>define_macro_on_include</span><span class='lparen token'>(</span><span class='mod identifier id'>mod</span><span class='comma token'>,</span> <span class='macro_name identifier id'>macro_name</span><span class='rparen token'>)</span>
   <span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='self self kw'>self</span>
@@ -1147,12 +1149,12 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-88
-89
-90</pre>
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 90</span>
 
 <span class='def def kw'>def</span> <span class='endpoint identifier id'>endpoint</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='block identifier id'>block</span> <span class='integer val'>? </span><span class='RoutedEndpoint constant id'>RoutedEndpoint</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='JobEndpoint constant id'>JobEndpoint</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='rparen token'>)</span>
@@ -1176,12 +1178,12 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-92
-93
-94</pre>
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 94</span>
 
 <span class='def def kw'>def</span> <span class='job identifier id'>job</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='job_definitions identifier id'>job_definitions</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
@@ -1205,12 +1207,12 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-112
-113
-114</pre>
+114
+115
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 114</span>
 
 <span class='def def kw'>def</span> <span class='mime_type_for identifier id'>mime_type_for</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='rparen token'>)</span>
   <span class='registered_mime_types identifier id'>registered_mime_types</span><span class='lbrack token'>[</span><span class='file_ext_string identifier id'>file_ext_string</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
@@ -1234,12 +1236,12 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-124
-125
-126</pre>
+126
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 126</span>
 
 <span class='def def kw'>def</span> <span class='mount_path identifier id'>mount_path</span>
   <span class='url_path_prefix identifier id'>url_path_prefix</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span> <span class='integer val'>? </span><span class='string val'>'/'</span> <span class='colon op'>:</span> <span class='url_path_prefix identifier id'>url_path_prefix</span>
@@ -1263,12 +1265,12 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-84
-85
-86</pre>
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 86</span>
 
 <span class='def def kw'>def</span> <span class='new_job identifier id'>new_job</span><span class='lparen token'>(</span><span class='content identifier id'>content</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='content identifier id'>content</span> <span class='integer val'>? </span><span class='Job constant id'>Job</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='content identifier id'>content</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='Job constant id'>Job</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
@@ -1292,12 +1294,12 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-103
-104
-105</pre>
+105
+106
+107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 105</span>
 
 <span class='def def kw'>def</span> <span class='register_mime_type identifier id'>register_mime_type</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='mime_type identifier id'>mime_type</span><span class='rparen token'>)</span>
   <span class='registered_mime_types identifier id'>registered_mime_types</span><span class='lbrack token'>[</span><span class='file_ext_string identifier id'>file_ext_string</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='rparen token'>)</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='mime_type identifier id'>mime_type</span>
@@ -1321,12 +1323,12 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-108
-109
-110</pre>
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 110</span>
 
 <span class='def def kw'>def</span> <span class='registered_mime_types identifier id'>registered_mime_types</span>
   <span class='@registered_mime_types ivar id'>@registered_mime_types</span> <span class='opasgn op'>||=</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Mime constant id'>Mime</span><span class='colon2 op'>::</span><span class='MIME_TYPES constant id'>MIME_TYPES</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
@@ -1350,16 +1352,16 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-116
-117
 118
 119
 120
 121
-122</pre>
+122
+123
+124</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 118</span>
 
 <span class='def def kw'>def</span> <span class='resolve_mime_type identifier id'>resolve_mime_type</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
   <span class='mime_type_for identifier id'>mime_type_for</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='format identifier id'>format</span><span class='rparen token'>)</span>                                   <span class='orop op'>||</span>
@@ -1387,14 +1389,14 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-97
-98
 99
 100
-101</pre>
+101
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 99</span>
 
 <span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='TempObject constant id'>TempObject</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='object identifier id'>object</span> <span class='colon op'>:</span> <span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
@@ -1420,8 +1422,6 @@ Returns the value of attribute server
       <pre class="lines">
 
 
-128
-129
 130
 131
 132
@@ -1445,10 +1445,12 @@ Returns the value of attribute server
 150
 151
 152
-153</pre>
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 128</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 130</span>
 
 <span class='def def kw'>def</span> <span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='eq op'>==</span> <span class='integer val'>1</span> <span class='andop op'>&amp;&amp;</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
@@ -1494,9 +1496,9 @@ Returns the value of attribute server
     </div>
 
     <div id="footer">
-  Generated on Tue Nov  2 13:23:27 2010 by 
+  Generated on Sun Nov 21 22:46:11 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.1 (ruby-1.8.7).
+  0.6.3 (ruby-1.8.7).
 </div>
 
   </body>

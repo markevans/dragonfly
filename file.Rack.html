@@ -93,13 +93,12 @@ then serving it in some form.</p>
 <pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
 <span class='require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
 
-<span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rmagick</span><span class='rparen token'>)</span>
+<span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
 
 <span class='run identifier id'>run</span> <span class='app identifier id'>app</span>
 </pre>
 
-<p>This enables the app to use all the RMagick goodies provided by Dragonfly (see <a href="file.Configuration.html" title="Configuration">Configuration</a>).
+<p>This enables the app to use all the ImageMagick goodies provided by Dragonfly (see <a href="file.Configuration.html" title="Configuration">Configuration</a>).
 By default the <span class='object_link'><a href="Dragonfly/DataStorage/FileDataStore.html" title="Dragonfly::DataStorage::FileDataStore (class)">file data store</a></span> is used.</p>
 
 <p>In the console:</p>
@@ -117,7 +116,8 @@ By default the <span class='object_link'><a href="Dragonfly/DataStorage/FileData
 
 <h2>Mounting in Rack</h2>
 
-<p>See <a href="file.URLs.html" title="URLs">URLs</a></p></div>
+<p>See <a href="file.URLs.html" title="URLs">URLs</a></p>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -127,9 +127,9 @@ By default the <span class='object_link'><a href="Dragonfly/DataStorage/FileData
     </div>
 
     <div id="footer">
-  Generated on Tue Nov  2 13:23:17 2010 by 
+  Generated on Sun Nov 21 22:46:02 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.1 (ruby-1.8.7).
+  0.6.3 (ruby-1.8.7).
 </div>
 
   </body>

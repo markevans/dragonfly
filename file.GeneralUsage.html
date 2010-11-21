@@ -187,13 +187,17 @@ some other method is called on them.</p>
 <span class='end end kw'>end</span>
 </pre>
 
-<p>The <span class='object_link'><a href="Dragonfly/Config/RMagick.html" title="Dragonfly::Config::RMagick (module)">RMagick</a></span> configuration comes with the pre-defined shortcuts:</p>
+<p>The <span class='object_link'><a href="Dragonfly/Config/ImageMagick.html" title="Dragonfly::Config::ImageMagick (module)">ImageMagick</a></span> configuration comes with the pre-defined shortcuts:</p>
 
-<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'40x30'</span><span class='rparen token'>)</span>   <span class='comment val'># same as image.process(:thumb, '40x30')</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='jpg identifier id'>jpg</span>              <span class='comment val'># same as image.encode(:jpg)</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='png identifier id'>png</span>              <span class='comment val'># same as image.encode(:png)</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='gif identifier id'>gif</span>              <span class='comment val'># same as image.encode(:gif)</span>
-</pre></div>
+<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'40x30'</span><span class='rparen token'>)</span>              <span class='comment val'># same as image.process(:thumb, '40x30')</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='jpg identifier id'>jpg</span>                         <span class='comment val'># same as image.encode(:jpg)</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='png identifier id'>png</span>                         <span class='comment val'># same as image.encode(:png)</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='gif identifier id'>gif</span>                         <span class='comment val'># same as image.encode(:gif)</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='string val'>'-scale 30x30'</span><span class='rparen token'>)</span>     <span class='comment val'># same as image.process(:convert, '-scale 30x30')</span>
+</pre>
+
+<p><code>thumb</code> and <code>convert</code> can optionally take a format (e.g. :gif) as the second argument.</p>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -203,9 +207,9 @@ some other method is called on them.</p>
     </div>
 
     <div id="footer">
-  Generated on Tue Nov  2 13:23:17 2010 by 
+  Generated on Sun Nov 21 22:46:02 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.1 (ruby-1.8.7).
+  0.6.3 (ruby-1.8.7).
 </div>
 
   </body>

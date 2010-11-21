@@ -169,9 +169,9 @@ to the urls:</p>
 
 <p>You can also use a number of Rack-based routers and create Dragonfly endpoints.</p>
 
-<p>If we have an app set up for using RMagick:</p>
+<p>If we have an app set up for using ImageMagick:</p>
 
-<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rmagick</span><span class='rparen token'>)</span>
+<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
 </pre>
 
 <p>Then to get the url '/text/hello' to display the text "hello"...</p>
@@ -251,7 +251,8 @@ work out how to generate urls to spam your server with heavy requests, e.g. resi
 <p>... where obviously you need to pass in a 'sha' parameter to the url, which can be found using</p>
 
 <pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='string val'>'some text'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='sha identifier id'>sha</span>
-</pre></div>
+</pre>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -261,9 +262,9 @@ work out how to generate urls to spam your server with heavy requests, e.g. resi
     </div>
 
     <div id="footer">
-  Generated on Tue Nov  2 13:23:18 2010 by 
+  Generated on Sun Nov 21 22:46:05 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.1 (ruby-1.8.7).
+  0.6.3 (ruby-1.8.7).
 </div>
 
   </body>

@@ -81,7 +81,7 @@
 <pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
 
 <span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rmagick</span><span class='rparen token'>)</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
 <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span>
 
 <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
@@ -102,7 +102,6 @@
 <p>environment.rb</p>
 
 <pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span><span class='comma token'>,</span> <span class='string val'>'~&gt;0.7.7'</span>
-<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rmagick'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'RMagick'</span>
 <span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rack-cache'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'rack/cache'</span>
 </pre>
 
@@ -121,7 +120,8 @@
 
 <h2>Use it!</h2>
 
-<p>To see what you can do with the model accessors, see <a href="file.Models.html" title="Models">Models</a>.</p></div>
+<p>To see what you can do with the model accessors, see <a href="file.Models.html" title="Models">Models</a>.</p>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -131,9 +131,9 @@
     </div>
 
     <div id="footer">
-  Generated on Tue Nov  2 13:23:17 2010 by 
+  Generated on Sun Nov 21 22:46:02 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.1 (ruby-1.8.7).
+  0.6.3 (ruby-1.8.7).
 </div>
 
   </body>

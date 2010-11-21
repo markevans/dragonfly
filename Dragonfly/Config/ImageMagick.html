@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta name="Content-Type" content="text/html; charset=utf-8" />
-<title>Module: Dragonfly::Config::RMagick</title>
+<title>Module: Dragonfly::Config::ImageMagick</title>
 <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -63,7 +63,7 @@
 
     <div id="content" class="clearfix">
       <div class="col1">
-        <h1>Module: Dragonfly::Config::RMagick
+        <h1>Module: Dragonfly::Config::ImageMagick
   
   
   
@@ -79,7 +79,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/dragonfly/config/r_magick.rb</dd>
+    <dd class="r1 last">lib/dragonfly/config/image_magick.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -87,17 +87,17 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     <p>
-RMagick is a saved configuration for Dragonfly apps, which does the
+ImageMagick is a saved configuration for Dragonfly apps, which does the
 following:
 </p>
 <ul>
-<li>registers an rmagick analyser
+<li>registers an imagemagick analyser
 
 </li>
-<li>registers an rmagick processor
+<li>registers an imagemagick processor
 
 </li>
-<li>registers an rmagick encoder
+<li>registers an imagemagick encoder
 
 </li>
 <li>adds thumb shortcuts like &#8216;280x140!&#8217;, etc.
@@ -195,31 +195,18 @@ configures the app.
 34
 35
 36
-37
-38
-39
-40
-41
-42</pre>
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/config/r_magick.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/config/image_magick.rb', line 12</span>
 
 <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='apply_configuration identifier id'>apply_configuration</span><span class='lparen token'>(</span><span class='app identifier id'>app</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='symbol val'>:use_filesystem</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:use_filesystem</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='true true kw'>true</span>
   <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
-    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='RMagickAnalyser constant id'>RMagickAnalyser</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span>
-      <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='use_filesystem identifier id'>use_filesystem</span>
-    <span class='end end kw'>end</span>
-    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Processing constant id'>Processing</span><span class='colon2 op'>::</span><span class='RMagickProcessor constant id'>RMagickProcessor</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span>
-      <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='use_filesystem identifier id'>use_filesystem</span>
-    <span class='end end kw'>end</span>
-    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='RMagickEncoder constant id'>RMagickEncoder</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span>
-      <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='use_filesystem identifier id'>use_filesystem</span>
-    <span class='end end kw'>end</span>
-    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='generator identifier id'>generator</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Generation constant id'>Generation</span><span class='colon2 op'>::</span><span class='RMagickGenerator constant id'>RMagickGenerator</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='g identifier id'>g</span><span class='bitor op'>|</span>
-      <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='use_filesystem identifier id'>use_filesystem</span>
-    <span class='end end kw'>end</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='ImageMagickAnalyser constant id'>ImageMagickAnalyser</span><span class='rparen token'>)</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Processing constant id'>Processing</span><span class='colon2 op'>::</span><span class='ImageMagickProcessor constant id'>ImageMagickProcessor</span><span class='rparen token'>)</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='ImageMagickEncoder constant id'>ImageMagickEncoder</span><span class='rparen token'>)</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='generator identifier id'>generator</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Generation constant id'>Generation</span><span class='colon2 op'>::</span><span class='ImageMagickGenerator constant id'>ImageMagickGenerator</span><span class='rparen token'>)</span>
+
     <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='symbol val'>:thumb</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='geometry identifier id'>geometry</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='bitor op'>|</span>
       <span class='process identifier id'>process</span> <span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='geometry identifier id'>geometry</span>
       <span class='encode identifier id'>encode</span> <span class='format identifier id'>format</span> <span class='if if_mod kw'>if</span> <span class='format identifier id'>format</span>
@@ -232,6 +219,9 @@ configures the app.
     <span class='end end kw'>end</span>
     <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='symbol val'>:png</span> <span class='do do kw'>do</span>
       <span class='encode identifier id'>encode</span> <span class='symbol val'>:png</span>
+    <span class='end end kw'>end</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='symbol val'>:convert</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='bitor op'>|</span>
+      <span class='process identifier id'>process</span> <span class='symbol val'>:convert</span><span class='comma token'>,</span> <span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='format identifier id'>format</span>
     <span class='end end kw'>end</span>
   <span class='end end kw'>end</span>
 
@@ -254,7 +244,7 @@ configures the app.
     </div>
 
     <div id="footer">
-  Generated on Sun Nov 21 22:46:10 2010 by 
+  Generated on Sun Nov 21 22:46:16 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.6.3 (ruby-1.8.7).
 </div>

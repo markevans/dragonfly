@@ -432,15 +432,15 @@ A new instance of S3DataStore
       <pre class="lines">
 
 
-55
-56
-57
-58
 59
-60</pre>
+60
+61
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 59</span>
 
 <span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
   <span class='ensure_initialized identifier id'>ensure_initialized</span>
@@ -488,19 +488,19 @@ A new instance of S3DataStore
       <pre class="lines">
 
 
-44
-45
-46
-47
 48
 49
 50
 51
 52
-53</pre>
+53
+54
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 48</span>
 
 <span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
   <span class='ensure_initialized identifier id'>ensure_initialized</span>
@@ -539,7 +539,11 @@ A new instance of S3DataStore
 39
 40
 41
-42</pre>
+42
+43
+44
+45
+46</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 34</span>
@@ -547,10 +551,14 @@ A new instance of S3DataStore
 <span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='generate_uid identifier id'>generate_uid</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='orop op'>||</span> <span class='string val'>'file'</span><span class='rparen token'>)</span>
   <span class='ensure_initialized identifier id'>ensure_initialized</span>
-  <span class='object identifier id'>object</span> <span class='assign token'>=</span> <span class='use_filesystem identifier id'>use_filesystem</span> <span class='integer val'>? </span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span> <span class='colon op'>:</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span>
   <span class='extra_data identifier id'>extra_data</span> <span class='assign token'>=</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span>
-  <span class='S3Object constant id'>S3Object</span><span class='dot token'>.</span><span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='s3_metadata_for identifier id'>s3_metadata_for</span><span class='lparen token'>(</span><span class='extra_data identifier id'>extra_data</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='close identifier id'>close</span> <span class='if if_mod kw'>if</span> <span class='use_filesystem identifier id'>use_filesystem</span>
+  <span class='if if kw'>if</span> <span class='use_filesystem identifier id'>use_filesystem</span>
+    <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span>
+      <span class='S3Object constant id'>S3Object</span><span class='dot token'>.</span><span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='f identifier id'>f</span><span class='comma token'>,</span> <span class='bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='s3_metadata_for identifier id'>s3_metadata_for</span><span class='lparen token'>(</span><span class='extra_data identifier id'>extra_data</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='else else kw'>else</span>
+    <span class='S3Object constant id'>S3Object</span><span class='dot token'>.</span><span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span><span class='comma token'>,</span> <span class='bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='s3_metadata_for identifier id'>s3_metadata_for</span><span class='lparen token'>(</span><span class='extra_data identifier id'>extra_data</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
   <span class='uid identifier id'>uid</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -571,9 +579,9 @@ A new instance of S3DataStore
     </div>
 
     <div id="footer">
-  Generated on Tue Nov  2 13:23:25 2010 by 
+  Generated on Sun Nov 21 22:46:12 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.1 (ruby-1.8.7).
+  0.6.3 (ruby-1.8.7).
 </div>
 
   </body>

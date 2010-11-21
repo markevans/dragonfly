@@ -79,8 +79,7 @@
 
 <p>Gem dependencies:</p>
 
-<pre class="code"><span class='minus op'>-</span> <span class='rmagick identifier id'>rmagick</span> <span class='lparen token'>(</span><span class='require identifier id'>require</span> <span class='as identifier id'>as</span> <span class='string val'>'RMagick'</span><span class='rparen token'>)</span>
-<span class='minus op'>-</span> <span class='aws identifier id'>aws</span><span class='minus op'>-</span><span class='s3 identifier id'>s3</span> <span class='lparen token'>(</span><span class='require identifier id'>require</span> <span class='as identifier id'>as</span> <span class='aws identifier id'>aws</span><span class='div op'>/</span><span class='s3 identifier id'>s3</span><span class='rparen token'>)</span>
+<pre class="code"><span class='minus op'>-</span> <span class='aws identifier id'>aws</span><span class='minus op'>-</span><span class='s3 identifier id'>s3</span> <span class='lparen token'>(</span><span class='require identifier id'>require</span> <span class='as identifier id'>as</span> <span class='aws identifier id'>aws</span><span class='div op'>/</span><span class='s3 identifier id'>s3</span><span class='rparen token'>)</span>
 <span class='minus op'>-</span> <span class='dragonfly identifier id'>dragonfly</span>
 </pre>
 
@@ -89,7 +88,7 @@
 <pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
 <span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
 
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rmagick</span><span class='rparen token'>)</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
 <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span>
 <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:heroku</span><span class='comma token'>,</span> <span class='string val'>'my_bucket_name'</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='env identifier id'>env</span><span class='dot token'>.</span><span class='production? fid id'>production?</span>
 
@@ -119,7 +118,8 @@
 <p>NOTE: HEROKU'S CACHE IS CLEARED EVERY TIME YOU DEPLOY!!!</p>
 
 <p>If this is an issue, you may want to look into using something like a Memcached add-on, or maybe an after-deploy hook for hitting specific Dragonfly urls you want to cache, etc.
-It won't be a problem for most sites though.</p></div>
+It won't be a problem for most sites though.</p>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -129,9 +129,9 @@ It won't be a problem for most sites though.</p></div>
     </div>
 
     <div id="footer">
-  Generated on Tue Nov  2 13:23:17 2010 by 
+  Generated on Sun Nov 21 22:46:03 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.1 (ruby-1.8.7).
+  0.6.3 (ruby-1.8.7).
 </div>
 
   </body>

@@ -103,16 +103,6 @@
 </dl>
 <div class="clear"></div>
 
-<h2>Defined Under Namespace</h2>
-<p class="children">
-   
-    
-   
-    
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="RMagickGenerator/HashWithCssStyleKeys.html" title="Dragonfly::Generation::RMagickGenerator::HashWithCssStyleKeys (class)">HashWithCssStyleKeys</a></span>
-    
-  
-</p>
 
   <h2>Constant Summary</h2>
   
@@ -280,19 +270,19 @@
       <pre class="lines">
 
 
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72</pre>
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/generation/r_magick_generator.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/generation/r_magick_generator.rb', line 45</span>
 
 <span class='def def kw'>def</span> <span class='plasma identifier id'>plasma</span><span class='lparen token'>(</span><span class='width identifier id'>width</span><span class='comma token'>,</span> <span class='height identifier id'>height</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='assign token'>=</span><span class='string val'>'png'</span><span class='rparen token'>)</span>
   <span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='Magick constant id'>Magick</span><span class='colon2 op'>::</span><span class='Image constant id'>Image</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='string val'>&quot;plasma:fractal&quot;</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{width}x#{height}&quot;</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
@@ -323,6 +313,24 @@
       <pre class="lines">
 
 
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
 74
 75
 76
@@ -364,28 +372,10 @@
 112
 113
 114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133</pre>
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/generation/r_magick_generator.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/generation/r_magick_generator.rb', line 56</span>
 
 <span class='def def kw'>def</span> <span class='text identifier id'>text</span><span class='lparen token'>(</span><span class='text_string identifier id'>text_string</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='HashWithCssStyleKeys constant id'>HashWithCssStyleKeys</span><span class='lbrack token'>[</span><span class='opts identifier id'>opts</span><span class='rbrack token'>]</span>
@@ -465,9 +455,9 @@
     </div>
 
     <div id="footer">
-  Generated on Tue Nov  2 13:23:22 2010 by 
+  Generated on Sun Nov 21 22:46:09 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.1 (ruby-1.8.7).
+  0.6.3 (ruby-1.8.7).
 </div>
 
   </body>

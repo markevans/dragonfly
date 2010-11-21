@@ -86,14 +86,14 @@
 
 <p>We can analyse it using any analysis methods that have been registered with the analyser.</p>
 
-<h2>RMagickAnalyser</h2>
+<h2>ImageMagickAnalyser</h2>
 
-<p>The <span class='object_link'><a href="Dragonfly/Analysis/RMagickAnalyser.html" title="Dragonfly::Analysis::RMagickAnalyser (class)">RMagickAnalyser</a></span> is registered by default by the
-<span class='object_link'><a href="Dragonfly/Config/RMagick.html" title="Dragonfly::Config::RMagick (module)">RMagick configuration</a></span> used by 'dragonfly/rails/images'.</p>
+<p>The <span class='object_link'><a href="Dragonfly/Analysis/ImageMagickAnalyser.html" title="Dragonfly::Analysis::ImageMagickAnalyser (class)">ImageMagickAnalyser</a></span> is registered by default by the
+<span class='object_link'><a href="Dragonfly/Config/ImageMagick.html" title="Dragonfly::Config::ImageMagick (module)">ImageMagick configuration</a></span> used by 'dragonfly/rails/images'.</p>
 
 <p>If not already registered:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='RMagickAnalyser constant id'>RMagickAnalyser</span><span class='rparen token'>)</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='ImageMagickAnalyser constant id'>ImageMagickAnalyser</span><span class='rparen token'>)</span>
 </pre>
 
 <p>gives us these methods:</p>
@@ -106,6 +106,16 @@
 <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='depth identifier id'>depth</span>               <span class='comment val'># =&gt; 8</span>
 <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='number_of_colours identifier id'>number_of_colours</span>   <span class='comment val'># =&gt; 34703</span>
 <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='format identifier id'>format</span>              <span class='comment val'># =&gt; :png</span>
+</pre>
+
+<h2>RMagickAnalyser</h2>
+
+<p>The <span class='object_link'><a href="Dragonfly/Analysis/RMagickAnalyser.html" title="Dragonfly::Analysis::RMagickAnalyser (class)">RMagickAnalyser</a></span> uses the <a href="http://rmagick.rubyforge.org" target="_parent" title="RMagick">RMagick</a> library and provides methods <code>width</code>, <code>height</code>, <code>aspect_ratio</code>,
+<code>portrait?</code>, <code>landscape?</code>, <code>depth</code>, <code>number_of_colours</code> and <code>format</code> like the ImageMagickAnalyser.</p>
+
+<p>You can tell it not to use the file system when registering it</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='RMagickAnalyser constant id'>RMagickAnalyser</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span> <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='false false kw'>false</span> <span class='rbrace token'>}</span>
 </pre>
 
 <h2>FileCommandAnalyser</h2>
@@ -144,7 +154,7 @@
 <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='wobbliness identifier id'>wobbliness</span>    <span class='comment val'># =&gt; 71</span>
 </pre>
 
-<p>You can create a class like the RMagick one above, in which case all public methods will be counted as analysis methods.
+<p>You can create a class like the ImageMagick one above, in which case all public methods will be counted as analysis methods.
 Each method takes the temp_object as its argument.</p>
 
 <pre class="code"><span class='class class kw'>class</span> <span class='MyAnalyser constant id'>MyAnalyser</span>
@@ -169,7 +179,8 @@ Each method takes the temp_object as its argument.</p>
 
 <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='coolness identifier id'>coolness</span>    <span class='comment val'># =&gt; -4.1</span>
 <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='uglyness identifier id'>uglyness</span>    <span class='comment val'># =&gt; &quot;VERY&quot;</span>
-</pre></div>
+</pre>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -179,9 +190,9 @@ Each method takes the temp_object as its argument.</p>
     </div>
 
     <div id="footer">
-  Generated on Tue Nov  2 13:23:18 2010 by 
+  Generated on Sun Nov 21 22:46:03 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.1 (ruby-1.8.7).
+  0.6.3 (ruby-1.8.7).
 </div>
 
   </body>

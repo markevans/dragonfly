@@ -4,3 +4,5 @@ pkg
 spec
 tmp
 fixtures
+.bundle
+.s3_spec.yml

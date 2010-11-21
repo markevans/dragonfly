@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta name="Content-Type" content="text/html; charset=utf-8" />
-<title>Class: Dragonfly::Encoding::RMagickEncoder</title>
+<title>Class: Dragonfly::Generation::HashWithCssStyleKeys</title>
 <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -63,7 +63,7 @@
 
     <div id="content" class="clearfix">
       <div class="col1">
-        <h1>Class: Dragonfly::Encoding::RMagickEncoder
+        <h1>Class: Dragonfly::Generation::HashWithCssStyleKeys
   
   
   
@@ -73,12 +73,14 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></span>
+      <span class="inheritName">Hash</span>
       
         <ul class="fullTree">
           <li><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></li>
           
-            <li class="next">Dragonfly::Encoding::RMagickEncoder</li>
+            <li class="next">Hash</li>
+          
+            <li class="next">Dragonfly::Generation::HashWithCssStyleKeys</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -90,32 +92,42 @@
     
   
     
-      <dt class="r2">Includes:</dt>
-      <dd class="r2"><span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span>, <span class='object_link'><a href="../RMagickUtils.html" title="Dragonfly::RMagickUtils (module)">RMagickUtils</a></span></dd>
-      
-    
   
   
   
-    <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/dragonfly/encoding/r_magick_encoder.rb</dd>
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/dragonfly/generation/hash_with_css_style_keys.rb</dd>
   
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>
+HashWithCssStyleKeys is solely for being able to access a hash which has
+css-style keys (e.g. &#8216;font-size&#8217;) with the underscore symbol
+version
+</p>
 
 
+  </div>
+</div>
+<div class="tags">
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='string val'>'font-size'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'23px'</span><span class='comma token'>,</span> <span class='symbol val'>:color</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'white'</span><span class='rbrace token'>}</span>
+<span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='HashWithCssStyleKeys constant id'>HashWithCssStyleKeys</span><span class='lbrack token'>[</span><span class='opts identifier id'>opts</span><span class='rbrack token'>]</span>
+<span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_size</span><span class='rbrack token'>]</span>   <span class='comment val'># ===&gt; '23px'</span>
+<span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:color</span><span class='rbrack token'>]</span>       <span class='comment val'># ===&gt; 'white'</span>
+</pre>
+    
+  </div>
+
+</div>
+
   
 
 
@@ -131,7 +143,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#encode-instance_method" title="#encode (instance method)">- (Object) <strong>encode</strong>(temp_object, format, encoding = {}) </a>
+      <a href="#%5B%5D-instance_method" title="#[] (instance method)">- (Object) <strong>[]</strong>(key) </a>
     
 
     
@@ -154,39 +166,15 @@
 
 
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Loggable.html#log-instance_method" title="Dragonfly::Loggable#log (method)">#log</a></span>, <span class='object_link'><a href="../Loggable.html#log%3D-instance_method" title="Dragonfly::Loggable#log= (method)">#log=</a></span>, <span class='object_link'><a href="../Loggable.html#use_same_log_as-instance_method" title="Dragonfly::Loggable#use_same_log_as (method)">#use_same_log_as</a></span></p>
-
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></span></p>
-
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
     
     
       <div class="method_details first">
-  <p class="signature first" id="encode-instance_method">
+  <p class="signature first" id="[]-instance_method">
   
-    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>encode</strong>(temp_object, format, encoding = {}) 
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>[]</strong>(key) 
   
 
   
@@ -196,33 +184,23 @@
       <pre class="lines">
 
 
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57</pre>
+13
+14
+15
+16
+17
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/encoding/r_magick_encoder.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/generation/hash_with_css_style_keys.rb', line 13</span>
 
-<span class='def def kw'>def</span> <span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='encoding identifier id'>encoding</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span>
-  <span class='throw identifier id'>throw</span> <span class='symbol val'>:unable_to_handle</span> <span class='unless unless_mod kw'>unless</span> <span class='supported_formats identifier id'>supported_formats</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
-  <span class='rmagick_image identifier id'>rmagick_image</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='image identifier id'>image</span><span class='bitor op'>|</span>
-    <span class='if if kw'>if</span> <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='format identifier id'>format</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span> <span class='eq op'>==</span> <span class='format identifier id'>format</span>
-      <span class='temp_object identifier id'>temp_object</span> <span class='comment val'># do nothing</span>
-    <span class='else else kw'>else</span>
-      <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='format identifier id'>format</span>
-      <span class='image identifier id'>image</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='aref op'>[]</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span> <span class='orop op'>||</span> <span class='lparen token'>(</span>
+    <span class='str_key identifier id'>str_key</span> <span class='assign token'>=</span> <span class='key identifier id'>key</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+    <span class='css_key identifier id'>css_key</span> <span class='assign token'>=</span> <span class='str_key identifier id'>str_key</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>'_'</span><span class='comma token'>,</span><span class='string val'>'-'</span><span class='rparen token'>)</span>
+    <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='str_key identifier id'>str_key</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='css_key identifier id'>css_key</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='css_key identifier id'>css_key</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
+  <span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>

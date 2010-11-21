@@ -87,14 +87,14 @@ e.g. converting to gif format, comes under the banner of Encoding.</p>
 
 <p>We can encode it to any format registered with the encoder.</p>
 
-<h2>RMagickEncoder</h2>
+<h2>ImageMagickEncoder</h2>
 
-<p>The <span class='object_link'><a href="Dragonfly/Encoding/RMagickEncoder.html" title="Dragonfly::Encoding::RMagickEncoder (class)">RMagickEncoder</a></span> is registered by default by
-the <span class='object_link'><a href="Dragonfly/Config/RMagick.html" title="Dragonfly::Config::RMagick (module)">RMagick configuration</a></span> used by 'dragonfly/rails/images'.</p>
+<p>The <span class='object_link'><a href="Dragonfly/Encoding/ImageMagickEncoder.html" title="Dragonfly::Encoding::ImageMagickEncoder (class)">ImageMagickEncoder</a></span> is registered by default by
+the <span class='object_link'><a href="Dragonfly/Config/ImageMagick.html" title="Dragonfly::Config::ImageMagick (module)">ImageMagick configuration</a></span> used by 'dragonfly/rails/images'.</p>
 
 <p>If not already registered:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='RMagickEncoder constant id'>RMagickEncoder</span><span class='rparen token'>)</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='ImageMagickEncoder constant id'>ImageMagickEncoder</span><span class='rparen token'>)</span>
 </pre>
 
 <p>gives us:</p>
@@ -105,7 +105,22 @@ the <span class='object_link'><a href="Dragonfly/Config/RMagick.html" title="Dra
 <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:tiff</span><span class='rparen token'>)</span>
 </pre>
 
-<p>and various other formats (see <span class='object_link'><a href="Dragonfly/Encoding/RMagickEncoder.html" title="Dragonfly::Encoding::RMagickEncoder (class)">RMagickEncoder</a></span>)</p>
+<p>and various other formats (see <span class='object_link'><a href="Dragonfly/Encoding/ImageMagickEncoder.html" title="Dragonfly::Encoding::ImageMagickEncoder (class)">ImageMagickEncoder</a></span>).</p>
+
+<p>You can also pass additional options to the imagemagick command line:</p>
+
+<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:jpg</span><span class='comma token'>,</span> <span class='string val'>'-quality 10'</span><span class='rparen token'>)</span>
+</pre>
+
+<h2>RMagickEncoder</h2>
+
+<p>The <span class='object_link'><a href="Dragonfly/Encoding/RMagickEncoder.html" title="Dragonfly::Encoding::RMagickEncoder (class)">RMagickEncoder</a></span> uses the <a href="http://rmagick.rubyforge.org" target="_parent" title="RMagick">RMagick</a> library to do similar things to the
+ImageMagickEncoder above.</p>
+
+<p>You can tell it not to use the file system when registering it using</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='RMagickEncoder constant id'>RMagickEncoder</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='false false kw'>false</span> <span class='rbrace token'>}</span>
+</pre>
 
 <h2>Lazy evaluation</h2>
 
@@ -137,7 +152,7 @@ the <span class='object_link'><a href="Dragonfly/Config/RMagick.html" title="Dra
 
 <p>If <code>:unable_to_handle</code> is thrown, the next most recently registered encoder is used, and so on.</p>
 
-<p>Alternatively you can create a class like the RMagick one above, which implements the method <code>encode</code>, and register this.</p>
+<p>Alternatively you can create a class like the ImageMagick one above, which implements the method <code>encode</code>, and register this.</p>
 
 <pre class="code"><span class='class class kw'>class</span> <span class='MyEncoder constant id'>MyEncoder</span>
 
@@ -150,7 +165,8 @@ the <span class='object_link'><a href="Dragonfly/Config/RMagick.html" title="Dra
 <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='MyEncoder constant id'>MyEncoder</span><span class='rparen token'>)</span>
 
 <span class='pdf_image identifier id'>pdf_image</span> <span class='assign token'>=</span> <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:pdf</span><span class='comma token'>,</span> <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>
-</pre></div>
+</pre>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -160,9 +176,9 @@ the <span class='object_link'><a href="Dragonfly/Config/RMagick.html" title="Dra
     </div>
 
     <div id="footer">
-  Generated on Tue Nov  2 13:23:18 2010 by 
+  Generated on Sun Nov 21 22:46:04 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.1 (ruby-1.8.7).
+  0.6.3 (ruby-1.8.7).
 </div>
 
   </body>
