@@ -60,13 +60,21 @@ module Dragonfly
 
     def run(command)
       log.debug("Running command: #{command}") if ImageMagickUtils.log_commands
-      result = `#{command}`
+      begin
+        result = `#{command}`
+      rescue Errno::ENOENT
+        raise_shell_command_failed(command)
+      end
       if $?.exitstatus == 1
         throw :unable_to_handle
       elsif !$?.success?
-        raise ShellCommandFailed, "Command failed (#{command}) with exit status #{$?.exitstatus}"
+        raise_shell_command_failed(command)
       end
       result
+    end
+    
+    def raise_shell_command_failed(command)
+      raise ShellCommandFailed, "Command failed (#{command}) with exit status #{$?.exitstatus}"
     end
 
   end
