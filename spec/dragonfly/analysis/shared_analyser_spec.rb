@@ -39,10 +39,12 @@ describe "image analyser methods", :shared => true do
 
   %w(width height aspect_ratio number_of_colours depth format portrait? landscape?).each do |meth|
     it "should throw unable_to_handle in #{meth.inspect} if it's not an image file" do
-      temp_object = Dragonfly::TempObject.new('blah')
-      lambda{
-        @analyser.send(meth, temp_object)
-      }.should throw_symbol(:unable_to_handle)
+      suppressing_stderr do
+        temp_object = Dragonfly::TempObject.new('blah')
+        lambda{
+          @analyser.send(meth, temp_object)
+        }.should throw_symbol(:unable_to_handle)
+      end
     end
   end
 

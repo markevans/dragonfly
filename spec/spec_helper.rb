@@ -46,3 +46,13 @@ end
 def test_app
   Dragonfly::App.send(:new)
 end
+
+def suppressing_stderr
+  original_stderr = $stderr.dup
+  tempfile = Tempfile.new('stderr')
+  $stderr.reopen(tempfile)
+  yield
+ensure
+  tempfile.close
+  $stderr.reopen(original_stderr)
+end
