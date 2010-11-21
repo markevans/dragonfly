@@ -89,6 +89,8 @@ module Dragonfly
         end
       end
       
+      public :convert
+      
     end
   end
 end
