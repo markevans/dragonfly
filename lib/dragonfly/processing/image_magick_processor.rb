@@ -58,13 +58,14 @@ module Dragonfly
         
         width   = opts[:width]  ? opts[:width].to_i  : current_width
         height  = opts[:height] ? opts[:height].to_i : current_height
+        gravity = opts[:gravity] || 'c'
 
         if width != current_width || height != current_height
           scale = [width.to_f / current_width, height.to_f / current_height].max
           temp_object = TempObject.new(resize(temp_object, "#{(scale * current_width).ceil}x#{(scale * current_height).ceil}"))
         end
 
-        crop(temp_object, :width => width, :height => height, :gravity => opts[:gravity])
+        crop(temp_object, :width => width, :height => height, :gravity => gravity)
       end
       
       def rotate(temp_object, amount, opts={})
