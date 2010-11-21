@@ -81,7 +81,7 @@ To register a single custom analyser:
 
     image.wobbliness    # => 71
 
-You can create a class like the RMagick one above, in which case all public methods will be counted as analysis methods.
+You can create a class like the ImageMagick one above, in which case all public methods will be counted as analysis methods.
 Each method takes the temp_object as its argument.
 
     class MyAnalyser

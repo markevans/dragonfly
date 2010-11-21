@@ -72,7 +72,7 @@ To register a single custom generator:
     app.generate(:blank_image, 'red')      # => 'Job' object which we can get data, etc.
 
 
-Or create a class like the RMagick one above, in which case all public methods will be counted as generator methods.
+Or create a class like the ImageMagick one above, in which case all public methods will be counted as generator methods.
 
     class RoundedCornerGenerator
 
