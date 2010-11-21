@@ -18,10 +18,11 @@ describe Dragonfly::Processing::ImageMagickProcessor do
       image.should have_height(71)
     end
     it "should allow for general convert commands with added format" do
-      image = @processor.convert(@image, '-scale 56x71', :gif)
+      image, extra = @processor.convert(@image, '-scale 56x71', :gif)
       image.should have_width(56)
       image.should have_height(71)
       image.should have_format('gif')
+      extra[:format].should == :gif
     end
   end
   

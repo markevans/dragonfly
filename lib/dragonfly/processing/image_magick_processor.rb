@@ -89,7 +89,9 @@ module Dragonfly
         end
       end
       
-      public :convert
+      def convert(temp_object, args='', format=nil)
+        format ? [super, {:format => format.to_sym}] : super
+      end
       
     end
   end
