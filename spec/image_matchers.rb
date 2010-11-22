@@ -39,3 +39,9 @@ Spec::Matchers.define :have_format do |format|
     image_properties(given)[:format].should == format
   end
 end
+
+Spec::Matchers.define :have_size do |size|
+  match do |given|
+    image_properties(given)[:size].should == size
+  end
+end

@@ -13,6 +13,12 @@ describe "data_store", :shared => true do
       temp_object2 = Dragonfly::TempObject.new('gollum')
       @data_store.store(@temp_object).should_not == @data_store.store(temp_object2)
     end
+    it "should return a unique identifier for each storage even when the first is deleted" do
+      uid1 = @data_store.store(@temp_object)
+      @data_store.destroy(uid1)
+      uid2 = @data_store.store(@temp_object)
+      uid1.should_not == uid2
+    end
     it "should allow for passing in options as a second argument" do
       @data_store.store(@temp_object, :some => :option)
     end

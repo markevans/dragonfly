@@ -9,7 +9,7 @@ ROOT_PATH = File.expand_path(File.dirname(__FILE__) + "/../..")
 # A hash of <name for reference> => <dragonfly uid> pairs
 TEMP_FILES = {}
 
-Dragonfly[:images].configure_with(:rmagick)
+Dragonfly[:images].configure_with(:imagemagick)
 Dragonfly[:files].configure do |c|
   c.analyser.register(Dragonfly::Analysis::FileCommandAnalyser)
 end

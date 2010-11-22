@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'spec'
 require 'rack'
+require 'fileutils'
 
 require File.dirname(__FILE__) + '/../lib/dragonfly'
 $:.unshift(File.dirname(__FILE__))
@@ -44,4 +45,14 @@ end
 
 def test_app
   Dragonfly::App.send(:new)
+end
+
+def suppressing_stderr
+  original_stderr = $stderr.dup
+  tempfile = Tempfile.new('stderr')
+  $stderr.reopen(tempfile)
+  yield
+ensure
+  tempfile.close
+  $stderr.reopen(original_stderr)
 end

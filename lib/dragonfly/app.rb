@@ -67,6 +67,8 @@ module Dragonfly
     attr_accessor :job_definitions
 
     SAVED_CONFIGS = {
+      :imagemagick => 'ImageMagick',
+      :image_magick => 'ImageMagick',
       :rmagick => 'RMagick',
       :r_magick => 'RMagick',
       :rails => 'Rails',

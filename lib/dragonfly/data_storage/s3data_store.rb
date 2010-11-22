@@ -34,10 +34,14 @@ module Dragonfly
       def store(temp_object, opts={})
         uid = opts[:path] || generate_uid(temp_object.name || 'file')
         ensure_initialized
-        object = use_filesystem ? temp_object.file : temp_object.data
         extra_data = temp_object.attributes
-        S3Object.store(uid, object, bucket_name, s3_metadata_for(extra_data))
-        object.close if use_filesystem
+        if use_filesystem
+          temp_object.file do |f|
+            S3Object.store(uid, f, bucket_name, s3_metadata_for(extra_data))
+          end
+        else
+          S3Object.store(uid, temp_object.data, bucket_name, s3_metadata_for(extra_data))
+        end
         uid
       end
 

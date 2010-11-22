@@ -1,5 +1,4 @@
 gem 'rack-cache', :lib => 'rack/cache'
-gem 'rmagick', :lib => 'RMagick'
 gem 'cucumber'
 generate 'cucumber'
 

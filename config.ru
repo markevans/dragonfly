@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rack/cache'
 require File.dirname(__FILE__) + '/lib/dragonfly'
 
-APP = Dragonfly[:images].configure_with(:rmagick) do |c|
+APP = Dragonfly[:images].configure_with(:imagemagick) do |c|
 end
 
 use Rack::Cache,

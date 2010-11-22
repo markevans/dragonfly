@@ -16,7 +16,7 @@ config/initializers/dragonfly.rb:
     require 'dragonfly'
 
     app = Dragonfly[:images]
-    app.configure_with(:rmagick)
+    app.configure_with(:imagemagick)
     app.configure_with(:rails)
 
     app.define_macro(ActiveRecord::Base, :image_accessor)
@@ -33,8 +33,7 @@ application.rb:
 Gemfile
 -------
 
-    gem 'dragonfly', '~>0.7.7'
-    gem 'rmagick', :require => 'RMagick'
+    gem 'dragonfly', '~>0.8.1'
     gem 'rack-cache', :require => 'rack/cache'
 
 Capistrano

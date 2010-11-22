@@ -67,7 +67,7 @@ module Dragonfly
       end
 
       def relative(absolute_path)
-        absolute_path[/^#{root_path}\/(.*)$/, 1]
+        absolute_path[/^#{root_path}\/?(.*)$/, 1]
       end
 
       def directory_empty?(path)
@@ -79,7 +79,9 @@ module Dragonfly
       end
 
       def relative_path_for(filename)
-        "#{Time.now.strftime '%Y/%m/%d'}/#{filename.gsub(/[^\w.]+/,'_')}"
+        time = Time.now
+        msec = time.usec / 1000
+        "#{time.strftime '%Y/%m/%d/%H_%M_%S'}_#{msec}_#{filename.gsub(/[^\w.]+/,'_')}"
       end
 
       def store_extra_data(data_path, temp_object)
