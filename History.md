@@ -1,3 +1,9 @@
+0.8.1 (2010-11-22)
+==================
+Fixes
+-----
+Removed runtime dependencies that Jeweler automatically takes from the Gemfile
+
 0.8.0 (2010-11-21)
 ==================
 Features
