@@ -2,7 +2,7 @@ module Dragonfly
   module ActiveModelExtensions
     module InstanceMethods
       
-      def attachments
+      def dragonfly_attachments
         @attachments ||= self.class.dragonfly_apps_for_attributes.inject({}) do |hash, (attribute, app)|
           hash[attribute] = Attachment.new(app, self, attribute)
           hash
@@ -11,14 +11,14 @@ module Dragonfly
 
       private
       
-      def save_attachments
-        attachments.each do |attribute, attachment|
+      def save_dragonfly_attachments
+        dragonfly_attachments.each do |attribute, attachment|
           attachment.save!
         end
       end
       
-      def destroy_attachments
-        attachments.each do |attribute, attachment|
+      def destroy_dragonfly_attachments
+        dragonfly_attachments.each do |attribute, attachment|
           attachment.destroy!
         end
       end

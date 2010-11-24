@@ -11,20 +11,20 @@ module Dragonfly
           define_method macro_name do |attribute|
 
             # Prior to activerecord 3, adding before callbacks more than once does add it more than once
-            before_save :save_attachments unless respond_to?(:before_save_callback_chain) && before_save_callback_chain.find(:save_attachments)
-            before_destroy :destroy_attachments unless respond_to?(:before_destroy_callback_chain) && before_destroy_callback_chain.find(:destroy_attachments)
+            before_save :save_dragonfly_attachments unless respond_to?(:before_save_callback_chain) && before_save_callback_chain.find(:save_dragonfly_attachments)
+            before_destroy :destroy_dragonfly_attachments unless respond_to?(:before_destroy_callback_chain) && before_destroy_callback_chain.find(:destroy_dragonfly_attachments)
       
             # Register the new attribute
             dragonfly_apps_for_attributes[attribute] = app
             
             # Define the setter for the attribute
             define_method "#{attribute}=" do |value|
-              attachments[attribute].assign(value)
+              dragonfly_attachments[attribute].assign(value)
             end
       
             # Define the getter for the attribute
             define_method attribute do
-              attachments[attribute].to_value
+              dragonfly_attachments[attribute].to_value
             end
       
           end
