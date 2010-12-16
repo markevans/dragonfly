@@ -539,6 +539,11 @@ describe Dragonfly::Job do
       new_job = Dragonfly::Job.deserialize(@job.serialize, @app)
       new_job.to_a.should == @job.to_a
     end
+    it "should serialize the same for steps, regardless of the key order in their arg hashes" do
+      j1 = Dragonfly::Job.new(@app).fetch("weofji").process(:resize_and_crop, :width => 100, :height => 200, :gravity => "#")
+      j2 = Dragonfly::Job.from_path(j1.url, @app)
+      j2.serialize.should == j1.serialize
+    end
   end
 
   describe "to_app" do

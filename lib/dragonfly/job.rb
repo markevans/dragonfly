@@ -36,7 +36,7 @@ module Dragonfly
       end
 
       def initialize(*args)
-        @args = args
+        @args = args.map{ |arg| arg.is_a?(Hash) ? arg.rehash : arg }
       end
 
       attr_reader :args
