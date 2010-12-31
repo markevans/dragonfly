@@ -4,13 +4,13 @@ gem "rack"
 
 # These gems are needed for development and testing
 group :development, :test, :cucumber do
-  gem 'aws-s3'
   gem 'bluecloth'
   gem 'capybara'
   gem 'cucumber', '~>0.10.0'
   gem 'cucumber-rails', '~>0.3.2'
   gem 'database_cleaner'
   gem 'jeweler', '~> 1.5.2'
+  gem 'fog'
   gem 'mongo'
   gem 'rack-cache'
   gem 'rails', '3.0.4', :require => nil

@@ -24,7 +24,7 @@ describe Dragonfly::DataStorage::S3DataStore do
       before(:each) do
         @data_store = Dragonfly::DataStorage::S3DataStore.new
         @data_store.configure do |d|
-          d.bucket_name = 'dragonfly_test'
+          d.bucket_name = 'dragonflytest'
           d.access_key_id = KEY
           d.secret_access_key = SECRET
         end
