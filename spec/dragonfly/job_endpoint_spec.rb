@@ -36,7 +36,7 @@ describe Dragonfly::JobEndpoint do
 
   def make_request(job, opts={})
     endpoint = Dragonfly::JobEndpoint.new(job)
-    method = opts.delete(:method).to_s.upcase || 'GET'
+    method = (opts.delete(:method) || :get).to_s.upcase
     Rack::MockRequest.new(endpoint).request(method, '', opts)
   end
 
@@ -66,6 +66,18 @@ describe Dragonfly::JobEndpoint do
     response['Content-Length'].should == '6'
     response['Content-Disposition'].should == 'filename="gung.txt"'
     response.body.should == ''
+  end
+
+  %w(POST PUT DELETE CUSTOM_METHOD).each do |method|
+    
+    it "should return a 405 error for a #{method} request" do
+      response = make_request(@job, :method => method)
+      response.status.should == 405
+      response['Allow'].should == "GET, HEAD"
+      response['Content-Type'].should == 'text/plain'
+      response.body.should == "#{method} method not allowed"
+    end
+
   end
 
   it "should return 404 if the datastore raises data not found" do

@@ -16,12 +16,13 @@ module Dragonfly
     end
 
     def to_response
-      if etag_matches?
-        # Not Modified
+      if !(request.head? || request.get?)
+        [405, method_not_allowed_headers, ["#{request.request_method} method not allowed"]]
+      elsif etag_matches?
         [304, cache_headers, []]
       elsif request.head?
         [200, success_headers.merge(cache_headers), []]
-      else
+      elsif request.get?
         [200, success_headers.merge(cache_headers), job.result]
       end
     rescue DataStorage::DataNotFound => e
@@ -65,6 +66,13 @@ module Dragonfly
       parts << content_disposition if content_disposition
       parts << %(filename="#{URI.encode(filename)}") if filename
       parts.any? ? {"Content-Disposition" => parts.join('; ')} : {}
+    end
+    
+    def method_not_allowed_headers
+      {
+        'Content-Type' => 'text/plain',
+        'Allow' => 'GET, HEAD'
+      }
     end
 
     def content_disposition
