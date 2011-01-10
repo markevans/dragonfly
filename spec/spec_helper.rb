@@ -17,7 +17,7 @@ ENV['PATH'] ||= ''
 ENV['PATH'] += ':' + extra_paths.join(':')
 
 # If this is jRuby, ignore the rmagick tests
-ENV['IGNORE_RMAGICK'] = 'true' if RUBY_PLATFORM == 'java'
+ENV['IGNORE_RMAGICK'] = 'true' if RUBY_PLATFORM == 'java' || defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
 
 SAMPLES_DIR = File.expand_path(File.dirname(__FILE__) + '/../samples') unless defined?(SAMPLES_DIR)
 
