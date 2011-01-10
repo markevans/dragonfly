@@ -57,7 +57,7 @@ module Dragonfly
         dirname = File.dirname(path)
         basename = File.basename(path, '.*')
         extname = File.extname(path)
-        "#{dirname}/#{basename}_#{Time.now.usec.to_s(32)}#{extname}"
+        "#{dirname}/#{basename}_#{(Time.now.usec*10 + rand(100)).to_s(32)}#{extname}"
       end
 
       private
