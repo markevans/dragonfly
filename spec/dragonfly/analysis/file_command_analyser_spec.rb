@@ -44,7 +44,7 @@ describe Dragonfly::Analysis::FileCommandAnalyser do
         :tif => 'image/tiff'
       }.each do |format, mime_type|
         it "should work properly (without a broken pipe error) for big files of format #{format}" do
-          data = Dragonfly::Generation::RMagickGenerator.new.plasma(1000, 1000, format).first
+          data = Dragonfly::Generation::ImageMagickGenerator.new.plasma(1000, 1000, format).first
           temp_object = Dragonfly::TempObject.new(data)
           @analyser.mime_type(temp_object).should == mime_type
         end

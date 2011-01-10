@@ -1,24 +1,28 @@
-require 'spec_helper'
-require 'dragonfly/generation/shared_generator_spec'
+unless ENV['IGNORE_RMAGICK']
 
-describe Dragonfly::Generation::RMagickGenerator do
+  require 'spec_helper'
+  require 'dragonfly/generation/shared_generator_spec'
 
-  before(:each) do
-    @generator = Dragonfly::Generation::RMagickGenerator.new
-  end
+  describe Dragonfly::Generation::RMagickGenerator do
 
-  describe "when using the filesystem" do
     before(:each) do
-      @generator.use_filesystem = true
+      @generator = Dragonfly::Generation::RMagickGenerator.new
     end
-    it_should_behave_like 'image generator'
-  end
-  
-  describe "when not using the filesystem" do
-    before(:each) do
-      @generator.use_filesystem = false
+
+    describe "when using the filesystem" do
+      before(:each) do
+        @generator.use_filesystem = true
+      end
+      it_should_behave_like 'image generator'
     end
-    it_should_behave_like 'image generator'
-  end
   
+    describe "when not using the filesystem" do
+      before(:each) do
+        @generator.use_filesystem = false
+      end
+      it_should_behave_like 'image generator'
+    end
+  
+  end
+
 end
