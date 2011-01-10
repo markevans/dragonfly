@@ -16,6 +16,9 @@ extra_paths = %w(/opt/local/bin)
 ENV['PATH'] ||= ''
 ENV['PATH'] += ':' + extra_paths.join(':')
 
+# If this is jRuby, ignore the rmagick tests
+ENV['IGNORE_RMAGICK'] = 'true' if RUBY_PLATFORM == 'java'
+
 SAMPLES_DIR = File.expand_path(File.dirname(__FILE__) + '/../samples') unless defined?(SAMPLES_DIR)
 
 Spec::Runner.configure do |c|
