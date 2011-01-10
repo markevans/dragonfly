@@ -3,6 +3,35 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 ## General tests for Response go here as it's a pretty simple wrapper around that
 
+describe "Dragonfly::JobEndpoint Rack::Lint tests" do
+  before(:each) do
+    @app = test_app
+    @app.generator.add(:test_data){ "Test Data" }
+    @job = Dragonfly::Job.new(@app).generate(:test_data)
+    @endpoint = Rack::Lint.new(Dragonfly::JobEndpoint.new(@job))
+  end
+  
+  it "should pass for HEAD requests" do
+    Rack::MockRequest.new(@endpoint).request("HEAD", '')
+  end
+  
+  it "should pass for GET requests" do
+    Rack::MockRequest.new(@endpoint).request("GET", '')
+  end
+  
+  it "should pass for POST requests" do
+    Rack::MockRequest.new(@endpoint).request("POST", '')
+  end
+  
+  it "should pass for PUT requests" do
+    Rack::MockRequest.new(@endpoint).request("PUT", '')
+  end
+  
+  it "should pass for DELETE requests" do
+    Rack::MockRequest.new(@endpoint).request("DELETE", '')
+  end
+end
+
 describe Dragonfly::JobEndpoint do
 
   def make_request(job, opts={})
