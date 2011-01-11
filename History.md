@@ -1,3 +1,12 @@
+0.8.2 (2010-01-11)
+==================
+Fixes
+-----
+- Renamed ActiveModel methods like 'attachments' to avoid name clashes
+- Respond properly to HEAD, POST, PUT and DELETE requests
+- Got it working with jRuby and Rubinius
+- Made DOS protection SHA (and ETag) consistent
+
 0.8.1 (2010-11-22)
 ==================
 Fixes
