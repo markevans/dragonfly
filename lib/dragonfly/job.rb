@@ -268,8 +268,8 @@ module Dragonfly
 
     # URLs, etc.
 
-    def url(*args)
-      app.url_for(self, *args) unless steps.empty?
+    def url(opts={})
+      app.url_for(self, opts) unless steps.empty?
     end
 
     def b64_data
