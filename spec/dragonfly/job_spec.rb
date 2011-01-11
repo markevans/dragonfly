@@ -616,6 +616,32 @@ describe Dragonfly::Job do
     end
   end
 
+  describe "to_unique_s" do
+    it "should use the arrays of args to create the string" do
+      job = test_app.fetch('uid').process(:gug, 4, :some => 'arg', :and => 'more')
+      job.to_unique_s.should == 'fuidpgug4andmoresomearg'
+    end
+  end
+
+  describe "sha" do
+    before(:each) do
+      @app = test_app
+      @job = @app.fetch('eggs')
+    end
+    
+    it "should be of the correct format" do
+      @job.sha.should =~ /^\w{8}$/
+    end
+    
+    it "should be the same for the same job steps" do
+      @app.fetch('eggs').sha.should == @job.sha
+    end
+    
+    it "should be different for different jobs" do
+      @app.fetch('figs').sha.should_not == @job.sha
+    end
+  end
+
   describe "validate_sha!" do
     before(:each) do
       @app = test_app
