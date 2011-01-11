@@ -1,5 +1,5 @@
 --main extra_docs/Index.md
--e yard/setup.rb
+-e ./yard/setup.rb
 -
 README.md
 extra_docs/GeneralUsage.md
