@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 # Matchers
 Spec::Matchers.define :match_steps do |steps|
@@ -530,7 +530,7 @@ describe Dragonfly::Job do
   describe "serialization" do
     before(:each) do
       @app = test_app
-      @job = Dragonfly::Job.new(@app).fetch('mumma').process(:resize, '1x50')
+      @job = Dragonfly::Job.new(@app).fetch('uid').process(:resize_and_crop, :width => 270, :height => 92, :gravity => 'n')
     end
     it "should serialize itself" do
       @job.serialize.should =~ /^\w{1,}$/
@@ -538,6 +538,14 @@ describe Dragonfly::Job do
     it "should deserialize to the same as the original" do
       new_job = Dragonfly::Job.deserialize(@job.serialize, @app)
       new_job.to_a.should == @job.to_a
+    end
+    it "should correctly deserialize a string serialized with ruby 1.8.7" do
+      job = Dragonfly::Job.deserialize('BAhbB1sHOgZmSSIIdWlkBjoGRVRbCDoGcDoUcmVzaXplX2FuZF9jcm9wewg6CndpZHRoaQIOAToLaGVpZ2h0aWE6DGdyYXZpdHlJIgZuBjsGVA', @app)
+      job.to_a.should == @job.to_a
+    end
+    it "should correctly deserialize a string serialized with ruby 1.9.2" do
+      job = Dragonfly::Job.deserialize('BAhbB1sHOgZmIgh1aWRbCDoGcDoUcmVzaXplX2FuZF9jcm9wewg6CndpZHRoaQIOAToLaGVpZ2h0aWE6DGdyYXZpdHkiBm4', @app)
+      job.to_a.should == @job.to_a
     end
   end
 
