@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -87,7 +87,7 @@ Formats are mapped to mime-types using the app's registered list of mime-types.<
 
 <p>To register a mime-type for the format 'egg':</p>
 
-<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='register_mime_type identifier id'>register_mime_type</span><span class='lparen token'>(</span><span class='symbol val'>:egg</span><span class='comma token'>,</span> <span class='string val'>'fried/egg'</span><span class='rparen token'>)</span>
+<pre class="code"><span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:my_app</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id register_mime_type'>register_mime_type</span><span class='lparen'>(</span><span class='symbol'>:egg</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>fried/egg</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 </pre>
 
 <p>You can also do this inside a configuration block.</p>
@@ -103,11 +103,10 @@ Formats are mapped to mime-types using the app's registered list of mime-types.<
 
 <p>By default this is 'application/octet-stream', but it can be changed using</p>
 
-<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='fallback_mime_type identifier id'>fallback_mime_type</span> <span class='assign token'>=</span> <span class='string val'>'meaty/beef'</span>
+<pre class="code"><span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:my_app</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id fallback_mime_type'>fallback_mime_type</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>meaty/beef</span><span class='tstring_end'>'</span></span>
 </pre>
 
-<p>This can also be done inside a configuration block.</p>
-</div>
+<p>This can also be done inside a configuration block.</p></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -117,9 +116,9 @@ Formats are mapped to mime-types using the app's registered list of mime-types.<
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:51 2010 by 
+  Generated on Tue Jan 11 14:48:13 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

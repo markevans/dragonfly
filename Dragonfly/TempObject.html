@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -114,20 +114,20 @@ separating how the data was created and how it is later accessed.
 You can initialize it various ways:
 </p>
 <pre class="code">
-  <span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'this is the content'</span><span class='rparen token'>)</span>           <span class='comment val'># with a String</span>
-  <span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/content'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>     <span class='comment val'># with a File</span>
-  <span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='some_tempfile identifier id'>some_tempfile</span><span class='rparen token'>)</span>                   <span class='comment val'># with a Tempfile</span>
-  <span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='some_other_temp_object identifier id'>some_other_temp_object</span><span class='rparen token'>)</span>          <span class='comment val'># with another TempObject</span>
-</pre>
+  <span class='id temp_object'>temp_object</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>TempObject</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>this is the content</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>           <span class='comment'># with a String
+</span>  <span class='id temp_object'>temp_object</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>TempObject</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>path/to/content</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span>     <span class='comment'># with a File
+</span>  <span class='id temp_object'>temp_object</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>TempObject</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id some_tempfile'>some_tempfile</span><span class='rparen'>)</span>                   <span class='comment'># with a Tempfile
+</span>  <span class='id temp_object'>temp_object</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>TempObject</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id some_other_temp_object'>some_other_temp_object</span><span class='rparen'>)</span>          <span class='comment'># with another TempObject
+</span></pre>
 <p>
 However, no matter how it was initialized, you can always access the data a
 number of ways:
 </p>
 <pre class="code">
-  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span>      <span class='comment val'># returns a data string</span>
-  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span>      <span class='comment val'># returns a file object holding the data</span>
-  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='path identifier id'>path</span>      <span class='comment val'># returns a path for the file</span>
-</pre>
+  <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span>      <span class='comment'># returns a data string
+</span>  <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id file'>file</span>      <span class='comment'># returns a file object holding the data
+</span>  <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id path'>path</span>      <span class='comment'># returns a path for the file
+</span></pre>
 <p>
 The data/file are created lazily, something which you may wish to take
 advantage of.
@@ -599,13 +599,12 @@ Instance Methods
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 43</span>
 
-<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='opts identifier id'>opts</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span> <span class='comment val'># in case it's nil</span>
-  <span class='initialize_from_object! fid id'>initialize_from_object!</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='rparen token'>)</span>
-  <span class='validate_options! fid id'>validate_options!</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
-  <span class='extract_attributes_from identifier id'>extract_attributes_from</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id obj'>obj</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id opts'>opts</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='comment'># in case it's nil
+</span>  <span class='id initialize_from_object!'>initialize_from_object!</span><span class='lparen'>(</span><span class='id obj'>obj</span><span class='rparen'>)</span>
+  <span class='id validate_options!'>validate_options!</span><span class='lparen'>(</span><span class='id opts'>opts</span><span class='rparen'>)</span>
+  <span class='id extract_attributes_from'>extract_attributes_from</span><span class='lparen'>(</span><span class='id opts'>opts</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -654,10 +653,9 @@ Returns the value of attribute format
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 93</span>
 
-<span class='def def kw'>def</span> <span class='format identifier id'>format</span>
-  <span class='@format ivar id'>@format</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id format'>format</span>
+  <span class='ivar'>@format</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -686,10 +684,9 @@ Returns the value of attribute format
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 97</span>
 
-<span class='def def kw'>def</span> <span class='meta identifier id'>meta</span>
-  <span class='@meta ivar id'>@meta</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id meta'>meta</span>
+  <span class='ivar'>@meta</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -729,10 +726,9 @@ Returns the value of attribute name
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 93</span>
 
-<span class='def def kw'>def</span> <span class='name identifier id'>name</span>
-  <span class='@name ivar id'>@name</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id name'>name</span>
+  <span class='ivar'>@name</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -769,14 +765,13 @@ Returns the value of attribute name
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 134</span>
 
-<span class='def def kw'>def</span> <span class='attributes identifier id'>attributes</span>
-  <span class='lbrace token'>{</span>
-    <span class='symbol val'>:name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='name identifier id'>name</span><span class='comma token'>,</span>
-    <span class='symbol val'>:meta</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='meta identifier id'>meta</span><span class='comma token'>,</span>
-    <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='format identifier id'>format</span>
-  <span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id attributes'>attributes</span>
+  <span class='lbrace'>{</span>
+    <span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='id name'>name</span><span class='comma'>,</span>
+    <span class='symbol'>:meta</span> <span class='op'>=&gt;</span> <span class='id meta'>meta</span><span class='comma'>,</span>
+    <span class='symbol'>:format</span> <span class='op'>=&gt;</span> <span class='id format'>format</span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -802,10 +797,9 @@ Returns the value of attribute name
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 101</span>
 
-<span class='def def kw'>def</span> <span class='basename identifier id'>basename</span>
-  <span class='File constant id'>File</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='string val'>'.*'</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='name identifier id'>name</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id basename'>basename</span>
+  <span class='const'>File</span><span class='period'>.</span><span class='id basename'>basename</span><span class='lparen'>(</span><span class='id name'>name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.*</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id name'>name</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -831,10 +825,9 @@ Returns the value of attribute name
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 50</span>
 
-<span class='def def kw'>def</span> <span class='data identifier id'>data</span>
-  <span class='@data ivar id'>@data</span> <span class='opasgn op'>||=</span> <span class='initialized_data identifier id'>initialized_data</span> <span class='orop op'>||</span> <span class='file identifier id'>file</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span> <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='read identifier id'>read</span> <span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id data'>data</span>
+  <span class='ivar'>@data</span> <span class='op'>||=</span> <span class='id initialized_data'>initialized_data</span> <span class='op'>||</span> <span class='id file'>file</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id f'>f</span><span class='op'>|</span> <span class='id f'>f</span><span class='period'>.</span><span class='id read'>read</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -864,14 +857,13 @@ Returns the value of attribute name
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 109</span>
 
-<span class='def def kw'>def</span> <span class='each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='to_io identifier id'>to_io</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='io identifier id'>io</span><span class='bitor op'>|</span>
-    <span class='while while kw'>while</span> <span class='part identifier id'>part</span> <span class='assign token'>=</span> <span class='io identifier id'>io</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='block_size identifier id'>block_size</span><span class='rparen token'>)</span>
-      <span class='yield yield kw'>yield</span> <span class='part identifier id'>part</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='id to_io'>to_io</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id io'>io</span><span class='op'>|</span>
+    <span class='kw'>while</span> <span class='id part'>part</span> <span class='op'>=</span> <span class='id io'>io</span><span class='period'>.</span><span class='id read'>read</span><span class='lparen'>(</span><span class='id block_size'>block_size</span><span class='rparen'>)</span>
+      <span class='kw'>yield</span> <span class='id part'>part</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -897,10 +889,9 @@ Returns the value of attribute name
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 105</span>
 
-<span class='def def kw'>def</span> <span class='ext identifier id'>ext</span>
-  <span class='File constant id'>File</span><span class='dot token'>.</span><span class='extname identifier id'>extname</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='regexp val'>/\.(.*)/</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='name identifier id'>name</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id ext'>ext</span>
+  <span class='const'>File</span><span class='period'>.</span><span class='id extname'>extname</span><span class='lparen'>(</span><span class='id name'>name</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.(.*)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id name'>name</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -928,12 +919,11 @@ Returns the value of attribute name
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 142</span>
 
-<span class='def def kw'>def</span> <span class='extract_attributes_from identifier id'>extract_attributes_from</span><span class='lparen token'>(</span><span class='hash identifier id'>hash</span><span class='rparen token'>)</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='name identifier id'>name</span>   <span class='assign token'>=</span> <span class='hash identifier id'>hash</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='rparen token'>)</span>     <span class='unless unless_mod kw'>unless</span> <span class='hash identifier id'>hash</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='hash identifier id'>hash</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:format</span><span class='rparen token'>)</span>   <span class='unless unless_mod kw'>unless</span> <span class='hash identifier id'>hash</span><span class='lbrack token'>[</span><span class='symbol val'>:format</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='meta identifier id'>meta</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='hash identifier id'>hash</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:meta</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='hash identifier id'>hash</span><span class='lbrack token'>[</span><span class='symbol val'>:meta</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id extract_attributes_from'>extract_attributes_from</span><span class='lparen'>(</span><span class='id hash'>hash</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id name'>name</span>   <span class='op'>=</span> <span class='id hash'>hash</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span>     <span class='kw'>unless</span> <span class='id hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id blank?'>blank?</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id format'>format</span> <span class='op'>=</span> <span class='id hash'>hash</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:format</span><span class='rparen'>)</span>   <span class='kw'>unless</span> <span class='id hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:format</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id blank?'>blank?</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id meta'>meta</span><span class='period'>.</span><span class='id merge!'>merge!</span><span class='lparen'>(</span><span class='id hash'>hash</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:meta</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:meta</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id blank?'>blank?</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -967,18 +957,17 @@ Returns the value of attribute name
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 69</span>
 
-<span class='def def kw'>def</span> <span class='file identifier id'>file</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='f identifier id'>f</span> <span class='assign token'>=</span> <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='open identifier id'>open</span>
-  <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='binmode identifier id'>binmode</span>
-  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
-    <span class='ret identifier id'>ret</span> <span class='assign token'>=</span> <span class='yield yield kw'>yield</span> <span class='f identifier id'>f</span>
-    <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='close identifier id'>close</span>
-  <span class='else else kw'>else</span>
-    <span class='ret identifier id'>ret</span> <span class='assign token'>=</span> <span class='f identifier id'>f</span>
-  <span class='end end kw'>end</span>
-  <span class='ret identifier id'>ret</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id file'>file</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='id f'>f</span> <span class='op'>=</span> <span class='id tempfile'>tempfile</span><span class='period'>.</span><span class='id open'>open</span>
+  <span class='id tempfile'>tempfile</span><span class='period'>.</span><span class='id binmode'>binmode</span>
+  <span class='kw'>if</span> <span class='id block_given?'>block_given?</span>
+    <span class='id ret'>ret</span> <span class='op'>=</span> <span class='kw'>yield</span> <span class='id f'>f</span>
+    <span class='id tempfile'>tempfile</span><span class='period'>.</span><span class='id close'>close</span>
+  <span class='kw'>else</span>
+    <span class='id ret'>ret</span> <span class='op'>=</span> <span class='id f'>f</span>
+  <span class='kw'>end</span>
+  <span class='id ret'>ret</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1011,17 +1000,16 @@ Returns the value of attribute name
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 148</span>
 
-<span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
-  <span class='content_string identifier id'>content_string</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='initialized_with identifier id'>initialized_with</span>
-  <span class='when when kw'>when</span> <span class='symbol val'>:data</span>
-    <span class='data_string identifier id'>data_string</span> <span class='assign token'>=</span> <span class='size identifier id'>size</span> <span class='gt op'>&gt;</span> <span class='integer val'>20</span> <span class='question op'>?</span> <span class='dstring node'>&quot;#{initialized_data[0..20]}...&quot;</span> <span class='colon op'>:</span> <span class='initialized_data identifier id'>initialized_data</span>
-    <span class='dstring node'>&quot;data=#{data_string.inspect}&quot;</span>
-  <span class='when when kw'>when</span> <span class='symbol val'>:file</span> <span class='then then kw'>then</span> <span class='dstring node'>&quot;file=#{initialized_file.inspect}&quot;</span>
-  <span class='when when kw'>when</span> <span class='symbol val'>:tempfile</span> <span class='then then kw'>then</span> <span class='dstring node'>&quot;tempfile=#{initialized_tempfile.inspect}&quot;</span>
-  <span class='end end kw'>end</span>
-  <span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/&gt;$/</span><span class='comma token'>,</span> <span class='dstring node'>&quot; #{content_string}, @meta=#{@meta.inspect}, @name=#{@name.inspect} &gt;&quot;</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id inspect'>inspect</span>
+  <span class='id content_string'>content_string</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id initialized_with'>initialized_with</span>
+  <span class='kw'>when</span> <span class='symbol'>:data</span>
+    <span class='id data_string'>data_string</span> <span class='op'>=</span> <span class='id size'>size</span> <span class='op'>&gt;</span> <span class='int'>20</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id initialized_data'>initialized_data</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='int'>20</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>...</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='id initialized_data'>initialized_data</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>data=</span><span class='embexpr_beg'>#{</span><span class='id data_string'>data_string</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>when</span> <span class='symbol'>:file</span> <span class='kw'>then</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>file=</span><span class='embexpr_beg'>#{</span><span class='id initialized_file'>initialized_file</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>when</span> <span class='symbol'>:tempfile</span> <span class='kw'>then</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tempfile=</span><span class='embexpr_beg'>#{</span><span class='id initialized_tempfile'>initialized_tempfile</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+  <span class='id to_s'>to_s</span><span class='period'>.</span><span class='id sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>&gt;$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id content_string'>content_string</span><span class='rbrace'>}</span><span class='tstring_content'>, @meta=</span><span class='embexpr_beg'>#{</span><span class='ivar'>@meta</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>, @name=</span><span class='embexpr_beg'>#{</span><span class='ivar'>@name</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> &gt;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1047,10 +1035,9 @@ Returns the value of attribute name
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 81</span>
 
-<span class='def def kw'>def</span> <span class='path identifier id'>path</span>
-  <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='path identifier id'>path</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id path'>path</span>
+  <span class='id tempfile'>tempfile</span><span class='period'>.</span><span class='id path'>path</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1080,14 +1067,13 @@ Returns the value of attribute name
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 85</span>
 
-<span class='def def kw'>def</span> <span class='size identifier id'>size</span>
-  <span class='if if kw'>if</span> <span class='initialized_data identifier id'>initialized_data</span>
-    <span class='initialized_data identifier id'>initialized_data</span><span class='dot token'>.</span><span class='bytesize identifier id'>bytesize</span>
-  <span class='else else kw'>else</span>
-    <span class='File constant id'>File</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id size'>size</span>
+  <span class='kw'>if</span> <span class='id initialized_data'>initialized_data</span>
+    <span class='id initialized_data'>initialized_data</span><span class='period'>.</span><span class='id bytesize'>bytesize</span>
+  <span class='kw'>else</span>
+    <span class='const'>File</span><span class='period'>.</span><span class='id size'>size</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1124,21 +1110,20 @@ Returns the value of attribute name
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 54</span>
 
-<span class='def def kw'>def</span> <span class='tempfile identifier id'>tempfile</span>
-  <span class='@tempfile ivar id'>@tempfile</span> <span class='opasgn op'>||=</span> <span class='begin begin kw'>begin</span>
-    <span class='case case kw'>case</span> <span class='initialized_with identifier id'>initialized_with</span>
-    <span class='when when kw'>when</span> <span class='symbol val'>:tempfile</span>
-      <span class='@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='initialized_tempfile identifier id'>initialized_tempfile</span>
-      <span class='@tempfile ivar id'>@tempfile</span><span class='dot token'>.</span><span class='close identifier id'>close</span>
-    <span class='when when kw'>when</span> <span class='symbol val'>:data</span>
-      <span class='@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='new_tempfile identifier id'>new_tempfile</span><span class='lparen token'>(</span><span class='initialized_data identifier id'>initialized_data</span><span class='rparen token'>)</span>
-    <span class='when when kw'>when</span> <span class='symbol val'>:file</span>
-      <span class='@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='copy_to_tempfile identifier id'>copy_to_tempfile</span><span class='lparen token'>(</span><span class='initialized_file identifier id'>initialized_file</span><span class='dot token'>.</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
-    <span class='end end kw'>end</span>
-    <span class='@tempfile ivar id'>@tempfile</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id tempfile'>tempfile</span>
+  <span class='ivar'>@tempfile</span> <span class='op'>||=</span> <span class='kw'>begin</span>
+    <span class='kw'>case</span> <span class='id initialized_with'>initialized_with</span>
+    <span class='kw'>when</span> <span class='symbol'>:tempfile</span>
+      <span class='ivar'>@tempfile</span> <span class='op'>=</span> <span class='id initialized_tempfile'>initialized_tempfile</span>
+      <span class='ivar'>@tempfile</span><span class='period'>.</span><span class='id close'>close</span>
+    <span class='kw'>when</span> <span class='symbol'>:data</span>
+      <span class='ivar'>@tempfile</span> <span class='op'>=</span> <span class='id new_tempfile'>new_tempfile</span><span class='lparen'>(</span><span class='id initialized_data'>initialized_data</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='symbol'>:file</span>
+      <span class='ivar'>@tempfile</span> <span class='op'>=</span> <span class='id copy_to_tempfile'>copy_to_tempfile</span><span class='lparen'>(</span><span class='id initialized_file'>initialized_file</span><span class='period'>.</span><span class='id path'>path</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='ivar'>@tempfile</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1169,15 +1154,14 @@ Returns the value of attribute name
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 117</span>
 
-<span class='def def kw'>def</span> <span class='to_file identifier id'>to_file</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='initialized_data identifier id'>initialized_data</span>
-    <span class='File constant id'>File</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='string val'>'wb'</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span> <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='write identifier id'>write</span><span class='lparen token'>(</span><span class='initialized_data identifier id'>initialized_data</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
-  <span class='else else kw'>else</span>
-    <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='cp identifier id'>cp</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='path identifier id'>path</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-  <span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='string val'>'rb'</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id to_file'>to_file</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id initialized_data'>initialized_data</span>
+    <span class='const'>File</span><span class='period'>.</span><span class='id open'>open</span><span class='lparen'>(</span><span class='id path'>path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>wb</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id f'>f</span><span class='op'>|</span> <span class='id f'>f</span><span class='period'>.</span><span class='id write'>write</span><span class='lparen'>(</span><span class='id initialized_data'>initialized_data</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='kw'>else</span>
+    <span class='const'>FileUtils</span><span class='period'>.</span><span class='id cp'>cp</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id path'>path</span><span class='comma'>,</span> <span class='id path'>path</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id path'>path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rb</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1207,14 +1191,13 @@ Returns the value of attribute name
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 126</span>
 
-<span class='def def kw'>def</span> <span class='to_io identifier id'>to_io</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='initialized_data identifier id'>initialized_data</span>
-    <span class='StringIO constant id'>StringIO</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='initialized_data identifier id'>initialized_data</span><span class='comma token'>,</span> <span class='string val'>'rb'</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='file identifier id'>file</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id to_io'>to_io</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id initialized_data'>initialized_data</span>
+    <span class='const'>StringIO</span><span class='period'>.</span><span class='id open'>open</span><span class='lparen'>(</span><span class='id initialized_data'>initialized_data</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rb</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id file'>file</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1232,9 +1215,9 @@ Returns the value of attribute name
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:52 2010 by 
+  Generated on Tue Jan 11 14:48:14 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

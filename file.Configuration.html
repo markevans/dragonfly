@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -67,60 +67,60 @@
 
 <p>Given a Dragonfly app</p>
 
-<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:app_name</span><span class='rbrack token'>]</span>
+<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:app_name</span><span class='rbracket'>]</span>
 </pre>
 
 <p>Configuration can either be done like so...</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_path_prefix identifier id'>url_path_prefix</span> <span class='assign token'>=</span> <span class='string val'>'/media'</span>
-  <span class='comment val'># ...</span>
-<span class='end end kw'>end</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id url_path_prefix'>url_path_prefix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/media</span><span class='tstring_end'>'</span></span>
+  <span class='comment'># ...
+</span><span class='kw'>end</span>
 </pre>
 
 <p>...or directly like so...</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='url_path_prefix identifier id'>url_path_prefix</span> <span class='assign token'>=</span> <span class='string val'>'/media'</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id url_path_prefix'>url_path_prefix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/media</span><span class='tstring_end'>'</span></span>
 </pre>
 
 <p>The defaults should be fairly sensible, but you can tweak a number of things if you wish.
 Here is an example of an app with all attributes configured:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='SomeCustomDataStore constant id'>SomeCustomDataStore</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='symbol val'>:egg</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'head'</span>  <span class='comment val'># defaults to FileDataStore</span>
-
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='cache_duration identifier id'>cache_duration</span> <span class='assign token'>=</span> <span class='integer val'>3600</span><span class='mult op'>*</span><span class='integer val'>24</span><span class='mult op'>*</span><span class='integer val'>365</span><span class='mult op'>*</span><span class='integer val'>2</span>                      <span class='comment val'># defaults to 1 year # (1 year)</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='fallback_mime_type identifier id'>fallback_mime_type</span> <span class='assign token'>=</span> <span class='string val'>'something/mental'</span>             <span class='comment val'># defaults to application/octet-stream</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='log identifier id'>log</span> <span class='assign token'>=</span> <span class='Logger constant id'>Logger</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='$stdout gvar id'>$stdout</span><span class='rparen token'>)</span>                           <span class='comment val'># defaults to Logger.new('/var/tmp/dragonfly.log')</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='infer_mime_type_from_file_ext identifier id'>infer_mime_type_from_file_ext</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>               <span class='comment val'># defaults to true</span>
-
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_path_prefix identifier id'>url_path_prefix</span> <span class='assign token'>=</span> <span class='string val'>'/images'</span>                         <span class='comment val'># defaults to nil</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_host identifier id'>url_host</span> <span class='assign token'>=</span> <span class='string val'>'http://some.domain.com:4000'</span>            <span class='comment val'># defaults to nil</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_suffix identifier id'>url_suffix</span> <span class='assign token'>=</span> <span class='string val'>'.jpg'</span>                                 <span class='comment val'># defaults to nil - has no effect other than change the url</span>
-
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='content_filename identifier id'>content_filename</span> <span class='assign token'>=</span> <span class='proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='request identifier id'>request</span><span class='bitor op'>|</span>              <span class='comment val'># defaults to the original name, with modified ext if encoded</span>
-    <span class='dstring node'>&quot;file.#{job.ext}&quot;</span>
-  <span class='rbrace token'>}</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='content_disposition identifier id'>content_disposition</span> <span class='assign token'>=</span> <span class='symbol val'>:attachment</span>                   <span class='comment val'># defaults to nil (use the browser default)</span>
-
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='protect_from_dos_attacks identifier id'>protect_from_dos_attacks</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>                     <span class='comment val'># defaults to false - adds a SHA parameter on the end of urls</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='secret identifier id'>secret</span> <span class='assign token'>=</span> <span class='string val'>'This is my secret yeh!!'</span>                  <span class='comment val'># should set this if concerned about DOS attacks</span>
-
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='MyAnalyser constant id'>MyAnalyser</span><span class='rparen token'>)</span>                       <span class='comment val'># See 'Analysers' for more details</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='MyProcessor constant id'>MyProcessor</span><span class='comma token'>,</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:fig</span><span class='rparen token'>)</span>      <span class='comment val'># See 'Processing' for more details</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='MyEncoder constant id'>MyEncoder</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span>                  <span class='comment val'># See 'Encoding' for more details</span>
-    <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='some_value identifier id'>some_value</span> <span class='assign token'>=</span> <span class='string val'>'geg'</span>
-  <span class='end end kw'>end</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='generator identifier id'>generator</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='MyGenerator constant id'>MyGenerator</span><span class='rparen token'>)</span>                     <span class='comment val'># See 'Generators' for more details</span>
-
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='register_mime_type identifier id'>register_mime_type</span><span class='lparen token'>(</span><span class='symbol val'>:egg</span><span class='comma token'>,</span> <span class='string val'>'fried/egg'</span><span class='rparen token'>)</span>               <span class='comment val'># See 'MimeTypes' for more details</span>
-
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='symbol val'>:black_and_white</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='size identifier id'>size</span><span class='bitor op'>|</span>                      <span class='comment val'># Job shortcut - lets you do image.black_and_white('30x30')</span>
-    <span class='process identifier id'>process</span> <span class='symbol val'>:greyscale</span>
-    <span class='process identifier id'>process</span> <span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='size identifier id'>size</span>
-    <span class='encode identifier id'>encode</span>  <span class='symbol val'>:gif</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id datastore'>datastore</span> <span class='op'>=</span> <span class='const'>SomeCustomDataStore</span><span class='period'>.</span><span class='id new'>new</span> <span class='symbol'>:egg</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>head</span><span class='tstring_end'>'</span></span>  <span class='comment'># defaults to FileDataStore
+</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id cache_duration'>cache_duration</span> <span class='op'>=</span> <span class='int'>3600</span><span class='op'>*</span><span class='int'>24</span><span class='op'>*</span><span class='int'>365</span><span class='op'>*</span><span class='int'>2</span>                      <span class='comment'># defaults to 1 year # (1 year)
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id fallback_mime_type'>fallback_mime_type</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>something/mental</span><span class='tstring_end'>'</span></span>             <span class='comment'># defaults to application/octet-stream
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id log'>log</span> <span class='op'>=</span> <span class='const'>Logger</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='gvar'>$stdout</span><span class='rparen'>)</span>                           <span class='comment'># defaults to Logger.new('/var/tmp/dragonfly.log')
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id infer_mime_type_from_file_ext'>infer_mime_type_from_file_ext</span> <span class='op'>=</span> <span class='kw'>false</span>               <span class='comment'># defaults to true
+</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id url_path_prefix'>url_path_prefix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/images</span><span class='tstring_end'>'</span></span>                         <span class='comment'># defaults to nil
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id url_host'>url_host</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>http://some.domain.com:4000</span><span class='tstring_end'>'</span></span>            <span class='comment'># defaults to nil
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id url_suffix'>url_suffix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.jpg</span><span class='tstring_end'>'</span></span>                                 <span class='comment'># defaults to nil - has no effect other than change the url
+</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id content_filename'>content_filename</span> <span class='op'>=</span> <span class='id proc'>proc</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id job'>job</span><span class='comma'>,</span> <span class='id request'>request</span><span class='op'>|</span>              <span class='comment'># defaults to the original name, with modified ext if encoded
+</span>    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>file.</span><span class='embexpr_beg'>#{</span><span class='id job'>job</span><span class='period'>.</span><span class='id ext'>ext</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='rbrace'>}</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id content_disposition'>content_disposition</span> <span class='op'>=</span> <span class='symbol'>:attachment</span>                   <span class='comment'># defaults to nil (use the browser default)
+</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id protect_from_dos_attacks'>protect_from_dos_attacks</span> <span class='op'>=</span> <span class='kw'>true</span>                     <span class='comment'># defaults to false - adds a SHA parameter on the end of urls
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id secret'>secret</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>This is my secret yeh!!</span><span class='tstring_end'>'</span></span>                  <span class='comment'># should set this if concerned about DOS attacks
+</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyAnalyser</span><span class='rparen'>)</span>                       <span class='comment'># See 'Analysers' for more details
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id processor'>processor</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyProcessor</span><span class='comma'>,</span> <span class='symbol'>:type</span> <span class='op'>=&gt;</span> <span class='symbol'>:fig</span><span class='rparen'>)</span>      <span class='comment'># See 'Processing' for more details
+</span>  <span class='id c'>c</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyEncoder</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id e'>e</span><span class='op'>|</span>                  <span class='comment'># See 'Encoding' for more details
+</span>    <span class='id e'>e</span><span class='period'>.</span><span class='id some_value'>some_value</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>geg</span><span class='tstring_end'>'</span></span>
+  <span class='kw'>end</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id generator'>generator</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyGenerator</span><span class='rparen'>)</span>                     <span class='comment'># See 'Generators' for more details
+</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id register_mime_type'>register_mime_type</span><span class='lparen'>(</span><span class='symbol'>:egg</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>fried/egg</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>               <span class='comment'># See 'MimeTypes' for more details
+</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id job'>job</span> <span class='symbol'>:black_and_white</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id size'>size</span><span class='op'>|</span>                      <span class='comment'># Job shortcut - lets you do image.black_and_white('30x30')
+</span>    <span class='id process'>process</span> <span class='symbol'>:greyscale</span>
+    <span class='id process'>process</span> <span class='symbol'>:thumb</span><span class='comma'>,</span> <span class='id size'>size</span>
+    <span class='id encode'>encode</span>  <span class='symbol'>:gif</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
 </pre>
 
 <h2>Where is configuration done?</h2>
@@ -135,7 +135,7 @@ There are a number that are provided with Dragonfly:</p>
 
 <h2>ImageMagick</h2>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:imagemagick</span><span class='rparen'>)</span>
 </pre>
 
 <p>The <span class='object_link'><a href="Dragonfly/Config/ImageMagick.html" title="Dragonfly::Config::ImageMagick (module)">ImageMagick configuration</a></span> registers the app with the <span class='object_link'><a href="Dragonfly/Analysis/ImageMagickAnalyser.html" title="Dragonfly::Analysis::ImageMagickAnalyser (class)">ImageMagickAnalyser</a></span>, <span class='object_link'><a href="Dragonfly/Processing/ImageMagickProcessor.html" title="Dragonfly::Processing::ImageMagickProcessor (class)">ImageMagickProcessor</a></span>,
@@ -148,7 +148,7 @@ There are a number that are provided with Dragonfly:</p>
 
 <h2>RMagick</h2>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rmagick</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:rmagick</span><span class='rparen'>)</span>
 </pre>
 
 <p>The <span class='object_link'><a href="Dragonfly/Config/RMagick.html" title="Dragonfly::Config::RMagick (module)">RMagick configuration</a></span> registers the app with the <span class='object_link'><a href="Dragonfly/Analysis/RMagickAnalyser.html" title="Dragonfly::Analysis::RMagickAnalyser (class)">RMagickAnalyser</a></span>, <span class='object_link'><a href="Dragonfly/Processing/RMagickProcessor.html" title="Dragonfly::Processing::RMagickProcessor (class)">RMagickProcessor</a></span>,
@@ -158,12 +158,12 @@ There are a number that are provided with Dragonfly:</p>
 <p>By default the processor, analyser, encoder and generator pass data around using tempfiles.
 You can make it pass data around using in-memory strings using</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rmagick</span><span class='comma token'>,</span> <span class='symbol val'>:use_filesystem</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:rmagick</span><span class='comma'>,</span> <span class='symbol'>:use_filesystem</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='rparen'>)</span>
 </pre>
 
 <h2>Rails</h2>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:rails</span><span class='rparen'>)</span>
 </pre>
 
 <p>The <span class='object_link'><a href="Dragonfly/Config/Rails.html" title="Dragonfly::Config::Rails (module)">Rails configuration</a></span> points the log to the Rails logger, configures the file data store root path, sets the url_path_prefix to /media, and
@@ -173,7 +173,7 @@ registers the <span class='object_link'><a href="Dragonfly/Analysis/FileCommandA
 
 <h2>Heroku</h2>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:heroku</span><span class='comma token'>,</span> <span class='string val'>'s3_bucket_name'</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:heroku</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>s3_bucket_name</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 </pre>
 
 <p>The <span class='object_link'><a href="Dragonfly/Config/Heroku.html" title="Dragonfly::Config::Heroku (module)">Heroku configuration</a></span> configures it to use the <span class='object_link'><a href="Dragonfly/DataStorage/S3DataStore.html" title="Dragonfly::DataStorage::S3DataStore (class)">Dragonfly::DataStorage::S3DataStore</a></span>, using Heroku's config attributes.
@@ -183,32 +183,31 @@ See <a href="file.Heroku.html" title="Heroku">Heroku</a> for more info.</p>
 
 <p>You can create your own saved configuration with any object that responds to 'apply_configuration':</p>
 
-<pre class="code"><span class='module module kw'>module</span> <span class='MyConfiguration constant id'>MyConfiguration</span>
+<pre class="code"><span class='kw'>module</span> <span class='const'>MyConfiguration</span>
 
-  <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='apply_configuration identifier id'>apply_configuration</span><span class='lparen token'>(</span><span class='app identifier id'>app</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-    <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
-      <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_path_prefix identifier id'>url_path_prefix</span> <span class='assign token'>=</span> <span class='string val'>'/hello/beans'</span>
-      <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='MyProcessor constant id'>MyProcessor</span><span class='rparen token'>)</span>
-      <span class='comment val'># ...</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
+  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id apply_configuration'>apply_configuration</span><span class='lparen'>(</span><span class='id app'>app</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+    <span class='id app'>app</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
+      <span class='id c'>c</span><span class='period'>.</span><span class='id url_path_prefix'>url_path_prefix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/hello/beans</span><span class='tstring_end'>'</span></span>
+      <span class='id c'>c</span><span class='period'>.</span><span class='id processor'>processor</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyProcessor</span><span class='rparen'>)</span>
+      <span class='comment'># ...
+</span>    <span class='kw'>end</span>
+  <span class='kw'>end</span>
 
-<span class='end end kw'>end</span>
+<span class='kw'>end</span>
 </pre>
 
 <p>Then to configure:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='MyConfiguration constant id'>MyConfiguration</span><span class='comma token'>,</span> <span class='symbol val'>:any_other</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>     <span class='comment val'># other args get passed through to apply_configuration</span>
-</pre>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='const'>MyConfiguration</span><span class='comma'>,</span> <span class='symbol'>:any_other</span> <span class='op'>=&gt;</span> <span class='symbol'>:args</span><span class='rparen'>)</span>     <span class='comment'># other args get passed through to apply_configuration
+</span></pre>
 
 <p>You can also carry on configuring by passing a block</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='MyConfiguration constant id'>MyConfiguration</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='any_extra identifier id'>any_extra</span> <span class='assign token'>=</span> <span class='symbol val'>:config_here</span>
-  <span class='comment val'># ...</span>
-<span class='end end kw'>end</span>
-</pre>
-</div>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='const'>MyConfiguration</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id any_extra'>any_extra</span> <span class='op'>=</span> <span class='symbol'>:config_here</span>
+  <span class='comment'># ...
+</span><span class='kw'>end</span>
+</pre></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -218,9 +217,9 @@ See <a href="file.Heroku.html" title="Heroku">Heroku</a> for more info.</p>
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:50 2010 by 
+  Generated on Tue Jan 11 14:48:13 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

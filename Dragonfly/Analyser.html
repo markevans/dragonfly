@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -358,19 +358,18 @@ A new instance of Analyser
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analyser.rb', line 8</span>
 
-<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
-  <span class='super super kw'>super</span>
-  <span class='analyser identifier id'>analyser</span> <span class='assign token'>=</span> <span class='self self kw'>self</span>
-  <span class='@analysis_methods ivar id'>@analysis_methods</span> <span class='assign token'>=</span> <span class='Module constant id'>Module</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span>
+<span class='kw'>def</span> <span class='id initialize'>initialize</span>
+  <span class='kw'>super</span>
+  <span class='id analyser'>analyser</span> <span class='op'>=</span> <span class='kw'>self</span>
+  <span class='ivar'>@analysis_methods</span> <span class='op'>=</span> <span class='const'>Module</span><span class='period'>.</span><span class='id new'>new</span> <span class='kw'>do</span>
 
-    <span class='define_method identifier id'>define_method</span> <span class='symbol val'>:analyser</span> <span class='do do kw'>do</span>
-      <span class='analyser identifier id'>analyser</span>
-    <span class='end end kw'>end</span>
+    <span class='id define_method'>define_method</span> <span class='symbol'>:analyser</span> <span class='kw'>do</span>
+      <span class='id analyser'>analyser</span>
+    <span class='kw'>end</span>
     
-  <span class='end end kw'>end</span>
-  <span class='@analysis_method_names ivar id'>@analysis_method_names</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
-</pre>
+  <span class='kw'>end</span>
+  <span class='ivar'>@analysis_method_names</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -415,10 +414,9 @@ Returns the value of attribute analysis_method_names
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analyser.rb', line 21</span>
 
-<span class='def def kw'>def</span> <span class='analysis_method_names identifier id'>analysis_method_names</span>
-  <span class='@analysis_method_names ivar id'>@analysis_method_names</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id analysis_method_names'>analysis_method_names</span>
+  <span class='ivar'>@analysis_method_names</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -458,10 +456,9 @@ Returns the value of attribute analysis_methods
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analyser.rb', line 21</span>
 
-<span class='def def kw'>def</span> <span class='analysis_methods identifier id'>analysis_methods</span>
-  <span class='@analysis_methods ivar id'>@analysis_methods</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id analysis_methods'>analysis_methods</span>
+  <span class='ivar'>@analysis_methods</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -513,16 +510,15 @@ analysis_methods module. Expects the object that is extended to define
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analyser.rb', line 38</span>
 
-<span class='def def kw'>def</span> <span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='analysis_methods identifier id'>analysis_methods</span><span class='dot token'>.</span><span class='module_eval identifier id'>module_eval</span> <span class='dstring node'>%(
-    def #{name}(*args)
-      analyse(:#{name}, *args)
+<span class='kw'>def</span> <span class='id add'>add</span><span class='lparen'>(</span><span class='id name'>name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='id analysis_methods'>analysis_methods</span><span class='period'>.</span><span class='id module_eval'>module_eval</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>
+</span><span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id name'>name</span><span class='rbrace'>}</span><span class='tstring_content'>(*args)
+</span><span class='tstring_content'>      analyse(:</span><span class='embexpr_beg'>#{</span><span class='id name'>name</span><span class='rbrace'>}</span><span class='tstring_content'>, *args)
     end
-  )</span>
-  <span class='analysis_method_names identifier id'>analysis_method_names</span> <span class='lshft op'>&lt;&lt;</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
-  <span class='super super kw'>super</span>
-<span class='end end kw'>end</span>
-</pre>
+</span><span class='tstring_content'>  </span><span class='tstring_end'>)</span></span>
+  <span class='id analysis_method_names'>analysis_method_names</span> <span class='op'>&lt;&lt;</span> <span class='id name'>name</span><span class='period'>.</span><span class='id to_sym'>to_sym</span>
+  <span class='kw'>super</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -556,18 +552,17 @@ analysis_methods module. Expects the object that is extended to define
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analyser.rb', line 23</span>
 
-<span class='def def kw'>def</span> <span class='analyse identifier id'>analyse</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='enable_cache identifier id'>enable_cache</span>
-    <span class='key identifier id'>key</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='object_id identifier id'>object_id</span><span class='comma token'>,</span> <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rbrack token'>]</span>
-    <span class='cache identifier id'>cache</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='call_last identifier id'>call_last</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='call_last identifier id'>call_last</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='rescue rescue kw'>rescue</span> <span class='NotDefined constant id'>NotDefined</span><span class='comma token'>,</span> <span class='UnableToHandle constant id'>UnableToHandle</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
-  <span class='log identifier id'>log</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span><span class='lparen token'>(</span><span class='e identifier id'>e</span><span class='dot token'>.</span><span class='message identifier id'>message</span><span class='rparen token'>)</span>
-  <span class='nil nil kw'>nil</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id analyse'>analyse</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id method'>method</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id enable_cache'>enable_cache</span>
+    <span class='id key'>key</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id object_id'>object_id</span><span class='comma'>,</span> <span class='id method'>method</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rbracket'>]</span>
+    <span class='id cache'>cache</span><span class='lbracket'>[</span><span class='id key'>key</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id call_last'>call_last</span><span class='lparen'>(</span><span class='id method'>method</span><span class='comma'>,</span> <span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id call_last'>call_last</span><span class='lparen'>(</span><span class='id method'>method</span><span class='comma'>,</span> <span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>rescue</span> <span class='const'>NotDefined</span><span class='comma'>,</span> <span class='const'>UnableToHandle</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
+  <span class='id log'>log</span><span class='period'>.</span><span class='id warn'>warn</span><span class='lparen'>(</span><span class='id e'>e</span><span class='period'>.</span><span class='id message'>message</span><span class='rparen'>)</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -593,10 +588,9 @@ analysis_methods module. Expects the object that is extended to define
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analyser.rb', line 48</span>
 
-<span class='def def kw'>def</span> <span class='clear_cache! fid id'>clear_cache!</span>
-  <span class='@cache ivar id'>@cache</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id clear_cache!'>clear_cache!</span>
+  <span class='ivar'>@cache</span> <span class='op'>=</span> <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -614,9 +608,9 @@ analysis_methods module. Expects the object that is extended to define
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:35:01 2010 by 
+  Generated on Tue Jan 11 14:48:14 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

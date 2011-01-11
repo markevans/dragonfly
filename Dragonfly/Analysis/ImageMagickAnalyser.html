@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -353,11 +353,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/image_magick_analyser.rb', line 16</span>
 
-<span class='def def kw'>def</span> <span class='aspect_ratio identifier id'>aspect_ratio</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='attrs identifier id'>attrs</span> <span class='assign token'>=</span> <span class='identify identifier id'>identify</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:width</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_f identifier id'>to_f</span> <span class='div op'>/</span> <span class='attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:height</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id aspect_ratio'>aspect_ratio</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id attrs'>attrs</span> <span class='op'>=</span> <span class='id identify'>identify</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id attrs'>attrs</span><span class='lbracket'>[</span><span class='symbol'>:width</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_f'>to_f</span> <span class='op'>/</span> <span class='id attrs'>attrs</span><span class='lbracket'>[</span><span class='symbol'>:height</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -383,10 +382,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/image_magick_analyser.rb', line 31</span>
 
-<span class='def def kw'>def</span> <span class='depth identifier id'>depth</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='identify identifier id'>identify</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='symbol val'>:depth</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id depth'>depth</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id identify'>identify</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:depth</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -412,10 +410,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/image_magick_analyser.rb', line 41</span>
 
-<span class='def def kw'>def</span> <span class='format identifier id'>format</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='identify identifier id'>identify</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='symbol val'>:format</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id format'>format</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id identify'>identify</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:format</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -441,10 +438,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/image_magick_analyser.rb', line 12</span>
 
-<span class='def def kw'>def</span> <span class='height identifier id'>height</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='identify identifier id'>identify</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='symbol val'>:height</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id height'>height</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id identify'>identify</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:height</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -492,11 +488,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/image_magick_analyser.rb', line 26</span>
 
-<span class='def def kw'>def</span> <span class='landscape? fid id'>landscape?</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='attrs identifier id'>attrs</span> <span class='assign token'>=</span> <span class='identify identifier id'>identify</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:width</span><span class='rbrack token'>]</span> <span class='geq op'>&gt;=</span> <span class='attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:height</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id landscape?'>landscape?</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id attrs'>attrs</span> <span class='op'>=</span> <span class='id identify'>identify</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id attrs'>attrs</span><span class='lbracket'>[</span><span class='symbol'>:width</span><span class='rbracket'>]</span> <span class='op'>&gt;=</span> <span class='id attrs'>attrs</span><span class='lbracket'>[</span><span class='symbol'>:height</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -527,11 +522,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/image_magick_analyser.rb', line 35</span>
 
-<span class='def def kw'>def</span> <span class='number_of_colours identifier id'>number_of_colours</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='details identifier id'>details</span> <span class='assign token'>=</span> <span class='raw_identify identifier id'>raw_identify</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='string val'>'-verbose -unique'</span><span class='rparen token'>)</span>
-  <span class='details identifier id'>details</span><span class='lbrack token'>[</span><span class='regexp val'>/Colors: (\d+)/</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id number_of_colours'>number_of_colours</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id details'>details</span> <span class='op'>=</span> <span class='id raw_identify'>raw_identify</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>-verbose -unique</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='id details'>details</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>Colors: (\d+)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -579,11 +573,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/image_magick_analyser.rb', line 21</span>
 
-<span class='def def kw'>def</span> <span class='portrait? fid id'>portrait?</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='attrs identifier id'>attrs</span> <span class='assign token'>=</span> <span class='identify identifier id'>identify</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:width</span><span class='rbrack token'>]</span> <span class='leq op'>&lt;=</span> <span class='attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:height</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id portrait?'>portrait?</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id attrs'>attrs</span> <span class='op'>=</span> <span class='id identify'>identify</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id attrs'>attrs</span><span class='lbracket'>[</span><span class='symbol'>:width</span><span class='rbracket'>]</span> <span class='op'>&lt;=</span> <span class='id attrs'>attrs</span><span class='lbracket'>[</span><span class='symbol'>:height</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -609,10 +602,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/image_magick_analyser.rb', line 8</span>
 
-<span class='def def kw'>def</span> <span class='width identifier id'>width</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='identify identifier id'>identify</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='symbol val'>:width</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id width'>width</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id identify'>identify</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:width</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -630,9 +622,9 @@
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:54 2010 by 
+  Generated on Tue Jan 11 14:48:16 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

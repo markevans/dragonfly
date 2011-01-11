@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -71,17 +71,17 @@
 
 <p>Let's say we have a Dragonfly app</p>
 
-<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
 </pre>
 
 <p>and an image object (actually a <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object)...</p>
 
-<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some/uid'</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 </pre>
 
 <p>...OR a Dragonfly model accessor...</p>
 
-<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span>
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span>
 </pre>
 
 <p>We can process it using any processing methods that have been registered with the processor.</p>
@@ -93,48 +93,48 @@ the <span class='object_link'><a href="Dragonfly/Config/ImageMagick.html" title=
 
 <p>If not already registered:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Processing constant id'>Processing</span><span class='colon2 op'>::</span><span class='ImageMagickProcessor constant id'>ImageMagickProcessor</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id processor'>processor</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Processing</span><span class='op'>::</span><span class='const'>ImageMagickProcessor</span><span class='rparen'>)</span>
 </pre>
 
 <p>gives us these methods:</p>
 
-<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>'400x300#'</span><span class='rparen token'>)</span>            <span class='comment val'># see below</span>
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:thumb</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300#</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>            <span class='comment'># see below
+</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:crop</span><span class='comma'>,</span> <span class='symbol'>:width</span> <span class='op'>=&gt;</span> <span class='int'>40</span><span class='comma'>,</span> <span class='symbol'>:height</span> <span class='op'>=&gt;</span> <span class='int'>50</span><span class='comma'>,</span> <span class='symbol'>:x</span> <span class='op'>=&gt;</span> <span class='int'>20</span><span class='comma'>,</span> <span class='symbol'>:y</span> <span class='op'>=&gt;</span> <span class='int'>30</span><span class='rparen'>)</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:crop</span><span class='comma'>,</span> <span class='symbol'>:width</span> <span class='op'>=&gt;</span> <span class='int'>40</span><span class='comma'>,</span> <span class='symbol'>:height</span> <span class='op'>=&gt;</span> <span class='int'>50</span><span class='comma'>,</span> <span class='symbol'>:gravity</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ne</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:crop</span><span class='comma token'>,</span> <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>40</span><span class='comma token'>,</span> <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:x</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>20</span><span class='comma token'>,</span> <span class='symbol val'>:y</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>30</span><span class='rparen token'>)</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:crop</span><span class='comma token'>,</span> <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>40</span><span class='comma token'>,</span> <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:gravity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ne'</span><span class='rparen token'>)</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:flip</span><span class='rparen'>)</span>                         <span class='comment'># flips it vertically
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:flop</span><span class='rparen'>)</span>                         <span class='comment'># flips it horizontally
+</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:greyscale</span><span class='comma'>,</span> <span class='symbol'>:depth</span> <span class='op'>=&gt;</span> <span class='int'>128</span><span class='rparen'>)</span>     <span class='comment'># default depth 256
+</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:resize</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>40x40</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:resize_and_crop</span><span class='comma'>,</span> <span class='symbol'>:width</span> <span class='op'>=&gt;</span> <span class='int'>40</span><span class='comma'>,</span> <span class='symbol'>:height</span><span class='op'>=&gt;</span> <span class='int'>50</span><span class='comma'>,</span> <span class='symbol'>:gravity</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ne</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:flip</span><span class='rparen token'>)</span>                         <span class='comment val'># flips it vertically</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:flop</span><span class='rparen token'>)</span>                         <span class='comment val'># flips it horizontally</span>
-
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='comma token'>,</span> <span class='symbol val'>:depth</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>128</span><span class='rparen token'>)</span>     <span class='comment val'># default depth 256</span>
-
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:resize</span><span class='comma token'>,</span> <span class='string val'>'40x40'</span><span class='rparen token'>)</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:resize_and_crop</span><span class='comma token'>,</span> <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>40</span><span class='comma token'>,</span> <span class='symbol val'>:height=</span><span class='gt op'>&gt;</span> <span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:gravity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ne'</span><span class='rparen token'>)</span>
-
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:rotate</span><span class='comma token'>,</span> <span class='integer val'>45</span><span class='comma token'>,</span> <span class='symbol val'>:background_colour</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'transparent'</span><span class='rparen token'>)</span>   <span class='comment val'># default bg black</span>
-</pre>
+<span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:rotate</span><span class='comma'>,</span> <span class='int'>45</span><span class='comma'>,</span> <span class='symbol'>:background_colour</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>transparent</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>   <span class='comment'># default bg black
+</span></pre>
 
 <p>The method <code>thumb</code> takes a geometry string and calls <code>resize</code>, <code>resize_and_crop</code> or <code>crop</code> accordingly.</p>
 
-<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>'400x300'</span><span class='rparen token'>)</span>             <span class='comment val'># calls resize</span>
-</pre>
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:thumb</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>             <span class='comment'># calls resize
+</span></pre>
 
 <p>Below are some examples of geometry strings:</p>
 
-<pre class="code"><span class='string val'>'400x300'</span>            <span class='comment val'># resize, maintain aspect ratio</span>
-<span class='string val'>'400x300!'</span>           <span class='comment val'># force resize, don't maintain aspect ratio</span>
-<span class='string val'>'400x'</span>               <span class='comment val'># resize width, maintain aspect ratio</span>
-<span class='string val'>'x300'</span>               <span class='comment val'># resize height, maintain aspect ratio</span>
-<span class='string val'>'400x300&gt;'</span>           <span class='comment val'># resize only if the image is larger than this</span>
-<span class='string val'>'400x300&lt;'</span>           <span class='comment val'># resize only if the image is smaller than this</span>
-<span class='string val'>'50x50%'</span>             <span class='comment val'># resize width and height to 50%</span>
-<span class='string val'>'400x300^'</span>           <span class='comment val'># resize width, height to minimum 400,300, maintain aspect ratio</span>
-<span class='string val'>'2000@'</span>              <span class='comment val'># resize so max area in pixels is 2000</span>
-<span class='string val'>'400x300#'</span>           <span class='comment val'># resize, crop if necessary to maintain aspect ratio (centre gravity)</span>
-<span class='string val'>'400x300#ne'</span>         <span class='comment val'># as above, north-east gravity</span>
-<span class='string val'>'400x300se'</span>          <span class='comment val'># crop, with south-east gravity</span>
-<span class='string val'>'400x300+50+100'</span>     <span class='comment val'># crop from the point 50,100 with width, height 400,300</span>
-</pre>
+<pre class="code"><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300</span><span class='tstring_end'>'</span></span>            <span class='comment'># resize, maintain aspect ratio
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300!</span><span class='tstring_end'>'</span></span>           <span class='comment'># force resize, don't maintain aspect ratio
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x</span><span class='tstring_end'>'</span></span>               <span class='comment'># resize width, maintain aspect ratio
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>x300</span><span class='tstring_end'>'</span></span>               <span class='comment'># resize height, maintain aspect ratio
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300&gt;</span><span class='tstring_end'>'</span></span>           <span class='comment'># resize only if the image is larger than this
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300&lt;</span><span class='tstring_end'>'</span></span>           <span class='comment'># resize only if the image is smaller than this
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>50x50%</span><span class='tstring_end'>'</span></span>             <span class='comment'># resize width and height to 50%
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300^</span><span class='tstring_end'>'</span></span>           <span class='comment'># resize width, height to minimum 400,300, maintain aspect ratio
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>2000@</span><span class='tstring_end'>'</span></span>              <span class='comment'># resize so max area in pixels is 2000
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300#</span><span class='tstring_end'>'</span></span>           <span class='comment'># resize, crop if necessary to maintain aspect ratio (centre gravity)
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300#ne</span><span class='tstring_end'>'</span></span>         <span class='comment'># as above, north-east gravity
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300se</span><span class='tstring_end'>'</span></span>          <span class='comment'># crop, with south-east gravity
+</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300+50+100</span><span class='tstring_end'>'</span></span>     <span class='comment'># crop from the point 50,100 with width, height 400,300
+</span></pre>
 
 <h2>RMagickProcessor</h2>
 
@@ -143,19 +143,19 @@ the <span class='object_link'><a href="Dragonfly/Config/ImageMagick.html" title=
 
 <p>You can tell it not to use the file system when registering it</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Processing constant id'>Processing</span><span class='colon2 op'>::</span><span class='RMagickProcessor constant id'>RMagickProcessor</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='false false kw'>false</span> <span class='rbrace token'>}</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id processor'>processor</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Processing</span><span class='op'>::</span><span class='const'>RMagickProcessor</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id p'>p</span><span class='op'>|</span> <span class='id p'>p</span><span class='period'>.</span><span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='kw'>false</span> <span class='rbrace'>}</span>
 </pre>
 
 <h2>Lazy evaluation</h2>
 
-<pre class="code"><span class='new_image identifier id'>new_image</span> <span class='assign token'>=</span> <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:some_method</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id new_image'>new_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:some_method</span><span class='rparen'>)</span>
 </pre>
 
 <p>doesn't actually do anything until you call something on the returned <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object, like <code>url</code>, <code>data</code>, etc.</p>
 
 <h2>Bang method</h2>
 
-<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='symbol val'>:some_method</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id process!'>process!</span><span class='lparen'>(</span><span class='symbol'>:some_method</span><span class='rparen'>)</span>
 </pre>
 
 <p>modifies the image object itself, rather than returning a new object.</p>
@@ -164,43 +164,42 @@ the <span class='object_link'><a href="Dragonfly/Config/ImageMagick.html" title=
 
 <p>To register a single custom processor:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='add identifier id'>add</span> <span class='symbol val'>:watermark</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='bitor op'>|</span>
-  <span class='comment val'># use temp_object.data, temp_object.path, temp_object.file, etc.</span>
-  <span class='SomeLibrary constant id'>SomeLibrary</span><span class='dot token'>.</span><span class='add_watermark identifier id'>add_watermark</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span><span class='comma token'>,</span> <span class='string val'>'some/watermark/file.png'</span><span class='rparen token'>)</span>
-  <span class='comment val'># return a String, File or Tempfile</span>
-<span class='end end kw'>end</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id processor'>processor</span><span class='period'>.</span><span class='id add'>add</span> <span class='symbol'>:watermark</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='op'>|</span>
+  <span class='comment'># use temp_object.data, temp_object.path, temp_object.file, etc.
+</span>  <span class='const'>SomeLibrary</span><span class='period'>.</span><span class='id add_watermark'>add_watermark</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/watermark/file.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='comment'># return a String, File or Tempfile
+</span><span class='kw'>end</span>
 
-<span class='new_image identifier id'>new_image</span> <span class='assign token'>=</span> <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:watermark</span><span class='rparen token'>)</span>
+<span class='id new_image'>new_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:watermark</span><span class='rparen'>)</span>
 </pre>
 
 <p>You can create a class like the RMagick one above, in which case all public methods will be counted as processing methods.
 Each method takes the temp_object as its argument, plus any other args.</p>
 
-<pre class="code"><span class='class class kw'>class</span> <span class='MyProcessor constant id'>MyProcessor</span>
+<pre class="code"><span class='kw'>class</span> <span class='const'>MyProcessor</span>
 
-  <span class='def def kw'>def</span> <span class='coolify identifier id'>coolify</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-    <span class='SomeLib constant id'>SomeLib</span><span class='dot token'>.</span><span class='coolify identifier id'>coolify</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
+  <span class='kw'>def</span> <span class='id coolify'>coolify</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='const'>SomeLib</span><span class='period'>.</span><span class='id coolify'>coolify</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
-  <span class='def def kw'>def</span> <span class='uglify identifier id'>uglify</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='ugliness identifier id'>ugliness</span><span class='rparen token'>)</span>
-    <span class='dxstring node'>`uglify -i #{temp_object.path} -u #{ugliness}`</span>
-  <span class='end end kw'>end</span>
+  <span class='kw'>def</span> <span class='id uglify'>uglify</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id ugliness'>ugliness</span><span class='rparen'>)</span>
+    <span class='backtick'>`</span><span class='tstring_content'>uglify -i </span><span class='embexpr_beg'>#{</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id path'>path</span><span class='rbrace'>}</span><span class='tstring_content'> -u </span><span class='embexpr_beg'>#{</span><span class='id ugliness'>ugliness</span><span class='rbrace'>}</span><span class='tstring_end'>`</span></span>
+  <span class='kw'>end</span>
 
-  <span class='private identifier id'>private</span>
+  <span class='id private'>private</span>
 
-  <span class='def def kw'>def</span> <span class='my_helper_method identifier id'>my_helper_method</span>
-    <span class='comment val'># do stuff</span>
-  <span class='end end kw'>end</span>
+  <span class='kw'>def</span> <span class='id my_helper_method'>my_helper_method</span>
+    <span class='comment'># do stuff
+</span>  <span class='kw'>end</span>
 
-<span class='end end kw'>end</span>
+<span class='kw'>end</span>
 
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='MyProcessor constant id'>MyProcessor</span><span class='rparen token'>)</span>
+<span class='id app'>app</span><span class='period'>.</span><span class='id processor'>processor</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyProcessor</span><span class='rparen'>)</span>
 
-<span class='new_image identifier id'>new_image</span> <span class='assign token'>=</span> <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='coolify identifier id'>coolify</span><span class='lparen token'>(</span><span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>
+<span class='id new_image'>new_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id coolify'>coolify</span><span class='lparen'>(</span><span class='symbol'>:some</span> <span class='op'>=&gt;</span> <span class='symbol'>:args</span><span class='rparen'>)</span>
 
-<span class='new_image identifier id'>new_image</span> <span class='assign token'>=</span> <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='uglify identifier id'>uglify</span><span class='lparen token'>(</span><span class='symbol val'>:loads</span><span class='rparen token'>)</span>
-</pre>
-</div>
+<span class='id new_image'>new_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id uglify'>uglify</span><span class='lparen'>(</span><span class='symbol'>:loads</span><span class='rparen'>)</span>
+</pre></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -210,9 +209,9 @@ Each method takes the temp_object as its argument, plus any other args.</p>
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:49 2010 by 
+  Generated on Tue Jan 11 14:48:12 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

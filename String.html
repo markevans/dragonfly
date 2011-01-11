@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -176,10 +176,9 @@ Ruby 1.8 reports methods as strings, whereas 1.9 reports them as symbols
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/core_ext/string.rb', line 5</span>
 
-<span class='def def kw'>def</span> <span class='to_method_name identifier id'>to_method_name</span>
-  <span class='RUBY_VERSION constant id'>RUBY_VERSION</span> <span class='match op'>=~</span> <span class='regexp val'>/^1.8/</span> <span class='question op'>?</span> <span class='self self kw'>self</span> <span class='colon op'>:</span> <span class='to_sym identifier id'>to_sym</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id to_method_name'>to_method_name</span>
+  <span class='const'>RUBY_VERSION</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^1.8</span><span class='regexp_end'>/</span></span> <span class='op'>?</span> <span class='kw'>self</span> <span class='op'>:</span> <span class='id to_sym'>to_sym</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -197,9 +196,9 @@ Ruby 1.8 reports methods as strings, whereas 1.9 reports them as symbols
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:59 2010 by 
+  Generated on Tue Jan 11 14:48:15 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

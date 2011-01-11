@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -353,14 +353,13 @@ A new instance of Attachment
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 15</span>
 
-<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='app identifier id'>app</span><span class='comma token'>,</span> <span class='parent_model identifier id'>parent_model</span><span class='comma token'>,</span> <span class='attribute_name identifier id'>attribute_name</span><span class='rparen token'>)</span>
-  <span class='@app ivar id'>@app</span><span class='comma token'>,</span> <span class='@parent_model ivar id'>@parent_model</span><span class='comma token'>,</span> <span class='@attribute_name ivar id'>@attribute_name</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='comma token'>,</span> <span class='parent_model identifier id'>parent_model</span><span class='comma token'>,</span> <span class='attribute_name identifier id'>attribute_name</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='analysis_methods identifier id'>analysis_methods</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='job_definitions identifier id'>job_definitions</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='parent_uid identifier id'>parent_uid</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='uid identifier id'>uid</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id app'>app</span><span class='comma'>,</span> <span class='id parent_model'>parent_model</span><span class='comma'>,</span> <span class='id attribute_name'>attribute_name</span><span class='rparen'>)</span>
+  <span class='ivar'>@app</span><span class='comma'>,</span> <span class='ivar'>@parent_model</span><span class='comma'>,</span> <span class='ivar'>@attribute_name</span> <span class='op'>=</span> <span class='id app'>app</span><span class='comma'>,</span> <span class='id parent_model'>parent_model</span><span class='comma'>,</span> <span class='id attribute_name'>attribute_name</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id extend'>extend</span> <span class='id app'>app</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id analysis_methods'>analysis_methods</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id extend'>extend</span> <span class='id app'>app</span><span class='period'>.</span><span class='id job_definitions'>job_definitions</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id uid'>uid</span> <span class='op'>=</span> <span class='id parent_uid'>parent_uid</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id job'>job</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id uid'>uid</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -393,10 +392,9 @@ A new instance of Attachment
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 62</span>
 
-<span class='def def kw'>def</span> <span class='analyse identifier id'>analyse</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='has_magic_attribute_for? fid id'>has_magic_attribute_for?</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='magic_attribute_for identifier id'>magic_attribute_for</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id analyse'>analyse</span><span class='lparen'>(</span><span class='id meth'>meth</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='id has_magic_attribute_for?'>has_magic_attribute_for?</span><span class='lparen'>(</span><span class='id meth'>meth</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id magic_attribute_for'>magic_attribute_for</span><span class='lparen'>(</span><span class='id meth'>meth</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id job'>job</span><span class='period'>.</span><span class='id send'>send</span><span class='lparen'>(</span><span class='id meth'>meth</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -434,22 +432,21 @@ A new instance of Attachment
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 23</span>
 
-<span class='def def kw'>def</span> <span class='assign identifier id'>assign</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
-    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
-    <span class='reset_magic_attributes identifier id'>reset_magic_attributes</span>
-  <span class='else else kw'>else</span>
-    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='value identifier id'>value</span>
-    <span class='when when kw'>when</span> <span class='Job constant id'>Job</span> <span class='then then kw'>then</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
-    <span class='when when kw'>when</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span> <span class='then then kw'>then</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='job identifier id'>job</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
-    <span class='else else kw'>else</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='new_job identifier id'>new_job</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
-    <span class='end end kw'>end</span>
-    <span class='set_magic_attributes identifier id'>set_magic_attributes</span>
-  <span class='end end kw'>end</span>
-  <span class='set_uid_and_parent_uid identifier id'>set_uid_and_parent_uid</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
-  <span class='value identifier id'>value</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id assign'>assign</span><span class='lparen'>(</span><span class='id value'>value</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id value'>value</span><span class='period'>.</span><span class='id nil?'>nil?</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id job'>job</span> <span class='op'>=</span> <span class='kw'>nil</span>
+    <span class='id reset_magic_attributes'>reset_magic_attributes</span>
+  <span class='kw'>else</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id job'>job</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id value'>value</span>
+    <span class='kw'>when</span> <span class='const'>Job</span> <span class='kw'>then</span> <span class='id value'>value</span><span class='period'>.</span><span class='id dup'>dup</span>
+    <span class='kw'>when</span> <span class='kw'>self</span><span class='period'>.</span><span class='id class'>class</span> <span class='kw'>then</span> <span class='id value'>value</span><span class='period'>.</span><span class='id job'>job</span><span class='period'>.</span><span class='id dup'>dup</span>
+    <span class='kw'>else</span> <span class='id app'>app</span><span class='period'>.</span><span class='id new_job'>new_job</span><span class='lparen'>(</span><span class='id value'>value</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='id set_magic_attributes'>set_magic_attributes</span>
+  <span class='kw'>end</span>
+  <span class='id set_uid_and_parent_uid'>set_uid_and_parent_uid</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id value'>value</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -476,11 +473,10 @@ A new instance of Attachment
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 39</span>
 
-<span class='def def kw'>def</span> <span class='destroy! fid id'>destroy!</span>
-  <span class='destroy_previous! fid id'>destroy_previous!</span>
-  <span class='destroy_content identifier id'>destroy_content</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='uid identifier id'>uid</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id destroy!'>destroy!</span>
+  <span class='id destroy_previous!'>destroy_previous!</span>
+  <span class='id destroy_content'>destroy_content</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id uid'>uid</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -507,11 +503,10 @@ A new instance of Attachment
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 83</span>
 
-<span class='def def kw'>def</span> <span class='encode! fid id'>encode!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='assign identifier id'>assign</span><span class='lparen token'>(</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='self self kw'>self</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id encode!'>encode!</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='id assign'>assign</span><span class='lparen'>(</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -539,12 +534,11 @@ A new instance of Attachment
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 72</span>
 
-<span class='def def kw'>def</span> <span class='name= identifier id'>name=</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
-  <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span>
-  <span class='set_magic_attribute identifier id'>set_magic_attribute</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='has_magic_attribute_for? fid id'>has_magic_attribute_for?</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='rparen token'>)</span>
-  <span class='name identifier id'>name</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id name='>name=</span><span class='lparen'>(</span><span class='id name'>name</span><span class='rparen'>)</span>
+  <span class='id job'>job</span><span class='period'>.</span><span class='id name'>name</span> <span class='op'>=</span> <span class='id name'>name</span>
+  <span class='id set_magic_attribute'>set_magic_attribute</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='comma'>,</span> <span class='id name'>name</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id has_magic_attribute_for?'>has_magic_attribute_for?</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span>
+  <span class='id name'>name</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -571,11 +565,10 @@ A new instance of Attachment
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 78</span>
 
-<span class='def def kw'>def</span> <span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='assign identifier id'>assign</span><span class='lparen token'>(</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='self self kw'>self</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id process!'>process!</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='id assign'>assign</span><span class='lparen'>(</span><span class='id process'>process</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -611,20 +604,19 @@ A new instance of Attachment
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 44</span>
 
-<span class='def def kw'>def</span> <span class='save! fid id'>save!</span>
-  <span class='sync_with_parent! fid id'>sync_with_parent!</span>
-  <span class='destroy_previous! fid id'>destroy_previous!</span>
-  <span class='if if kw'>if</span> <span class='job identifier id'>job</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='uid identifier id'>uid</span>
-    <span class='set_uid_and_parent_uid identifier id'>set_uid_and_parent_uid</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='store identifier id'>store</span><span class='lparen token'>(</span>
-      <span class='symbol val'>:meta</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span>
-        <span class='symbol val'>:model_class</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='parent_model identifier id'>parent_model</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span>
-        <span class='symbol val'>:model_attachment</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='attribute_name identifier id'>attribute_name</span>
-      <span class='rbrace token'>}</span>
-    <span class='rparen token'>)</span>
-    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='assign token'>=</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='to_fetched_job identifier id'>to_fetched_job</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id save!'>save!</span>
+  <span class='id sync_with_parent!'>sync_with_parent!</span>
+  <span class='id destroy_previous!'>destroy_previous!</span>
+  <span class='kw'>if</span> <span class='id job'>job</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id uid'>uid</span>
+    <span class='id set_uid_and_parent_uid'>set_uid_and_parent_uid</span> <span class='id job'>job</span><span class='period'>.</span><span class='id store'>store</span><span class='lparen'>(</span>
+      <span class='symbol'>:meta</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+        <span class='symbol'>:model_class</span> <span class='op'>=&gt;</span> <span class='id parent_model'>parent_model</span><span class='period'>.</span><span class='id class'>class</span><span class='period'>.</span><span class='id name'>name</span><span class='comma'>,</span>
+        <span class='symbol'>:model_attachment</span> <span class='op'>=&gt;</span> <span class='id attribute_name'>attribute_name</span>
+      <span class='rbrace'>}</span>
+    <span class='rparen'>)</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id job'>job</span> <span class='op'>=</span> <span class='id job'>job</span><span class='period'>.</span><span class='id to_fetched_job'>to_fetched_job</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -650,10 +642,9 @@ A new instance of Attachment
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 58</span>
 
-<span class='def def kw'>def</span> <span class='to_value identifier id'>to_value</span>
-  <span class='self self kw'>self</span> <span class='if if_mod kw'>if</span> <span class='job identifier id'>job</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id to_value'>to_value</span>
+  <span class='kw'>self</span> <span class='kw'>if</span> <span class='id job'>job</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -671,9 +662,9 @@ A new instance of Attachment
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:35:02 2010 by 
+  Generated on Tue Jan 11 14:48:16 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

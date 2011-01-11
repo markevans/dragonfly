@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -73,12 +73,12 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName">Hash</span>
+      <span class="inheritName"><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></span>
       
         <ul class="fullTree">
           <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
           
-            <li class="next">Hash</li>
+            <li class="next"><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></li>
           
             <li class="next">Dragonfly::SimpleCache</li>
           
@@ -103,6 +103,9 @@
 
 
 
+  
+  
+  
   
   <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
   <ul class="summary">
@@ -198,7 +201,16 @@ A new instance of SimpleCache.
   
 
 
-  <div id="constructor_details" class="method_details_list">
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Hash.html#to_dragonfly_unique_s-instance_method" title="Hash#to_dragonfly_unique_s (method)">#to_dragonfly_unique_s</a></span></p>
+<div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
@@ -233,11 +245,10 @@ A new instance of SimpleCache
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_cache.rb', line 4</span>
 
-<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='max_size identifier id'>max_size</span><span class='rparen token'>)</span>
-  <span class='@max_size ivar id'>@max_size</span> <span class='assign token'>=</span> <span class='max_size identifier id'>max_size</span>
-  <span class='@keys ivar id'>@keys</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id max_size'>max_size</span><span class='rparen'>)</span>
+  <span class='ivar'>@max_size</span> <span class='op'>=</span> <span class='id max_size'>max_size</span>
+  <span class='ivar'>@keys</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -282,10 +293,9 @@ Returns the value of attribute max_size
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_cache.rb', line 9</span>
 
-<span class='def def kw'>def</span> <span class='max_size identifier id'>max_size</span>
-  <span class='@max_size ivar id'>@max_size</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id max_size'>max_size</span>
+  <span class='ivar'>@max_size</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -325,17 +335,16 @@ Returns the value of attribute max_size
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_cache.rb', line 11</span>
 
-<span class='def def kw'>def</span> <span class='aset op'>[]=</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
-    <span class='@keys ivar id'>@keys</span> <span class='lshft op'>&lt;&lt;</span> <span class='key identifier id'>key</span>
-    <span class='if if kw'>if</span> <span class='size identifier id'>size</span> <span class='eq op'>==</span> <span class='max_size identifier id'>max_size</span>
-      <span class='key_to_purge identifier id'>key_to_purge</span> <span class='assign token'>=</span> <span class='@keys ivar id'>@keys</span><span class='dot token'>.</span><span class='shift identifier id'>shift</span>
-      <span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='key_to_purge identifier id'>key_to_purge</span><span class='rparen token'>)</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
-  <span class='super super kw'>super</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='op'>[]=</span><span class='lparen'>(</span><span class='id key'>key</span><span class='comma'>,</span> <span class='id value'>value</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='op'>!</span><span class='id has_key?'>has_key?</span><span class='lparen'>(</span><span class='id key'>key</span><span class='rparen'>)</span>
+    <span class='ivar'>@keys</span> <span class='op'>&lt;&lt;</span> <span class='id key'>key</span>
+    <span class='kw'>if</span> <span class='id size'>size</span> <span class='op'>==</span> <span class='id max_size'>max_size</span>
+      <span class='id key_to_purge'>key_to_purge</span> <span class='op'>=</span> <span class='ivar'>@keys</span><span class='period'>.</span><span class='id shift'>shift</span>
+      <span class='id delete'>delete</span><span class='lparen'>(</span><span class='id key_to_purge'>key_to_purge</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='kw'>super</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -353,9 +362,9 @@ Returns the value of attribute max_size
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:53 2010 by 
+  Generated on Tue Jan 11 14:48:14 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -203,17 +203,16 @@
       <pre class="lines">
 
 
-44
-45
-46</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 52</span>
 
-<span class='def def kw'>def</span> <span class='configuration identifier id'>configuration</span>
-  <span class='configuration_hash identifier id'>configuration_hash</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id configuration'>configuration</span>
+  <span class='id configuration_hash'>configuration_hash</span><span class='period'>.</span><span class='id dup'>dup</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -253,19 +252,18 @@
       <pre class="lines">
 
 
-32
-33
-34
-35</pre>
+40
+41
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 40</span>
 
-<span class='def def kw'>def</span> <span class='configure identifier id'>configure</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='yield yield kw'>yield</span> <span class='ConfigurationProxy constant id'>ConfigurationProxy</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
-  <span class='self self kw'>self</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id configure'>configure</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>yield</span> <span class='const'>ConfigurationProxy</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -284,23 +282,22 @@
       <pre class="lines">
 
 
-37
-38
-39
-40
-41
-42</pre>
+45
+46
+47
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 45</span>
 
-<span class='def def kw'>def</span> <span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='configurer identifier id'>configurer</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='configurer identifier id'>configurer</span> <span class='assign token'>=</span> <span class='configurer_for identifier id'>configurer_for</span><span class='lparen token'>(</span><span class='configurer identifier id'>configurer</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='configurer identifier id'>configurer</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Symbol constant id'>Symbol</span><span class='rparen token'>)</span>
-  <span class='configurer identifier id'>configurer</span><span class='dot token'>.</span><span class='apply_configuration identifier id'>apply_configuration</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='configure identifier id'>configure</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='block identifier id'>block</span>
-  <span class='self self kw'>self</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='id configurer'>configurer</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='id configurer'>configurer</span> <span class='op'>=</span> <span class='id configurer_for'>configurer_for</span><span class='lparen'>(</span><span class='id configurer'>configurer</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id configurer'>configurer</span><span class='period'>.</span><span class='id is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Symbol</span><span class='rparen'>)</span>
+  <span class='id configurer'>configurer</span><span class='period'>.</span><span class='id apply_configuration'>apply_configuration</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='id configure'>configure</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id block'>block</span>
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -340,17 +337,16 @@
       <pre class="lines">
 
 
-48
-49
-50</pre>
+56
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 56</span>
 
-<span class='def def kw'>def</span> <span class='has_configuration_method? fid id'>has_configuration_method?</span><span class='lparen token'>(</span><span class='method_name identifier id'>method_name</span><span class='rparen token'>)</span>
-  <span class='configuration_methods identifier id'>configuration_methods</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='method_name identifier id'>method_name</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id has_configuration_method?'>has_configuration_method?</span><span class='lparen'>(</span><span class='id method_name'>method_name</span><span class='rparen'>)</span>
+  <span class='id configuration_methods'>configuration_methods</span><span class='period'>.</span><span class='id include?'>include?</span><span class='lparen'>(</span><span class='id method_name'>method_name</span><span class='period'>.</span><span class='id to_sym'>to_sym</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -368,9 +364,9 @@
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:58 2010 by 
+  Generated on Tue Jan 11 14:48:14 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

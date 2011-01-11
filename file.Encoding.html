@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -72,17 +72,17 @@ e.g. converting to gif format, comes under the banner of Encoding.</p>
 
 <p>Let's say we have a Dragonfly app</p>
 
-<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
 </pre>
 
 <p>and an image object (actually a <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object)...</p>
 
-<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some/uid'</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 </pre>
 
 <p>...OR a Dragonfly model accessor...</p>
 
-<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span>
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span>
 </pre>
 
 <p>We can encode it to any format registered with the encoder.</p>
@@ -94,22 +94,22 @@ the <span class='object_link'><a href="Dragonfly/Config/ImageMagick.html" title=
 
 <p>If not already registered:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='ImageMagickEncoder constant id'>ImageMagickEncoder</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>ImageMagickEncoder</span><span class='rparen'>)</span>
 </pre>
 
 <p>gives us:</p>
 
-<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:jpg</span><span class='rparen token'>)</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:png</span><span class='rparen token'>)</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:tiff</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:jpg</span><span class='rparen'>)</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:gif</span><span class='rparen'>)</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:png</span><span class='rparen'>)</span>
+<span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:tiff</span><span class='rparen'>)</span>
 </pre>
 
 <p>and various other formats (see <span class='object_link'><a href="Dragonfly/Encoding/ImageMagickEncoder.html" title="Dragonfly::Encoding::ImageMagickEncoder (class)">ImageMagickEncoder</a></span>).</p>
 
 <p>You can also pass additional options to the imagemagick command line:</p>
 
-<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:jpg</span><span class='comma token'>,</span> <span class='string val'>'-quality 10'</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:jpg</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>-quality 10</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 </pre>
 
 <h2>RMagickEncoder</h2>
@@ -119,19 +119,19 @@ ImageMagickEncoder above.</p>
 
 <p>You can tell it not to use the file system when registering it using</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='RMagickEncoder constant id'>RMagickEncoder</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='false false kw'>false</span> <span class='rbrace token'>}</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>RMagickEncoder</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id e'>e</span><span class='op'>|</span> <span class='id e'>e</span><span class='period'>.</span><span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='kw'>false</span> <span class='rbrace'>}</span>
 </pre>
 
 <h2>Lazy evaluation</h2>
 
-<pre class="code"><span class='gif_image identifier id'>gif_image</span> <span class='assign token'>=</span> <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id gif_image'>gif_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:gif</span><span class='rparen'>)</span>
 </pre>
 
 <p>doesn't actually do anything until you call something on the returned <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object, like <code>url</code>, <code>data</code>, etc.</p>
 
 <h2>Bang method</h2>
 
-<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode! fid id'>encode!</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id encode!'>encode!</span><span class='lparen'>(</span><span class='symbol'>:gif</span><span class='rparen'>)</span>
 </pre>
 
 <p>modifies the image object itself, rather than returning a new object.</p>
@@ -140,33 +140,32 @@ ImageMagickEncoder above.</p>
 
 <p>To register a custom encoder, for e.g. pdf format:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='add identifier id'>add</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='bitor op'>|</span>
-  <span class='throw identifier id'>throw</span> <span class='symbol val'>:unable_to_handle</span> <span class='unless unless_mod kw'>unless</span> <span class='format identifier id'>format</span> <span class='eq op'>==</span> <span class='symbol val'>:pdf</span>
-  <span class='comment val'># use temp_object.data, temp_object.path, temp_object.file, etc.</span>
-  <span class='SomeLibrary constant id'>SomeLibrary</span><span class='dot token'>.</span><span class='convert_to_pdf identifier id'>convert_to_pdf</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span><span class='rparen token'>)</span>
-  <span class='comment val'># return a String, File or Tempfile</span>
-<span class='end end kw'>end</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id add'>add</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id format'>format</span><span class='op'>|</span>
+  <span class='id throw'>throw</span> <span class='symbol'>:unable_to_handle</span> <span class='kw'>unless</span> <span class='id format'>format</span> <span class='op'>==</span> <span class='symbol'>:pdf</span>
+  <span class='comment'># use temp_object.data, temp_object.path, temp_object.file, etc.
+</span>  <span class='const'>SomeLibrary</span><span class='period'>.</span><span class='id convert_to_pdf'>convert_to_pdf</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span><span class='rparen'>)</span>
+  <span class='comment'># return a String, File or Tempfile
+</span><span class='kw'>end</span>
 
-<span class='pdf_image identifier id'>pdf_image</span> <span class='assign token'>=</span> <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:pdf</span><span class='rparen token'>)</span>
+<span class='id pdf_image'>pdf_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:pdf</span><span class='rparen'>)</span>
 </pre>
 
 <p>If <code>:unable_to_handle</code> is thrown, the next most recently registered encoder is used, and so on.</p>
 
 <p>Alternatively you can create a class like the ImageMagick one above, which implements the method <code>encode</code>, and register this.</p>
 
-<pre class="code"><span class='class class kw'>class</span> <span class='MyEncoder constant id'>MyEncoder</span>
+<pre class="code"><span class='kw'>class</span> <span class='const'>MyEncoder</span>
 
-  <span class='def def kw'>def</span> <span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-    <span class='SomeLib constant id'>SomeLib</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
+  <span class='kw'>def</span> <span class='id encode'>encode</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id format'>format</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+    <span class='const'>SomeLib</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span><span class='comma'>,</span> <span class='id format'>format</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
-<span class='end end kw'>end</span>
+<span class='kw'>end</span>
 
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='MyEncoder constant id'>MyEncoder</span><span class='rparen token'>)</span>
+<span class='id app'>app</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyEncoder</span><span class='rparen'>)</span>
 
-<span class='pdf_image identifier id'>pdf_image</span> <span class='assign token'>=</span> <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:pdf</span><span class='comma token'>,</span> <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>
-</pre>
-</div>
+<span class='id pdf_image'>pdf_image</span> <span class='op'>=</span> <span class='id image'>image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:pdf</span><span class='comma'>,</span> <span class='symbol'>:some</span> <span class='op'>=&gt;</span> <span class='symbol'>:args</span><span class='rparen'>)</span>
+</pre></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -176,9 +175,9 @@ ImageMagickEncoder above.</p>
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:50 2010 by 
+  Generated on Tue Jan 11 14:48:12 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

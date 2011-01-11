@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -71,17 +71,17 @@
 
 <p>Let's say we have a Dragonfly app</p>
 
-<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
 </pre>
 
 <p>and an image object (actually a <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object)...</p>
 
-<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some/uid'</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
 </pre>
 
 <p>...OR a Dragonfly model accessor...</p>
 
-<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span>
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span>
 </pre>
 
 <p>We can analyse it using any analysis methods that have been registered with the analyser.</p>
@@ -93,20 +93,20 @@
 
 <p>If not already registered:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='ImageMagickAnalyser constant id'>ImageMagickAnalyser</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Analysis</span><span class='op'>::</span><span class='const'>ImageMagickAnalyser</span><span class='rparen'>)</span>
 </pre>
 
 <p>gives us these methods:</p>
 
-<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='width identifier id'>width</span>               <span class='comment val'># =&gt; 280</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='height identifier id'>height</span>              <span class='comment val'># =&gt; 355</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='aspect_ratio identifier id'>aspect_ratio</span>        <span class='comment val'># =&gt; 0.788732394366197</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='portrait? fid id'>portrait?</span>           <span class='comment val'># =&gt; true</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='landscape? fid id'>landscape?</span>          <span class='comment val'># =&gt; false</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='depth identifier id'>depth</span>               <span class='comment val'># =&gt; 8</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='number_of_colours identifier id'>number_of_colours</span>   <span class='comment val'># =&gt; 34703</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='format identifier id'>format</span>              <span class='comment val'># =&gt; :png</span>
-</pre>
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id width'>width</span>               <span class='comment'># =&gt; 280
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id height'>height</span>              <span class='comment'># =&gt; 355
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id aspect_ratio'>aspect_ratio</span>        <span class='comment'># =&gt; 0.788732394366197
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id portrait?'>portrait?</span>           <span class='comment'># =&gt; true
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id landscape?'>landscape?</span>          <span class='comment'># =&gt; false
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id depth'>depth</span>               <span class='comment'># =&gt; 8
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id number_of_colours'>number_of_colours</span>   <span class='comment'># =&gt; 34703
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id format'>format</span>              <span class='comment'># =&gt; :png
+</span></pre>
 
 <h2>RMagickAnalyser</h2>
 
@@ -115,7 +115,7 @@
 
 <p>You can tell it not to use the file system when registering it</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='RMagickAnalyser constant id'>RMagickAnalyser</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span> <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='false false kw'>false</span> <span class='rbrace token'>}</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Analysis</span><span class='op'>::</span><span class='const'>RMagickAnalyser</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id a'>a</span><span class='op'>|</span> <span class='id a'>a</span><span class='period'>.</span><span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='kw'>false</span> <span class='rbrace'>}</span>
 </pre>
 
 <h2>FileCommandAnalyser</h2>
@@ -127,60 +127,59 @@
 
 <p>If not already registered:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='FileCommandAnalyser constant id'>FileCommandAnalyser</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Analysis</span><span class='op'>::</span><span class='const'>FileCommandAnalyser</span><span class='rparen'>)</span>
 </pre>
 
 <p>gives us:</p>
 
-<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='mime_type identifier id'>mime_type</span>    <span class='comment val'># =&gt; 'image/png'</span>
-</pre>
+<pre class="code"><span class='id image'>image</span><span class='period'>.</span><span class='id mime_type'>mime_type</span>    <span class='comment'># =&gt; 'image/png'
+</span></pre>
 
 <p>It doesn't use the filesystem by default (it operates on in-memory strings), but we can make it do so by using</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='FileCommandAnalyser constant id'>FileCommandAnalyser</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span>
-  <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
-<span class='end end kw'>end</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Analysis</span><span class='op'>::</span><span class='const'>FileCommandAnalyser</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id a'>a</span><span class='op'>|</span>
+  <span class='id a'>a</span><span class='period'>.</span><span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='kw'>true</span>
+<span class='kw'>end</span>
 </pre>
 
 <h2>Custom Analysers</h2>
 
 <p>To register a single custom analyser:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='add identifier id'>add</span> <span class='symbol val'>:wobbliness</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='temp_object identifier id'>temp_object</span><span class='bitor op'>|</span>
-  <span class='comment val'># can use temp_object.data, temp_object.path, temp_object.file, etc.</span>
-  <span class='SomeLibrary constant id'>SomeLibrary</span><span class='dot token'>.</span><span class='assess_wobbliness identifier id'>assess_wobbliness</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id add'>add</span> <span class='symbol'>:wobbliness</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id temp_object'>temp_object</span><span class='op'>|</span>
+  <span class='comment'># can use temp_object.data, temp_object.path, temp_object.file, etc.
+</span>  <span class='const'>SomeLibrary</span><span class='period'>.</span><span class='id assess_wobbliness'>assess_wobbliness</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span><span class='rparen'>)</span>
+<span class='kw'>end</span>
 
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='wobbliness identifier id'>wobbliness</span>    <span class='comment val'># =&gt; 71</span>
-</pre>
+<span class='id image'>image</span><span class='period'>.</span><span class='id wobbliness'>wobbliness</span>    <span class='comment'># =&gt; 71
+</span></pre>
 
 <p>You can create a class like the ImageMagick one above, in which case all public methods will be counted as analysis methods.
 Each method takes the temp_object as its argument.</p>
 
-<pre class="code"><span class='class class kw'>class</span> <span class='MyAnalyser constant id'>MyAnalyser</span>
+<pre class="code"><span class='kw'>class</span> <span class='const'>MyAnalyser</span>
 
-  <span class='def def kw'>def</span> <span class='coolness identifier id'>coolness</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-    <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='div op'>/</span> <span class='integer val'>30</span>
-  <span class='end end kw'>end</span>
+  <span class='kw'>def</span> <span class='id coolness'>coolness</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+    <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id size'>size</span> <span class='op'>/</span> <span class='int'>30</span>
+  <span class='kw'>end</span>
 
-  <span class='def def kw'>def</span> <span class='uglyness identifier id'>uglyness</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-    <span class='dxstring node'>`ugly -i #{temp_object.path}`</span>
-  <span class='end end kw'>end</span>
+  <span class='kw'>def</span> <span class='id uglyness'>uglyness</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+    <span class='backtick'>`</span><span class='tstring_content'>ugly -i </span><span class='embexpr_beg'>#{</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id path'>path</span><span class='rbrace'>}</span><span class='tstring_end'>`</span></span>
+  <span class='kw'>end</span>
 
-  <span class='private identifier id'>private</span>
+  <span class='id private'>private</span>
 
-  <span class='def def kw'>def</span> <span class='my_helper_method identifier id'>my_helper_method</span>
-    <span class='comment val'># do stuff</span>
-  <span class='end end kw'>end</span>
+  <span class='kw'>def</span> <span class='id my_helper_method'>my_helper_method</span>
+    <span class='comment'># do stuff
+</span>  <span class='kw'>end</span>
 
-<span class='end end kw'>end</span>
+<span class='kw'>end</span>
 
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='MyAnalyser constant id'>MyAnalyser</span><span class='rparen token'>)</span>
+<span class='id app'>app</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>MyAnalyser</span><span class='rparen'>)</span>
 
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='coolness identifier id'>coolness</span>    <span class='comment val'># =&gt; -4.1</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='uglyness identifier id'>uglyness</span>    <span class='comment val'># =&gt; &quot;VERY&quot;</span>
-</pre>
-</div>
+<span class='id image'>image</span><span class='period'>.</span><span class='id coolness'>coolness</span>    <span class='comment'># =&gt; -4.1
+</span><span class='id image'>image</span><span class='period'>.</span><span class='id uglyness'>uglyness</span>    <span class='comment'># =&gt; &quot;VERY&quot;
+</span></pre></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -190,9 +189,9 @@ Each method takes the temp_object as its argument.</p>
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:49 2010 by 
+  Generated on Tue Jan 11 14:48:12 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

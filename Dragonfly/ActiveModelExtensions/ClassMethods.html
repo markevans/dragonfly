@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -184,13 +184,12 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/class_methods.rb', line 36</span>
 
-<span class='def def kw'>def</span> <span class='dragonfly_apps_for_attributes identifier id'>dragonfly_apps_for_attributes</span>
-  <span class='@dragonfly_apps_for_attributes ivar id'>@dragonfly_apps_for_attributes</span> <span class='opasgn op'>||=</span> <span class='begin begin kw'>begin</span>
-    <span class='parent_class identifier id'>parent_class</span> <span class='assign token'>=</span> <span class='ancestors identifier id'>ancestors</span><span class='dot token'>.</span><span class='select identifier id'>select</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span> <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Class constant id'>Class</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
-    <span class='parent_class identifier id'>parent_class</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:dragonfly_apps_for_attributes</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='parent_class identifier id'>parent_class</span><span class='dot token'>.</span><span class='dragonfly_apps_for_attributes identifier id'>dragonfly_apps_for_attributes</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span> <span class='colon op'>:</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id dragonfly_apps_for_attributes'>dragonfly_apps_for_attributes</span>
+  <span class='ivar'>@dragonfly_apps_for_attributes</span> <span class='op'>||=</span> <span class='kw'>begin</span>
+    <span class='id parent_class'>parent_class</span> <span class='op'>=</span> <span class='id ancestors'>ancestors</span><span class='period'>.</span><span class='id select'>select</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id a'>a</span><span class='op'>|</span> <span class='id a'>a</span><span class='period'>.</span><span class='id is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Class</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span>
+    <span class='id parent_class'>parent_class</span><span class='period'>.</span><span class='id respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:dragonfly_apps_for_attributes</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id parent_class'>parent_class</span><span class='period'>.</span><span class='id dragonfly_apps_for_attributes'>dragonfly_apps_for_attributes</span><span class='period'>.</span><span class='id dup'>dup</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -241,35 +240,34 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/class_methods.rb', line 7</span>
 
-<span class='def def kw'>def</span> <span class='register_dragonfly_app identifier id'>register_dragonfly_app</span><span class='lparen token'>(</span><span class='macro_name identifier id'>macro_name</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='rparen token'>)</span>
-  <span class='lparen token'>(</span><span class='class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='self self kw'>self</span><span class='semicolon token'>;</span> <span class='self self kw'>self</span><span class='semicolon token'>;</span> <span class='end end kw'>end</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
+<span class='kw'>def</span> <span class='id register_dragonfly_app'>register_dragonfly_app</span><span class='lparen'>(</span><span class='id macro_name'>macro_name</span><span class='comma'>,</span> <span class='id app'>app</span><span class='rparen'>)</span>
+  <span class='lparen'>(</span><span class='kw'>class</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span><span class='semicolon'>;</span> <span class='kw'>self</span><span class='semicolon'>;</span> <span class='kw'>end</span><span class='rparen'>)</span><span class='period'>.</span><span class='id class_eval'>class_eval</span> <span class='kw'>do</span>
     
-    <span class='comment val'># Defines e.g. 'image_accessor' for any activerecord class body</span>
-    <span class='define_method identifier id'>define_method</span> <span class='macro_name identifier id'>macro_name</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='attribute identifier id'>attribute</span><span class='bitor op'>|</span>
+    <span class='comment'># Defines e.g. 'image_accessor' for any activerecord class body
+</span>    <span class='id define_method'>define_method</span> <span class='id macro_name'>macro_name</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id attribute'>attribute</span><span class='op'>|</span>
 
-      <span class='comment val'># Prior to activerecord 3, adding before callbacks more than once does add it more than once</span>
-      <span class='before_save identifier id'>before_save</span> <span class='symbol val'>:save_attachments</span> <span class='unless unless_mod kw'>unless</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:before_save_callback_chain</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='before_save_callback_chain identifier id'>before_save_callback_chain</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:save_attachments</span><span class='rparen token'>)</span>
-      <span class='before_destroy identifier id'>before_destroy</span> <span class='symbol val'>:destroy_attachments</span> <span class='unless unless_mod kw'>unless</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:before_destroy_callback_chain</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='before_destroy_callback_chain identifier id'>before_destroy_callback_chain</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='symbol val'>:destroy_attachments</span><span class='rparen token'>)</span>
+      <span class='comment'># Prior to activerecord 3, adding before callbacks more than once does add it more than once
+</span>      <span class='id before_save'>before_save</span> <span class='symbol'>:save_dragonfly_attachments</span> <span class='kw'>unless</span> <span class='id respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:before_save_callback_chain</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id before_save_callback_chain'>before_save_callback_chain</span><span class='period'>.</span><span class='id find'>find</span><span class='lparen'>(</span><span class='symbol'>:save_dragonfly_attachments</span><span class='rparen'>)</span>
+      <span class='id before_destroy'>before_destroy</span> <span class='symbol'>:destroy_dragonfly_attachments</span> <span class='kw'>unless</span> <span class='id respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:before_destroy_callback_chain</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id before_destroy_callback_chain'>before_destroy_callback_chain</span><span class='period'>.</span><span class='id find'>find</span><span class='lparen'>(</span><span class='symbol'>:destroy_dragonfly_attachments</span><span class='rparen'>)</span>
 
-      <span class='comment val'># Register the new attribute</span>
-      <span class='dragonfly_apps_for_attributes identifier id'>dragonfly_apps_for_attributes</span><span class='lbrack token'>[</span><span class='attribute identifier id'>attribute</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span>
+      <span class='comment'># Register the new attribute
+</span>      <span class='id dragonfly_apps_for_attributes'>dragonfly_apps_for_attributes</span><span class='lbracket'>[</span><span class='id attribute'>attribute</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id app'>app</span>
       
-      <span class='comment val'># Define the setter for the attribute</span>
-      <span class='define_method identifier id'>define_method</span> <span class='dstring node'>&quot;#{attribute}=&quot;</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='value identifier id'>value</span><span class='bitor op'>|</span>
-        <span class='attachments identifier id'>attachments</span><span class='lbrack token'>[</span><span class='attribute identifier id'>attribute</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='assign identifier id'>assign</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
-      <span class='end end kw'>end</span>
+      <span class='comment'># Define the setter for the attribute
+</span>      <span class='id define_method'>define_method</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id attribute'>attribute</span><span class='rbrace'>}</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id value'>value</span><span class='op'>|</span>
+        <span class='id dragonfly_attachments'>dragonfly_attachments</span><span class='lbracket'>[</span><span class='id attribute'>attribute</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id assign'>assign</span><span class='lparen'>(</span><span class='id value'>value</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
 
-      <span class='comment val'># Define the getter for the attribute</span>
-      <span class='define_method identifier id'>define_method</span> <span class='attribute identifier id'>attribute</span> <span class='do do kw'>do</span>
-        <span class='attachments identifier id'>attachments</span><span class='lbrack token'>[</span><span class='attribute identifier id'>attribute</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_value identifier id'>to_value</span>
-      <span class='end end kw'>end</span>
+      <span class='comment'># Define the getter for the attribute
+</span>      <span class='id define_method'>define_method</span> <span class='id attribute'>attribute</span> <span class='kw'>do</span>
+        <span class='id dragonfly_attachments'>dragonfly_attachments</span><span class='lbracket'>[</span><span class='id attribute'>attribute</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_value'>to_value</span>
+      <span class='kw'>end</span>
 
-    <span class='end end kw'>end</span>
+    <span class='kw'>end</span>
     
-  <span class='end end kw'>end</span>
-  <span class='app identifier id'>app</span>
-<span class='end end kw'>end</span>
-</pre>
+  <span class='kw'>end</span>
+  <span class='id app'>app</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -287,9 +285,9 @@
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:56 2010 by 
+  Generated on Tue Jan 11 14:48:16 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

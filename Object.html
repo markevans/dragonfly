@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -128,6 +128,27 @@ Will eventually get this by cherry-picking from activesupport.
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_dragonfly_unique_s-instance_method" title="#to_dragonfly_unique_s (instance method)">- (Object) <strong>to_dragonfly_unique_s</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -181,10 +202,37 @@ Will eventually get this by cherry-picking from activesupport
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/core_ext/object.rb', line 4</span>
 
-<span class='def def kw'>def</span> <span class='blank? fid id'>blank?</span>
-  <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:empty?</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='empty? fid id'>empty?</span> <span class='colon op'>:</span> <span class='notop op'>!</span><span class='self self kw'>self</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id blank?'>blank?</span>
+  <span class='id respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:empty?</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id empty?'>empty?</span> <span class='op'>:</span> <span class='op'>!</span><span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_dragonfly_unique_s-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Object (class)">Object</a></span></tt>) <strong>to_dragonfly_unique_s</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+8
+9
+10</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/core_ext/object.rb', line 8</span>
+
+<span class='kw'>def</span> <span class='id to_dragonfly_unique_s'>to_dragonfly_unique_s</span>
+  <span class='id to_s'>to_s</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -202,9 +250,9 @@ Will eventually get this by cherry-picking from activesupport
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:35:00 2010 by 
+  Generated on Tue Jan 11 14:48:15 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

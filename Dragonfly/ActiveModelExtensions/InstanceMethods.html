@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -100,7 +100,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#attachments-instance_method" title="#attachments (instance method)">- (Object) <strong>attachments</strong> </a>
+      <a href="#dragonfly_attachments-instance_method" title="#dragonfly_attachments (instance method)">- (Object) <strong>dragonfly_attachments</strong> </a>
     
 
     
@@ -128,9 +128,9 @@
     
     
       <div class="method_details first">
-  <p class="signature first" id="attachments-instance_method">
+  <p class="signature first" id="dragonfly_attachments-instance_method">
   
-    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>attachments</strong> 
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>dragonfly_attachments</strong> 
   
 
   
@@ -150,13 +150,12 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/instance_methods.rb', line 5</span>
 
-<span class='def def kw'>def</span> <span class='attachments identifier id'>attachments</span>
-  <span class='@attachments ivar id'>@attachments</span> <span class='opasgn op'>||=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='dragonfly_apps_for_attributes identifier id'>dragonfly_apps_for_attributes</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='hash identifier id'>hash</span><span class='comma token'>,</span> <span class='lparen token'>(</span><span class='attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='rparen token'>)</span><span class='bitor op'>|</span>
-    <span class='hash identifier id'>hash</span><span class='lbrack token'>[</span><span class='attribute identifier id'>attribute</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='Attachment constant id'>Attachment</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='app identifier id'>app</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='comma token'>,</span> <span class='attribute identifier id'>attribute</span><span class='rparen token'>)</span>
-    <span class='hash identifier id'>hash</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id dragonfly_attachments'>dragonfly_attachments</span>
+  <span class='ivar'>@dragonfly_attachments</span> <span class='op'>||=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id class'>class</span><span class='period'>.</span><span class='id dragonfly_apps_for_attributes'>dragonfly_apps_for_attributes</span><span class='period'>.</span><span class='id inject'>inject</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id hash'>hash</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id attribute'>attribute</span><span class='comma'>,</span> <span class='id app'>app</span><span class='rparen'>)</span><span class='op'>|</span>
+    <span class='id hash'>hash</span><span class='lbracket'>[</span><span class='id attribute'>attribute</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>Attachment</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id app'>app</span><span class='comma'>,</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='id attribute'>attribute</span><span class='rparen'>)</span>
+    <span class='id hash'>hash</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -174,9 +173,9 @@
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:35:02 2010 by 
+  Generated on Tue Jan 11 14:48:16 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

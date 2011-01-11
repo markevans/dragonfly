@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -250,13 +250,12 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 86</span>
 
-<span class='def def kw'>def</span> <span class='apply identifier id'>apply</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='rparen token'>)</span>
-  <span class='raise identifier id'>raise</span> <span class='NothingToEncode constant id'>NothingToEncode</span><span class='comma token'>,</span> <span class='string val'>&quot;Can't encode because temp object has not been initialized. Need to fetch first?&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='temp_object identifier id'>temp_object</span>
-  <span class='content identifier id'>content</span><span class='comma token'>,</span> <span class='extra identifier id'>extra</span> <span class='assign token'>=</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='dot token'>.</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='arguments identifier id'>arguments</span><span class='rparen token'>)</span>
-  <span class='update_temp_object identifier id'>update_temp_object</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='content identifier id'>content</span><span class='comma token'>,</span> <span class='extra identifier id'>extra</span><span class='rparen token'>)</span>
-  <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='format identifier id'>format</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id apply'>apply</span><span class='lparen'>(</span><span class='id job'>job</span><span class='rparen'>)</span>
+  <span class='id raise'>raise</span> <span class='const'>NothingToEncode</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Can't encode because temp object has not been initialized. Need to fetch first?</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id job'>job</span><span class='period'>.</span><span class='id temp_object'>temp_object</span>
+  <span class='id content'>content</span><span class='comma'>,</span> <span class='id extra'>extra</span> <span class='op'>=</span> <span class='id job'>job</span><span class='period'>.</span><span class='id app'>app</span><span class='period'>.</span><span class='id encoder'>encoder</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='id job'>job</span><span class='period'>.</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id format'>format</span><span class='comma'>,</span> <span class='op'>*</span><span class='id arguments'>arguments</span><span class='rparen'>)</span>
+  <span class='id update_temp_object'>update_temp_object</span><span class='lparen'>(</span><span class='id job'>job</span><span class='comma'>,</span> <span class='id content'>content</span><span class='comma'>,</span> <span class='id extra'>extra</span><span class='rparen'>)</span>
+  <span class='id job'>job</span><span class='period'>.</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id format'>format</span> <span class='op'>=</span> <span class='id format'>format</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -282,10 +281,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 83</span>
 
-<span class='def def kw'>def</span> <span class='arguments identifier id'>arguments</span>
-  <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id arguments'>arguments</span>
+  <span class='id args'>args</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -311,10 +309,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 80</span>
 
-<span class='def def kw'>def</span> <span class='format identifier id'>format</span>
-  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id format'>format</span>
+  <span class='id args'>args</span><span class='period'>.</span><span class='id first'>first</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -332,9 +329,9 @@
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:56 2010 by 
+  Generated on Tue Jan 11 14:48:13 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

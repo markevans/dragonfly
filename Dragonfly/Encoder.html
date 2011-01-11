@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -219,10 +219,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/encoder.rb', line 4</span>
 
-<span class='def def kw'>def</span> <span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='assign token'>=</span><span class='symbol val'>:encode</span><span class='comma token'>,</span> <span class='callable_obj identifier id'>callable_obj</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='callable_obj identifier id'>callable_obj</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id add'>add</span><span class='lparen'>(</span><span class='id name'>name</span><span class='op'>=</span><span class='symbol'>:encode</span><span class='comma'>,</span> <span class='id callable_obj'>callable_obj</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='id name'>name</span><span class='comma'>,</span> <span class='id callable_obj'>callable_obj</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -248,10 +247,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/encoder.rb', line 8</span>
 
-<span class='def def kw'>def</span> <span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='call_last identifier id'>call_last</span><span class='lparen token'>(</span><span class='symbol val'>:encode</span><span class='comma token'>,</span> <span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id encode'>encode</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='id call_last'>call_last</span><span class='lparen'>(</span><span class='symbol'>:encode</span><span class='comma'>,</span> <span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -269,9 +267,9 @@
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:59 2010 by 
+  Generated on Tue Jan 11 14:48:14 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -236,11 +236,10 @@ Instance methods
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_endpoint.rb', line 8</span>
 
-<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='app identifier id'>app</span><span class='rparen token'>)</span>
-  <span class='@app ivar id'>@app</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span>
-  <span class='use_same_log_as identifier id'>use_same_log_as</span><span class='lparen token'>(</span><span class='app identifier id'>app</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id app'>app</span><span class='rparen'>)</span>
+  <span class='ivar'>@app</span> <span class='op'>=</span> <span class='id app'>app</span>
+  <span class='id use_same_log_as'>use_same_log_as</span><span class='lparen'>(</span><span class='id app'>app</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -289,26 +288,25 @@ Instance methods
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_endpoint.rb', line 13</span>
 
-<span class='def def kw'>def</span> <span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
-  <span class='request identifier id'>request</span> <span class='assign token'>=</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Request constant id'>Request</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
+<span class='kw'>def</span> <span class='id call'>call</span><span class='lparen'>(</span><span class='id env'>env</span><span class='rparen'>)</span>
+  <span class='id request'>request</span> <span class='op'>=</span> <span class='const'>Rack</span><span class='op'>::</span><span class='const'>Request</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id env'>env</span><span class='rparen'>)</span>
 
-  <span class='case case kw'>case</span> <span class='request identifier id'>request</span><span class='dot token'>.</span><span class='path_info identifier id'>path_info</span>
-  <span class='when when kw'>when</span> <span class='string val'>''</span><span class='comma token'>,</span> <span class='string val'>'/'</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='url_path_prefix identifier id'>url_path_prefix</span>
-    <span class='dragonfly_response identifier id'>dragonfly_response</span>
-  <span class='else else kw'>else</span>
-    <span class='job identifier id'>job</span> <span class='assign token'>=</span> <span class='Job constant id'>Job</span><span class='dot token'>.</span><span class='from_path identifier id'>from_path</span><span class='lparen token'>(</span><span class='request identifier id'>request</span><span class='dot token'>.</span><span class='path_info identifier id'>path_info</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='rparen token'>)</span>
-    <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='validate_sha! fid id'>validate_sha!</span><span class='lparen token'>(</span><span class='request identifier id'>request</span><span class='lbrack token'>[</span><span class='string val'>'s'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='protect_from_dos_attacks identifier id'>protect_from_dos_attacks</span>
-    <span class='Response constant id'>Response</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='env identifier id'>env</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_response identifier id'>to_response</span>
-  <span class='end end kw'>end</span>
-<span class='rescue rescue kw'>rescue</span> <span class='Serializer constant id'>Serializer</span><span class='colon2 op'>::</span><span class='BadString constant id'>BadString</span><span class='comma token'>,</span> <span class='Job constant id'>Job</span><span class='colon2 op'>::</span><span class='InvalidArray constant id'>InvalidArray</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
-  <span class='log identifier id'>log</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span><span class='lparen token'>(</span><span class='e identifier id'>e</span><span class='dot token'>.</span><span class='message identifier id'>message</span><span class='rparen token'>)</span>
-  <span class='lbrack token'>[</span><span class='integer val'>404</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='string val'>'Content-Type'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'text/plain'</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='string val'>'Not found'</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
-<span class='rescue rescue kw'>rescue</span> <span class='Job constant id'>Job</span><span class='colon2 op'>::</span><span class='NoSHAGiven constant id'>NoSHAGiven</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
-  <span class='lbrack token'>[</span><span class='integer val'>400</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='string val'>&quot;Content-Type&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'text/plain'</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='string val'>&quot;You need to give a SHA parameter&quot;</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
-<span class='rescue rescue kw'>rescue</span> <span class='Job constant id'>Job</span><span class='colon2 op'>::</span><span class='IncorrectSHA constant id'>IncorrectSHA</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
-  <span class='lbrack token'>[</span><span class='integer val'>400</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='string val'>&quot;Content-Type&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'text/plain'</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='dstring node'>&quot;The SHA parameter you gave (#{e}) is incorrect&quot;</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
-</pre>
+  <span class='kw'>case</span> <span class='id request'>request</span><span class='period'>.</span><span class='id path_info'>path_info</span>
+  <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id app'>app</span><span class='period'>.</span><span class='id url_path_prefix'>url_path_prefix</span>
+    <span class='id dragonfly_response'>dragonfly_response</span>
+  <span class='kw'>else</span>
+    <span class='id job'>job</span> <span class='op'>=</span> <span class='const'>Job</span><span class='period'>.</span><span class='id from_path'>from_path</span><span class='lparen'>(</span><span class='id request'>request</span><span class='period'>.</span><span class='id path_info'>path_info</span><span class='comma'>,</span> <span class='id app'>app</span><span class='rparen'>)</span>
+    <span class='id job'>job</span><span class='period'>.</span><span class='id validate_sha!'>validate_sha!</span><span class='lparen'>(</span><span class='id request'>request</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>s</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id app'>app</span><span class='period'>.</span><span class='id protect_from_dos_attacks'>protect_from_dos_attacks</span>
+    <span class='const'>Response</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id job'>job</span><span class='comma'>,</span> <span class='id env'>env</span><span class='rparen'>)</span><span class='period'>.</span><span class='id to_response'>to_response</span>
+  <span class='kw'>end</span>
+<span class='kw'>rescue</span> <span class='const'>Serializer</span><span class='op'>::</span><span class='const'>BadString</span><span class='comma'>,</span> <span class='const'>Job</span><span class='op'>::</span><span class='const'>InvalidArray</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
+  <span class='id log'>log</span><span class='period'>.</span><span class='id warn'>warn</span><span class='lparen'>(</span><span class='id e'>e</span><span class='period'>.</span><span class='id message'>message</span><span class='rparen'>)</span>
+  <span class='lbracket'>[</span><span class='int'>404</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>text/plain</span><span class='tstring_end'>'</span></span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Not found</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+<span class='kw'>rescue</span> <span class='const'>Job</span><span class='op'>::</span><span class='const'>NoSHAGiven</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
+  <span class='lbracket'>[</span><span class='int'>400</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>text/plain</span><span class='tstring_end'>'</span></span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You need to give a SHA parameter</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+<span class='kw'>rescue</span> <span class='const'>Job</span><span class='op'>::</span><span class='const'>IncorrectSHA</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
+  <span class='lbracket'>[</span><span class='int'>400</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>text/plain</span><span class='tstring_end'>'</span></span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The SHA parameter you gave (</span><span class='embexpr_beg'>#{</span><span class='id e'>e</span><span class='rbrace'>}</span><span class='tstring_content'>) is incorrect</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -334,10 +332,9 @@ Instance methods
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_endpoint.rb', line 33</span>
 
-<span class='def def kw'>def</span> <span class='required_params_for identifier id'>required_params_for</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='rparen token'>)</span>
-  <span class='lbrace token'>{</span><span class='string val'>'s'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='sha identifier id'>sha</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id required_params_for'>required_params_for</span><span class='lparen'>(</span><span class='id job'>job</span><span class='rparen'>)</span>
+  <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>s</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='id job'>job</span><span class='period'>.</span><span class='id sha'>sha</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -355,9 +352,9 @@ Instance methods
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:57 2010 by 
+  Generated on Tue Jan 11 14:48:15 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

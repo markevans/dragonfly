@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -212,19 +212,18 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/encoding/r_magick_encoder.rb', line 46</span>
 
-<span class='def def kw'>def</span> <span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='encoding identifier id'>encoding</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span>
-  <span class='throw identifier id'>throw</span> <span class='symbol val'>:unable_to_handle</span> <span class='unless unless_mod kw'>unless</span> <span class='supported_formats identifier id'>supported_formats</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
-  <span class='rmagick_image identifier id'>rmagick_image</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='image identifier id'>image</span><span class='bitor op'>|</span>
-    <span class='if if kw'>if</span> <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='format identifier id'>format</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span> <span class='eq op'>==</span> <span class='format identifier id'>format</span>
-      <span class='temp_object identifier id'>temp_object</span> <span class='comment val'># do nothing</span>
-    <span class='else else kw'>else</span>
-      <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='format identifier id'>format</span>
-      <span class='image identifier id'>image</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id encode'>encode</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id format'>format</span><span class='comma'>,</span> <span class='id encoding'>encoding</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id format'>format</span> <span class='op'>=</span> <span class='id format'>format</span><span class='period'>.</span><span class='id to_s'>to_s</span><span class='period'>.</span><span class='id downcase'>downcase</span>
+  <span class='id throw'>throw</span> <span class='symbol'>:unable_to_handle</span> <span class='kw'>unless</span> <span class='id supported_formats'>supported_formats</span><span class='period'>.</span><span class='id include?'>include?</span><span class='lparen'>(</span><span class='id format'>format</span><span class='period'>.</span><span class='id to_sym'>to_sym</span><span class='rparen'>)</span>
+  <span class='id rmagick_image'>rmagick_image</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id image'>image</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='id image'>image</span><span class='period'>.</span><span class='id format'>format</span><span class='period'>.</span><span class='id downcase'>downcase</span> <span class='op'>==</span> <span class='id format'>format</span>
+      <span class='id temp_object'>temp_object</span> <span class='comment'># do nothing
+</span>    <span class='kw'>else</span>
+      <span class='id image'>image</span><span class='period'>.</span><span class='id format'>format</span> <span class='op'>=</span> <span class='id format'>format</span>
+      <span class='id image'>image</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -242,9 +241,9 @@
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:35:02 2010 by 
+  Generated on Tue Jan 11 14:48:15 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

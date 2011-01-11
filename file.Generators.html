@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -71,12 +71,12 @@
 
 <p>Given a Dragonfly app</p>
 
-<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
 </pre>
 
 <p>we can get generated content using</p>
 
-<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:some_method</span><span class='comma token'>,</span> <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='symbol'>:some_method</span><span class='comma'>,</span> <span class='symbol'>:some</span> <span class='op'>=&gt;</span> <span class='symbol'>:args</span><span class='rparen'>)</span>
 </pre>
 
 <p>where <code>:some_method</code> is added by the configured generators.</p>
@@ -88,28 +88,28 @@
 
 <p>If not already registered:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generator identifier id'>generator</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Generation constant id'>Generation</span><span class='colon2 op'>::</span><span class='ImageMagickGenerator constant id'>ImageMagickGenerator</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id generator'>generator</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Generation</span><span class='op'>::</span><span class='const'>ImageMagickGenerator</span><span class='rparen'>)</span>
 </pre>
 
 <p>gives us these methods:</p>
 
-<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:plasma</span><span class='comma token'>,</span> <span class='integer val'>600</span><span class='comma token'>,</span> <span class='integer val'>400</span><span class='comma token'>,</span> <span class='symbol val'>:gif</span><span class='rparen token'>)</span>       <span class='comment val'># generate a 600x400 plasma image</span>
-                                                    <span class='comment val'># last arg defaults to :png</span>
-
-<span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='string val'>&quot;Hello there&quot;</span><span class='rparen token'>)</span>          <span class='comment val'># an image of the text &quot;Hello there&quot;</span>
-
-<span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='string val'>&quot;Hello there&quot;</span><span class='comma token'>,</span>
-  <span class='symbol val'>:font_size</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>30</span><span class='comma token'>,</span>                                 <span class='comment val'># defaults to 12</span>
-  <span class='symbol val'>:font_family</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Monaco'</span><span class='comma token'>,</span>
-  <span class='symbol val'>:stroke_color</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'#ddd'</span><span class='comma token'>,</span>
-  <span class='symbol val'>:color</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'red'</span><span class='comma token'>,</span>
-  <span class='symbol val'>:font_style</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'italic'</span><span class='comma token'>,</span>
-  <span class='symbol val'>:font_stretch</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'expanded'</span><span class='comma token'>,</span>
-  <span class='symbol val'>:font_weight</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'bold'</span><span class='comma token'>,</span>
-  <span class='symbol val'>:padding</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'30 20 10'</span><span class='comma token'>,</span>
-  <span class='symbol val'>:background_color</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'#efefef'</span><span class='comma token'>,</span>                   <span class='comment val'># defaults to transparent</span>
-  <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:gif</span>                                   <span class='comment val'># defaults to png</span>
-<span class='rparen token'>)</span>
+<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='symbol'>:plasma</span><span class='comma'>,</span> <span class='int'>600</span><span class='comma'>,</span> <span class='int'>400</span><span class='comma'>,</span> <span class='symbol'>:gif</span><span class='rparen'>)</span>       <span class='comment'># generate a 600x400 plasma image
+</span>                                                    <span class='comment'># last arg defaults to :png
+</span>
+<span class='id image'>image</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='symbol'>:text</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello there</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>          <span class='comment'># an image of the text &quot;Hello there&quot;
+</span>
+<span class='id image'>image</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='symbol'>:text</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello there</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='symbol'>:font_size</span> <span class='op'>=&gt;</span> <span class='int'>30</span><span class='comma'>,</span>                                 <span class='comment'># defaults to 12
+</span>  <span class='symbol'>:font_family</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Monaco</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='symbol'>:stroke_color</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>#ddd</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='symbol'>:color</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>red</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='symbol'>:font_style</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>italic</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='symbol'>:font_stretch</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>expanded</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='symbol'>:font_weight</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>bold</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='symbol'>:padding</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>30 20 10</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='symbol'>:background_color</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>#efefef</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>                   <span class='comment'># defaults to transparent
+</span>  <span class='symbol'>:format</span> <span class='op'>=&gt;</span> <span class='symbol'>:gif</span>                                   <span class='comment'># defaults to png
+</span><span class='rparen'>)</span>
 </pre>
 
 <p>Note that the options are meant to resemble css as much as possible. You can also use, for example, <code>'font-family'</code> instead of <code>:font_family</code>.</p>
@@ -126,50 +126,49 @@ Available fonts are those available on your system.</p>
 
 <p>You can tell it not to use the file system when registering it</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generator identifier id'>generator</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Generation constant id'>Generation</span><span class='colon2 op'>::</span><span class='RMagickGenerator constant id'>RMagickGenerator</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='g identifier id'>g</span><span class='bitor op'>|</span> <span class='g identifier id'>g</span><span class='dot token'>.</span><span class='use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='false false kw'>false</span> <span class='rbrace token'>}</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id generator'>generator</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Generation</span><span class='op'>::</span><span class='const'>RMagickGenerator</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id g'>g</span><span class='op'>|</span> <span class='id g'>g</span><span class='period'>.</span><span class='id use_filesystem'>use_filesystem</span> <span class='op'>=</span> <span class='kw'>false</span> <span class='rbrace'>}</span>
 </pre>
 
 <h2>Custom Generators</h2>
 
 <p>To register a single custom generator:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generator identifier id'>generator</span><span class='dot token'>.</span><span class='add identifier id'>add</span> <span class='symbol val'>:blank_image</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='colour identifier id'>colour</span><span class='bitor op'>|</span>
-  <span class='SomeLibrary constant id'>SomeLibrary</span><span class='dot token'>.</span><span class='create_blank_image identifier id'>create_blank_image</span><span class='lparen token'>(</span><span class='colour identifier id'>colour</span><span class='rparen token'>)</span>     <span class='comment val'># return a String, File or Tempfile</span>
-<span class='end end kw'>end</span>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id generator'>generator</span><span class='period'>.</span><span class='id add'>add</span> <span class='symbol'>:blank_image</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id colour'>colour</span><span class='op'>|</span>
+  <span class='const'>SomeLibrary</span><span class='period'>.</span><span class='id create_blank_image'>create_blank_image</span><span class='lparen'>(</span><span class='id colour'>colour</span><span class='rparen'>)</span>     <span class='comment'># return a String, File or Tempfile
+</span><span class='kw'>end</span>
 
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:blank_image</span><span class='comma token'>,</span> <span class='string val'>'red'</span><span class='rparen token'>)</span>      <span class='comment val'># =&gt; 'Job' object which we can get data, etc.</span>
-</pre>
+<span class='id app'>app</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='symbol'>:blank_image</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>red</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>      <span class='comment'># =&gt; 'Job' object which we can get data, etc.
+</span></pre>
 
 <p>Or create a class like the ImageMagick one above, in which case all public methods will be counted as generator methods.</p>
 
-<pre class="code"><span class='class class kw'>class</span> <span class='RoundedCornerGenerator constant id'>RoundedCornerGenerator</span>
+<pre class="code"><span class='kw'>class</span> <span class='const'>RoundedCornerGenerator</span>
 
-  <span class='def def kw'>def</span> <span class='top_left_corner identifier id'>top_left_corner</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-    <span class='SomeLib constant id'>SomeLib</span><span class='dot token'>.</span><span class='tlc identifier id'>tlc</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
+  <span class='kw'>def</span> <span class='id top_left_corner'>top_left_corner</span><span class='lparen'>(</span><span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='const'>SomeLib</span><span class='period'>.</span><span class='id tlc'>tlc</span><span class='lparen'>(</span><span class='id opts'>opts</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
-  <span class='def def kw'>def</span> <span class='bottom_right_corner identifier id'>bottom_right_corner</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-    <span class='tempfile identifier id'>tempfile</span> <span class='assign token'>=</span> <span class='Tempfile constant id'>Tempfile</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'brc'</span><span class='rparen token'>)</span>
-    <span class='dxstring node'>`some_command -c #{opts[:colour]} -o #{tempfile.path}`</span>
-    <span class='tempfile identifier id'>tempfile</span>
-  <span class='end end kw'>end</span>
+  <span class='kw'>def</span> <span class='id bottom_right_corner'>bottom_right_corner</span><span class='lparen'>(</span><span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='id tempfile'>tempfile</span> <span class='op'>=</span> <span class='const'>Tempfile</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>brc</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+    <span class='backtick'>`</span><span class='tstring_content'>some_command -c </span><span class='embexpr_beg'>#{</span><span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:colour</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'> -o </span><span class='embexpr_beg'>#{</span><span class='id tempfile'>tempfile</span><span class='period'>.</span><span class='id path'>path</span><span class='rbrace'>}</span><span class='tstring_end'>`</span></span>
+    <span class='id tempfile'>tempfile</span>
+  <span class='kw'>end</span>
 
-  <span class='comment val'># ...</span>
+  <span class='comment'># ...
+</span>
+  <span class='id private'>private</span>
 
-  <span class='private identifier id'>private</span>
+  <span class='kw'>def</span> <span class='id my_helper_method'>my_helper_method</span>
+    <span class='comment'># do stuff
+</span>  <span class='kw'>end</span>
 
-  <span class='def def kw'>def</span> <span class='my_helper_method identifier id'>my_helper_method</span>
-    <span class='comment val'># do stuff</span>
-  <span class='end end kw'>end</span>
+<span class='kw'>end</span>
 
-<span class='end end kw'>end</span>
+<span class='id app'>app</span><span class='period'>.</span><span class='id generator'>generator</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>RoundedCornerGenerator</span><span class='rparen'>)</span>
 
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generator identifier id'>generator</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='RoundedCornerGenerator constant id'>RoundedCornerGenerator</span><span class='rparen token'>)</span>
-
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:top_left_corner</span><span class='comma token'>,</span> <span class='symbol val'>:colour</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'green'</span><span class='rparen token'>)</span>
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:bottom_right_corner</span><span class='comma token'>,</span> <span class='symbol val'>:colour</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'mauve'</span><span class='rparen token'>)</span>
-</pre>
-</div>
+<span class='id app'>app</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='symbol'>:top_left_corner</span><span class='comma'>,</span> <span class='symbol'>:colour</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>green</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<span class='id app'>app</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='symbol'>:bottom_right_corner</span><span class='comma'>,</span> <span class='symbol'>:colour</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>mauve</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+</pre></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -179,9 +178,9 @@ Available fonts are those available on your system.</p>
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:50 2010 by 
+  Generated on Tue Jan 11 14:48:12 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

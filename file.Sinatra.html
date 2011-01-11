@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -67,11 +67,11 @@
 
 <p>You can use <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span>'s <code>to_response</code> method like so:</p>
 
-<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
+<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:imagemagick</span><span class='rparen'>)</span>
 
-<span class='get identifier id'>get</span> <span class='string val'>'/images/:size.:format'</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='size identifier id'>size</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='bitor op'>|</span>
-  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch_file identifier id'>fetch_file</span><span class='lparen token'>(</span><span class='string val'>'~/some/image.png'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='size identifier id'>size</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_response identifier id'>to_response</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='id get'>get</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/images/:size.:format</span><span class='tstring_end'>'</span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id size'>size</span><span class='comma'>,</span> <span class='id format'>format</span><span class='op'>|</span>
+  <span class='id app'>app</span><span class='period'>.</span><span class='id fetch_file'>fetch_file</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>~/some/image.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id thumb'>thumb</span><span class='lparen'>(</span><span class='id size'>size</span><span class='rparen'>)</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='id format'>format</span><span class='rparen'>)</span><span class='period'>.</span><span class='id to_response'>to_response</span><span class='lparen'>(</span><span class='id env'>env</span><span class='rparen'>)</span>
+<span class='kw'>end</span>
 </pre>
 
 <p><code>to_response</code> returns a rack-style response array with status, headers and body.</p>
@@ -81,16 +81,15 @@ a path segment.</p>
 
 <p>or you can mount as a middleware, like in rails:</p>
 
-<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_path_prefix identifier id'>url_path_prefix</span> <span class='assign token'>=</span> <span class='string val'>'/media'</span>
-<span class='end end kw'>end</span>
+<pre class="code"><span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:imagemagick</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
+  <span class='id c'>c</span><span class='period'>.</span><span class='id url_path_prefix'>url_path_prefix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/media</span><span class='tstring_end'>'</span></span>
+<span class='kw'>end</span>
 
-<span class='use identifier id'>use</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='Middleware constant id'>Middleware</span><span class='comma token'>,</span> <span class='symbol val'>:images</span><span class='comma token'>,</span> <span class='string val'>'/media'</span>
+<span class='id use'>use</span> <span class='const'>Dragonfly</span><span class='op'>::</span><span class='const'>Middleware</span><span class='comma'>,</span> <span class='symbol'>:images</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/media</span><span class='tstring_end'>'</span></span>
 
-<span class='get identifier id'>get</span> <span class='string val'>'/'</span> <span class='comment val'>#... do</span>
-  <span class='comment val'># ...</span>
-</pre>
-</div>
+<span class='id get'>get</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/</span><span class='tstring_end'>'</span></span> <span class='comment'>#... do
+</span>  <span class='comment'># ...
+</span></pre></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -100,9 +99,9 @@ a path segment.</p>
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:48 2010 by 
+  Generated on Tue Jan 11 14:48:12 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

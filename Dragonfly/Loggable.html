@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -237,10 +237,9 @@ Returns the value of attribute log_object
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/loggable.rb', line 21</span>
 
-<span class='def def kw'>def</span> <span class='log_object identifier id'>log_object</span>
-  <span class='@log_object ivar id'>@log_object</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id log_object'>log_object</span>
+  <span class='ivar'>@log_object</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -280,17 +279,16 @@ Returns the value of attribute log_object
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/loggable.rb', line 6</span>
 
-<span class='def def kw'>def</span> <span class='log identifier id'>log</span>
-  <span class='case case kw'>case</span> <span class='@log_object ivar id'>@log_object</span>
-  <span class='when when kw'>when</span> <span class='nil nil kw'>nil</span>
-    <span class='@log_object ivar id'>@log_object</span> <span class='assign token'>=</span> <span class='Logger constant id'>Logger</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='$stdout gvar id'>$stdout</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='Proc constant id'>Proc</span>
-    <span class='@log_object ivar id'>@log_object</span><span class='lbrack token'>[</span><span class='rbrack token'>]</span>
-  <span class='when when kw'>when</span> <span class='Logger constant id'>Logger</span>
-    <span class='@log_object ivar id'>@log_object</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id log'>log</span>
+  <span class='kw'>case</span> <span class='ivar'>@log_object</span>
+  <span class='kw'>when</span> <span class='kw'>nil</span>
+    <span class='ivar'>@log_object</span> <span class='op'>=</span> <span class='const'>Logger</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='gvar'>$stdout</span><span class='rparen'>)</span>
+  <span class='kw'>when</span> <span class='const'>Proc</span>
+    <span class='ivar'>@log_object</span><span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='kw'>when</span> <span class='const'>Logger</span>
+    <span class='ivar'>@log_object</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -316,10 +314,9 @@ Returns the value of attribute log_object
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/loggable.rb', line 17</span>
 
-<span class='def def kw'>def</span> <span class='log= identifier id'>log=</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
-  <span class='@log_object ivar id'>@log_object</span> <span class='assign token'>=</span> <span class='object identifier id'>object</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id log='>log=</span><span class='lparen'>(</span><span class='id object'>object</span><span class='rparen'>)</span>
+  <span class='ivar'>@log_object</span> <span class='op'>=</span> <span class='id object'>object</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -345,10 +342,9 @@ Returns the value of attribute log_object
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/loggable.rb', line 23</span>
 
-<span class='def def kw'>def</span> <span class='use_same_log_as identifier id'>use_same_log_as</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='log identifier id'>log</span> <span class='assign token'>=</span> <span class='proc identifier id'>proc</span><span class='lbrace token'>{</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='log identifier id'>log</span> <span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id use_same_log_as'>use_same_log_as</span><span class='lparen'>(</span><span class='id object'>object</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id log'>log</span> <span class='op'>=</span> <span class='id proc'>proc</span><span class='lbrace'>{</span> <span class='id object'>object</span><span class='period'>.</span><span class='id log'>log</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -366,9 +362,9 @@ Returns the value of attribute log_object
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:56 2010 by 
+  Generated on Tue Jan 11 14:48:14 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

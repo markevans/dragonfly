@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -78,16 +78,15 @@ you may wish to look into something like Varnish.</p>
 
 <p>Given a dragonfly app</p>
 
-<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
 </pre>
 
 <p>You can configure the 'Cache-Control' header with</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='cache_duration identifier id'>cache_duration</span> <span class='assign token'>=</span> <span class='integer val'>3600</span><span class='mult op'>*</span><span class='integer val'>24</span><span class='mult op'>*</span><span class='integer val'>365</span><span class='mult op'>*</span><span class='integer val'>3</span>  <span class='comment val'># time in seconds</span>
-</pre>
+<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id cache_duration'>cache_duration</span> <span class='op'>=</span> <span class='int'>3600</span><span class='op'>*</span><span class='int'>24</span><span class='op'>*</span><span class='int'>365</span><span class='op'>*</span><span class='int'>3</span>  <span class='comment'># time in seconds
+</span></pre>
 
-<p>For a well-written discussion of Cache-Control and ETag headers, see <a href="http://tomayko.com/writings/things-caches-do" target="_parent" title="http://tomayko.com/writings/things-caches-do">http://tomayko.com/writings/things-caches-do</a>.</p>
-</div>
+<p>For a well-written discussion of Cache-Control and ETag headers, see <a href="http://tomayko.com/writings/things-caches-do" target="_parent" title="http://tomayko.com/writings/things-caches-do">http://tomayko.com/writings/things-caches-do</a>.</p></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -97,9 +96,9 @@ you may wish to look into something like Varnish.</p>
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:50 2010 by 
+  Generated on Tue Jan 11 14:48:13 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

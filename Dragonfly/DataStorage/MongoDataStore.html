@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -122,14 +122,12 @@ Mongo gem deprecated ObjectID in favour of ObjectId
   
 </div>
         </dt>
-        <dd><pre class="code"><span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='ObjectId constant id'>ObjectId</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='ObjectId constant id'>ObjectId</span> <span class='colon op'>:</span> <span class='BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='ObjectID constant id'>ObjectID</span>
-</pre></dd>
+        <dd><pre class="code"><span class='kw'>defined?</span><span class='lparen'>(</span><span class='const'>BSON</span><span class='op'>::</span><span class='const'>ObjectId</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='const'>BSON</span><span class='op'>::</span><span class='const'>ObjectId</span> <span class='op'>:</span> <span class='const'>BSON</span><span class='op'>::</span><span class='const'>ObjectID</span></pre></dd>
       
         <dt id="INVALID_OBJECT_ID-constant" class="">INVALID_OBJECT_ID =
           
         </dt>
-        <dd><pre class="code"><span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='InvalidObjectId constant id'>InvalidObjectId</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='InvalidObjectId constant id'>InvalidObjectId</span> <span class='colon op'>:</span> <span class='BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='InvalidObjectID constant id'>InvalidObjectID</span>
-</pre></dd>
+        <dd><pre class="code"><span class='kw'>defined?</span><span class='lparen'>(</span><span class='const'>BSON</span><span class='op'>::</span><span class='const'>InvalidObjectId</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='const'>BSON</span><span class='op'>::</span><span class='const'>InvalidObjectId</span> <span class='op'>:</span> <span class='const'>BSON</span><span class='op'>::</span><span class='const'>InvalidObjectID</span></pre></dd>
       
     </dl>
   
@@ -367,14 +365,13 @@ A new instance of MongoDataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 20</span>
 
-<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='host identifier id'>host</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:host</span><span class='rbrack token'>]</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='port identifier id'>port</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='database identifier id'>database</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:database</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:database</span><span class='rbrack token'>]</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='username identifier id'>username</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:username</span><span class='rbrack token'>]</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='password identifier id'>password</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:password</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id host'>host</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:host</span><span class='rbracket'>]</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id port'>port</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:port</span><span class='rbracket'>]</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id database'>database</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:database</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:database</span><span class='rbracket'>]</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id username'>username</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:username</span><span class='rbracket'>]</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id password'>password</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:password</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -407,10 +404,9 @@ A new instance of MongoDataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 56</span>
 
-<span class='def def kw'>def</span> <span class='connection identifier id'>connection</span>
-  <span class='@connection ivar id'>@connection</span> <span class='opasgn op'>||=</span> <span class='Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='Connection constant id'>Connection</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='host identifier id'>host</span><span class='comma token'>,</span> <span class='port identifier id'>port</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id connection'>connection</span>
+  <span class='ivar'>@connection</span> <span class='op'>||=</span> <span class='const'>Mongo</span><span class='op'>::</span><span class='const'>Connection</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id host'>host</span><span class='comma'>,</span> <span class='id port'>port</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -436,10 +432,9 @@ A new instance of MongoDataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 60</span>
 
-<span class='def def kw'>def</span> <span class='db identifier id'>db</span>
-  <span class='@db ivar id'>@db</span> <span class='opasgn op'>||=</span> <span class='connection identifier id'>connection</span><span class='dot token'>.</span><span class='db identifier id'>db</span><span class='lparen token'>(</span><span class='database identifier id'>database</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id db'>db</span>
+  <span class='ivar'>@db</span> <span class='op'>||=</span> <span class='id connection'>connection</span><span class='period'>.</span><span class='id db'>db</span><span class='lparen'>(</span><span class='id database'>database</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -489,13 +484,12 @@ A new instance of MongoDataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 49</span>
 
-<span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
-  <span class='ensure_authenticated! fid id'>ensure_authenticated!</span>
-  <span class='grid identifier id'>grid</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='bson_id identifier id'>bson_id</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-<span class='rescue rescue kw'>rescue</span> <span class='Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='GridFileNotFound constant id'>GridFileNotFound</span><span class='comma token'>,</span> <span class='INVALID_OBJECT_ID constant id'>INVALID_OBJECT_ID</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
-  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id destroy'>destroy</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span>
+  <span class='id ensure_authenticated!'>ensure_authenticated!</span>
+  <span class='id grid'>grid</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='id bson_id'>bson_id</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span> <span class='const'>Mongo</span><span class='op'>::</span><span class='const'>GridFileNotFound</span><span class='comma'>,</span> <span class='const'>INVALID_OBJECT_ID</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
+  <span class='id raise'>raise</span> <span class='const'>DataNotFound</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id e'>e</span><span class='rbrace'>}</span><span class='tstring_content'> - </span><span class='embexpr_beg'>#{</span><span class='id uid'>uid</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -521,10 +515,9 @@ A new instance of MongoDataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 64</span>
 
-<span class='def def kw'>def</span> <span class='grid identifier id'>grid</span>
-  <span class='@grid ivar id'>@grid</span> <span class='opasgn op'>||=</span> <span class='Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='Grid constant id'>Grid</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='db identifier id'>db</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id grid'>grid</span>
+  <span class='ivar'>@grid</span> <span class='op'>||=</span> <span class='const'>Mongo</span><span class='op'>::</span><span class='const'>Grid</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id db'>db</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -580,19 +573,18 @@ A new instance of MongoDataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 36</span>
 
-<span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
-  <span class='ensure_authenticated! fid id'>ensure_authenticated!</span>
-  <span class='grid_io identifier id'>grid_io</span> <span class='assign token'>=</span> <span class='grid identifier id'>grid</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='bson_id identifier id'>bson_id</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='extra identifier id'>extra</span> <span class='assign token'>=</span> <span class='marshal_decode identifier id'>marshal_decode</span><span class='lparen token'>(</span><span class='grid_io identifier id'>grid_io</span><span class='dot token'>.</span><span class='metadata identifier id'>metadata</span><span class='rparen token'>)</span>
-  <span class='extra identifier id'>extra</span><span class='lbrack token'>[</span><span class='symbol val'>:meta</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='symbol val'>:stored_at</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='grid_io identifier id'>grid_io</span><span class='dot token'>.</span><span class='upload_date identifier id'>upload_date</span><span class='rparen token'>)</span>
-  <span class='lbrack token'>[</span>
-    <span class='grid_io identifier id'>grid_io</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='comma token'>,</span>
-    <span class='extra identifier id'>extra</span>
-  <span class='rbrack token'>]</span>
-<span class='rescue rescue kw'>rescue</span> <span class='Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='GridFileNotFound constant id'>GridFileNotFound</span><span class='comma token'>,</span> <span class='INVALID_OBJECT_ID constant id'>INVALID_OBJECT_ID</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
-  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id retrieve'>retrieve</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span>
+  <span class='id ensure_authenticated!'>ensure_authenticated!</span>
+  <span class='id grid_io'>grid_io</span> <span class='op'>=</span> <span class='id grid'>grid</span><span class='period'>.</span><span class='id get'>get</span><span class='lparen'>(</span><span class='id bson_id'>bson_id</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id extra'>extra</span> <span class='op'>=</span> <span class='id marshal_decode'>marshal_decode</span><span class='lparen'>(</span><span class='id grid_io'>grid_io</span><span class='period'>.</span><span class='id metadata'>metadata</span><span class='rparen'>)</span>
+  <span class='id extra'>extra</span><span class='lbracket'>[</span><span class='symbol'>:meta</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id merge!'>merge!</span><span class='lparen'>(</span><span class='symbol'>:stored_at</span> <span class='op'>=&gt;</span> <span class='id grid_io'>grid_io</span><span class='period'>.</span><span class='id upload_date'>upload_date</span><span class='rparen'>)</span>
+  <span class='lbracket'>[</span>
+    <span class='id grid_io'>grid_io</span><span class='period'>.</span><span class='id read'>read</span><span class='comma'>,</span>
+    <span class='id extra'>extra</span>
+  <span class='rbracket'>]</span>
+<span class='kw'>rescue</span> <span class='const'>Mongo</span><span class='op'>::</span><span class='const'>GridFileNotFound</span><span class='comma'>,</span> <span class='const'>INVALID_OBJECT_ID</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
+  <span class='id raise'>raise</span> <span class='const'>DataNotFound</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id e'>e</span><span class='rbrace'>}</span><span class='tstring_content'> - </span><span class='embexpr_beg'>#{</span><span class='id uid'>uid</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -622,14 +614,13 @@ A new instance of MongoDataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 28</span>
 
-<span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='ensure_authenticated! fid id'>ensure_authenticated!</span>
-  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span>
-    <span class='mongo_id identifier id'>mongo_id</span> <span class='assign token'>=</span> <span class='grid identifier id'>grid</span><span class='dot token'>.</span><span class='put identifier id'>put</span><span class='lparen token'>(</span><span class='f identifier id'>f</span><span class='comma token'>,</span> <span class='symbol val'>:metadata</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='marshal_encode identifier id'>marshal_encode</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='attributes identifier id'>attributes</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-    <span class='mongo_id identifier id'>mongo_id</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id store'>store</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id ensure_authenticated!'>ensure_authenticated!</span>
+  <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id file'>file</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id f'>f</span><span class='op'>|</span>
+    <span class='id mongo_id'>mongo_id</span> <span class='op'>=</span> <span class='id grid'>grid</span><span class='period'>.</span><span class='id put'>put</span><span class='lparen'>(</span><span class='id f'>f</span><span class='comma'>,</span> <span class='symbol'>:metadata</span> <span class='op'>=&gt;</span> <span class='id marshal_encode'>marshal_encode</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id attributes'>attributes</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='id mongo_id'>mongo_id</span><span class='period'>.</span><span class='id to_s'>to_s</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -647,9 +638,9 @@ A new instance of MongoDataStore
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:54 2010 by 
+  Generated on Tue Jan 11 14:48:15 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

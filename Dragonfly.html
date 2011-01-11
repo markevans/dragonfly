@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -80,7 +80,7 @@
   
     <dt class="r1 last">Defined in:</dt>
     <dd class="r1 last">lib/dragonfly.rb<span class="defines">,<br />
-  lib/dragonfly/app.rb,<br /> lib/dragonfly/job.rb,<br /> lib/dragonfly/encoder.rb,<br /> lib/dragonfly/loggable.rb,<br /> lib/dragonfly/analyser.rb,<br /> lib/dragonfly/response.rb,<br /> lib/dragonfly/processor.rb,<br /> lib/dragonfly/generator.rb,<br /> lib/dragonfly/middleware.rb,<br /> lib/dragonfly/serializer.rb,<br /> lib/dragonfly/temp_object.rb,<br /> lib/dragonfly/job_builder.rb,<br /> lib/dragonfly/config/rails.rb,<br /> lib/dragonfly/configurable.rb,<br /> lib/dragonfly/simple_cache.rb,<br /> lib/dragonfly/job_endpoint.rb,<br /> lib/dragonfly/data_storage.rb,<br /> lib/dragonfly/config/heroku.rb,<br /> lib/dragonfly/r_magick_utils.rb,<br /> lib/dragonfly/simple_endpoint.rb,<br /> lib/dragonfly/job_definitions.rb,<br /> lib/dragonfly/config/r_magick.rb,<br /> lib/dragonfly/routed_endpoint.rb,<br /> lib/dragonfly/function_manager.rb,<br /> lib/dragonfly/image_magick_utils.rb,<br /> lib/dragonfly/config/image_magick.rb,<br /> lib/dragonfly/active_model_extensions.rb,<br /> lib/dragonfly/data_storage/s3data_store.rb,<br /> lib/dragonfly/encoding/r_magick_encoder.rb,<br /> lib/dragonfly/analysis/r_magick_analyser.rb,<br /> lib/dragonfly/data_storage/file_data_store.rb,<br /> lib/dragonfly/generation/r_magick_generator.rb,<br /> lib/dragonfly/encoding/image_magick_encoder.rb,<br /> lib/dragonfly/processing/r_magick_processor.rb,<br /> lib/dragonfly/data_storage/mongo_data_store.rb,<br /> lib/dragonfly/analysis/image_magick_analyser.rb,<br /> lib/dragonfly/analysis/file_command_analyser.rb,<br /> lib/dragonfly/processing/image_magick_processor.rb,<br /> lib/dragonfly/generation/image_magick_generator.rb,<br /> lib/dragonfly/active_model_extensions/attachment.rb,<br /> lib/dragonfly/active_model_extensions/validations.rb,<br /> lib/dragonfly/generation/hash_with_css_style_keys.rb,<br /> lib/dragonfly/active_model_extensions/class_methods.rb,<br /> lib/dragonfly/active_model_extensions/instance_methods.rb</span>
+  lib/dragonfly/job.rb,<br /> lib/dragonfly/app.rb,<br /> lib/dragonfly/encoder.rb,<br /> lib/dragonfly/response.rb,<br /> lib/dragonfly/loggable.rb,<br /> lib/dragonfly/analyser.rb,<br /> lib/dragonfly/generator.rb,<br /> lib/dragonfly/processor.rb,<br /> lib/dragonfly/middleware.rb,<br /> lib/dragonfly/serializer.rb,<br /> lib/dragonfly/job_builder.rb,<br /> lib/dragonfly/temp_object.rb,<br /> lib/dragonfly/configurable.rb,<br /> lib/dragonfly/config/rails.rb,<br /> lib/dragonfly/data_storage.rb,<br /> lib/dragonfly/simple_cache.rb,<br /> lib/dragonfly/job_endpoint.rb,<br /> lib/dragonfly/config/heroku.rb,<br /> lib/dragonfly/r_magick_utils.rb,<br /> lib/dragonfly/job_definitions.rb,<br /> lib/dragonfly/config/r_magick.rb,<br /> lib/dragonfly/simple_endpoint.rb,<br /> lib/dragonfly/routed_endpoint.rb,<br /> lib/dragonfly/function_manager.rb,<br /> lib/dragonfly/image_magick_utils.rb,<br /> lib/dragonfly/config/image_magick.rb,<br /> lib/dragonfly/active_model_extensions.rb,<br /> lib/dragonfly/encoding/r_magick_encoder.rb,<br /> lib/dragonfly/data_storage/s3data_store.rb,<br /> lib/dragonfly/analysis/r_magick_analyser.rb,<br /> lib/dragonfly/data_storage/file_data_store.rb,<br /> lib/dragonfly/generation/r_magick_generator.rb,<br /> lib/dragonfly/data_storage/mongo_data_store.rb,<br /> lib/dragonfly/processing/r_magick_processor.rb,<br /> lib/dragonfly/encoding/image_magick_encoder.rb,<br /> lib/dragonfly/analysis/file_command_analyser.rb,<br /> lib/dragonfly/analysis/image_magick_analyser.rb,<br /> lib/dragonfly/processing/image_magick_processor.rb,<br /> lib/dragonfly/generation/image_magick_generator.rb,<br /> lib/dragonfly/active_model_extensions/attachment.rb,<br /> lib/dragonfly/active_model_extensions/validations.rb,<br /> lib/dragonfly/generation/hash_with_css_style_keys.rb,<br /> lib/dragonfly/active_model_extensions/class_methods.rb,<br /> lib/dragonfly/active_model_extensions/instance_methods.rb</span>
 </dd>
   
 </dl>
@@ -154,17 +154,16 @@
       <pre class="lines">
 
 
-40
-41
-42</pre>
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly.rb', line 42</span>
 
-<span class='def def kw'>def</span> <span class='aref op'>[]</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='op'>[]</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
+  <span class='const'>App</span><span class='lbracket'>[</span><span class='op'>*</span><span class='id args'>args</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -182,9 +181,9 @@
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:58 2010 by 
+  Generated on Tue Jan 11 14:48:13 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -152,15 +152,14 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/config/rails.rb', line 6</span>
 
-<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='apply_configuration identifier id'>apply_configuration</span><span class='lparen token'>(</span><span class='app identifier id'>app</span><span class='rparen token'>)</span>
-  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
-    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='log identifier id'>log</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='logger identifier id'>logger</span>
-    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='root_path identifier id'>root_path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{::Rails.root}/public/system/dragonfly/#{::Rails.env}&quot;</span> <span class='if if_mod kw'>if</span> <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='FileDataStore constant id'>FileDataStore</span><span class='rparen token'>)</span>
-    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_path_prefix identifier id'>url_path_prefix</span> <span class='assign token'>=</span> <span class='string val'>'/media'</span>
-    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='FileCommandAnalyser constant id'>FileCommandAnalyser</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id apply_configuration'>apply_configuration</span><span class='lparen'>(</span><span class='id app'>app</span><span class='rparen'>)</span>
+  <span class='id app'>app</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
+    <span class='id c'>c</span><span class='period'>.</span><span class='id log'>log</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>Rails</span><span class='period'>.</span><span class='id logger'>logger</span>
+    <span class='id c'>c</span><span class='period'>.</span><span class='id datastore'>datastore</span><span class='period'>.</span><span class='id root_path'>root_path</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='op'>::</span><span class='const'>Rails</span><span class='period'>.</span><span class='id root'>root</span><span class='rbrace'>}</span><span class='tstring_content'>/public/system/dragonfly/</span><span class='embexpr_beg'>#{</span><span class='op'>::</span><span class='const'>Rails</span><span class='period'>.</span><span class='id env'>env</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id c'>c</span><span class='period'>.</span><span class='id datastore'>datastore</span><span class='period'>.</span><span class='id is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>DataStorage</span><span class='op'>::</span><span class='const'>FileDataStore</span><span class='rparen'>)</span>
+    <span class='id c'>c</span><span class='period'>.</span><span class='id url_path_prefix'>url_path_prefix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/media</span><span class='tstring_end'>'</span></span>
+    <span class='id c'>c</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id register'>register</span><span class='lparen'>(</span><span class='const'>Analysis</span><span class='op'>::</span><span class='const'>FileCommandAnalyser</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -178,9 +177,9 @@
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:56 2010 by 
+  Generated on Tue Jan 11 14:48:14 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>

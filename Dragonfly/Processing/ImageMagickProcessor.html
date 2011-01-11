@@ -48,7 +48,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.1)</div>
+      <div id="logo">DRAGONFLY (v 0.8.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -111,18 +111,17 @@
         <dt id="GRAVITIES-constant" class="">GRAVITIES =
           
         </dt>
-        <dd><pre class="code"><span class='lbrace token'>{</span>
-  <span class='string val'>'nw'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'NorthWest'</span><span class='comma token'>,</span>
-  <span class='string val'>'n'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'North'</span><span class='comma token'>,</span>
-  <span class='string val'>'ne'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'NorthEast'</span><span class='comma token'>,</span>
-  <span class='string val'>'w'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'West'</span><span class='comma token'>,</span>
-  <span class='string val'>'c'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Center'</span><span class='comma token'>,</span>
-  <span class='string val'>'e'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'East'</span><span class='comma token'>,</span>
-  <span class='string val'>'sw'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'SouthWest'</span><span class='comma token'>,</span>
-  <span class='string val'>'s'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'South'</span><span class='comma token'>,</span>
-  <span class='string val'>'se'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'SouthEast'</span>
-<span class='rbrace token'>}</span>
-</pre></dd>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>nw</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NorthWest</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>n</span><span class='tstring_end'>'</span></span>  <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>North</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ne</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NorthEast</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>w</span><span class='tstring_end'>'</span></span>  <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>West</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>c</span><span class='tstring_end'>'</span></span>  <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Center</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>e</span><span class='tstring_end'>'</span></span>  <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>East</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>sw</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>SouthWest</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>s</span><span class='tstring_end'>'</span></span>  <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>South</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>se</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>SouthEast</span><span class='tstring_end'>'</span></span>
+<span class='rbrace'>}</span></pre></dd>
       
         <dt id="RESIZE_GEOMETRY-constant" class="">RESIZE_GEOMETRY =
           <div class="docstring">
@@ -138,8 +137,7 @@ Geometry string patterns
   
 </div>
         </dt>
-        <dd><pre class="code"><span class='regexp val'>/^\d*x\d*[&gt;&lt;%^!]?$|^\d+@$/</span>
-</pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\d*x\d*[&gt;&lt;%^!]?$|^\d+@$</span><span class='regexp_end'>/</span></span></pre></dd>
       
         <dt id="CROPPED_RESIZE_GEOMETRY-constant" class="">CROPPED_RESIZE_GEOMETRY =
           <div class="docstring">
@@ -155,8 +153,7 @@ e.g. &#8216;20x50#ne&#8217;
   
 </div>
         </dt>
-        <dd><pre class="code"><span class='regexp val'>/^(\d+)x(\d+)#(\w{1,2})?$/</span>
-</pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^(\d+)x(\d+)#(\w{1,2})?$</span><span class='regexp_end'>/</span></span></pre></dd>
       
         <dt id="CROP_GEOMETRY-constant" class="">CROP_GEOMETRY =
           <div class="docstring">
@@ -172,14 +169,12 @@ e.g. &#8216;30x30<tt>10</tt>10&#8217;
   
 </div>
         </dt>
-        <dd><pre class="code"><span class='regexp val'>/^(\d+)x(\d+)([+-]\d+)?([+-]\d+)?(\w{1,2})?$/</span>
-</pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^(\d+)x(\d+)([+-]\d+)?([+-]\d+)?(\w{1,2})?$</span><span class='regexp_end'>/</span></span></pre></dd>
       
         <dt id="THUMB_GEOMETRY-constant" class="">THUMB_GEOMETRY =
           
         </dt>
-        <dd><pre class="code"><span class='Regexp constant id'>Regexp</span><span class='dot token'>.</span><span class='union identifier id'>union</span> <span class='RESIZE_GEOMETRY constant id'>RESIZE_GEOMETRY</span><span class='comma token'>,</span> <span class='CROPPED_RESIZE_GEOMETRY constant id'>CROPPED_RESIZE_GEOMETRY</span><span class='comma token'>,</span> <span class='CROP_GEOMETRY constant id'>CROP_GEOMETRY</span>
-</pre></dd>
+        <dd><pre class="code"><span class='const'>Regexp</span><span class='period'>.</span><span class='id union'>union</span> <span class='const'>RESIZE_GEOMETRY</span><span class='comma'>,</span> <span class='const'>CROPPED_RESIZE_GEOMETRY</span><span class='comma'>,</span> <span class='const'>CROP_GEOMETRY</span></pre></dd>
       
     </dl>
   
@@ -453,10 +448,9 @@ e.g. &#8216;30x30<tt>10</tt>10&#8217;
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/image_magick_processor.rb', line 93</span>
 
-<span class='def def kw'>def</span> <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='args identifier id'>args</span><span class='assign token'>=</span><span class='string val'>''</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
-  <span class='format identifier id'>format</span> <span class='integer val'>? </span><span class='lbrack token'>[</span><span class='super super kw'>super</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrace token'>}</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='super super kw'>super</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id convert'>convert</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id args'>args</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id format'>format</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id format'>format</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='kw'>super</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='symbol'>:format</span> <span class='op'>=&gt;</span> <span class='id format'>format</span><span class='period'>.</span><span class='id to_sym'>to_sym</span><span class='rbrace'>}</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='kw'>super</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -490,18 +484,17 @@ e.g. &#8216;30x30<tt>10</tt>10&#8217;
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/image_magick_processor.rb', line 29</span>
 
-<span class='def def kw'>def</span> <span class='crop identifier id'>crop</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='width identifier id'>width</span>   <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:width</span><span class='rbrack token'>]</span>
-  <span class='height identifier id'>height</span>  <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:height</span><span class='rbrack token'>]</span>
-  <span class='gravity identifier id'>gravity</span> <span class='assign token'>=</span> <span class='GRAVITIES constant id'>GRAVITIES</span><span class='lbrack token'>[</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:gravity</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
-  <span class='x identifier id'>x</span>       <span class='assign token'>=</span> <span class='dstring node'>&quot;#{opts[:x] || 0}&quot;</span>
-  <span class='x identifier id'>x</span> <span class='assign token'>=</span> <span class='string val'>'+'</span> <span class='plus op'>+</span> <span class='x identifier id'>x</span> <span class='unless unless_mod kw'>unless</span> <span class='x identifier id'>x</span><span class='lbrack token'>[</span><span class='regexp val'>/^[+-]/</span><span class='rbrack token'>]</span>
-  <span class='y identifier id'>y</span>       <span class='assign token'>=</span> <span class='dstring node'>&quot;#{opts[:y] || 0}&quot;</span>
-  <span class='y identifier id'>y</span> <span class='assign token'>=</span> <span class='string val'>'+'</span> <span class='plus op'>+</span> <span class='y identifier id'>y</span> <span class='unless unless_mod kw'>unless</span> <span class='y identifier id'>y</span><span class='lbrack token'>[</span><span class='regexp val'>/^[+-]/</span><span class='rbrack token'>]</span>
+<span class='kw'>def</span> <span class='id crop'>crop</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id width'>width</span>   <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:width</span><span class='rbracket'>]</span>
+  <span class='id height'>height</span>  <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:height</span><span class='rbracket'>]</span>
+  <span class='id gravity'>gravity</span> <span class='op'>=</span> <span class='const'>GRAVITIES</span><span class='lbracket'>[</span><span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:gravity</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+  <span class='id x'>x</span>       <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:x</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='int'>0</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id x'>x</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>+</span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='id x'>x</span> <span class='kw'>unless</span> <span class='id x'>x</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^[+-]</span><span class='regexp_end'>/</span></span><span class='rbracket'>]</span>
+  <span class='id y'>y</span>       <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:y</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='int'>0</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id y'>y</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>+</span><span class='tstring_end'>'</span></span> <span class='op'>+</span> <span class='id y'>y</span> <span class='kw'>unless</span> <span class='id y'>y</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^[+-]</span><span class='regexp_end'>/</span></span><span class='rbracket'>]</span>
 
-  <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='dstring node'>&quot;-crop #{width}x#{height}#{x}#{y}#{&quot; -gravity #{gravity}&quot; if gravity}&quot;</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+  <span class='id convert'>convert</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-crop </span><span class='embexpr_beg'>#{</span><span class='id width'>width</span><span class='rbrace'>}</span><span class='tstring_content'>x</span><span class='embexpr_beg'>#{</span><span class='id height'>height</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id x'>x</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id y'>y</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> -gravity </span><span class='embexpr_beg'>#{</span><span class='id gravity'>gravity</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id gravity'>gravity</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -527,10 +520,9 @@ e.g. &#8216;30x30<tt>10</tt>10&#8217;
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/image_magick_processor.rb', line 41</span>
 
-<span class='def def kw'>def</span> <span class='flip identifier id'>flip</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='string val'>&quot;-flip&quot;</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id flip'>flip</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id convert'>convert</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-flip</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -556,10 +548,9 @@ e.g. &#8216;30x30<tt>10</tt>10&#8217;
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/image_magick_processor.rb', line 45</span>
 
-<span class='def def kw'>def</span> <span class='flop identifier id'>flop</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='string val'>&quot;-flop&quot;</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id flop'>flop</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id convert'>convert</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-flop</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -589,10 +580,9 @@ e.g. &#8216;30x30<tt>10</tt>10&#8217;
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/image_magick_processor.rb', line 49</span>
 
-<span class='def def kw'>def</span> <span class='greyscale identifier id'>greyscale</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='string val'>&quot;-colorspace Gray&quot;</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id greyscale'>greyscale</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id convert'>convert</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-colorspace Gray</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -618,10 +608,9 @@ e.g. &#8216;30x30<tt>10</tt>10&#8217;
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/image_magick_processor.rb', line 25</span>
 
-<span class='def def kw'>def</span> <span class='resize identifier id'>resize</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='geometry identifier id'>geometry</span><span class='rparen token'>)</span>
-  <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='dstring node'>&quot;-resize '#{geometry}'&quot;</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id resize'>resize</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id geometry'>geometry</span><span class='rparen'>)</span>
+  <span class='id convert'>convert</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-resize '</span><span class='embexpr_beg'>#{</span><span class='id geometry'>geometry</span><span class='rbrace'>}</span><span class='tstring_content'>'</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -660,23 +649,22 @@ e.g. &#8216;30x30<tt>10</tt>10&#8217;
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/image_magick_processor.rb', line 54</span>
 
-<span class='def def kw'>def</span> <span class='resize_and_crop identifier id'>resize_and_crop</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='attrs identifier id'>attrs</span>          <span class='assign token'>=</span> <span class='identify identifier id'>identify</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='current_width identifier id'>current_width</span>  <span class='assign token'>=</span> <span class='attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:width</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
-  <span class='current_height identifier id'>current_height</span> <span class='assign token'>=</span> <span class='attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:height</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+<span class='kw'>def</span> <span class='id resize_and_crop'>resize_and_crop</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id attrs'>attrs</span>          <span class='op'>=</span> <span class='id identify'>identify</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
+  <span class='id current_width'>current_width</span>  <span class='op'>=</span> <span class='id attrs'>attrs</span><span class='lbracket'>[</span><span class='symbol'>:width</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span>
+  <span class='id current_height'>current_height</span> <span class='op'>=</span> <span class='id attrs'>attrs</span><span class='lbracket'>[</span><span class='symbol'>:height</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span>
   
-  <span class='width identifier id'>width</span>   <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:width</span><span class='rbrack token'>]</span>  <span class='question op'>?</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:width</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>  <span class='colon op'>:</span> <span class='current_width identifier id'>current_width</span>
-  <span class='height identifier id'>height</span>  <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:height</span><span class='rbrack token'>]</span> <span class='question op'>?</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:height</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='colon op'>:</span> <span class='current_height identifier id'>current_height</span>
-  <span class='gravity identifier id'>gravity</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:gravity</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'c'</span>
+  <span class='id width'>width</span>   <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:width</span><span class='rbracket'>]</span>  <span class='op'>?</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:width</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span>  <span class='op'>:</span> <span class='id current_width'>current_width</span>
+  <span class='id height'>height</span>  <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:height</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:height</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span> <span class='op'>:</span> <span class='id current_height'>current_height</span>
+  <span class='id gravity'>gravity</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:gravity</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>c</span><span class='tstring_end'>'</span></span>
 
-  <span class='if if kw'>if</span> <span class='width identifier id'>width</span> <span class='neq op'>!=</span> <span class='current_width identifier id'>current_width</span> <span class='orop op'>||</span> <span class='height identifier id'>height</span> <span class='neq op'>!=</span> <span class='current_height identifier id'>current_height</span>
-    <span class='scale identifier id'>scale</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='width identifier id'>width</span><span class='dot token'>.</span><span class='to_f identifier id'>to_f</span> <span class='div op'>/</span> <span class='current_width identifier id'>current_width</span><span class='comma token'>,</span> <span class='height identifier id'>height</span><span class='dot token'>.</span><span class='to_f identifier id'>to_f</span> <span class='div op'>/</span> <span class='current_height identifier id'>current_height</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='max identifier id'>max</span>
-    <span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='resize identifier id'>resize</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{(scale * current_width).ceil}x#{(scale * current_height).ceil}&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
+  <span class='kw'>if</span> <span class='id width'>width</span> <span class='op'>!=</span> <span class='id current_width'>current_width</span> <span class='op'>||</span> <span class='id height'>height</span> <span class='op'>!=</span> <span class='id current_height'>current_height</span>
+    <span class='id scale'>scale</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id width'>width</span><span class='period'>.</span><span class='id to_f'>to_f</span> <span class='op'>/</span> <span class='id current_width'>current_width</span><span class='comma'>,</span> <span class='id height'>height</span><span class='period'>.</span><span class='id to_f'>to_f</span> <span class='op'>/</span> <span class='id current_height'>current_height</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id max'>max</span>
+    <span class='id temp_object'>temp_object</span> <span class='op'>=</span> <span class='const'>TempObject</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id resize'>resize</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='lparen'>(</span><span class='id scale'>scale</span> <span class='op'>*</span> <span class='id current_width'>current_width</span><span class='rparen'>)</span><span class='period'>.</span><span class='id ceil'>ceil</span><span class='rbrace'>}</span><span class='tstring_content'>x</span><span class='embexpr_beg'>#{</span><span class='lparen'>(</span><span class='id scale'>scale</span> <span class='op'>*</span> <span class='id current_height'>current_height</span><span class='rparen'>)</span><span class='period'>.</span><span class='id ceil'>ceil</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
-  <span class='crop identifier id'>crop</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='width identifier id'>width</span><span class='comma token'>,</span> <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='height identifier id'>height</span><span class='comma token'>,</span> <span class='symbol val'>:gravity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='gravity identifier id'>gravity</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+  <span class='id crop'>crop</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='symbol'>:width</span> <span class='op'>=&gt;</span> <span class='id width'>width</span><span class='comma'>,</span> <span class='symbol'>:height</span> <span class='op'>=&gt;</span> <span class='id height'>height</span><span class='comma'>,</span> <span class='symbol'>:gravity</span> <span class='op'>=&gt;</span> <span class='id gravity'>gravity</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -702,10 +690,9 @@ e.g. &#8216;30x30<tt>10</tt>10&#8217;
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/image_magick_processor.rb', line 71</span>
 
-<span class='def def kw'>def</span> <span class='rotate identifier id'>rotate</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='amount identifier id'>amount</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='dstring node'>&quot;-rotate '#{amount}#{opts[:qualifier]}'&quot;</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id rotate'>rotate</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id amount'>amount</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id convert'>convert</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-rotate '</span><span class='embexpr_beg'>#{</span><span class='id amount'>amount</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:qualifier</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>'</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -745,24 +732,23 @@ e.g. &#8216;30x30<tt>10</tt>10&#8217;
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/processing/image_magick_processor.rb', line 75</span>
 
-<span class='def def kw'>def</span> <span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='geometry identifier id'>geometry</span><span class='rparen token'>)</span>
-  <span class='case case kw'>case</span> <span class='geometry identifier id'>geometry</span>
-  <span class='when when kw'>when</span> <span class='RESIZE_GEOMETRY constant id'>RESIZE_GEOMETRY</span>
-    <span class='resize identifier id'>resize</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='geometry identifier id'>geometry</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='CROPPED_RESIZE_GEOMETRY constant id'>CROPPED_RESIZE_GEOMETRY</span>
-    <span class='resize_and_crop identifier id'>resize_and_crop</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='$1 nth_ref id'>$1</span><span class='comma token'>,</span> <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='$2 nth_ref id'>$2</span><span class='comma token'>,</span> <span class='symbol val'>:gravity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='$3 nth_ref id'>$3</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='CROP_GEOMETRY constant id'>CROP_GEOMETRY</span>
-    <span class='crop identifier id'>crop</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span>
-      <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='$1 nth_ref id'>$1</span><span class='comma token'>,</span>
-      <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='$2 nth_ref id'>$2</span><span class='comma token'>,</span>
-      <span class='symbol val'>:x</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='$3 nth_ref id'>$3</span><span class='comma token'>,</span>
-      <span class='symbol val'>:y</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='$4 nth_ref id'>$4</span><span class='comma token'>,</span>
-      <span class='symbol val'>:gravity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='$5 nth_ref id'>$5</span>
-    <span class='rparen token'>)</span>
-  <span class='else else kw'>else</span> <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Didn't recognise the geometry string #{geometry}&quot;</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id thumb'>thumb</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id geometry'>geometry</span><span class='rparen'>)</span>
+  <span class='kw'>case</span> <span class='id geometry'>geometry</span>
+  <span class='kw'>when</span> <span class='const'>RESIZE_GEOMETRY</span>
+    <span class='id resize'>resize</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id geometry'>geometry</span><span class='rparen'>)</span>
+  <span class='kw'>when</span> <span class='const'>CROPPED_RESIZE_GEOMETRY</span>
+    <span class='id resize_and_crop'>resize_and_crop</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='symbol'>:width</span> <span class='op'>=&gt;</span> <span class='backref'>$1</span><span class='comma'>,</span> <span class='symbol'>:height</span> <span class='op'>=&gt;</span> <span class='backref'>$2</span><span class='comma'>,</span> <span class='symbol'>:gravity</span> <span class='op'>=&gt;</span> <span class='backref'>$3</span><span class='rparen'>)</span>
+  <span class='kw'>when</span> <span class='const'>CROP_GEOMETRY</span>
+    <span class='id crop'>crop</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span>
+      <span class='symbol'>:width</span> <span class='op'>=&gt;</span> <span class='backref'>$1</span><span class='comma'>,</span>
+      <span class='symbol'>:height</span> <span class='op'>=&gt;</span> <span class='backref'>$2</span><span class='comma'>,</span>
+      <span class='symbol'>:x</span> <span class='op'>=&gt;</span> <span class='backref'>$3</span><span class='comma'>,</span>
+      <span class='symbol'>:y</span> <span class='op'>=&gt;</span> <span class='backref'>$4</span><span class='comma'>,</span>
+      <span class='symbol'>:gravity</span> <span class='op'>=&gt;</span> <span class='backref'>$5</span>
+    <span class='rparen'>)</span>
+  <span class='kw'>else</span> <span class='id raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Didn't recognise the geometry string </span><span class='embexpr_beg'>#{</span><span class='id geometry'>geometry</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -780,9 +766,9 @@ e.g. &#8216;30x30<tt>10</tt>10&#8217;
     </div>
 
     <div id="footer">
-  Generated on Mon Nov 22 13:34:53 2010 by 
+  Generated on Tue Jan 11 14:48:16 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.3 (ruby-1.8.7).
+  0.6.4 (ruby-1.9.2).
 </div>
 
   </body>
