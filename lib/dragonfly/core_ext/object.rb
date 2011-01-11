@@ -4,5 +4,9 @@ class Object
   def blank?
     respond_to?(:empty?) ? empty? : !self
   end
+
+  def to_dragonfly_unique_s
+    to_s
+  end
   
 end
