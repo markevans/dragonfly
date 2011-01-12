@@ -243,16 +243,20 @@ module Dragonfly
 
     # Serializing, etc.
 
+    def to_unique_s
+      to_a.to_dragonfly_unique_s
+    end
+
     def serialize
       Serializer.marshal_encode(to_a)
     end
 
     def unique_signature
-      Digest::SHA1.hexdigest(serialize)
+      Digest::SHA1.hexdigest(to_unique_s)
     end
 
     def sha
-      Digest::SHA1.hexdigest("#{serialize}#{app.secret}")[0...8]
+      Digest::SHA1.hexdigest("#{to_unique_s}#{app.secret}")[0...8]
     end
 
     def validate_sha!(sha)
@@ -268,8 +272,8 @@ module Dragonfly
 
     # URLs, etc.
 
-    def url(*args)
-      app.url_for(self, *args) unless steps.empty?
+    def url(opts={})
+      app.url_for(self, opts) unless steps.empty?
     end
 
     def b64_data

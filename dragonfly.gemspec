@@ -5,10 +5,10 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.8.1"
+  s.version = "0.8.2"
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2010-11-22}
+  s.date = %q{2011-01-11}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -80,6 +80,8 @@ Gem::Specification.new do |s|
     "lib/dragonfly/config/r_magick.rb",
     "lib/dragonfly/config/rails.rb",
     "lib/dragonfly/configurable.rb",
+    "lib/dragonfly/core_ext/array.rb",
+    "lib/dragonfly/core_ext/hash.rb",
     "lib/dragonfly/core_ext/object.rb",
     "lib/dragonfly/core_ext/string.rb",
     "lib/dragonfly/core_ext/symbol.rb",
@@ -131,13 +133,14 @@ Gem::Specification.new do |s|
     "spec/dragonfly/app_spec.rb",
     "spec/dragonfly/config/r_magick_spec.rb",
     "spec/dragonfly/configurable_spec.rb",
+    "spec/dragonfly/core_ext/array_spec.rb",
+    "spec/dragonfly/core_ext/hash_spec.rb",
     "spec/dragonfly/core_ext/string_spec.rb",
     "spec/dragonfly/core_ext/symbol_spec.rb",
     "spec/dragonfly/data_storage/data_store_spec.rb",
     "spec/dragonfly/data_storage/file_data_store_spec.rb",
     "spec/dragonfly/data_storage/mongo_data_store_spec.rb",
     "spec/dragonfly/data_storage/s3_data_store_spec.rb",
-    "spec/dragonfly/deprecation_spec.rb",
     "spec/dragonfly/encoding/image_magick_encoder_spec.rb",
     "spec/dragonfly/encoding/r_magick_encoder_spec.rb",
     "spec/dragonfly/function_manager_spec.rb",
@@ -188,13 +191,14 @@ Gem::Specification.new do |s|
     "spec/dragonfly/app_spec.rb",
     "spec/dragonfly/config/r_magick_spec.rb",
     "spec/dragonfly/configurable_spec.rb",
+    "spec/dragonfly/core_ext/array_spec.rb",
+    "spec/dragonfly/core_ext/hash_spec.rb",
     "spec/dragonfly/core_ext/string_spec.rb",
     "spec/dragonfly/core_ext/symbol_spec.rb",
     "spec/dragonfly/data_storage/data_store_spec.rb",
     "spec/dragonfly/data_storage/file_data_store_spec.rb",
     "spec/dragonfly/data_storage/mongo_data_store_spec.rb",
     "spec/dragonfly/data_storage/s3_data_store_spec.rb",
-    "spec/dragonfly/deprecation_spec.rb",
     "spec/dragonfly/encoding/image_magick_encoder_spec.rb",
     "spec/dragonfly/encoding/r_magick_encoder_spec.rb",
     "spec/dragonfly/function_manager_spec.rb",
@@ -228,7 +232,6 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<aws-s3>, [">= 0"])
-      s.add_development_dependency(%q<bson_ext>, [">= 0"])
       s.add_development_dependency(%q<capybara>, [">= 0"])
       s.add_development_dependency(%q<cucumber>, ["= 0.8.5"])
       s.add_development_dependency(%q<cucumber-rails>, [">= 0"])
@@ -241,14 +244,14 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rack-cache>, [">= 0"])
       s.add_development_dependency(%q<rails>, ["= 3.0.3"])
       s.add_development_dependency(%q<rake>, [">= 0"])
-      s.add_development_dependency(%q<rmagick>, ["= 2.12.2"])
       s.add_development_dependency(%q<rspec>, ["~> 1.3"])
-      s.add_development_dependency(%q<sqlite3-ruby>, ["= 1.3.0"])
       s.add_development_dependency(%q<yard>, [">= 0"])
+      s.add_development_dependency(%q<bson_ext>, [">= 0"])
+      s.add_development_dependency(%q<rmagick>, ["= 2.12.2"])
+      s.add_development_dependency(%q<sqlite3-ruby>, ["= 1.3.0"])
       s.add_runtime_dependency(%q<rack>, [">= 0"])
     else
       s.add_dependency(%q<aws-s3>, [">= 0"])
-      s.add_dependency(%q<bson_ext>, [">= 0"])
       s.add_dependency(%q<capybara>, [">= 0"])
       s.add_dependency(%q<cucumber>, ["= 0.8.5"])
       s.add_dependency(%q<cucumber-rails>, [">= 0"])
@@ -261,15 +264,15 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rack-cache>, [">= 0"])
       s.add_dependency(%q<rails>, ["= 3.0.3"])
       s.add_dependency(%q<rake>, [">= 0"])
-      s.add_dependency(%q<rmagick>, ["= 2.12.2"])
       s.add_dependency(%q<rspec>, ["~> 1.3"])
-      s.add_dependency(%q<sqlite3-ruby>, ["= 1.3.0"])
       s.add_dependency(%q<yard>, [">= 0"])
+      s.add_dependency(%q<bson_ext>, [">= 0"])
+      s.add_dependency(%q<rmagick>, ["= 2.12.2"])
+      s.add_dependency(%q<sqlite3-ruby>, ["= 1.3.0"])
       s.add_dependency(%q<rack>, [">= 0"])
     end
   else
     s.add_dependency(%q<aws-s3>, [">= 0"])
-    s.add_dependency(%q<bson_ext>, [">= 0"])
     s.add_dependency(%q<capybara>, [">= 0"])
     s.add_dependency(%q<cucumber>, ["= 0.8.5"])
     s.add_dependency(%q<cucumber-rails>, [">= 0"])
@@ -282,10 +285,11 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rack-cache>, [">= 0"])
     s.add_dependency(%q<rails>, ["= 3.0.3"])
     s.add_dependency(%q<rake>, [">= 0"])
-    s.add_dependency(%q<rmagick>, ["= 2.12.2"])
     s.add_dependency(%q<rspec>, ["~> 1.3"])
-    s.add_dependency(%q<sqlite3-ruby>, ["= 1.3.0"])
     s.add_dependency(%q<yard>, [">= 0"])
+    s.add_dependency(%q<bson_ext>, [">= 0"])
+    s.add_dependency(%q<rmagick>, ["= 2.12.2"])
+    s.add_dependency(%q<sqlite3-ruby>, ["= 1.3.0"])
     s.add_dependency(%q<rack>, [">= 0"])
   end
 end

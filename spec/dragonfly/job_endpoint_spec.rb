@@ -3,11 +3,41 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 ## General tests for Response go here as it's a pretty simple wrapper around that
 
+describe "Dragonfly::JobEndpoint Rack::Lint tests" do
+  before(:each) do
+    @app = test_app
+    @app.generator.add(:test_data){ "Test Data" }
+    @job = Dragonfly::Job.new(@app).generate(:test_data)
+    @endpoint = Rack::Lint.new(Dragonfly::JobEndpoint.new(@job))
+  end
+  
+  it "should pass for HEAD requests" do
+    Rack::MockRequest.new(@endpoint).request("HEAD", '')
+  end
+  
+  it "should pass for GET requests" do
+    Rack::MockRequest.new(@endpoint).request("GET", '')
+  end
+  
+  it "should pass for POST requests" do
+    Rack::MockRequest.new(@endpoint).request("POST", '')
+  end
+  
+  it "should pass for PUT requests" do
+    Rack::MockRequest.new(@endpoint).request("PUT", '')
+  end
+  
+  it "should pass for DELETE requests" do
+    Rack::MockRequest.new(@endpoint).request("DELETE", '')
+  end
+end
+
 describe Dragonfly::JobEndpoint do
 
   def make_request(job, opts={})
     endpoint = Dragonfly::JobEndpoint.new(job)
-    Rack::MockRequest.new(endpoint).get('', opts)
+    method = (opts.delete(:method) || :get).to_s.upcase
+    Rack::MockRequest.new(endpoint).request(method, '', opts)
   end
 
   before(:each) do
@@ -16,7 +46,7 @@ describe Dragonfly::JobEndpoint do
     @job = Dragonfly::Job.new(@app).fetch('egg')
   end
 
-  it "should return a correct response if successful" do
+  it "should return a correct response to a successful GET request" do
     response = make_request(@job)
     response.status.should == 200
     response['ETag'].should =~ /^"\w+"$/
@@ -25,6 +55,29 @@ describe Dragonfly::JobEndpoint do
     response['Content-Length'].should == '6'
     response['Content-Disposition'].should == 'filename="gung.txt"'
     response.body.should == 'GUNGLE'
+  end
+
+  it "should return the correct headers and no content to a successful HEAD request" do
+    response = make_request(@job, :method => :head)
+    response.status.should == 200
+    response['ETag'].should =~ /^"\w+"$/
+    response['Cache-Control'].should == "public, max-age=31536000"
+    response['Content-Type'].should == 'text/plain'
+    response['Content-Length'].should == '6'
+    response['Content-Disposition'].should == 'filename="gung.txt"'
+    response.body.should == ''
+  end
+
+  %w(POST PUT DELETE CUSTOM_METHOD).each do |method|
+    
+    it "should return a 405 error for a #{method} request" do
+      response = make_request(@job, :method => method)
+      response.status.should == 405
+      response['Allow'].should == "GET, HEAD"
+      response['Content-Type'].should == 'text/plain'
+      response.body.should == "#{method} method not allowed"
+    end
+
   end
 
   it "should return 404 if the datastore raises data not found" do
@@ -100,7 +153,7 @@ describe Dragonfly::JobEndpoint do
         response['Content-Disposition'].should be_nil
       end
     end
-    
+
     describe "content disposition" do
       it "should use the app's configured content-disposition" do
         @app.content_disposition = :attachment

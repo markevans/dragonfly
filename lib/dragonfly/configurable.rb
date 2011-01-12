@@ -25,8 +25,8 @@ module Dragonfly
       end
     end
 
-    class DeferredBlock
-      def initialize(&blk)
+    class DeferredBlock # Inheriting from Proc causes errors in some versions of Ruby
+      def initialize(blk)
         @blk = blk
       end
 
@@ -72,7 +72,7 @@ module Dragonfly
       private
 
       def configurable_attr attribute, default=nil, &blk
-        default_configuration[attribute] = blk ? DeferredBlock.new(&blk) : default
+        default_configuration[attribute] = blk ? DeferredBlock.new(blk) : default
 
         # Define the reader
         define_method(attribute) do

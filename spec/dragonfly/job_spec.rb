@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 # Matchers
 Spec::Matchers.define :match_steps do |steps|
@@ -530,7 +530,7 @@ describe Dragonfly::Job do
   describe "serialization" do
     before(:each) do
       @app = test_app
-      @job = Dragonfly::Job.new(@app).fetch('mumma').process(:resize, '1x50')
+      @job = Dragonfly::Job.new(@app).fetch('uid').process(:resize_and_crop, :width => 270, :height => 92, :gravity => 'n')
     end
     it "should serialize itself" do
       @job.serialize.should =~ /^\w{1,}$/
@@ -538,6 +538,14 @@ describe Dragonfly::Job do
     it "should deserialize to the same as the original" do
       new_job = Dragonfly::Job.deserialize(@job.serialize, @app)
       new_job.to_a.should == @job.to_a
+    end
+    it "should correctly deserialize a string serialized with ruby 1.8.7" do
+      job = Dragonfly::Job.deserialize('BAhbB1sHOgZmSSIIdWlkBjoGRVRbCDoGcDoUcmVzaXplX2FuZF9jcm9wewg6CndpZHRoaQIOAToLaGVpZ2h0aWE6DGdyYXZpdHlJIgZuBjsGVA', @app)
+      job.to_a.should == @job.to_a
+    end
+    it "should correctly deserialize a string serialized with ruby 1.9.2" do
+      job = Dragonfly::Job.deserialize('BAhbB1sHOgZmIgh1aWRbCDoGcDoUcmVzaXplX2FuZF9jcm9wewg6CndpZHRoaQIOAToLaGVpZ2h0aWE6DGdyYXZpdHkiBm4', @app)
+      job.to_a.should == @job.to_a
     end
   end
 
@@ -605,6 +613,32 @@ describe Dragonfly::Job do
       end
       job = @app.new_job("HELLO", :format => :txt)
       job.format.should == :txt
+    end
+  end
+
+  describe "to_unique_s" do
+    it "should use the arrays of args to create the string" do
+      job = test_app.fetch('uid').process(:gug, 4, :some => 'arg', :and => 'more')
+      job.to_unique_s.should == 'fuidpgug4andmoresomearg'
+    end
+  end
+
+  describe "sha" do
+    before(:each) do
+      @app = test_app
+      @job = @app.fetch('eggs')
+    end
+    
+    it "should be of the correct format" do
+      @job.sha.should =~ /^\w{8}$/
+    end
+    
+    it "should be the same for the same job steps" do
+      @app.fetch('eggs').sha.should == @job.sha
+    end
+    
+    it "should be different for different jobs" do
+      @app.fetch('figs').sha.should_not == @job.sha
     end
   end
 

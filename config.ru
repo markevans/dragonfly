@@ -1,9 +1,10 @@
-require 'rubygems'
+require "rubygems"
+require "bundler/setup"
+$:.unshift(File.expand_path('../lib', __FILE__))
+require 'dragonfly'
 require 'rack/cache'
-require File.dirname(__FILE__) + '/lib/dragonfly'
 
-APP = Dragonfly[:images].configure_with(:imagemagick) do |c|
-end
+APP = Dragonfly[:images].configure_with(:imagemagick)
 
 use Rack::Cache,
   :verbose     => true,
