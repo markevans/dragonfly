@@ -1,3 +1,9 @@
+(2010-01-14)
+==================
+Features
+--------
+- Added CouchDataStore that uses a CouchDB as a data storage engine
+
 0.8.2 (2010-01-11)
 ==================
 Fixes

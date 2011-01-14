@@ -85,6 +85,24 @@ It won't normally need configuring, but if you wish to:
 
 You can also pass these options to `MongoDataStore.new` as an options hash.
 
+Couch datastore
+---------------
+To configure with the {Dragonfly::DataStorage::CouchDataStore CouchDataStore}:
+
+    app.datastore = Dragonfly::DataStorage::CouchDataStore.new
+
+To configure:
+
+    app.datastore.configure do |d|
+      c.host = 'localhost'                            # defaults to localhost
+      c.port = '5984'                                 # defaults to couchdb default (5984)
+      c.database = 'dragonfly'                        # defaults to 'dragonfly'
+      c.username = ''                                 # not needed if couchdb is in 'admin party' mode
+      c.password = ''                                 # not needed if couchdb is in 'admin party' mode
+    end
+
+You can also pass these options to `CouchDataStore.new` as an options hash.
+
 Custom datastore
 ----------------
 Data stores are key-value in nature, and need to implement 3 methods: `store`, `retrieve` and `destroy`.

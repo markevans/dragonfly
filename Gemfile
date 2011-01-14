@@ -10,6 +10,7 @@ group :development, :test, :cucumber do
   gem 'jeweler',  '~> 1.4'
   gem 'gherkin', '2.1.4' # 2.1.5 seems to segfault on Ruby 1.9.2
   gem 'mongo'
+  gem 'couchrest', '~> 1.0'
   gem 'nokogiri', '1.5.0.beta.2' # 1.4.3.1 segfaults on Ruby 1.9.2
   gem 'rack', '~>1.1'
   gem 'rack-cache'
