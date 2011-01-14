@@ -24,6 +24,12 @@ Mongoid
 
 defines the macro `image_accessor` on any models that include `Mongoid::Document`
 
+CouchRest::Model
+-------
+    app.define_macro_on_include(CouchRest::Model::Base, :image_accessor)
+
+defines the macro `image_accessor` on any models that include `CouchRest::Model::Base`
+
 Adding accessors
 ----------------
 Now we have the method `image_accessor` available in our model classes, which we can use as many times as we like

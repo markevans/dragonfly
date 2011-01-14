@@ -12,6 +12,7 @@ group :development, :test, :cucumber do
   gem 'jeweler', '~> 1.5.2'
   gem 'fog'
   gem 'mongo'
+  gem 'couchrest', '~> 1.0'
   gem 'rack-cache'
   gem 'rails', '3.0.5', :require => nil
   gem 'rake'
