@@ -69,10 +69,17 @@ describe Dragonfly::SimpleEndpoint do
     response.body.should == 'HELLO THERE'
   end
 
-  it "should return a simple text response at the root" do
+  it "should return a simple text response at the root by default" do
     response = request(@endpoint, '/')
     response.status.should == 200
     response.body.length.should > 0
+    response.content_type.should == 'text/plain'
+  end
+
+  it "should return the configured response if configured" do
+    @endpoint.root_response = [404, {'Content-Type' => 'text/plain'}, ['Not found']]
+    response = request(@endpoint, '/')
+    response.status.should == 404
     response.content_type.should == 'text/plain'
   end
 

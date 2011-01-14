@@ -63,7 +63,8 @@ module Dragonfly
     configuration_method :processor
     configuration_method :encoder
     configuration_method :generator
-
+    configuration_method :server
+    
     attr_accessor :job_definitions
 
     SAVED_CONFIGS = {

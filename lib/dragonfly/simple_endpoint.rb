@@ -2,7 +2,10 @@ module Dragonfly
   class SimpleEndpoint
 
     include Loggable
+    include Configurable
 
+    configurable_attr :root_response do dragonfly_response end
+    
     # Instance methods
 
     def initialize(app)
@@ -15,7 +18,7 @@ module Dragonfly
 
       case request.path_info
       when '', '/', app.url_path_prefix
-        dragonfly_response
+        root_response
       else
         job = Job.from_path(request.path_info, app)
         job.validate_sha!(request['s']) if app.protect_from_dos_attacks
@@ -38,7 +41,7 @@ module Dragonfly
 
     attr_reader :app
 
-    def dragonfly_response
+    def self.dragonfly_response
       body = <<-DRAGONFLY
           _o|o_
   _~~---._(   )_.---~~_
