@@ -22,22 +22,21 @@ module Dragonfly
       end
 
       def store(temp_object, opts={})
-        attributes = {
-          :content_type => 'application/octet-stream',
-        }.merge(temp_object.attributes)
-
         temp_object.file do |f|
-          doc = CouchRest::Document.new(attributes)
+          doc = CouchRest::Document.new(:extra => temp_object.attributes)
           response = db.save_doc(doc)
-          doc.put_attachment(attributes[:name] || 'file', f)
+          doc.put_attachment(temp_object.attributes[:name] || 'file', f, {:content_type => 'application/octet-stream'})
           response['id']
         end
+      rescue Exception => e
+        raise UnableToStore, "#{e} - #{temp_object.inspect}"
       end
 
       def retrieve(uid)
         doc = db.get(uid)
         name = doc['_attachments'].keys.first
-        [doc.fetch_attachment(name), symbolize_keys_recursively(doc.to_hash)]
+        extra = symbolize_keys_recursively(doc['extra'])
+        [doc.fetch_attachment(name), extra]
       rescue Exception => e
         raise DataNotFound, "#{e} - #{uid}"
       end
