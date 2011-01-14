@@ -26,7 +26,7 @@ defines the macro `image_accessor` on any models that include `Mongoid::Document
 
 CouchRest::Model
 -------
-    app.define_macro_on_include(CouchRest::Model::Base, :image_accessor)
+    app.define_macro(CouchRest::Model::Base, :image_accessor)
 
 defines the macro `image_accessor` on any models that include `CouchRest::Model::Base`
 

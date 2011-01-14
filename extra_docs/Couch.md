@@ -33,7 +33,7 @@ In config/initializers/dragonfly.rb:
     end
 
     # Allow all CouchRest::Model models to use the macro 'image_accessor'
-    app.define_macro_on_include(CouchRest::Model::Base, :image_accessor)
+    app.define_macro(CouchRest::Model::Base, :image_accessor)
 
     # ... any other setup, see Rails docs
 
