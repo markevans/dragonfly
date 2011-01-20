@@ -57,6 +57,6 @@ Mounting in routes.rb
 ---------------------
 Instead of mounting as a middleware, you could skip that bit and mount directly in the routes.rb file:
 
-    match '/media(/:dragonfly)', :to => Dragonfly[:images]
+    match '/media/*:dragonfly', :to => Dragonfly[:images]
 
 Make sure the the path prefix matches the Dragonfly app's configured url_path_prefix (which is /media by default for Rails).
