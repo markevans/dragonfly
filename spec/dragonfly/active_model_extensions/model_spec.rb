@@ -9,14 +9,32 @@ describe Item do
     let(:app1){ Dragonfly[:images] }
     let(:app2){ Dragonfly[:videos] }
 
-    it "should return the mapping of apps to attributes" do
-      app1.define_macro(model_class, :image_accessor)
-      app2.define_macro(model_class, :video_accessor)
-      Item.class_eval do
-        image_accessor :preview_image
-        video_accessor :trailer_video
+    describe "attachment specs" do
+      before(:each) do
+        app1.define_macro(model_class, :image_accessor)
+        app2.define_macro(model_class, :video_accessor)
+        Item.class_eval do
+          image_accessor :preview_image
+          video_accessor :trailer_video
+        end
+        @specs = Item.dragonfly_attachment_specs
+        @spec1, @spec2 = @specs
       end
-      Item.dragonfly_apps_for_attributes.should == {:preview_image => app1, :trailer_video => app2}
+      
+      it "should return the attachment specs" do
+        @spec1.should be_a(Dragonfly::ActiveModelExtensions::AttachmentSpec)
+        @spec2.should be_a(Dragonfly::ActiveModelExtensions::AttachmentSpec)
+      end
+
+      it "should associate the correct app with each spec" do
+        @spec1.app.should == app1
+        @spec2.app.should == app2
+      end
+
+      it "should associate the correct attribute with each spec" do
+        @spec1.attribute.should == :preview_image
+        @spec2.attribute.should == :trailer_video
+      end
     end
 
     it "should work for included modules (e.g. Mongoid::Document)" do
@@ -28,7 +46,9 @@ describe Item do
         include mongoid_document
         dog_accessor :doogie
       end
-      model_class.dragonfly_apps_for_attributes.should == {:doogie => app1}
+      spec = model_class.dragonfly_attachment_specs.first
+      spec.app.should == app1
+      spec.attribute.should == :doogie
     end
 
   end
@@ -713,10 +733,10 @@ describe Item do
       @subclass_with_module.create! :reliant_image => 'blah'
     end
     it "return the correct apps for each accessors, even when names clash" do
-      @base_class.dragonfly_apps_for_attributes.should == {:image => @app}
-      @subclass.dragonfly_apps_for_attributes.should == {:image => @app, :reliant_image => @app}
-      @subclass_with_module.dragonfly_apps_for_attributes.should == {:image => @app, :reliant_image => @app}
-      @unrelated_class.dragonfly_apps_for_attributes.should == {:image => @app2}
+      @base_class.dragonfly_attachment_specs.should match_attachment_specs([[:image, @app]])
+      @subclass.dragonfly_attachment_specs.should match_attachment_specs([[:image, @app], [:reliant_image, @app]])
+      @subclass_with_module.dragonfly_attachment_specs.should match_attachment_specs([[:image, @app], [:reliant_image, @app]])
+      @unrelated_class.dragonfly_attachment_specs.should match_attachment_specs([[:image, @app2]])
     end
   end
 

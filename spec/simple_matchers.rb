@@ -42,3 +42,12 @@ Spec::Matchers.define :leak_memory do
     result
   end
 end
+
+Spec::Matchers.define :match_attachment_specs do |specs|
+  match do |given_specs|
+    given_specs.length == specs.length &&
+      specs.zip(given_specs).all? do |(spec, given)|
+        given.attribute == spec[0] && given.app == spec[1]
+      end
+  end
+end

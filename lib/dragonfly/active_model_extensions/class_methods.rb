@@ -15,7 +15,7 @@ module Dragonfly
             before_destroy :destroy_dragonfly_attachments unless respond_to?(:before_destroy_callback_chain) && before_destroy_callback_chain.find(:destroy_dragonfly_attachments)
       
             # Register the new attribute
-            dragonfly_apps_for_attributes[attribute] = app
+            dragonfly_attachment_specs << AttachmentSpec.new(attribute, app)
             
             # Define the setter for the attribute
             define_method "#{attribute}=" do |value|
@@ -33,10 +33,10 @@ module Dragonfly
         app
       end
       
-      def dragonfly_apps_for_attributes
-        @dragonfly_apps_for_attributes ||= begin
+      def dragonfly_attachment_specs
+        @dragonfly_attachment_specs ||= begin
           parent_class = ancestors.select{|a| a.is_a?(Class) }[1]
-          parent_class.respond_to?(:dragonfly_apps_for_attributes) ? parent_class.dragonfly_apps_for_attributes.dup : {}
+          parent_class.respond_to?(:dragonfly_attachment_specs) ? parent_class.dragonfly_attachment_specs.dup : []
         end
       end
       

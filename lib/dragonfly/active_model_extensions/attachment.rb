@@ -12,8 +12,11 @@ module Dragonfly
         :meta, :meta=,
         :url
 
-      def initialize(app, parent_model, attribute_name)
-        @app, @parent_model, @attribute_name = app, parent_model, attribute_name
+      def_delegators :spec,
+        :app, :attribute
+
+      def initialize(spec, parent_model)
+        @spec, @parent_model = spec, parent_model
         self.extend app.analyser.analysis_methods
         self.extend app.job_definitions
         self.uid = parent_uid
@@ -48,7 +51,7 @@ module Dragonfly
           set_uid_and_parent_uid job.store(
             :meta => {
               :model_class => parent_model.class.name,
-              :model_attachment => attribute_name
+              :model_attachment => attribute
             }
           )
           self.job = job.to_fetched_job(uid)
@@ -117,14 +120,14 @@ module Dragonfly
       end
 
       def parent_uid=(uid)
-        parent_model.send("#{attribute_name}_uid=", uid)
+        parent_model.send("#{attribute}_uid=", uid)
       end
 
       def parent_uid
-        parent_model.send("#{attribute_name}_uid")
+        parent_model.send("#{attribute}_uid")
       end
 
-      attr_reader :app, :parent_model, :attribute_name
+      attr_reader :spec, :parent_model
       attr_writer :job
       attr_accessor :previous_uid
       attr_reader :uid
@@ -140,12 +143,12 @@ module Dragonfly
 
       def magic_attributes
         @magic_attributes ||= parent_model.public_methods.select { |name|
-          name.to_s =~ /^#{attribute_name}_(.+)$/ && allowed_magic_attributes.include?($1.to_sym)
-        }.map{|name| name.to_s.sub("#{attribute_name}_", '').to_sym }
+          name.to_s =~ /^#{attribute}_(.+)$/ && allowed_magic_attributes.include?($1.to_sym)
+        }.map{|name| name.to_s.sub("#{attribute}_", '').to_sym }
       end
 
       def set_magic_attribute(property, value)
-        parent_model.send("#{attribute_name}_#{property}=", value)
+        parent_model.send("#{attribute}_#{property}=", value)
       end
 
       def set_magic_attributes
@@ -161,7 +164,7 @@ module Dragonfly
       end
 
       def magic_attribute_for(property)
-        parent_model.send("#{attribute_name}_#{property}")
+        parent_model.send("#{attribute}_#{property}")
       end
 
     end
