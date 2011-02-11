@@ -9,6 +9,7 @@ tmp
 fixtures/*/tmp_app
 .ginger
 .bundle
+.rvmrc
 spec/spec.log
 Gemfile.lock
 .s3_spec.yml
