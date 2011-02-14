@@ -45,48 +45,15 @@ task :spec do
   system "bundle exec spec -O .specopts spec/dragonfly"
 end
 
-desc "Run the active model specs"
-task :model_spec do
-  system "bundle exec spec -O .specopts spec/dragonfly/active_model_extensions"
-end
-
-desc "Run the active_record specs (AR 2.3)"
-task :model_spec_235 do
-  system "export BUNDLE_GEMFILE=Gemfile.rails.2.3.5 && bundle exec spec -O .specopts spec/dragonfly/active_model_extensions"
-end
-
+desc "Run all the features"
 task :features do
   system "bundle exec cucumber"
 end
 
 task :default do
   # Do everything!!!
-  puts "*** Running all the specs using the default Gemfile ***"
+  puts "*** Running the specs ***"
   Rake::Task['spec'].invoke
-  puts "*** Running the model specs with Gemfile.rails.2.3.5 ***"
-  Rake::Task['model_spec_235'].invoke
   puts "*** Running the features ***"
   Rake::Task['features'].invoke
-end
-
-desc 'Set up a Rails app ready for testing'
-namespace :rails do
-
-  task :setup do
-    version = ENV['RAILS_VERSION']
-    raise "Please give a RAILS_VERSION, e.g. RAILS_VERSION=2.3.5" unless version
-    path = File.expand_path("fixtures/rails_#{version}")
-    app_name = 'tmp_app'
-    system %(
-      cd #{path} &&
-      rm -rf #{app_name} &&
-      ../rails _#{version}_ #{app_name} -m template.rb
-    )
-    FileUtils.cp("fixtures/dragonfly_setup.rb", "#{path}/#{app_name}/config/initializers")
-    system %(cd #{path}/#{app_name} && rake db:migrate)
-    puts "*** Created a Rails #{version} app in #{path}/#{app_name} ***"
-    puts "Now just start the server, and go to localhost:3000/albums"
-    puts "***"
-  end
-
 end
