@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # Needs: @generator
-describe "image generator", :shared => true do
+shared_examples_for "image generator" do
   
   describe "generating an image with the given dimensions" do
     before(:each) do

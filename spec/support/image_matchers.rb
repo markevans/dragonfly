@@ -22,25 +22,25 @@ def image_properties(image)
   }
 end
 
-Spec::Matchers.define :have_width do |width|
+RSpec::Matchers.define :have_width do |width|
   match do |given|
     width.should === image_properties(given)[:width].to_i
   end
 end
 
-Spec::Matchers.define :have_height do |height|
+RSpec::Matchers.define :have_height do |height|
   match do |given|
     height.should === image_properties(given)[:height].to_i
   end
 end
 
-Spec::Matchers.define :have_format do |format|
+RSpec::Matchers.define :have_format do |format|
   match do |given|
     image_properties(given)[:format].should == format
   end
 end
 
-Spec::Matchers.define :have_size do |size|
+RSpec::Matchers.define :have_size do |size|
   match do |given|
     image_properties(given)[:size].should == size
   end

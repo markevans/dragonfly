@@ -1,7 +1,7 @@
 unless ENV['IGNORE_RMAGICK']
 
   require 'spec_helper'
-  require 'dragonfly/processing/shared_processing_spec'
+  require 'dragonfly/processing/shared_processing_examples'
 
   describe Dragonfly::Processing::RMagickProcessor do
   

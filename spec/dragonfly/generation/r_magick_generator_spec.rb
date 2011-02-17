@@ -1,7 +1,7 @@
 unless ENV['IGNORE_RMAGICK']
 
   require 'spec_helper'
-  require 'dragonfly/generation/shared_generator_spec'
+  require 'dragonfly/generation/shared_generator_examples'
 
   describe Dragonfly::Generation::RMagickGenerator do
 

@@ -3,7 +3,7 @@
 # @image
 # @processor
 #
-describe "processing methods", :shared => true do
+shared_examples_for "processing methods" do
 
   describe "resize" do
 

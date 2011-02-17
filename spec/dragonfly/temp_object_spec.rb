@@ -48,7 +48,7 @@ describe Dragonfly::TempObject do
     }.should raise_error(ArgumentError)
   end
 
-  describe "common behaviour", :shared => true do
+  shared_examples_for "common behaviour" do
 
     describe "simple initialization" do
 

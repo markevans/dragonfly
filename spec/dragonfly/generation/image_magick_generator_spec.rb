@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'dragonfly/generation/shared_generator_spec'
+require 'dragonfly/generation/shared_generator_examples'
 
 describe Dragonfly::Generation::ImageMagickGenerator do
 

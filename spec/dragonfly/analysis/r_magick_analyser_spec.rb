@@ -1,7 +1,7 @@
 unless ENV['IGNORE_RMAGICK']
 
   require 'spec_helper'
-  require 'dragonfly/analysis/shared_analyser_spec'
+  require 'dragonfly/analysis/shared_analyser_examples'
 
   describe Dragonfly::Analysis::RMagickAnalyser do
   

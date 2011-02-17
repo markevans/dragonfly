@@ -10,7 +10,7 @@ describe Dragonfly::Loggable do
     @object = Testoast.new
   end
 
-  describe "common", :shared => true do
+  shared_examples_for "common" do
     it "should return a log" do
       @object.log.should be_a(Logger)
     end

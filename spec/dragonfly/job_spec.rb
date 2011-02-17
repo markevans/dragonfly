@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # Matchers
-Spec::Matchers.define :match_steps do |steps|
+RSpec::Matchers.define :match_steps do |steps|
   match do |given|
     given.map{|step| step.class } == steps
   end

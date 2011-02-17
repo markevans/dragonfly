@@ -3,7 +3,7 @@
 # @image
 # @processor
 #
-describe "image analyser methods", :shared => true do
+shared_examples_for "image analyser methods" do
   
   it "should return the width" do
     @analyser.width(@image).should == 280

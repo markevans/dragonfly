@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "data_store", :shared => true do
+shared_examples_for "data_store" do
 
   # Using these shared spec requires you to set the inst var @data_store
 
