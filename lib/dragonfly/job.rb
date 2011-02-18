@@ -201,19 +201,6 @@ module Dragonfly
       end
     end
 
-    def +(other_job)
-      unless app == other_job.app
-        raise AppDoesNotMatch, "Cannot add jobs belonging to different apps (#{app} is not #{other_job.app})"
-      end
-      unless other_job.applied_steps.empty?
-        raise JobAlreadyApplied, "Cannot add jobs when the second one has already been applied (#{other_job})"
-      end
-      new_job = self.class.new(app, temp_object)
-      new_job.steps = steps + other_job.steps
-      new_job.next_step_index = next_step_index
-      new_job
-    end
-
     # Applying, etc.
 
     def apply
