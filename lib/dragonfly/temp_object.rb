@@ -91,7 +91,6 @@ module Dragonfly
     end
 
     attr_accessor :name, :format
-    alias _format format
     attr_writer :meta
 
     def meta

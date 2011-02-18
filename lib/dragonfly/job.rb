@@ -16,7 +16,7 @@ module Dragonfly
     class IncorrectSHA < StandardError; end
 
     extend Forwardable
-    def_delegators :result, :data, :file, :tempfile, :path, :to_file, :size, :ext, :name, :name=, :basename, :meta, :meta=, :format, :_format
+    def_delegators :result, :data, :file, :tempfile, :path, :to_file, :size, :ext, :name, :name=, :basename, :meta, :meta=, :format
 
     class Step
 
@@ -195,7 +195,7 @@ module Dragonfly
       end
       # Hacky - wish there was a nicer way to do this without extending with yet another module
       if method == :format
-        _format || analyser.analyse(result, method, *args)
+        result.format || analyser.analyse(result, method, *args)
       else
         analyser.analyse(result, method, *args)
       end
