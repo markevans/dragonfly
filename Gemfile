@@ -9,7 +9,6 @@ group :development, :test, :cucumber do
   gem 'database_cleaner'
   gem 'jeweler', '~> 1.5.2'
   gem 'mongo'
-  gem 'nokogiri'
   gem 'rack', '~>1.1'
   gem 'rack-cache'
   gem 'rails', '3.0.3', :require => nil
