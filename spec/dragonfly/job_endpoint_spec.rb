@@ -7,7 +7,7 @@ describe "Dragonfly::JobEndpoint Rack::Lint tests" do
   before(:each) do
     @app = test_app
     @app.generator.add(:test_data){ "Test Data" }
-    @job = Dragonfly::Job.new(@app).generate(:test_data)
+    @job = @app.new_job.generate(:test_data)
     @endpoint = Rack::Lint.new(Dragonfly::JobEndpoint.new(@job))
   end
   
@@ -43,7 +43,7 @@ describe Dragonfly::JobEndpoint do
   before(:each) do
     @app = test_app
     @app.datastore.stub!(:retrieve).with('egg').and_return(["GUNGLE", {:name => 'gung.txt'}])
-    @job = Dragonfly::Job.new(@app).fetch('egg')
+    @job = @app.new_job.fetch('egg')
   end
 
   it "should return a correct response to a successful GET request" do

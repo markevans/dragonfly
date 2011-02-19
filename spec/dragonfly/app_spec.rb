@@ -135,7 +135,7 @@ describe Dragonfly::App do
   describe "without path prefix or DOS protection" do
     before(:each) do
       @app = test_app
-      @job = Dragonfly::Job.new(@app).fetch('some_uid')
+      @job = @app.new_job.fetch('some_uid')
       @app.datastore.stub!(:retrieve).with('some_uid').and_return "Hi there"
       @app.configure{|c| c.protect_from_dos_attacks = false }
     end
@@ -152,7 +152,7 @@ describe Dragonfly::App do
   describe "url_path_prefix" do
     before(:each) do
       @app = test_app
-      @job = Dragonfly::Job.new(@app)
+      @job = @app.new_job
     end
     it "should add the path prefix to the url if configured" do
       @app.url_path_prefix = '/media'
@@ -170,7 +170,7 @@ describe Dragonfly::App do
   describe "url_host" do
     before(:each) do
       @app = test_app
-      @job = Dragonfly::Job.new(@app)
+      @job = @app.new_job
     end
     it "should add the host to the url if configured" do
       @app.url_host = 'http://some.server:4000'
@@ -188,7 +188,7 @@ describe Dragonfly::App do
   describe "url_suffix" do
     before(:each) do
       @app = test_app
-      @job = Dragonfly::Job.new(@app)
+      @job = @app.new_job
     end
     it "should add the suffix to the url if configured" do
       @app.url_suffix = 'hellodudes'
@@ -211,7 +211,7 @@ describe Dragonfly::App do
   describe "url params" do
     before(:each) do
       @app = test_app
-      @job = Dragonfly::Job.new(@app)
+      @job = @app.new_job
     end
     it "should add extra params to the url query string" do
       @app.url_for(@job, :suffix => '/suffix', :a => 'thing', :b => 'nuther').should =~ /\w+\/suffix\?a=thing&b=nuther$/
@@ -222,7 +222,7 @@ describe Dragonfly::App do
     before(:each) do
       @app = test_app
       @app.protect_from_dos_attacks = true
-      @job = Dragonfly::Job.new(@app).fetch('some_uid')
+      @job = @app.new_job.fetch('some_uid')
     end
     it "should generate the correct url" do
       @app.url_for(@job).should == "/#{@job.serialize}?s=#{@job.sha}"

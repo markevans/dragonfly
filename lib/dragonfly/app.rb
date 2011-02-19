@@ -84,7 +84,7 @@ module Dragonfly
     end
 
     def new_job(content=nil, opts={})
-      content ? Job.new(self, TempObject.new(content, opts)) : Job.new(self)
+      content ? job_class.new(self, TempObject.new(content, opts)) : job_class.new(self)
     end
 
     def endpoint(job=nil, &block)
@@ -95,6 +95,18 @@ module Dragonfly
       job_definitions.add(name, &block)
     end
     configuration_method :job
+
+    def job_class
+      @job_class ||= begin
+        app = self
+        Class.new(Job).class_eval do
+          include app.analyser.analysis_methods
+          include app.job_definitions
+          include Job::OverrideInstanceMethods
+          self
+        end
+      end
+    end
 
     def store(object, opts={})
       temp_object = object.is_a?(TempObject) ? object : TempObject.new(object)

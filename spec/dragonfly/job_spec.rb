@@ -231,7 +231,7 @@ describe Dragonfly::Job do
   describe "analysis" do
     before(:each) do
       @app = test_app
-      @job = Dragonfly::Job.new(@app, Dragonfly::TempObject.new('HELLO'))
+      @job = @app.new_job('HELLO')
       @app.analyser.add(:num_letters){|temp_object, letter| temp_object.data.count(letter) }
     end
     it "should return correctly when calling analyse" do
