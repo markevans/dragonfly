@@ -11,13 +11,6 @@ require 'fileutils'
 # Requires supporting files with custom matchers and macros, etc,
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
-ROOT_PATH = File.expand_path(File.dirname(__FILE__) + "/..") unless defined?(ROOT_PATH)
-
-# A hack as system calls weren't using my path
-extra_paths = %w(/opt/local/bin)
-ENV['PATH'] ||= ''
-ENV['PATH'] += ':' + extra_paths.join(':')
-
 # If this is jRuby, ignore the rmagick tests
 ENV['IGNORE_RMAGICK'] = 'true' if RUBY_PLATFORM == 'java' || defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
 
