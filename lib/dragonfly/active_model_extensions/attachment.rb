@@ -17,8 +17,6 @@ module Dragonfly
 
       def initialize(spec, parent_model)
         @spec, @parent_model = spec, parent_model
-        self.extend app.analyser.analysis_methods
-        self.extend app.job_definitions
         self.uid = parent_uid
         self.job = app.fetch(uid) if uid
       end

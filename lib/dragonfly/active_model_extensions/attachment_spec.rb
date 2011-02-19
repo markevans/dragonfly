@@ -9,6 +9,10 @@ module Dragonfly
       
       attr_reader :attribute, :app
       
+      def new_attachment(model)
+        app.attachment_class.new(self, model)
+      end
+      
     end
   end
 end

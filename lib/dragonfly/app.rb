@@ -108,6 +108,17 @@ module Dragonfly
       end
     end
 
+    def attachment_class
+      @attachment_class ||= begin
+        app = self
+        Class.new(ActiveModelExtensions::Attachment).class_eval do
+          include app.analyser.analysis_methods
+          include app.job_definitions
+          self
+        end
+      end
+    end
+
     def store(object, opts={})
       temp_object = object.is_a?(TempObject) ? object : TempObject.new(object)
       temp_object.extract_attributes_from(opts)
