@@ -43,5 +43,12 @@ module Dragonfly
       App[*args]
     end
 
+    # Register saved configurations so we can do e.g.
+    # Dragonfly[:my_app].configure_with(:image_magick)
+    App.register_configuration(:imagemagick){ ImageMagick::Config }
+    App.register_configuration(:image_magick){ ImageMagick::Config }
+    App.register_configuration(:rails){ Config::Rails }
+    App.register_configuration(:heroku){ Config::Heroku }
+
   end
 end
