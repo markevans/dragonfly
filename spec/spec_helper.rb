@@ -11,9 +11,6 @@ require 'fileutils'
 # Requires supporting files with custom matchers and macros, etc,
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
-# If this is jRuby, ignore the rmagick tests
-ENV['IGNORE_RMAGICK'] = 'true' if RUBY_PLATFORM == 'java' || defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
-
 SAMPLES_DIR = File.expand_path(File.dirname(__FILE__) + '/../samples') unless defined?(SAMPLES_DIR)
 
 def todo
