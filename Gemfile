@@ -13,7 +13,7 @@ group :development, :test, :cucumber do
   gem 'jeweler', '~> 1.5.2'
   gem 'mongo'
   gem 'rack-cache'
-  gem 'rails', '3.0.3', :require => nil
+  gem 'rails', '3.0.4', :require => nil
   gem 'rake'
   gem 'rspec', '~> 2.5'
   gem 'yard'
