@@ -23,7 +23,7 @@ We can encode it to any format registered with the encoder.
 ImageMagick Encoder
 -------------------
 The {Dragonfly::ImageMagick::Encoder ImageMagick Encoder} is registered by default by
-the {Dragonfly::Config::ImageMagick ImageMagick configuration} used by 'dragonfly/rails/images'.
+the {Dragonfly::ImageMagick::Config ImageMagick configuration} used by 'dragonfly/rails/images'.
 
 If not already registered:
 

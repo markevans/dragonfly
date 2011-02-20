@@ -22,7 +22,7 @@ We can process it using any processing methods that have been registered with th
 ImageMagick Processor
 ---------------------
 The {Dragonfly::ImageMagick::Processor ImageMagick Processor} is registered by default by
-the {Dragonfly::Config::ImageMagick ImageMagick configuration} used by 'dragonfly/rails/images'.
+the {Dragonfly::ImageMagick::Config ImageMagick configuration} used by 'dragonfly/rails/images'.
 
 If not already registered:
 

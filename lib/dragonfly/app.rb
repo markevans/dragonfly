@@ -17,8 +17,8 @@ module Dragonfly
 
       def saved_configs
         @saved_configs ||= {
-          :imagemagick => proc{ Config::ImageMagick },
-          :image_magick => proc{ Config::ImageMagick },
+          :imagemagick => proc{ ImageMagick::Config },
+          :image_magick => proc{ ImageMagick::Config },
           :rails => proc{ Config::Rails },
           :heroku => proc{ Config::Heroku }
         }

@@ -235,8 +235,8 @@ describe Dragonfly::App do
     end
 
     {
-      :imagemagick => Dragonfly::Config::ImageMagick,
-      :image_magick => Dragonfly::Config::ImageMagick,
+      :imagemagick => Dragonfly::ImageMagick::Config,
+      :image_magick => Dragonfly::ImageMagick::Config,
       :rails => Dragonfly::Config::Rails,
       :heroku => Dragonfly::Config::Heroku,
     }.each do |key, klass|

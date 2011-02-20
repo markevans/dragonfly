@@ -18,7 +18,7 @@ where `:some_method` is added by the configured generators.
 ImageMagick Generator
 ---------------------
 The {Dragonfly::ImageMagick::Generator ImageMagick Generator} is registered by default by the
-{Dragonfly::Config::ImageMagick ImageMagick configuration} used by 'dragonfly/rails/images'.
+{Dragonfly::ImageMagick::Config ImageMagick configuration} used by 'dragonfly/rails/images'.
 
 If not already registered:
 

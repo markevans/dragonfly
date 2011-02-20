@@ -22,7 +22,7 @@ We can analyse it using any analysis methods that have been registered with the 
 ImageMagick Analyser
 --------------------
 The {Dragonfly::ImageMagick::Analyser ImageMagick Analyser} is registered by default by the
-{Dragonfly::Config::ImageMagick ImageMagick configuration} used by 'dragonfly/rails/images'.
+{Dragonfly::ImageMagick::Config ImageMagick configuration} used by 'dragonfly/rails/images'.
 
 If not already registered:
 
