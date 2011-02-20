@@ -39,15 +39,6 @@ gives us these methods:
     image.number_of_colours   # => 34703
     image.format              # => :png
 
-RMagickAnalyser
--------------------
-The {Dragonfly::Analysis::RMagickAnalyser RMagickAnalyser} uses the {http://rmagick.rubyforge.org RMagick} library and provides methods `width`, `height`, `aspect_ratio`,
-`portrait?`, `landscape?`, `depth`, `number_of_colours` and `format` like the ImageMagickAnalyser.
-
-You can tell it not to use the file system when registering it
-
-    app.analyser.register(Dragonfly::Analysis::RMagickAnalyser){|a| a.use_filesystem = false }
-
 FileCommandAnalyser
 -------------------
 The {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} is registered by default by the

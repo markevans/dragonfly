@@ -78,20 +78,6 @@ The file 'dragonfly/rails/images' does this for you.
 
 The processor, analyser, encoder and generator pass data around using tempfiles.
 
-RMagick
--------
-
-    app.configure_with(:rmagick)
-
-The {Dragonfly::Config::RMagick RMagick configuration} registers the app with the {Dragonfly::Analysis::RMagickAnalyser RMagickAnalyser}, {Dragonfly::Processing::RMagickProcessor RMagickProcessor},
-{Dragonfly::Encoding::RMagickEncoder RMagickEncoder} and {Dragonfly::Generation::RMagickGenerator RMagickGenerator}, and adds the 'job shortcuts'
-`thumb`, `jpg`, `png` and `gif`.
-
-By default the processor, analyser, encoder and generator pass data around using tempfiles.
-You can make it pass data around using in-memory strings using
-
-    app.configure_with(:rmagick, :use_filesystem => false)
-
 Rails
 -----
 

@@ -51,16 +51,6 @@ You can use `padding-top`, `padding-left`, etc., as well as the standard css sho
 An alternative for `:font_family` is `:font` (see {http://www.imagemagick.org/script/command-line-options.php#font}), which could be a complete filename.
 Available fonts are those available on your system.
 
-RMagickGenerator
-----------------
-The {Dragonfly::Generation::RMagickGenerator RMagickGenerator} gives you `plasma` and `text` like the imagemagick generator above, using the
-{http://rmagick.rubyforge.org RMagick} library.
-
-You can tell it not to use the file system when registering it
-
-    app.generator.register(Dragonfly::Generation::RMagickGenerator){|g| g.use_filesystem = false }
-
-
 Custom Generators
 -----------------
 To register a single custom generator:
