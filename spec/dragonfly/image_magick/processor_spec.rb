@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Dragonfly::Processing::ImageMagickProcessor do
+describe Dragonfly::ImageMagick::Processor do
   
   before(:each) do
     sample_file = File.dirname(__FILE__) + '/../../../samples/beach.png' # 280x355
     @image = Dragonfly::TempObject.new(File.new(sample_file))
-    @processor = Dragonfly::Processing::ImageMagickProcessor.new
+    @processor = Dragonfly::ImageMagick::Processor.new
   end
 
   describe "resize" do
