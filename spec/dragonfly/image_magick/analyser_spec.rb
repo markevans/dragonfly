@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Dragonfly::Analysis::ImageMagickAnalyser do
+describe Dragonfly::ImageMagick::Analyser do
   
   before(:each) do
     image_path = File.dirname(__FILE__) + '/../../../samples/beach.png'
     @image = Dragonfly::TempObject.new(File.new(image_path))
-    @analyser = Dragonfly::Analysis::ImageMagickAnalyser.new
+    @analyser = Dragonfly::ImageMagick::Analyser.new
   end
 
   it "should return the width" do
