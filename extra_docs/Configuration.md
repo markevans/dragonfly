@@ -70,8 +70,8 @@ ImageMagick
 
     app.configure_with(:imagemagick)
 
-The {Dragonfly::Config::ImageMagick ImageMagick configuration} registers the app with the {Dragonfly::Analysis::ImageMagickAnalyser ImageMagickAnalyser}, {Dragonfly::Processing::ImageMagickProcessor ImageMagickProcessor},
-{Dragonfly::Encoding::ImageMagickEncoder ImageMagickEncoder} and {Dragonfly::Generation::ImageMagickGenerator ImageMagickGenerator}, and adds the 'job shortcuts'
+The {Dragonfly::Config::ImageMagick ImageMagick configuration} registers the app with the {Dragonfly::ImageMagick::Analyser ImageMagick Analyser}, {Dragonfly::ImageMagick::Processor ImageMagick Processor},
+{Dragonfly::ImageMagick::Encoder ImageMagick Encoder} and {Dragonfly::ImageMagick::Generator ImageMagick Generator}, and adds the 'job shortcuts'
 `thumb`, `jpg`, `png`, `gif` and `convert`.
 
 The file 'dragonfly/rails/images' does this for you.

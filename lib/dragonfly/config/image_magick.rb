@@ -11,10 +11,10 @@ module Dragonfly
 
       def self.apply_configuration(app, opts={})
         app.configure do |c|
-          c.analyser.register(Analysis::ImageMagickAnalyser)
-          c.processor.register(Processing::ImageMagickProcessor)
-          c.encoder.register(Encoding::ImageMagickEncoder)
-          c.generator.register(Generation::ImageMagickGenerator)
+          c.analyser.register(ImageMagick::Analyser)
+          c.processor.register(ImageMagick::Processor)
+          c.encoder.register(ImageMagick::Encoder)
+          c.generator.register(ImageMagick::Generator)
 
           c.job :thumb do |geometry, format|
             process :thumb, geometry

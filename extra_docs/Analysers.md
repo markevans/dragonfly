@@ -19,14 +19,14 @@ and an image object (actually a {Dragonfly::Job Job} object)...
 
 We can analyse it using any analysis methods that have been registered with the analyser.
 
-ImageMagickAnalyser
--------------------
-The {Dragonfly::Analysis::ImageMagickAnalyser ImageMagickAnalyser} is registered by default by the
+ImageMagick Analyser
+--------------------
+The {Dragonfly::ImageMagick::Analyser ImageMagick Analyser} is registered by default by the
 {Dragonfly::Config::ImageMagick ImageMagick configuration} used by 'dragonfly/rails/images'.
 
 If not already registered:
 
-    app.analyser.register(Dragonfly::Analysis::ImageMagickAnalyser)
+    app.analyser.register(Dragonfly::ImageMagick::Analyser)
 
 gives us these methods:
 
