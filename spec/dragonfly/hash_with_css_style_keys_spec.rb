@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Dragonfly::Generation::HashWithCssStyleKeys do
+describe Dragonfly::HashWithCssStyleKeys do
   
   before(:each) do
-    @hash = Dragonfly::Generation::HashWithCssStyleKeys[
+    @hash = Dragonfly::HashWithCssStyleKeys[
       :font_style => 'normal',
       :'font-weight' => 'bold',
       'font_colour' => 'white',
