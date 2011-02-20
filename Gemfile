@@ -23,7 +23,6 @@ group :development, :test, :cucumber do
     gem "jruby-openssl"
   else
     gem 'bson_ext'
-    gem 'rmagick', '2.12.2', :require => nil
     gem 'sqlite3-ruby'
   end
 end
