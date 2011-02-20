@@ -3,6 +3,7 @@ source :rubygems
 # These gems are needed for development and testing
 group :development, :test, :cucumber do
   gem 'aws-s3'
+  gem 'bluecloth'
   gem 'capybara'
   gem 'cucumber', '~>0.10.0'
   gem 'cucumber-rails', '~>0.3.2'
