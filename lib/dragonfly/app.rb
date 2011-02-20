@@ -15,6 +15,15 @@ module Dragonfly
 
       alias [] instance
 
+      def saved_configs
+        @saved_configs ||= {
+          :imagemagick => proc{ Config::ImageMagick },
+          :image_magick => proc{ Config::ImageMagick },
+          :rails => proc{ Config::Rails },
+          :heroku => proc{ Config::Heroku }
+        }
+      end
+
       private
 
       def apps
@@ -66,19 +75,13 @@ module Dragonfly
 
     attr_accessor :job_definitions
 
-    SAVED_CONFIGS = {
-      :imagemagick => 'ImageMagick',
-      :image_magick => 'ImageMagick',
-      :rails => 'Rails',
-      :heroku => 'Heroku'
-    }
-
     def configurer_for(symbol)
-      class_name = SAVED_CONFIGS[symbol]
-      if class_name.nil?
-        raise ArgumentError, "#{symbol.inspect} is not a known configuration - try one of #{SAVED_CONFIGS.keys.join(', ')}"
+      config = saved_configs[symbol]
+      if config.nil?
+        raise ArgumentError, "#{symbol.inspect} is not a known configuration - try one of #{saved_configs.keys.join(', ')}"
       end
-      Config.const_get(class_name)
+      config = config.call if config.respond_to?(:call)
+      config
     end
 
     def new_job(content=nil, opts={})
@@ -180,6 +183,10 @@ module Dragonfly
     end
 
     private
+
+    def saved_configs
+      self.class.saved_configs
+    end
 
     def file_ext_string(format)
       '.' + format.to_s.downcase.sub(/^.*\./,'')

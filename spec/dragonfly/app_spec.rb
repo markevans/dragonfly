@@ -246,10 +246,24 @@ describe Dragonfly::App do
       end
     end
 
-    it "should description" do
+    it "should throw an error if an unknown symbol is passed in" do
       lambda {
         @app.configure_with(:eggs)
       }.should raise_error(ArgumentError)
+    end
+    
+    describe "lazy loading the saved configs, to avoid loading a library not present on a system until it's needed" do
+      before(:each) do
+        Dragonfly::App.stub!(:saved_configs).and_return(
+          :some_library => proc{ SomeLibrary }
+        )
+      end
+      
+      it "should only try to load the library when asked to" do
+        lambda{
+          @app.configure_with(:some_library)
+        }.should raise_error(NameError, /uninitialized constant.*SomeLibrary/)
+      end
     end
   end
 
