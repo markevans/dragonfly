@@ -178,7 +178,7 @@ describe Dragonfly::Configurable do
 
   end
   
-  describe "configuring with a configurer" do
+  describe "configuring with a saved config" do
     before(:each) do
       @cool_configuration = Object.new
       def @cool_configuration.apply_configuration(car, colour=nil)
@@ -188,13 +188,13 @@ describe Dragonfly::Configurable do
       end
     end
     
-    it "should allow configuration by a configurer" do
+    it "should allow configuration by a saved config" do
       @car.configure_with(@cool_configuration)
       @car.colour.should == 'vermelho'
       @car.top_speed.should == 216
     end
     
-    it "should pass any args through to the configurer" do
+    it "should pass any args through to the saved config" do
       @car.configure_with(@cool_configuration, 'preto')
       @car.colour.should == 'preto'
     end
@@ -210,11 +210,39 @@ describe Dragonfly::Configurable do
       @car.configure_with(@cool_configuration).should == @car
     end
     
-    it "should ask the object which object to configure with if a symbol is given" do
-      @car.should_receive(:configurer_for).with(:cool).and_return(@cool_configuration)
-      @car.configure_with(:cool)
-      @car.colour.should == 'vermelho'
+    describe "using a symbol to specify the config" do
+
+      before(:all) do
+        @rally_config = Object.new
+        Car.register_configuration(:rally, @rally_config)
+        @long_journey_config = Object.new
+        Car.register_configuration(:long_journey){ @long_journey_config }
+        Car.register_configuration(:some_library){ SomeLibrary }
+      end
+
+      it "should map the symbol to the correct configuration" do
+        @rally_config.should_receive(:apply_configuration).with(@car)
+        @car.configure_with(:rally)
+      end
+
+      it "should map the symbol to the correct configuration lazily" do
+        @long_journey_config.should_receive(:apply_configuration).with(@car)
+        @car.configure_with(:long_journey)
+      end
+
+      it "should throw an error if an unknown symbol is passed in" do
+        lambda {
+          @car.configure_with(:eggs)
+        }.should raise_error(ArgumentError)
+      end
+
+      it "should only try to load the library when asked to" do
+        lambda{
+          @car.configure_with(:some_library)
+        }.should raise_error(NameError, /uninitialized constant.*SomeLibrary/)
+      end
     end
+    
   end
   
 end

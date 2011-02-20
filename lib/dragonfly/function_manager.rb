@@ -59,7 +59,7 @@ module Dragonfly
       if obj.is_a?(Configurable)
         obj.public_methods(false) -
           obj.configuration_methods.map{|meth| meth.to_method_name} -
-          [:configuration_methods.to_method_name]
+          [:configuration_methods.to_method_name, :saved_configs.to_method_name] # Hacky - there must be a better way...
       else
         obj.public_methods(false)
       end

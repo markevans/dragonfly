@@ -15,15 +15,6 @@ module Dragonfly
 
       alias [] instance
 
-      def saved_configs
-        @saved_configs ||= {
-          :imagemagick => proc{ ImageMagick::Config },
-          :image_magick => proc{ ImageMagick::Config },
-          :rails => proc{ Config::Rails },
-          :heroku => proc{ Config::Heroku }
-        }
-      end
-
       private
 
       def apps
@@ -74,15 +65,6 @@ module Dragonfly
     configuration_method :generator
 
     attr_accessor :job_definitions
-
-    def configurer_for(symbol)
-      config = saved_configs[symbol]
-      if config.nil?
-        raise ArgumentError, "#{symbol.inspect} is not a known configuration - try one of #{saved_configs.keys.join(', ')}"
-      end
-      config = config.call if config.respond_to?(:call)
-      config
-    end
 
     def new_job(content=nil, opts={})
       content ? job_class.new(self, TempObject.new(content, opts)) : job_class.new(self)

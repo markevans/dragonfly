@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 require 'rack/mock'
 
 def request(app, path)
@@ -226,44 +226,6 @@ describe Dragonfly::App do
     end
     it "should generate the correct url" do
       @app.url_for(@job).should == "/#{@job.serialize}?s=#{@job.sha}"
-    end
-  end
-
-  describe "configuring with saved configurations" do
-    before(:each) do
-      @app = test_app
-    end
-
-    {
-      :imagemagick => Dragonfly::ImageMagick::Config,
-      :image_magick => Dragonfly::ImageMagick::Config,
-      :rails => Dragonfly::Config::Rails,
-      :heroku => Dragonfly::Config::Heroku,
-    }.each do |key, klass|
-      it "should map #{key} to #{klass}" do
-        klass.should_receive(:apply_configuration).with(@app)
-        @app.configure_with(key)
-      end
-    end
-
-    it "should throw an error if an unknown symbol is passed in" do
-      lambda {
-        @app.configure_with(:eggs)
-      }.should raise_error(ArgumentError)
-    end
-    
-    describe "lazy loading the saved configs, to avoid loading a library not present on a system until it's needed" do
-      before(:each) do
-        Dragonfly::App.stub!(:saved_configs).and_return(
-          :some_library => proc{ SomeLibrary }
-        )
-      end
-      
-      it "should only try to load the library when asked to" do
-        lambda{
-          @app.configure_with(:some_library)
-        }.should raise_error(NameError, /uninitialized constant.*SomeLibrary/)
-      end
     end
   end
 

@@ -12,7 +12,7 @@ module Dragonfly
         # These aren't included in InstanceMethods because we need access to 'klass'
         # We can't just put them into InstanceMethods and use 'self.class' because
         # this won't always point to the class in which we've included Configurable,
-        # e.g. if we've included it in an eigenclasse
+        # e.g. if we've included it in an eigenclass
         define_method :configuration_hash do
           @configuration_hash ||= klass.default_configuration.dup
         end
@@ -20,6 +20,10 @@ module Dragonfly
 
         define_method :configuration_methods do
           klass.configuration_methods
+        end
+
+        define_method :saved_configs do
+          klass.saved_configs
         end
 
       end
@@ -42,9 +46,9 @@ module Dragonfly
         self
       end
 
-      def configure_with(configurer, *args, &block)
-        configurer = configurer_for(configurer) if configurer.is_a?(Symbol)
-        configurer.apply_configuration(self, *args)
+      def configure_with(config, *args, &block)
+        config = saved_config_for(config) if config.is_a?(Symbol)
+        config.apply_configuration(self, *args)
         configure(&block) if block
         self
       end
@@ -55,6 +59,17 @@ module Dragonfly
 
       def has_configuration_method?(method_name)
         configuration_methods.include?(method_name.to_sym)
+      end
+      
+      private
+      
+      def saved_config_for(symbol)
+        config = saved_configs[symbol]
+        if config.nil?
+          raise ArgumentError, "#{symbol.inspect} is not a known configuration - try one of #{saved_configs.keys.join(', ')}"
+        end
+        config = config.call if config.respond_to?(:call)
+        config
       end
 
     end
@@ -67,6 +82,14 @@ module Dragonfly
 
       def configuration_methods
         @configuration_methods ||= []
+      end
+
+      def register_configuration(name, config=nil, &config_in_block) 
+        saved_configs[name] = config_in_block || config
+      end
+
+      def saved_configs
+        @saved_configs ||= {}
       end
 
       private
