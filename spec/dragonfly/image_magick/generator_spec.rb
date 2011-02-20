@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Dragonfly::Generation::ImageMagickGenerator do
+describe Dragonfly::ImageMagick::Generator do
 
   before(:each) do
-    @generator = Dragonfly::Generation::ImageMagickGenerator.new
+    @generator = Dragonfly::ImageMagick::Generator.new
   end
 
   describe "generating an image with the given dimensions" do
