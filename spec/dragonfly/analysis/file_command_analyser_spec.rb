@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
+require 'spec_helper'
 
 png_path = File.dirname(__FILE__) + '/../../../samples/egg.png'
 

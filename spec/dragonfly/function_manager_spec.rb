@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 RSpec::Matchers.define :have_keys do |*keys|
   match do |given|
