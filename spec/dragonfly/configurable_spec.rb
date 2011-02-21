@@ -30,6 +30,11 @@ describe Dragonfly::Configurable do
       @car.colour.should be_nil
     end
     
+    it "should allow setting to nil" do
+      @car.top_speed = nil
+      @car.top_speed.should be_nil
+    end
+    
     it "should allow specifying configurable attrs as strings" do
       class Bike
         include Dragonfly::Configurable
@@ -61,12 +66,12 @@ describe Dragonfly::Configurable do
   end
   
   describe "getting configuration" do
-    it "should return the configuration as a hash" do
-      @car.configuration.should == {:colour => nil, :top_speed => 216}
+    it "should return the configuration when nothing is set" do
+      @car.configuration.should == {}
     end
-    it "should not allow you to change the configuration via the hash" do
-      @car.configuration[:top_speed] = 555
-      @car.top_speed.should == 216
+    it "should return the configuration when something is set" do
+      @car.top_speed = 10
+      @car.configuration.should == {:top_speed => 10}
     end
   end
   
@@ -79,8 +84,8 @@ describe Dragonfly::Configurable do
       car1.configure{|c| c.colour = 'green'}
       car2 = Car.new
       car2.configure{|c| c.colour = 'yellow'}
-      car1.configuration.should == {:colour => 'green', :top_speed => 216}
-      car2.configuration.should == {:colour => 'yellow', :top_speed => 216}
+      car1.configuration.should == {:colour => 'green'}
+      car2.configuration.should == {:colour => 'yellow'}
     end
   end
   
@@ -245,4 +250,123 @@ describe Dragonfly::Configurable do
     
   end
   
+  describe "falling back to another config" do
+    before(:each) do
+      @garage = Object.new
+      class << @garage
+        include Dragonfly::Configurable
+        configurable_attr :top_speed, 100
+      end
+      @car.use_as_fallback_config(@garage)
+    end
+    
+    describe "when nothing set" do
+      it "should use its default" do
+        @car.top_speed.should == 216
+      end
+      it "shouldn't affect the fallback config object" do
+        @garage.top_speed.should == 100
+      end
+    end
+    
+    describe "if set" do
+      before(:each) do
+        @car.top_speed = 444
+      end
+      it "should work normally" do
+        @car.top_speed.should == 444
+      end
+      it "shouldn't affect the fallback config object" do
+        @garage.top_speed.should == 100
+      end
+    end
+    
+    describe "both set" do
+      before(:each) do
+        @car.top_speed = 444
+        @garage.top_speed = 3000
+      end
+      it "should prefer its own setting" do
+        @car.top_speed.should == 444
+      end
+      it "shouldn't affect the fallback config object" do
+        @garage.top_speed.should == 3000
+      end
+    end
+    
+    describe "the fallback config is set" do
+      before(:each) do
+        @garage.top_speed = 3000
+      end
+      it "should use the fallback config" do
+        @car.top_speed.should == 3000
+      end
+      it "shouldn't affect the fallback config object" do
+        @garage.top_speed.should == 3000
+      end
+    end
+    
+    describe "falling back multiple levels" do
+      before(:each) do
+        @klass = Class.new
+        @klass.class_eval do
+          include Dragonfly::Configurable
+          configurable_attr :veg, 'carrot'
+        end
+        @a = @klass.new
+        @b = @klass.new
+        @b.use_as_fallback_config(@a)
+        @c = @klass.new
+        @c.use_as_fallback_config(@b)
+      end
+      
+      it "should be the default if nothing set" do
+        @c.veg.should == 'carrot'
+      end
+      
+      it "should fall all the way back to the top one if necessary" do
+        @a.veg = 'turnip'
+        @c.veg.should == 'turnip'
+      end
+      
+      it "should prefer the closer one over the further away one" do
+        @b.veg = 'tatty'
+        @a.veg = 'turnip'
+        @c.veg.should == 'tatty'
+      end
+    end
+    
+    describe "objects with different methods" do
+      before(:each) do
+        @app = Object.new
+        class << @app
+          include Dragonfly::Configurable
+        end
+        @pob = Object.new
+        class << @pob
+          include Dragonfly::Configurable
+          configurable_attr :lug
+        end
+        @pob.use_as_fallback_config(@app)
+      end
+
+      it "should not allow setting on the fallback obj directly" do
+        lambda{
+          @app.lug = 'leg'
+        }.should raise_error(NoMethodError)
+      end
+
+      it "should not have the fallback obj respond to the method" do
+        @app.should_not respond_to(:lug=)
+      end
+
+      it "should allow configuring through the fallback object even if it doesn't have that method" do
+        @app.configure do |c|
+          c.lug = 'leg'
+        end
+        @pob.lug.should == 'leg'
+      end
+    end
+    
+  end
 end

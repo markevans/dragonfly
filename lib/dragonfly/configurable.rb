@@ -9,23 +9,12 @@ module Dragonfly
         include Configurable::InstanceMethods
         extend Configurable::ClassMethods
 
-        # These aren't included in InstanceMethods because we need access to 'klass'
-        # We can't just put them into InstanceMethods and use 'self.class' because
-        # this won't always point to the class in which we've included Configurable,
-        # e.g. if we've included it in an eigenclass
-        define_method :configuration_hash do
-          @configuration_hash ||= klass.default_configuration.dup
+        # We should use configured_class rather than self.class
+        # because sometimes this will be the eigenclass of an object
+        # e.g. if we configure a module, etc.
+        define_method :configured_class do
+          klass
         end
-        private :configuration_hash
-
-        define_method :configuration_methods do
-          klass.configuration_methods
-        end
-
-        define_method :saved_configs do
-          klass.saved_configs
-        end
-
       end
     end
 
@@ -53,16 +42,60 @@ module Dragonfly
         self
       end
 
+      def has_config_method?(method_name)
+        config_methods.include?(method_name.to_sym)
+      end
+            
+      def config_methods
+        @config_methods ||= configured_class.config_methods.dup
+      end
+      
       def configuration
-        configuration_hash.dup
+        @configuration ||= {}
+      end
+      
+      def default_configuration
+        @default_configuration ||= configured_class.default_configuration.dup
       end
 
-      def has_configuration_method?(method_name)
-        configuration_methods.include?(method_name.to_sym)
+      def use_as_fallback_config(other_configurable)
+        self.fallback_configurable = other_configurable
+        other_configurable.config_methods.push(*config_methods)
       end
-      
+
+      protected
+
+      def configured_value(key)
+        if config_attr_set?(key)
+          configuration[key]
+        elsif fallback_configurable
+          fallback_configurable.configured_value(key)
+        end
+      end
+
+      def config_attr_set_anywhere?(key)
+        config_attr_set?(key) || fallback_configurable && fallback_configurable.config_attr_set_anywhere?(key)
+      end
+
       private
       
+      def config_attr_set?(key)
+        configuration.has_key?(key)
+      end
+
+      attr_accessor :fallback_configurable
+
+      def default_value(key)
+        if default_configuration[key].is_a?(DeferredBlock)
+          default_configuration[key] = default_configuration[key].call
+        end
+        default_configuration[key]
+      end
+
+      def saved_configs
+        configured_class.saved_configs
+      end
+
       def saved_config_for(symbol)
         config = saved_configs[symbol]
         if config.nil?
@@ -80,8 +113,8 @@ module Dragonfly
         @default_configuration ||= {}
       end
 
-      def configuration_methods
-        @configuration_methods ||= []
+      def config_methods
+        @config_methods ||= []
       end
 
       def register_configuration(name, config=nil, &config_in_block) 
@@ -99,15 +132,16 @@ module Dragonfly
 
         # Define the reader
         define_method(attribute) do
-          if configuration_hash[attribute].is_a?(DeferredBlock)
-            configuration_hash[attribute] = configuration_hash[attribute].call
+          if config_attr_set_anywhere?(attribute)
+            configured_value(attribute)
+          else
+            default_value(attribute)
           end
-          configuration_hash[attribute]
         end
 
         # Define the writer
         define_method("#{attribute}=") do |value|
-          configuration_hash[attribute] = value
+          configuration[attribute] = value
         end
 
         configuration_method attribute
@@ -115,7 +149,7 @@ module Dragonfly
       end
 
       def configuration_method(*method_names)
-        configuration_methods.push(*method_names.map{|n| n.to_sym })
+        config_methods.push(*method_names.map{|n| n.to_sym })
       end
 
     end
@@ -127,12 +161,16 @@ module Dragonfly
       end
 
       def method_missing(method_name, *args, &block)
-        if owner.has_configuration_method?(method_name)
-          owner.send(method_name, *args, &block)
+        if owner.has_config_method?(method_name)
+          if method_name.to_s =~ /=$/
+            owner.configuration[method_name.to_s.tr('=','').to_sym] = args.first
+          else
+            owner.send(method_name, *args, &block)
+          end
         elsif nested_configurable?(method_name, *args)
           owner.send(method_name, *args)
         else
-          raise BadConfigAttribute, "You tried to configure using '#{method_name.inspect}',  but the valid config attributes are #{owner.configuration_methods.map{|a| %('#{a.inspect}') }.sort.join(', ')}"
+          raise BadConfigAttribute, "You tried to configure using '#{method_name.inspect}',  but the valid config attributes are #{owner.config_methods.map{|a| %('#{a.inspect}') }.sort.join(', ')}"
         end
       end
 
