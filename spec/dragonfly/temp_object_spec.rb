@@ -5,7 +5,7 @@ describe Dragonfly::TempObject do
   ####### Helper Methods #######
 
   def sample_path(filename)
-    File.dirname(__FILE__) + '/../../samples/' + filename
+    File.join(SAMPLES_DIR, filename)
   end
 
   def new_tempfile(data='HELLO')
@@ -15,11 +15,11 @@ describe Dragonfly::TempObject do
     tempfile
   end
 
-  def new_file(data='HELLO')
-    File.open('/tmp/test_file', 'w') do |f|
+  def new_file(data='HELLO', path="/tmp/test_file")
+    File.open(path, 'w') do |f|
       f.write(data)
     end
-    File.new('/tmp/test_file')
+    File.new(path)
   end
 
   def new_temp_object(data, opts={})
@@ -97,8 +97,8 @@ describe Dragonfly::TempObject do
       end
 
       describe "path" do
-        it "should return the absolute file path" do
-          @temp_object.path.should == @temp_object.tempfile.path
+        it "should return an absolute file path" do
+          @temp_object.path.should =~ %r{^/\w+}
         end
       end
 
@@ -204,6 +204,11 @@ describe Dragonfly::TempObject do
       temp_object.should_not_receive(:data)
       temp_object.each{}
     end
+
+    it "should return the tempfile's path" do
+      temp_object = new_temp_object('HELLO')
+      temp_object.path.should == temp_object.tempfile.path
+    end
   end
 
   describe "initializing from a file" do
@@ -219,13 +224,35 @@ describe Dragonfly::TempObject do
       temp_object.should_not_receive(:data)
       temp_object.each{}
     end
+
+    it "should return the file's path" do
+      file = new_file('HELLO')
+      temp_object = Dragonfly::TempObject.new(file)
+      temp_object.path.should == file.path
+    end
+    
+    it "should return an absolute path even if the file wasn't instantiated like that" do
+      file = new_file('HELLO', 'testfile')
+      temp_object = Dragonfly::TempObject.new(file)
+      temp_object.path.should =~ %r{^/\w}
+      file.close
+      FileUtils.rm(file.path)
+    end
   end
 
   describe "initializing from another temp object" do
+    
+    def initialization_object(data)
+      Dragonfly::TempObject.new(data)
+    end
+    
     before(:each) do
       @temp_object1 = Dragonfly::TempObject.new(new_tempfile('hello'))
       @temp_object2 = Dragonfly::TempObject.new(@temp_object1)
     end
+    
+    it_should_behave_like "common behaviour"
+    
     it "should not be the same object" do
       @temp_object1.should_not == @temp_object2
     end
