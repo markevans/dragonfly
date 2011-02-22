@@ -232,8 +232,8 @@ describe Dragonfly::TempObject do
     it "should have the same data" do
       @temp_object1.data.should == @temp_object2.data
     end
-    it "should have a different file path" do
-      @temp_object1.path.should_not == @temp_object2.path
+    it "should have the same file path" do
+      @temp_object1.path.should == @temp_object2.path
     end
   end
 

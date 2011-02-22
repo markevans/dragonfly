@@ -164,7 +164,7 @@ module Dragonfly
     def initialize_from_object!(obj)
       if obj.is_a? TempObject
         @initialized_data = obj.initialized_data
-        @initialized_tempfile = copy_to_tempfile(obj.initialized_tempfile.path) if obj.initialized_tempfile
+        @initialized_tempfile = obj.initialized_tempfile
         @initialized_file = obj.initialized_file
       elsif obj.is_a? String
         @initialized_data = obj
