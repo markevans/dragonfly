@@ -720,6 +720,17 @@ describe Dragonfly::Job do
       end
     end
 
+    describe "fetch_url_step" do
+      it "should return nil if it doesn't exist" do
+        @app.generate(:ponies).fetch_url_step.should be_nil
+      end
+      it "should return the fetch_url step otherwise" do
+        step = @app.fetch_url('egg.heads').process(:cheese).fetch_url_step
+        step.should be_a(Dragonfly::Job::FetchUrl)
+        step.url.should == 'http://egg.heads'
+      end
+    end
+
     describe "generate_step" do
       it "should return nil if it doesn't exist" do
         @app.fetch('many/ponies').process(:jam).generate_step.should be_nil

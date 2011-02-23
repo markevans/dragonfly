@@ -337,6 +337,10 @@ module Dragonfly
       last_step_of_type(FetchFile)
     end
 
+    def fetch_url_step
+      last_step_of_type(FetchUrl)
+    end
+
     def process_steps
       steps.select{|s| s.is_a?(Process) }
     end
