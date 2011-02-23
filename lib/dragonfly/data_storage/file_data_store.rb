@@ -34,14 +34,12 @@ module Dragonfly
 
       def retrieve(relative_path)
         path = absolute(relative_path)
-        file = File.new(path)
-        file.close
+        pathname = path.to_pathname
+        raise DataNotFound, "couldn't find file #{path}" unless pathname.exist?
         [
-          file,
+          pathname,
           retrieve_extra_data(path)
         ]
-      rescue Errno::ENOENT => e
-        raise DataNotFound, e.message
       end
 
       def destroy(relative_path)
