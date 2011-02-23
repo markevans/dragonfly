@@ -14,4 +14,16 @@ describe String do
     end
   end
   
+  describe "to_pathname" do
+    before(:each) do
+      @pathname = "hello/there".to_pathname
+    end
+    it "should return a pathname" do
+      @pathname.should be_a(Pathname)
+    end
+    it "should be the correct path" do
+      @pathname.to_s.should == 'hello/there'
+    end
+  end
+  
 end
