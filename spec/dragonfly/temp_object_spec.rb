@@ -22,6 +22,13 @@ describe Dragonfly::TempObject do
     File.new(path)
   end
 
+  def new_pathname(data='HELLO', path="/tmp/test_file")
+    File.open(path, 'w') do |f|
+      f.write(data)
+    end
+    Pathname.new(path)
+  end
+
   def new_temp_object(data, opts={})
     klass = opts.delete(:class) || Dragonfly::TempObject
     klass.new(initialization_object(data), opts)
@@ -234,9 +241,37 @@ describe Dragonfly::TempObject do
     it "should return an absolute path even if the file wasn't instantiated like that" do
       file = new_file('HELLO', 'testfile')
       temp_object = Dragonfly::TempObject.new(file)
-      temp_object.path.should =~ %r{^/\w}
+      temp_object.path.should =~ %r{^/\w.*testfile}
       file.close
       FileUtils.rm(file.path)
+    end
+  end
+
+  describe "initializing from a pathname" do
+
+    def initialization_object(data)
+      new_pathname(data)
+    end
+
+    it_should_behave_like "common behaviour"
+
+    it "should not create a data string when calling each" do
+      temp_object = new_temp_object('HELLO')
+      temp_object.should_not_receive(:data)
+      temp_object.each{}
+    end
+
+    it "should return the file's path" do
+      pathname = new_pathname('HELLO')
+      temp_object = Dragonfly::TempObject.new(pathname)
+      temp_object.path.should == pathname.to_s
+    end
+    
+    it "should return an absolute path even if the pathname is relative" do
+      pathname = new_pathname('HELLO', 'testfile')
+      temp_object = Dragonfly::TempObject.new(pathname)
+      temp_object.path.should =~ %r{^/\w.*testfile}
+      pathname.delete
     end
   end
 
@@ -280,6 +315,11 @@ describe Dragonfly::TempObject do
     it "should set the name if the initial object is a file object" do
       file = File.new(SAMPLES_DIR + '/round.gif')
       temp_object = Dragonfly::TempObject.new(file)
+      temp_object.name.should == 'round.gif'
+    end
+    it "should set the name if the initial object is a pathname" do
+      pathname = Pathname.new(SAMPLES_DIR + '/round.gif')
+      temp_object = Dragonfly::TempObject.new(pathname)
       temp_object.name.should == 'round.gif'
     end
     it "should still be nil if set to empty string on initialize" do
