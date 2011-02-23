@@ -16,7 +16,8 @@ describe Dragonfly::Job do
       Dragonfly::Job::Process => :process,
       Dragonfly::Job::Encode => :encode,
       Dragonfly::Job::Generate => :generate,
-      Dragonfly::Job::FetchFile => :fetch_file
+      Dragonfly::Job::FetchFile => :fetch_file,
+      Dragonfly::Job::FetchUrl => :fetch_url
     }.each do |klass, step_name|
       it "should return the correct step name for #{klass}" do
         klass.step_name.should == step_name
@@ -28,7 +29,8 @@ describe Dragonfly::Job do
       Dragonfly::Job::Process => :p,
       Dragonfly::Job::Encode => :e,
       Dragonfly::Job::Generate => :g,
-      Dragonfly::Job::FetchFile => :ff
+      Dragonfly::Job::FetchFile => :ff,
+      Dragonfly::Job::FetchUrl => :fu
     }.each do |klass, abbreviation|
       it "should return the correct abbreviation for #{klass}" do
         klass.abbreviation.should == abbreviation
@@ -37,7 +39,7 @@ describe Dragonfly::Job do
 
     describe "step_names" do
       it "should return the available step names" do
-        Dragonfly::Job.step_names.should == [:fetch, :process, :encode, :generate, :fetch_file]
+        Dragonfly::Job.step_names.should == [:fetch, :process, :encode, :generate, :fetch_file, :fetch_url]
       end
     end
 
@@ -135,6 +137,34 @@ describe Dragonfly::Job do
       it "should fetch the specified file when applied" do
         @job.apply
         @job.temp_object.size.should == 62664
+      end
+
+    end
+
+    describe "fetch_url" do
+      before(:each) do
+        stub_request(:get, 'http://some.place.com').to_return(:body => 'result!')
+        stub_request(:get, 'https://some.place.com').to_return(:body => 'secure result!')
+      end
+
+      it {
+        @job.fetch_url!('some.url')
+        @job.steps.should match_steps([Dragonfly::Job::FetchUrl])
+      }
+
+      it "should fetch the specified url when applied" do
+        @job.fetch_url!('http://some.place.com').apply
+        @job.temp_object.data.should == "result!"
+      end
+
+      it "should default to http" do
+        @job.fetch_url!('some.place.com').apply
+        @job.temp_object.data.should == "result!"
+      end
+
+      it "should also work with https" do
+        @job.fetch_url!('https://some.place.com').apply
+        @job.temp_object.data.should == "secure result!"
       end
 
     end

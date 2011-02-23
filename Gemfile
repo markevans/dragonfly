@@ -16,6 +16,7 @@ group :development, :test, :cucumber do
   gem 'rails', '3.0.4', :require => nil
   gem 'rake'
   gem 'rspec', '~> 2.5'
+  gem 'webmock'
   gem 'yard'
   if RUBY_PLATFORM == "java"
     gem "jdbc-sqlite3"

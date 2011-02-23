@@ -8,6 +8,8 @@ require 'rspec'
 require 'dragonfly'
 require 'fileutils'
 
+require 'webmock/rspec'
+
 # Requires supporting files with custom matchers and macros, etc,
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 

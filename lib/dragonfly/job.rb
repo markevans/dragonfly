@@ -1,6 +1,7 @@
 require 'forwardable'
 require 'digest/sha1'
 require 'base64'
+require 'open-uri'
 
 module Dragonfly
   class Job
@@ -108,12 +109,24 @@ module Dragonfly
       end
     end
 
+    class FetchUrl < Step
+      def url
+        @url ||= (args.first[%r<^\w+://>] ? args.first : "http://#{args.first}")
+      end
+      def apply(job)
+        open(url) do |f|
+          job.temp_object = TempObject.new(f.read)
+        end
+      end
+    end
+
     STEPS = [
       Fetch,
       Process,
       Encode,
       Generate,
-      FetchFile
+      FetchFile,
+      FetchUrl
     ]
 
     # Class methods
