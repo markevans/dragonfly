@@ -58,33 +58,33 @@ module Dragonfly
         @default_configuration ||= configured_class.default_configuration.dup
       end
 
+      def set_config_value(key, value)
+        configuration[key] = value
+        child_configurables.each{|c| c.set_if_unset(key, value) }
+        value
+      end
+      
       def use_as_fallback_config(other_configurable)
-        self.fallback_configurable = other_configurable
-        other_configurable.config_methods.push(*config_methods)
+        other_configurable.add_child_configurable(self)
       end
 
       protected
 
-      def configured_value(key)
-        if config_attr_set?(key)
-          configuration[key]
-        elsif fallback_configurable
-          fallback_configurable.configured_value(key)
-        end
+      def add_child_configurable(configurable)
+        child_configurables << configurable 
+        config_methods.push(*configurable.config_methods)
       end
 
-      def config_attr_set_anywhere?(key)
-        config_attr_set?(key) || fallback_configurable && fallback_configurable.config_attr_set_anywhere?(key)
+      def set_if_unset(key, value)
+        set_config_value(key, value) unless configuration.has_key?(key)
       end
 
       private
       
-      def config_attr_set?(key)
-        configuration.has_key?(key)
+      def child_configurables
+        @child_configurables ||= []
       end
-
-      attr_accessor :fallback_configurable
-
+      
       def default_value(key)
         if default_configuration[key].is_a?(DeferredBlock)
           default_configuration[key] = default_configuration[key].call
@@ -132,16 +132,12 @@ module Dragonfly
 
         # Define the reader
         define_method(attribute) do
-          if config_attr_set_anywhere?(attribute)
-            configured_value(attribute)
-          else
-            default_value(attribute)
-          end
+          configuration.has_key?(attribute) ? configuration[attribute] : default_value(attribute)
         end
 
         # Define the writer
         define_method("#{attribute}=") do |value|
-          configuration[attribute] = value
+          set_config_value(attribute, value)
         end
 
         configuration_method attribute
@@ -163,7 +159,8 @@ module Dragonfly
       def method_missing(method_name, *args, &block)
         if owner.has_config_method?(method_name)
           if method_name.to_s =~ /=$/
-            owner.configuration[method_name.to_s.tr('=','').to_sym] = args.first
+            attribute = method_name.to_s.tr('=','').to_sym
+            owner.set_config_value(attribute, args.first)
           else
             owner.send(method_name, *args, &block)
           end

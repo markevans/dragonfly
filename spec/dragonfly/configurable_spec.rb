@@ -334,6 +334,14 @@ describe Dragonfly::Configurable do
         @a.veg = 'turnip'
         @c.veg.should == 'tatty'
       end
+      
+      it "should work properly with nils" do
+        @a.veg = nil
+        @c.veg = 'broc'
+        @a.veg.should be_nil
+        @b.veg.should be_nil
+        @c.veg.should == 'broc'
+      end
     end
     
     describe "objects with different methods" do
