@@ -7,14 +7,11 @@ module Dragonfly
       # Exceptions
       class ShellCommandFailed < RuntimeError; end
 
-      class << self
-        include Configurable
-        configurable_attr :convert_command, "convert"
-        configurable_attr :identify_command, "identify"
-        configurable_attr :log_commands, false
-      end
-    
       include Loggable
+      include Configurable
+      configurable_attr :convert_command, "convert"
+      configurable_attr :identify_command, "identify"
+      configurable_attr :log_commands, false
     
       private
 
@@ -49,14 +46,6 @@ module Dragonfly
         tempfile.binmode
         tempfile.close
         tempfile
-      end
-    
-      def convert_command
-        Utils.convert_command
-      end
-
-      def identify_command
-        Utils.identify_command
       end
 
       def run(command)

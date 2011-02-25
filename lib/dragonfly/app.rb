@@ -25,10 +25,10 @@ module Dragonfly
 
     def initialize
       @analyser, @processor, @encoder, @generator = Analyser.new, Processor.new, Encoder.new, Generator.new
-      @analyser.use_same_log_as(self)
-      @processor.use_same_log_as(self)
-      @encoder.use_same_log_as(self)
-      @generator.use_same_log_as(self)
+      [@analyser, @processor, @encoder, @generator].each do |obj|
+        obj.use_same_log_as(self)
+        obj.use_as_fallback_config(self)
+      end
       @job_definitions = JobDefinitions.new
       @server = Dragonfly::SimpleEndpoint.new(self)
     end
