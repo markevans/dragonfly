@@ -66,13 +66,15 @@ module Dragonfly
       
       def use_as_fallback_config(other_configurable)
         other_configurable.add_child_configurable(self)
+        self.fallback_configurable = other_configurable
       end
 
       protected
 
-      def add_child_configurable(configurable)
-        child_configurables << configurable 
-        config_methods.push(*configurable.config_methods)
+      def add_child_configurable(obj)
+        child_configurables << obj
+        config_methods.push(*obj.config_methods)
+        fallback_configurable.config_methods.push(*obj.config_methods) if fallback_configurable
       end
 
       def set_if_unset(key, value)
@@ -80,6 +82,8 @@ module Dragonfly
       end
 
       private
+      
+      attr_accessor :fallback_configurable
       
       def child_configurables
         @child_configurables ||= []

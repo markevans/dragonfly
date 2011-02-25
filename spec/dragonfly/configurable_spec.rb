@@ -346,33 +346,44 @@ describe Dragonfly::Configurable do
     
     describe "objects with different methods" do
       before(:each) do
-        @app = Object.new
-        class << @app
+        @dad = Object.new
+        class << @dad
           include Dragonfly::Configurable
         end
-        @pob = Object.new
-        class << @pob
+        @kid = Object.new
+        class << @kid
           include Dragonfly::Configurable
           configurable_attr :lug
         end
-        @pob.use_as_fallback_config(@app)
+        @kid.use_as_fallback_config(@dad)
       end
 
       it "should not allow setting on the fallback obj directly" do
         lambda{
-          @app.lug = 'leg'
+          @dad.lug = 'leg'
         }.should raise_error(NoMethodError)
       end
 
       it "should not have the fallback obj respond to the method" do
-        @app.should_not respond_to(:lug=)
+        @dad.should_not respond_to(:lug=)
       end
 
       it "should allow configuring through the fallback object even if it doesn't have that method" do
-        @app.configure do |c|
+        @dad.configure do |c|
           c.lug = 'leg'
         end
-        @pob.lug.should == 'leg'
+        @kid.lug.should == 'leg'
+      end
+      
+      it "should work when a grandchild config is added later" do
+        grandkid = Object.new
+        class << grandkid
+          include Dragonfly::Configurable
+          configurable_attr :oogie, 'boogie'
+        end
+        grandkid.use_as_fallback_config(@kid)
+        @dad.configure{|c| c.oogie = 'duggen' }
+        grandkid.oogie.should == 'duggen'
       end
     end
     
