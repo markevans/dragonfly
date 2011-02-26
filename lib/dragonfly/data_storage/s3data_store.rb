@@ -12,11 +12,19 @@ module Dragonfly
       configurable_attr :access_key_id
       configurable_attr :secret_access_key
       configurable_attr :use_filesystem, true
+      configurable_attr :region
+
+      # Regions:
+      # us-east-1 (default)
+      # eu-west-1
+      # ap-southeast-1
+      # us-west-1
 
       def initialize(opts={})
         self.bucket_name = opts[:bucket_name]
         self.access_key_id = opts[:access_key_id]
         self.secret_access_key = opts[:secret_access_key]
+        self.region = opts[:region]
       end
 
       def store(temp_object, opts={})
@@ -53,15 +61,27 @@ module Dragonfly
         @storage ||= Fog::Storage.new(
           :provider => 'AWS',
           :aws_access_key_id => access_key_id,
-          :aws_secret_access_key => secret_access_key
+          :aws_secret_access_key => secret_access_key,
+          :region => region
         )
       end
 
       def ensure_initialized!
         unless @initialized
-          storage.put_bucket(bucket_name)
+          create_bucket!
           @initialized = true
         end
+      end
+
+      def create_bucket!
+        storage.put_bucket(bucket_name, 'LocationConstraint' => region) if get_bucket_location.nil?
+      end
+
+      def get_bucket_location
+        hash = storage.get_bucket_location(bucket_name).body
+        hash["LocationConstraint"]
+      rescue Excon::Errors::NotFound => e
+        nil
       end
 
       def generate_uid(name)
