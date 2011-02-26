@@ -14,11 +14,12 @@ module Dragonfly
       configurable_attr :use_filesystem, true
       configurable_attr :region
 
-      # Regions:
-      # us-east-1 (default)
-      # eu-west-1
-      # ap-southeast-1
-      # us-west-1
+      REGIONS = {
+        'us-east-1'      => 's3.amazonaws.com',  #default
+        'eu-west-1'      => 's3-eu-west-1.amazonaws.com',
+        'ap-southeast-1' => 's3-ap-southeast-1.amazonaws.com',
+        'us-west-1'      => 's3-us-west-1.amazonaws.com'
+      }
 
       def initialize(opts={})
         self.bucket_name = opts[:bucket_name]
@@ -55,6 +56,10 @@ module Dragonfly
         storage.delete_object(bucket_name, uid)
       end
 
+      def domain
+        REGIONS[get_region]
+      end
+
       private
 
       def storage
@@ -77,6 +82,12 @@ module Dragonfly
         storage.put_bucket(bucket_name, 'LocationConstraint' => region) if get_bucket_location.nil?
       end
 
+      def get_region
+        reg = region || 'us-east-1'
+        raise "Invalid region #{reg} - should be one of #{valid_regions.join(', ')}" unless valid_regions.include?(reg)
+        reg
+      end
+
       def get_bucket_location
         hash = storage.get_bucket_location(bucket_name).body
         hash["LocationConstraint"]
@@ -95,6 +106,10 @@ module Dragonfly
       def parse_s3_metadata(headers)
         extra_data = headers['x-amz-meta-extra']
         marshal_decode(extra_data) if extra_data
+      end
+
+      def valid_regions
+        REGIONS.keys
       end
 
     end
