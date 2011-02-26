@@ -85,6 +85,10 @@ module Dragonfly
         assign(encode(*args))
         self
       end
+      
+      def remote_url(opts={})
+        app.remote_url_for(uid, opts) if uid
+      end
 
       protected
 

@@ -349,6 +349,22 @@ describe Item do
       end
     end
 
+    describe "remote_url" do
+      before(:each) do
+        @app.define_remote_url do |uid|
+          'http://some.domain/' + uid
+        end
+      end
+      it "should give the remote url if the uid is set" do
+        @item.preview_image_uid = 'some/uid'
+        @item.preview_image.remote_url(:some => 'param').should == 'http://some.domain/some/uid?some=param'
+      end
+      it "should return nil if the content is not yet saved" do
+        @item.preview_image = "hello"
+        @item.preview_image.remote_url(:some => 'param').should be_nil
+      end
+    end
+
   end
 
   describe "validations" do
