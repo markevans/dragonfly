@@ -217,6 +217,31 @@ describe Dragonfly::App do
       @app.url_for(@job, :suffix => '/suffix', :a => 'thing', :b => 'nuther').should =~ /\w+\/suffix\?a=thing&b=nuther$/
     end
   end
+  
+  describe "remote_url_for" do
+    before(:each) do
+      @app = test_app
+    end
+    it "should raise an error if not configured" do
+      lambda{
+        @app.remote_url_for('some_uid')
+      }.should raise_error(NotImplementedError)
+    end
+    it "should correctly call it if configured" do
+      @app.configure do |c|
+        c.define_remote_url{|uid| "http://some.cdn/#{uid}" }
+      end
+      @app.remote_url_for('some_uid').should == 'http://some.cdn/some_uid'
+    end
+    it "should add any params to the request" do
+      @app.define_remote_url{|uid| "http://some.cdn/#{uid}" }
+      @app.remote_url_for('some_uid', :some => 'eggs', :and => 'cheese').should == 'http://some.cdn/some_uid?some=eggs&and=cheese'
+    end
+    it "should correctly add params if it already has some" do
+      @app.define_remote_url{|uid| "http://some.cdn/#{uid}?and=bread" }
+      @app.remote_url_for('some_uid', :some => 'eggs').should == 'http://some.cdn/some_uid?and=bread&some=eggs'
+    end
+  end
 
   describe "Denial of Service protection" do
     before(:each) do

@@ -146,6 +146,21 @@ module Dragonfly
       path
     end
 
+    def define_remote_url(&block)
+      self.get_remote_url = proc(&block)
+    end
+    configuration_method :define_remote_url
+    
+    def remote_url_for(uid, query={})
+      raise NotImplementedError, "You need to configure remote_urls on the Dragonfly app" if get_remote_url.nil?
+      url = get_remote_url.call(uid)
+      if query.any?
+        query_string = Rack::Utils.build_query(query)
+        url << (url['?'] ? "&#{query_string}" : "?#{query_string}")
+      end
+      url
+    end
+
     def define_macro(mod, macro_name)
       already_extended = (class << mod; self; end).included_modules.include?(ActiveModelExtensions)
       mod.extend(ActiveModelExtensions) unless already_extended
@@ -165,6 +180,8 @@ module Dragonfly
     end
 
     private
+
+    attr_accessor :get_remote_url
 
     def saved_configs
       self.class.saved_configs
