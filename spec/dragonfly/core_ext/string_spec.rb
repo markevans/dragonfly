@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
+require 'spec_helper'
 
 describe String do
   
@@ -11,6 +11,18 @@ describe String do
       it "should return a symbol" do
         'hello'.to_method_name.should == :hello
       end
+    end
+  end
+  
+  describe "to_pathname" do
+    before(:each) do
+      @pathname = "hello/there".to_pathname
+    end
+    it "should return a pathname" do
+      @pathname.should be_a(Pathname)
+    end
+    it "should be the correct path" do
+      @pathname.to_s.should == 'hello/there'
     end
   end
   

@@ -1,11 +1,11 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe Dragonfly::TempObject do
 
   ####### Helper Methods #######
 
   def sample_path(filename)
-    File.dirname(__FILE__) + '/../../samples/' + filename
+    File.join(SAMPLES_DIR, filename)
   end
 
   def new_tempfile(data='HELLO')
@@ -15,11 +15,18 @@ describe Dragonfly::TempObject do
     tempfile
   end
 
-  def new_file(data='HELLO')
-    File.open('/tmp/test_file', 'w') do |f|
+  def new_file(data='HELLO', path="/tmp/test_file")
+    File.open(path, 'w') do |f|
       f.write(data)
     end
-    File.new('/tmp/test_file')
+    File.new(path)
+  end
+
+  def new_pathname(data='HELLO', path="/tmp/test_file")
+    File.open(path, 'w') do |f|
+      f.write(data)
+    end
+    Pathname.new(path)
   end
 
   def new_temp_object(data, opts={})
@@ -48,7 +55,7 @@ describe Dragonfly::TempObject do
     }.should raise_error(ArgumentError)
   end
 
-  describe "common behaviour", :shared => true do
+  shared_examples_for "common behaviour" do
 
     describe "simple initialization" do
 
@@ -97,8 +104,8 @@ describe Dragonfly::TempObject do
       end
 
       describe "path" do
-        it "should return the absolute file path" do
-          @temp_object.path.should == @temp_object.tempfile.path
+        it "should return an absolute file path" do
+          @temp_object.path.should =~ %r{^/\w+}
         end
       end
 
@@ -204,6 +211,11 @@ describe Dragonfly::TempObject do
       temp_object.should_not_receive(:data)
       temp_object.each{}
     end
+
+    it "should return the tempfile's path" do
+      temp_object = new_temp_object('HELLO')
+      temp_object.path.should == temp_object.tempfile.path
+    end
   end
 
   describe "initializing from a file" do
@@ -219,21 +231,71 @@ describe Dragonfly::TempObject do
       temp_object.should_not_receive(:data)
       temp_object.each{}
     end
+
+    it "should return the file's path" do
+      file = new_file('HELLO')
+      temp_object = Dragonfly::TempObject.new(file)
+      temp_object.path.should == file.path
+    end
+    
+    it "should return an absolute path even if the file wasn't instantiated like that" do
+      file = new_file('HELLO', 'testfile')
+      temp_object = Dragonfly::TempObject.new(file)
+      temp_object.path.should =~ %r{^/\w.*testfile}
+      file.close
+      FileUtils.rm(file.path)
+    end
+  end
+
+  describe "initializing from a pathname" do
+
+    def initialization_object(data)
+      new_pathname(data)
+    end
+
+    it_should_behave_like "common behaviour"
+
+    it "should not create a data string when calling each" do
+      temp_object = new_temp_object('HELLO')
+      temp_object.should_not_receive(:data)
+      temp_object.each{}
+    end
+
+    it "should return the file's path" do
+      pathname = new_pathname('HELLO')
+      temp_object = Dragonfly::TempObject.new(pathname)
+      temp_object.path.should == pathname.to_s
+    end
+    
+    it "should return an absolute path even if the pathname is relative" do
+      pathname = new_pathname('HELLO', 'testfile')
+      temp_object = Dragonfly::TempObject.new(pathname)
+      temp_object.path.should =~ %r{^/\w.*testfile}
+      pathname.delete
+    end
   end
 
   describe "initializing from another temp object" do
+    
+    def initialization_object(data)
+      Dragonfly::TempObject.new(data)
+    end
+    
     before(:each) do
       @temp_object1 = Dragonfly::TempObject.new(new_tempfile('hello'))
       @temp_object2 = Dragonfly::TempObject.new(@temp_object1)
     end
+    
+    it_should_behave_like "common behaviour"
+    
     it "should not be the same object" do
       @temp_object1.should_not == @temp_object2
     end
     it "should have the same data" do
       @temp_object1.data.should == @temp_object2.data
     end
-    it "should have a different file path" do
-      @temp_object1.path.should_not == @temp_object2.path
+    it "should have the same file path" do
+      @temp_object1.path.should == @temp_object2.path
     end
   end
 
@@ -253,6 +315,11 @@ describe Dragonfly::TempObject do
     it "should set the name if the initial object is a file object" do
       file = File.new(SAMPLES_DIR + '/round.gif')
       temp_object = Dragonfly::TempObject.new(file)
+      temp_object.name.should == 'round.gif'
+    end
+    it "should set the name if the initial object is a pathname" do
+      pathname = Pathname.new(SAMPLES_DIR + '/round.gif')
+      temp_object = Dragonfly::TempObject.new(pathname)
       temp_object.name.should == 'round.gif'
     end
     it "should still be nil if set to empty string on initialize" do

@@ -1,6 +1,6 @@
 # encoding: utf-8
-require File.dirname(__FILE__) + '/../../spec_helper'
-require File.dirname(__FILE__) + '/data_store_spec'
+require 'spec_helper'
+require File.dirname(__FILE__) + '/shared_data_store_examples'
 require 'mongo'
 
 describe Dragonfly::DataStorage::MongoDataStore do

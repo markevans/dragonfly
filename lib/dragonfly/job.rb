@@ -1,6 +1,7 @@
 require 'forwardable'
 require 'digest/sha1'
 require 'base64'
+require 'open-uri'
 
 module Dragonfly
   class Job
@@ -16,7 +17,8 @@ module Dragonfly
     class IncorrectSHA < StandardError; end
 
     extend Forwardable
-    def_delegators :result, :data, :file, :tempfile, :path, :to_file, :size, :ext, :name, :name=, :basename, :meta, :meta=, :format, :_format
+    def_delegators :result,
+                   :data, :file, :tempfile, :path, :to_file, :size, :ext, :name, :name=, :basename, :meta, :meta=
 
     class Step
 
@@ -107,12 +109,24 @@ module Dragonfly
       end
     end
 
+    class FetchUrl < Step
+      def url
+        @url ||= (args.first[%r<^\w+://>] ? args.first : "http://#{args.first}")
+      end
+      def apply(job)
+        open(url) do |f|
+          job.temp_object = TempObject.new(f.read)
+        end
+      end
+    end
+
     STEPS = [
       Fetch,
       Process,
       Encode,
       Generate,
-      FetchFile
+      FetchFile,
+      FetchUrl
     ]
 
     # Class methods
@@ -152,12 +166,27 @@ module Dragonfly
 
     end
 
-    # Instance methods
+    ####### Instance methods #######
+
+    # This is needed because we need a way of overriding
+    # the methods added to Job objects by the analyser and by
+    # the job shortcuts like 'thumb', etc.
+    # If we had traits/classboxes in ruby maybe this wouldn't be needed
+    # Think of it as like a normal instance method but with a css-like !important after it
+    module OverrideInstanceMethods
+      
+      def format
+        result.format || analyse(:format)
+      end
+      
+      def to_s
+        super.sub(/#<Class:\w+>/, 'Extended Dragonfly::Job')
+      end
+      
+    end
 
     def initialize(app, temp_object=nil)
       @app = app
-      self.extend app.analyser.analysis_methods
-      self.extend app.job_definitions
       @steps = []
       @next_step_index = 0
       @temp_object = temp_object
@@ -166,8 +195,6 @@ module Dragonfly
     # Used by 'dup' and 'clone'
     def initialize_copy(other)
       self.steps = other.steps.dup
-      self.extend app.analyser.analysis_methods
-      self.extend app.job_definitions
     end
 
     attr_accessor :temp_object
@@ -193,25 +220,7 @@ module Dragonfly
       unless result
         raise NothingToAnalyse, "Can't analyse because temp object has not been initialized. Need to fetch first?"
       end
-      # Hacky - wish there was a nicer way to do this without extending with yet another module
-      if method == :format
-        _format || analyser.analyse(result, method, *args)
-      else
-        analyser.analyse(result, method, *args)
-      end
-    end
-
-    def +(other_job)
-      unless app == other_job.app
-        raise AppDoesNotMatch, "Cannot add jobs belonging to different apps (#{app} is not #{other_job.app})"
-      end
-      unless other_job.applied_steps.empty?
-        raise JobAlreadyApplied, "Cannot add jobs when the second one has already been applied (#{other_job})"
-      end
-      new_job = self.class.new(app, temp_object)
-      new_job.steps = steps + other_job.steps
-      new_job.next_step_index = next_step_index
-      new_job
+      analyser.analyse(result, method, *args)
     end
 
     # Applying, etc.
@@ -326,6 +335,10 @@ module Dragonfly
 
     def fetch_file_step
       last_step_of_type(FetchFile)
+    end
+
+    def fetch_url_step
+      last_step_of_type(FetchUrl)
     end
 
     def process_steps

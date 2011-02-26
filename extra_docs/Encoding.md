@@ -20,14 +20,14 @@ and an image object (actually a {Dragonfly::Job Job} object)...
 
 We can encode it to any format registered with the encoder.
 
-ImageMagickEncoder
-------------------
-The {Dragonfly::Encoding::ImageMagickEncoder ImageMagickEncoder} is registered by default by
-the {Dragonfly::Config::ImageMagick ImageMagick configuration} used by 'dragonfly/rails/images'.
+ImageMagick Encoder
+-------------------
+The {Dragonfly::ImageMagick::Encoder ImageMagick Encoder} is registered by default by
+the {Dragonfly::ImageMagick::Config ImageMagick configuration} used by 'dragonfly/rails/images'.
 
 If not already registered:
 
-    app.encoder.register(Dragonfly::Encoding::ImageMagickEncoder)
+    app.encoder.register(Dragonfly::ImageMagick::Encoder)
 
 gives us:
 
@@ -36,20 +36,11 @@ gives us:
     image.encode(:png)
     image.encode(:tiff)
 
-and various other formats (see {Dragonfly::Encoding::ImageMagickEncoder ImageMagickEncoder}).
+and various other formats (see {Dragonfly::ImageMagick::Encoder ImageMagick Encoder}).
 
 You can also pass additional options to the imagemagick command line:
 
     image.encode(:jpg, '-quality 10')
-
-RMagickEncoder
---------------
-The {Dragonfly::Encoding::RMagickEncoder RMagickEncoder} uses the {http://rmagick.rubyforge.org RMagick} library to do similar things to the
-ImageMagickEncoder above.
-
-You can tell it not to use the file system when registering it using
-
-    app.encoder.register(Dragonfly::Encoding::RMagickEncoder){|e| e.use_filesystem = false }
 
 Lazy evaluation
 ---------------

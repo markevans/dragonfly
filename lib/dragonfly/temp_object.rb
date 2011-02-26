@@ -1,5 +1,6 @@
 require 'stringio'
 require 'tempfile'
+require 'pathname'
 
 module Dragonfly
 
@@ -10,6 +11,7 @@ module Dragonfly
   # You can initialize it various ways:
   #
   #   temp_object = Dragonfly::TempObject.new('this is the content')           # with a String
+  #   temp_object = Dragonfly::TempObject.new(Pathname.new('path/to/content')) # with a Pathname
   #   temp_object = Dragonfly::TempObject.new(File.new('path/to/content'))     # with a File
   #   temp_object = Dragonfly::TempObject.new(some_tempfile)                   # with a Tempfile
   #   temp_object = Dragonfly::TempObject.new(some_other_temp_object)          # with another TempObject
@@ -48,19 +50,16 @@ module Dragonfly
     end
 
     def data
-      @data ||= initialized_data || file{|f| f.read }
+      @data ||= file{|f| f.read }
     end
 
     def tempfile
       @tempfile ||= begin
-        case initialized_with
-        when :tempfile
-          @tempfile = initialized_tempfile
-          @tempfile.close
-        when :data
-          @tempfile = new_tempfile(initialized_data)
-        when :file
-          @tempfile = copy_to_tempfile(initialized_file.path)
+        case
+        when @data
+          @tempfile = new_tempfile(@data)
+        when @pathname
+          @tempfile = copy_to_tempfile(@pathname.expand_path)
         end
         @tempfile
       end
@@ -79,19 +78,14 @@ module Dragonfly
     end
 
     def path
-      tempfile.path
+      @pathname ? @pathname.expand_path.to_s : tempfile.path
     end
 
     def size
-      if initialized_data
-        initialized_data.bytesize
-      else
-        File.size(path)
-      end
+      @data ? @data.bytesize : File.size(path)
     end
 
     attr_accessor :name, :format
-    alias _format format
     attr_writer :meta
 
     def meta
@@ -115,8 +109,8 @@ module Dragonfly
     end
 
     def to_file(path)
-      if initialized_data
-        File.open(path, 'wb'){|f| f.write(initialized_data) }
+      if @data
+        File.open(path, 'wb'){|f| f.write(@data) }
       else
         FileUtils.cp(self.path, path)
       end
@@ -124,11 +118,7 @@ module Dragonfly
     end
 
     def to_io(&block)
-      if initialized_data
-        StringIO.open(initialized_data, 'rb', &block)
-      else
-        file(&block)
-      end
+      @data ? StringIO.open(@data, 'rb', &block) : file(&block)
     end
 
     def attributes
@@ -146,50 +136,55 @@ module Dragonfly
     end
 
     def inspect
-      content_string = case initialized_with
-      when :data
-        data_string = size > 20 ? "#{initialized_data[0..20]}..." : initialized_data
+      content_string = case
+      when @data
+        data_string = size > 20 ? "#{@data[0..20]}..." : @data
         "data=#{data_string.inspect}"
-      when :file then "file=#{initialized_file.inspect}"
-      when :tempfile then "tempfile=#{initialized_tempfile.inspect}"
+      when @pathname then "pathname=#{@pathname.inspect}"
+      when @tempfile then "tempfile=#{@tempfile.inspect}"
       end
       to_s.sub(/>$/, " #{content_string}, @meta=#{@meta.inspect}, @name=#{@name.inspect} >")
     end
 
     protected
 
-    attr_accessor :initialized_data, :initialized_tempfile, :initialized_file
+    # We don't use normal accessors here because #data etc. do more than just return the instance var
+    def get_data
+      @data
+    end
+    
+    def get_pathname
+      @pathname
+    end
+    
+    def get_tempfile
+      @tempfile
+    end
 
     private
 
     def initialize_from_object!(obj)
       if obj.is_a? TempObject
-        @initialized_data = obj.initialized_data
-        @initialized_tempfile = copy_to_tempfile(obj.initialized_tempfile.path) if obj.initialized_tempfile
-        @initialized_file = obj.initialized_file
+        @data = obj.get_data
+        @tempfile = obj.get_tempfile
+        @pathname = obj.get_pathname
       elsif obj.is_a? String
-        @initialized_data = obj
+        @data = obj
       elsif obj.is_a? Tempfile
-        @initialized_tempfile = obj
+        @tempfile = obj
       elsif obj.is_a? File
-        @initialized_file = obj
-        self.name = File.basename(obj.path)
+        @pathname = Pathname.new(obj.path)
+        self.name = @pathname.basename.to_s
+      elsif obj.is_a? Pathname
+        @pathname = obj
+        self.name = @pathname.basename.to_s
       elsif obj.respond_to?(:tempfile)
-        @initialized_tempfile = obj.tempfile
+        @tempfile = obj.tempfile
       else
-        raise ArgumentError, "#{self.class.name} must be initialized with a String, a File, a Tempfile, another TempObject, or something that responds to .tempfile"
+        raise ArgumentError, "#{self.class.name} must be initialized with a String, a Pathname, a File, a Tempfile, another TempObject, or something that responds to .tempfile"
       end
+      @tempfile.close if @tempfile
       self.name = obj.original_filename if obj.respond_to?(:original_filename)
-    end
-
-    def initialized_with
-      if initialized_tempfile
-        :tempfile
-      elsif initialized_data
-        :data
-      elsif initialized_file
-        :file
-      end
     end
 
     def block_size
@@ -198,7 +193,7 @@ module Dragonfly
 
     def copy_to_tempfile(path)
       tempfile = new_tempfile
-      FileUtils.cp File.expand_path(path), tempfile.path
+      FileUtils.cp path, tempfile.path
       tempfile
     end
 

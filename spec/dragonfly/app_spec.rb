@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 require 'rack/mock'
 
 def request(app, path)
@@ -135,7 +135,7 @@ describe Dragonfly::App do
   describe "without path prefix or DOS protection" do
     before(:each) do
       @app = test_app
-      @job = Dragonfly::Job.new(@app).fetch('some_uid')
+      @job = @app.new_job.fetch('some_uid')
       @app.datastore.stub!(:retrieve).with('some_uid').and_return "Hi there"
       @app.configure{|c| c.protect_from_dos_attacks = false }
     end
@@ -152,7 +152,7 @@ describe Dragonfly::App do
   describe "url_path_prefix" do
     before(:each) do
       @app = test_app
-      @job = Dragonfly::Job.new(@app)
+      @job = @app.new_job
     end
     it "should add the path prefix to the url if configured" do
       @app.url_path_prefix = '/media'
@@ -170,7 +170,7 @@ describe Dragonfly::App do
   describe "url_host" do
     before(:each) do
       @app = test_app
-      @job = Dragonfly::Job.new(@app)
+      @job = @app.new_job
     end
     it "should add the host to the url if configured" do
       @app.url_host = 'http://some.server:4000'
@@ -188,7 +188,7 @@ describe Dragonfly::App do
   describe "url_suffix" do
     before(:each) do
       @app = test_app
-      @job = Dragonfly::Job.new(@app)
+      @job = @app.new_job
     end
     it "should add the suffix to the url if configured" do
       @app.url_suffix = 'hellodudes'
@@ -211,10 +211,35 @@ describe Dragonfly::App do
   describe "url params" do
     before(:each) do
       @app = test_app
-      @job = Dragonfly::Job.new(@app)
+      @job = @app.new_job
     end
     it "should add extra params to the url query string" do
       @app.url_for(@job, :suffix => '/suffix', :a => 'thing', :b => 'nuther').should =~ /\w+\/suffix\?a=thing&b=nuther$/
+    end
+  end
+  
+  describe "remote_url_for" do
+    before(:each) do
+      @app = test_app
+    end
+    it "should raise an error if not configured" do
+      lambda{
+        @app.remote_url_for('some_uid')
+      }.should raise_error(NotImplementedError)
+    end
+    it "should correctly call it if configured" do
+      @app.configure do |c|
+        c.define_remote_url{|uid| "http://some.cdn/#{uid}" }
+      end
+      @app.remote_url_for('some_uid').should == 'http://some.cdn/some_uid'
+    end
+    it "should add any params to the request" do
+      @app.define_remote_url{|uid| "http://some.cdn/#{uid}" }
+      @app.remote_url_for('some_uid', :some => 'eggs', :and => 'cheese').should == 'http://some.cdn/some_uid?some=eggs&and=cheese'
+    end
+    it "should correctly add params if it already has some" do
+      @app.define_remote_url{|uid| "http://some.cdn/#{uid}?and=bread" }
+      @app.remote_url_for('some_uid', :some => 'eggs').should == 'http://some.cdn/some_uid?and=bread&some=eggs'
     end
   end
 
@@ -222,36 +247,10 @@ describe Dragonfly::App do
     before(:each) do
       @app = test_app
       @app.protect_from_dos_attacks = true
-      @job = Dragonfly::Job.new(@app).fetch('some_uid')
+      @job = @app.new_job.fetch('some_uid')
     end
     it "should generate the correct url" do
       @app.url_for(@job).should == "/#{@job.serialize}?s=#{@job.sha}"
-    end
-  end
-
-  describe "configuring with saved configurations" do
-    before(:each) do
-      @app = test_app
-    end
-
-    {
-      :imagemagick => Dragonfly::Config::ImageMagick,
-      :image_magick => Dragonfly::Config::ImageMagick,
-      :rmagick => Dragonfly::Config::RMagick,
-      :r_magick => Dragonfly::Config::RMagick,
-      :rails => Dragonfly::Config::Rails,
-      :heroku => Dragonfly::Config::Heroku,
-    }.each do |key, klass|
-      it "should map #{key} to #{klass}" do
-        klass.should_receive(:apply_configuration).with(@app)
-        @app.configure_with(key)
-      end
-    end
-
-    it "should description" do
-      lambda {
-        @app.configure_with(:eggs)
-      }.should raise_error(ArgumentError)
     end
   end
 

@@ -4,7 +4,7 @@ module Dragonfly
       
       def dragonfly_attachments
         @dragonfly_attachments ||= self.class.dragonfly_attachment_specs.inject({}) do |hash, spec|
-          hash[spec.attribute] = Attachment.new(spec, self)
+          hash[spec.attribute] = spec.new_attachment(self)
           hash
         end
       end

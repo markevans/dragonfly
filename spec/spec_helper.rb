@@ -1,29 +1,19 @@
-require 'rubygems'
-require 'spec'
-require 'rack'
+require "rubygems"
+require "bundler"
+Bundler.setup(:default, :test)
+
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+require 'rspec'
+require 'dragonfly'
 require 'fileutils'
 
-require File.dirname(__FILE__) + '/../lib/dragonfly'
-$:.unshift(File.dirname(__FILE__))
-require 'argument_matchers'
-require 'simple_matchers'
-require 'image_matchers'
+require 'webmock/rspec'
 
-ROOT_PATH = File.expand_path(File.dirname(__FILE__) + "/..") unless defined?(ROOT_PATH)
-
-# A hack as system calls weren't using my path
-extra_paths = %w(/opt/local/bin)
-ENV['PATH'] ||= ''
-ENV['PATH'] += ':' + extra_paths.join(':')
-
-# If this is jRuby, ignore the rmagick tests
-ENV['IGNORE_RMAGICK'] = 'true' if RUBY_PLATFORM == 'java' || defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
+# Requires supporting files with custom matchers and macros, etc,
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 SAMPLES_DIR = File.expand_path(File.dirname(__FILE__) + '/../samples') unless defined?(SAMPLES_DIR)
-
-Spec::Runner.configure do |c|
-  c.after(:all){ Dir["#{ROOT_PATH}/Gemfile*.lock"].each{|f| FileUtils.rm_f(f) } }
-end
 
 def todo
   raise "TODO"
@@ -56,6 +46,6 @@ def suppressing_stderr
   $stderr.reopen(tempfile)
   yield
 ensure
-  tempfile.close
+  tempfile.close!
   $stderr.reopen(original_stderr)
 end

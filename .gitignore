@@ -14,4 +14,4 @@ spec/spec.log
 Gemfile.lock
 .s3_spec.yml
 ***.rbc
-
+spec/support/tmp.rb

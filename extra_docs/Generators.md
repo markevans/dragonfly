@@ -15,14 +15,14 @@ we can get generated content using
 
 where `:some_method` is added by the configured generators.
 
-ImageMagickGenerator
---------------------
-The {Dragonfly::Generation::ImageMagickGenerator ImageMagickGenerator} is registered by default by the
-{Dragonfly::Config::ImageMagick ImageMagick configuration} used by 'dragonfly/rails/images'.
+ImageMagick Generator
+---------------------
+The {Dragonfly::ImageMagick::Generator ImageMagick Generator} is registered by default by the
+{Dragonfly::ImageMagick::Config ImageMagick configuration} used by 'dragonfly/rails/images'.
 
 If not already registered:
 
-    app.generator.register(Dragonfly::Generation::ImageMagickGenerator)
+    app.generator.register(Dragonfly::ImageMagick::Generator)
 
 gives us these methods:
 
@@ -50,16 +50,6 @@ You can use `padding-top`, `padding-left`, etc., as well as the standard css sho
 
 An alternative for `:font_family` is `:font` (see {http://www.imagemagick.org/script/command-line-options.php#font}), which could be a complete filename.
 Available fonts are those available on your system.
-
-RMagickGenerator
-----------------
-The {Dragonfly::Generation::RMagickGenerator RMagickGenerator} gives you `plasma` and `text` like the imagemagick generator above, using the
-{http://rmagick.rubyforge.org RMagick} library.
-
-You can tell it not to use the file system when registering it
-
-    app.generator.register(Dragonfly::Generation::RMagickGenerator){|g| g.use_filesystem = false }
-
 
 Custom Generators
 -----------------

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # Matchers
-Spec::Matchers.define :match_steps do |steps|
+RSpec::Matchers.define :match_steps do |steps|
   match do |given|
     given.map{|step| step.class } == steps
   end
@@ -16,7 +16,8 @@ describe Dragonfly::Job do
       Dragonfly::Job::Process => :process,
       Dragonfly::Job::Encode => :encode,
       Dragonfly::Job::Generate => :generate,
-      Dragonfly::Job::FetchFile => :fetch_file
+      Dragonfly::Job::FetchFile => :fetch_file,
+      Dragonfly::Job::FetchUrl => :fetch_url
     }.each do |klass, step_name|
       it "should return the correct step name for #{klass}" do
         klass.step_name.should == step_name
@@ -28,7 +29,8 @@ describe Dragonfly::Job do
       Dragonfly::Job::Process => :p,
       Dragonfly::Job::Encode => :e,
       Dragonfly::Job::Generate => :g,
-      Dragonfly::Job::FetchFile => :ff
+      Dragonfly::Job::FetchFile => :ff,
+      Dragonfly::Job::FetchUrl => :fu
     }.each do |klass, abbreviation|
       it "should return the correct abbreviation for #{klass}" do
         klass.abbreviation.should == abbreviation
@@ -37,7 +39,7 @@ describe Dragonfly::Job do
 
     describe "step_names" do
       it "should return the available step names" do
-        Dragonfly::Job.step_names.should == [:fetch, :process, :encode, :generate, :fetch_file]
+        Dragonfly::Job.step_names.should == [:fetch, :process, :encode, :generate, :fetch_file, :fetch_url]
       end
     end
 
@@ -139,6 +141,34 @@ describe Dragonfly::Job do
 
     end
 
+    describe "fetch_url" do
+      before(:each) do
+        stub_request(:get, 'http://some.place.com').to_return(:body => 'result!')
+        stub_request(:get, 'https://some.place.com').to_return(:body => 'secure result!')
+      end
+
+      it {
+        @job.fetch_url!('some.url')
+        @job.steps.should match_steps([Dragonfly::Job::FetchUrl])
+      }
+
+      it "should fetch the specified url when applied" do
+        @job.fetch_url!('http://some.place.com').apply
+        @job.temp_object.data.should == "result!"
+      end
+
+      it "should default to http" do
+        @job.fetch_url!('some.place.com').apply
+        @job.temp_object.data.should == "result!"
+      end
+
+      it "should also work with https" do
+        @job.fetch_url!('https://some.place.com').apply
+        @job.temp_object.data.should == "secure result!"
+      end
+
+    end
+
   end
 
   describe "with temp_object already there" do
@@ -231,7 +261,7 @@ describe Dragonfly::Job do
   describe "analysis" do
     before(:each) do
       @app = test_app
-      @job = Dragonfly::Job.new(@app, Dragonfly::TempObject.new('HELLO'))
+      @job = @app.new_job('HELLO')
       @app.analyser.add(:num_letters){|temp_object, letter| temp_object.data.count(letter) }
     end
     it "should return correctly when calling analyse" do
@@ -252,71 +282,6 @@ describe Dragonfly::Job do
       @app.processor.add(:double){|temp_object| temp_object.data * 2 }
       @job.process(:double).num_letters('L').should == 4
     end
-  end
-
-  describe "adding jobs" do
-
-    before(:each) do
-      @app = mock_app
-    end
-
-    it "should raise an error if the app is different" do
-      job1 = Dragonfly::Job.new(@app)
-      job2 = Dragonfly::Job.new(mock_app)
-      lambda {
-        job1 + job2
-      }.should raise_error(Dragonfly::Job::AppDoesNotMatch)
-    end
-
-    describe "both belonging to the same app" do
-      before(:each) do
-        @job1 = Dragonfly::Job.new(@app, Dragonfly::TempObject.new('hello'))
-        @job1.process! :resize
-        @job2 = Dragonfly::Job.new(@app, Dragonfly::TempObject.new('hola'))
-        @job2.encode! :png
-      end
-
-      it "should concatenate jobs" do
-        job3 = @job1 + @job2
-        job3.steps.should match_steps([
-          Dragonfly::Job::Process,
-          Dragonfly::Job::Encode
-        ])
-      end
-
-      it "should raise an error if the second job has applied steps" do
-        @job2.apply
-        lambda {
-          @job1 + @job2
-        }.should raise_error(Dragonfly::Job::JobAlreadyApplied)
-      end
-
-      it "should not raise an error if the first job has applied steps" do
-        @job1.apply
-        lambda {
-          @job1 + @job2
-        }.should_not raise_error
-      end
-
-      it "should have the first job's temp_object" do
-        (@job1 + @job2).temp_object.data.should == 'hello'
-      end
-
-      it "should have the correct applied steps" do
-        @job1.apply
-        (@job1 + @job2).applied_steps.should match_steps([
-          Dragonfly::Job::Process
-        ])
-      end
-
-      it "should have the correct pending steps" do
-        @job1.apply
-        (@job1 + @job2).pending_steps.should match_steps([
-          Dragonfly::Job::Encode
-        ])
-      end
-    end
-
   end
 
   describe "defining extra steps after applying" do
@@ -752,6 +717,17 @@ describe Dragonfly::Job do
         step = @app.fetch_file('/my/file.png').process(:cheese).fetch_file_step
         step.should be_a(Dragonfly::Job::FetchFile)
         step.path.should == '/my/file.png'
+      end
+    end
+
+    describe "fetch_url_step" do
+      it "should return nil if it doesn't exist" do
+        @app.generate(:ponies).fetch_url_step.should be_nil
+      end
+      it "should return the fetch_url step otherwise" do
+        step = @app.fetch_url('egg.heads').process(:cheese).fetch_url_step
+        step.should be_a(Dragonfly::Job::FetchUrl)
+        step.url.should == 'http://egg.heads'
       end
     end
 

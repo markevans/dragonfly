@@ -19,14 +19,14 @@ and an image object (actually a {Dragonfly::Job Job} object)...
 
 We can process it using any processing methods that have been registered with the processor.
 
-ImageMagickProcessor
---------------------
-The {Dragonfly::Processing::ImageMagickProcessor ImageMagickProcessor} is registered by default by
-the {Dragonfly::Config::ImageMagick ImageMagick configuration} used by 'dragonfly/rails/images'.
+ImageMagick Processor
+---------------------
+The {Dragonfly::ImageMagick::Processor ImageMagick Processor} is registered by default by
+the {Dragonfly::ImageMagick::Config ImageMagick configuration} used by 'dragonfly/rails/images'.
 
 If not already registered:
 
-    app.processor.register(Dragonfly::Processing::ImageMagickProcessor)
+    app.processor.register(Dragonfly::ImageMagick::Processor)
 
 gives us these methods:
 
@@ -65,16 +65,6 @@ Below are some examples of geometry strings:
     '400x300se'          # crop, with south-east gravity
     '400x300+50+100'     # crop from the point 50,100 with width, height 400,300
 
-RMagickProcessor
-----------------
-The {Dragonfly::Processing::RMagickProcessor RMagickProcessor} uses the {http://rmagick.rubyforge.org RMagick} library and provides the methods
-`thumb`, `crop`, `flip`, `flop`, `greyscale`, `resize`, `resize_and_crop` and `rotate` like the ImageMagickProcessor above.
-
-You can tell it not to use the file system when registering it
-
-    app.processor.register(Dragonfly::Processing::RMagickProcessor){|p| p.use_filesystem = false }
-
-
 Lazy evaluation
 ---------------
 
@@ -102,7 +92,7 @@ To register a single custom processor:
 
     new_image = image.process(:watermark)
 
-You can create a class like the RMagick one above, in which case all public methods will be counted as processing methods.
+You can create a class like the ImageMagick one above, in which case all public methods will be counted as processing methods.
 Each method takes the temp_object as its argument, plus any other args.
 
     class MyProcessor

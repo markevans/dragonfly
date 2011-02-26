@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
-Spec::Matchers.define :have_keys do |*keys|
+RSpec::Matchers.define :have_keys do |*keys|
   match do |given|
     given.keys.map{|sym| sym.to_s }.sort == keys.map{|sym| sym.to_s }.sort
   end

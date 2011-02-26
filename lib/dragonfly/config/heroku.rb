@@ -5,7 +5,7 @@ module Dragonfly
 
       def self.apply_configuration(app, bucket_name)
         app.configure do |c|
-          c.datastore = Dragonfly::DataStorage::S3DataStore.new
+          c.datastore = DataStorage::S3DataStore.new
           c.datastore.configure do |d|
             d.bucket_name = bucket_name
             d.access_key_id = ENV['S3_KEY'] || raise("ENV variable 'S3_KEY' needs to be set - use\n\theroku config:add S3_KEY=XXXXXXXXX")

@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
+require 'spec_helper'
 
 png_path = File.dirname(__FILE__) + '/../../../samples/egg.png'
 
@@ -36,20 +36,11 @@ describe Dragonfly::Analysis::FileCommandAnalyser do
         @analyser.mime_type(@temp_object)
         @temp_object.instance_eval{@tempfile}.should be_nil
       end
-      
-      {
-        :jpg => 'image/jpeg',
-        :png => 'image/png',
-        :gif => 'image/gif',
-        :tif => 'image/tiff'
-      }.each do |format, mime_type|
-        it "should work properly (without a broken pipe error) for big files of format #{format}" do
-          data = Dragonfly::Generation::ImageMagickGenerator.new.plasma(1000, 1000, format).first
-          temp_object = Dragonfly::TempObject.new(data)
-          @analyser.mime_type(temp_object).should == mime_type
-        end
+      it "should work properly (without a broken pipe error) for big files of format jpg" do
+        data = Dragonfly::ImageMagick::Generator.new.plasma(1000, 1000, :jpg).first
+        temp_object = Dragonfly::TempObject.new(data)
+        @analyser.mime_type(temp_object).should == "image/jpeg"
       end
-      
     end
   
   end

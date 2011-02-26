@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe Dragonfly::Configurable do
 
@@ -28,6 +28,11 @@ describe Dragonfly::Configurable do
 
     it "should set the default as nil if not specified" do
       @car.colour.should be_nil
+    end
+    
+    it "should allow setting to nil" do
+      @car.top_speed = nil
+      @car.top_speed.should be_nil
     end
     
     it "should allow specifying configurable attrs as strings" do
@@ -61,12 +66,12 @@ describe Dragonfly::Configurable do
   end
   
   describe "getting configuration" do
-    it "should return the configuration as a hash" do
-      @car.configuration.should == {:colour => nil, :top_speed => 216}
+    it "should return the configuration when nothing is set" do
+      @car.configuration.should == {}
     end
-    it "should not allow you to change the configuration via the hash" do
-      @car.configuration[:top_speed] = 555
-      @car.top_speed.should == 216
+    it "should return the configuration when something is set" do
+      @car.top_speed = 10
+      @car.configuration.should == {:top_speed => 10}
     end
   end
   
@@ -79,8 +84,8 @@ describe Dragonfly::Configurable do
       car1.configure{|c| c.colour = 'green'}
       car2 = Car.new
       car2.configure{|c| c.colour = 'yellow'}
-      car1.configuration.should == {:colour => 'green', :top_speed => 216}
-      car2.configuration.should == {:colour => 'yellow', :top_speed => 216}
+      car1.configuration.should == {:colour => 'green'}
+      car2.configuration.should == {:colour => 'yellow'}
     end
   end
   
@@ -178,7 +183,7 @@ describe Dragonfly::Configurable do
 
   end
   
-  describe "configuring with a configurer" do
+  describe "configuring with a saved config" do
     before(:each) do
       @cool_configuration = Object.new
       def @cool_configuration.apply_configuration(car, colour=nil)
@@ -188,13 +193,13 @@ describe Dragonfly::Configurable do
       end
     end
     
-    it "should allow configuration by a configurer" do
+    it "should allow configuration by a saved config" do
       @car.configure_with(@cool_configuration)
       @car.colour.should == 'vermelho'
       @car.top_speed.should == 216
     end
     
-    it "should pass any args through to the configurer" do
+    it "should pass any args through to the saved config" do
       @car.configure_with(@cool_configuration, 'preto')
       @car.colour.should == 'preto'
     end
@@ -210,11 +215,223 @@ describe Dragonfly::Configurable do
       @car.configure_with(@cool_configuration).should == @car
     end
     
-    it "should ask the object which object to configure with if a symbol is given" do
-      @car.should_receive(:configurer_for).with(:cool).and_return(@cool_configuration)
-      @car.configure_with(:cool)
-      @car.colour.should == 'vermelho'
+    describe "using a symbol to specify the config" do
+
+      before(:all) do
+        @rally_config = Object.new
+        Car.register_configuration(:rally, @rally_config)
+        @long_journey_config = Object.new
+        Car.register_configuration(:long_journey){ @long_journey_config }
+        Car.register_configuration(:some_library){ SomeLibrary }
+      end
+
+      it "should map the symbol to the correct configuration" do
+        @rally_config.should_receive(:apply_configuration).with(@car)
+        @car.configure_with(:rally)
+      end
+
+      it "should map the symbol to the correct configuration lazily" do
+        @long_journey_config.should_receive(:apply_configuration).with(@car)
+        @car.configure_with(:long_journey)
+      end
+
+      it "should throw an error if an unknown symbol is passed in" do
+        lambda {
+          @car.configure_with(:eggs)
+        }.should raise_error(ArgumentError)
+      end
+
+      it "should only try to load the library when asked to" do
+        lambda{
+          @car.configure_with(:some_library)
+        }.should raise_error(NameError, /uninitialized constant.*SomeLibrary/)
+      end
     end
+    
   end
   
+  describe "falling back to another config" do
+    before(:each) do
+      @garage = Object.new
+      class << @garage
+        include Dragonfly::Configurable
+        configurable_attr :top_speed, 100
+      end
+      @car.use_as_fallback_config(@garage)
+    end
+    
+    describe "when nothing set" do
+      it "should use its default" do
+        @car.top_speed.should == 216
+      end
+      it "shouldn't affect the fallback config object" do
+        @garage.top_speed.should == 100
+      end
+    end
+    
+    describe "if set" do
+      before(:each) do
+        @car.top_speed = 444
+      end
+      it "should work normally" do
+        @car.top_speed.should == 444
+      end
+      it "shouldn't affect the fallback config object" do
+        @garage.top_speed.should == 100
+      end
+    end
+    
+    describe "both set" do
+      before(:each) do
+        @car.top_speed = 444
+        @garage.top_speed = 3000
+      end
+      it "should prefer its own setting" do
+        @car.top_speed.should == 444
+      end
+      it "shouldn't affect the fallback config object" do
+        @garage.top_speed.should == 3000
+      end
+    end
+    
+    describe "the fallback config is set" do
+      before(:each) do
+        @garage.top_speed = 3000
+      end
+      it "should use the fallback config" do
+        @car.top_speed.should == 3000
+      end
+      it "shouldn't affect the fallback config object" do
+        @garage.top_speed.should == 3000
+      end
+    end
+    
+    describe "falling back multiple levels" do
+      before(:each) do
+        @klass = Class.new
+        @klass.class_eval do
+          include Dragonfly::Configurable
+          configurable_attr :veg, 'carrot'
+        end
+        @a = @klass.new
+        @b = @klass.new
+        @b.use_as_fallback_config(@a)
+        @c = @klass.new
+        @c.use_as_fallback_config(@b)
+      end
+      
+      it "should be the default if nothing set" do
+        @c.veg.should == 'carrot'
+      end
+      
+      it "should fall all the way back to the top one if necessary" do
+        @a.veg = 'turnip'
+        @c.veg.should == 'turnip'
+      end
+      
+      it "should prefer the closer one over the further away one" do
+        @b.veg = 'tatty'
+        @a.veg = 'turnip'
+        @c.veg.should == 'tatty'
+      end
+      
+      it "should work properly with nils" do
+        @a.veg = nil
+        @c.veg = 'broc'
+        @a.veg.should be_nil
+        @b.veg.should be_nil
+        @c.veg.should == 'broc'
+      end
+    end
+    
+    describe "objects with different methods" do
+      before(:each) do
+        @dad = Object.new
+        class << @dad
+          include Dragonfly::Configurable
+        end
+        @kid = Object.new
+        class << @kid
+          include Dragonfly::Configurable
+          configurable_attr :lug
+        end
+        @kid.use_as_fallback_config(@dad)
+      end
+
+      it "should not allow setting on the fallback obj directly" do
+        lambda{
+          @dad.lug = 'leg'
+        }.should raise_error(NoMethodError)
+      end
+
+      it "should not have the fallback obj respond to the method" do
+        @dad.should_not respond_to(:lug=)
+      end
+
+      it "should allow configuring through the fallback object even if it doesn't have that method" do
+        @dad.configure do |c|
+          c.lug = 'leg'
+        end
+        @kid.lug.should == 'leg'
+      end
+      
+      it "should work when a grandchild config is added later" do
+        grandkid = Object.new
+        class << grandkid
+          include Dragonfly::Configurable
+          configurable_attr :oogie, 'boogie'
+        end
+        grandkid.use_as_fallback_config(@kid)
+        @dad.configure{|c| c.oogie = 'duggen' }
+        grandkid.oogie.should == 'duggen'
+      end
+    end
+    
+    describe "clashing with configurable modules" do
+      before(:each) do
+        @mod = mod = Module.new
+        @mod.module_eval do
+          include Dragonfly::Configurable
+          configurable_attr :team, 'spurs'
+        end
+        @class = Class.new
+        @class.class_eval do
+          include mod
+          include Dragonfly::Configurable
+          configurable_attr :tree, 'elm'
+        end
+      end
+      
+      it "should not override the defaults from the module" do
+        obj = @class.new
+        obj.team.should == 'spurs'
+      end
+      
+      it "should still use its own defaults" do
+        obj = @class.new
+        obj.tree.should == 'elm'
+      end
+      
+      describe "when the configurable_attr is specified in a subclass that doesn't include Configurable" do
+        before(:each) do
+          @subclass = Class.new(@class)
+          @subclass.class_eval do
+            configurable_attr :car, 'mazda'
+            configurable_attr :tree, 'oak'
+          end
+          @obj = @subclass.new
+        end
+
+        it "should still work with default values" do
+          @obj.car.should == 'mazda'
+        end
+
+        it "should override the default from the parent" do
+          @obj.tree.should == 'oak'
+        end
+      end
+
+    end
+    
+  end
 end

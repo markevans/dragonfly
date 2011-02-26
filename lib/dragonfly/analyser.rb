@@ -1,7 +1,6 @@
 module Dragonfly
   class Analyser < FunctionManager
     
-    include Configurable
     configurable_attr :enable_cache, true
     configurable_attr :cache_size, 100
     

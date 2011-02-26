@@ -25,10 +25,10 @@ module Dragonfly
 
     def initialize
       @analyser, @processor, @encoder, @generator = Analyser.new, Processor.new, Encoder.new, Generator.new
-      @analyser.use_same_log_as(self)
-      @processor.use_same_log_as(self)
-      @encoder.use_same_log_as(self)
-      @generator.use_same_log_as(self)
+      [@analyser, @processor, @encoder, @generator].each do |obj|
+        obj.use_same_log_as(self)
+        obj.use_as_fallback_config(self)
+      end
       @job_definitions = JobDefinitions.new
       @server = Dragonfly::SimpleEndpoint.new(self)
     end
@@ -37,7 +37,7 @@ module Dragonfly
 
     extend Forwardable
     def_delegator :datastore, :destroy
-    def_delegators :new_job, :fetch, :generate, :fetch_file
+    def_delegators :new_job, :fetch, :generate, :fetch_file, :fetch_url
     def_delegator :server, :call
 
     configurable_attr :datastore do DataStorage::FileDataStore.new end
@@ -66,25 +66,8 @@ module Dragonfly
 
     attr_accessor :job_definitions
 
-    SAVED_CONFIGS = {
-      :imagemagick => 'ImageMagick',
-      :image_magick => 'ImageMagick',
-      :rmagick => 'RMagick',
-      :r_magick => 'RMagick',
-      :rails => 'Rails',
-      :heroku => 'Heroku'
-    }
-
-    def configurer_for(symbol)
-      class_name = SAVED_CONFIGS[symbol]
-      if class_name.nil?
-        raise ArgumentError, "#{symbol.inspect} is not a known configuration - try one of #{SAVED_CONFIGS.keys.join(', ')}"
-      end
-      Config.const_get(class_name)
-    end
-
     def new_job(content=nil, opts={})
-      content ? Job.new(self, TempObject.new(content, opts)) : Job.new(self)
+      content ? job_class.new(self, TempObject.new(content, opts)) : job_class.new(self)
     end
 
     def endpoint(job=nil, &block)
@@ -95,6 +78,29 @@ module Dragonfly
       job_definitions.add(name, &block)
     end
     configuration_method :job
+
+    def job_class
+      @job_class ||= begin
+        app = self
+        Class.new(Job).class_eval do
+          include app.analyser.analysis_methods
+          include app.job_definitions
+          include Job::OverrideInstanceMethods
+          self
+        end
+      end
+    end
+
+    def attachment_class
+      @attachment_class ||= begin
+        app = self
+        Class.new(ActiveModelExtensions::Attachment).class_eval do
+          include app.analyser.analysis_methods
+          include app.job_definitions
+          self
+        end
+      end
+    end
 
     def store(object, opts={})
       temp_object = object.is_a?(TempObject) ? object : TempObject.new(object)
@@ -140,6 +146,21 @@ module Dragonfly
       path
     end
 
+    def define_remote_url(&block)
+      self.get_remote_url = proc(&block)
+    end
+    configuration_method :define_remote_url
+    
+    def remote_url_for(uid, query={})
+      raise NotImplementedError, "You need to configure remote_urls on the Dragonfly app" if get_remote_url.nil?
+      url = get_remote_url.call(uid)
+      if query.any?
+        query_string = Rack::Utils.build_query(query)
+        url << (url['?'] ? "&#{query_string}" : "?#{query_string}")
+      end
+      url
+    end
+
     def define_macro(mod, macro_name)
       already_extended = (class << mod; self; end).included_modules.include?(ActiveModelExtensions)
       mod.extend(ActiveModelExtensions) unless already_extended
@@ -159,6 +180,12 @@ module Dragonfly
     end
 
     private
+
+    attr_accessor :get_remote_url
+
+    def saved_configs
+      self.class.saved_configs
+    end
 
     def file_ext_string(format)
       '.' + format.to_s.downcase.sub(/^.*\./,'')

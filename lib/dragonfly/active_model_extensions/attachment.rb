@@ -17,8 +17,6 @@ module Dragonfly
 
       def initialize(spec, parent_model)
         @spec, @parent_model = spec, parent_model
-        self.extend app.analyser.analysis_methods
-        self.extend app.job_definitions
         self.uid = parent_uid
         self.job = app.fetch(uid) if uid
       end
@@ -86,6 +84,10 @@ module Dragonfly
       def encode!(*args)
         assign(encode(*args))
         self
+      end
+      
+      def remote_url(opts={})
+        app.remote_url_for(uid, opts) if uid
       end
 
       protected

@@ -11,8 +11,8 @@ describe Item do
 
     describe "attachment specs" do
       before(:each) do
-        app1.define_macro(model_class, :image_accessor)
-        app2.define_macro(model_class, :video_accessor)
+        app1.define_macro(MyModel, :image_accessor)
+        app2.define_macro(MyModel, :video_accessor)
         Item.class_eval do
           image_accessor :preview_image
           video_accessor :trailer_video
@@ -57,7 +57,7 @@ describe Item do
 
     before(:each) do
       @app = Dragonfly[:images]
-      @app.define_macro(model_class, :image_accessor)
+      @app.define_macro(MyModel, :image_accessor)
       Item.class_eval do
         image_accessor :preview_image
       end
@@ -179,7 +179,7 @@ describe Item do
       end
 
       it "should return the url for the data" do
-        @app.should_receive(:url_for).with(an_instance_of(Dragonfly::Job), {}).and_return('some.url')
+        @app.should_receive(:url_for).with(an_instance_of(@app.job_class), {}).and_return('some.url')
         @item.preview_image.url.should == 'some.url'
       end
 
@@ -349,13 +349,29 @@ describe Item do
       end
     end
 
+    describe "remote_url" do
+      before(:each) do
+        @app.define_remote_url do |uid|
+          'http://some.domain/' + uid
+        end
+      end
+      it "should give the remote url if the uid is set" do
+        @item.preview_image_uid = 'some/uid'
+        @item.preview_image.remote_url(:some => 'param').should == 'http://some.domain/some/uid?some=param'
+      end
+      it "should return nil if the content is not yet saved" do
+        @item.preview_image = "hello"
+        @item.preview_image.remote_url(:some => 'param').should be_nil
+      end
+    end
+
   end
 
   describe "validations" do
 
     before(:all) do
       @app = Dragonfly[:images]
-      @app.define_macro(model_class, :image_accessor)
+      @app.define_macro(MyModel, :image_accessor)
     end
 
     describe "validates_presence_of" do
@@ -510,7 +526,7 @@ describe Item do
         def number_of_As(temp_object); temp_object.data.count('A'); end
       end
       @app.analyser.register(custom_analyser)
-      @app.define_macro(model_class, :image_accessor)
+      @app.define_macro(MyModel, :image_accessor)
       Item.class_eval do
         image_accessor :preview_image
       end
@@ -694,8 +710,8 @@ describe Item do
     before(:all) do
       @app = Dragonfly[:images]
       @app2 = Dragonfly[:egg]
-      @app.define_macro(model_class, :image_accessor)
-      @app2.define_macro(model_class, :egg_accessor)
+      @app.define_macro(MyModel, :image_accessor)
+      @app2.define_macro(MyModel, :egg_accessor)
       Car.class_eval do
         image_accessor :image
       end

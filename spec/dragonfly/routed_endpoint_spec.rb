@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 def response_for(array)
   Rack::MockResponse.new(*array)
