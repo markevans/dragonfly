@@ -19,7 +19,7 @@ or you can mount as a middleware, like in rails:
       c.url_path_prefix = '/media'
     end
 
-    use Dragonfly::Middleware, :images, '/media'
+    use Dragonfly::Middleware, :images
 
     get '/' #... do
       # ...
