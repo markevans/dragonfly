@@ -387,5 +387,51 @@ describe Dragonfly::Configurable do
       end
     end
     
+    describe "clashing with configurable modules" do
+      before(:each) do
+        @mod = mod = Module.new
+        @mod.module_eval do
+          include Dragonfly::Configurable
+          configurable_attr :team, 'spurs'
+        end
+        @class = Class.new
+        @class.class_eval do
+          include mod
+          include Dragonfly::Configurable
+          configurable_attr :tree, 'elm'
+        end
+      end
+      
+      it "should not override the defaults from the module" do
+        obj = @class.new
+        obj.team.should == 'spurs'
+      end
+      
+      it "should still use its own defaults" do
+        obj = @class.new
+        obj.tree.should == 'elm'
+      end
+      
+      describe "when the configurable_attr is specified in a subclass that doesn't include Configurable" do
+        before(:each) do
+          @subclass = Class.new(@class)
+          @subclass.class_eval do
+            configurable_attr :car, 'mazda'
+            configurable_attr :tree, 'oak'
+          end
+          @obj = @subclass.new
+        end
+
+        it "should still work with default values" do
+          @obj.car.should == 'mazda'
+        end
+
+        it "should override the default from the parent" do
+          @obj.tree.should == 'oak'
+        end
+      end
+
+    end
+    
   end
 end

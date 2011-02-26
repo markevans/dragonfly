@@ -55,7 +55,11 @@ module Dragonfly
       end
       
       def default_configuration
-        @default_configuration ||= configured_class.default_configuration.dup
+        # Merge the default configuration of all ancestor classes/modules which are configurable
+        @default_configuration ||= [self.class, configured_class, *configured_class.ancestors].reverse.inject({}) do |default_config, klass|
+          default_config.merge!(klass.default_configuration) if klass.respond_to? :default_configuration
+          default_config
+        end
       end
 
       def set_config_value(key, value)
