@@ -6,13 +6,13 @@ def request(app, path)
   Rack::MockRequest.new(app).get(path)
 end
 
-describe Dragonfly::SimpleEndpoint do
+describe Dragonfly::Server do
 
   before(:each) do
     @app = test_app
     @app.protect_from_dos_attacks = false
     @uid = @app.store('HELLO THERE')
-    @endpoint = Dragonfly::SimpleEndpoint.new(@app)
+    @endpoint = Dragonfly::Server.new(@app)
   end
   
   after(:each) do

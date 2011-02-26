@@ -30,7 +30,7 @@ module Dragonfly
         obj.use_as_fallback_config(self)
       end
       @job_definitions = JobDefinitions.new
-      @server = Dragonfly::SimpleEndpoint.new(self)
+      @server = Dragonfly::Server.new(self)
     end
 
     include Configurable
