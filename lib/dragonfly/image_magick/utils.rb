@@ -49,7 +49,7 @@ module Dragonfly
       end
 
       def run(command)
-        log.debug("Running command: #{command}") if Utils.log_commands
+        log.debug("Running command: #{command}") if log_commands
         begin
           result = `#{command}`
         rescue Errno::ENOENT
