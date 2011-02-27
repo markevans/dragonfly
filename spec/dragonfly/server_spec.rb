@@ -56,19 +56,6 @@ describe Dragonfly::Server do
     response.content_type.should == 'text/plain'
   end
 
-  it "should still work when mapped to a prefix" do
-    endpoint = @endpoint
-    rack_app = Rack::Builder.new do
-      map '/some_prefix' do
-        run endpoint
-      end
-    end.to_app
-    url = "/some_prefix/#{@app.fetch(@uid).serialize}"
-    response = request(rack_app, url)
-    response.status.should == 200
-    response.body.should == 'HELLO THERE'
-  end
-
   it "should return a simple text response at the root" do
     response = request(@endpoint, '/')
     response.status.should == 200

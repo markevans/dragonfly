@@ -56,7 +56,7 @@ module Dragonfly
 
     def success_headers
       {
-        "Content-Type" => job.resolve_mime_type,
+        "Content-Type" => job.mime_type,
         "Content-Length" => job.size.to_s
       }.merge(content_disposition_header)
     end

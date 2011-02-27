@@ -29,8 +29,8 @@ module Dragonfly
         obj.use_same_log_as(self)
         obj.use_as_fallback_config(self)
       end
+      @server = Server.new(self)
       @job_definitions = JobDefinitions.new
-      @server = Dragonfly::Server.new(self)
     end
 
     include Configurable
@@ -38,7 +38,7 @@ module Dragonfly
     extend Forwardable
     def_delegator :datastore, :destroy
     def_delegators :new_job, :fetch, :generate, :fetch_file, :fetch_url
-    def_delegator :server, :call
+    def_delegator :server, :call, :url_for
 
     configurable_attr :datastore do DataStorage::FileDataStore.new end
     configurable_attr :cache_duration, 3600*24*365 # (1 year)
@@ -46,7 +46,6 @@ module Dragonfly
     configurable_attr :url_path_prefix
     configurable_attr :url_host
     configurable_attr :url_suffix
-    configurable_attr :protect_from_dos_attacks, false
     configurable_attr :secret, 'secret yo'
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
     configurable_attr :infer_mime_type_from_file_ext, true
@@ -67,7 +66,7 @@ module Dragonfly
     attr_accessor :job_definitions
 
     def new_job(content=nil, opts={})
-      content ? job_class.new(self, TempObject.new(content, opts)) : job_class.new(self)
+      content ? job_class.new(self, TempObject.new(content), opts) : job_class.new(self)
     end
 
     def endpoint(job=nil, &block)
@@ -119,31 +118,6 @@ module Dragonfly
 
     def mime_type_for(format)
       registered_mime_types[file_ext_string(format)]
-    end
-
-    def resolve_mime_type(temp_object)
-      mime_type_for(temp_object.format)                                   ||
-        (mime_type_for(temp_object.ext) if infer_mime_type_from_file_ext) ||
-        analyser.analyse(temp_object, :mime_type)                         ||
-        mime_type_for(analyser.analyse(temp_object, :format))             ||
-        fallback_mime_type
-    end
-
-    def mount_path
-      url_path_prefix.blank? ? '/' : url_path_prefix
-    end
-
-    def url_for(job, opts={})
-      opts = opts.dup
-      host = opts.delete(:host) || url_host
-      suffix = opts.delete(:suffix) || url_suffix
-      suffix = suffix.call(job) if suffix.respond_to?(:call)
-      path_prefix = opts.delete(:path_prefix) || url_path_prefix
-      path = "#{host}#{path_prefix}#{job.to_path}#{suffix}"
-      query = opts
-      query.merge!(server.required_params_for(job)) if protect_from_dos_attacks
-      path << "?#{Rack::Utils.build_query(query)}" if query.any?
-      path
     end
 
     def define_remote_url(&block)

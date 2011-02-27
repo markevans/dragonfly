@@ -2,13 +2,9 @@ require 'spec_helper'
 
 describe Dragonfly::UrlMapper do
   
-  before(:each) do
-    @url_mapper = Dragonfly::UrlMapper.new
-  end
-  
   describe "url_for" do
     before(:each) do
-      @url_mapper.url_format = '/media/:job'
+      @url_mapper = Dragonfly::UrlMapper.new('/media/:job')
     end
     
     it "should map correctly" do
@@ -28,7 +24,7 @@ describe Dragonfly::UrlMapper do
 
   describe "params_for" do
     before(:each) do
-      @url_mapper.url_format = '/media/:job'
+      @url_mapper = Dragonfly::UrlMapper.new('/media/:job')
     end
     
     it "should map correctly" do
@@ -53,6 +49,8 @@ describe Dragonfly::UrlMapper do
         @url_mapper.params_for(url).should be_nil
       end    
     end
+    
+    
   end
   
 end

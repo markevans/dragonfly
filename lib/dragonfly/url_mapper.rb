@@ -6,19 +6,13 @@ module Dragonfly
     
     PARAM_FORMAT = /\:[\w_]+/
     
-    include Configurable
-    configurable_attr :url_format, '/'
-    
-    def initialize(url_format=nil)
-      self.url_format = url_format if url_format
+    def initialize(url_format)
+      self.url_format = url_format
+      self.url_regexp = Regexp.new('^' + url_format.gsub(PARAM_FORMAT, '([\w_]+)') + '$')
+      self.url_regexp_groups = url_format.scan(PARAM_FORMAT).map{|f| f.tr(':','') } # Unfortunately we don't have named groups in Ruby 1.8
     end
-    
-    # Override the method given by Configurable
-    def url_format=(format_string)
-      self.url_regexp = Regexp.new('^' + format_string.gsub(PARAM_FORMAT, '([\w_]+)') + '$')
-      self.url_regexp_groups = format_string.scan(PARAM_FORMAT).map{|f| f.tr(':','') } # Unfortunately we don't have named groups in Ruby 1.8
-      set_config_value(:url_format, format_string) # from Configurable
-    end
+
+    attr_accessor :url_format
     
     def url_for(params)
       params = params.dup

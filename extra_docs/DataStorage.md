@@ -93,7 +93,6 @@ Data stores are key-value in nature, and need to implement 3 methods: `store`, `
 
       def store(temp_object, opts={})
         # ... use temp_object.data, temp_object.file, temp_object.path, etc. ...
-        # ... can also make use of temp_object.name, temp_object.format, temp_object.meta
         # store and return the uid
         'return_some_unique_uid'
       end
