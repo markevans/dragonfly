@@ -29,9 +29,8 @@ describe Dragonfly::TempObject do
     Pathname.new(path)
   end
 
-  def new_temp_object(data, opts={})
-    klass = opts.delete(:class) || Dragonfly::TempObject
-    klass.new(initialization_object(data), opts)
+  def new_temp_object(data, klass=Dragonfly::TempObject)
+    klass.new(initialization_object(data))
   end
 
   def initialization_object(data)
@@ -151,7 +150,7 @@ describe Dragonfly::TempObject do
       end
       it "should yield the number of bytes specified in the class configuration" do
         klass = Class.new(Dragonfly::TempObject)
-        temp_object = new_temp_object(File.read(sample_path('round.gif')), :class => klass)
+        temp_object = new_temp_object(File.read(sample_path('round.gif')), klass)
         klass.block_size = 3001
         parts = get_parts(temp_object)
         parts[0...-1].each do |part|
@@ -279,67 +278,28 @@ describe Dragonfly::TempObject do
     end
   end
 
-  describe "name" do
+  describe "original_filename" do
     before(:each) do
       @obj = new_tempfile
     end
-    it "should set the name if the initial object responds to 'original filename'" do
+    it "should set the original_filename if the initial object responds to 'original filename'" do
       def @obj.original_filename
         'jimmy.page'
       end
-      Dragonfly::TempObject.new(@obj).name.should == 'jimmy.page'
+      Dragonfly::TempObject.new(@obj).original_filename.should == 'jimmy.page'
     end
     it "should not set the name if the initial object doesn't respond to 'original filename'" do
-      Dragonfly::TempObject.new(@obj).name.should be_nil
+      Dragonfly::TempObject.new(@obj).original_filename.should be_nil
     end
     it "should set the name if the initial object is a file object" do
       file = File.new(SAMPLES_DIR + '/round.gif')
       temp_object = Dragonfly::TempObject.new(file)
-      temp_object.name.should == 'round.gif'
+      temp_object.original_filename.should == 'round.gif'
     end
     it "should set the name if the initial object is a pathname" do
       pathname = Pathname.new(SAMPLES_DIR + '/round.gif')
       temp_object = Dragonfly::TempObject.new(pathname)
-      temp_object.name.should == 'round.gif'
-    end
-    it "should set allow setting on initialize" do
-      temp_object = Dragonfly::TempObject.new('HELLO', :name => 'monkey.egg')
-      temp_object.name.should == 'monkey.egg'
-    end
-    it "should allow setting" do
-      temp_object = Dragonfly::TempObject.new('sdf')
-      temp_object.name = "jonny.briggs"
-      temp_object.name.should == 'jonny.briggs'
-    end
-  end
-
-  describe "ext" do
-    it "should use the correct extension from name" do
-      temp_object = Dragonfly::TempObject.new('asfsadf', :name => 'hello.there.mate')
-      temp_object.ext.should == 'mate'
-    end
-    it "should be nil if name has none" do
-      temp_object = Dragonfly::TempObject.new('asfsadf', :name => 'hello')
-      temp_object.ext.should be_nil
-    end
-    it "should be nil if name is nil" do
-      temp_object = Dragonfly::TempObject.new('asfsadf')
-      temp_object.ext.should be_nil
-    end
-  end
-
-  describe "basename" do
-    it "should use the correct basename from name" do
-      temp_object = Dragonfly::TempObject.new('A', :name => 'hello.there.mate')
-      temp_object.basename.should == 'hello.there'
-    end
-    it "should be the name if it has no ext" do
-      temp_object = Dragonfly::TempObject.new('A', :name => 'hello')
-      temp_object.basename.should == 'hello'
-    end
-    it "should be nil if name is nil" do
-      temp_object = Dragonfly::TempObject.new('A', :name => nil)
-      temp_object.basename.should be_nil
+      temp_object.original_filename.should == 'round.gif'
     end
   end
 
