@@ -234,6 +234,11 @@ describe Dragonfly::Job do
         @job.apply.format.should == :gif
       end
 
+      it "should update the format even when not applied" do
+        @app.encoder.should_not_receive(:encode)
+        @job.format.should == :gif
+      end
+
       it "should allow returning an array with extra attributes form the encoder" do
         @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return(['alo', {:name => 'doobie', :meta => {:eggs => 'fish'}}])
         @job.data.should == 'alo'

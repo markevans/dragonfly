@@ -2,6 +2,7 @@ require 'forwardable'
 require 'digest/sha1'
 require 'base64'
 require 'open-uri'
+require 'pathname'
 
 module Dragonfly
   class Job
@@ -37,11 +38,15 @@ module Dragonfly
         end
       end
 
-      def initialize(*args)
-        @args = args
+      def initialize(job, *args)
+        @job, @args = job, args
+        init
       end
 
-      attr_reader :args
+      def init # To be overridden
+      end
+
+      attr_reader :job, :args
 
       def inspect
         "#{self.class.step_name}(#{args.map{|a| a.inspect }.join(', ')})"
@@ -49,7 +54,7 @@ module Dragonfly
 
       private
       
-      def update_job(job, content, attributes)
+      def update_job(content, attributes)
         job.temp_object = TempObject.new(content)
         job.update_attributes(attributes) if attributes
       end
@@ -60,9 +65,9 @@ module Dragonfly
       def uid
         args.first
       end
-      def apply(job)
+      def apply
         content, extra = job.app.datastore.retrieve(uid)
-        update_job(job, content, extra)
+        update_job(content, extra)
       end
     end
 
@@ -73,32 +78,35 @@ module Dragonfly
       def arguments
         args[1..-1]
       end
-      def apply(job)
+      def apply
         raise NothingToProcess, "Can't process because temp object has not been initialized. Need to fetch first?" unless job.temp_object
         content, extra = job.app.processor.process(job.temp_object, name, *arguments)
-        update_job(job, content, extra)
+        update_job(content, extra)
       end
     end
 
     class Encode < Step
+      def init
+        job.format = format
+      end
       def format
         args.first
       end
       def arguments
         args[1..-1]
       end
-      def apply(job)
+      def apply
         raise NothingToEncode, "Can't encode because temp object has not been initialized. Need to fetch first?" unless job.temp_object
         content, extra = job.app.encoder.encode(job.temp_object, format, *arguments)
-        update_job(job, content, extra)
+        update_job(content, extra)
         job.format = format
       end
     end
 
     class Generate < Step
-      def apply(job)
+      def apply
         content, extra = job.app.generator.generate(*args)
-        update_job(job, content, extra)
+        update_job(content, extra)
       end
     end
 
@@ -106,8 +114,8 @@ module Dragonfly
       def path
         File.expand_path(args.first)
       end
-      def apply(job)
-        job.temp_object = TempObject.new(File.new(path))
+      def apply
+        job.temp_object = TempObject.new(Pathname.new(path))
       end
     end
 
@@ -115,7 +123,7 @@ module Dragonfly
       def url
         @url ||= (args.first[%r<^\w+://>] ? args.first : "http://#{args.first}")
       end
-      def apply(job)
+      def apply
         open(url) do |f|
           job.temp_object = TempObject.new(f.read)
         end
@@ -142,7 +150,7 @@ module Dragonfly
         job = app.new_job
         steps_array.each do |step_array|
           step_class = step_abbreviations[step_array.shift]
-          job.steps << step_class.new(*step_array)
+          job.steps << step_class.new(job, *step_array)
         end
         job
       end
@@ -207,7 +215,9 @@ module Dragonfly
 
     # Used by 'dup' and 'clone'
     def initialize_copy(other)
-      self.steps = other.steps.dup
+      self.steps = other.steps.map do |step|
+        step.class.new(self, *step.args)
+      end
     end
 
     attr_accessor :temp_object
@@ -218,12 +228,12 @@ module Dragonfly
       class_eval %(
         def #{step_class.step_name}(*args)
           new_job = self.dup
-          new_job.steps << #{step_class}.new(*args)
+          new_job.steps << #{step_class}.new(new_job, *args)
           new_job
         end
 
         def #{step_class.step_name}!(*args)
-          steps << #{step_class}.new(*args)
+          steps << #{step_class}.new(self, *args)
           self
         end
       )
@@ -239,7 +249,7 @@ module Dragonfly
     # Applying, etc.
 
     def apply
-      pending_steps.each{|step| step.apply(self) }
+      pending_steps.each{|step| step.apply }
       self.next_step_index = steps.length
       self
     end
