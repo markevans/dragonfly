@@ -45,8 +45,7 @@ module Dragonfly
     def initialize(obj, opts={})
       opts ||= {} # in case it's nil
       initialize_from_object!(obj)
-      validate_options!(opts)
-      extract_attributes_from(opts)
+      self.name ||= opts[:name]
     end
 
     def data
@@ -85,12 +84,7 @@ module Dragonfly
       @data ? @data.bytesize : File.size(path)
     end
 
-    attr_accessor :name, :format
-    attr_writer :meta
-
-    def meta
-      @meta ||= {}
-    end
+    attr_accessor :name
 
     def basename
       File.basename(name, '.*') if name
@@ -121,20 +115,6 @@ module Dragonfly
       @data ? StringIO.open(@data, 'rb', &block) : file(&block)
     end
 
-    def attributes
-      {
-        :name => name,
-        :meta => meta,
-        :format => format
-      }
-    end
-
-    def extract_attributes_from(hash)
-      self.name   = hash.delete(:name)     unless hash[:name].blank?
-      self.format = hash.delete(:format)   unless hash[:format].blank?
-      self.meta.merge!(hash.delete(:meta)) unless hash[:meta].blank?
-    end
-
     def inspect
       content_string = case
       when @data
@@ -143,7 +123,7 @@ module Dragonfly
       when @pathname then "pathname=#{@pathname.inspect}"
       when @tempfile then "tempfile=#{@tempfile.inspect}"
       end
-      to_s.sub(/>$/, " #{content_string}, @meta=#{@meta.inspect}, @name=#{@name.inspect} >")
+      to_s.sub(/>$/, " #{content_string}, @name=#{@name.inspect} >")
     end
 
     protected
@@ -195,12 +175,6 @@ module Dragonfly
       tempfile = new_tempfile
       FileUtils.cp path, tempfile.path
       tempfile
-    end
-
-    def validate_options!(opts)
-      valid_keys = [:name, :meta, :format]
-      invalid_keys = opts.keys - valid_keys
-      raise ArgumentError, "Unrecognised options #{invalid_keys.inspect}" if invalid_keys.any?
     end
 
     def new_tempfile(content=nil)
