@@ -181,6 +181,14 @@ module Dragonfly
         @format || analyse(:format)
       end
       
+      def mime_type
+        app.mime_type_for(@format)                                      ||
+          (app.mime_type_for(ext) if app.infer_mime_type_from_file_ext) ||
+          analyse(:mime_type)                                           ||
+          app.mime_type_for(analyse(:format))                           ||
+          app.fallback_mime_type
+      end
+      
       def to_s
         super.sub(/#<Class:\w+>/, 'Extended Dragonfly::Job')
       end
@@ -291,7 +299,7 @@ module Dragonfly
     end
 
     def b64_data
-      "data:#{resolve_mime_type};base64,#{Base64.encode64(data)}"
+      "data:#{mime_type};base64,#{Base64.encode64(data)}"
     end
 
     # to_stuff...
@@ -368,10 +376,6 @@ module Dragonfly
 
     def store(opts={})
       app.store(result, opts)
-    end
-
-    def resolve_mime_type
-      app.resolve_mime_type(result)
     end
 
     def inspect

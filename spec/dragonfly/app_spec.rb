@@ -70,66 +70,6 @@ describe Dragonfly::App do
       end
     end
 
-    describe "#resolve_mime_type" do
-      before(:each) do
-        @app = test_app
-        @app.analyser.add :format do |temp_object|
-          :png
-        end
-        @app.analyser.add :mime_type do |temp_object|
-          'image/jpeg'
-        end
-        @app.encoder.add do |temp_object|
-          'ENCODED DATA YO'
-        end
-      end
-
-      it "should return the correct mime_type if the temp_object has a format" do
-        temp_object = Dragonfly::TempObject.new("HIMATE", :format => :tiff, :name => 'test.pdf')
-        @app.resolve_mime_type(temp_object).should == 'image/tiff'
-      end
-
-      it "should use the file extension if it has no format" do
-        temp_object = Dragonfly::TempObject.new("HIMATE", :name => 'test.pdf')
-        @app.resolve_mime_type(temp_object).should == 'application/pdf'
-      end
-
-      it "should not use the file extension if it's been switched off (fall back to mime_type analyser)" do
-        @app.infer_mime_type_from_file_ext = false
-        temp_object = Dragonfly::TempObject.new("HIMATE", :name => 'test.pdf')
-        @app.resolve_mime_type(temp_object).should == 'image/jpeg'
-      end
-
-      it "should fall back to the mime_type analyser if the temp_object has no ext" do
-        temp_object = Dragonfly::TempObject.new("HIMATE", :name => 'test')
-        @app.resolve_mime_type(temp_object).should == 'image/jpeg'
-      end
-
-      describe "when the temp_object has no name" do
-
-        before(:each) do
-          @temp_object = Dragonfly::TempObject.new("HIMATE")
-        end
-
-        it "should fall back to the mime_type analyser" do
-          @app.resolve_mime_type(@temp_object).should == 'image/jpeg'
-        end
-
-        it "should fall back to the format analyser if the mime_type analyser doesn't exist" do
-          @app.analyser.functions.delete(:mime_type)
-          @app.resolve_mime_type(@temp_object).should == 'image/png'
-        end
-
-        it "should fall back to the app's fallback mime_type if no mime_type/format analyser exists" do
-          @app.analyser.functions.delete(:mime_type)
-          @app.analyser.functions.delete(:format)
-          @app.resolve_mime_type(@temp_object).should == 'application/octet-stream'
-        end
-
-      end
-
-    end
-
   end
 
   describe "without path prefix or DOS protection" do

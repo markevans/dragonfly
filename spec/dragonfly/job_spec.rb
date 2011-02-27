@@ -594,7 +594,6 @@ describe Dragonfly::Job do
       @app = test_app
     end
     it "should return a string using the data:URI schema" do
-      @app.should_receive(:resolve_mime_type).and_return('text/plain')
       job = @app.new_job("HELLO", :name => 'text.txt')
       job.b64_data.should == "data:text/plain;base64,SEVMTE8=\n"
     end
@@ -860,6 +859,66 @@ describe Dragonfly::Job do
       @job.format.should == :txt
       @job.meta.should == {:tub => :head, :door => :soldier, :dub => :door}
     end
+  end
+
+  describe "mime_type" do
+    before(:each) do
+      @app = test_app
+      @app.analyser.add :format do |temp_object|
+        :png
+      end
+      @app.analyser.add :mime_type do |temp_object|
+        'image/jpeg'
+      end
+      @app.encoder.add do |temp_object|
+        'ENCODED DATA YO'
+      end
+    end
+
+    it "should return the correct mime_type if the format is given" do
+      @job = @app.new_job("HIMATE", :format => :tiff, :name => 'test.pdf')
+      @job.mime_type.should == 'image/tiff'
+    end
+
+    it "should use the file extension if it has no format" do
+      @job = @app.new_job("HIMATE", :name => 'test.pdf')
+      @job.mime_type.should == 'application/pdf'
+    end
+
+    it "should not use the file extension if it's been switched off (fall back to mime_type analyser)" do
+      @app.infer_mime_type_from_file_ext = false
+      @job = @app.new_job("HIMATE", :name => 'test.pdf')
+      @job.mime_type.should == 'image/jpeg'
+    end
+
+    it "should fall back to the mime_type analyser if the temp_object has no ext" do
+      @job = @app.new_job("HIMATE", :name => 'test')
+      @job.mime_type.should == 'image/jpeg'
+    end
+
+    describe "when the temp_object has no name" do
+
+      before(:each) do
+        @job = @app.new_job("HIMATE")
+      end
+
+      it "should fall back to the mime_type analyser" do
+        @job.mime_type.should == 'image/jpeg'
+      end
+
+      it "should fall back to the format analyser if the mime_type analyser doesn't exist" do
+        @app.analyser.functions.delete(:mime_type)
+        @job.mime_type.should == 'image/png'
+      end
+
+      it "should fall back to the app's fallback mime_type if no mime_type/format analyser exists" do
+        @app.analyser.functions.delete(:mime_type)
+        @app.analyser.functions.delete(:format)
+        @job.mime_type.should == 'application/octet-stream'
+      end
+
+    end
+
   end
 
 end
