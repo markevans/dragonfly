@@ -18,7 +18,7 @@ module Dragonfly
 
     extend Forwardable
     def_delegators :result,
-                   :data, :file, :tempfile, :path, :to_file, :size, :ext, :name, :name=, :basename, :meta, :meta=
+                   :data, :file, :tempfile, :path, :to_file, :size
 
     class Step
 
@@ -43,15 +43,17 @@ module Dragonfly
 
       attr_reader :args
 
-      def update_temp_object(job, content, extra)
-        temp_object = TempObject.new(content, job.temp_object.attributes)
-        temp_object.extract_attributes_from(extra) if extra
-        job.temp_object = temp_object
-      end
-
       def inspect
         "#{self.class.step_name}(#{args.map{|a| a.inspect }.join(', ')})"
       end
+
+      private
+      
+      def update_job(job, content, attributes)
+        job.temp_object = TempObject.new(content)
+        job.update_attributes(attributes) if attributes
+      end
+
     end
 
     class Fetch < Step
@@ -60,7 +62,7 @@ module Dragonfly
       end
       def apply(job)
         content, extra = job.app.datastore.retrieve(uid)
-        job.temp_object = TempObject.new(content, extra)
+        update_job(job, content, extra)
       end
     end
 
@@ -74,7 +76,7 @@ module Dragonfly
       def apply(job)
         raise NothingToProcess, "Can't process because temp object has not been initialized. Need to fetch first?" unless job.temp_object
         content, extra = job.app.processor.process(job.temp_object, name, *arguments)
-        update_temp_object(job, content, extra)
+        update_job(job, content, extra)
       end
     end
 
@@ -88,15 +90,15 @@ module Dragonfly
       def apply(job)
         raise NothingToEncode, "Can't encode because temp object has not been initialized. Need to fetch first?" unless job.temp_object
         content, extra = job.app.encoder.encode(job.temp_object, format, *arguments)
-        update_temp_object(job, content, extra)
-        job.temp_object.format = format
+        update_job(job, content, extra)
+        job.format = format
       end
     end
 
     class Generate < Step
       def apply(job)
         content, extra = job.app.generator.generate(*args)
-        job.temp_object = TempObject.new(content, extra)
+        update_job(job, content, extra)
       end
     end
 
@@ -176,7 +178,7 @@ module Dragonfly
     module OverrideInstanceMethods
       
       def format
-        result.format || analyse(:format)
+        @format || analyse(:format)
       end
       
       def to_s
@@ -185,11 +187,14 @@ module Dragonfly
       
     end
 
-    def initialize(app, temp_object=nil)
+    def initialize(app, temp_object=nil, opts={})
       @app = app
       @steps = []
       @next_step_index = 0
       @temp_object = temp_object
+      self.name = opts[:name]
+      self.format = opts[:format]
+      self.meta = opts[:meta] || {}
     end
 
     # Used by 'dup' and 'clone'
@@ -373,6 +378,30 @@ module Dragonfly
       to_s.sub(/>$/, " app=#{app}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >")
     end
 
+    # Name and stuff
+        
+    attr_accessor :name, :format
+    attr_reader :meta
+
+    def meta=(hash)
+      raise ArgumentError, "meta must be a hash, you tried setting it as #{hash.inspect}" unless hash.is_a?(Hash)
+      @meta = hash
+    end
+
+    def basename
+      File.basename(name, '.*') if name
+    end
+
+    def ext
+      File.extname(name)[/\.(.*)/, 1] if name
+    end
+
+    def update_attributes(attrs)
+      self.name = attrs[:name] if attrs[:name]
+      self.format = attrs[:format] if attrs[:format]
+      self.meta.merge!(attrs[:meta]) if attrs[:meta]
+    end
+    
     protected
 
     attr_writer :steps
