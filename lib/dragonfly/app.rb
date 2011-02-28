@@ -103,7 +103,6 @@ module Dragonfly
 
     def store(object, opts={})
       temp_object = object.is_a?(TempObject) ? object : TempObject.new(object)
-      temp_object.extract_attributes_from(opts)
       datastore.store(temp_object, opts)
     end
 

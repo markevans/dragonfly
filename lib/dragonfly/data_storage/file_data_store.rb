@@ -13,7 +13,7 @@ module Dragonfly
         relative_path = if opts[:path]
           opts[:path]
         else
-          filename = temp_object.name || 'file'
+          filename = opts[:name] || temp_object.original_filename || 'file'
           relative_path = relative_path_for(filename)
         end
 
@@ -24,7 +24,7 @@ module Dragonfly
           end
           prepare_path(path)
           temp_object.to_file(path).close
-          store_extra_data(path, temp_object)
+          store_extra_data(path, opts)
         rescue Errno::EACCES => e
           raise UnableToStore, e.message
         end
@@ -82,9 +82,9 @@ module Dragonfly
         "#{time.strftime '%Y/%m/%d/%H_%M_%S'}_#{msec}_#{filename.gsub(/[^\w.]+/,'_')}"
       end
 
-      def store_extra_data(data_path, temp_object)
+      def store_extra_data(data_path, opts)
         File.open(extra_data_path(data_path), 'wb') do |f|
-          f.write Marshal.dump(temp_object.attributes)
+          f.write Marshal.dump(:name => opts[:name], :format => opts[:format], :meta => (opts[:meta] || {}))
         end
       end
 
