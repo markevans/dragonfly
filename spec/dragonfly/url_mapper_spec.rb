@@ -1,7 +1,14 @@
 require 'spec_helper'
 
 describe Dragonfly::UrlMapper do
-  
+
+  describe "required_params" do
+    it "should return everything specified in the url" do
+      url_mapper = Dragonfly::UrlMapper.new('/media/:job/:basename.:ext')
+      url_mapper.required_params.should == ['job', 'basename', 'ext']
+    end
+  end
+
   describe "url_for" do
     before(:each) do
       @url_mapper = Dragonfly::UrlMapper.new('/media/:job')
