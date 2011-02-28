@@ -5,7 +5,7 @@ module Dragonfly
     include Configurable
     
     configurable_attr :protect_from_dos_attacks, false
-    configurable_attr :url_format, '/media/:job'
+    configurable_attr :url_format, '/media/:job/:basename.:format'
     
     def initialize(app)
       @app = app
@@ -32,25 +32,16 @@ module Dragonfly
       [400, {"Content-Type" => 'text/plain'}, ["The SHA parameter you gave (#{e}) is incorrect"]]
     end
 
-    def url_for(job, opts={})
-      # TODO TODO TODO TODO TODO TODO TODO TODO TODO 
-      # opts = opts.dup
-      # host = opts.delete(:host) || url_host
-      # suffix = opts.delete(:suffix) || url_suffix
-      # suffix = suffix.call(job) if suffix.respond_to?(:call)
-      # path = "#{host}#{}#{suffix}"
-      # query = opts
-      # query.merge!(server.required_params_for(job)) if protect_from_dos_attacks
-      # path << "?#{Rack::Utils.build_query(query)}" if query.any?
-      # path
-    end
-
     private
     
     attr_reader :app
 
     def url_mapper
-      @url_mapper ||= UrlMapper.new(url_format)
+      @url_mapper ||= UrlMapper.new(url_format,
+        :job => '\w',
+        :basename => '[^\/]?',
+        :format => '[^\.]?'
+      )
     end
 
     def dragonfly_response

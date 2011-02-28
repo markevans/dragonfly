@@ -10,9 +10,10 @@ describe Dragonfly::Server do
 
   before(:each) do
     @app = test_app
-    @app.protect_from_dos_attacks = false
     @uid = @app.store('HELLO THERE')
     @endpoint = Dragonfly::Server.new(@app)
+    @endpoint.url_format = '/media/:job'
+    @job = @app.fetch(@uid)
   end
   
   after(:each) do
@@ -20,7 +21,7 @@ describe Dragonfly::Server do
   end
 
   it "should return the thing when given the url" do
-    url = "/#{@app.fetch(@uid).serialize}"
+    url = "/media/#{@job.serialize}"
     response = request(@endpoint, url)
     response.status.should == 200
     response.body.should == 'HELLO THERE'
@@ -28,43 +29,53 @@ describe Dragonfly::Server do
   end
 
   it "should return a 400 if no sha given but protection on" do
-    @app.protect_from_dos_attacks = true
-    url = "/#{@app.fetch(@uid).serialize}"
+    @endpoint.protect_from_dos_attacks = true
+    url = "/media/#{@job.serialize}"
     response = request(@endpoint, url)
     response.status.should == 400
   end
   
   it "should return a 400 if wrong sha given and protection on" do
-    @app.protect_from_dos_attacks = true
-    url = "/#{@app.fetch(@uid).serialize}?s=asdfs"
+    @endpoint.protect_from_dos_attacks = true
+    url = "/media/#{@job.serialize}?sha=asdfs"
     response = request(@endpoint, url)
     response.status.should == 400
   end
   
-  it "should return a 404 when the url isn't known" do
-    response = request(@endpoint, '/sadhfasdfdsfsdf')
+  it "should return a 404 when the url matches but doesn't correspond to a job" do
+    response = request(@endpoint, '/media/sadhfasdfdsfsdf')
     response.status.should == 404
     response.body.should == 'Not found'
     response.content_type.should == 'text/plain'
+    response.headers['X-Cascade'].should be_nil
+  end
+  
+  it "should return a 404 when the url isn't known at all" do
+    response = request(@endpoint, '/jfasd/dsfa')
+    response.status.should == 404
+    response.body.should == 'Not found'
+    response.content_type.should == 'text/plain'
+    response.headers['X-Cascade'].should == 'pass'
   end
   
   it "should return a 404 when the url is a well-encoded but bad array" do
-    url = "/#{Dragonfly::Serializer.marshal_encode([[:egg, {:some => 'args'}]])}"
+    url = "/media/#{Dragonfly::Serializer.marshal_encode([[:egg, {:some => 'args'}]])}"
     response = request(@endpoint, url)
     response.status.should == 404
     response.body.should == 'Not found'
     response.content_type.should == 'text/plain'
+    response.headers['X-Cascade'].should be_nil
   end
 
-  it "should return a simple text response at the root" do
-    response = request(@endpoint, '/')
-    response.status.should == 200
-    response.body.length.should > 0
-    response.content_type.should == 'text/plain'
-  end
+  # it "should return a simple text response at the root" do
+  #   response = request(@endpoint, '/')
+  #   response.status.should == 200
+  #   response.body.length.should > 0
+  #   response.content_type.should == 'text/plain'
+  # end
 
   it "should return a cacheable response" do
-    url = "/#{@app.fetch(@uid).serialize}"
+    url = "/media/#{@job.serialize}"
     cache = Rack::Cache.new(@endpoint, :entitystore => 'heap:/')
     response = request(cache, url)
     response.status.should == 200
