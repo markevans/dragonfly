@@ -5,15 +5,30 @@ module Dragonfly
     class MissingParams < StandardError; end
     class BadUrlFormat < StandardError; end
     
-    DEFAULT_SEGMENT_PATTERN = '[\w_]?'
+    class Segment < Struct.new(:param, :seperator, :pattern, :required)
     
-    def initialize(url_format, segment_patterns={})
+      def regexp_string
+        @regexp_string ||= begin
+          reg = "(#{Regexp.escape(seperator)}#{pattern}+?)"
+          reg << '?' unless required
+          reg
+        end
+      end
+      
+      def regexp
+        @regexp ||= Regexp.new(regexp_string)
+      end
+    
+    end
+    
+    def initialize(url_format, segment_specs={})
       @url_format = url_format
-      @segment_patterns = segment_patterns
-      generate_url_regexp
+      raise BadUrlFormat, "bad url format #{url_format}" if url_format[/[\w_]:[\w_]/]
+      init_segments(segment_specs)
+      init_url_regexp
     end
 
-    attr_reader :url_format, :url_regexp, :segment_patterns
+    attr_reader :url_format, :url_regexp, :segments
     
     def params_for(url)
       path, query = url.split('?')
@@ -31,31 +46,46 @@ module Dragonfly
       @params_in_url ||= url_format.scan(/\:[\w_]+/).map{|f| f.tr(':','') }
     end
     
+    def required_params
+      @required_params ||= segments.select{|s| s.required }.map{|s| s.param }
+    end
+    
     def url_for(params)
       params = params.dup
       url = url_format.dup
-      params.each do |k, v|
-        params.delete(k) if url.sub!(":#{k.to_s}", v)
+      segments.each do |seg|
+        value = params[seg.param]
+        raise MissingParams, "missing param #{seg.param.inspect}" if seg.required && !value
+        value ? url.sub!(/:[\w_]+/, value) : url.sub!(/.:[\w_]+/, '')
+        params.delete(seg.param)
       end
       url << "?#{Rack::Utils.build_query(params)}" if params.any?
-      if url[':']
-        raise MissingParams, "missing params #{url.scan(/\:[\w_]+/).join(', ')}"
-      end
       url
     end
     
     private
     
-    def generate_url_regexp
-      raise BadUrlFormat, "bad url format #{url_format}" if url_format[/[\w_]:[\w_]/]
-      regexp_string = url_format.gsub(/([^\w_]):([\w_]+)/) do
-        pattern = segment_patterns[$2.to_sym] || DEFAULT_SEGMENT_PATTERN
-        seperator = Regexp.escape($1)
-        if pattern[-1..-1] == '?'
-          "(#{seperator}#{pattern[0..-2]}+?)?"
-        else
-          "(#{seperator}#{pattern}+?)"
-        end
+    # specs should look like e.g.
+    # {
+    #   :job => {:pattern => /\w/, :required => true},
+    #   ...
+    # }
+    def init_segments(specs)
+      @segments = []
+      url_format.scan(/([^\w_]):([\w_]+)/).each do |seperator, param|
+        spec = specs[param.to_sym] || {}
+        segments << Segment.new(
+          param,
+          seperator,
+          spec[:pattern] || '[\w_]',
+          spec[:required]
+        )
+      end
+    end
+    
+    def init_url_regexp
+      regexp_string = url_format.gsub(/[^\w_]:([\w_]+)/).with_index do |_, i|
+        segments[i].regexp_string
       end
       @url_regexp = Regexp.new('^' + regexp_string + '$')
     end
