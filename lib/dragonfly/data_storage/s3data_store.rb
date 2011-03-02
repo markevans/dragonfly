@@ -29,7 +29,7 @@ module Dragonfly
       end
 
       def store(temp_object, opts={})
-        ensure_initialized!
+        ensure_initialized
         uid = opts[:path] || generate_uid(temp_object.name || 'file')
         extra_data = temp_object.attributes
         if use_filesystem
@@ -71,15 +71,15 @@ module Dragonfly
         )
       end
 
-      def ensure_initialized!
+      def ensure_initialized
         unless @initialized
-          create_bucket!
+          ensure_bucket_exists
           @initialized = true
         end
       end
 
-      def create_bucket!
-        storage.put_bucket(bucket_name, 'LocationConstraint' => region) if get_bucket_location.nil?
+      def ensure_bucket_exists
+        storage.put_bucket(bucket_name, 'LocationConstraint' => region) unless bucket_exists?
       end
 
       def get_region
@@ -88,11 +88,11 @@ module Dragonfly
         reg
       end
 
-      def get_bucket_location
-        hash = storage.get_bucket_location(bucket_name).body
-        hash["LocationConstraint"]
+      def bucket_exists?
+        storage.get_bucket_location(bucket_name)
+        true
       rescue Excon::Errors::NotFound => e
-        nil
+        false
       end
 
       def generate_uid(name)
