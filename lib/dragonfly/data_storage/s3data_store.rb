@@ -13,6 +13,7 @@ module Dragonfly
       configurable_attr :secret_access_key
       configurable_attr :use_filesystem, true
       configurable_attr :region
+      configurable_attr :storage_headers, {'x-amz-acl' => 'public-read'}
 
       REGIONS = {
         'us-east-1'      => 's3.amazonaws.com',  #default
@@ -34,10 +35,10 @@ module Dragonfly
         extra_data = temp_object.attributes
         if use_filesystem
           temp_object.file do |f|
-            storage.put_object(bucket_name, uid, f, s3_metadata_for(extra_data))
+            storage.put_object(bucket_name, uid, f, full_storage_headers(extra_data))
           end
         else
-          storage.put_object(bucket_name, uid, temp_object.data, s3_metadata_for(extra_data))
+          storage.put_object(bucket_name, uid, temp_object.data, full_storage_headers(extra_data))
         end
         uid
       end
@@ -99,8 +100,8 @@ module Dragonfly
         "#{Time.now.strftime '%Y/%m/%d/%H/%M/%S'}/#{rand(1000)}/#{name.gsub(/[^\w.]+/, '_')}"
       end
 
-      def s3_metadata_for(extra_data)
-        {'x-amz-meta-extra' => marshal_encode(extra_data)}
+      def full_storage_headers(extra_data)
+        {'x-amz-meta-extra' => marshal_encode(extra_data)}.merge(storage_headers)
       end
 
       def parse_s3_metadata(headers)
