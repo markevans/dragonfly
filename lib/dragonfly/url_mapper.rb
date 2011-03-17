@@ -2,29 +2,24 @@ module Dragonfly
   class UrlMapper
     
     # Exceptions
-    class MissingParams < StandardError; end
     class BadUrlFormat < StandardError; end
     
-    class Segment < Struct.new(:param, :seperator, :pattern, :required)
+    class Segment < Struct.new(:param, :seperator, :pattern)
     
       def regexp_string
-        @regexp_string ||= begin
-          reg = "(#{Regexp.escape(seperator)}#{pattern}+?)"
-          reg << '?' unless required
-          reg
-        end
+        @regexp_string ||= "(#{Regexp.escape(seperator)}#{pattern}+?)?"
       end
-      
-      def regexp
-        @regexp ||= Regexp.new(regexp_string)
-      end
+      # 
+      # def regexp
+      #   @regexp ||= Regexp.new(regexp_string)
+      # end
     
     end
     
-    def initialize(url_format, segment_specs={})
+    def initialize(url_format, patterns={})
       @url_format = url_format
       raise BadUrlFormat, "bad url format #{url_format}" if url_format[/[\w_]:[\w_]/]
-      init_segments(segment_specs)
+      init_segments(patterns)
       init_url_regexp
     end
 
@@ -46,16 +41,11 @@ module Dragonfly
       @params_in_url ||= url_format.scan(/\:[\w_]+/).map{|f| f.tr(':','') }
     end
     
-    def required_params
-      @required_params ||= segments.select{|s| s.required }.map{|s| s.param }
-    end
-    
     def url_for(params)
       params = params.dup
       url = url_format.dup
       segments.each do |seg|
         value = params[seg.param]
-        raise MissingParams, "missing param #{seg.param.inspect}" if seg.required && !value
         value ? url.sub!(/:[\w_]+/, value) : url.sub!(/.:[\w_]+/, '')
         params.delete(seg.param)
       end
@@ -65,20 +55,13 @@ module Dragonfly
     
     private
     
-    # specs should look like e.g.
-    # {
-    #   :job => {:pattern => /\w/, :required => true},
-    #   ...
-    # }
-    def init_segments(specs)
+    def init_segments(patterns)
       @segments = []
       url_format.scan(/([^\w_]):([\w_]+)/).each do |seperator, param|
-        spec = specs[param.to_sym] || {}
         segments << Segment.new(
           param,
           seperator,
-          spec[:pattern] || '[\w_]',
-          spec[:required]
+          patterns[param.to_sym] || '[\w_]'
         )
       end
     end

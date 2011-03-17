@@ -28,35 +28,24 @@ describe Dragonfly::UrlMapper do
     
     it "should allow setting custom patterns in the url" do
       url_mapper = Dragonfly::UrlMapper.new('/media/:job-:size.:format',
-        :job => {:pattern => '\w', :required => true},
-        :size => {:pattern => '\d'},
-        :format => {:pattern => '[^\.]'}
+        :job => '\w',
+        :size => '\d',
+        :format => '[^\.]'
       )
-      url_mapper.url_regexp.should == %r{^/media(/\w+?)(\-\d+?)?(\.[^\.]+?)?$}
+      url_mapper.url_regexp.should == %r{^/media(/\w+?)?(\-\d+?)?(\.[^\.]+?)?$}
     end
     
     it "should make optional match patterns (ending in ?) apply to the whole group including the preceding seperator" do
-      url_mapper = Dragonfly::UrlMapper.new('/media/:job', :job => {:pattern => '\w'})
+      url_mapper = Dragonfly::UrlMapper.new('/media/:job', :job => '\w')
       url_mapper.url_regexp.should == %r{^/media(/\w+?)?$}
-    end
-  end
-
-  describe "required_params" do
-    it "should return required params" do
-      url_mapper = Dragonfly::UrlMapper.new('/media/:job-:size.:format',
-        :job => {:pattern => '\w', :required => true},
-        :size => {:pattern => '\d', :required => true},
-        :format => {:pattern => '[^\.]'}
-      )
-      url_mapper.required_params.should == ['job', 'size']
     end
   end
 
   describe "url_for" do
     before(:each) do
       @url_mapper = Dragonfly::UrlMapper.new('/media/:job-:size',
-        :job => {:pattern => '\w', :required => true},
-        :size => {:pattern => '\w'}
+        :job => '\w',
+        :size => '\w'
       )
     end
     
@@ -68,14 +57,8 @@ describe Dragonfly::UrlMapper do
       @url_mapper.url_for('job' => 'asdf', 'size' => '30x30', 'when' => 'now').should == '/media/asdf-30x30?when=now'
     end
     
-    it "should not worry if optional params aren't given" do
+    it "should not worry if params aren't given" do
       @url_mapper.url_for('job' => 'asdf', 'when' => 'now').should == '/media/asdf?when=now'
-    end
-    
-    it "should raise an error if required params aren't given" do
-      lambda{
-        @url_mapper.url_for('size' => '30x30', 'when' => 'now')
-      }.should raise_error(Dragonfly::UrlMapper::MissingParams)      
     end
   end
 
@@ -96,16 +79,16 @@ describe Dragonfly::UrlMapper do
   describe "matching urls with standard format /media/:job/:basename.:format" do
     before(:each) do
       @url_mapper = Dragonfly::UrlMapper.new('/media/:job/:basename.:format',
-        :job => {:pattern => '\w', :required => true},
-        :basename => {:pattern => '[^\/]'},
-        :format => {:pattern => '[^\.]'}
+        :job => '\w',
+        :basename => '[^\/]',
+        :format => '[^\.]'
       )
     end
 
     {
       '' => nil,
       '/' => nil,
-      '/media' => nil,
+      '/media' => {'job' => nil, 'basename' => nil, 'format' => nil},
       '/media/' => nil,
       '/moodia/asdf' => nil,
       '/media/asdf/' => nil,
