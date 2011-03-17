@@ -58,7 +58,7 @@ describe Dragonfly::UrlMapper do
     end
     
     it "should not worry if params aren't given" do
-      @url_mapper.url_for('job' => 'asdf', 'when' => 'now').should == '/media/asdf?when=now'
+      @url_mapper.url_for('job' => 'asdf', 'when' => 'now', 'then' => 'soon').should == '/media/asdf?when=now&then=soon'
     end
   end
 

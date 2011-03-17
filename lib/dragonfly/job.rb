@@ -186,7 +186,7 @@ module Dragonfly
     module OverrideInstanceMethods
       
       def format
-        @format || analyse(:format)
+        @format# TODO || analyse(:format)
       end
       
       def mime_type

@@ -4,8 +4,11 @@ module Dragonfly
     include Loggable
     include Configurable
     
+    KNOWN_JOB_METHODS = %w(name ext basename format)
+    
     configurable_attr :protect_from_dos_attacks, false
     configurable_attr :url_format, '/media/:job/:basename.:format'
+    configurable_attr :url_host
     
     def initialize(app)
       @app = app
@@ -16,7 +19,7 @@ module Dragonfly
     def call(env)
       request = Rack::Request.new(env)
       params = url_mapper.params_for(request.path_info)
-      if params
+      if params && params['job']
         job = Job.deserialize(params['job'], app)
         job.validate_sha!(params['sha']) if protect_from_dos_attacks
         Response.new(job, env).to_response
@@ -32,6 +35,15 @@ module Dragonfly
       [400, {"Content-Type" => 'text/plain'}, ["The SHA parameter you gave (#{e}) is incorrect"]]
     end
 
+    def url_for(job, opts={})
+      opts = opts.dup
+      host = opts.delete(:host) || url_host
+      query = stringify_keys(opts)
+      params = params_from_job(job).merge(query)
+      url = url_mapper.url_for(params)
+      "#{host}#{url}"
+    end
+
     private
     
     attr_reader :app
@@ -39,9 +51,27 @@ module Dragonfly
     def url_mapper
       @url_mapper ||= UrlMapper.new(url_format,
         :job => '\w',
-        :basename => '[^\/]?',
-        :format => '[^\.]?'
+        :basename => '[^\/]',
+        :format => '[^\.]'
       )
+    end
+
+    def stringify_keys(params)
+      params.inject({}) do |hash, (k, v)|
+        hash[k.to_s] = v
+        hash
+      end
+    end
+
+    def params_from_job(job)
+      params = {}
+      url_mapper.params_in_url.each do |key|
+        params[key] = KNOWN_JOB_METHODS.include?(key) ? job.send(key) : job.meta[key.to_sym]
+        params[key] = params[key].to_s if params[key]
+      end
+      params['job'] = job.serialize
+      params['sha'] = job.sha if protect_from_dos_attacks
+      params
     end
 
     def dragonfly_response

@@ -38,14 +38,11 @@ module Dragonfly
     extend Forwardable
     def_delegator :datastore, :destroy
     def_delegators :new_job, :fetch, :generate, :fetch_file, :fetch_url
-    def_delegator :server, :call, :url_for
+    def_delegators :server, :call, :url_for
 
     configurable_attr :datastore do DataStorage::FileDataStore.new end
     configurable_attr :cache_duration, 3600*24*365 # (1 year)
     configurable_attr :fallback_mime_type, 'application/octet-stream'
-    configurable_attr :url_path_prefix
-    configurable_attr :url_host
-    configurable_attr :url_suffix
     configurable_attr :secret, 'secret yo'
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
     configurable_attr :infer_mime_type_from_file_ext, true
