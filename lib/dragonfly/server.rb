@@ -4,8 +4,6 @@ module Dragonfly
     include Loggable
     include Configurable
     
-    KNOWN_JOB_METHODS = %w(name ext basename format)
-    
     configurable_attr :protect_from_dos_attacks, false
     configurable_attr :url_format, '/media/:job/:basename.:format'
     configurable_attr :url_host
@@ -38,8 +36,9 @@ module Dragonfly
     def url_for(job, opts={})
       opts = opts.dup
       host = opts.delete(:host) || url_host
-      query = stringify_keys(opts)
-      params = params_from_job(job).merge(query)
+      params = stringify_keys(opts)
+      params['job'] = job.serialize
+      params['sha'] = job.sha if protect_from_dos_attacks
       url = url_mapper.url_for(params)
       "#{host}#{url}"
     end
@@ -61,17 +60,6 @@ module Dragonfly
         hash[k.to_s] = v
         hash
       end
-    end
-
-    def params_from_job(job)
-      params = {}
-      url_mapper.params_in_url.each do |key|
-        params[key] = KNOWN_JOB_METHODS.include?(key) ? job.send(key) : job.meta[key.to_sym]
-        params[key] = params[key].to_s if params[key]
-      end
-      params['job'] = job.serialize
-      params['sha'] = job.sha if protect_from_dos_attacks
-      params
     end
 
     def dragonfly_response

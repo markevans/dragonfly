@@ -129,61 +129,29 @@ describe Dragonfly::Server do
     end
     
     it "should generate the correct url when there is a basename and no format" do
-      @job.name = 'hello.png'
-      @server.url_for(@job).should == "/media/#{@job.serialize}/hello"
+      @server.url_for(@job, :basename => 'hello').should == "/media/#{@job.serialize}/hello"
     end
     
     it "should generate the correct url when there is a basename and different format" do
-      @job.name = 'hello.png'
-      @job.format = :gif
-      @server.url_for(@job).should == "/media/#{@job.serialize}/hello.gif"
-    end
-    
-    describe "custom params" do
-      before(:each) do
-        @server.url_format = '/media/:job/:doobie'
-      end
-
-      it "should ignore if not in the meta" do
-        @server.url_for(@job).should == "/media/#{@job.serialize}"
-      end
-
-      it "should use if in the meta" do
-        @job.meta[:doobie] = 'eggs'
-        @server.url_for(@job).should == "/media/#{@job.serialize}/eggs"
-      end
+      @server.url_for(@job, :basename => 'hello', :format => 'gif').should == "/media/#{@job.serialize}/hello.gif"
     end
 
-    describe "url_host" do
-      before(:each) do
-        @app = test_app
-        @server = Dragonfly::Server.new(@app)
-        @server.url_format = '/media/:job'
-        @job = @app.new_job
-      end
-      it "should add the host to the url if configured" do
-        @server.url_host = 'http://some.server:4000'
-        @server.url_for(@job).should =~ %r{^http://some\.server:4000/media/\w+$}
-      end
-      it "should add the host to the url if passed in" do
-        @server.url_for(@job, :host => 'https://bungle.com').should =~ %r{^https://bungle\.com/media/\w+$}
-      end
-      it "should favour the passed in one" do
-        @server.url_host = 'http://some.server:4000'
-        @server.url_for(@job, :host => 'https://smeedy').should =~ %r{^https://smeedy/media/\w+$}
-      end
+    it "should add extra params to the url query string" do
+      @server.url_for(@job, :a => 'thing', :b => 'nuther').should == "/media/#{@job.serialize}?a=thing&b=nuther"
     end
   
-    describe "url params" do
-      before(:each) do
-        @app = test_app
-        @server = Dragonfly::Server.new(@app)
-        @server.url_format = '/media/:job'
-        @job = @app.new_job
-      end
-      it "should add extra params to the url query string" do
-        @server.url_for(@job, :a => 'thing', :b => 'nuther').should =~ %r{^/media/\w+\?a=thing&b=nuther$}
-      end
+    it "should add the host to the url if configured" do
+      @server.url_host = 'http://some.server:4000'
+      @server.url_for(@job).should == "http://some.server:4000/media/#{@job.serialize}"
+    end
+
+    it "should add the host to the url if passed in" do
+      @server.url_for(@job, :host => 'https://bungle.com').should == "https://bungle.com/media/#{@job.serialize}"
+    end
+
+    it "should favour the passed in host" do
+      @server.url_host = 'http://some.server:4000'
+      @server.url_for(@job, :host => 'https://smeedy').should == "https://smeedy/media/#{@job.serialize}"
     end
   
     describe "Denial of Service protection" do
