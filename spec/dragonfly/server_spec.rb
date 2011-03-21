@@ -93,13 +93,6 @@ describe Dragonfly::Server do
       response.headers['X-Cascade'].should be_nil
     end
 
-    # it "should return a simple text response at the root" do
-    #   response = request(@server, '/')
-    #   response.status.should == 200
-    #   response.body.length.should > 0
-    #   response.content_type.should == 'text/plain'
-    # end
-
     it "should return a cacheable response" do
       url = "/media/#{@job.serialize}"
       cache = Rack::Cache.new(@server, :entitystore => 'heap:/')
@@ -113,6 +106,30 @@ describe Dragonfly::Server do
 
   end
   
+  describe "dragonfly response" do
+    before(:each) do
+      @app = test_app
+      @server = Dragonfly::Server.new(@app)
+      @server.url_format = '/media/:job'
+    end
+    
+    it "should return a simple text response" do
+      request(@server, '/dragonfly').should be_a_text_response
+    end
+
+    it "should be configurable" do
+      @server.dragonfly_url = '/hello'
+      request(@server, '/hello').should be_a_text_response
+      request(@server, '/dragonfly').status.should == 404
+    end
+
+    it "should be possible to turn it off" do
+      @server.dragonfly_url = nil
+      request(@server, '/').status.should == 404
+      request(@server, '/dragonfly').status.should == 404
+    end
+  end
+
   describe "urls" do
     
     before(:each) do

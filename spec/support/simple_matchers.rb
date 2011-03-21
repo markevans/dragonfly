@@ -51,3 +51,11 @@ RSpec::Matchers.define :match_attachment_specs do |specs|
       end
   end
 end
+
+RSpec::Matchers.define :be_a_text_response do
+  match do |given_response|
+    given_response.status.should == 200
+    given_response.body.length.should > 0
+    given_response.content_type.should == 'text/plain'
+  end
+end
