@@ -23,7 +23,7 @@ describe Dragonfly::UrlMapper do
   describe "url_regexp" do
     it "should return a regexp with non-greedy optional groups that include the preceding slash/dot/dash" do
       url_mapper = Dragonfly::UrlMapper.new('/media/:job/:basename-:size.:format')
-      url_mapper.url_regexp.should == %r{^/media(/[\w_]+?)?(/[\w_]+?)?(\-[\w_]+?)?(\.[\w_]+?)?$}
+      url_mapper.url_regexp.should == %r{^/media(/[^\/\-\.]+?)?(/[^\/\-\.]+?)?(\-[^\/\-\.]+?)?(\.[^\/\-\.]+?)?$}
     end
     
     it "should allow setting custom patterns in the url" do
@@ -73,6 +73,11 @@ describe Dragonfly::UrlMapper do
     
     it "should include query parameters" do
       @url_mapper.params_for('/media/asdf?when=now').should == {'job' => 'asdf', 'when' => 'now'}
+    end
+    
+    it "should generally be ok with wierd characters" do
+      @url_mapper = Dragonfly::UrlMapper.new('/media/:doobie')
+      @url_mapper.params_for('/media/sd sdf jl£@$ sdf:_?job=goodun').should == {'job' => 'goodun', 'doobie' => 'sd sdf jl£@$ sdf:_'}
     end
   end
 

@@ -61,7 +61,7 @@ module Dragonfly
         segments << Segment.new(
           param,
           seperator,
-          patterns[param.to_sym] || '[\w_]'
+          patterns[param.to_sym] || '[^\/\-\.]'
         )
       end
     end
