@@ -58,13 +58,19 @@ describe Dragonfly::DataStorage::S3DataStore do
       @data_store.store(temp_object).should_not == @data_store.store(temp_object2)
     end
 
+    it "should use the name in the meta if set" do
+      temp_object = Dragonfly::TempObject.new('eggheads')
+      uid = @data_store.store(temp_object, :meta => {:name =>  'doobie'})
+      uid.should =~ /doobie$/
+      data, meta = @data_store.retrieve(uid)
+      data.should == 'eggheads'
+    end
+
     it "should work ok with files with funny names" do
-      temp_object = Dragonfly::TempObject.new('eggheads',
-        :name =>  'A Picture with many spaces in its name (at 20:00 pm).png'
-      )
-      uid = @data_store.store(temp_object)
+      temp_object = Dragonfly::TempObject.new('eggheads')
+      uid = @data_store.store(temp_object, :meta => {:name =>  'A Picture with many spaces in its name (at 20:00 pm).png'})
       uid.should =~ /A_Picture_with_many_spaces_in_its_name_at_20_00_pm_\.png$/
-      data, extra = @data_store.retrieve(uid)
+      data, meta = @data_store.retrieve(uid)
       data.should == 'eggheads'
     end
 
@@ -72,7 +78,7 @@ describe Dragonfly::DataStorage::S3DataStore do
       temp_object = Dragonfly::TempObject.new('eggheads')
       uid = @data_store.store(temp_object, :path => 'hello/there')
       uid.should == 'hello/there'
-      data, extra = @data_store.retrieve(uid)
+      data, meta = @data_store.retrieve(uid)
       data.should == 'eggheads'
     end
     
@@ -80,7 +86,7 @@ describe Dragonfly::DataStorage::S3DataStore do
       @data_store.use_filesystem = false
       temp_object = Dragonfly::TempObject.new('gollum')
       uid = @data_store.store(temp_object)
-      @data_store.retrieve(uid).should == ["gollum", {:meta=>{}, :format=>nil, :name=>nil}]
+      @data_store.retrieve(uid).first.should == "gollum"
     end
   end
 

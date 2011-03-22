@@ -26,32 +26,32 @@ shared_examples_for "data_store" do
 
   describe "retrieve" do
 
-    describe "without extra info" do
+    describe "without meta" do
       before(:each) do
         uid = @data_store.store(@temp_object)
-        @obj, @extra_info = @data_store.retrieve(uid)
+        @obj, @meta = @data_store.retrieve(uid)
       end
 
       it "should retrieve the stored data" do
         Dragonfly::TempObject.new(@obj).data.should == @temp_object.data
       end
-
-      it { @extra_info[:name].should be_nil }
-      it { @extra_info[:meta].should be_a(Hash) }
-    end
-
-    describe "when extra info is given" do
-      before(:each) do
-        temp_object = Dragonfly::TempObject.new('gollum',
-          :name => 'danny.boy',
-          :meta => {:bitrate => '35'}
-        )
-        @uid = @data_store.store(temp_object)
-        @obj, @extra_info = @data_store.retrieve(@uid)
+      
+      it "should return empty meta" do
+        @meta.should == {}
       end
 
-      it { @extra_info[:name].should == 'danny.boy' }
-      it { @extra_info[:meta].should include_hash(:bitrate => '35') }
+    end
+
+    describe "when meta is given" do
+      before(:each) do
+        temp_object = Dragonfly::TempObject.new('gollum')
+        @uid = @data_store.store(temp_object, :meta => {:bitrate => '35', :name => 'danny.boy'})
+        @obj, @meta = @data_store.retrieve(@uid)
+      end
+
+      it "should return the stored meta" do
+        @meta.should == {:bitrate => '35', :name => 'danny.boy'}
+      end
     end
 
     it "should raise an exception if the data doesn't exist" do
