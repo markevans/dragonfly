@@ -8,6 +8,9 @@ module Dragonfly
     configurable_attr :protect_from_dos_attacks, false
     configurable_attr :url_format, '/media/:job/:basename.:format'
     configurable_attr :url_host
+
+    extend Forwardable
+    def_delegator :url_mapper, :params_in_url
     
     def initialize(app)
       @app = app

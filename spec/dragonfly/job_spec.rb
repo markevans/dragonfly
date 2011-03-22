@@ -514,12 +514,34 @@ describe Dragonfly::Job do
       @app = test_app
       @job = Dragonfly::Job.new(@app)
     end
-    it "should pass any args straight to url_for" do
-      @app.should_receive(:url_for).with(@job, :egg => 'head', :host => 'beans').and_return 'hello'
-      @job.generate!(:blah).url(:egg => 'head', :host => 'beans').should == 'hello'
-    end
+
     it "should return nil if there are no steps" do
       @job.url.should be_nil
+    end
+    
+    describe "using attributes in the url" do
+      before(:each) do
+        @app.server.url_format = '/media/:job/:zoo'
+        @job.generate!(:fish)
+      end
+      it "should act as per usual if no params given" do
+        @job.url.should == "/media/#{@job.serialize}"
+      end
+      it "should add given params" do
+        @job.url(:zoo => 'jokes', :on => 'me').should == "/media/#{@job.serialize}/jokes?on=me"
+      end
+      it "should use the attribute if it exists" do
+        @job.attributes[:zoo] = 'hair'
+        @job.url.should == "/media/#{@job.serialize}/hair"
+      end
+      it "should not add an attribute that isn't needed" do
+        @job.attributes[:gump] = 'flub'
+        @job.url.should == "/media/#{@job.serialize}"
+      end
+      it "should override if a param is passed in" do
+        @job.attributes[:zoo] = 'hair'
+        @job.url(:zoo => 'dare').should == "/media/#{@job.serialize}/dare"
+      end
     end
   end
 

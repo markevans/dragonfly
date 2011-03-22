@@ -156,13 +156,6 @@ module Dragonfly
         job
       end
 
-      def from_path(path, app)
-        path = path.dup
-        path.sub!(app.url_path_prefix, '') if app.url_path_prefix
-        path.sub!('/', '')
-        deserialize(path, app)
-      end
-
       def deserialize(string, app)
         from_a(Serializer.marshal_decode(string), app)
       end
@@ -306,7 +299,7 @@ module Dragonfly
     # URLs, etc.
 
     def url(opts={})
-      app.url_for(self, opts) unless steps.empty?
+      app.server.url_for(self, attributes_for_url.merge(opts)) unless steps.empty?
     end
 
     def b64_data
@@ -413,6 +406,10 @@ module Dragonfly
 
     def attributes
       @attributes ||= {}
+    end
+    
+    def attributes_for_url
+      attributes.reject{|k, v| !app.server.params_in_url.include?(k.to_s) }
     end
 
     def update_attributes(attrs)
