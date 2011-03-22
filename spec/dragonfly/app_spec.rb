@@ -111,8 +111,7 @@ describe Dragonfly::App do
     end
     it "should allow storing with extra stuff" do
       @app.datastore.should_receive(:store).with(
-        a_temp_object_with_data("HELLO", :meta => {:egg => :head}),
-        {:option => :blarney}
+        a_temp_object_with_data("HELLO"), :meta => {:egg => :head}, :option => :blarney
       )
       @app.store("HELLO", :meta => {:egg => :head}, :option => :blarney)
     end
