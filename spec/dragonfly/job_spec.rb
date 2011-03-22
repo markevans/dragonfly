@@ -497,12 +497,12 @@ describe Dragonfly::Job do
 
   describe "url" do
     before(:each) do
-      @app = mock_app(:url_for => 'hello')
+      @app = test_app
       @job = Dragonfly::Job.new(@app)
     end
-    it "should return a url" do
-      @job.generate!(:plasma)
-      @job.url.should == 'hello'
+    it "should pass any args straight to url_for" do
+      @app.should_receive(:url_for).with(@job, :egg => 'head', :host => 'beans').and_return 'hello'
+      @job.generate!(:blah).url(:egg => 'head', :host => 'beans').should == 'hello'
     end
     it "should return nil if there are no steps" do
       @job.url.should be_nil

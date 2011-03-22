@@ -137,8 +137,6 @@ describe Dragonfly::Server do
       @server = Dragonfly::Server.new(@app)
       @server.url_format = '/media/:job/:basename.:format'
       @job = @app.fetch('some_uid')
-      @job.name = nil
-      @job.format = nil
     end
     
     it "should generate the correct url when no basename/format" do

@@ -116,6 +116,7 @@ module Dragonfly
       end
       def apply
         job.temp_object = TempObject.new(Pathname.new(path))
+        job.name = job.temp_object.original_filename
       end
     end
 
@@ -186,7 +187,7 @@ module Dragonfly
     module OverrideInstanceMethods
       
       def format
-        @format# TODO || analyse(:format)
+        @format || analyse(:format)
       end
       
       def mime_type
