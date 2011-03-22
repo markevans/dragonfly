@@ -54,9 +54,9 @@ module Dragonfly
 
       private
       
-      def update_job(content, attributes)
+      def update_job(content, meta)
         job.temp_object = TempObject.new(content)
-        job.update_attributes(attributes) if attributes
+        job.meta.merge!(meta) if meta
       end
 
     end
@@ -66,8 +66,8 @@ module Dragonfly
         args.first
       end
       def apply
-        content, extra = job.app.datastore.retrieve(uid)
-        update_job(content, extra)
+        content, meta = job.app.datastore.retrieve(uid)
+        update_job(content, meta)
       end
     end
 
@@ -80,14 +80,14 @@ module Dragonfly
       end
       def apply
         raise NothingToProcess, "Can't process because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        content, extra = job.app.processor.process(job.temp_object, name, *arguments)
-        update_job(content, extra)
+        content, meta = job.app.processor.process(job.temp_object, name, *arguments)
+        update_job(content, meta)
       end
     end
 
     class Encode < Step
       def init
-        job.format = format
+        job.meta[:format] = format
       end
       def format
         args.first
@@ -97,16 +97,16 @@ module Dragonfly
       end
       def apply
         raise NothingToEncode, "Can't encode because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        content, extra = job.app.encoder.encode(job.temp_object, format, *arguments)
-        update_job(content, extra)
-        job.format = format
+        content, meta = job.app.encoder.encode(job.temp_object, format, *arguments)
+        update_job(content, meta)
+        job.meta[:format] = format
       end
     end
 
     class Generate < Step
       def apply
-        content, extra = job.app.generator.generate(*args)
-        update_job(content, extra)
+        content, meta = job.app.generator.generate(*args)
+        update_job(content, meta)
       end
     end
 
@@ -188,11 +188,11 @@ module Dragonfly
     module OverrideInstanceMethods
       
       def format
-        @format || analyse(:format)
+        meta[:format] || analyse(:format)
       end
       
       def mime_type
-        app.mime_type_for(@format)                                      ||
+        app.mime_type_for(meta[:format])                                ||
           (app.mime_type_for(ext) if app.infer_mime_type_from_file_ext) ||
           analyse(:mime_type)                                           ||
           app.mime_type_for(analyse(:format))                           ||
@@ -205,14 +205,12 @@ module Dragonfly
       
     end
 
-    def initialize(app, temp_object=nil, opts={})
+    def initialize(app, temp_object=nil, meta={})
       @app = app
       @steps = []
       @next_step_index = 0
       @temp_object = temp_object
-      self.name = opts[:name]
-      self.format = opts[:format]
-      self.meta = opts[:meta] || {}
+      self.meta = meta
     end
 
     # Used by 'dup' and 'clone'
@@ -396,7 +394,6 @@ module Dragonfly
 
     # Name and stuff
         
-    attr_accessor :name, :format
     attr_reader :meta
 
     def meta=(hash)
@@ -404,6 +401,14 @@ module Dragonfly
       @meta = hash
     end
 
+    def name
+      meta[:name]
+    end
+
+    def name=(name)
+      meta[:name] = name
+    end
+    
     def basename
       File.basename(name, '.*') if name
     end
@@ -412,18 +417,8 @@ module Dragonfly
       File.extname(name)[/\.(.*)/, 1] if name
     end
 
-    def attributes
-      @attributes ||= {}
-    end
-    
     def attributes_for_url
-      attributes.reject{|k, v| !app.server.params_in_url.include?(k.to_s) }
-    end
-
-    def update_attributes(attrs)
-      self.name = attrs[:name] if attrs[:name]
-      self.format = attrs[:format] if attrs[:format]
-      self.meta.merge!(attrs[:meta]) if attrs[:meta]
+      meta.reject{|k, v| !app.server.params_in_url.include?(k.to_s) }
     end
     
     protected
