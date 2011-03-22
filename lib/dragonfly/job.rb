@@ -411,6 +411,10 @@ module Dragonfly
       File.extname(name)[/\.(.*)/, 1] if name
     end
 
+    def attributes
+      @attributes ||= {}
+    end
+
     def update_attributes(attrs)
       self.name = attrs[:name] if attrs[:name]
       self.format = attrs[:format] if attrs[:format]

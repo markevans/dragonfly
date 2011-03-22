@@ -495,6 +495,20 @@ describe Dragonfly::Job do
     end
   end
 
+  describe "attributes" do
+    before(:each) do
+      @app = test_app
+      @job = @app.new_job
+    end
+    it "should return an empty hash by default" do
+      @job.attributes.should == {}
+    end
+    it "should allow setting values" do
+      @job.attributes[:egg] = 'beard'
+      @job.attributes.should == {:egg => 'beard'}
+    end
+  end
+
   describe "url" do
     before(:each) do
       @app = test_app
