@@ -134,7 +134,10 @@ describe Dragonfly::Job do
       it "should fetch the specified file when applied" do
         @job.size.should == 62664
       end
-
+      
+      it "should set the name" do
+        @job.name.should == 'egg.png'
+      end
     end
 
     describe "fetch_url" do
@@ -163,6 +166,17 @@ describe Dragonfly::Job do
         @job.data.should == "secure result!"
       end
 
+      it "should set the name if there is one" do
+        @job.fetch_url!('some.place.com/dung.beetle')
+        @job.name.should == 'dung.beetle'
+      end
+
+      ["some.place.com", "some.place.com/", "some.place.com/eggs/"].each do |url|
+        it "should not set the name if there isn't one, e.g. #{url}" do
+          @job.fetch_url!(url)
+          @job.name.should be_nil
+        end
+      end
     end
 
   end

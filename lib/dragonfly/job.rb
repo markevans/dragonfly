@@ -111,18 +111,26 @@ module Dragonfly
     end
 
     class FetchFile < Step
+      def init
+        job.name = File.basename(path)
+      end
       def path
         File.expand_path(args.first)
       end
       def apply
         job.temp_object = TempObject.new(Pathname.new(path))
-        job.name = job.temp_object.original_filename
       end
     end
 
     class FetchUrl < Step
+      def init
+        job.name = File.basename(path) if path[/[^\/]$/]
+      end
       def url
         @url ||= (args.first[%r<^\w+://>] ? args.first : "http://#{args.first}")
+      end
+      def path
+        @path ||= URI.parse(url).path
       end
       def apply
         open(url) do |f|
