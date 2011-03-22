@@ -507,6 +507,10 @@ describe Dragonfly::Job do
       @job.attributes[:egg] = 'beard'
       @job.attributes.should == {:egg => 'beard'}
     end
+    it "should keep them when chained" do
+      @job.attributes[:darn] = 'it'
+      @job.generate(:gollum).attributes.should == {:darn => 'it'}
+    end
   end
 
   describe "url" do
