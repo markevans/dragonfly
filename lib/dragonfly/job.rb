@@ -188,15 +188,11 @@ module Dragonfly
     module OverrideInstanceMethods
       
       def format
-        meta[:format] || analyse(:format)
+        meta[:format] || (ext.to_sym if ext && app.infer_mime_type_from_file_ext) || analyse(:format)
       end
       
       def mime_type
-        app.mime_type_for(meta[:format])                                ||
-          (app.mime_type_for(ext) if app.infer_mime_type_from_file_ext) ||
-          analyse(:mime_type)                                           ||
-          app.mime_type_for(analyse(:format))                           ||
-          app.fallback_mime_type
+        app.mime_type_for(format) || analyse(:mime_type) || app.fallback_mime_type
       end
       
       def to_s
