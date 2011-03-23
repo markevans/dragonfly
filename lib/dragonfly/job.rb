@@ -250,6 +250,10 @@ module Dragonfly
       self
     end
 
+    def applied?
+      next_step_index == steps.length
+    end
+
     def result
       apply
       temp_object

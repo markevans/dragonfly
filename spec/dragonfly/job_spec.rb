@@ -386,6 +386,23 @@ describe Dragonfly::Job do
 
   end
 
+  describe "applied?" do
+    before(:each) do
+      @app = test_app
+    end
+    it "should return true when empty" do
+      @app.new_job.should be_applied
+    end
+    it "should return false when not applied" do
+      @app.fetch('eggs').should_not be_applied
+    end
+    it "should return true when applied" do
+      @app.datastore.should_receive(:retrieve).with('eggs').and_return("cracked")
+      job = @app.fetch('eggs').apply
+      job.should be_applied
+    end
+  end
+
   describe "to_a" do
     before(:each) do
       @app = mock_app
