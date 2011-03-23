@@ -188,6 +188,7 @@ module Dragonfly
     module OverrideInstanceMethods
       
       def format
+        apply
         meta[:format] || (ext.to_sym if ext && app.infer_mime_type_from_file_ext) || analyse(:format)
       end
       

@@ -887,6 +887,12 @@ describe Dragonfly::Job do
         job = @app.new_job("HELLO", :name => 'test.pdf')
         job.format.should == :pdf
       end
+      it "should apply the job" do
+        @app.generator.add(:test){ ["skid marks", {:name => 'terry.burton'}] }
+        job = @app.generate(:test)
+        job.format.should == :burton
+        job.should be_applied
+      end
     end
 
     describe "mime_type" do
