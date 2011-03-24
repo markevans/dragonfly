@@ -518,7 +518,7 @@ describe Item do
   describe "extra properties" do
 
     before(:each) do
-      @app = Dragonfly[:images]
+      @app = test_app
       custom_analyser = Class.new do
         def some_analyser_method(temp_object)
           "abc" + temp_object.data[0..0]
@@ -692,12 +692,12 @@ describe Item do
         it "should save it correctly" do
           @item.save!
           item = Item.find(@item.id)
-          item.preview_image.meta.should include_hash(:slime => 'balls')
+          item.preview_image.apply.meta.should include_hash(:slime => 'balls')
         end
         it "should store meta info about the model" do
           @item.save!
-          meta = {:model_class => 'Item', :model_attachment => :preview_image, :slime => 'balls'}
-          @app.fetch(@item.preview_image_uid).meta.should == meta
+          item = Item.find(@item.id)
+          item.preview_image.apply.meta.should include_hash(:model_class => 'Item', :model_attachment => :preview_image)  
         end
       end
 
