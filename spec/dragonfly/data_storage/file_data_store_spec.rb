@@ -149,10 +149,10 @@ describe Dragonfly::DataStorage::FileDataStore do
   describe "retrieve" do
     it "should return a pathname" do
       uid = @data_store.store(@temp_object)
-      pathname, extra = @data_store.retrieve(uid)
+      pathname, meta = @data_store.retrieve(uid)
       pathname.should be_a(Pathname)
     end
-    it "should be able to retrieve any file, stored or not (and without extra data)" do
+    it "should be able to retrieve any file, stored or not (and without meta data)" do
       FileUtils.mkdir_p("#{@data_store.root_path}/jelly_beans/are")
       File.open("#{@data_store.root_path}/jelly_beans/are/good", 'w'){|f| f.write('hey dog') }
       pathname, meta = @data_store.retrieve("jelly_beans/are/good")
