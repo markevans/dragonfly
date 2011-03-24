@@ -179,8 +179,7 @@ describe Item do
       end
 
       it "should return the url for the data" do
-        @app.should_receive(:url_for).with(an_instance_of(@app.job_class), {}).and_return('some.url')
-        @item.preview_image.url.should == 'some.url'
+        @item.preview_image.url.should =~ %r<^/media/\w+$>
       end
 
       it "should destroy the old data when the uid is set manually" do
@@ -460,7 +459,7 @@ describe Item do
       it "should be invalid if the property is nil" do
         @item.preview_image = "OTHER TYPE"
         @item.should_not be_valid
-        @item.errors[:preview_image].should match_ar_error("mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was ''")
+        @item.errors[:preview_image].should match_ar_error("mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was 'application/octet-stream'")
       end
 
       it "should be invalid if the property is wrong" do
