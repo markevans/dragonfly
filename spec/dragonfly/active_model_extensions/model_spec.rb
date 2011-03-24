@@ -122,7 +122,7 @@ describe Item do
         @item.preview_image_uid.should be_nil
       end
       it "should store the image when saved" do
-        @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING"), {})
+        @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING"), hash_including)
         @item.save!
       end
       it "should not try to destroy anything on destroy" do
@@ -156,7 +156,7 @@ describe Item do
 
       before(:each) do
         @item.preview_image = "DATASTRING"
-        @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING"), {}).once.and_return('some_uid')
+        @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING"), hash_including).once.and_return('some_uid')
         @item.save!
       end
 
@@ -223,7 +223,7 @@ describe Item do
           @item.save!
         end
         it "should store the new data when saved" do
-          @app.datastore.should_receive(:store).with(a_temp_object_with_data("ANEWDATASTRING"), {})
+          @app.datastore.should_receive(:store).with(a_temp_object_with_data("ANEWDATASTRING"), hash_including)
           @item.save!
         end
         it "should destroy the old data on destroy" do
