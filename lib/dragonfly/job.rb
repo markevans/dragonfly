@@ -386,7 +386,7 @@ module Dragonfly
     # Misc
 
     def store(opts={})
-      app.store(result, opts)
+      app.store(result, opts.merge(:meta => meta))
     end
 
     def inspect

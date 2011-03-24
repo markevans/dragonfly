@@ -917,5 +917,22 @@ describe Dragonfly::Job do
     end
 
   end
+  
+  describe "store" do
+    before(:each) do
+      @app = test_app
+      @app.generator.add(:test){ ["Toes", {:name => 'doogie.txt'}] }
+      @job = @app.generate(:test)
+    end
+    it "should store its data along with the meta" do
+      @job.meta[:eggs] = 'doolally'
+      @app.datastore.should_receive(:store).with(a_temp_object_with_data("Toes"), :meta => {:name => 'doogie.txt', :eggs => 'doolally'})
+      @job.store
+    end
+    it "should add extra opts" do
+      @app.datastore.should_receive(:store).with(a_temp_object_with_data("Toes"), :meta => {:name => 'doogie.txt'}, :path => 'blah')
+      @job.store(:path => 'blah')
+    end
+  end
 
 end
