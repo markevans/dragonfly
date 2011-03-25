@@ -191,10 +191,10 @@ describe Dragonfly::Server do
         @app = test_app
         @server = Dragonfly::Server.new(@app)
         @server.protect_from_dos_attacks = true
-        @job = @app.new_job.fetch('some_uid')
+        @job = @app.fetch('some_uid')
       end
       it "should generate the correct url" do
-        @server.url_for(@job).should == "/media/#{@job.serialize}?sha=#{@job.sha}"
+        @server.url_for(@job).should == "/#{@job.serialize}?sha=#{@job.sha}"
       end
     end
 

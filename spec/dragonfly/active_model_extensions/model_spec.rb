@@ -179,7 +179,7 @@ describe Item do
       end
 
       it "should return the url for the data" do
-        @item.preview_image.url.should =~ %r<^/media/\w+$>
+        @item.preview_image.url.should =~ %r<^/\w+$>
       end
 
       it "should destroy the old data when the uid is set manually" do
