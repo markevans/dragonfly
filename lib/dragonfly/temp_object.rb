@@ -42,12 +42,31 @@ module Dragonfly
 
     # Instance Methods
 
-    def initialize(obj, opts={})
-      opts ||= {} # in case it's nil
-      initialize_from_object!(obj)
-      validate_options!(opts)
-      extract_attributes_from(opts)
+    def initialize(obj)
+      if obj.is_a? TempObject
+        @data = obj.get_data
+        @tempfile = obj.get_tempfile
+        @pathname = obj.get_pathname
+      elsif obj.is_a? String
+        @data = obj
+      elsif obj.is_a? Tempfile
+        @tempfile = obj
+      elsif obj.is_a? File
+        @pathname = Pathname.new(obj.path)
+        @original_filename = @pathname.basename.to_s
+      elsif obj.is_a? Pathname
+        @pathname = obj
+        @original_filename = @pathname.basename.to_s
+      elsif obj.respond_to?(:tempfile)
+        @tempfile = obj.tempfile
+      else
+        raise ArgumentError, "#{self.class.name} must be initialized with a String, a Pathname, a File, a Tempfile, another TempObject, or something that responds to .tempfile"
+      end
+      @tempfile.close if @tempfile
+      @original_filename = obj.original_filename if obj.respond_to?(:original_filename)
     end
+    
+    attr_reader :original_filename
 
     def data
       @data ||= file{|f| f.read }
@@ -85,21 +104,6 @@ module Dragonfly
       @data ? @data.bytesize : File.size(path)
     end
 
-    attr_accessor :name, :format
-    attr_writer :meta
-
-    def meta
-      @meta ||= {}
-    end
-
-    def basename
-      File.basename(name, '.*') if name
-    end
-
-    def ext
-      File.extname(name)[/\.(.*)/, 1] if name
-    end
-
     def each(&block)
       to_io do |io|
         while part = io.read(block_size)
@@ -121,20 +125,6 @@ module Dragonfly
       @data ? StringIO.open(@data, 'rb', &block) : file(&block)
     end
 
-    def attributes
-      {
-        :name => name,
-        :meta => meta,
-        :format => format
-      }
-    end
-
-    def extract_attributes_from(hash)
-      self.name   = hash.delete(:name)     unless hash[:name].blank?
-      self.format = hash.delete(:format)   unless hash[:format].blank?
-      self.meta.merge!(hash.delete(:meta)) unless hash[:meta].blank?
-    end
-
     def inspect
       content_string = case
       when @data
@@ -143,7 +133,7 @@ module Dragonfly
       when @pathname then "pathname=#{@pathname.inspect}"
       when @tempfile then "tempfile=#{@tempfile.inspect}"
       end
-      to_s.sub(/>$/, " #{content_string}, @meta=#{@meta.inspect}, @name=#{@name.inspect} >")
+      to_s.sub(/>$/, " #{content_string} >")
     end
 
     protected
@@ -163,30 +153,6 @@ module Dragonfly
 
     private
 
-    def initialize_from_object!(obj)
-      if obj.is_a? TempObject
-        @data = obj.get_data
-        @tempfile = obj.get_tempfile
-        @pathname = obj.get_pathname
-      elsif obj.is_a? String
-        @data = obj
-      elsif obj.is_a? Tempfile
-        @tempfile = obj
-      elsif obj.is_a? File
-        @pathname = Pathname.new(obj.path)
-        self.name = @pathname.basename.to_s
-      elsif obj.is_a? Pathname
-        @pathname = obj
-        self.name = @pathname.basename.to_s
-      elsif obj.respond_to?(:tempfile)
-        @tempfile = obj.tempfile
-      else
-        raise ArgumentError, "#{self.class.name} must be initialized with a String, a Pathname, a File, a Tempfile, another TempObject, or something that responds to .tempfile"
-      end
-      @tempfile.close if @tempfile
-      self.name = obj.original_filename if obj.respond_to?(:original_filename)
-    end
-
     def block_size
       self.class.block_size
     end
@@ -195,12 +161,6 @@ module Dragonfly
       tempfile = new_tempfile
       FileUtils.cp path, tempfile.path
       tempfile
-    end
-
-    def validate_options!(opts)
-      valid_keys = [:name, :meta, :format]
-      invalid_keys = opts.keys - valid_keys
-      raise ArgumentError, "Unrecognised options #{invalid_keys.inspect}" if invalid_keys.any?
     end
 
     def new_tempfile(content=nil)

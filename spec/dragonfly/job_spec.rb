@@ -45,7 +45,7 @@ describe Dragonfly::Job do
 
   end
 
-  describe "without temp_object" do
+  describe "without content" do
 
     before(:each) do
       @app = mock_app
@@ -53,8 +53,8 @@ describe Dragonfly::Job do
     end
 
     it "should allow initializing with content" do
-      job = Dragonfly::Job.new(@app, Dragonfly::TempObject.new('eggheads'))
-      job.temp_object.data.should == 'eggheads'
+      job = Dragonfly::Job.new(@app, 'eggheads')
+      job.data.should == 'eggheads'
     end
 
     describe "fetch" do
@@ -66,16 +66,13 @@ describe Dragonfly::Job do
 
       it "should retrieve from the app's datastore when applied" do
         @app.datastore.should_receive(:retrieve).with('some_uid').and_return('HELLO')
-        @job.apply
-        @job.temp_object.data.should == 'HELLO'
+        @job.data.should == 'HELLO'
       end
 
       it "should set extra data if returned from the datastore" do
-        @app.datastore.should_receive(:retrieve).with('some_uid').and_return(['HELLO', {:name => 'test.txt', :meta => {1=>2}}])
-        @job.apply
-        @job.temp_object.data.should == 'HELLO'
-        @job.temp_object.name.should == 'test.txt'
-        @job.temp_object.meta.should == {1 => 2}
+        @app.datastore.should_receive(:retrieve).with('some_uid').and_return(['HELLO', {:name => 'test.txt'}])
+        @job.data.should == 'HELLO'
+        @job.meta.should == {:name => 'test.txt'}
       end
     end
 
@@ -114,16 +111,13 @@ describe Dragonfly::Job do
 
       it "should use the generator when applied" do
         @app.generator.should_receive(:generate).with(:plasma, 20, 30).and_return('hi')
-        @job.apply.data.should == 'hi'
+        @job.data.should == 'hi'
       end
 
       it "should save extra data if the generator returns it" do
-        @app.generator.should_receive(:generate).with(:plasma, 20, 30).and_return(['hi', {:name => 'plasma.png', :format => :png, :meta => {:a => :b}}])
-        @job.apply
-        @job.temp_object.data.should == 'hi'
-        @job.temp_object.name.should == 'plasma.png'
-        @job.temp_object.format.should == :png
-        @job.temp_object.meta.should == {:a => :b}
+        @app.generator.should_receive(:generate).with(:plasma, 20, 30).and_return(['hi', {:name => 'plasma.png'}])
+        @job.data.should == 'hi'
+        @job.meta.should == {:name => 'plasma.png'}
       end
     end
 
@@ -135,10 +129,12 @@ describe Dragonfly::Job do
       it { @job.steps.should match_steps([Dragonfly::Job::FetchFile]) }
 
       it "should fetch the specified file when applied" do
-        @job.apply
-        @job.temp_object.size.should == 62664
+        @job.size.should == 62664
       end
-
+      
+      it "should set the name" do
+        @job.meta[:name].should == 'egg.png'
+      end
     end
 
     describe "fetch_url" do
@@ -153,31 +149,41 @@ describe Dragonfly::Job do
       }
 
       it "should fetch the specified url when applied" do
-        @job.fetch_url!('http://some.place.com').apply
-        @job.temp_object.data.should == "result!"
+        @job.fetch_url!('http://some.place.com')
+        @job.data.should == "result!"
       end
 
       it "should default to http" do
-        @job.fetch_url!('some.place.com').apply
-        @job.temp_object.data.should == "result!"
+        @job.fetch_url!('some.place.com')
+        @job.data.should == "result!"
       end
 
       it "should also work with https" do
-        @job.fetch_url!('https://some.place.com').apply
-        @job.temp_object.data.should == "secure result!"
+        @job.fetch_url!('https://some.place.com')
+        @job.data.should == "secure result!"
       end
 
+      it "should set the name if there is one" do
+        @job.fetch_url!('some.place.com/dung.beetle')
+        @job.meta[:name].should == 'dung.beetle'
+      end
+
+      ["some.place.com", "some.place.com/", "some.place.com/eggs/"].each do |url|
+        it "should not set the name if there isn't one, e.g. #{url}" do
+          @job.fetch_url!(url)
+          @job.meta[:name].should be_nil
+        end
+      end
     end
 
   end
 
-  describe "with temp_object already there" do
+  describe "with content already there" do
 
     before(:each) do
       @app = mock_app
-      @temp_object = Dragonfly::TempObject.new('HELLO', :name => 'hello.txt', :meta => {:a => :b}, :format => :txt)
-      @job = Dragonfly::Job.new(@app)
-      @job.temp_object = @temp_object
+      @job = Dragonfly::Job.new(@app, 'HELLO', :name => 'hello.txt', :a => :b)
+      @temp_object = @job.temp_object
     end
 
     describe "apply" do
@@ -195,25 +201,19 @@ describe Dragonfly::Job do
 
       it "should use the processor when applied" do
         @app.processor.should_receive(:process).with(@temp_object, :resize, '20x30').and_return('hi')
-        @job.apply.data.should == 'hi'
+        @job.data.should == 'hi'
       end
 
-      it "should maintain the temp object attributes" do
+      it "should maintain the meta attributes" do
         @app.processor.should_receive(:process).with(@temp_object, :resize, '20x30').and_return('hi')
-        temp_object = @job.apply.temp_object
-        temp_object.data.should == 'hi'
-        temp_object.name.should == 'hello.txt'
-        temp_object.meta.should == {:a => :b}
-        temp_object.format.should == :txt
+        @job.data.should == 'hi'
+        @job.meta.should == {:name => 'hello.txt', :a => :b}
       end
 
       it "should allow returning an array with extra attributes from the processor" do
-        @app.processor.should_receive(:process).with(@temp_object, :resize, '20x30').and_return(['hi', {:name => 'hello_20x30.txt', :meta => {:eggs => 'asdf'}}])
-        temp_object = @job.apply.temp_object
-        temp_object.data.should == 'hi'
-        temp_object.name.should == 'hello_20x30.txt'
-        temp_object.meta.should == {:a => :b, :eggs => 'asdf'}
-        temp_object.format.should == :txt
+        @app.processor.should_receive(:process).with(@temp_object, :resize, '20x30').and_return(['hi', {:name => 'hello_20x30.txt', :eggs => 'asdf'}])
+        @job.data.should == 'hi'
+        @job.meta.should == {:name => 'hello_20x30.txt', :a => :b, :eggs => 'asdf'}
       end
     end
 
@@ -226,34 +226,29 @@ describe Dragonfly::Job do
 
       it "should use the encoder when applied" do
         @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
-        @job.apply.data.should == 'alo'
+        @job.data.should == 'alo'
       end
 
-      it "should maintain the temp object attributes (except format)" do
+      it "should maintain the meta and update the format" do
         @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
-        temp_object = @job.apply.temp_object
-        temp_object.data.should == 'alo'
-        temp_object.name.should == 'hello.txt'
-        temp_object.meta.should == {:a => :b}
+        @job.data.should == 'alo'
+        @job.meta.should == {:name => 'hello.txt', :a => :b, :format => :gif}
       end
 
-      it "should update the format" do
-        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
-        @job.apply.temp_object.format.should == :gif
+      it "should update the format even when not applied" do
+        @app.encoder.should_not_receive(:encode)
+        @job.meta[:format].should == :gif
       end
 
       it "should allow returning an array with extra attributes form the encoder" do
-        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return(['alo', {:name => 'doobie', :meta => {:eggs => 'fish'}}])
-        temp_object = @job.apply.temp_object
-        temp_object.data.should == 'alo'
-        temp_object.name.should == 'doobie'
-        temp_object.meta.should == {:a => :b, :eggs => 'fish'}
+        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return(['alo', {:name => 'doobie', :eggs => 'fish'}])
+        @job.data.should == 'alo'
+        @job.meta.should == {:name => 'doobie', :a => :b, :eggs => 'fish', :format => :gif}
       end
 
       it "not allow overriding the format" do
         @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return(['alo', {:format => :png}])
-        temp_object = @job.apply.temp_object
-        temp_object.format.should == :gif
+        @job.apply.meta[:format].should == :gif
       end
     end
   end
@@ -391,6 +386,23 @@ describe Dragonfly::Job do
 
   end
 
+  describe "applied?" do
+    before(:each) do
+      @app = test_app
+    end
+    it "should return true when empty" do
+      @app.new_job.should be_applied
+    end
+    it "should return false when not applied" do
+      @app.fetch('eggs').should_not be_applied
+    end
+    it "should return true when applied" do
+      @app.datastore.should_receive(:retrieve).with('eggs').and_return("cracked")
+      job = @app.fetch('eggs').apply
+      job.should be_applied
+    end
+  end
+
   describe "to_a" do
     before(:each) do
       @app = mock_app
@@ -466,32 +478,6 @@ describe Dragonfly::Job do
     end
   end
 
-  describe "from_path" do
-    before(:each) do
-      @app = test_app
-      @serialized = @app.fetch('eggs').serialize
-    end
-    it "should work with a simple path" do
-      Dragonfly::Job.from_path("/#{@serialized}", @app).should be_a(Dragonfly::Job)
-    end
-    it "should work with no slash" do
-      Dragonfly::Job.from_path(@serialized, @app).should be_a(Dragonfly::Job)
-    end
-    it "should ignore the app's url_path_prefix" do
-      @app.url_path_prefix = '/images/yo'
-      Dragonfly::Job.from_path("/images/yo/#{@serialized}", @app).should be_a(Dragonfly::Job)
-    end
-    it "should not work with an incorrect url_path_prefix" do
-      @app.url_path_prefix = '/images/yo'
-      lambda{
-        Dragonfly::Job.from_path("/images/#{@serialized}", @app).should be_a(Dragonfly::Job)
-      }.should raise_error(Dragonfly::Serializer::BadString)
-    end
-    it "should ignore any suffix" do
-      Dragonfly::Job.from_path("/#{@serialized}asdfJASKLDF*()!@$%{}|/GGG/.png.your.mum", @app).should be_a(Dragonfly::Job)
-    end
-  end
-
   describe "serialization" do
     before(:each) do
       @app = test_app
@@ -528,56 +514,50 @@ describe Dragonfly::Job do
 
   describe "url" do
     before(:each) do
-      @app = mock_app(:url_for => 'hello')
+      @app = test_app
       @job = Dragonfly::Job.new(@app)
     end
-    it "should return a url" do
-      @job.generate!(:plasma)
-      @job.url.should == 'hello'
-    end
+
     it "should return nil if there are no steps" do
       @job.url.should be_nil
+    end
+    
+    describe "using meta in the url" do
+      before(:each) do
+        @app.server.url_format = '/media/:job/:zoo'
+        @job.generate!(:fish)
+      end
+      it "should act as per usual if no params given" do
+        @job.url.should == "/media/#{@job.serialize}"
+      end
+      it "should add given params" do
+        @job.url(:zoo => 'jokes', :on => 'me').should == "/media/#{@job.serialize}/jokes?on=me"
+      end
+      it "should use the meta if it exists" do
+        @job.meta[:zoo] = 'hair'
+        @job.url.should == "/media/#{@job.serialize}/hair"
+      end
+      it "should not add an meta that isn't needed" do
+        @job.meta[:gump] = 'flub'
+        @job.url.should == "/media/#{@job.serialize}"
+      end
+      it "should override if a param is passed in" do
+        @job.meta[:zoo] = 'hair'
+        @job.url(:zoo => 'dare').should == "/media/#{@job.serialize}/dare"
+      end
     end
   end
 
   describe "to_fetched_job" do
     it "should maintain the same temp_object and be already applied" do
       app = mock_app
-      job = Dragonfly::Job.new(app, Dragonfly::TempObject.new("HELLO"))
+      job = Dragonfly::Job.new(app, "HELLO")
       new_job = job.to_fetched_job('some_uid')
-      new_job.temp_object.data.should == 'HELLO'
+      new_job.data.should == 'HELLO'
       new_job.to_a.should == [
         [:f, 'some_uid']
       ]
       new_job.pending_steps.should be_empty
-    end
-  end
-
-  describe "format" do
-    before(:each) do
-      @app = test_app
-    end
-    it "should default to nil" do
-      job = @app.new_job("HELLO")
-      job.format.should be_nil
-    end
-    it "should use the temp_object format if it exists" do
-      job = @app.new_job("HELLO", :format => :txt)
-      job.format.should == :txt
-    end
-    it "should use the analyser format if it exists" do
-      @app.analyser.add :format do |temp_object|
-        :egg
-      end
-      job = @app.new_job("HELLO")
-      job.format.should == :egg
-    end
-    it "should prefer the temp_object format if both exist" do
-      @app.analyser.add :format do |temp_object|
-        :egg
-      end
-      job = @app.new_job("HELLO", :format => :txt)
-      job.format.should == :txt
     end
   end
 
@@ -641,7 +621,7 @@ describe Dragonfly::Job do
   describe "setting the meta" do
     before(:each) do
       @app = test_app
-      @job = @app.new_job("HiThere", :meta => {:five => 'beans'})
+      @job = @app.new_job("HiThere", :five => 'beans')
     end
     it "should allow setting the meta" do
       @job.meta = {:doogie => 'ladders'}
@@ -777,6 +757,203 @@ describe Dragonfly::Job do
       it "should return the last encoded format as an extname if it exists" do
         @app.fetch('gungedin').encode(:a).encode(:b).encoded_extname.should == '.b'
       end
+    end
+  end
+
+  describe "meta" do
+    before(:each) do
+      @app = test_app
+      @job = @app.new_job
+    end
+    it "should default meta to an empty hash" do
+      @job.meta.should == {}
+    end
+    it "should allow setting" do
+      @job.meta = {:a => :b}
+      @job.meta.should == {:a => :b}
+    end
+    it "should not allow setting as anything other than a hash" do
+      lambda{
+        @job.meta = 3
+      }.should raise_error(ArgumentError)
+    end
+    it "should allow setting on initialize" do
+      job = @app.new_job('asdf', :b => :c)
+      job.meta.should == {:b => :c}
+    end
+    it "should keep them when chained" do
+      @job.meta[:darn] = 'it'
+      @job.generate(:gollum).meta.should == {:darn => 'it'}
+    end
+  end
+
+  describe "name" do
+    before(:each) do
+      @app = test_app
+    end
+    it "should default to nil" do
+      job = @app.new_job('HELLO')
+      job.name.should be_nil
+    end
+    it "should use the meta" do
+      job = @app.new_job('HELLO')
+      job.meta[:name] = 'monkey.egg'
+      job.name.should == 'monkey.egg'
+    end
+    it "should allow setting" do
+      job = @app.new_job('HELLO')
+      job.name = "jonny.briggs"
+      job.meta[:name].should == 'jonny.briggs'
+    end
+    
+    describe "ext" do
+      before(:each) do
+        @job = @app.new_job('asdf')
+      end
+      it "should use the correct extension from name" do
+        @job.name = 'hello.there.mate'
+        @job.ext.should == 'mate'
+      end
+      it "should be nil if name has none" do
+        @job.name = 'hello'
+        @job.ext.should be_nil
+      end
+      it "should be nil if name is nil" do
+        @job.name = nil
+        @job.ext.should be_nil
+      end
+    end
+
+    describe "basename" do
+      before(:each) do
+        @job = @app.new_job('asdf')
+      end
+      it "should use the correct basename from name" do
+        @job.name = 'hello.there.mate'
+        @job.basename.should == 'hello.there'
+      end
+      it "should be the name if it has no ext" do
+        @job.name = 'hello'
+        @job.basename.should == 'hello'
+      end
+      it "should be nil if name is nil" do
+        @job.name = nil
+        @job.basename.should be_nil
+      end
+    end
+
+    describe "format" do
+      before(:each) do
+        @app = test_app
+      end
+      it "should default to nil" do
+        job = @app.new_job("HELLO")
+        job.format.should be_nil
+      end
+      it "should use the meta format if it exists" do
+        job = @app.new_job("HELLO")
+        job.meta[:format] = :txt
+        job.format.should == :txt
+      end
+      it "should use the analyser format if it exists" do
+        @app.analyser.add :format do |temp_object|
+          :egg
+        end
+        job = @app.new_job("HELLO")
+        job.format.should == :egg
+      end
+      it "should use the file extension if it has no format" do
+        @job = @app.new_job("HIMATE", :name => 'test.pdf')
+        @job.format.should == :pdf
+      end
+      it "should not use the file extension if it's been switched off" do
+        @app.infer_mime_type_from_file_ext = false
+        @job = @app.new_job("HIMATE", :name => 'test.pdf')
+        @job.format.should be_nil
+      end
+      it "should prefer the set format over the file extension" do
+        job = @app.new_job("HELLO", :name => 'test.pdf', :format => :txt)
+        job.format.should == :txt
+      end
+      it "should prefer the file extension over the analysed format" do
+        @app.analyser.add :format do |temp_object|
+          :egg
+        end
+        job = @app.new_job("HELLO", :name => 'test.pdf')
+        job.format.should == :pdf
+      end
+      it "should apply the job" do
+        @app.generator.add(:test){ ["skid marks", {:name => 'terry.burton'}] }
+        job = @app.generate(:test)
+        job.format.should == :burton
+        job.should be_applied
+      end
+    end
+
+    describe "mime_type" do
+      before(:each) do
+        @app = test_app
+      end
+      it "should return the correct mime_type if the format is given" do
+        @job = @app.new_job("HIMATE")
+        @job.should_receive(:format).and_return(:tiff)
+        @job.mime_type.should == 'image/tiff'
+      end
+      it "should fall back to the mime_type analyser if the format is nil" do
+        @app.analyser.add :mime_type do |temp_object|
+          'image/jpeg'
+        end
+        @job = @app.new_job("HIMATE")
+        @job.mime_type.should == 'image/jpeg'
+      end
+      it "should fall back to the fallback mime_type if neither format or analyser exist" do
+        @app.new_job("HIMATE").mime_type.should == 'application/octet-stream'
+      end
+    end
+
+  end
+  
+  describe "store" do
+    before(:each) do
+      @app = test_app
+      @app.generator.add(:test){ ["Toes", {:name => 'doogie.txt'}] }
+      @job = @app.generate(:test)
+    end
+    it "should store its data along with the meta" do
+      @job.meta[:eggs] = 'doolally'
+      @app.datastore.should_receive(:store).with(a_temp_object_with_data("Toes"), :meta => {:name => 'doogie.txt', :eggs => 'doolally'})
+      @job.store
+    end
+    it "should add extra opts" do
+      @app.datastore.should_receive(:store).with(a_temp_object_with_data("Toes"), :meta => {:name => 'doogie.txt'}, :path => 'blah')
+      @job.store(:path => 'blah')
+    end
+  end
+
+  describe "dealing with original_filename" do
+    before(:each) do
+      @string = "terry"
+      @string.stub!(:original_filename).and_return("gum.tree")
+      @app = test_app
+      @app.generator.add(:test){ @string }
+    end
+    it "should set it as the name" do
+      @app.create(@string).name.should == 'gum.tree'
+    end
+    it "should prefer the initialized name over the original_filename" do
+      @app.create(@string, :name => 'doo.berry').name.should == 'doo.berry'
+    end
+    it "should work with e.g. generators" do
+      @app.generate(:test).apply.name.should == 'gum.tree'
+    end
+    it "should favour an e.g. generator returned name" do
+      @app.generator.add(:test2){ [@string, {:name => 'gen.ome'}] }
+      @app.generate(:test2).apply.name.should == 'gen.ome'
+    end
+    it "should not overwrite a set name" do
+      job = @app.generate(:test)
+      job.name = 'egg.mumma'
+      job.apply.name.should == 'egg.mumma'
     end
   end
 

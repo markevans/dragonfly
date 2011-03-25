@@ -7,7 +7,7 @@ describe "Dragonfly::JobEndpoint Rack::Lint tests" do
   before(:each) do
     @app = test_app
     @app.generator.add(:test_data){ "Test Data" }
-    @job = @app.new_job.generate(:test_data)
+    @job = @app.generate(:test_data)
     @endpoint = Rack::Lint.new(Dragonfly::JobEndpoint.new(@job))
   end
   

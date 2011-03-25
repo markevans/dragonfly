@@ -29,9 +29,8 @@ describe Dragonfly::TempObject do
     Pathname.new(path)
   end
 
-  def new_temp_object(data, opts={})
-    klass = opts.delete(:class) || Dragonfly::TempObject
-    klass.new(initialization_object(data), opts)
+  def new_temp_object(data, klass=Dragonfly::TempObject)
+    klass.new(initialization_object(data))
   end
 
   def initialization_object(data)
@@ -140,26 +139,6 @@ describe Dragonfly::TempObject do
 
     end
 
-    describe "initializing attributes too" do
-      it "should set the name" do
-        temp_object = Dragonfly::TempObject.new(initialization_object('HELLO'), :name => 'monkey.egg')
-        temp_object.name.should == 'monkey.egg'
-      end
-      it "should set the meta" do
-        temp_object = Dragonfly::TempObject.new(initialization_object('HELLO'), :meta => {:dr => 'doolittle'})
-        temp_object.meta.should == {:dr => 'doolittle'}
-      end
-      it "should set the format" do
-        temp_object = Dragonfly::TempObject.new(initialization_object('HELLO'), :format => :jpg)
-        temp_object.format.should == :jpg
-      end
-      it "should raise an error if an invalid option is given" do
-        lambda {
-          Dragonfly::TempObject.new(initialization_object('HELLO'), :doobie => 'doo')
-        }.should raise_error(ArgumentError)
-      end
-    end
-
     describe "each" do
       it "should yield 8192 bytes each time" do
         temp_object = new_temp_object(File.read(sample_path('round.gif')))
@@ -171,7 +150,7 @@ describe Dragonfly::TempObject do
       end
       it "should yield the number of bytes specified in the class configuration" do
         klass = Class.new(Dragonfly::TempObject)
-        temp_object = new_temp_object(File.read(sample_path('round.gif')), :class => klass)
+        temp_object = new_temp_object(File.read(sample_path('round.gif')), klass)
         klass.block_size = 3001
         parts = get_parts(temp_object)
         parts[0...-1].each do |part|
@@ -299,120 +278,28 @@ describe Dragonfly::TempObject do
     end
   end
 
-  describe "name" do
+  describe "original_filename" do
     before(:each) do
       @obj = new_tempfile
     end
-    it "should set the name if the initial object responds to 'original filename'" do
+    it "should set the original_filename if the initial object responds to 'original filename'" do
       def @obj.original_filename
         'jimmy.page'
       end
-      Dragonfly::TempObject.new(@obj).name.should == 'jimmy.page'
+      Dragonfly::TempObject.new(@obj).original_filename.should == 'jimmy.page'
     end
     it "should not set the name if the initial object doesn't respond to 'original filename'" do
-      Dragonfly::TempObject.new(@obj).name.should be_nil
+      Dragonfly::TempObject.new(@obj).original_filename.should be_nil
     end
     it "should set the name if the initial object is a file object" do
       file = File.new(SAMPLES_DIR + '/round.gif')
       temp_object = Dragonfly::TempObject.new(file)
-      temp_object.name.should == 'round.gif'
+      temp_object.original_filename.should == 'round.gif'
     end
     it "should set the name if the initial object is a pathname" do
       pathname = Pathname.new(SAMPLES_DIR + '/round.gif')
       temp_object = Dragonfly::TempObject.new(pathname)
-      temp_object.name.should == 'round.gif'
-    end
-    it "should still be nil if set to empty string on initialize" do
-      temp_object = Dragonfly::TempObject.new('sdf', :name => '')
-      temp_object.name.should be_nil
-    end
-    it "should allow setting" do
-      temp_object = Dragonfly::TempObject.new('sdf')
-      temp_object.name = "jonny.briggs"
-      temp_object.name.should == 'jonny.briggs'
-    end
-  end
-
-  describe "ext" do
-    it "should use the correct extension from name" do
-      temp_object = Dragonfly::TempObject.new('asfsadf', :name => 'hello.there.mate')
-      temp_object.ext.should == 'mate'
-    end
-    it "should be nil if name has none" do
-      temp_object = Dragonfly::TempObject.new('asfsadf', :name => 'hello')
-      temp_object.ext.should be_nil
-    end
-    it "should be nil if name is nil" do
-      temp_object = Dragonfly::TempObject.new('asfsadf')
-      temp_object.ext.should be_nil
-    end
-  end
-
-  describe "basename" do
-    it "should use the correct basename from name" do
-      temp_object = Dragonfly::TempObject.new('A', :name => 'hello.there.mate')
-      temp_object.basename.should == 'hello.there'
-    end
-    it "should be the name if it has no ext" do
-      temp_object = Dragonfly::TempObject.new('A', :name => 'hello')
-      temp_object.basename.should == 'hello'
-    end
-    it "should be nil if name is nil" do
-      temp_object = Dragonfly::TempObject.new('A', :name => nil)
-      temp_object.basename.should be_nil
-    end
-  end
-
-  describe "meta" do
-    before(:each) do
-      @temp_object = Dragonfly::TempObject.new('get outta here!')
-    end
-    it "should return an empty hash if not set" do
-      @temp_object.meta.should == {}
-    end
-    it "should allow setting" do
-      @temp_object.meta = {:teeth => 'many'}
-      @temp_object.meta.should == {:teeth => 'many'}
-    end
-  end
-
-  describe "format" do
-    it "should return nil if not set" do
-      temp_object = Dragonfly::TempObject.new('wassin my belly??!')
-      temp_object.format.should be_nil
-    end
-    it "should allow setting on initialize" do
-      temp_object = Dragonfly::TempObject.new('wassin my belly??!', :format => :jpg)
-      temp_object.format.should == :jpg
-    end
-    it "should allow setting" do
-      temp_object = Dragonfly::TempObject.new('jo*ida pero contenta')
-      temp_object.format = :tiff
-      temp_object.format.should == :tiff
-    end
-  end
-
-  describe "extract_attributes_from" do
-    before(:each) do
-      @temp_object = Dragonfly::TempObject.new("ne'er gonna give you up",
-        :meta => {:a => 4},
-        :name => 'fred.txt',
-        :format => :txt
-      )
-      @attributes = {:meta => {:b => 5}, :ogle => 'bogle', :format => :dungbats}
-      @temp_object.extract_attributes_from(@attributes)
-    end
-    it "should overwrite its own attributes if specified" do
-      @temp_object.format.should == :dungbats
-    end
-    it "should merge its own meta if specified" do
-      @temp_object.meta.should == {:a => 4, :b => 5}
-    end
-    it "should leave non-specified attributes untouched" do
-      @temp_object.name.should == 'fred.txt'
-    end
-    it "should remove attributes from the hash" do
-      @attributes.should == {:ogle => 'bogle'}
+      temp_object.original_filename.should == 'round.gif'
     end
   end
 

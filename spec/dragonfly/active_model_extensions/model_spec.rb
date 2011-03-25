@@ -122,7 +122,7 @@ describe Item do
         @item.preview_image_uid.should be_nil
       end
       it "should store the image when saved" do
-        @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING"), {})
+        @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING"), hash_including)
         @item.save!
       end
       it "should not try to destroy anything on destroy" do
@@ -156,7 +156,7 @@ describe Item do
 
       before(:each) do
         @item.preview_image = "DATASTRING"
-        @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING"), {}).once.and_return('some_uid')
+        @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING"), hash_including).once.and_return('some_uid')
         @item.save!
       end
 
@@ -179,8 +179,7 @@ describe Item do
       end
 
       it "should return the url for the data" do
-        @app.should_receive(:url_for).with(an_instance_of(@app.job_class), {}).and_return('some.url')
-        @item.preview_image.url.should == 'some.url'
+        @item.preview_image.url.should =~ %r<^/\w+$>
       end
 
       it "should destroy the old data when the uid is set manually" do
@@ -223,7 +222,7 @@ describe Item do
           @item.save!
         end
         it "should store the new data when saved" do
-          @app.datastore.should_receive(:store).with(a_temp_object_with_data("ANEWDATASTRING"), {})
+          @app.datastore.should_receive(:store).with(a_temp_object_with_data("ANEWDATASTRING"), hash_including)
           @item.save!
         end
         it "should destroy the old data on destroy" do
@@ -460,7 +459,7 @@ describe Item do
       it "should be invalid if the property is nil" do
         @item.preview_image = "OTHER TYPE"
         @item.should_not be_valid
-        @item.errors[:preview_image].should match_ar_error("mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was ''")
+        @item.errors[:preview_image].should match_ar_error("mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was 'application/octet-stream'")
       end
 
       it "should be invalid if the property is wrong" do
@@ -518,7 +517,7 @@ describe Item do
   describe "extra properties" do
 
     before(:each) do
-      @app = Dragonfly[:images]
+      @app = test_app
       custom_analyser = Class.new do
         def some_analyser_method(temp_object)
           "abc" + temp_object.data[0..0]
@@ -628,18 +627,25 @@ describe Item do
           @item.preview_image.some_analyser_method.should == 'result yo'
         end
 
-        %w(size name ext).each do |attr|
-          it "should use the magic attribute for #{attr} if there is one, and not load the content" do
-            @app.datastore.should_not_receive(:retrieve)
-            @item.should_receive("preview_image_#{attr}".to_sym).and_return('result yo')
-            @item.preview_image.send(attr).should == 'result yo'
+        describe "non-analyser magic attributes" do
+          before(:each) do
+            @job = @item.preview_image.send(:job)
           end
 
-          it "should load the content then delegate '#{attr}' if there is no magic attribute for it" do
-            @item.should_receive(:public_methods).and_return(['preview_image_uid']) # no magic attributes
-            @app.datastore.should_receive(:retrieve).with('my_uid').and_return(['DATASTRING', {}])
-            @item.preview_image.send(attr).should == @item.preview_image.send(:job).send(attr)
+          %w(size name ext).each do |attr|
+            it "should use the magic attribute for #{attr} if there is one, and not the job object" do
+              @job.should_not_receive(attr.to_sym)
+              @item.should_receive("preview_image_#{attr}".to_sym).and_return('result yo')
+              @item.preview_image.send(attr).should == 'result yo'
+            end
+
+            it "should delegate '#{attr}' to the job object if there is no magic attribute for it" do
+              @item.should_receive(:public_methods).and_return(['preview_image_uid']) # no magic attributes
+              @job.should_receive(attr.to_sym).and_return "nother result y'all"
+              @item.preview_image.send(attr).should == "nother result y'all"
+            end
           end
+
         end
 
       end
@@ -692,12 +698,12 @@ describe Item do
         it "should save it correctly" do
           @item.save!
           item = Item.find(@item.id)
-          item.preview_image.meta.should include_hash(:slime => 'balls')
+          item.preview_image.apply.meta.should include_hash(:slime => 'balls')
         end
         it "should store meta info about the model" do
           @item.save!
-          meta = {:model_class => 'Item', :model_attachment => :preview_image, :slime => 'balls'}
-          @app.fetch(@item.preview_image_uid).meta.should == meta
+          item = Item.find(@item.id)
+          item.preview_image.apply.meta.should include_hash(:model_class => 'Item', :model_attachment => :preview_image)  
         end
       end
 

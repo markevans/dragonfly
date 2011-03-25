@@ -2,6 +2,7 @@ require 'forwardable'
 require 'digest/sha1'
 require 'base64'
 require 'open-uri'
+require 'pathname'
 
 module Dragonfly
   class Job
@@ -18,7 +19,7 @@ module Dragonfly
 
     extend Forwardable
     def_delegators :result,
-                   :data, :file, :tempfile, :path, :to_file, :size, :ext, :name, :name=, :basename, :meta, :meta=
+                   :data, :file, :tempfile, :path, :to_file, :size
 
     class Step
 
@@ -37,30 +38,29 @@ module Dragonfly
         end
       end
 
-      def initialize(*args)
-        @args = args
+      def initialize(job, *args)
+        @job, @args = job, args
+        init
       end
 
-      attr_reader :args
-
-      def update_temp_object(job, content, extra)
-        temp_object = TempObject.new(content, job.temp_object.attributes)
-        temp_object.extract_attributes_from(extra) if extra
-        job.temp_object = temp_object
+      def init # To be overridden
       end
+
+      attr_reader :job, :args
 
       def inspect
         "#{self.class.step_name}(#{args.map{|a| a.inspect }.join(', ')})"
       end
+
     end
 
     class Fetch < Step
       def uid
         args.first
       end
-      def apply(job)
-        content, extra = job.app.datastore.retrieve(uid)
-        job.temp_object = TempObject.new(content, extra)
+      def apply
+        content, meta = job.app.datastore.retrieve(uid)
+        job.update(content, meta)
       end
     end
 
@@ -71,49 +71,61 @@ module Dragonfly
       def arguments
         args[1..-1]
       end
-      def apply(job)
+      def apply
         raise NothingToProcess, "Can't process because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        content, extra = job.app.processor.process(job.temp_object, name, *arguments)
-        update_temp_object(job, content, extra)
+        content, meta = job.app.processor.process(job.temp_object, name, *arguments)
+        job.update(content, meta)
       end
     end
 
     class Encode < Step
+      def init
+        job.meta[:format] = format
+      end
       def format
         args.first
       end
       def arguments
         args[1..-1]
       end
-      def apply(job)
+      def apply
         raise NothingToEncode, "Can't encode because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        content, extra = job.app.encoder.encode(job.temp_object, format, *arguments)
-        update_temp_object(job, content, extra)
-        job.temp_object.format = format
+        content, meta = job.app.encoder.encode(job.temp_object, format, *arguments)
+        job.update(content, meta)
+        job.meta[:format] = format
       end
     end
 
     class Generate < Step
-      def apply(job)
-        content, extra = job.app.generator.generate(*args)
-        job.temp_object = TempObject.new(content, extra)
+      def apply
+        content, meta = job.app.generator.generate(*args)
+        job.update(content, meta)
       end
     end
 
     class FetchFile < Step
+      def init
+        job.name = File.basename(path)
+      end
       def path
         File.expand_path(args.first)
       end
-      def apply(job)
-        job.temp_object = TempObject.new(File.new(path))
+      def apply
+        job.temp_object = TempObject.new(Pathname.new(path))
       end
     end
 
     class FetchUrl < Step
+      def init
+        job.name = File.basename(path) if path[/[^\/]$/]
+      end
       def url
         @url ||= (args.first[%r<^\w+://>] ? args.first : "http://#{args.first}")
       end
-      def apply(job)
+      def path
+        @path ||= URI.parse(url).path
+      end
+      def apply
         open(url) do |f|
           job.temp_object = TempObject.new(f.read)
         end
@@ -140,16 +152,9 @@ module Dragonfly
         job = app.new_job
         steps_array.each do |step_array|
           step_class = step_abbreviations[step_array.shift]
-          job.steps << step_class.new(*step_array)
+          job.steps << step_class.new(job, *step_array)
         end
         job
-      end
-
-      def from_path(path, app)
-        path = path.dup
-        path.sub!(app.url_path_prefix, '') if app.url_path_prefix
-        path.sub!('/', '')
-        deserialize(path, app)
       end
 
       def deserialize(string, app)
@@ -176,7 +181,12 @@ module Dragonfly
     module OverrideInstanceMethods
       
       def format
-        result.format || analyse(:format)
+        apply
+        meta[:format] || (ext.to_sym if ext && app.infer_mime_type_from_file_ext) || analyse(:format)
+      end
+      
+      def mime_type
+        app.mime_type_for(format) || analyse(:mime_type) || app.fallback_mime_type
       end
       
       def to_s
@@ -185,16 +195,19 @@ module Dragonfly
       
     end
 
-    def initialize(app, temp_object=nil)
+    def initialize(app, content=nil, meta={})
       @app = app
       @steps = []
       @next_step_index = 0
-      @temp_object = temp_object
+      @meta = {}
+      update(content, meta)
     end
 
     # Used by 'dup' and 'clone'
     def initialize_copy(other)
-      self.steps = other.steps.dup
+      self.steps = other.steps.map do |step|
+        step.class.new(self, *step.args)
+      end
     end
 
     attr_accessor :temp_object
@@ -205,12 +218,12 @@ module Dragonfly
       class_eval %(
         def #{step_class.step_name}(*args)
           new_job = self.dup
-          new_job.steps << #{step_class}.new(*args)
+          new_job.steps << #{step_class}.new(new_job, *args)
           new_job
         end
 
         def #{step_class.step_name}!(*args)
-          steps << #{step_class}.new(*args)
+          steps << #{step_class}.new(self, *args)
           self
         end
       )
@@ -226,9 +239,13 @@ module Dragonfly
     # Applying, etc.
 
     def apply
-      pending_steps.each{|step| step.apply(self) }
+      pending_steps.each{|step| step.apply }
       self.next_step_index = steps.length
       self
+    end
+
+    def applied?
+      next_step_index == steps.length
     end
 
     def result
@@ -282,11 +299,11 @@ module Dragonfly
     # URLs, etc.
 
     def url(opts={})
-      app.url_for(self, opts) unless steps.empty?
+      app.server.url_for(self, attributes_for_url.merge(opts)) unless steps.empty?
     end
 
     def b64_data
-      "data:#{resolve_mime_type};base64,#{Base64.encode64(data)}"
+      "data:#{mime_type};base64,#{Base64.encode64(data)}"
     end
 
     # to_stuff...
@@ -362,17 +379,50 @@ module Dragonfly
     # Misc
 
     def store(opts={})
-      app.store(result, opts)
-    end
-
-    def resolve_mime_type
-      app.resolve_mime_type(result)
+      app.store(result, opts.merge(:meta => meta))
     end
 
     def inspect
       to_s.sub(/>$/, " app=#{app}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >")
     end
 
+    # Name and stuff
+        
+    attr_reader :meta
+
+    def meta=(hash)
+      raise ArgumentError, "meta must be a hash, you tried setting it as #{hash.inspect}" unless hash.is_a?(Hash)
+      @meta = hash
+    end
+
+    def name
+      meta[:name]
+    end
+
+    def name=(name)
+      meta[:name] = name
+    end
+    
+    def basename
+      File.basename(name, '.*') if name
+    end
+
+    def ext
+      File.extname(name)[/\.(.*)/, 1] if name
+    end
+
+    def attributes_for_url
+      meta.reject{|k, v| !app.server.params_in_url.include?(k.to_s) }
+    end
+    
+    def update(content, meta)
+      self.meta.merge!(meta) if meta
+      if content
+        self.temp_object = TempObject.new(content)
+        self.name = temp_object.original_filename if name.nil? && temp_object.original_filename
+      end
+    end
+    
     protected
 
     attr_writer :steps
