@@ -73,12 +73,12 @@ describe Dragonfly::UrlMapper do
     end
     
     it "should include query parameters" do
-      @url_mapper.params_for('/media/asdf?when=now').should == {'job' => 'asdf', 'when' => 'now'}
+      @url_mapper.params_for('/media/asdf', 'when=now').should == {'job' => 'asdf', 'when' => 'now'}
     end
     
     it "should generally be ok with wierd characters" do
       @url_mapper = Dragonfly::UrlMapper.new('/media/:doobie')
-      @url_mapper.params_for('/media/sd sdf jl£@$ sdf:_?job=goodun').should == {'job' => 'goodun', 'doobie' => 'sd sdf jl£@$ sdf:_'}
+      @url_mapper.params_for('/media/sd sdf jl£@$ sdf:_', 'job=goodun').should == {'job' => 'goodun', 'doobie' => 'sd sdf jl£@$ sdf:_'}
     end
   end
 
@@ -107,15 +107,15 @@ describe Dragonfly::UrlMapper do
       '/media/asdf/stuff.dog.egg' => {'job' => 'asdf', 'basename' => 'stuff.dog', 'format' => 'egg'},
       '/media/asdf/s=2 -.d.e' => {'job' => 'asdf', 'basename' => 's=2 -.d', 'format' => 'e'},
       '/media/asdf-40x40/stuff.egg' => nil
-    }.each do |url, params|
+    }.each do |path, params|
       
-      it "should turn the url #{url} into params #{params.inspect}" do
-        @url_mapper.params_for(url).should == params
+      it "should turn the url #{path} into params #{params.inspect}" do
+        @url_mapper.params_for(path).should == params
       end    
       
       if params
-        it "should turn the params #{params.inspect} into url #{url}" do
-          @url_mapper.url_for(params).should == url
+        it "should turn the params #{params.inspect} into url #{path}" do
+          @url_mapper.url_for(params).should == path
         end
       end
       

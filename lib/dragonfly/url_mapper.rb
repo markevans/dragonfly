@@ -25,8 +25,7 @@ module Dragonfly
 
     attr_reader :url_format, :url_regexp, :segments
     
-    def params_for(url)
-      path, query = url.split('?')
+    def params_for(path, query=nil)
       if path and md = path.match(url_regexp)
         params = Rack::Utils.parse_query(query)
         params_in_url.each_with_index do |var, i|
