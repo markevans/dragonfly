@@ -62,9 +62,10 @@ module Dragonfly
 
     attr_accessor :job_definitions
 
-    def new_job(content=nil, opts={})
-      content ? job_class.new(self, TempObject.new(content), opts) : job_class.new(self)
+    def new_job(content=nil, meta={})
+      job_class.new(self, content, meta)
     end
+    alias create new_job
 
     def endpoint(job=nil, &block)
       block ? RoutedEndpoint.new(self, &block) : JobEndpoint.new(job)

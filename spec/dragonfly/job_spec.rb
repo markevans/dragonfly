@@ -45,7 +45,7 @@ describe Dragonfly::Job do
 
   end
 
-  describe "without temp_object" do
+  describe "without content" do
 
     before(:each) do
       @app = mock_app
@@ -53,7 +53,7 @@ describe Dragonfly::Job do
     end
 
     it "should allow initializing with content" do
-      job = Dragonfly::Job.new(@app, Dragonfly::TempObject.new('eggheads'))
+      job = Dragonfly::Job.new(@app, 'eggheads')
       job.data.should == 'eggheads'
     end
 
@@ -178,12 +178,12 @@ describe Dragonfly::Job do
 
   end
 
-  describe "with temp_object already there" do
+  describe "with content already there" do
 
     before(:each) do
       @app = mock_app
-      @temp_object = Dragonfly::TempObject.new('HELLO')
-      @job = Dragonfly::Job.new(@app, @temp_object, :name => 'hello.txt', :a => :b)
+      @job = Dragonfly::Job.new(@app, 'HELLO', :name => 'hello.txt', :a => :b)
+      @temp_object = @job.temp_object
     end
 
     describe "apply" do
@@ -551,7 +551,7 @@ describe Dragonfly::Job do
   describe "to_fetched_job" do
     it "should maintain the same temp_object and be already applied" do
       app = mock_app
-      job = Dragonfly::Job.new(app, Dragonfly::TempObject.new("HELLO"))
+      job = Dragonfly::Job.new(app, "HELLO")
       new_job = job.to_fetched_job('some_uid')
       new_job.data.should == 'HELLO'
       new_job.to_a.should == [
