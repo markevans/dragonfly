@@ -36,8 +36,8 @@ shared_examples_for "data_store" do
         Dragonfly::TempObject.new(@obj).data.should == @temp_object.data
       end
       
-      it "should return empty meta" do
-        @meta.should == {}
+      it "should return a meta hash (probably empty)" do
+        @meta.should be_a(Hash)
       end
 
     end
@@ -50,7 +50,8 @@ shared_examples_for "data_store" do
       end
 
       it "should return the stored meta" do
-        @meta.should == {:bitrate => '35', :name => 'danny.boy'}
+        @meta[:bitrate].should == '35'
+        @meta[:name].should == 'danny.boy'
       end
     end
 
