@@ -781,11 +781,6 @@ describe Dragonfly::Job do
       job = @app.new_job('asdf', :b => :c)
       job.meta.should == {:b => :c}
     end
-    it "should not allow setting as anything other than a hash on initialize" do
-      lambda{
-        @app.new_job('asdf', 'eggs')
-      }.should raise_error(ArgumentError)
-    end
     it "should keep them when chained" do
       @job.meta[:darn] = 'it'
       @job.generate(:gollum).meta.should == {:darn => 'it'}
@@ -932,6 +927,33 @@ describe Dragonfly::Job do
     it "should add extra opts" do
       @app.datastore.should_receive(:store).with(a_temp_object_with_data("Toes"), :meta => {:name => 'doogie.txt'}, :path => 'blah')
       @job.store(:path => 'blah')
+    end
+  end
+
+  describe "dealing with original_filename" do
+    before(:each) do
+      @string = "terry"
+      @string.stub!(:original_filename).and_return("gum.tree")
+      @app = test_app
+      @app.generator.add(:test){ @string }
+    end
+    it "should set it as the name" do
+      @app.create(@string).name.should == 'gum.tree'
+    end
+    it "should prefer the initialized name over the original_filename" do
+      @app.create(@string, :name => 'doo.berry').name.should == 'doo.berry'
+    end
+    it "should work with e.g. generators" do
+      @app.generate(:test).apply.name.should == 'gum.tree'
+    end
+    it "should favour an e.g. generator returned name" do
+      @app.generator.add(:test2){ [@string, {:name => 'gen.ome'}] }
+      @app.generate(:test2).apply.name.should == 'gen.ome'
+    end
+    it "should not overwrite a set name" do
+      job = @app.generate(:test)
+      job.name = 'egg.mumma'
+      job.apply.name.should == 'egg.mumma'
     end
   end
 

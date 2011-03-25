@@ -52,13 +52,6 @@ module Dragonfly
         "#{self.class.step_name}(#{args.map{|a| a.inspect }.join(', ')})"
       end
 
-      private
-      
-      def update_job(content, meta)
-        job.temp_object = TempObject.new(content)
-        job.meta.merge!(meta) if meta
-      end
-
     end
 
     class Fetch < Step
@@ -67,7 +60,7 @@ module Dragonfly
       end
       def apply
         content, meta = job.app.datastore.retrieve(uid)
-        update_job(content, meta)
+        job.update(content, meta)
       end
     end
 
@@ -81,7 +74,7 @@ module Dragonfly
       def apply
         raise NothingToProcess, "Can't process because temp object has not been initialized. Need to fetch first?" unless job.temp_object
         content, meta = job.app.processor.process(job.temp_object, name, *arguments)
-        update_job(content, meta)
+        job.update(content, meta)
       end
     end
 
@@ -98,7 +91,7 @@ module Dragonfly
       def apply
         raise NothingToEncode, "Can't encode because temp object has not been initialized. Need to fetch first?" unless job.temp_object
         content, meta = job.app.encoder.encode(job.temp_object, format, *arguments)
-        update_job(content, meta)
+        job.update(content, meta)
         job.meta[:format] = format
       end
     end
@@ -106,7 +99,7 @@ module Dragonfly
     class Generate < Step
       def apply
         content, meta = job.app.generator.generate(*args)
-        update_job(content, meta)
+        job.update(content, meta)
       end
     end
 
@@ -202,12 +195,12 @@ module Dragonfly
       
     end
 
-    def initialize(app, temp_object=nil, meta={})
+    def initialize(app, content=nil, meta={})
       @app = app
       @steps = []
       @next_step_index = 0
-      @temp_object = temp_object
-      self.meta = meta
+      @meta = {}
+      update(content, meta)
     end
 
     # Used by 'dup' and 'clone'
@@ -420,6 +413,14 @@ module Dragonfly
 
     def attributes_for_url
       meta.reject{|k, v| !app.server.params_in_url.include?(k.to_s) }
+    end
+    
+    def update(content, meta)
+      self.meta.merge!(meta) if meta
+      if content
+        self.temp_object = TempObject.new(content)
+        self.name = temp_object.original_filename if name.nil? && temp_object.original_filename
+      end
     end
     
     protected
