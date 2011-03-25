@@ -19,12 +19,9 @@ module Dragonfly
     end
     
     def call(env)
-      request = Rack::Request.new(env)
-      path = request.path_info
-      
-      if dragonfly_url == path
+      if dragonfly_url == env["PATH_INFO"]
         dragonfly_response
-      elsif (params = url_mapper.params_for(path)) && params['job']
+      elsif (params = url_mapper.params_for(env["PATH_INFO"], env["QUERY_STRING"])) && params['job']
         job = Job.deserialize(params['job'], app)
         job.validate_sha!(params['sha']) if protect_from_dos_attacks
         Response.new(job, env).to_response

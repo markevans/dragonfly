@@ -26,14 +26,14 @@ describe Dragonfly::Server do
       before(:each) do
         @server.url_format = '/media/:job/:name.:format'
       end
-
+    
       [
         '',
         '/name',
         '/name.ext'
       ].each do |suffix|
-
-        it "should return the thing when given the url with suffix #{suffix.inspect}" do
+    
+        it "should return successfully when given the url with suffix #{suffix.inspect}" do
           url = "/media/#{@job.serialize}#{suffix}"
           response = request(@server, url)
           response.status.should == 200
@@ -42,6 +42,23 @@ describe Dragonfly::Server do
         end
         
       end
+
+      it "should return successfully with the correct sha given and protection on" do
+        @server.protect_from_dos_attacks = true
+        url = "/media/#{@job.serialize}?sha=#{@job.sha}"
+        response = request(@server, url)
+        response.status.should == 200
+        response.body.should == 'HELLO THERE'
+      end
+
+    end
+
+    it "should return successfully even if the job is in the query string" do
+      @server.url_format = '/'
+      url = "/?job=#{@job.serialize}"
+      response = request(@server, url)
+      response.status.should == 200
+      response.body.should == 'HELLO THERE'
     end
 
     it "should return a 400 if no sha given but protection on" do
