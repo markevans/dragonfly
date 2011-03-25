@@ -627,18 +627,25 @@ describe Item do
           @item.preview_image.some_analyser_method.should == 'result yo'
         end
 
-        %w(size name ext).each do |attr|
-          it "should use the magic attribute for #{attr} if there is one, and not load the content" do
-            @app.datastore.should_not_receive(:retrieve)
-            @item.should_receive("preview_image_#{attr}".to_sym).and_return('result yo')
-            @item.preview_image.send(attr).should == 'result yo'
+        describe "non-analyser magic attributes" do
+          before(:each) do
+            @job = @item.preview_image.send(:job)
           end
 
-          it "should load the content then delegate '#{attr}' if there is no magic attribute for it" do
-            @item.should_receive(:public_methods).and_return(['preview_image_uid']) # no magic attributes
-            @app.datastore.should_receive(:retrieve).with('my_uid').and_return(['DATASTRING', {}])
-            @item.preview_image.send(attr).should == @item.preview_image.send(:job).send(attr)
+          %w(size name ext).each do |attr|
+            it "should use the magic attribute for #{attr} if there is one, and not the job object" do
+              @job.should_not_receive(attr.to_sym)
+              @item.should_receive("preview_image_#{attr}".to_sym).and_return('result yo')
+              @item.preview_image.send(attr).should == 'result yo'
+            end
+
+            it "should delegate '#{attr}' to the job object if there is no magic attribute for it" do
+              @item.should_receive(:public_methods).and_return(['preview_image_uid']) # no magic attributes
+              @job.should_receive(attr.to_sym).and_return "nother result y'all"
+              @item.preview_image.send(attr).should == "nother result y'all"
+            end
           end
+
         end
 
       end
