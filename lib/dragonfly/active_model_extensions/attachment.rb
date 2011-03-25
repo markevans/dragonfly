@@ -46,12 +46,9 @@ module Dragonfly
         sync_with_parent!
         destroy_previous!
         if job && !uid
-          set_uid_and_parent_uid job.store(
-            :meta => {
-              :model_class => parent_model.class.name,
-              :model_attachment => attribute
-            }
-          )
+          job.meta[:model_class] = parent_model.class.name
+          job.meta[:model_attachment] = attribute
+          set_uid_and_parent_uid job.store
           self.job = job.to_fetched_job(uid)
         end
       end
@@ -88,6 +85,11 @@ module Dragonfly
       
       def remote_url(opts={})
         app.remote_url_for(uid, opts) if uid
+      end
+      
+      def apply
+        job.apply
+        self
       end
 
       protected

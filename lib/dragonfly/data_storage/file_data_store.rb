@@ -10,10 +10,11 @@ module Dragonfly
       configurable_attr :root_path, '/var/tmp/dragonfly'
 
       def store(temp_object, opts={})
+        meta = opts[:meta] || {}
         relative_path = if opts[:path]
           opts[:path]
         else
-          filename = opts[:name] || temp_object.original_filename || 'file'
+          filename = meta[:name] || temp_object.original_filename || 'file'
           relative_path = relative_path_for(filename)
         end
 
@@ -24,7 +25,7 @@ module Dragonfly
           end
           prepare_path(path)
           temp_object.to_file(path).close
-          store_extra_data(path, opts)
+          store_meta_data(path, meta)
         rescue Errno::EACCES => e
           raise UnableToStore, e.message
         end
@@ -38,14 +39,14 @@ module Dragonfly
         raise DataNotFound, "couldn't find file #{path}" unless pathname.exist?
         [
           pathname,
-          retrieve_extra_data(path)
+          retrieve_meta_data(path)
         ]
       end
 
       def destroy(relative_path)
         path = absolute(relative_path)
         FileUtils.rm path
-        FileUtils.rm extra_data_path(path)
+        FileUtils.rm meta_data_path(path)
         purge_empty_directories(relative_path)
       rescue Errno::ENOENT => e
         raise DataNotFound, e.message
@@ -72,8 +73,8 @@ module Dragonfly
         Dir.entries(path) == ['.','..']
       end
 
-      def extra_data_path(data_path)
-        "#{data_path}.extra"
+      def meta_data_path(data_path)
+        "#{data_path}.meta"
       end
 
       def relative_path_for(filename)
@@ -82,14 +83,14 @@ module Dragonfly
         "#{time.strftime '%Y/%m/%d/%H_%M_%S'}_#{msec}_#{filename.gsub(/[^\w.]+/,'_')}"
       end
 
-      def store_extra_data(data_path, opts)
-        File.open(extra_data_path(data_path), 'wb') do |f|
-          f.write Marshal.dump(:name => opts[:name], :format => opts[:format], :meta => (opts[:meta] || {}))
+      def store_meta_data(data_path, meta)
+        File.open(meta_data_path(data_path), 'wb') do |f|
+          f.write Marshal.dump(meta)
         end
       end
 
-      def retrieve_extra_data(data_path)
-        path = extra_data_path(data_path)
+      def retrieve_meta_data(data_path)
+        path = meta_data_path(data_path)
         File.exist?(path) ?  File.open(path,'rb'){|f| Marshal.load(f.read) } : {}
       end
 

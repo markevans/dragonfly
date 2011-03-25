@@ -52,13 +52,6 @@ module Dragonfly
         "#{self.class.step_name}(#{args.map{|a| a.inspect }.join(', ')})"
       end
 
-      private
-      
-      def update_job(content, attributes)
-        job.temp_object = TempObject.new(content)
-        job.update_attributes(attributes) if attributes
-      end
-
     end
 
     class Fetch < Step
@@ -66,8 +59,8 @@ module Dragonfly
         args.first
       end
       def apply
-        content, extra = job.app.datastore.retrieve(uid)
-        update_job(content, extra)
+        content, meta = job.app.datastore.retrieve(uid)
+        job.update(content, meta)
       end
     end
 
@@ -80,14 +73,14 @@ module Dragonfly
       end
       def apply
         raise NothingToProcess, "Can't process because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        content, extra = job.app.processor.process(job.temp_object, name, *arguments)
-        update_job(content, extra)
+        content, meta = job.app.processor.process(job.temp_object, name, *arguments)
+        job.update(content, meta)
       end
     end
 
     class Encode < Step
       def init
-        job.format = format
+        job.meta[:format] = format
       end
       def format
         args.first
@@ -97,16 +90,16 @@ module Dragonfly
       end
       def apply
         raise NothingToEncode, "Can't encode because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        content, extra = job.app.encoder.encode(job.temp_object, format, *arguments)
-        update_job(content, extra)
-        job.format = format
+        content, meta = job.app.encoder.encode(job.temp_object, format, *arguments)
+        job.update(content, meta)
+        job.meta[:format] = format
       end
     end
 
     class Generate < Step
       def apply
-        content, extra = job.app.generator.generate(*args)
-        update_job(content, extra)
+        content, meta = job.app.generator.generate(*args)
+        job.update(content, meta)
       end
     end
 
@@ -188,15 +181,12 @@ module Dragonfly
     module OverrideInstanceMethods
       
       def format
-        @format || analyse(:format)
+        apply
+        meta[:format] || (ext.to_sym if ext && app.infer_mime_type_from_file_ext) || analyse(:format)
       end
       
       def mime_type
-        app.mime_type_for(@format)                                      ||
-          (app.mime_type_for(ext) if app.infer_mime_type_from_file_ext) ||
-          analyse(:mime_type)                                           ||
-          app.mime_type_for(analyse(:format))                           ||
-          app.fallback_mime_type
+        app.mime_type_for(format) || analyse(:mime_type) || app.fallback_mime_type
       end
       
       def to_s
@@ -205,14 +195,12 @@ module Dragonfly
       
     end
 
-    def initialize(app, temp_object=nil, opts={})
+    def initialize(app, content=nil, meta={})
       @app = app
       @steps = []
       @next_step_index = 0
-      @temp_object = temp_object
-      self.name = opts[:name]
-      self.format = opts[:format]
-      self.meta = opts[:meta] || {}
+      @meta = {}
+      update(content, meta)
     end
 
     # Used by 'dup' and 'clone'
@@ -254,6 +242,10 @@ module Dragonfly
       pending_steps.each{|step| step.apply }
       self.next_step_index = steps.length
       self
+    end
+
+    def applied?
+      next_step_index == steps.length
     end
 
     def result
@@ -387,7 +379,7 @@ module Dragonfly
     # Misc
 
     def store(opts={})
-      app.store(result, opts)
+      app.store(result, opts.merge(:meta => meta))
     end
 
     def inspect
@@ -396,7 +388,6 @@ module Dragonfly
 
     # Name and stuff
         
-    attr_accessor :name, :format
     attr_reader :meta
 
     def meta=(hash)
@@ -404,6 +395,14 @@ module Dragonfly
       @meta = hash
     end
 
+    def name
+      meta[:name]
+    end
+
+    def name=(name)
+      meta[:name] = name
+    end
+    
     def basename
       File.basename(name, '.*') if name
     end
@@ -412,18 +411,16 @@ module Dragonfly
       File.extname(name)[/\.(.*)/, 1] if name
     end
 
-    def attributes
-      @attributes ||= {}
+    def attributes_for_url
+      meta.reject{|k, v| !app.server.params_in_url.include?(k.to_s) }
     end
     
-    def attributes_for_url
-      attributes.reject{|k, v| !app.server.params_in_url.include?(k.to_s) }
-    end
-
-    def update_attributes(attrs)
-      self.name = attrs[:name] if attrs[:name]
-      self.format = attrs[:format] if attrs[:format]
-      self.meta.merge!(attrs[:meta]) if attrs[:meta]
+    def update(content, meta)
+      self.meta.merge!(meta) if meta
+      if content
+        self.temp_object = TempObject.new(content)
+        self.name = temp_object.original_filename if name.nil? && temp_object.original_filename
+      end
     end
     
     protected

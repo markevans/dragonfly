@@ -28,7 +28,7 @@ module Dragonfly
       def store(temp_object, opts={})
         ensure_authenticated!
         temp_object.file do |f|
-          mongo_id = grid.put(f, :metadata => marshal_encode(temp_object.attributes))
+          mongo_id = grid.put(f, :metadata => marshal_encode(opts[:meta] || {}))
           mongo_id.to_s
         end
       end
@@ -36,11 +36,11 @@ module Dragonfly
       def retrieve(uid)
         ensure_authenticated!
         grid_io = grid.get(bson_id(uid))
-        extra = marshal_decode(grid_io.metadata)
-        extra[:meta].merge!(:stored_at => grid_io.upload_date)
+        meta = marshal_decode(grid_io.metadata)
+        meta.merge!(:stored_at => grid_io.upload_date)
         [
           grid_io.read,
-          extra
+          meta
         ]
       rescue Mongo::GridFileNotFound, INVALID_OBJECT_ID => e
         raise DataNotFound, "#{e} - #{uid}"
