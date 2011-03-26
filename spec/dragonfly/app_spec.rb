@@ -88,11 +88,11 @@ describe Dragonfly::App do
     end
     it "should add any params to the request" do
       @app.define_remote_url{|uid| "http://some.cdn/#{uid}" }
-      @app.remote_url_for('some_uid', :some => 'eggs', :and => 'cheese').should == 'http://some.cdn/some_uid?some=eggs&and=cheese'
+      @app.remote_url_for('some_uid', :some => 'eggs', :and => 'cheese').should match_url('http://some.cdn/some_uid?some=eggs&and=cheese')
     end
     it "should correctly add params if it already has some" do
       @app.define_remote_url{|uid| "http://some.cdn/#{uid}?and=bread" }
-      @app.remote_url_for('some_uid', :some => 'eggs').should == 'http://some.cdn/some_uid?and=bread&some=eggs'
+      @app.remote_url_for('some_uid', :some => 'eggs').should match_url('http://some.cdn/some_uid?and=bread&some=eggs')
     end
   end
 
