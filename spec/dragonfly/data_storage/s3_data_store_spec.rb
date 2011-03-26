@@ -90,6 +90,18 @@ describe Dragonfly::DataStorage::S3DataStore do
     end
   end
 
+  describe "destroy" do
+
+    if enabled # Fog.mock doesn't seem to be consistent here with real one
+      it "should raise not found if not found" do
+        lambda {
+          @data_store.destroy('some-random-egg')
+        }.should raise_error(Dragonfly::DataStorage::DataNotFound)
+      end
+    end
+    
+  end
+
   describe "domain" do
     it "should default to the US" do
       @data_store.region = nil

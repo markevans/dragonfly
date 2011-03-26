@@ -60,6 +60,8 @@ module Dragonfly
 
       def destroy(uid)
         storage.delete_object(bucket_name, uid)
+      rescue Excon::Errors::NotFound => e
+        raise DataNotFound, "#{e} - #{uid}"
       end
 
       def domain
