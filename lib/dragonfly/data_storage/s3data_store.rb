@@ -5,6 +5,9 @@ module Dragonfly
 
     class S3DataStore
 
+      # Exceptions
+      class NotConfigured < RuntimeError; end
+
       include Configurable
       include Serializer
 
@@ -30,7 +33,8 @@ module Dragonfly
       end
 
       def store(temp_object, opts={})
-        ensure_initialized
+        ensure_configured
+        ensure_bucket_initialized
         meta = opts[:meta] || {}
         uid = opts[:path] || generate_uid(meta[:name] || temp_object.original_filename || 'file')
         if use_filesystem
@@ -44,6 +48,7 @@ module Dragonfly
       end
 
       def retrieve(uid)
+        ensure_configured
         response = storage.get_object(bucket_name, uid)
         [
           response.body,
@@ -72,15 +77,20 @@ module Dragonfly
         )
       end
 
-      def ensure_initialized
-        unless @initialized
-          ensure_bucket_exists
-          @initialized = true
+      def ensure_configured
+        unless @configured
+          [:bucket_name, :access_key_id, :secret_access_key].each do |attr|
+            raise NotConfigured, "You need to configure #{self.class.name} with #{attr}" if send(attr).nil?
+          end
+          @configured = true
         end
       end
 
-      def ensure_bucket_exists
-        storage.put_bucket(bucket_name, 'LocationConstraint' => region) unless bucket_exists?
+      def ensure_bucket_initialized
+        unless @bucket_initialized
+          storage.put_bucket(bucket_name, 'LocationConstraint' => region) unless bucket_exists?
+          @bucket_initialized = true
+        end
       end
 
       def get_region

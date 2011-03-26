@@ -109,4 +109,53 @@ describe Dragonfly::DataStorage::S3DataStore do
     end
   end
 
+  describe "not configuring stuff properly" do
+    before(:each) do
+      @temp_object = Dragonfly::TempObject.new("Hi guys")
+    end
+    
+    it "should require a bucket name on store" do
+      @data_store.bucket_name = nil
+      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+    end
+    
+    it "should require an access_key_id on store" do
+      @data_store.access_key_id = nil
+      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+    end
+    
+    it "should require a secret access key on store" do
+      @data_store.secret_access_key = nil
+      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+    end
+    
+    it "should require a bucket name on retrieve" do
+      @data_store.bucket_name = nil
+      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+    end
+    
+    it "should require an access_key_id on retrieve" do
+      @data_store.access_key_id = nil
+      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+    end
+    
+    it "should require a secret access key on retrieve" do
+      @data_store.secret_access_key = nil
+      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+    end
+  end
+
+  describe "autocreating the bucket" do
+    it "should create the bucket on store if it doesn't exist" do
+      @data_store.bucket_name = "dragonfly-test-blah-blah-#{rand(100000000)}"
+      @data_store.store(Dragonfly::TempObject.new("asdfj"))
+    end
+    
+    it "should not try to create the bucket on retrieve if it doesn't exist" do
+      @data_store.bucket_name = "dragonfly-test-blah-blah-#{rand(100000000)}"
+      @data_store.send(:storage).should_not_receive(:put_bucket)
+      proc{ @data_store.retrieve("gungle") }.should raise_error(Dragonfly::DataStorage::DataNotFound)
+    end
+  end
+
 end
