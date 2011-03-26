@@ -549,15 +549,22 @@ describe Dragonfly::Job do
   end
 
   describe "to_fetched_job" do
+    before(:each) do
+      @app = test_app
+      @job = @app.create("HELLO")
+    end
     it "should maintain the same temp_object and be already applied" do
-      app = mock_app
-      job = Dragonfly::Job.new(app, "HELLO")
-      new_job = job.to_fetched_job('some_uid')
+      new_job = @job.to_fetched_job('some_uid')
       new_job.data.should == 'HELLO'
       new_job.to_a.should == [
         [:f, 'some_uid']
       ]
       new_job.pending_steps.should be_empty
+    end
+    it "should maintain the meta" do
+      @job.meta = {:right => 'said fred'}
+      new_job = @job.to_fetched_job('some_uid')
+      new_job.meta.should == {:right => 'said fred'}
     end
   end
 

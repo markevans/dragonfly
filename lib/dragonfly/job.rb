@@ -321,7 +321,7 @@ module Dragonfly
     end
 
     def to_fetched_job(uid)
-      new_job = self.class.new(app, temp_object)
+      new_job = self.class.new(app, temp_object, meta)
       new_job.fetch!(uid)
       new_job.next_step_index = 1
       new_job
