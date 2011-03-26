@@ -545,6 +545,42 @@ describe Dragonfly::Job do
         @job.meta[:zoo] = 'hair'
         @job.url(:zoo => 'dare').should == "/media/#{@job.serialize}/dare"
       end
+      
+      describe "basename" do
+        before(:each) do
+          @app.server.url_format = '/:job/:basename'
+          @job.meta = {:name => 'hello.egg', :basename => 'hi'}
+        end
+        it "should use the meta if it exists" do
+          @job.url.should == "/#{@job.serialize}/hi"
+        end
+        it "should use the name if basename meta doesn't exist" do
+          @job.meta.delete(:basename)
+          @job.url.should == "/#{@job.serialize}/hello"
+        end
+        it "should not set if neither exist" do
+          @job.meta = {}
+          @job.url.should == "/#{@job.serialize}"
+        end
+      end
+
+      describe "ext" do
+        before(:each) do
+          @app.server.url_format = '/:job.:ext'
+          @job.meta = {:name => 'hello.egg', :ext => 'hi'}
+        end
+        it "should use the meta if it exists" do
+          @job.url.should == "/#{@job.serialize}.hi"
+        end
+        it "should use the name if ext meta doesn't exist" do
+          @job.meta.delete(:ext)
+          @job.url.should == "/#{@job.serialize}.egg"
+        end
+        it "should not set if neither exist" do
+          @job.meta = {}
+          @job.url.should == "/#{@job.serialize}"
+        end
+      end
     end
   end
 

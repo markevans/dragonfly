@@ -20,6 +20,7 @@ module Dragonfly
     extend Forwardable
     def_delegators :result,
                    :data, :file, :tempfile, :path, :to_file, :size
+    def_delegator :app, :server
 
     class Step
 
@@ -299,7 +300,7 @@ module Dragonfly
     # URLs, etc.
 
     def url(opts={})
-      app.server.url_for(self, attributes_for_url.merge(opts)) unless steps.empty?
+      server.url_for(self, attributes_for_url.merge(opts)) unless steps.empty?
     end
 
     def b64_data
@@ -412,7 +413,14 @@ module Dragonfly
     end
 
     def attributes_for_url
-      meta.reject{|k, v| !app.server.params_in_url.include?(k.to_s) }
+      attrs = meta.reject{|k, v| !server.params_in_url.include?(k.to_s) }
+      [:basename, :ext].each do |key|
+        if server.params_in_url.include?(key.to_s)
+          val = send(key)
+          attrs[key] ||= val if val
+        end
+      end
+      attrs
     end
     
     def update(content, meta)
