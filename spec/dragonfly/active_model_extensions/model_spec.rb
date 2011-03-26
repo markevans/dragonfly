@@ -555,12 +555,6 @@ describe Item do
         @item.preview_image_some_analyser_method.should == 'abc4'
       end
 
-      it "should reset the magic attribute when set to nil" do
-        @item.preview_image = '123'
-        @item.preview_image = nil
-        @item.preview_image_some_analyser_method.should be_nil
-      end
-
       it "should not reset non-magic attributes with the same prefix when set to nil" do
         @item.preview_image_blah_blah = 'wassup'
         @item.preview_image = '123'
@@ -586,8 +580,47 @@ describe Item do
         @item.preview_image = data
         @item.preview_image_name.should == 'hello.png'
       end
+
     end
 
+    describe "meta from magic attributes" do
+      
+      it "should set the meta for the magic attribute when assigned" do
+        @item.preview_image = '123'
+        @item.preview_image.meta[:some_analyser_method].should == 'abc1'
+      end
+      
+      it "should not set meta for non-magic attributes with the same prefix when assigned" do
+        @item.preview_image = '123'
+        @item.preview_image.meta[:blah_blah].should be_nil
+      end
+
+      it "should update the meta for the magic attribute when something else is assigned" do
+        @item.preview_image = '123'
+        @item.preview_image = '456'
+        @item.preview_image.meta[:some_analyser_method].should == 'abc4'
+      end
+      
+      it "should include the meta for size too" do
+        @item.preview_image = '123'
+        @item.preview_image.meta[:size].should == 3
+      end
+
+      it "should store the meta for the original file name if it exists" do
+        data = 'jasdlkf sadjl'
+        data.stub!(:original_filename).and_return('hello.png')
+        @item.preview_image = data
+        @item.preview_image.meta[:name].should == 'hello.png'
+      end
+      
+      it "should still have the meta after reload" do
+        @item.preview_image = '123'
+        @item.save!
+        item = Item.find(@item.id)
+        item.preview_image.meta[:some_analyser_method].should == 'abc1'
+      end
+
+    end
 
     describe "delegating methods to the job" do
       before(:each) do
@@ -623,26 +656,22 @@ describe Item do
         end
         it "should use the magic attribute if there is one, and not load the content" do
           @app.datastore.should_not_receive(:retrieve)
-          @item.should_receive(:preview_image_some_analyser_method).and_return('result yo')
+          @item.should_receive(:preview_image_some_analyser_method).at_least(:once).and_return('result yo')
           @item.preview_image.some_analyser_method.should == 'result yo'
         end
 
         describe "non-analyser magic attributes" do
-          before(:each) do
-            @job = @item.preview_image.send(:job)
-          end
-
           %w(size name ext).each do |attr|
             it "should use the magic attribute for #{attr} if there is one, and not the job object" do
-              @job.should_not_receive(attr.to_sym)
-              @item.should_receive("preview_image_#{attr}".to_sym).and_return('result yo')
+              @item.preview_image.send(:job).should_not_receive(attr)
+              @item.should_receive("preview_image_#{attr}").and_return('result yo')
               @item.preview_image.send(attr).should == 'result yo'
             end
 
             it "should delegate '#{attr}' to the job object if there is no magic attribute for it" do
-              @item.should_receive(:public_methods).and_return(['preview_image_uid']) # no magic attributes
-              @job.should_receive(attr.to_sym).and_return "nother result y'all"
-              @item.preview_image.send(attr).should == "nother result y'all"
+              @item.other_image = 'blahdata'
+              @item.other_image.send(:job).should_receive(attr).and_return "nother result y'all"
+              @item.other_image.send(attr).should == "nother result y'all"
             end
           end
 

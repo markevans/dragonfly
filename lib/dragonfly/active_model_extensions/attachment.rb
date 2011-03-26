@@ -18,7 +18,10 @@ module Dragonfly
       def initialize(spec, parent_model)
         @spec, @parent_model = spec, parent_model
         self.uid = parent_uid
-        self.job = app.fetch(uid) if uid
+        if uid
+          self.job = app.fetch(uid)
+          set_meta_for_magic_attributes
+        end
       end
 
       def assign(value)
@@ -32,6 +35,7 @@ module Dragonfly
           else app.new_job(value)
           end
           set_magic_attributes
+          set_meta_for_magic_attributes
         end
         set_uid_and_parent_uid(nil)
         value
@@ -157,6 +161,10 @@ module Dragonfly
 
       def set_magic_attributes
         magic_attributes.each{|property| set_magic_attribute(property, job.send(property)) }
+      end
+
+      def set_meta_for_magic_attributes
+        magic_attributes.each{|property| meta[property] = parent_model.send("#{attribute}_#{property}") }
       end
 
       def reset_magic_attributes
