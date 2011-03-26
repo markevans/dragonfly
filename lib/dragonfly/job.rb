@@ -183,7 +183,7 @@ module Dragonfly
       
       def format
         apply
-        meta[:format] || (ext.to_sym if ext && app.infer_mime_type_from_file_ext) || analyse(:format)
+        format_from_meta || analyse(:format)
       end
       
       def mime_type
@@ -411,15 +411,13 @@ module Dragonfly
     def ext
       meta[:ext] || (File.extname(name)[/\.(.*)/, 1] if name)
     end
-
+    
     def attributes_for_url
       attrs = meta.reject{|k, v| !server.params_in_url.include?(k.to_s) }
-      [:basename, :ext].each do |key|
-        if server.params_in_url.include?(key.to_s)
-          val = send(key)
-          attrs[key] ||= val if val
-        end
-      end
+      attrs[:basename] ||= basename if server.params_in_url.include?('basename')
+      attrs[:ext] ||= ext if server.params_in_url.include?('ext')
+      attrs[:format] = (attrs[:format] || format_from_meta).to_s if server.params_in_url.include?('format')
+      attrs.delete_if{|k, v| v.blank? }
       attrs
     end
     
@@ -437,6 +435,10 @@ module Dragonfly
     attr_accessor :next_step_index
 
     private
+
+    def format_from_meta
+      meta[:format] || (ext.to_sym if ext && app.infer_mime_type_from_file_ext)
+    end
 
     def last_step_of_type(type)
       steps.select{|s| s.is_a?(type) }.last

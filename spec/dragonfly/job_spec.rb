@@ -581,6 +581,28 @@ describe Dragonfly::Job do
           @job.url.should == "/#{@job.serialize}"
         end
       end
+
+      describe "format" do
+        before(:each) do
+          @app.server.url_format = '/:job.:format'
+          @job.stub!(:ext).and_return("hi")
+        end
+        it "should use the meta if it exists" do
+          @job.meta = {:format => :txt}
+          @job.url.should == "/#{@job.serialize}.txt"
+        end
+        it "should use the ext if format meta doesn't exist" do
+          @job.url.should == "/#{@job.serialize}.hi"
+        end
+        it "should not use the ext if format meta doesn't exist and inferring from ext is switched off" do
+          @app.infer_mime_type_from_file_ext = false
+          @job.url.should == "/#{@job.serialize}"
+        end
+        it "should not set if neither exist" do
+          @job.should_receive(:ext).and_return nil
+          @job.url.should == "/#{@job.serialize}"
+        end
+      end
     end
   end
 
