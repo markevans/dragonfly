@@ -20,7 +20,7 @@ module Dragonfly
         self.uid = parent_uid
         if uid
           self.job = app.fetch(uid)
-          set_meta_for_magic_attributes
+          update_meta
         end
       end
 
@@ -35,7 +35,7 @@ module Dragonfly
           else app.new_job(value)
           end
           set_magic_attributes
-          set_meta_for_magic_attributes
+          update_meta
         end
         set_uid_and_parent_uid(nil)
         value
@@ -50,8 +50,6 @@ module Dragonfly
         sync_with_parent!
         destroy_previous!
         if job && !uid
-          job.meta[:model_class] = parent_model.class.name
-          job.meta[:model_attachment] = attribute
           set_uid_and_parent_uid job.store
           self.job = job.to_fetched_job(uid)
         end
@@ -145,6 +143,12 @@ module Dragonfly
         @uid = uid
       end
 
+      def update_meta
+        magic_attributes.each{|property| meta[property] = parent_model.send("#{attribute}_#{property}") }
+        meta[:model_class] = parent_model.class.name
+        meta[:model_attachment] = attribute
+      end
+
       def allowed_magic_attributes
         app.analyser.analysis_method_names + [:size, :ext, :name]
       end
@@ -161,10 +165,6 @@ module Dragonfly
 
       def set_magic_attributes
         magic_attributes.each{|property| set_magic_attribute(property, job.send(property)) }
-      end
-
-      def set_meta_for_magic_attributes
-        magic_attributes.each{|property| meta[property] = parent_model.send("#{attribute}_#{property}") }
       end
 
       def reset_magic_attributes

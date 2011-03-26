@@ -729,10 +729,10 @@ describe Item do
           item = Item.find(@item.id)
           item.preview_image.apply.meta.should include_hash(:slime => 'balls')
         end
-        it "should store meta info about the model" do
+        it "should include meta info about the model" do
           @item.save!
           item = Item.find(@item.id)
-          item.preview_image.apply.meta.should include_hash(:model_class => 'Item', :model_attachment => :preview_image)  
+          item.preview_image.meta.should include_hash(:model_class => 'Item', :model_attachment => :preview_image)  
         end
       end
 
