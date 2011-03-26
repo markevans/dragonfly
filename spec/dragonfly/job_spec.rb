@@ -865,6 +865,11 @@ describe Dragonfly::Job do
         @job.name = nil
         @job.ext.should be_nil
       end
+      it "should use the meta first if set" do
+        @job.meta[:ext] = 'duggs'
+        @job.name = 'hello.there.mate'
+        @job.ext.should == 'duggs'
+      end
     end
 
     describe "basename" do
@@ -882,6 +887,11 @@ describe Dragonfly::Job do
       it "should be nil if name is nil" do
         @job.name = nil
         @job.basename.should be_nil
+      end
+      it "should use the meta first if set" do
+        @job.meta[:basename] = 'duggs'
+        @job.name = 'hello.there.mate'
+        @job.basename.should == 'duggs'
       end
     end
 

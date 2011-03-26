@@ -405,11 +405,11 @@ module Dragonfly
     end
     
     def basename
-      File.basename(name, '.*') if name
+      meta[:basename] || (File.basename(name, '.*') if name)
     end
 
     def ext
-      File.extname(name)[/\.(.*)/, 1] if name
+      meta[:ext] || (File.extname(name)[/\.(.*)/, 1] if name)
     end
 
     def attributes_for_url
