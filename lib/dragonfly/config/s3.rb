@@ -7,7 +7,7 @@ module Dragonfly
         app.configure do |c|
           c.datastore = DataStorage::S3DataStore.new(opts)
           c.define_remote_url do |uid|
-            "http://#{c.datastore.domain}/#{uid}"
+            "http://#{c.datastore.bucket_name}.s3.amazonaws.com/#{uid}"
           end
         end
       end

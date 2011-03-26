@@ -15,13 +15,13 @@ describe "an app configured for S3" do
       @uid = @app.store("Eggs")
     end
     
-    it "should default to the US url" do
-      @app.remote_url_for(@uid).should == "http://s3.amazonaws.com/some/path/on/s3"
+    it "should use the bucket subdomain" do
+      @app.remote_url_for(@uid).should == "http://joey.s3.amazonaws.com/some/path/on/s3"
     end
     
-    it "should use a different region if configured" do
+    it "should use the bucket subdomain for other regions too" do
       @app.datastore.region = 'eu-west-1'
-      @app.remote_url_for(@uid).should == "http://s3-eu-west-1.amazonaws.com/some/path/on/s3"
+      @app.remote_url_for(@uid).should == "http://joey.s3.amazonaws.com/some/path/on/s3"
     end
     
   end
