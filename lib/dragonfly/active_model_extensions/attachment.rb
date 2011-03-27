@@ -154,9 +154,16 @@ module Dragonfly
       end
 
       def magic_attributes
-        @magic_attributes ||= parent_model.public_methods.select { |name|
-          name.to_s =~ /^#{attribute}_(.+)$/ && allowed_magic_attributes.include?($1.to_sym)
-        }.map{|name| name.to_s.sub("#{attribute}_", '').to_sym }
+        @magic_attributes ||= begin
+          prefix = attribute.to_s + '_'
+          parent_model.public_methods.inject([]) do |attrs, name|
+            _, __, suffix  = name.to_s.partition(prefix)
+            if !suffix.empty? && allowed_magic_attributes.include?(suffix.to_sym)
+              attrs << suffix.to_sym
+            end
+            attrs
+          end
+        end
       end
 
       def set_magic_attribute(property, value)
