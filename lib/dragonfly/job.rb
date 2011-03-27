@@ -313,7 +313,7 @@ module Dragonfly
       JobEndpoint.new(self)
     end
 
-    def to_response(env={})
+    def to_response(env={"REQUEST_METHOD" => "GET"})
       to_app.call(env)
     end
 
