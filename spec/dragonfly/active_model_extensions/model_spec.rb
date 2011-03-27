@@ -818,6 +818,12 @@ describe Item do
       @item.preview_image_name.should == 'yo.png'
       @item.preview_image.meta[:name].should == 'yo.png'
     end
+    [nil, ""].each do |value|
+      it "should do nothing if set with #{value.inspect}" do
+        @item.preview_image_url = value
+        @item.preview_image.should be_nil
+      end
+    end
   end
 
   describe "removing the accessor with e.g. a form" do

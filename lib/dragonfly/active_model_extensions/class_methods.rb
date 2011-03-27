@@ -29,7 +29,9 @@ module Dragonfly
       
             # Define the URL setter
             define_method "#{attribute}_url=" do |url|
-              dragonfly_attachments[attribute].assign(app.fetch_url(url))
+              unless url.blank?
+                dragonfly_attachments[attribute].assign(app.fetch_url(url))
+              end
             end
       
             # Define the URL getter
