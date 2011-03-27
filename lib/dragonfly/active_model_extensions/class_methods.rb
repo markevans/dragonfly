@@ -36,6 +36,18 @@ module Dragonfly
             define_method "#{attribute}_url" do
               nil
             end
+
+            # Define the remove setter
+            define_method "remove_#{attribute}=" do |value|
+              unless [0, "0", false, "false", "", nil].include?(value)
+                dragonfly_attachments[attribute].assign(nil)
+              end
+            end
+
+            # Define the remove getter
+            define_method "remove_#{attribute}" do
+              false
+            end
       
           end
     

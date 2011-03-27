@@ -2,6 +2,13 @@ require File.dirname(__FILE__) + '/spec_helper'
 
 describe Item do
 
+  def set_up_item_class(app=test_app)
+    app.define_macro(MyModel, :image_accessor)
+    Item.class_eval do
+      image_accessor :preview_image
+    end
+  end
+
   # See extra setup in models / initializer files
 
   describe "defining accessors" do
@@ -793,11 +800,7 @@ describe Item do
 
   describe "setting the url" do
     before(:each) do
-      @app = Dragonfly[:set_url]
-      @app.define_macro(MyModel, :image_accessor)
-      Item.class_eval do
-        image_accessor :preview_image
-      end
+      set_up_item_class
       @item = Item.new
       stub_request(:get, "http://some.url/yo.png").to_return(:body => "aaaaayo")
     end
@@ -815,6 +818,47 @@ describe Item do
       @item.preview_image_name.should == 'yo.png'
       @item.preview_image.meta[:name].should == 'yo.png'
     end
+  end
+
+  describe "removing the accessor with e.g. a form" do
+    before(:each) do
+      set_up_item_class
+      @item = Item.new
+      @item.preview_image = "something"
+    end
+    
+    [
+      1,
+      "1",
+      true,
+      "true",
+      "blahblah"
+    ].each do |value|
+      it "should remove the accessor if passed #{value.inspect}" do
+        @item.remove_preview_image = value
+        @item.preview_image.should be_nil
+      end
+    end
+
+    [
+      0,
+      "0",
+      false,
+      "false",
+      "",
+      nil
+    ].each do |value|
+      it "should not remove the accessor if passed #{value.inspect}" do
+        @item.remove_preview_image = value
+        @item.preview_image.should_not be_nil
+      end
+    end
+    
+    it "should always return false for the getter" do
+      @item.remove_preview_image = true
+      @item.remove_preview_image.should be_false
+    end
+    
   end
 
 end
