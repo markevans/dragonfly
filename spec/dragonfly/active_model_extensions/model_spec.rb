@@ -791,4 +791,30 @@ describe Item do
     end
   end
 
+  describe "setting the url" do
+    before(:each) do
+      @app = Dragonfly[:set_url]
+      @app.define_macro(MyModel, :image_accessor)
+      Item.class_eval do
+        image_accessor :preview_image
+      end
+      @item = Item.new
+      stub_request(:get, "http://some.url/yo.png").to_return(:body => "aaaaayo")
+    end
+
+    it "should allow setting the url" do
+      @item.preview_image_url = 'http://some.url/yo.png'
+      @item.preview_image.data.should == 'aaaaayo'
+    end
+    it "should return nil always for the reader" do
+      @item.preview_image_url = 'http://some.url/yo.png'
+      @item.preview_image_url.should be_nil
+    end
+    it "should have set the name" do
+      @item.preview_image_url = 'http://some.url/yo.png'
+      @item.preview_image_name.should == 'yo.png'
+      @item.preview_image.meta[:name].should == 'yo.png'
+    end
+  end
+
 end

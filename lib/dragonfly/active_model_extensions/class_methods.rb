@@ -27,6 +27,16 @@ module Dragonfly
               dragonfly_attachments[attribute].to_value
             end
       
+            # Define the URL setter
+            define_method "#{attribute}_url=" do |url|
+              dragonfly_attachments[attribute].assign(app.fetch_url(url))
+            end
+      
+            # Define the URL getter
+            define_method "#{attribute}_url" do
+              nil
+            end
+      
           end
     
         end
