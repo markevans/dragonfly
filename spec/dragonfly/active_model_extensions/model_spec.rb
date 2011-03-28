@@ -866,5 +866,83 @@ describe Item do
     end
     
   end
+  
+  describe "callbacks" do
+
+    describe "after_assign" do
+      
+      before(:each) do
+        @app = test_app
+        @app.define_macro(MyModel, :image_accessor)
+      end
+
+      describe "as a block" do
+        
+        def set_after_assign(*args, &block)
+          Item.class_eval do
+            image_accessor :preview_image do
+              after_assign(*args, &block)
+            end
+          end
+        end
+
+        it "should call it after assign" do
+          x = nil
+          set_after_assign{ x = 3 }
+          Item.new.preview_image = "hello"
+          x.should == 3
+        end
+
+        it "should not call it after unassign" do
+          x = nil
+          set_after_assign{ x = 3 }
+          Item.new.preview_image = nil
+          x.should be_nil
+        end
+        
+        it "should yield the attachment" do
+          x = nil
+          set_after_assign{|a| x = a.data }
+          Item.new.preview_image = "discussion"
+          x.should == "discussion"
+        end
+        
+        it "should evaluate in the model context" do
+          x = nil
+          set_after_assign{ x = title.upcase }
+          item = Item.new
+          item.title = "big"
+          item.preview_image = "jobs"
+          x.should == "BIG"
+        end
+        
+        it "should allow passing a symbol for calling a model method" do
+          set_after_assign :set_title
+          item = Item.new
+          def item.set_title; self.title = 'duggen'; end
+          item.preview_image = "jobs"
+          item.title.should == "duggen"
+        end
+
+        it "should allow passing a symbol for calling a model method" do
+          set_after_assign :set_title, :upcase_title
+          item = Item.new
+          def item.set_title; self.title = 'doobie'; end
+          def item.upcase_title; self.title.upcase!; end
+          item.preview_image = "jobs"
+          item.title.should == "DOOBIE"
+        end
+        
+        it "should not re-trigger callbacks (causing an infinite loop)" do
+          set_after_assign{|a| self.preview_image = 'dogman' }
+          item = Item.new
+          item.preview_image = "hello"
+        end
+
+      end
+    
+    end
+    
+  end
 
 end

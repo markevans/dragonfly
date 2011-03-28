@@ -22,6 +22,7 @@ module Dragonfly
           self.job = app.fetch(uid)
           update_meta
         end
+        @run_callbacks = true
       end
 
       def assign(value)
@@ -36,6 +37,7 @@ module Dragonfly
           end
           set_magic_attributes
           update_meta
+          spec.run_after_assign_callbacks(self, parent_model) if run_callbacks?
         end
         set_uid_and_parent_uid(nil)
         value
@@ -92,6 +94,12 @@ module Dragonfly
       def apply
         job.apply
         self
+      end
+
+      attr_writer :run_callbacks
+      
+      def run_callbacks?
+        @run_callbacks
       end
 
       protected
