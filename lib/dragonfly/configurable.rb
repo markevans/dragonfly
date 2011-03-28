@@ -82,7 +82,7 @@ module Dragonfly
       end
 
       def set_if_unset(key, value)
-        set_config_value(key, value) unless configuration.has_key?(key)
+        set_config_value(key, value) unless configured_locally?(key)
       end
 
       private
@@ -91,6 +91,14 @@ module Dragonfly
       
       def child_configurables
         @child_configurables ||= []
+      end
+      
+      def configured_locally?(key)
+        configured_locally_keys.include?(key)
+      end
+      
+      def configured_locally_keys
+        @configured_locally_keys ||= []
       end
       
       def default_value(key)
@@ -145,6 +153,7 @@ module Dragonfly
 
         # Define the writer
         define_method("#{attribute}=") do |value|
+          configured_locally_keys << attribute
           set_config_value(attribute, value)
         end
 

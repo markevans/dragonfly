@@ -12,7 +12,7 @@ describe "model urls" do
   end
   
   before(:each) do
-    @app = Dragonfly[:model_urls_test].configure do |c|
+    @app = test_app.configure do |c|
       c.url_format = '/media/:job/:basename.:format'
     end
     @app.define_macro(MyModel, :image_accessor)
@@ -71,5 +71,15 @@ describe "model urls" do
     @item.save!
     item = Item.find(@item.id)
     item.preview_image.url.should =~ %r{^/media/\w+/hello\.txt\?sha=\w+$}
+  end
+  
+  it "should allow configuring the url" do
+    @app.configure do |c|
+      c.url_format = '/img/:job'
+    end
+    @item.preview_image = new_tempfile
+    @item.save!
+    item = Item.find(@item.id)
+    item.preview_image.url.should =~ %r{^/img/\w+$}
   end
 end

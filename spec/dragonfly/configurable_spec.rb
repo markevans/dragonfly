@@ -353,7 +353,7 @@ describe Dragonfly::Configurable do
         @kid = Object.new
         class << @kid
           include Dragonfly::Configurable
-          configurable_attr :lug
+          configurable_attr :lug, 'default-lug'
         end
         @kid.use_as_fallback_config(@dad)
       end
@@ -384,6 +384,12 @@ describe Dragonfly::Configurable do
         grandkid.use_as_fallback_config(@kid)
         @dad.configure{|c| c.oogie = 'duggen' }
         grandkid.oogie.should == 'duggen'
+      end
+
+      it "should allow configuring twice through the fallback object" do
+        @dad.configure{|c| c.lug = 'leg' }
+        @dad.configure{|c| c.lug = 'blug' }
+        @kid.lug.should == 'blug'
       end
     end
     
