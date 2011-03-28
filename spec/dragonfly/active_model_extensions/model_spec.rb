@@ -943,6 +943,29 @@ describe Item do
     
     end
     
+    describe "after_unassign" do
+      before(:each) do
+        @app = test_app
+        @app.define_macro(MyModel, :image_accessor)
+        Item.class_eval do
+          image_accessor :preview_image do
+            after_unassign{ self.title = 'unassigned' }
+          end
+        end
+        @item = Item.new :title => 'yo'
+      end
+      
+      it "should not call it after assign" do
+        @item.preview_image = 'suggs'
+        @item.title.should == 'yo'
+      end
+      
+      it "should call it after unassign" do
+        @item.preview_image = nil
+        @item.title.should == 'unassigned'
+      end
+    end
+    
   end
 
 end
