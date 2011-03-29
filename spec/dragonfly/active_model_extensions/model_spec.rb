@@ -966,6 +966,42 @@ describe Item do
       end
     end
     
+    describe "copy_to" do
+      before(:each) do
+        @app = test_app
+        @app.define_macro(MyModel, :image_accessor)
+        @app.processor.add(:append) do |temp_object, string|
+          temp_object.data + string
+        end
+        Item.class_eval do
+          image_accessor :preview_image do
+            copy_to(:other_image){|a| a.process(:append, title) }
+            copy_to(:yet_another_image)
+          end
+          image_accessor :other_image
+          image_accessor :yet_another_image
+        end
+        @item = Item.new :title => 'yo'
+      end
+      
+      it "should copy to the other image when assigned" do
+        @item.preview_image = 'hello bear'
+        @item.other_image.data.should == 'hello bearyo'
+      end
+
+      it "should remove the other image when unassigned" do
+        @item.preview_image = 'hello bear'
+        @item.preview_image = nil
+        @item.other_image.should be_nil
+      end
+      
+      it "should allow simply copying over without args" do
+        @item.preview_image = 'hello bear'
+        @item.yet_another_image.data.should == 'hello bear'
+      end
+      
+    end
+    
   end
 
 end

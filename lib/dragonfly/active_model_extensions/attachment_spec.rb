@@ -29,6 +29,16 @@ module Dragonfly
           end
         end
         
+        def copy_to(accessor, &block)
+          if block_given?
+            after_assign{|a| self.send("#{accessor}=", instance_exec(a, &block)) }
+            after_unassign{|a| self.send("#{accessor}=", nil) }
+          else
+            after_assign{|a| self.send("#{accessor}=", a) }
+            after_unassign{|a| self.send("#{accessor}=", nil) }
+          end
+        end
+        
       end
       
       def initialize(attribute, app, &block)
@@ -48,13 +58,19 @@ module Dragonfly
       
       def run_callbacks(name, model, attachment)
         attachment.should_run_callbacks = false
-        callbacks[name].each do |callback|
-          case callback
-          when Symbol then model.send(callback)
-          when Proc then model.instance_exec(attachment, &callback)
-          end
+        callbacks[name].each do |c|
+          evaluate_callback(c, model, attachment)
         end
         attachment.should_run_callbacks = true
+      end
+
+      private
+      
+      def evaluate_callback(callback, model, attachment)
+        case callback
+        when Symbol then model.send(callback)
+        when Proc then model.instance_exec(attachment, &callback)
+        end
       end
 
     end
