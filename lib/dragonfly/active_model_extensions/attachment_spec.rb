@@ -14,28 +14,27 @@ module Dragonfly
         attr_reader :spec
         
         def after_assign(*callbacks, &block)
-          if block_given?
-            spec.callbacks[:after_assign] << block
-          else
-            spec.callbacks[:after_assign].push(*callbacks)
-          end
+          add_callbacks(:after_assign, *callbacks, &block)
         end
         
         def after_unassign(*callbacks, &block)
-          if block_given?
-            spec.callbacks[:after_unassign] << block
-          else
-            spec.callbacks[:after_unassign].push(*callbacks)
-          end
+          add_callbacks(:after_unassign, *callbacks, &block)
         end
         
         def copy_to(accessor, &block)
+          after_assign do |a|
+            self.send "#{accessor}=", (block_given? ? instance_exec(a, &block) : a)
+          end
+          after_unassign{|a| self.send("#{accessor}=", nil) }
+        end
+        
+        private
+        
+        def add_callbacks(name, *callbacks, &block)
           if block_given?
-            after_assign{|a| self.send("#{accessor}=", instance_exec(a, &block)) }
-            after_unassign{|a| self.send("#{accessor}=", nil) }
+            spec.callbacks[name] << block
           else
-            after_assign{|a| self.send("#{accessor}=", a) }
-            after_unassign{|a| self.send("#{accessor}=", nil) }
+            spec.callbacks[name].push(*callbacks)
           end
         end
         
@@ -58,19 +57,13 @@ module Dragonfly
       
       def run_callbacks(name, model, attachment)
         attachment.should_run_callbacks = false
-        callbacks[name].each do |c|
-          evaluate_callback(c, model, attachment)
+        callbacks[name].each do |callback|
+          case callback
+          when Symbol then model.send(callback)
+          when Proc then model.instance_exec(attachment, &callback)
+          end
         end
         attachment.should_run_callbacks = true
-      end
-
-      private
-      
-      def evaluate_callback(callback, model, attachment)
-        case callback
-        when Symbol then model.send(callback)
-        when Proc then model.instance_exec(attachment, &callback)
-        end
       end
 
     end
