@@ -924,7 +924,7 @@ describe Item do
           item.title.should == "duggen"
         end
 
-        it "should allow passing a symbol for calling a model method" do
+        it "should allow passing multiple symbols" do
           set_after_assign :set_title, :upcase_title
           item = Item.new
           def item.set_title; self.title = 'doobie'; end
@@ -1002,6 +1002,57 @@ describe Item do
       
     end
     
+  end
+
+  describe "storage_opts" do
+    
+    def set_storage_opts(*args, &block)
+      Item.class_eval do
+        image_accessor :preview_image do
+          storage_opts(*args, &block)
+        end
+      end
+    end
+    
+    before(:each) do
+      @app = test_app
+      @app.define_macro(MyModel, :image_accessor)
+    end
+    
+    it "should send the specified options to the datastore on store" do
+      set_storage_opts :egg => 'head'
+      item = Item.new :preview_image => 'hello'
+      @app.datastore.should_receive(:store).with(anything, hash_including(:egg => 'head'))
+      item.save!
+    end
+    
+    it "should allow putting in a proc" do
+      set_storage_opts{ {:egg => 'numb'} }
+      item = Item.new :preview_image => 'hello'
+      @app.datastore.should_receive(:store).with(anything, hash_including(:egg => 'numb'))
+      item.save!
+    end
+
+    it "should yield the attachment and exec in model context" do
+      set_storage_opts{|a| {:egg => (a.data + title)} }
+      item = Item.new :title => 'lump', :preview_image => 'hello'
+      @app.datastore.should_receive(:store).with(anything, hash_including(:egg => 'hellolump'))
+      item.save!
+    end
+    
+    it "should allow setting more than once" do
+      Item.class_eval do
+        image_accessor :preview_image do
+          storage_opts{{ :a => title, :b => 'dumple' }}
+          storage_opts{{ :b => title.upcase, :c => 'digby' }}
+        end
+      end
+      item = Item.new :title => 'lump', :preview_image => 'hello'
+      @app.datastore.should_receive(:store).with(anything, hash_including(
+        :a => 'lump', :b => 'LUMP', :c => 'digby'
+      ))
+      item.save!
+    end
   end
 
 end

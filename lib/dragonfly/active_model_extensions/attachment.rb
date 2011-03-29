@@ -53,7 +53,8 @@ module Dragonfly
         sync_with_parent!
         destroy_previous!
         if job && !uid
-          set_uid_and_parent_uid job.store
+          opts = spec.evaluate_storage_opts(parent_model, self)
+          set_uid_and_parent_uid job.store(opts)
           self.job = job.to_fetched_job(uid)
         end
       end

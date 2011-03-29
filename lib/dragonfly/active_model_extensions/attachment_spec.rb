@@ -28,6 +28,10 @@ module Dragonfly
           after_unassign{|a| self.send("#{accessor}=", nil) }
         end
         
+        def storage_opts(opts=nil, &block)
+          spec.storage_opts_specs << (opts || block)
+        end
+        
         private
         
         def add_callbacks(name, *callbacks, &block)
@@ -64,6 +68,18 @@ module Dragonfly
           end
         end
         attachment.should_run_callbacks = true
+      end
+
+      def storage_opts_specs
+        @storage_opts_specs ||= []
+      end
+      
+      def evaluate_storage_opts(model, attachment)
+        storage_opts_specs.inject({}) do |opts, spec|
+          spec = model.instance_exec(attachment, &spec) if spec.is_a?(Proc)
+          opts.merge!(spec)
+          opts
+        end
       end
 
     end
