@@ -31,14 +31,30 @@ module Dragonfly
         def storage_opts(opts=nil, &block)
           spec.storage_opts_specs << (opts || block)
         end
-        
-        private
+
+        def storage_opt(key, value, &block)
+          if value.is_a? Symbol
+            storage_opts{|a| {key => send(value)} }
+          elsif block_given?
+            storage_opts{|a| {key => instance_exec(a, &block)} }
+          else
+            storage_opts{|a| {key => value} }
+          end
+        end
         
         def add_callbacks(name, *callbacks, &block)
           if block_given?
             spec.callbacks[name] << block
           else
             spec.callbacks[name].push(*callbacks)
+          end
+        end
+        
+        def method_missing(meth, *args, &block)
+          if meth.to_s =~ /^storage_(.*)$/
+            storage_opt($1.to_sym, args.first, &block)
+          else
+            super
           end
         end
         
@@ -76,8 +92,12 @@ module Dragonfly
       
       def evaluate_storage_opts(model, attachment)
         storage_opts_specs.inject({}) do |opts, spec|
-          spec = model.instance_exec(attachment, &spec) if spec.is_a?(Proc)
-          opts.merge!(spec)
+          options = case spec
+          when Proc then model.instance_exec(attachment, &spec)
+          when Symbol then model.send(spec)
+          else spec
+          end
+          opts.merge!(options)
           opts
         end
       end

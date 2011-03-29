@@ -1039,6 +1039,14 @@ describe Item do
       @app.datastore.should_receive(:store).with(anything, hash_including(:egg => 'hellolump'))
       item.save!
     end
+
+    it "should allow giving it a method symbol" do
+      set_storage_opts :special_ops
+      item = Item.new :preview_image => 'hello'
+      def item.special_ops; {:a => 1}; end
+      @app.datastore.should_receive(:store).with(anything, hash_including(:a => 1))
+      item.save!
+    end
     
     it "should allow setting more than once" do
       Item.class_eval do
@@ -1052,6 +1060,79 @@ describe Item do
         :a => 'lump', :b => 'LUMP', :c => 'digby'
       ))
       item.save!
+    end
+  end
+
+  describe "storage_path, etc." do
+   
+    def set_storage_path(path=nil, &block)
+      Item.class_eval do
+        image_accessor :preview_image do
+          storage_path(path, &block)
+        end
+        def monkey
+          "mr/#{title}/monkey"
+        end
+      end
+    end
+
+    before(:each) do
+      @app = test_app
+      @app.define_macro(MyModel, :image_accessor)
+    end
+
+    it "should allow setting as a string" do
+      set_storage_path 'always/the/same'
+      item = Item.new :preview_image => 'bilbo'
+      @app.datastore.should_receive(:store).with(anything, hash_including(
+        :path => 'always/the/same'
+      ))
+      item.save!
+    end
+
+    it "should allow setting as a symbol" do
+      set_storage_path :monkey
+      item = Item.new :title => 'billy'
+      item.preview_image = 'bilbo'
+      @app.datastore.should_receive(:store).with(anything, hash_including(
+        :path => 'mr/billy/monkey'
+      ))
+      item.save!
+    end
+  
+    it "should allow setting as a block" do
+      set_storage_path{|a| "#{a.data}/megs/#{title}" }
+      item = Item.new :title => 'billy'
+      item.preview_image = 'bilbo'
+      @app.datastore.should_receive(:store).with(anything, hash_including(
+        :path => 'bilbo/megs/billy'
+      ))
+      item.save!
+    end
+
+    it "should work for other storage_xxx declarations" do
+      Item.class_eval do
+        image_accessor :preview_image do
+          storage_eggs 23
+        end
+      end
+      item = Item.new :preview_image => 'bilbo'
+      @app.datastore.should_receive(:store).with(anything, hash_including(
+        :eggs => 23
+      ))
+      item.save!
+    end
+  end
+  
+  describe "unknown config method" do
+    it "should raise an error" do
+      lambda{
+        Item.class_eval do
+          image_accessor :preview_image do
+            what :now?
+          end
+        end
+      }.should raise_error(NoMethodError)
     end
   end
 
