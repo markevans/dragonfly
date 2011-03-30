@@ -124,6 +124,7 @@ module Dragonfly
       end
       
       def from_serialized(string)
+        return if string.blank?
         attrs = Serializer.marshal_decode(string)
         attrs.each do |key, value|
           unless attribute_keys.include?(key)
@@ -133,6 +134,8 @@ module Dragonfly
         end
         sync_with_parent
         update_from_uid
+      rescue Serializer::BadString => e
+        app.log.warn("*** WARNING ***: couldn't update attachment with serialized #{attribute}_pending string #{string.inspect}")
       end
 
       protected
