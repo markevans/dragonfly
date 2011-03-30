@@ -71,6 +71,10 @@ module Dragonfly
       def rotate(temp_object, amount, opts={})
         convert(temp_object, "-rotate '#{amount}#{opts[:qualifier]}'")
       end
+
+      def strip(temp_object)
+        convert(temp_object, "-strip")
+      end   
       
       def thumb(temp_object, geometry)
         case geometry
