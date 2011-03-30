@@ -43,13 +43,12 @@ module Dragonfly
             define_method "remove_#{attribute}=" do |value|
               unless [0, "0", false, "false", "", nil].include?(value)
                 dragonfly_attachments[attribute].assign(nil)
+                instance_variable_set("@remove_#{attribute}", true)
               end
             end
 
             # Define the remove getter
-            define_method "remove_#{attribute}" do
-              false
-            end
+            attr_reader "remove_#{attribute}"
       
           end
     

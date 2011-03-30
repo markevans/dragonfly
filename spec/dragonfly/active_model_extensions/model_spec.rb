@@ -844,6 +844,11 @@ describe Item do
         @item.remove_preview_image = value
         @item.preview_image.should be_nil
       end
+
+      it "should return true when called if set with #{value.inspect}" do
+        @item.remove_preview_image = value
+        @item.remove_preview_image.should be_true
+      end
     end
 
     [
@@ -858,10 +863,14 @@ describe Item do
         @item.remove_preview_image = value
         @item.preview_image.should_not be_nil
       end
+
+      it "should return false when called if set with #{value.inspect}" do
+        @item.remove_preview_image = value
+        @item.remove_preview_image.should be_false
+      end
     end
     
-    it "should always return false for the getter" do
-      @item.remove_preview_image = true
+    it "should return false by default for the getter" do
       @item.remove_preview_image.should be_false
     end
     
