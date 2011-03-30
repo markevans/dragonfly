@@ -574,13 +574,6 @@ describe Item do
         @item.preview_image_size.should == 3
       end
 
-      it "should store the original file extension if it exists" do
-        data = 'jasdlkf sadjl'
-        data.stub!(:original_filename).and_return('hello.png')
-        @item.preview_image = data
-        @item.preview_image_ext.should == 'png'
-      end
-
       it "should store the original file name if it exists" do
         data = 'jasdlkf sadjl'
         data.stub!(:original_filename).and_return('hello.png')
@@ -667,21 +660,16 @@ describe Item do
           @item.preview_image.some_analyser_method.should == 'result yo'
         end
 
-        describe "non-analyser magic attributes" do
-          %w(size name ext).each do |attr|
-            it "should use the magic attribute for #{attr} if there is one, and not the job object" do
-              @item.preview_image.send(:job).should_not_receive(attr)
-              @item.should_receive("preview_image_#{attr}").and_return('result yo')
-              @item.preview_image.send(attr).should == 'result yo'
-            end
+        it "should use the magic attribute for size if there is one, and not the job object" do
+          @item.preview_image.send(:job).should_not_receive(:size)
+          @item.should_receive("preview_image_size").and_return(17)
+          @item.preview_image.size.should == 17
+        end
 
-            it "should delegate '#{attr}' to the job object if there is no magic attribute for it" do
-              @item.other_image = 'blahdata'
-              @item.other_image.send(:job).should_receive(attr).and_return "nother result y'all"
-              @item.other_image.send(attr).should == "nother result y'all"
-            end
-          end
-
+        it "should delegate 'size' to the job object if there is no magic attribute for it" do
+          @item.other_image = 'blahdata'
+          @item.other_image.send(:job).should_receive(:size).and_return 54
+          @item.other_image.size.should == 54
         end
 
       end
@@ -713,6 +701,9 @@ describe Item do
         end
         it "should return the name" do
           (@item.preview_image.name = 'no.silly').should == 'no.silly'
+        end
+        it "should update the ext too" do
+          @item.preview_image.ext.should == 'there'
         end
       end
 

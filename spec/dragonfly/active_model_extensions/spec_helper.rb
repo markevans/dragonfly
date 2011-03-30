@@ -65,7 +65,6 @@ class Item < MyModel
     :preview_image_some_analyser_method,
     :preview_image_size,
     :preview_image_name,
-    :preview_image_ext,
     :preview_image_blah_blah,
     :other_image_uid,
     :yet_another_image_uid,
