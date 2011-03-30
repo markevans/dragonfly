@@ -1135,5 +1135,30 @@ describe Item do
       }.should raise_error(NoMethodError)
     end
   end
+  
+  describe "changed?" do
+    before(:each) do
+      set_up_item_class
+      @item = Item.new
+    end
+    
+    it "should be changed when assigned" do
+      @item.preview_image = 'ggg'
+      @item.preview_image.should be_changed
+    end
+    
+    it "should not be changed when saved" do
+      @item.preview_image = 'ggg'
+      @item.save!
+      @item.preview_image.should_not be_changed
+    end
+
+    it "should not be changed when reloaded" do
+      @item.preview_image = 'ggg'
+      @item.save!
+      item = Item.find(@item.id)
+      item.preview_image.should_not be_changed
+    end
+  end
 
 end

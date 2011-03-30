@@ -42,7 +42,12 @@ module Dragonfly
           spec.run_callbacks(:after_assign, parent_model, self) if should_run_callbacks?
         end
         set_uid_and_parent_uid(nil)
+        self.changed = true
         value
+      end
+
+      def changed?
+        !!@changed
       end
 
       def destroy!
@@ -58,6 +63,7 @@ module Dragonfly
           set_uid_and_parent_uid job.store(opts)
           self.job = job.to_fetched_job(uid)
         end
+        self.changed = false
       end
 
       def to_value
@@ -108,6 +114,8 @@ module Dragonfly
       attr_reader :job
 
       private
+
+      attr_writer :changed
 
       def destroy_content(uid)
         app.datastore.destroy(uid)
