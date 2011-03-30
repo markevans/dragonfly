@@ -68,8 +68,6 @@ module Dragonfly
         REGIONS[get_region]
       end
 
-      private
-
       def storage
         @storage ||= Fog::Storage.new(
           :provider => 'AWS',
@@ -78,6 +76,15 @@ module Dragonfly
           :region => region
         )
       end
+
+      def bucket_exists?
+        storage.get_bucket_location(bucket_name)
+        true
+      rescue Excon::Errors::NotFound => e
+        false
+      end
+
+      private
 
       def ensure_configured
         unless @configured
@@ -99,13 +106,6 @@ module Dragonfly
         reg = region || 'us-east-1'
         raise "Invalid region #{reg} - should be one of #{valid_regions.join(', ')}" unless valid_regions.include?(reg)
         reg
-      end
-
-      def bucket_exists?
-        storage.get_bucket_location(bucket_name)
-        true
-      rescue Excon::Errors::NotFound => e
-        false
       end
 
       def generate_uid(name)
