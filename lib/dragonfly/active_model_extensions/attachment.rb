@@ -5,6 +5,9 @@ module Dragonfly
 
     class Attachment
 
+      # Exceptions
+      class BadAssignmentKey < RuntimeError; end
+
       extend Forwardable
       def_delegators :job,
         :data, :to_file, :file, :tempfile, :path,
@@ -123,6 +126,9 @@ module Dragonfly
       def from_serialized(string)
         attrs = Serializer.marshal_decode(string)
         attrs.each do |key, value|
+          unless attribute_keys.include?(key)
+            raise BadAssignmentKey, "trying to call #{attribute}_#{key} = #{value.inspect} via #{attribute}_pending but this is not allowed!"
+          end
           parent_model.send("#{attribute}_#{key}=", value)
         end
         sync_with_parent
@@ -137,8 +143,12 @@ module Dragonfly
 
       attr_writer :changed, :retained
 
+      def attribute_keys
+        [:uid] + magic_attributes
+      end
+
       def attributes
-        ([:uid] + magic_attributes).inject({}) do |hash, key|
+        attribute_keys.inject({}) do |hash, key|
           hash[key] = send(key)
           hash
         end

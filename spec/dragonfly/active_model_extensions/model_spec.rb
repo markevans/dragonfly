@@ -1261,6 +1261,20 @@ describe Item do
       @item.preview_image_pending = @pending_string
       @item.preview_image.url.should =~ %r{^/\w+/dog.biscuit$}
     end
+    
+    it "should raise an error if the pending string contains a non-magic attr method" do
+      pending_string = Dragonfly::Serializer.marshal_encode(
+        :uid => 'new/uid',
+        :some_analyser_method => 'HELLO',
+        :size => 5,
+        :name => 'dog.biscuit',
+        :something => 'else'
+      )
+      item = @item
+      lambda{
+        item.preview_image_pending = pending_string
+      }.should raise_error(Dragonfly::ActiveModelExtensions::Attachment::BadAssignmentKey)
+    end
   end
 
 end
