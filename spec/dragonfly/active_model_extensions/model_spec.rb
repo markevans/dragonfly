@@ -1220,5 +1220,47 @@ describe Item do
       item.preview_image_pending.should be_nil
     end
   end
+  
+  describe "assigning from a pending state" do
+    before(:each) do
+      set_up_item_class(@app=test_app)
+      @app.analyser.add :some_analyser_method do |temp_object|
+        temp_object.data.upcase
+      end
+      @pending_string = Dragonfly::Serializer.marshal_encode(
+        :uid => 'new/uid',
+        :some_analyser_method => 'HELLO',
+        :size => 5,
+        :name => 'dog.biscuit'
+      )
+      @item = Item.new
+    end
+    
+    it "should update the attributes" do
+      @item.preview_image_pending = @pending_string
+      @item.preview_image_uid.should == 'new/uid'
+      @item.preview_image_some_analyser_method.should == 'HELLO'
+      @item.preview_image_size.should == 5
+      @item.preview_image_name.should == 'dog.biscuit'
+    end
+    
+    it "should update the attachment meta" do
+      @item.preview_image_pending = @pending_string
+      @item.preview_image.meta[:some_analyser_method].should == 'HELLO'
+      @item.preview_image.meta[:size].should == 5
+      @item.preview_image.meta[:name].should == 'dog.biscuit'
+    end
+    
+    it "should be a normal fetch job" do
+      @item.preview_image_pending = @pending_string
+      @app.datastore.should_receive(:retrieve).with('new/uid').and_return(Dragonfly::TempObject.new('retrieved yo'))
+      @item.preview_image.data.should == 'retrieved yo'
+    end
+    
+    it "should give the correct url" do
+      @item.preview_image_pending = @pending_string
+      @item.preview_image.url.should =~ %r{^/\w+/dog.biscuit$}
+    end
+  end
 
 end

@@ -19,10 +19,7 @@ module Dragonfly
       def initialize(spec, parent_model)
         @spec, @parent_model = spec, parent_model
         self.uid = parent_uid
-        if uid
-          self.job = app.fetch(uid)
-          update_meta
-        end
+        update_from_uid if uid
         @should_run_callbacks = true
       end
 
@@ -56,7 +53,7 @@ module Dragonfly
       end
 
       def save!
-        sync_with_parent!
+        sync_with_parent
         store_job! if job && !uid
         destroy_previous!
         self.changed = false
@@ -122,6 +119,15 @@ module Dragonfly
       def serialized_attributes
         Serializer.marshal_encode(attributes)
       end
+      
+      def from_serialized(string)
+        attrs = Serializer.marshal_decode(string)
+        attrs.each do |key, value|
+          parent_model.send("#{attribute}_#{key}=", value)
+        end
+        sync_with_parent
+        update_from_uid
+      end
 
       protected
 
@@ -157,7 +163,7 @@ module Dragonfly
         end
       end
 
-      def sync_with_parent!
+      def sync_with_parent
         # If the parent uid has been set manually
         if uid != parent_uid
           self.uid = parent_uid
@@ -191,6 +197,11 @@ module Dragonfly
         magic_attributes.each{|property| meta[property] = parent_model.send("#{attribute}_#{property}") }
         meta[:model_class] = parent_model.class.name
         meta[:model_attachment] = attribute
+      end
+
+      def update_from_uid
+        self.job = app.fetch(uid)
+        update_meta
       end
 
       def allowed_magic_attributes
