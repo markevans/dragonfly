@@ -357,8 +357,8 @@ describe Item do
 
     describe "remote_url" do
       before(:each) do
-        @app.define_remote_url do |uid|
-          'http://some.domain/' + uid
+        @app.define_remote_url do |uid, opts|
+          'http://some.domain/' + uid + "?some=#{opts[:some]}"
         end
       end
       it "should give the remote url if the uid is set" do

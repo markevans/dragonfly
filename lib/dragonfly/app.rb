@@ -122,14 +122,9 @@ module Dragonfly
     end
     configuration_method :define_remote_url
     
-    def remote_url_for(uid, query={})
+    def remote_url_for(uid, *args)
       raise NotImplementedError, "You need to configure remote_urls on the Dragonfly app" if get_remote_url.nil?
-      url = get_remote_url.call(uid)
-      if query.any?
-        query_string = Rack::Utils.build_query(query)
-        url << (url['?'] ? "&#{query_string}" : "?#{query_string}")
-      end
-      url
+      get_remote_url.call(uid, *args)
     end
 
     def define_macro(mod, macro_name)

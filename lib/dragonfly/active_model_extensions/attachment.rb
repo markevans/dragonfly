@@ -89,8 +89,8 @@ module Dragonfly
         self
       end
       
-      def remote_url(opts={})
-        app.remote_url_for(uid, opts) if uid
+      def remote_url(*args)
+        app.remote_url_for(uid, *args) if uid
       end
       
       def apply

@@ -86,13 +86,9 @@ describe Dragonfly::App do
       end
       @app.remote_url_for('some_uid').should == 'http://some.cdn/some_uid'
     end
-    it "should add any params to the request" do
-      @app.define_remote_url{|uid| "http://some.cdn/#{uid}" }
-      @app.remote_url_for('some_uid', :some => 'eggs', :and => 'cheese').should match_url('http://some.cdn/some_uid?some=eggs&and=cheese')
-    end
-    it "should correctly add params if it already has some" do
-      @app.define_remote_url{|uid| "http://some.cdn/#{uid}?and=bread" }
-      @app.remote_url_for('some_uid', :some => 'eggs').should match_url('http://some.cdn/some_uid?and=bread&some=eggs')
+    it "should add other args" do
+      @app.define_remote_url{|uid, arg1| "http://some.cdn/#{uid}?#{arg1}" }
+      @app.remote_url_for('some_uid', 'cheese').should match_url('http://some.cdn/some_uid?cheese')
     end
   end
 
