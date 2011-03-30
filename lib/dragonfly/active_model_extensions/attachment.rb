@@ -57,13 +57,10 @@ module Dragonfly
 
       def save!
         sync_with_parent!
+        store_job! if job && !uid
         destroy_previous!
-        if job && !uid
-          opts = spec.evaluate_storage_opts(parent_model, self)
-          set_uid_and_parent_uid job.store(opts)
-          self.job = job.to_fetched_job(uid)
-        end
         self.changed = false
+        self.retained = false
       end
 
       def to_value
@@ -109,13 +106,43 @@ module Dragonfly
         @should_run_callbacks
       end
 
+      # Retaining for avoiding uploading more than once
+
+      def retain!
+        if changed?
+          store_job!
+          self.retained = true
+        end
+      end
+
+      def retained?
+        !!@retained
+      end
+
+      def serialized_attributes
+        Serializer.marshal_encode(attributes)
+      end
+
       protected
 
       attr_reader :job
 
       private
 
-      attr_writer :changed
+      attr_writer :changed, :retained
+
+      def attributes
+        ([:uid] + magic_attributes).inject({}) do |hash, key|
+          hash[key] = send(key)
+          hash
+        end
+      end
+
+      def store_job!
+        opts = spec.evaluate_storage_opts(parent_model, self)
+        set_uid_and_parent_uid job.store(opts)
+        self.job = job.to_fetched_job(uid)
+      end
 
       def destroy_content(uid)
         app.datastore.destroy(uid)

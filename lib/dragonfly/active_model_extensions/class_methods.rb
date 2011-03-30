@@ -49,7 +49,18 @@ module Dragonfly
 
             # Define the remove getter
             attr_reader "remove_#{attribute}"
-      
+
+            # Define the pending setter
+            define_method "#{attribute}_pending=" do |value|
+              dragonfly_attachments[attribute].from_serialized(value)
+            end
+            
+            # Define the pending getter
+            define_method "#{attribute}_pending" do
+              attachment = dragonfly_attachments[attribute]
+              attachment.serialized_attributes if attachment.retained?
+            end
+            
           end
     
         end

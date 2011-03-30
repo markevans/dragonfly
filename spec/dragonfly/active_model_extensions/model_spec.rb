@@ -1160,5 +1160,65 @@ describe Item do
       item.preview_image.should_not be_changed
     end
   end
+  
+  describe "retain and pending" do
+    before(:each) do
+      set_up_item_class(@app=test_app)
+      @app.analyser.add :some_analyser_method do |temp_object|
+        temp_object.data.upcase
+      end
+      @item = Item.new
+    end
+
+    it "should return nil if there are no changes" do
+      @item.preview_image_pending.should be_nil
+    end
+
+    it "should return nil if assigned but not saved" do
+      @item.preview_image = 'hello'
+      @item.preview_image_pending.should be_nil
+    end
+    
+    it "should return nil if assigned and saved" do
+      @item.preview_image = 'hello'
+      @item.save!
+      @item.preview_image_pending.should be_nil
+    end
+    
+    it "should return the saved stuff if assigned and retained" do
+      @item.preview_image = 'hello'
+      @item.preview_image.name = 'dog.biscuit'
+      @app.datastore.should_receive(:store).with(a_temp_object_with_data('hello'), anything).and_return('new/uid')
+      @item.preview_image.retain!
+      @item.preview_image_pending.should == Dragonfly::Serializer.marshal_encode(
+        :uid => 'new/uid',
+        :some_analyser_method => 'HELLO',
+        :size => 5,
+        :name => 'dog.biscuit'
+      )
+    end
+    
+    it "should return nil if assigned, retained and saved" do
+      @item.preview_image = 'hello'
+      @item.preview_image.retain!
+      @item.save!
+      @item.preview_image_pending.should be_nil
+    end
+
+    it "should return nil if assigned, saved and retained" do
+      @item.preview_image = 'hello'
+      @item.save!
+      @item.preview_image.retain!
+      @item.preview_image_pending.should be_nil
+    end
+
+    it "should return nil if no changes have been made" do
+      @item.preview_image = 'hello'
+      @item.save!
+      item = Item.find(@item.id)
+      item.preview_image.retain!
+      item.preview_image_pending.should be_nil
+    end
+  end
 
 end
