@@ -27,6 +27,8 @@ module Dragonfly
       end
 
       def assign(value)
+        self.changed = true
+        set_uid_and_parent_uid(nil)
         if value.nil?
           self.job = nil
           reset_magic_attributes
@@ -41,8 +43,6 @@ module Dragonfly
           update_meta
           spec.run_callbacks(:after_assign, parent_model, self) if should_run_callbacks?
         end
-        set_uid_and_parent_uid(nil)
-        self.changed = true
         value
       end
 
@@ -134,6 +134,7 @@ module Dragonfly
         end
         sync_with_parent
         update_from_uid
+        self.retained = true
       rescue Serializer::BadString => e
         app.log.warn("*** WARNING ***: couldn't update attachment with serialized #{attribute}_pending string #{string.inspect}")
       end

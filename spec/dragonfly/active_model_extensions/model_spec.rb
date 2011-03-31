@@ -1282,6 +1282,21 @@ describe Item do
         @item.preview_image_uid.should be_nil
       end
     end
+    
+    it "should return the pending string again" do
+      @item.preview_image_pending = @pending_string
+      @item.preview_image_pending.should == @pending_string
+    end
+    
+    it "should destroy the old one on save" do
+      @item.preview_image = 'oldone'
+      @app.datastore.should_receive(:store).with(a_temp_object_with_data('oldone'), anything).and_return('old/uid')
+      @item.save!
+      item = Item.find(@item.id)
+      item.preview_image_pending = @pending_string
+      @app.datastore.should_receive(:destroy).with('old/uid')
+      item.save!
+    end
   end
 
 end
