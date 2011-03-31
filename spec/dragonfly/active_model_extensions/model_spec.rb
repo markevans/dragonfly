@@ -1300,7 +1300,6 @@ describe Item do
 
     describe "combinations of assignment" do
       before(:each) do
-        pending
       end
       it "should destroy the previously retained one if something new is then assigned" do
         @item.retained_preview_image = @pending_string

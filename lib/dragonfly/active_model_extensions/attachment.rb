@@ -28,6 +28,7 @@ module Dragonfly
 
       def assign(value)
         self.changed = true
+        destroy_retained! if retained?
         set_uid_and_parent_uid(nil)
         if value.nil?
           self.job = nil
@@ -117,6 +118,10 @@ module Dragonfly
 
       def retained?
         !!@retained
+      end
+      
+      def destroy_retained!
+        destroy_content(retained_attrs[:uid])
       end
       
       def retained_attrs
