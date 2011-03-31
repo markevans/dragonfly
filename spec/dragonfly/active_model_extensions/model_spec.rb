@@ -1171,18 +1171,18 @@ describe Item do
     end
 
     it "should return nil if there are no changes" do
-      @item.preview_image_pending.should be_nil
+      @item.retained_preview_image.should be_nil
     end
 
     it "should return nil if assigned but not saved" do
       @item.preview_image = 'hello'
-      @item.preview_image_pending.should be_nil
+      @item.retained_preview_image.should be_nil
     end
     
     it "should return nil if assigned and saved" do
       @item.preview_image = 'hello'
       @item.save!
-      @item.preview_image_pending.should be_nil
+      @item.retained_preview_image.should be_nil
     end
     
     it "should return the saved stuff if assigned and retained" do
@@ -1190,7 +1190,7 @@ describe Item do
       @item.preview_image.name = 'dog.biscuit'
       @app.datastore.should_receive(:store).with(a_temp_object_with_data('hello'), anything).and_return('new/uid')
       @item.preview_image.retain!
-      @item.preview_image_pending.should == Dragonfly::Serializer.marshal_encode(
+      @item.retained_preview_image.should == Dragonfly::Serializer.marshal_encode(
         :uid => 'new/uid',
         :some_analyser_method => 'HELLO',
         :size => 5,
@@ -1202,14 +1202,14 @@ describe Item do
       @item.preview_image = 'hello'
       @item.preview_image.retain!
       @item.save!
-      @item.preview_image_pending.should be_nil
+      @item.retained_preview_image.should be_nil
     end
 
     it "should return nil if assigned, saved and retained" do
       @item.preview_image = 'hello'
       @item.save!
       @item.preview_image.retain!
-      @item.preview_image_pending.should be_nil
+      @item.retained_preview_image.should be_nil
     end
 
     it "should return nil if no changes have been made" do
@@ -1217,7 +1217,7 @@ describe Item do
       @item.save!
       item = Item.find(@item.id)
       item.preview_image.retain!
-      item.preview_image_pending.should be_nil
+      item.retained_preview_image.should be_nil
     end
   end
   
@@ -1237,7 +1237,7 @@ describe Item do
     end
     
     it "should update the attributes" do
-      @item.preview_image_pending = @pending_string
+      @item.retained_preview_image = @pending_string
       @item.preview_image_uid.should == 'new/uid'
       @item.preview_image_some_analyser_method.should == 'HELLO'
       @item.preview_image_size.should == 5
@@ -1245,20 +1245,20 @@ describe Item do
     end
     
     it "should update the attachment meta" do
-      @item.preview_image_pending = @pending_string
+      @item.retained_preview_image = @pending_string
       @item.preview_image.meta[:some_analyser_method].should == 'HELLO'
       @item.preview_image.meta[:size].should == 5
       @item.preview_image.meta[:name].should == 'dog.biscuit'
     end
     
     it "should be a normal fetch job" do
-      @item.preview_image_pending = @pending_string
+      @item.retained_preview_image = @pending_string
       @app.datastore.should_receive(:retrieve).with('new/uid').and_return(Dragonfly::TempObject.new('retrieved yo'))
       @item.preview_image.data.should == 'retrieved yo'
     end
     
     it "should give the correct url" do
-      @item.preview_image_pending = @pending_string
+      @item.retained_preview_image = @pending_string
       @item.preview_image.url.should =~ %r{^/\w+/dog.biscuit$}
     end
     
@@ -1272,20 +1272,20 @@ describe Item do
       )
       item = @item
       lambda{
-        item.preview_image_pending = pending_string
+        item.retained_preview_image = pending_string
       }.should raise_error(Dragonfly::ActiveModelExtensions::Attachment::BadAssignmentKey)
     end
     
     [nil, "", "asdfsad"].each do |value|
       it "should do nothing if assigned with #{value}" do
-        @item.preview_image_pending = value
+        @item.retained_preview_image = value
         @item.preview_image_uid.should be_nil
       end
     end
     
     it "should return the pending string again" do
-      @item.preview_image_pending = @pending_string
-      @item.preview_image_pending.should == @pending_string
+      @item.retained_preview_image = @pending_string
+      @item.retained_preview_image.should == @pending_string
     end
     
     it "should destroy the old one on save" do
@@ -1293,10 +1293,40 @@ describe Item do
       @app.datastore.should_receive(:store).with(a_temp_object_with_data('oldone'), anything).and_return('old/uid')
       @item.save!
       item = Item.find(@item.id)
-      item.preview_image_pending = @pending_string
+      item.retained_preview_image = @pending_string
       @app.datastore.should_receive(:destroy).with('old/uid')
       item.save!
     end
-  end
 
+    describe "combinations of assignment" do
+      before(:each) do
+        pending
+      end
+      it "should destroy the previously retained one if something new is then assigned" do
+        @item.retained_preview_image = @pending_string
+        @app.datastore.should_receive(:destroy).with('new/uid')
+        @item.preview_image = 'yet another new thing'
+      end
+
+      it "should destroy the previously retained one if something new is already assigned" do
+        @item.preview_image = 'yet another new thing'
+        @app.datastore.should_receive(:destroy).with('new/uid')
+        @item.retained_preview_image = @pending_string
+      end
+
+      it "should destroy the previously retained one if nil is then assigned" do
+        @item.retained_preview_image = @pending_string
+        @app.datastore.should_receive(:destroy).with('new/uid')
+        @item.preview_image = nil
+      end
+
+      it "should destroy the previously retained one if nil is already assigned" do
+        @item.preview_image = nil
+        @app.datastore.should_receive(:destroy).with('new/uid')
+        @item.retained_preview_image = @pending_string
+      end
+    end
+
+  end
+  
 end

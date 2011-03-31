@@ -119,20 +119,20 @@ module Dragonfly
         !!@retained
       end
       
-      def pending_attrs
+      def retained_attrs
         attribute_keys.inject({}) do |hash, key|
           hash[key] = send(key)
           hash
         end if retained?
       end
       
-      def pending_attrs=(attrs)
+      def retained_attrs=(attrs)
         if changed? # if already set, ignore and destroy this retained content
           destroy_content(attrs[:uid])
         else
           attrs.each do |key, value|
             unless attribute_keys.include?(key)
-              raise BadAssignmentKey, "trying to call #{attribute}_#{key} = #{value.inspect} via #{attribute}_pending but this is not allowed!"
+              raise BadAssignmentKey, "trying to call #{attribute}_#{key} = #{value.inspect} via retained_#{attribute} but this is not allowed!"
             end
             parent_model.send("#{attribute}_#{key}=", value)
           end

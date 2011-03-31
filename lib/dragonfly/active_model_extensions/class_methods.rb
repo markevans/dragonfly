@@ -50,20 +50,20 @@ module Dragonfly
             # Define the remove getter
             attr_reader "remove_#{attribute}"
 
-            # Define the pending setter
-            define_method "#{attribute}_pending=" do |string|
+            # Define the retained setter
+            define_method "retained_#{attribute}=" do |string|
               unless string.blank?
                 begin
-                  dragonfly_attachments[attribute].pending_attrs = Serializer.marshal_decode(string)
+                  dragonfly_attachments[attribute].retained_attrs = Serializer.marshal_decode(string)
                 rescue Serializer::BadString => e
-                  app.log.warn("*** WARNING ***: couldn't update attachment with serialized #{attribute}_pending string #{string.inspect}")              
+                  app.log.warn("*** WARNING ***: couldn't update attachment with serialized retained_#{attribute} string #{string.inspect}")              
                 end
               end
             end
             
-            # Define the pending getter
-            define_method "#{attribute}_pending" do
-              attrs = dragonfly_attachments[attribute].pending_attrs
+            # Define the retained getter
+            define_method "retained_#{attribute}" do
+              attrs = dragonfly_attachments[attribute].retained_attrs
               Serializer.marshal_encode(attrs) if attrs
             end
             
