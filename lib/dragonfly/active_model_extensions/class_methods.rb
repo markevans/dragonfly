@@ -52,13 +52,19 @@ module Dragonfly
 
             # Define the pending setter
             define_method "#{attribute}_pending=" do |string|
-              dragonfly_attachments[attribute].from_serialized(string)
+              unless string.blank?
+                begin
+                  dragonfly_attachments[attribute].pending_attrs = Serializer.marshal_decode(string)
+                rescue Serializer::BadString => e
+                  app.log.warn("*** WARNING ***: couldn't update attachment with serialized #{attribute}_pending string #{string.inspect}")              
+                end
+              end
             end
             
             # Define the pending getter
             define_method "#{attribute}_pending" do
-              attachment = dragonfly_attachments[attribute]
-              attachment.serialized_attributes if attachment.retained?
+              attrs = dragonfly_attachments[attribute].pending_attrs
+              Serializer.marshal_encode(attrs) if attrs
             end
             
           end

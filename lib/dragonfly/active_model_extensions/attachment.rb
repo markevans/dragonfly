@@ -118,25 +118,28 @@ module Dragonfly
       def retained?
         !!@retained
       end
-
-      def serialized_attributes
-        Serializer.marshal_encode(attributes)
+      
+      def pending_attrs
+        attribute_keys.inject({}) do |hash, key|
+          hash[key] = send(key)
+          hash
+        end if retained?
       end
       
-      def from_serialized(string)
-        return if string.blank?
-        attrs = Serializer.marshal_decode(string)
-        attrs.each do |key, value|
-          unless attribute_keys.include?(key)
-            raise BadAssignmentKey, "trying to call #{attribute}_#{key} = #{value.inspect} via #{attribute}_pending but this is not allowed!"
+      def pending_attrs=(attrs)
+        if changed? # if already set, ignore and destroy this retained content
+          destroy_content(attrs[:uid])
+        else
+          attrs.each do |key, value|
+            unless attribute_keys.include?(key)
+              raise BadAssignmentKey, "trying to call #{attribute}_#{key} = #{value.inspect} via #{attribute}_pending but this is not allowed!"
+            end
+            parent_model.send("#{attribute}_#{key}=", value)
           end
-          parent_model.send("#{attribute}_#{key}=", value)
+          sync_with_parent
+          update_from_uid
+          self.retained = true
         end
-        sync_with_parent
-        update_from_uid
-        self.retained = true
-      rescue Serializer::BadString => e
-        app.log.warn("*** WARNING ***: couldn't update attachment with serialized #{attribute}_pending string #{string.inspect}")
       end
 
       protected
@@ -149,13 +152,6 @@ module Dragonfly
 
       def attribute_keys
         [:uid] + magic_attributes
-      end
-
-      def attributes
-        attribute_keys.inject({}) do |hash, key|
-          hash[key] = send(key)
-          hash
-        end
       end
 
       def store_job!
