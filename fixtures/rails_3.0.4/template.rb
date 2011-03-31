@@ -6,7 +6,7 @@ gem 'cucumber', '0.8.5'
 
 generate 'cucumber:install'
 
-generate 'scaffold albums cover_image_uid:string'
+generate 'scaffold albums cover_image_uid:string name:string'
 rake 'db:migrate'
 
 # Copy over all files from the template dir
