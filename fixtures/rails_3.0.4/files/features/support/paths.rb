@@ -3,6 +3,8 @@ module NavigationHelpers
     case page_name
     when "the new album page"
       '/albums/new'
+    when /^the page for album "(.+)"$/
+      album_path(Album.find_by_name($1))
     when /^the image for text "(.+)", size "(.+)"$/
       "/text/#{$1}/#{$2}"
     else

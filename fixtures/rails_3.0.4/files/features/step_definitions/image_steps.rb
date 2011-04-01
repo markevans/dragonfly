@@ -1,5 +1,15 @@
-When /^I look at the generated (.+) image$/ do |image_name|
+Given /^an album "(.+)" with attached file "(.+)"$/ do |name, filename|
+  Album.create! :name => name, :cover_image => Rails.root.join('../../../samples', filename)
+end
+
+When /^I look at the generated image$/ do
   page.body =~ %r{src="(/media[^"]+?)"}
+  url = $1
+  visit(url)
+end
+
+When /^I look at the original image$/ do
+  page.body =~ %r{src="(/system[^"]+?)"}
   url = $1
   visit(url)
 end

@@ -8,8 +8,8 @@ Feature: champion adds cover images to his albums
     And I press "Create"
     Then I should see "successfully created"
     And I should see "Look at this cover image!"
-    When I look at the generated beach image
-    And I should see a PNG image of size 200x100
+    When I look at the generated image
+    Then I should see a PNG image of size 200x100
 
   Scenario: validation fails
     When I go to the new album page
@@ -28,5 +28,11 @@ Feature: champion adds cover images to his albums
     Then I should see "successfully created"
     And I should see "short"
     And I should see "Look at this cover image!"
-    When I look at the generated beach image
-    And I should see a PNG image of size 200x100
+    When I look at the generated image
+    Then I should see a PNG image of size 200x100
+
+  Scenario: view remote image
+    Given an album "good" with attached file "beach.png"
+    When I go to the page for album "good"
+    And I look at the original image
+    Then I should see a PNG image of size 280x355
