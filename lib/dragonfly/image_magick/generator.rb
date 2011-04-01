@@ -40,10 +40,8 @@ module Dragonfly
       include Configurable
 
       def plasma(width, height, format='png')
-        tempfile = new_tempfile(format)
-        run "#{convert_command} -size #{width}x#{height} plasma:fractal #{tempfile.path}"
         [
-          tempfile,
+          convert(nil, "-size #{width}x#{height} plasma:fractal", format),
           {:format => format.to_sym, :name => "plasma.#{format}"}
         ]
       end
@@ -77,8 +75,7 @@ module Dragonfly
         padding_bottom = (opts[:padding_bottom] || pb || 0)
         padding_left   = (opts[:padding_left]   || pl || 0)
 
-        tempfile = new_tempfile(format)
-        run "#{convert_command} #{args.join(' ')} #{tempfile.path}"
+        tempfile = convert(nil, args.join(' '), format)
 
         if (padding_top || padding_right || padding_bottom || padding_left)
           attrs  = identify(tempfile)
