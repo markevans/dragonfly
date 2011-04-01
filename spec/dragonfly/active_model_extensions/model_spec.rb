@@ -1328,4 +1328,24 @@ describe Item do
 
   end
   
+  describe "retain macro" do
+    
+    before(:each) do
+      @app = test_app
+      @app.define_macro(MyModel, :image_accessor)
+      Item.class_eval do
+        image_accessor :preview_image do
+          retain
+        end
+      end
+      @item = Item.new
+    end
+    
+    it "should retain if specified" do
+      @app.datastore.should_receive(:store).with(a_temp_object_with_data('boo'), anything).and_return('uidyo')
+      @item.preview_image = 'boo'
+      @item.retained_preview_image.should =~ /^\w+$/
+    end
+  end
+  
 end

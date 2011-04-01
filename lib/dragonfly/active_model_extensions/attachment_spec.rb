@@ -28,6 +28,10 @@ module Dragonfly
           after_unassign{|a| self.send("#{accessor}=", nil) }
         end
         
+        def retain
+          after_assign{|a| a.retain! }
+        end
+        
         def storage_opts(opts=nil, &block)
           spec.storage_opts_specs << (opts || block)
         end
