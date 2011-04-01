@@ -41,6 +41,10 @@ module Dragonfly
       def format(temp_object)
         identify(temp_object)[:format]
       end
+      
+      def image?(temp_object)
+        !!catch(:unable_to_handle){ identify(temp_object) }
+      end
 
     end
   end

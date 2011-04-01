@@ -51,4 +51,14 @@ describe Dragonfly::ImageMagick::Analyser do
     end
   end
 
+  it "should say if it's an image" do
+    @analyser.image?(@image).should == true
+  end
+  
+  it "should say if it's not an image" do
+    suppressing_stderr do
+      @analyser.image?(Dragonfly::TempObject.new('blah')).should == false
+    end
+  end
+
 end
