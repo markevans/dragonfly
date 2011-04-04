@@ -169,5 +169,40 @@ describe Dragonfly::DataStorage::S3DataStore do
       proc{ @data_store.retrieve("gungle") }.should raise_error(Dragonfly::DataStorage::DataNotFound)
     end
   end
+  
+  describe "headers" do
+    before(:each) do
+      @temp_object = Dragonfly::TempObject.new('fjkdlsa')
+      @data_store.storage_headers = {'x-amz-foo' => 'biscuithead'}
+    end
+    
+    it "should allow configuring globally" do
+      @data_store.storage.should_receive(:put_object).with('test-bucket', anything, anything,
+        hash_including('x-amz-foo' => 'biscuithead')
+      )
+      @data_store.store(@temp_object)
+    end
+    
+    it "should allow adding per-store" do
+      @data_store.storage.should_receive(:put_object).with('test-bucket', anything, anything,
+        hash_including('x-amz-foo' => 'biscuithead', 'hello' => 'there')
+      )
+      @data_store.store(@temp_object, :headers => {'hello' => 'there'})
+    end
+    
+    it "should let the per-store one take precedence" do
+      @data_store.storage.should_receive(:put_object).with('test-bucket', anything, anything,
+        hash_including('x-amz-foo' => 'override!')
+      )
+      @data_store.store(@temp_object, :headers => {'x-amz-foo' => 'override!'})
+    end
+    
+    it "should not mess with the meta" do
+      @data_store.storage.should_receive(:put_object) do |_, __, ___, headers|
+        headers['x-amz-meta-extra'].should =~ /^\w+$/
+      end
+      @data_store.store(@temp_object, :headers => {'hello' => 'there'})
+    end
+  end
 
 end

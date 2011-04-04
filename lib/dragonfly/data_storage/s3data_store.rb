@@ -35,15 +35,19 @@ module Dragonfly
       def store(temp_object, opts={})
         ensure_configured
         ensure_bucket_initialized
+        
         meta = opts[:meta] || {}
+        headers = opts[:headers] || {}
         uid = opts[:path] || generate_uid(meta[:name] || temp_object.original_filename || 'file')
+        
         if use_filesystem
           temp_object.file do |f|
-            storage.put_object(bucket_name, uid, f, full_storage_headers(meta))
+            storage.put_object(bucket_name, uid, f, full_storage_headers(headers, meta))
           end
         else
-          storage.put_object(bucket_name, uid, temp_object.data, full_storage_headers(meta))
+          storage.put_object(bucket_name, uid, temp_object.data, full_storage_headers(headers, meta))
         end
+        
         uid
       end
 
@@ -112,8 +116,8 @@ module Dragonfly
         "#{Time.now.strftime '%Y/%m/%d/%H/%M/%S'}/#{rand(1000)}/#{name.gsub(/[^\w.]+/, '_')}"
       end
 
-      def full_storage_headers(meta)
-        {'x-amz-meta-extra' => marshal_encode(meta)}.merge(storage_headers)
+      def full_storage_headers(headers, meta)
+        {'x-amz-meta-extra' => marshal_encode(meta)}.merge(storage_headers).merge(headers)
       end
 
       def parse_s3_metadata(headers)
