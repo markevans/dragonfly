@@ -8,9 +8,11 @@ describe Dragonfly::ImageMagick::Utils do
   end
   
   it "should raise an error if the identify command isn't found" do
-    lambda{
-      @obj.send(:run, "non-existent-command")
-    }.should raise_error(Dragonfly::ImageMagick::Utils::ShellCommandFailed)
+    suppressing_stderr do
+      lambda{
+        @obj.send(:run, "non-existent-command")
+      }.should raise_error(Dragonfly::ImageMagick::Utils::ShellCommandFailed)
+    end
   end
 
 end
