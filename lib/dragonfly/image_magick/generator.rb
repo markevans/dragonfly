@@ -39,6 +39,14 @@ module Dragonfly
       include Utils
       include Configurable
 
+      def plain(width, height, colour, opts={})
+        format = opts[:format] || 'png'
+        [
+          convert(nil, "-size #{width}x#{height} 'xc:#{colour}'", format),
+          {:format => format.to_sym, :name => "plain.#{format}"}
+        ]
+      end
+
       def plasma(width, height, format='png')
         [
           convert(nil, "-size #{width}x#{height} plasma:fractal", format),
