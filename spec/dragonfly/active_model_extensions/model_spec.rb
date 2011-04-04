@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'dragonfly/active_model_extensions/spec_helper'
 
 describe Item do
 
