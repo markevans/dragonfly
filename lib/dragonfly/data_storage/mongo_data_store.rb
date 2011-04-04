@@ -12,6 +12,8 @@ module Dragonfly
       configurable_attr :database, 'dragonfly'
       configurable_attr :username
       configurable_attr :password
+      configurable_attr :connection
+      configurable_attr :db
 
       # Mongo gem deprecated ObjectID in favour of ObjectId
       OBJECT_ID = defined?(BSON::ObjectId) ? BSON::ObjectId : BSON::ObjectID
@@ -23,6 +25,8 @@ module Dragonfly
         self.database = opts[:database] if opts[:database]
         self.username = opts[:username]
         self.password = opts[:password]
+        self.connection = opts[:connection]
+        self.db = opts[:db]
       end
 
       def store(temp_object, opts={})

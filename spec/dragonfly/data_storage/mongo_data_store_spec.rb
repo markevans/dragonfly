@@ -45,4 +45,23 @@ describe Dragonfly::DataStorage::MongoDataStore do
     end
   end
 
+  describe "sharing already configured stuff" do
+    before(:each) do
+      @connection = Mongo::Connection.new
+      @temp_object = Dragonfly::TempObject.new('asdf')
+    end
+    
+    it "should allow sharing the connection" do
+      @data_store.connection = @connection
+      @connection.should_receive(:db).with('dragonfly_test').and_return(db=mock)
+      @data_store.db.should == db
+    end
+    
+    it "should allow sharing the db" do
+      db = @connection.db('dragonfly_test_yo')
+      @data_store.db = db
+      @data_store.grid.instance_eval{@db}.should == db # so wrong
+    end
+  end
+
 end
