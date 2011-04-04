@@ -8,6 +8,7 @@ module Dragonfly
       include Configurable
 
       configurable_attr :root_path, '/var/tmp/dragonfly'
+      configurable_attr :store_meta, true
 
       def store(temp_object, opts={})
         meta = opts[:meta] || {}
@@ -25,7 +26,7 @@ module Dragonfly
           end
           prepare_path(path)
           temp_object.to_file(path).close
-          store_meta_data(path, meta)
+          store_meta_data(path, meta) if store_meta
         rescue Errno::EACCES => e
           raise UnableToStore, e.message
         end
@@ -39,14 +40,14 @@ module Dragonfly
         raise DataNotFound, "couldn't find file #{path}" unless pathname.exist?
         [
           pathname,
-          retrieve_meta_data(path)
+          (store_meta ? retrieve_meta_data(path) : {})
         ]
       end
 
       def destroy(relative_path)
         path = absolute(relative_path)
         FileUtils.rm path
-        FileUtils.rm meta_data_path(path)
+        FileUtils.rm_f meta_data_path(path)
         purge_empty_directories(relative_path)
       rescue Errno::ENOENT => e
         raise DataNotFound, e.message

@@ -200,5 +200,38 @@ describe Dragonfly::DataStorage::FileDataStore do
       it { should == relative_path }
     end
   end
+  
+  describe "turning meta off" do
+    before(:each) do
+      @data_store.store_meta = false
+    end
+
+    it "should not write a meta file" do
+      uid = @data_store.store(@temp_object, :meta => {:bitrate => '35', :name => 'danny.boy'})
+      path = File.join(@data_store.root_path, uid) + '.meta'
+      File.exist?(path).should be_false
+    end
+
+    it "should return an empty hash on retrieve" do
+      uid = @data_store.store(@temp_object, :meta => {:bitrate => '35', :name => 'danny.boy'})
+      obj, meta = @data_store.retrieve(uid)
+      meta.should == {}
+    end
+    
+    it "should still destroy the meta file if it exists" do
+      @data_store.store_meta = true
+      uid = @data_store.store(@temp_object)
+      @data_store.store_meta = false
+      @data_store.destroy(uid)
+      @data_store.root_path.should be_an_empty_directory
+    end
+
+    it "should still destroy properly if meta is on but the meta file doesn't exist" do
+      uid = @data_store.store(@temp_object)
+      @data_store.store_meta = true
+      @data_store.destroy(uid)
+      @data_store.root_path.should be_an_empty_directory
+    end
+  end
 
 end
