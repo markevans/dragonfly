@@ -24,11 +24,12 @@ module Dragonfly
       def store(temp_object, opts={})
         meta = opts[:meta] || {}
         name = meta[:name] || temp_object.original_filename || 'file'
+        content_type = opts[:content_type] || opts[:mime_type] || 'application/octet-stream'
         
         temp_object.file do |f|
           doc = CouchRest::Document.new(:meta => marshal_encode(meta))
           response = db.save_doc(doc)
-          doc.put_attachment(name, f, {:content_type => 'application/octet-stream'})
+          doc.put_attachment(name, f, {:content_type => content_type})
           response['id']
         end
       rescue RuntimeError => e
