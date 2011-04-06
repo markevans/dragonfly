@@ -16,16 +16,6 @@ describe Dragonfly::DataStorage::MongoDataStore do
   
   it_should_behave_like 'data_store'
   
-  describe "destroying" do
-
-    it "should raise an error if the data doesn't exist" do
-      lambda{
-        @data_store.destroy('1a1a1a1a1a1a1a1a')
-      }.should raise_error(Dragonfly::DataStorage::DataNotFound)
-    end
-    
-  end
-  
   describe "authenticating" do
     before(:each) do
       @temp_object = Dragonfly::TempObject.new('Feijão verde')

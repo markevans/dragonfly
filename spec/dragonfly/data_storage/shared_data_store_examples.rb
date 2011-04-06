@@ -72,6 +72,16 @@ shared_examples_for "data_store" do
       }.should raise_error(Dragonfly::DataStorage::DataNotFound)
     end
 
+    it "should raise an error if the data doesn't exist on destroy" do
+      unless @skip_raise_on_destroy_test
+        uid = @data_store.store(@temp_object)
+        @data_store.destroy(uid)
+        lambda{
+          @data_store.destroy(uid)
+        }.should raise_error(Dragonfly::DataStorage::DataNotFound)
+      end
+    end
+
   end
 
 end

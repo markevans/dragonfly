@@ -45,6 +45,11 @@ describe Dragonfly::DataStorage::S3DataStore do
         d.secret_access_key = 'XXXXXXXXX'
         d.region = 'eu-west-1'
       end
+      @skip_raise_on_destroy_test = true # so hacky - I love it!
+    end
+    
+    after(:each) do
+      @skip_raise_on_destroy_test = false
     end
     
   end
@@ -88,18 +93,6 @@ describe Dragonfly::DataStorage::S3DataStore do
       uid = @data_store.store(temp_object)
       @data_store.retrieve(uid).first.should == "gollum"
     end
-  end
-
-  describe "destroy" do
-
-    if enabled # Fog.mock doesn't seem to be consistent here with real one
-      it "should raise not found if not found" do
-        lambda {
-          @data_store.destroy('some-random-egg')
-        }.should raise_error(Dragonfly::DataStorage::DataNotFound)
-      end
-    end
-    
   end
 
   describe "domain" do

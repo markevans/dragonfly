@@ -14,5 +14,6 @@ describe Dragonfly::DataStorage::CouchDataStore do
     )
   end
   
-  it_should_behave_like 'data_store'  
+  it_should_behave_like 'data_store'
+  
 end
