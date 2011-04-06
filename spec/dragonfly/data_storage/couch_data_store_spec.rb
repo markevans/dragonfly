@@ -1,10 +1,10 @@
 # encoding: utf-8
-require File.dirname(__FILE__) + '/../../spec_helper'
-require File.dirname(__FILE__) + '/data_store_spec'
-require 'couchrest'
+require 'spec_helper'
+require File.dirname(__FILE__) + '/shared_data_store_examples'
 
 describe Dragonfly::DataStorage::CouchDataStore do
   before(:each) do
+    WebMock.allow_net_connect!
     @data_store = Dragonfly::DataStorage::CouchDataStore.new(
       :host => "localhost", 
       :port => "5984", 

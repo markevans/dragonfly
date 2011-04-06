@@ -22,10 +22,13 @@ module Dragonfly
       end
 
       def store(temp_object, opts={})
+        meta = opts[:meta] || {}
+        name = meta[:name] || temp_object.original_filename || 'file'
+        
         temp_object.file do |f|
-          doc = CouchRest::Document.new(:extra => temp_object.attributes)
+          doc = CouchRest::Document.new(:meta => marshal_encode(meta))
           response = db.save_doc(doc)
-          doc.put_attachment(temp_object.attributes[:name] || 'file', f, {:content_type => 'application/octet-stream'})
+          doc.put_attachment(name, f, {:content_type => 'application/octet-stream'})
           response['id']
         end
       rescue Exception => e
@@ -35,8 +38,7 @@ module Dragonfly
       def retrieve(uid)
         doc = db.get(uid)
         name = doc['_attachments'].keys.first
-        extra = symbolize_keys_recursively(doc['extra'])
-        [doc.fetch_attachment(name), extra]
+        [doc.fetch_attachment(name), marshal_decode(doc['meta'])]
       rescue Exception => e
         raise DataNotFound, "#{e} - #{uid}"
       end
@@ -49,24 +51,13 @@ module Dragonfly
       end
 
       def db
-        auth = username.blank? ? nil : "#{username}:#{password}@"
-        url = "http://#{auth}#{host}:#{port}"
-        
-        @db ||= CouchRest.new(url).database!(database)
-      end
-
-    private
-      # CouchDocument always returns a hash with string keys, so symbolize them
-      def symbolize_keys_recursively(hash)
-        if hash.is_a? Hash
-          hash.inject({}) do |newhash, (k,v)|
-            newhash[k.to_sym] = symbolize_keys_recursively(v)
-            newhash
-          end
-        else
-          hash
+        @db ||= begin
+          auth = username.blank? ? nil : "#{username}:#{password}@"
+          url = "http://#{auth}#{host}:#{port}"
+          CouchRest.new(url).database!(database)
         end
       end
+
     end
   end
 end
