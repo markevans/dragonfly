@@ -31,7 +31,7 @@ module Dragonfly
           doc.put_attachment(name, f, {:content_type => 'application/octet-stream'})
           response['id']
         end
-      rescue Exception => e
+      rescue RuntimeError => e
         raise UnableToStore, "#{e} - #{temp_object.inspect}"
       end
 
@@ -39,14 +39,14 @@ module Dragonfly
         doc = db.get(uid)
         name = doc['_attachments'].keys.first
         [doc.fetch_attachment(name), marshal_decode(doc['meta'])]
-      rescue Exception => e
+      rescue RestClient::ResourceNotFound => e
         raise DataNotFound, "#{e} - #{uid}"
       end
 
       def destroy(uid)
         doc = db.get(uid)
         db.delete_doc(doc)
-      rescue Exception => e
+      rescue RestClient::ResourceNotFound => e
         raise DataNotFound, "#{e} - #{uid}"
       end
 
