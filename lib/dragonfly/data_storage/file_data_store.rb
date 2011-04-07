@@ -5,9 +5,13 @@ module Dragonfly
 
     class FileDataStore
 
+      # Exceptions
+      class UnableToFormUrl < RuntimeError; end
+
       include Configurable
 
       configurable_attr :root_path, '/var/tmp/dragonfly'
+      configurable_attr :server_root
       configurable_attr :store_meta, true
 
       def store(temp_object, opts={})
@@ -51,6 +55,19 @@ module Dragonfly
         purge_empty_directories(relative_path)
       rescue Errno::ENOENT => e
         raise DataNotFound, e.message
+      end
+
+      def url_for(relative_path, opts={})
+        if server_root.nil?
+          raise NotConfigured, "you need to configure server_root for #{self.class.name} in order to form urls"
+        else
+          _, __, path = absolute(relative_path).partition(server_root)
+          if path.empty?
+            raise UnableToFormUrl, "couldn't form url for uid #{relative_path.inspect} with root_path #{root_path.inspect} and server_root #{server_root.inspect}"
+          else
+            path
+          end
+        end
       end
 
       def disambiguate(path)

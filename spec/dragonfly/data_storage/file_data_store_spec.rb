@@ -227,5 +227,47 @@ describe Dragonfly::DataStorage::FileDataStore do
       @data_store.root_path.should be_an_empty_directory
     end
   end
+  
+  describe "urls for serving directly" do
+    before(:each) do
+      @uid = 'some/path/to/file.png'
+      @data_store.root_path = '/var/tmp/eggs'
+    end
+    
+    it "should raise an error if called without configuring" do
+      expect{
+        @data_store.url_for(@uid)
+      }.to raise_error(Dragonfly::Configurable::NotConfigured)
+    end
+    
+    it "should work as expected when the the server root is above the root path" do
+      @data_store.server_root = '/var/tmp'
+      @data_store.url_for(@uid).should == '/eggs/some/path/to/file.png'
+    end
+
+    it "should work as expected when the the server root is the root path" do
+      @data_store.server_root = '/var/tmp/eggs'
+      @data_store.url_for(@uid).should == '/some/path/to/file.png'
+    end
+
+    it "should work as expected when the the server root is below the root path" do
+      @data_store.server_root = '/var/tmp/eggs/some/path'
+      @data_store.url_for(@uid).should == '/to/file.png'
+    end
+
+    it "should raise an error when the server root doesn't coincide with the root path" do
+      @data_store.server_root = '/var/blimey/eggs'
+      expect{
+        @data_store.url_for(@uid)
+      }.to raise_error(Dragonfly::DataStorage::FileDataStore::UnableToFormUrl)
+    end
+
+    it "should raise an error when the server root doesn't coincide with the uid" do
+      @data_store.server_root = '/var/tmp/eggs/some/gooney'
+      expect{
+        @data_store.url_for(@uid)
+      }.to raise_error(Dragonfly::DataStorage::FileDataStore::UnableToFormUrl)
+    end
+  end
 
 end
