@@ -17,11 +17,10 @@ describe Dragonfly::DataStorage::S3DataStore do
     enabled = false
   end
 
-
-  # Make sure it's a new bucket name
-  BUCKET_NAME = "dragonfly-test-#{Time.now.to_i.to_s(36)}"
-
   if enabled
+
+    # Make sure it's a new bucket name
+    BUCKET_NAME = "dragonfly-test-#{Time.now.to_i.to_s(36)}"
 
     before(:each) do
       WebMock.allow_net_connect!
@@ -36,11 +35,13 @@ describe Dragonfly::DataStorage::S3DataStore do
     
   else
 
+    BUCKET_NAME = 'test-bucket'
+
     before(:each) do
       Fog.mock!
       @data_store = Dragonfly::DataStorage::S3DataStore.new
       @data_store.configure do |d|
-        d.bucket_name = 'test-bucket'
+        d.bucket_name = BUCKET_NAME
         d.access_key_id = 'XXXXXXXXX'
         d.secret_access_key = 'XXXXXXXXX'
         d.region = 'eu-west-1'
@@ -196,6 +197,28 @@ describe Dragonfly::DataStorage::S3DataStore do
       end
       @data_store.store(@temp_object, :headers => {'hello' => 'there'})
     end
+  end
+
+  describe "urls for serving directly" do
+    
+    before(:each) do
+      @uid = 'some/path/on/s3'
+    end
+    
+    it "should use the bucket subdomain" do
+      @data_store.url_for(@uid).should == "http://#{BUCKET_NAME}.s3.amazonaws.com/some/path/on/s3"
+    end
+    
+    it "should use the bucket subdomain for other regions too" do
+      @data_store.region = 'eu-west-1'
+      @data_store.url_for(@uid).should == "http://#{BUCKET_NAME}.s3.amazonaws.com/some/path/on/s3"
+    end
+    
+    it "should give an expiring url" do
+      @data_store.url_for(@uid, :expires => 1301476942).should =~
+        %r{^https://#{@data_store.domain}/#{BUCKET_NAME}/some/path/on/s3\?AWSAccessKeyId=#{@data_store.access_key_id}&Signature=[\w%]+&Expires=1301476942$}
+    end
+    
   end
 
 end
