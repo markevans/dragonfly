@@ -122,32 +122,32 @@ describe Dragonfly::DataStorage::S3DataStore do
     
     it "should require a bucket name on store" do
       @data_store.bucket_name = nil
-      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::Configurable::NotConfigured)
     end
     
     it "should require an access_key_id on store" do
       @data_store.access_key_id = nil
-      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::Configurable::NotConfigured)
     end
     
     it "should require a secret access key on store" do
       @data_store.secret_access_key = nil
-      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::Configurable::NotConfigured)
     end
     
     it "should require a bucket name on retrieve" do
       @data_store.bucket_name = nil
-      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::Configurable::NotConfigured)
     end
     
     it "should require an access_key_id on retrieve" do
       @data_store.access_key_id = nil
-      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::Configurable::NotConfigured)
     end
     
     it "should require a secret access key on retrieve" do
       @data_store.secret_access_key = nil
-      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::Configurable::NotConfigured)
     end
   end
 

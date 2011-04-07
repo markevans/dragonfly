@@ -2,7 +2,8 @@ module Dragonfly
   module Configurable
 
     # Exceptions
-    class BadConfigAttribute < StandardError; end
+    class NotConfigured < RuntimeError; end
+    class BadConfigAttribute < RuntimeError; end
 
     def self.included(klass)
       klass.class_eval do

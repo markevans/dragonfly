@@ -5,9 +5,6 @@ module Dragonfly
 
     class S3DataStore
 
-      # Exceptions
-      class NotConfigured < RuntimeError; end
-
       include Configurable
       include Serializer
 
