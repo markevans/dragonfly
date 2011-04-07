@@ -169,6 +169,14 @@ describe Dragonfly::DataStorage::FileDataStore do
       @data_store.root_path.should be_an_empty_directory
     end
 
+    it "should raise an error if the data doesn't exist on destroy" do
+      uid = @data_store.store(@temp_object)
+      @data_store.destroy(uid)
+      lambda{
+        @data_store.destroy(uid)
+      }.should raise_error(Dragonfly::DataStorage::DataNotFound)
+    end
+
   end
 
   describe "relative paths" do

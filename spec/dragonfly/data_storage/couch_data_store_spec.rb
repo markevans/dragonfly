@@ -25,6 +25,20 @@ describe Dragonfly::DataStorage::CouchDataStore do
   
   it_should_behave_like 'data_store'
   
+  describe "destroy" do
+    before(:each) do
+      @temp_object = Dragonfly::TempObject.new('gollum')
+    end
+    
+    it "should raise an error if the data doesn't exist on destroy" do
+      uid = @data_store.store(@temp_object)
+      @data_store.destroy(uid)
+      lambda{
+        @data_store.destroy(uid)
+      }.should raise_error(Dragonfly::DataStorage::DataNotFound)
+    end
+  end
+  
   describe "serving from couchdb" do
 
     def get_content(uid, name)
