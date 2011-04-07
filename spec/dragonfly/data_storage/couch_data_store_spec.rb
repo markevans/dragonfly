@@ -36,14 +36,6 @@ describe Dragonfly::DataStorage::CouchDataStore do
     before(:each) do
       @temp_object = Dragonfly::TempObject.new('testingyo')
     end
-
-    it "should serve using the format of the filename" do
-      pending
-    end
-    
-    it "should use the fallback if it has no ext" do
-      pending
-    end
     
     it "should use the fallback by default" do
       uid = @data_store.store(@temp_object)
