@@ -74,21 +74,16 @@ describe Dragonfly::App do
   describe "remote_url_for" do
     before(:each) do
       @app = test_app
+      @app.datastore = Object.new
     end
-    it "should raise an error if not configured" do
+    it "should raise an error if the datastore doesn't provide it" do
       lambda{
         @app.remote_url_for('some_uid')
       }.should raise_error(NotImplementedError)
     end
-    it "should correctly call it if configured" do
-      @app.configure do |c|
-        c.define_remote_url{|uid| "http://some.cdn/#{uid}" }
-      end
-      @app.remote_url_for('some_uid').should == 'http://some.cdn/some_uid'
-    end
-    it "should add other args" do
-      @app.define_remote_url{|uid, arg1| "http://some.cdn/#{uid}?#{arg1}" }
-      @app.remote_url_for('some_uid', 'cheese').should match_url('http://some.cdn/some_uid?cheese')
+    it "should correctly call it if the datastore provides it" do
+      @app.datastore.should_receive(:url_for).with('some_uid', :some => :opts).and_return 'http://egg.head'
+      @app.remote_url_for('some_uid', :some => :opts).should == 'http://egg.head'
     end
   end
 

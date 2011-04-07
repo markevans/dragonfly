@@ -122,9 +122,10 @@ module Dragonfly
     end
     configuration_method :define_remote_url
     
-    def remote_url_for(uid, *args)
-      raise NotImplementedError, "You need to configure remote_urls on the Dragonfly app" if get_remote_url.nil?
-      get_remote_url.call(uid, *args)
+    def remote_url_for(uid, opts={})
+      datastore.url_for(uid, opts)
+    rescue NoMethodError => e
+      raise NotImplementedError, "The datastore doesn't support serving content directly - #{datastore.inspect}"
     end
 
     def define_macro(mod, macro_name)

@@ -356,14 +356,10 @@ describe Item do
     end
 
     describe "remote_url" do
-      before(:each) do
-        @app.define_remote_url do |uid, opts|
-          'http://some.domain/' + uid + "?some=#{opts[:some]}"
-        end
-      end
       it "should give the remote url if the uid is set" do
         @item.preview_image_uid = 'some/uid'
-        @item.preview_image.remote_url(:some => 'param').should == 'http://some.domain/some/uid?some=param'
+        @app.should_receive(:remote_url_for).with('some/uid', :some => 'param').and_return('http://egg.nog')
+        @item.preview_image.remote_url(:some => 'param').should == 'http://egg.nog'
       end
       it "should return nil if the content is not yet saved" do
         @item.preview_image = "hello"
