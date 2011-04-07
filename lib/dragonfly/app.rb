@@ -38,7 +38,7 @@ module Dragonfly
     extend Forwardable
     def_delegator :datastore, :destroy
     def_delegators :new_job, :fetch, :generate, :fetch_file, :fetch_url
-    def_delegators :server, :call, :url_for
+    def_delegators :server, :call
 
     configurable_attr :datastore do DataStorage::FileDataStore.new end
     configurable_attr :cache_duration, 3600*24*365 # (1 year)
@@ -115,6 +115,19 @@ module Dragonfly
 
     def mime_type_for(format)
       registered_mime_types[file_ext_string(format)]
+    end
+
+    def define_url(&block)
+      @url_proc = block
+    end
+    configuration_method :define_url
+
+    def url_for(job, opts={})
+      if @url_proc
+        @url_proc.call(self, job, opts)
+      else
+        server.url_for(job, opts)
+      end
     end
 
     def remote_url_for(uid, opts={})

@@ -108,4 +108,28 @@ describe Dragonfly::App do
     end
   end
 
+  describe "url_for" do
+    before(:each) do
+      @app = test_app
+      @job = @app.fetch('eggs')
+    end
+    it "should give the server url by default" do
+      @app.url_for(@job).should =~ %r{^/\w+$}
+    end
+    it "should allow configuring" do
+      @app.configure do |c|
+        c.define_url do |app, job, opts|
+          "doogies"
+        end
+      end
+      @app.url_for(@job).should == 'doogies'
+    end
+    it "should yield the correct dooberries" do
+      @app.define_url do |app, job, opts|
+        [app, job, opts]
+      end
+      @app.url_for(@job, {'chuddies' => 'margate'}).should == [@app, @job, {'chuddies' => 'margate'}]
+    end
+  end
+
 end

@@ -300,7 +300,7 @@ module Dragonfly
     # URLs, etc.
 
     def url(opts={})
-      server.url_for(self, attributes_for_url.merge(opts)) unless steps.empty?
+      app.url_for(self, attributes_for_url.merge(opts)) unless steps.empty?
     end
 
     def b64_data
