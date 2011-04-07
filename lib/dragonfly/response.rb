@@ -29,6 +29,10 @@ module Dragonfly
       [404, {"Content-Type" => 'text/plain'}, [e.message]]
     end
 
+    def served?
+      request.get? && !etag_matches?
+    end
+
     private
 
     attr_reader :job, :env, :app
@@ -45,8 +49,9 @@ module Dragonfly
     end
 
     def etag_matches?
+      return @etag_matches unless @etag_matches.nil?
       if_none_match = env['HTTP_IF_NONE_MATCH']
-      if if_none_match
+      @etag_matches = if if_none_match
         if_none_match.tr!('"','')
         if_none_match.split(',').include?(job.unique_signature) || if_none_match == '*'
       else

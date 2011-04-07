@@ -18,13 +18,22 @@ module Dragonfly
       use_as_fallback_config(app)
     end
     
+    def before_serve(&block)
+      self.before_serve_callback = block
+    end
+    configuration_method :before_serve
+    
     def call(env)
       if dragonfly_url == env["PATH_INFO"]
         dragonfly_response
       elsif (params = url_mapper.params_for(env["PATH_INFO"], env["QUERY_STRING"])) && params['job']
         job = Job.deserialize(params['job'], app)
         job.validate_sha!(params['sha']) if protect_from_dos_attacks
-        Response.new(job, env).to_response
+        response = Response.new(job, env)
+        if before_serve_callback && response.served?
+          before_serve_callback.call(job, env)
+        end
+        response.to_response
       else
         [404, {'Content-Type' => 'text/plain', 'X-Cascade' => 'pass'}, ['Not found']]
       end
@@ -50,6 +59,7 @@ module Dragonfly
     private
     
     attr_reader :app
+    attr_accessor :before_serve_callback
 
     def url_mapper
       @url_mapper ||= UrlMapper.new(url_format,
