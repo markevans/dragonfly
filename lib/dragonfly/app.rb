@@ -117,11 +117,6 @@ module Dragonfly
       registered_mime_types[file_ext_string(format)]
     end
 
-    def define_remote_url(&block)
-      self.get_remote_url = proc(&block)
-    end
-    configuration_method :define_remote_url
-    
     def remote_url_for(uid, opts={})
       datastore.url_for(uid, opts)
     rescue NoMethodError => e
