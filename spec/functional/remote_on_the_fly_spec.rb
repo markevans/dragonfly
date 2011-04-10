@@ -5,7 +5,7 @@ describe "remote on-the-fly urls" do
   THUMBS = {}
   
   before(:each) do
-    @app = Dragonfly[:images].configure do |c|
+    @app = test_app.configure do |c|
       c.generator.add :test do
         "TEST"
       end
