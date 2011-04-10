@@ -8,6 +8,7 @@ app.configure_with(:imagemagick)
 
 ### Extend active record ###
 app.define_macro(ActiveRecord::Base, :image_accessor)
+app.define_macro(ActiveRecord::Base, :file_accessor)
 
 ### Insert the middleware ###
 # Where the middleware is depends on the version of Rails
