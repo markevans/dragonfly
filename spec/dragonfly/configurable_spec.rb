@@ -158,29 +158,47 @@ describe Dragonfly::Configurable do
   
   describe "nested configurable objects" do
 
-    it "should allow configuring nested configurable objects" do
-
+    before(:each) do
       class NestedThing
         include Dragonfly::Configurable
         configurable_attr :age, 29
+        def some_method(val)
+          @some_thing = val
+        end
+        configuration_method :some_method
+        attr_reader :some_thing
       end
 
       class Car
         def nested_thing
           @nested_thing ||= NestedThing.new
         end
+        nested_configurable :nested_thing
       end
 
       @car.configure do |c|
         c.nested_thing.configure do |nt|
           nt.age = 50
+          nt.some_method('yo')
         end
       end
-
-      @car.nested_thing.age.should == 50
-
     end
 
+    it "should allow configuring nested configurable accessors" do
+      @car.nested_thing.age.should == 50
+    end
+
+    it "should allow configuring nested configurable normal methods" do
+      @car.nested_thing.some_thing.should == 'yo'
+    end
+    
+    it "should not allow configuring directly on the config object" do
+      expect{
+        @car.configure do |c|
+          c.some_method('other')
+        end
+      }.to raise_error(Dragonfly::Configurable::BadConfigAttribute)
+    end
   end
   
   describe "configuring with a saved config" do

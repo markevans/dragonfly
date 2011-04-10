@@ -130,6 +130,10 @@ module Dragonfly
         @config_methods ||= []
       end
 
+      def nested_configurables
+        @nested_configurables ||= []
+      end
+
       def register_configuration(name, config=nil, &config_in_block) 
         saved_configs[name] = config_in_block || config
       end
@@ -159,7 +163,11 @@ module Dragonfly
       end
 
       def configuration_method(*method_names)
-        config_methods.push(*method_names.map{|n| n.to_sym })
+        config_methods.push(*method_names.map{|n| n.to_sym }).uniq!
+      end
+      
+      def nested_configurable(*method_names)
+        nested_configurables.push(*method_names)
       end
 
     end
@@ -178,8 +186,8 @@ module Dragonfly
           else
             owner.send(method_name, *args, &block)
           end
-        elsif nested_configurable?(method_name, *args)
-          owner.send(method_name, *args)
+        elsif nested_configurable?(method_name)
+          owner.send(method_name)
         else
           raise BadConfigAttribute, "You tried to configure using '#{method_name.inspect}',  but the valid config attributes are #{owner.config_methods.map{|a| %('#{a.inspect}') }.sort.join(', ')}"
         end
@@ -189,8 +197,8 @@ module Dragonfly
 
       attr_reader :owner
 
-      def nested_configurable?(method, *args)
-        owner.respond_to?(method) && owner.send(method, *args).is_a?(Configurable)
+      def nested_configurable?(method)
+        owner.configured_class.nested_configurables.include?(method.to_sym)
       end
 
     end

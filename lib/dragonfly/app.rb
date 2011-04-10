@@ -55,10 +55,7 @@ module Dragonfly
     attr_reader :generator
     attr_reader :server
 
-    configuration_method :analyser
-    configuration_method :processor
-    configuration_method :encoder
-    configuration_method :generator
+    nested_configurable :server, :analyser, :processor, :encoder, :generator
 
     attr_accessor :job_definitions
 
