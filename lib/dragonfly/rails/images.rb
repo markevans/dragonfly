@@ -14,7 +14,7 @@ app.define_macro(ActiveRecord::Base, :file_accessor)
 # Where the middleware is depends on the version of Rails
 middleware = Rails.respond_to?(:application) ? Rails.application.middleware : ActionController::Dispatcher.middleware
 
-middleware.insert_after 'Rack::Lock', 'Dragonfly::Middleware', :images
+middleware.insert 0, 'Dragonfly::Middleware', :images
 
 begin
   require 'rack/cache'
