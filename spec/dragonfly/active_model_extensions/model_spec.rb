@@ -1186,12 +1186,12 @@ describe Item do
       @item.preview_image.name = 'dog.biscuit'
       @app.datastore.should_receive(:store).with(a_temp_object_with_data('hello'), anything).and_return('new/uid')
       @item.preview_image.retain!
-      @item.retained_preview_image.should == Dragonfly::Serializer.marshal_encode(
+      Dragonfly::Serializer.marshal_decode(@item.retained_preview_image).should == {
         :uid => 'new/uid',
         :some_analyser_method => 'HELLO',
         :size => 5,
         :name => 'dog.biscuit'
-      )
+      }
     end
     
     it "should return nil if assigned, retained and saved" do
@@ -1281,7 +1281,8 @@ describe Item do
     
     it "should return the pending string again" do
       @item.retained_preview_image = @pending_string
-      @item.retained_preview_image.should == @pending_string
+      Dragonfly::Serializer.marshal_decode(@item.retained_preview_image).should ==
+        Dragonfly::Serializer.marshal_decode(@pending_string)
     end
     
     it "should destroy the old one on save" do
