@@ -66,7 +66,9 @@ module Dragonfly
     end
     
     def init_url_regexp
-      regexp_string = url_format.gsub(/[^\w_]:([\w_]+)/).with_index do |_, i|
+      i = -1
+      regexp_string = url_format.gsub(/[^\w_]:[\w_]+/) do
+        i += 1
         segments[i].regexp_string
       end
       @url_regexp = Regexp.new('^' + regexp_string + '$')

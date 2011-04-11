@@ -4,7 +4,6 @@ gem "rack"
 
 # These gems are needed for development and testing
 group :development, :test, :cucumber do
-  gem 'bluecloth'
   gem 'capybara'
   gem 'cucumber', '~>0.10.0'
   gem 'cucumber-rails', '~>0.3.2'
@@ -24,6 +23,7 @@ group :development, :test, :cucumber do
     gem "activerecord-jdbcsqlite3-adapter"
     gem "jruby-openssl"
   else
+    gem 'bluecloth'
     gem 'bson_ext'
     gem 'sqlite3-ruby'
   end
