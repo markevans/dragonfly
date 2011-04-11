@@ -40,7 +40,7 @@ module Dragonfly
 
       def retrieve(relative_path)
         path = absolute(relative_path)
-        pathname = path.to_pathname
+        pathname = Pathname.new(path)
         raise DataNotFound, "couldn't find file #{path}" unless pathname.exist?
         [
           pathname,
