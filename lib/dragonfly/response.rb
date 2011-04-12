@@ -26,7 +26,8 @@ module Dragonfly
         [200, success_headers.merge(cache_headers), job.result]
       end
     rescue DataStorage::DataNotFound => e
-      [404, {"Content-Type" => 'text/plain'}, [e.message]]
+      app.log.warn(e.message)
+      [404, {"Content-Type" => 'text/plain'}, ['Not found']]
     end
 
     def served?
