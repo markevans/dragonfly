@@ -19,9 +19,9 @@ module Dragonfly
       def_delegators :spec,
         :app, :attribute
 
-      def initialize(spec, parent_model)
-        @spec, @parent_model = spec, parent_model
-        self.uid = parent_uid
+      def initialize(spec, model)
+        @spec, @model = spec, model
+        self.uid = model_uid
         update_from_uid if uid
         @should_run_callbacks = true
       end
@@ -29,11 +29,11 @@ module Dragonfly
       def assign(value)
         self.changed = true
         destroy_retained! if retained?
-        set_uid_and_parent_uid(nil)
+        set_uid_and_model_uid(nil)
         if value.nil?
           self.job = nil
           reset_magic_attributes
-          spec.run_callbacks(:after_unassign, parent_model, self) if should_run_callbacks?
+          spec.run_callbacks(:after_unassign, model, self) if should_run_callbacks?
         else
           self.job = case value
           when Job then value.dup
@@ -42,7 +42,7 @@ module Dragonfly
           end
           set_magic_attributes
           update_meta
-          spec.run_callbacks(:after_assign, parent_model, self) if should_run_callbacks?
+          spec.run_callbacks(:after_assign, model, self) if should_run_callbacks?
         end
         value
       end
@@ -57,7 +57,7 @@ module Dragonfly
       end
 
       def save!
-        sync_with_parent
+        sync_with_model
         store_job! if job && !uid
         destroy_previous!
         self.changed = false
@@ -139,9 +139,9 @@ module Dragonfly
             unless attribute_keys.include?(key)
               raise BadAssignmentKey, "trying to call #{attribute}_#{key} = #{value.inspect} via retained_#{attribute} but this is not allowed!"
             end
-            parent_model.send("#{attribute}_#{key}=", value)
+            model.send("#{attribute}_#{key}=", value)
           end
-          sync_with_parent
+          sync_with_model
           update_from_uid
           self.retained = true
         end
@@ -160,8 +160,8 @@ module Dragonfly
       end
 
       def store_job!
-        opts = spec.evaluate_storage_opts(parent_model, self)
-        set_uid_and_parent_uid job.store(opts)
+        opts = spec.evaluate_storage_opts(model, self)
+        set_uid_and_model_uid job.store(opts)
         self.job = job.to_fetched_job(uid)
       end
 
@@ -178,27 +178,27 @@ module Dragonfly
         end
       end
 
-      def sync_with_parent
-        # If the parent uid has been set manually
-        if uid != parent_uid
-          self.uid = parent_uid
+      def sync_with_model
+        # If the model uid has been set manually
+        if uid != model_uid
+          self.uid = model_uid
         end
       end
 
-      def set_uid_and_parent_uid(uid)
+      def set_uid_and_model_uid(uid)
         self.uid = uid
-        self.parent_uid = uid
+        self.model_uid = uid
       end
 
-      def parent_uid=(uid)
-        parent_model.send("#{attribute}_uid=", uid)
+      def model_uid=(uid)
+        model.send("#{attribute}_uid=", uid)
       end
 
-      def parent_uid
-        parent_model.send("#{attribute}_uid")
+      def model_uid
+        model.send("#{attribute}_uid")
       end
 
-      attr_reader :spec, :parent_model
+      attr_reader :spec, :model
       attr_writer :job
       attr_accessor :previous_uid
       attr_reader :uid
@@ -209,8 +209,8 @@ module Dragonfly
       end
 
       def update_meta
-        magic_attributes.each{|property| meta[property] = parent_model.send("#{attribute}_#{property}") }
-        meta[:model_class] = parent_model.class.name
+        magic_attributes.each{|property| meta[property] = model.send("#{attribute}_#{property}") }
+        meta[:model_class] = model.class.name
         meta[:model_attachment] = attribute
       end
 
@@ -226,7 +226,7 @@ module Dragonfly
       def magic_attributes
         @magic_attributes ||= begin
           prefix = attribute.to_s + '_'
-          parent_model.public_methods.inject([]) do |attrs, name|
+          model.public_methods.inject([]) do |attrs, name|
             _, __, suffix  = name.to_s.partition(prefix)
             if !suffix.empty? && allowed_magic_attributes.include?(suffix.to_sym)
               attrs << suffix.to_sym
@@ -237,7 +237,7 @@ module Dragonfly
       end
 
       def set_magic_attribute(property, value)
-        parent_model.send("#{attribute}_#{property}=", value)
+        model.send("#{attribute}_#{property}=", value)
       end
 
       def set_magic_attributes
@@ -253,7 +253,7 @@ module Dragonfly
       end
 
       def magic_attribute_for(property)
-        parent_model.send("#{attribute}_#{property}")
+        model.send("#{attribute}_#{property}")
       end
 
     end
