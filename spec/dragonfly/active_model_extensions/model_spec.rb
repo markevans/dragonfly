@@ -13,10 +13,10 @@ describe Item do
 
   describe "defining accessors" do
 
-    let(:app1){ Dragonfly[:images] }
-    let(:app2){ Dragonfly[:videos] }
+    let(:app1){ Dragonfly[:img] }
+    let(:app2){ Dragonfly[:vid] }
 
-    describe "attachment specs" do
+    describe "attachment classes" do
       before(:each) do
         app1.define_macro(MyModel, :image_accessor)
         app2.define_macro(MyModel, :video_accessor)
@@ -24,23 +24,28 @@ describe Item do
           image_accessor :preview_image
           video_accessor :trailer_video
         end
-        @specs = Item.dragonfly_attachment_specs
-        @spec1, @spec2 = @specs
+        @classes = Item.dragonfly_attachment_classes
+        @class1, @class2 = @classes
       end
       
-      it "should return the attachment specs" do
-        @spec1.should be_a(Dragonfly::ActiveModelExtensions::AttachmentSpec)
-        @spec2.should be_a(Dragonfly::ActiveModelExtensions::AttachmentSpec)
+      it "should return the attachment classes" do
+        @class1.superclass.should == Dragonfly::ActiveModelExtensions::Attachment
+        @class2.superclass.should == Dragonfly::ActiveModelExtensions::Attachment
       end
 
-      it "should associate the correct app with each spec" do
-        @spec1.app.should == app1
-        @spec2.app.should == app2
+      it "should associate the correct app with each class" do
+        @class1.app.should == app1
+        @class2.app.should == app2
       end
 
-      it "should associate the correct attribute with each spec" do
-        @spec1.attribute.should == :preview_image
-        @spec2.attribute.should == :trailer_video
+      it "should associate the correct attribute with each class" do
+        @class1.attribute.should == :preview_image
+        @class2.attribute.should == :trailer_video
+      end
+
+      it "should associate the correct model class with each class" do
+        @class1.model_class.should == Item
+        @class2.model_class.should == Item
       end
     end
 
@@ -53,9 +58,9 @@ describe Item do
         include mongoid_document
         dog_accessor :doogie
       end
-      spec = model_class.dragonfly_attachment_specs.first
-      spec.app.should == app1
-      spec.attribute.should == :doogie
+      klass = model_class.dragonfly_attachment_classes.first
+      klass.app.should == app1
+      klass.attribute.should == :doogie
     end
 
   end
@@ -63,7 +68,7 @@ describe Item do
   describe "correctly defined" do
 
     before(:each) do
-      @app = Dragonfly[:images]
+      @app = test_app
       @app.define_macro(MyModel, :image_accessor)
       Item.class_eval do
         image_accessor :preview_image
@@ -372,7 +377,7 @@ describe Item do
   describe "validations" do
 
     before(:all) do
-      @app = Dragonfly[:images]
+      @app = test_app
       @app.define_macro(MyModel, :image_accessor)
     end
 
@@ -677,6 +682,19 @@ describe Item do
         }.should raise_error(NoMethodError)
       end
     end
+    
+    describe "job shortcuts" do
+      before(:each) do
+        @app.job :bacon do
+          process :breakfast
+        end
+        @item = Item.new :preview_image => 'gurg'
+      end
+      it "should add job shortcuts for that app" do
+        job = @item.preview_image.bacon
+        job.steps.first.should be_a(Dragonfly::Job::Process)
+      end
+    end
 
     describe "setting things on the attachment" do
 
@@ -737,8 +755,8 @@ describe Item do
   describe "inheritance" do
 
     before(:all) do
-      @app = Dragonfly[:images]
-      @app2 = Dragonfly[:egg]
+      @app = test_app
+      @app2 = test_app
       @app.define_macro(MyModel, :image_accessor)
       @app2.define_macro(MyModel, :egg_accessor)
       Car.class_eval do
@@ -777,11 +795,17 @@ describe Item do
     it "should allow assigning subclass accessors in the subclass, even if it has mixins" do
       @subclass_with_module.create! :reliant_image => 'blah'
     end
-    it "return the correct apps for each accessors, even when names clash" do
-      @base_class.dragonfly_attachment_specs.should match_attachment_specs([[:image, @app]])
-      @subclass.dragonfly_attachment_specs.should match_attachment_specs([[:image, @app], [:reliant_image, @app]])
-      @subclass_with_module.dragonfly_attachment_specs.should match_attachment_specs([[:image, @app], [:reliant_image, @app]])
-      @unrelated_class.dragonfly_attachment_specs.should match_attachment_specs([[:image, @app2]])
+    it "should return the correct attachment classes for the base class" do
+      @base_class.dragonfly_attachment_classes.should match_attachment_classes([[Car, :image, @app]])
+    end
+    it "should return the correct attachment classes for the subclass" do
+      @subclass.dragonfly_attachment_classes.should match_attachment_classes([[ReliantRobin, :image, @app], [ReliantRobin, :reliant_image, @app]])
+    end
+    it "should return the correct attachment classes for the subclass with module" do
+      @subclass_with_module.dragonfly_attachment_classes.should match_attachment_classes([[ReliantRobinWithModule, :image, @app], [ReliantRobinWithModule, :reliant_image, @app]])
+    end
+    it "should return the correct attachment classes for a class from a different hierarchy" do
+      @unrelated_class.dragonfly_attachment_classes.should match_attachment_classes([[Photo, :image, @app2]])
     end
   end
 

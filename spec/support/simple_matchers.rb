@@ -43,11 +43,11 @@ RSpec::Matchers.define :leak_memory do
   end
 end
 
-RSpec::Matchers.define :match_attachment_specs do |specs|
-  match do |given_specs|
-    given_specs.length == specs.length &&
-      specs.zip(given_specs).all? do |(spec, given)|
-        given.attribute == spec[0] && given.app == spec[1]
+RSpec::Matchers.define :match_attachment_classes do |classes|
+  match do |given_classes|
+    given_classes.length == classes.length &&
+      classes.zip(given_classes).all? do |(klass, given)|
+        given.model_class == klass[0] && given.attribute == klass[1] && given.app == klass[2]
       end
   end
 end

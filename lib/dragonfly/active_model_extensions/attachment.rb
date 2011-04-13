@@ -1,4 +1,5 @@
 require 'forwardable'
+require 'dragonfly/active_model_extensions/attachment_class_methods'
 
 module Dragonfly
   module ActiveModelExtensions
@@ -16,14 +17,19 @@ module Dragonfly
         :name, :ext,
         :url
 
-      def_delegators :spec,
-        :app, :attribute
-
-      def initialize(spec, model)
-        @spec, @model = spec, model
+      def initialize(model)
+        @model = model
         self.uid = model_uid
         update_from_uid if uid
         @should_run_callbacks = true
+      end
+
+      def app
+        self.class.app
+      end
+      
+      def attribute
+        self.class.attribute
       end
 
       def assign(value)
@@ -33,7 +39,7 @@ module Dragonfly
         if value.nil?
           self.job = nil
           reset_magic_attributes
-          spec.run_callbacks(:after_unassign, model, self) if should_run_callbacks?
+          self.class.run_callbacks(:after_unassign, model, self) if should_run_callbacks?
         else
           self.job = case value
           when Job then value.dup
@@ -42,7 +48,7 @@ module Dragonfly
           end
           set_magic_attributes
           update_meta
-          spec.run_callbacks(:after_assign, model, self) if should_run_callbacks?
+          self.class.run_callbacks(:after_assign, model, self) if should_run_callbacks?
         end
         value
       end
@@ -160,7 +166,7 @@ module Dragonfly
       end
 
       def store_job!
-        opts = spec.evaluate_storage_opts(model, self)
+        opts = self.class.evaluate_storage_opts(model, self)
         set_uid_and_model_uid job.store(opts)
         self.job = job.to_fetched_job(uid)
       end
@@ -198,10 +204,9 @@ module Dragonfly
         model.send("#{attribute}_uid")
       end
 
-      attr_reader :spec, :model
+      attr_reader :model, :uid
       attr_writer :job
       attr_accessor :previous_uid
-      attr_reader :uid
 
       def uid=(uid)
         self.previous_uid = @uid if @uid
@@ -219,21 +224,8 @@ module Dragonfly
         update_meta
       end
 
-      def allowed_magic_attributes
-        app.analyser.analysis_method_names + [:size, :name]
-      end
-
       def magic_attributes
-        @magic_attributes ||= begin
-          prefix = attribute.to_s + '_'
-          model.public_methods.inject([]) do |attrs, name|
-            _, __, suffix  = name.to_s.partition(prefix)
-            if !suffix.empty? && allowed_magic_attributes.include?(suffix.to_sym)
-              attrs << suffix.to_sym
-            end
-            attrs
-          end
-        end
+        self.class.magic_attributes
       end
 
       def set_magic_attribute(property, value)

@@ -3,8 +3,8 @@ module Dragonfly
     module InstanceMethods
       
       def dragonfly_attachments
-        @dragonfly_attachments ||= self.class.dragonfly_attachment_specs.inject({}) do |hash, spec|
-          hash[spec.attribute] = spec.new_attachment(self)
+        @dragonfly_attachments ||= self.class.dragonfly_attachment_classes.inject({}) do |hash, klass|
+          hash[klass.attribute] = klass.new(self)
           hash
         end
       end

@@ -8,14 +8,14 @@ module Dragonfly
         (class << self; self; end).class_eval do
     
           # Defines e.g. 'image_accessor' for any activerecord class body
-          define_method macro_name do |attribute, &block|
+          define_method macro_name do |attribute, &config_block|
 
             # Prior to activerecord 3, adding before callbacks more than once does add it more than once
             before_save :save_dragonfly_attachments unless respond_to?(:before_save_callback_chain) && before_save_callback_chain.find(:save_dragonfly_attachments)
             before_destroy :destroy_dragonfly_attachments unless respond_to?(:before_destroy_callback_chain) && before_destroy_callback_chain.find(:destroy_dragonfly_attachments)
       
             # Register the new attribute
-            dragonfly_attachment_specs << AttachmentSpec.new(attribute, app, &block)
+            dragonfly_attachment_classes << new_dragonfly_attachment_class(attribute, app, config_block)
             
             # Define the setter for the attribute
             define_method "#{attribute}=" do |value|
@@ -73,11 +73,21 @@ module Dragonfly
         app
       end
       
-      def dragonfly_attachment_specs
-        @dragonfly_attachment_specs ||= begin
+      def dragonfly_attachment_classes
+        @dragonfly_attachment_classes ||= begin
           parent_class = ancestors.select{|a| a.is_a?(Class) }[1]
-          parent_class.respond_to?(:dragonfly_attachment_specs) ? parent_class.dragonfly_attachment_specs.dup : []
+          if parent_class.respond_to?(:dragonfly_attachment_classes)
+            parent_class.dragonfly_attachment_classes.map do |klass|
+              new_dragonfly_attachment_class(klass.attribute, klass.app, klass.config_block)
+            end
+          else
+            []
+          end
         end
+      end
+      
+      def new_dragonfly_attachment_class(attribute, app, config_block)
+        Class.new(Attachment).init(self, attribute, app, config_block)
       end
       
     end
