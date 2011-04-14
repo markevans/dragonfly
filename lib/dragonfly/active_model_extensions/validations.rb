@@ -12,23 +12,23 @@ module Dragonfly
         allowed_values = opts[:in] || [opts[:as]]
 
         args = attrs + [opts]
-        validates_each(*args) do |record, attr, attachment|
+        validates_each(*args) do |model, attr, attachment|
           if attachment
             property = attachment.send(property_name)
             unless allowed_values.include?(property)
               message = opts[:message] ||
                 "#{property_name.to_s.humanize.downcase} is incorrect. "+
-                "It needs to be #{expected_values_string(allowed_values)}"+
+                "It needs to be #{Validations.expected_values_string(allowed_values)}"+
                 (property ? ", but was '#{property}'" : "")
-              message = message.call(property) if message.respond_to?(:call)
-              record.errors.add(attr, message)
+              message = message.call(property, model) if message.respond_to?(:call)
+              model.errors.add(attr, message)
             end
           end
         end
 
       end
 
-      def expected_values_string(allowed_values)
+      def self.expected_values_string(allowed_values)
         if allowed_values.is_a?(Range)
           "between #{allowed_values.first} and #{allowed_values.last}"
         else

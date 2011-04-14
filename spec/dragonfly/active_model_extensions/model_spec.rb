@@ -522,11 +522,12 @@ describe Item do
         @item.should_receive(:its_friday).and_return(false) # hack to get rid of other validation
         Item.class_eval do
           validates_property :mime_type, :of => :preview_image, :as => 'one/thing',
-            :message => proc{|actual| "Unlucky! Was #{actual}" }
+            :message => proc{|actual, model| "Unlucky #{model.title}! Was #{actual}" }
         end
+        @item.title = 'scubby'
         @item.preview_image = "WRONG TYPE"
         @item.should_not be_valid
-        @item.errors[:preview_image].should  == ["Unlucky! Was wrong/type"]
+        @item.errors[:preview_image].should  == ["Unlucky scubby! Was wrong/type"]
       end
 
     end
