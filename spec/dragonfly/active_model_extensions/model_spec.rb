@@ -1400,4 +1400,15 @@ describe Item do
     end
   end
   
+  describe "inspect" do
+    before(:each) do
+      set_up_item_class
+      @item = Item.new :preview_image => 'blug'
+      @item.save!
+    end
+    it "should be awesome" do
+      @item.preview_image.inspect.should =~ %r{^<Dragonfly Attachment uid="[^"]+".*>$}
+    end
+  end
+  
 end

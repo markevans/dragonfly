@@ -145,6 +145,10 @@ module Dragonfly
           self.retained = true
         end
       end
+      
+      def inspect
+        "<Dragonfly Attachment uid=#{uid.inspect}, app=#{app.inspect}>"
+      end
 
       protected
 
