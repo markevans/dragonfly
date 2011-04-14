@@ -15,7 +15,7 @@ Feature: champion adds cover images to his albums
     When I go to the new album page
     And I attach the file "../../../samples/sample.docx" to "album[cover_image]"
     And I press "Create"
-    Then I should see "Cover image format is incorrect. It needs to be one of 'jpg', 'png', 'gif', but was 'docx'"
+    Then I should see "Cover image format is incorrect. It needs to be one of 'jpg', 'png', 'gif'"
 
   Scenario: other validation fails
     When I go to the new album page
