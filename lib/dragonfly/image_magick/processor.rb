@@ -22,13 +22,15 @@ module Dragonfly
       
       include Utils
       
-      def resize(temp_object, geometry)
-        convert(temp_object, "-resize '#{geometry}'")
-      end
-      
-      def filter(temp_object, name, opts={})
-        raise ArgumentError if name !~ /^\w*$/
-        convert(temp_object, "-filter #{name}")
+      def resize(temp_object, geometry, opts={})
+        raise ArgumentError if geometry !~ RESIZE_GEOMETRY
+        filter = opts[:filter]
+        if filter
+          raise ArgumentError if filter !~ /^\w*$/
+          initial = "-filter #{filter}"
+        end
+
+        convert(temp_object, "#{initial} -resize '#{geometry}'")
       end
       
       def crop(temp_object, opts={})

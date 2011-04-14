@@ -72,13 +72,15 @@ describe Dragonfly::ImageMagick::Processor do
 
     end
 
-  end
-  
-  describe "filter" do
-    it "should not raise an error" do
-      # Bit tricky to test
-      @processor.filter(@image, "Gaussian")
+    describe "filter" do
+      
+      it "should not raise an error" do
+        # Bit tricky to test
+        @processor.resize(@image, '500x', :filter => "Gaussian")
+      end
+
     end
+
   end
 
   describe "crop" do # Difficult to test here other than dimensions
