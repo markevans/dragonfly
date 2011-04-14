@@ -467,11 +467,17 @@ describe Item do
       it "should be invalid if the property is nil" do
         @item.preview_image = "OTHER TYPE"
         @item.should_not be_valid
-        @item.errors[:preview_image].should match_ar_error("mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was 'application/octet-stream'")
+        @item.errors[:preview_image].should match_ar_error("mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was ''")
       end
 
       it "should be invalid if the property is wrong" do
         @item.preview_image = "WRONG TYPE"
+        @item.should_not be_valid
+        @item.errors[:preview_image].should match_ar_error("mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was 'wrong/type'")
+      end
+
+      it "should analyse rather than just send the method" do
+        @item.preview_image = @app.new_job("WRONG TYPE", :format => :txt)
         @item.should_not be_valid
         @item.errors[:preview_image].should match_ar_error("mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was 'wrong/type'")
       end

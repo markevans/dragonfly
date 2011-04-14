@@ -14,7 +14,7 @@ module Dragonfly
         args = attrs + [opts]
         validates_each(*args) do |record, attr, attachment|
           if attachment
-            property = attachment.send(property_name)
+            property = attachment.analyse(property_name)
             record.errors.add(attr,
                               opts[:message] ||
                                 "#{property_name.to_s.humanize.downcase} is incorrect. It needs to be #{expected_values_string(allowed_values)}, but was '#{property}'"
