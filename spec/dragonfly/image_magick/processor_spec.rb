@@ -73,6 +73,13 @@ describe Dragonfly::ImageMagick::Processor do
     end
 
   end
+  
+  describe "filter" do
+    it "should not raise an error" do
+      # Bit tricky to test
+      @processor.filter(@image, "Gaussian")
+    end
+  end
 
   describe "crop" do # Difficult to test here other than dimensions
 

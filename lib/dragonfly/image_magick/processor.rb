@@ -26,6 +26,11 @@ module Dragonfly
         convert(temp_object, "-resize '#{geometry}'")
       end
       
+      def filter(temp_object, name, opts={})
+        raise ArgumentError if name !~ /^\w*$/
+        convert(temp_object, "-filter #{name}")
+      end
+      
       def crop(temp_object, opts={})
         width   = opts[:width]
         height  = opts[:height]
