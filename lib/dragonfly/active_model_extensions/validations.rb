@@ -20,6 +20,7 @@ module Dragonfly
                 "#{property_name.to_s.humanize.downcase} is incorrect. "+
                 "It needs to be #{expected_values_string(allowed_values)}"+
                 (property ? ", but was '#{property}'" : "")
+              message = message.call(property) if message.respond_to?(:call)
               record.errors.add(attr, message)
             end
           end

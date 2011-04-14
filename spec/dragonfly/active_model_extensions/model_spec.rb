@@ -517,6 +517,17 @@ describe Item do
         @item.should_not be_valid
         @item.errors[:otra_imagen].should  == ["tipo de contenido incorrecto. Que chungo tio"]
       end
+      
+      it "should allow for custom messages including access to the property name and expected/allowed values" do
+        @item.should_receive(:its_friday).and_return(false) # hack to get rid of other validation
+        Item.class_eval do
+          validates_property :mime_type, :of => :preview_image, :as => 'one/thing',
+            :message => proc{|actual| "Unlucky! Was #{actual}" }
+        end
+        @item.preview_image = "WRONG TYPE"
+        @item.should_not be_valid
+        @item.errors[:preview_image].should  == ["Unlucky! Was wrong/type"]
+      end
 
     end
 
