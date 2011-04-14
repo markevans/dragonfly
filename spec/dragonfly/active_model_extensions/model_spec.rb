@@ -467,33 +467,33 @@ describe Item do
       it "should be invalid if the property is nil" do
         @item.preview_image = "OTHER TYPE"
         @item.should_not be_valid
-        @item.errors[:preview_image].should match_ar_error("mime type is incorrect. It needs to be one of 'how/special', 'how/crazy'")
+        @item.errors[:preview_image].should == ["mime type is incorrect. It needs to be one of 'how/special', 'how/crazy'"]
       end
 
       it "should be invalid if the property is wrong" do
         @item.preview_image = "WRONG TYPE"
         @item.should_not be_valid
-        @item.errors[:preview_image].should match_ar_error("mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was 'wrong/type'")
+        @item.errors[:preview_image].should == ["mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was 'wrong/type'"]
       end
 
       it "should analyse rather than just send the method" do
         @item.preview_image = @app.new_job("WRONG TYPE", :format => :txt)
         @item.should_not be_valid
-        @item.errors[:preview_image].should match_ar_error("mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was 'wrong/type'")
+        @item.errors[:preview_image].should == ["mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was 'wrong/type'"]
       end
 
       it "should work for a range" do
         @item.preview_image = "GOOGLE GUM"
         @item.should_not be_valid
-        @item.errors[:preview_image].should match_ar_error("number of gs is incorrect. It needs to be between 0 and 2, but was '3'")
+        @item.errors[:preview_image].should == ["number of gs is incorrect. It needs to be between 0 and 2, but was '3'"]
       end
 
       it "should validate individually" do
         @item.other_image = "1234567"
         @item.yet_another_image = "WRONG TYPE"
         @item.should_not be_valid
-        @item.errors[:other_image].should match_ar_error(nil)
-        @item.errors[:yet_another_image].should match_ar_error("mime type is incorrect. It needs to be 'how/special', but was 'wrong/type'")
+        @item.errors[:other_image].should == []
+        @item.errors[:yet_another_image].should == ["mime type is incorrect. It needs to be 'how/special', but was 'wrong/type'"]
       end
 
       it "should include standard extra options like 'if' on mime type validation" do
@@ -521,7 +521,7 @@ describe Item do
       it "should allow for custom messages" do
         @item.otra_imagen = "WRONG TYPE"
         @item.should_not be_valid
-        @item.errors[:otra_imagen].should match_ar_error("tipo de contenido incorrecto. Que chungo tio")
+        @item.errors[:otra_imagen].should  == ["tipo de contenido incorrecto. Que chungo tio"]
       end
 
     end

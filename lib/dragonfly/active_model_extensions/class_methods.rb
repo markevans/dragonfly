@@ -7,12 +7,12 @@ module Dragonfly
       def register_dragonfly_app(macro_name, app)
         (class << self; self; end).class_eval do
     
-          # Defines e.g. 'image_accessor' for any activerecord class body
+          # Defines e.g. 'image_accessor' for any activemodel class body
           define_method macro_name do |attribute, &config_block|
 
-            # Prior to activerecord 3, adding before callbacks more than once does add it more than once
-            before_save :save_dragonfly_attachments unless respond_to?(:before_save_callback_chain) && before_save_callback_chain.find(:save_dragonfly_attachments)
-            before_destroy :destroy_dragonfly_attachments unless respond_to?(:before_destroy_callback_chain) && before_destroy_callback_chain.find(:destroy_dragonfly_attachments)
+            # Add callbacks
+            before_save :save_dragonfly_attachments
+            before_destroy :destroy_dragonfly_attachments
       
             # Register the new attribute
             dragonfly_attachment_classes << new_dragonfly_attachment_class(attribute, app, config_block)

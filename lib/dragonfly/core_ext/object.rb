@@ -1,6 +1,6 @@
 class Object
   
-  # Will eventually get this by cherry-picking from activesupport
+  # Don't want to depend on activesupport for this
   def blank?
     respond_to?(:empty?) ? empty? : !self
   end

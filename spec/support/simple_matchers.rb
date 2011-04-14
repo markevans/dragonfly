@@ -13,14 +13,6 @@ RSpec::Matchers.define :be_an_empty_directory do
   end
 end
 
-# The reason we need this is that ActiveRecord 2.x returns just a string/nil, whereas AR 3 always returns an array
-RSpec::Matchers.define :match_ar_error do |string|
-  match do |given|
-    error = given.is_a?(Array) ? given.first : given
-    error == string
-  end
-end
-
 RSpec::Matchers.define :include_hash do |hash|
   match do |given|
     given.merge(hash) == given

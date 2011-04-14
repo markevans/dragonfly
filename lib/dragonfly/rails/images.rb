@@ -11,14 +11,11 @@ app.define_macro(ActiveRecord::Base, :image_accessor)
 app.define_macro(ActiveRecord::Base, :file_accessor)
 
 ### Insert the middleware ###
-# Where the middleware is depends on the version of Rails
-middleware = Rails.respond_to?(:application) ? Rails.application.middleware : ActionController::Dispatcher.middleware
-
-middleware.insert 0, 'Dragonfly::Middleware', :images
+Rails.application.middleware.insert 0, 'Dragonfly::Middleware', :images
 
 begin
   require 'rack/cache'
-  middleware.insert_before 'Dragonfly::Middleware', 'Rack::Cache', {
+  Rails.application.middleware.insert_before 'Dragonfly::Middleware', 'Rack::Cache', {
     :verbose     => true,
     :metastore   => URI.encode("file:#{Rails.root}/tmp/dragonfly/cache/meta"), # URI encoded because Windows
     :entitystore => URI.encode("file:#{Rails.root}/tmp/dragonfly/cache/body")  # has problems with spaces
