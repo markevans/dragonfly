@@ -15,10 +15,13 @@ module Dragonfly
         validates_each(*args) do |record, attr, attachment|
           if attachment
             property = attachment.analyse(property_name)
-            record.errors.add(attr,
-                              opts[:message] ||
-                                "#{property_name.to_s.humanize.downcase} is incorrect. It needs to be #{expected_values_string(allowed_values)}, but was '#{property}'"
-                              ) unless allowed_values.include?(property)
+            unless allowed_values.include?(property)
+              message = opts[:message] ||
+                "#{property_name.to_s.humanize.downcase} is incorrect. "+
+                "It needs to be #{expected_values_string(allowed_values)}"+
+                (property ? ", but was '#{property}'" : "")
+              record.errors.add(attr, message)
+            end
           end
         end
 
