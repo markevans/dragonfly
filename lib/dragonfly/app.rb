@@ -45,7 +45,7 @@ module Dragonfly
     configurable_attr :fallback_mime_type, 'application/octet-stream'
     configurable_attr :secret, 'secret yo'
     configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
-    configurable_attr :infer_mime_type_from_file_ext, true
+    configurable_attr :trust_file_extensions, true
     configurable_attr :content_disposition
     configurable_attr :content_filename, Response::DEFAULT_FILENAME
 

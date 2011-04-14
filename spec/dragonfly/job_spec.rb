@@ -594,8 +594,8 @@ describe Dragonfly::Job do
         it "should use the ext if format meta doesn't exist" do
           @job.url.should == "/#{@job.serialize}.hi"
         end
-        it "should not use the ext if format meta doesn't exist and inferring from ext is switched off" do
-          @app.infer_mime_type_from_file_ext = false
+        it "should not use the ext if format meta doesn't exist and trust_file_extensions is switched off" do
+          @app.trust_file_extensions = false
           @job.url.should == "/#{@job.serialize}"
         end
         it "should not set if neither exist" do
@@ -942,7 +942,7 @@ describe Dragonfly::Job do
         @job.format.should == :pdf
       end
       it "should not use the file extension if it's been switched off" do
-        @app.infer_mime_type_from_file_ext = false
+        @app.trust_file_extensions = false
         @job = @app.new_job("HIMATE", :name => 'test.pdf')
         @job.format.should be_nil
       end

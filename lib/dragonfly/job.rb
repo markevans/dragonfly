@@ -437,7 +437,7 @@ module Dragonfly
     private
 
     def format_from_meta
-      meta[:format] || (ext.to_sym if ext && app.infer_mime_type_from_file_ext)
+      meta[:format] || (ext.to_sym if ext && app.trust_file_extensions)
     end
 
     def last_step_of_type(type)
