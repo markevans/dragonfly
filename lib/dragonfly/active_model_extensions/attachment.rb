@@ -14,7 +14,7 @@ module Dragonfly
         :data, :to_file, :file, :tempfile, :path,
         :process, :encode, :analyse,
         :meta, :meta=,
-        :name, :ext,
+        :name, :basename, :ext, :size,
         :url
 
       def initialize(model)
@@ -22,6 +22,7 @@ module Dragonfly
         self.uid = model_uid
         update_from_uid if uid
         @should_run_callbacks = true
+        self.class.ensure_uses_cached_magic_attributes
       end
 
       def app
@@ -72,14 +73,6 @@ module Dragonfly
 
       def to_value
         self if job
-      end
-
-      def analyse(meth, *args)
-        has_magic_attribute_for?(meth) ? magic_attribute_for(meth) : job.send(meth)
-      end
-
-      def size
-        analyse(:size)
       end
 
       def name=(name)

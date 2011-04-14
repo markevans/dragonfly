@@ -75,6 +75,7 @@ module Dragonfly
 
         attr_reader :model_class, :attribute, :app, :config_block
 
+        # Callbacks
         def callbacks
           @callbacks ||= Hash.new{|h,k| h[k] = [] }
         end
@@ -90,8 +91,9 @@ module Dragonfly
           attachment.should_run_callbacks = true
         end
 
+        # Magic attributes
         def allowed_magic_attributes
-          app.analyser.analysis_method_names + [:size, :name]
+          app.analyser.analysis_method_names + [:size, :basename, :name, :ext, :meta]
         end
 
         def magic_attributes
@@ -107,6 +109,17 @@ module Dragonfly
           end
         end
 
+        def ensure_uses_cached_magic_attributes
+          return if @uses_cached_magic_attributes
+          magic_attributes.each do |attr|
+            define_method attr do
+              magic_attribute_for(attr)
+            end
+          end
+          @uses_cached_magic_attributes = true
+        end
+
+        # Storage options
         def storage_opts_specs
           @storage_opts_specs ||= []
         end
