@@ -69,6 +69,12 @@ module Dragonfly
           @model_class, @attribute, @app, @config_block = model_class, attribute, app, config_block
           include app.analyser.analysis_methods
           include app.job_definitions
+          define_method :format do
+            job.format
+          end
+          define_method :mime_type do
+            job.mime_type
+          end
           ConfigProxy.new(self, config_block) if config_block
           self
         end

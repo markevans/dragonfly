@@ -1375,4 +1375,35 @@ describe Item do
     end
   end
   
+  describe "format and mime type" do
+    before(:each) do
+      @app = test_app
+      @app.analyser.add :mime_type do |temp_object|
+        'some/type'
+      end
+      set_up_item_class(@app)
+      @item = Item.new
+      @content = "doggo"
+      @content.stub!(:original_filename).and_return('egg.png')
+    end
+    it "should trust the file extension with format if configured to" do
+      @item.preview_image = @content
+      @item.preview_image.format.should == :png
+    end
+    it "should trust the file extension with mime_type if configured to" do
+      @item.preview_image = @content
+      @item.preview_image.mime_type.should == 'image/png'
+    end
+    it "should not trust the file extension with format if configured not to" do
+      @app.trust_file_extensions = false
+      @item.preview_image = @content
+      @item.preview_image.format.should == nil
+    end
+    it "should not trust the file extension with mime_type if configured not to" do
+      @app.trust_file_extensions = false
+      @item.preview_image = @content
+      @item.preview_image.mime_type.should == 'some/type'
+    end
+  end
+  
 end
