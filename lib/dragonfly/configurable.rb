@@ -180,8 +180,8 @@ module Dragonfly
 
       def method_missing(method_name, *args, &block)
         if owner.has_config_method?(method_name)
-          if method_name.to_s =~ /=$/
-            attribute = method_name.to_s.tr('=','').to_sym
+          attribute = method_name.to_s.tr('=','').to_sym
+          if method_name.to_s =~ /=$/ && owner.has_config_method?(attribute) # a bit hacky - if it has both getter and setter, assume it's a configurable_attr
             owner.set_config_value(attribute, args.first)
           else
             owner.send(method_name, *args, &block)
