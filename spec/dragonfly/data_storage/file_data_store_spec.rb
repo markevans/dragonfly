@@ -159,6 +159,12 @@ describe Dragonfly::DataStorage::FileDataStore do
       pathname.read.should == 'hey dog'
       meta.should == {}
     end
+    it "should work even if meta is stored in old .extra file" do
+      uid = @data_store.store(@temp_object, :meta => {:dog => 'food'})
+      FileUtils.mv("#{@data_store.root_path}/#{uid}.meta", "#{@data_store.root_path}/#{uid}.extra")
+      pathname, meta = @data_store.retrieve(uid)
+      meta.should == {:dog => 'food'}
+    end
   end
   
   describe "destroying" do
@@ -175,6 +181,15 @@ describe Dragonfly::DataStorage::FileDataStore do
       lambda{
         @data_store.destroy(uid)
       }.should raise_error(Dragonfly::DataStorage::DataNotFound)
+    end
+
+    it "should also destroy old .extra files" do
+      uid = @data_store.store(@temp_object)
+      FileUtils.cp("#{@data_store.root_path}/#{uid}.meta", "#{@data_store.root_path}/#{uid}.extra")
+      @data_store.destroy(uid)
+      File.exist?("#{@data_store.root_path}/#{uid}").should be_false
+      File.exist?("#{@data_store.root_path}/#{uid}.meta").should be_false
+      File.exist?("#{@data_store.root_path}/#{uid}.extra").should be_false
     end
 
   end
