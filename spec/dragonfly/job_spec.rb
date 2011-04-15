@@ -1032,4 +1032,15 @@ describe Dragonfly::Job do
     end
   end
 
+  describe "deprecated meta format" do
+    before(:each) do
+      @app = test_app
+    end
+    it "should still work if the datastore/whatever returns meta nested in :meta key" do
+      @app.datastore.should_receive(:retrieve).with('some_uid').and_return(['HELLO', {:name => 'test.txt', :meta => {:some => 'meta'}}])
+      job = @app.fetch('some_uid').apply
+      job.meta.should == {:name => 'test.txt', :some => 'meta'}
+    end
+  end
+
 end

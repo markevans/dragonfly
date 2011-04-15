@@ -422,7 +422,10 @@ module Dragonfly
     end
     
     def update(content, meta)
-      self.meta.merge!(meta) if meta
+      if meta
+        meta.merge!(meta.delete(:meta)) if meta[:meta] # legacy data etc. may have nested meta hash - deprecate gracefully here
+        self.meta.merge!(meta)
+      end
       if content
         self.temp_object = TempObject.new(content)
         self.name = temp_object.original_filename if name.nil? && temp_object.original_filename
