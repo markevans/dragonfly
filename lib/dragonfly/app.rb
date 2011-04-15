@@ -139,6 +139,22 @@ module Dragonfly
         alias included included_with_dragonfly
       end
     end
+    
+    # Deprecated methods
+    def url_path_prefix=(thing)
+      raise NoMethodError, "url_path_prefix is deprecated - please use url_format, e.g. url_format = '/media/:job/:basename.:format' - see docs for more details"
+    end
+    configuration_method :url_path_prefix=
+
+    def url_suffix=(thing)
+      raise NoMethodError, "url_suffix is deprecated - please use url_format, e.g. url_format = '/media/:job/:basename.:format' - see docs for more details"
+    end
+    configuration_method :url_suffix=
+
+    def infer_mime_type_from_file_ext=(bool)
+      raise NoMethodError, "infer_mime_type_from_file_ext is deprecated - please use trust_file_extensions = #{bool.inspect} instead"
+    end
+    configuration_method :infer_mime_type_from_file_ext=
 
     private
 

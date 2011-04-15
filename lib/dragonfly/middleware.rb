@@ -1,7 +1,8 @@
 module Dragonfly
   class Middleware
 
-    def initialize(app, dragonfly_app_name)
+    def initialize(app, dragonfly_app_name, deprecated_arg=nil)
+      raise ArgumentError, "mounting Dragonfly::Middleware with a mount point is deprecated - just use Dragonfly::Middleware, #{dragonfly_app_name.inspect}" if deprecated_arg
       @app = app
       @dragonfly_app_name = dragonfly_app_name
     end
