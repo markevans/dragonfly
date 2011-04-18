@@ -1,9 +1,50 @@
-(????)
+0.9.0 (2011-04-19)
 ==================
-?????
+Features
 --------
+- Model accessors are configurable
+  - added `after_assign` callback
+  - added `after_unassign` callback
+  - added `copy_to` for e.g. up-front thumbnailing
+  - added `storage_opts` and `storage_xxx`
+- Added model `remove_xxxxx` for using with checkboxes
+- Added model `xxxx_url` for assigning content from a url
+- Added job step `fetch_url`
+- Added `retain` and `retain!` for avoiding multiple uploads when validations fail
+- Added `image?` to imagemagick analyser
+- Added imagemagick `plain` generator
 - Added CouchDataStore that uses a CouchDB as a data storage engine
-- 
+- Added `before_serve` callback
+- Made url re-definable with `define_url`
+- `validates_property` can take a proc for the message
+- Saved configs can be registered now so they can be used with `configure_with(:symbol)`
+- Configurable objects can fallback to a parent configuration, so e.g. the server can be configured through the parent app's configure block.
+- Allowed initializing data by using a pathname
+- `convert_command` and `identify_command` can be configured on a per-app basis
+- Added `remote_url` and ability for datastores to form urls
+  - Added for File and S3 datastores
+- Models automatically copy magic attributes into meta
+- S3DataStore configurable headers
+- 'dragonfly/rails/images' slightly smarter and added `file_accessor` for more semantic use of non-image attachments
+- Made dragonfly response configurable
+- Mongo datastore can reuse an existing connection/db
+- FileDataStore can be configured not to store meta (save on extra file)
+
+Changes
+-------
+- Removed `url_path_prefix` and `url_suffix` in favour of `url_format`
+  - Middleware doesn't need mount point argument now
+- Removed support for rails 2.3
+- Removed RMagick support (and extracted into a plugin)
+- ImageMagick processors etc. moved into the ImageMagick namespace
+- moved from aws/s3 -> fog for S3 support
+- Renamed SimpleEndpoint -> Server
+- moved name and meta into Job, simplified, and now they don't cause the job to be applied
+- FileDataStore stores metadata in xxx.meta now, not xxx.extra
+
+Fixes
+-----
+- Performance tweaks regarding temp_objects model accessors and job objects
 
 0.8.2 (2010-01-11)
 ==================
