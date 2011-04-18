@@ -7,8 +7,10 @@ app.configure_with(:rails)
 app.configure_with(:imagemagick)
 
 ### Extend active record ###
-app.define_macro(ActiveRecord::Base, :image_accessor)
-app.define_macro(ActiveRecord::Base, :file_accessor)
+if defined?(ActiveRecord::Base)
+  app.define_macro(ActiveRecord::Base, :image_accessor)
+  app.define_macro(ActiveRecord::Base, :file_accessor)
+end
 
 ### Insert the middleware ###
 Rails.application.middleware.insert 0, 'Dragonfly::Middleware', :images
