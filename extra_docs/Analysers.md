@@ -1,43 +1,10 @@
 Analysers
 =========
-
-Analysing data for things like width, mime_type, etc. come under the banner of Analysis.
-
-You can register as many analysers as you like.
-
-Let's say we have a Dragonfly app
-
-    app = Dragonfly[:images]
-
-and an image object (actually a {Dragonfly::Job Job} object)...
-
-    image = app.fetch('some/uid')
-
-...OR a Dragonfly model accessor...
-
-    image = @album.cover_image
-
-We can analyse it using any analysis methods that have been registered with the analyser.
+Analysers are registered with Dragonfly apps for adding methods to {file:GeneralUsage Job} objects and {file:Models model attachments} such as `width`, `height`, etc.
 
 ImageMagick Analyser
 --------------------
-The {Dragonfly::ImageMagick::Analyser ImageMagick Analyser} is registered by default by the
-{Dragonfly::ImageMagick::Config ImageMagick configuration} used by 'dragonfly/rails/images'.
-
-If not already registered:
-
-    app.analyser.register(Dragonfly::ImageMagick::Analyser)
-
-gives us these methods:
-
-    image.width               # => 280
-    image.height              # => 355
-    image.aspect_ratio        # => 0.788732394366197
-    image.portrait?           # => true
-    image.landscape?          # => false
-    image.depth               # => 8
-    image.number_of_colours   # => 34703
-    image.format              # => :png
+See {file:ImageMagick}.
 
 FileCommandAnalyser
 -------------------
