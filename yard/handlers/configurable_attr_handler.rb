@@ -2,7 +2,7 @@ class ConfigurableAttrHandler < YARD::Handlers::Ruby::Legacy::Base
   handles(/^\s*configurable_attr/)
 
   def process
-    owner[:configurable_attributes] ||= []
+    namespace[:configurable_attributes] ||= []
     
     attribute = token_to_object(statement.tokens[2])
     comments = statement.comments.join(' ') if statement.comments
@@ -14,7 +14,7 @@ class ConfigurableAttrHandler < YARD::Handlers::Ruby::Legacy::Base
     # e.g. configurable_attr :fallback_mime_type, 'application/octet-stream'    
       default_value = token_to_object(statement.tokens[5..-1])
     end
-    owner[:configurable_attributes] << {
+    namespace[:configurable_attributes] << {
       :attribute => attribute,
       :default_value => default_value,
       :lazy_default_value => lazy_default_value,
