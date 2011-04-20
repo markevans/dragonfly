@@ -14,6 +14,7 @@ module Dragonfly
       configurable_attr :use_filesystem, true
       configurable_attr :region
       configurable_attr :storage_headers, {'x-amz-acl' => 'public-read'}
+      configurable_attr :specific_uid
 
       REGIONS = {
         'us-east-1'      => 's3.amazonaws.com',  #default
@@ -32,11 +33,11 @@ module Dragonfly
       def store(temp_object, opts={})
         ensure_configured
         ensure_bucket_initialized
-        
+
         meta = opts[:meta] || {}
         headers = opts[:headers] || {}
         uid = opts[:path] || generate_uid(meta[:name] || temp_object.original_filename || 'file')
-        
+
         if use_filesystem
           temp_object.file do |f|
             storage.put_object(bucket_name, uid, f, full_storage_headers(headers, meta))
@@ -44,7 +45,7 @@ module Dragonfly
         else
           storage.put_object(bucket_name, uid, temp_object.data, full_storage_headers(headers, meta))
         end
-        
+
         uid
       end
 
@@ -118,7 +119,11 @@ module Dragonfly
       end
 
       def generate_uid(name)
-        "#{Time.now.strftime '%Y/%m/%d/%H/%M/%S'}/#{rand(1000)}/#{name.gsub(/[^\w.]+/, '_')}"
+        if self.specific_uid.is_a?(Proc)
+          self.specific_uid.call(name)
+        else
+          "#{Time.now.strftime '%Y/%m/%d/%H/%M/%S'}/#{rand(1000)}/#{name.gsub(/[^\w.]+/, '_')}"
+        end
       end
 
       def full_storage_headers(headers, meta)

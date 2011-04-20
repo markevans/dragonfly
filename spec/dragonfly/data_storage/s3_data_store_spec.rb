@@ -32,7 +32,7 @@ describe Dragonfly::DataStorage::S3DataStore do
         d.region = 'eu-west-1'
       end
     end
-    
+
   else
 
     BUCKET_NAME = 'test-bucket'
@@ -47,7 +47,7 @@ describe Dragonfly::DataStorage::S3DataStore do
         d.region = 'eu-west-1'
       end
     end
-    
+
   end
 
   it_should_behave_like 'data_store'
@@ -82,17 +82,39 @@ describe Dragonfly::DataStorage::S3DataStore do
       data, meta = @data_store.retrieve(uid)
       data.should == 'eggheads'
     end
-    
+
     it "should work fine when not using the filesystem" do
       @data_store.use_filesystem = false
       temp_object = Dragonfly::TempObject.new('gollum')
       uid = @data_store.store(temp_object)
       @data_store.retrieve(uid).first.should == "gollum"
     end
+
+    describe "generate_uid" do
+      context "without a specific_uid" do
+        it 'should the default value' do
+          @data_store.send(:generate_uid, "hello").should =~ /\d+\/\d+\/\d+\/\d+\/\d+\/\d+\/\w+\/hello/
+        end
+      end
+
+      context "with a specific_uid" do
+        before do
+          @data_store.specific_uid = lambda{|name| name}
+        end
+
+        after do
+          @data_store.specific_uid = nil
+        end
+
+        it 'should call the specific_uid lambda' do
+          @data_store.send(:generate_uid, "hello").should == 'hello'
+        end
+      end
+    end
   end
 
   if enabled # Fog.mock! doesn't work consistently with real one here
-    
+
     describe "destroy" do
       before(:each) do
         @temp_object = Dragonfly::TempObject.new('gollum')
@@ -105,7 +127,7 @@ describe Dragonfly::DataStorage::S3DataStore do
         }.should raise_error(Dragonfly::DataStorage::DataNotFound)
       end
     end
-    
+
   end
 
   describe "domain" do
@@ -113,12 +135,12 @@ describe Dragonfly::DataStorage::S3DataStore do
       @data_store.region = nil
       @data_store.domain.should == 's3.amazonaws.com'
     end
-    
+
     it "should return the correct domain" do
       @data_store.region = 'eu-west-1'
       @data_store.domain.should == 's3-eu-west-1.amazonaws.com'
     end
-    
+
     it "does raise an error if an unknown region is given" do
       @data_store.region = 'latvia-central'
       lambda{
@@ -131,32 +153,32 @@ describe Dragonfly::DataStorage::S3DataStore do
     before(:each) do
       @temp_object = Dragonfly::TempObject.new("Hi guys")
     end
-    
+
     it "should require a bucket name on store" do
       @data_store.bucket_name = nil
       proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::Configurable::NotConfigured)
     end
-    
+
     it "should require an access_key_id on store" do
       @data_store.access_key_id = nil
       proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::Configurable::NotConfigured)
     end
-    
+
     it "should require a secret access key on store" do
       @data_store.secret_access_key = nil
       proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::Configurable::NotConfigured)
     end
-    
+
     it "should require a bucket name on retrieve" do
       @data_store.bucket_name = nil
       proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::Configurable::NotConfigured)
     end
-    
+
     it "should require an access_key_id on retrieve" do
       @data_store.access_key_id = nil
       proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::Configurable::NotConfigured)
     end
-    
+
     it "should require a secret access key on retrieve" do
       @data_store.secret_access_key = nil
       proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::Configurable::NotConfigured)
@@ -168,41 +190,41 @@ describe Dragonfly::DataStorage::S3DataStore do
       @data_store.bucket_name = "dragonfly-test-blah-blah-#{rand(100000000)}"
       @data_store.store(Dragonfly::TempObject.new("asdfj"))
     end
-    
+
     it "should not try to create the bucket on retrieve if it doesn't exist" do
       @data_store.bucket_name = "dragonfly-test-blah-blah-#{rand(100000000)}"
       @data_store.send(:storage).should_not_receive(:put_bucket)
       proc{ @data_store.retrieve("gungle") }.should raise_error(Dragonfly::DataStorage::DataNotFound)
     end
   end
-  
+
   describe "headers" do
     before(:each) do
       @temp_object = Dragonfly::TempObject.new('fjkdlsa')
       @data_store.storage_headers = {'x-amz-foo' => 'biscuithead'}
     end
-    
+
     it "should allow configuring globally" do
       @data_store.storage.should_receive(:put_object).with('test-bucket', anything, anything,
         hash_including('x-amz-foo' => 'biscuithead')
       )
       @data_store.store(@temp_object)
     end
-    
+
     it "should allow adding per-store" do
       @data_store.storage.should_receive(:put_object).with('test-bucket', anything, anything,
         hash_including('x-amz-foo' => 'biscuithead', 'hello' => 'there')
       )
       @data_store.store(@temp_object, :headers => {'hello' => 'there'})
     end
-    
+
     it "should let the per-store one take precedence" do
       @data_store.storage.should_receive(:put_object).with('test-bucket', anything, anything,
         hash_including('x-amz-foo' => 'override!')
       )
       @data_store.store(@temp_object, :headers => {'x-amz-foo' => 'override!'})
     end
-    
+
     it "should not mess with the meta" do
       @data_store.storage.should_receive(:put_object) do |_, __, ___, headers|
         headers['x-amz-meta-extra'].should =~ /^\w+$/
@@ -212,25 +234,25 @@ describe Dragonfly::DataStorage::S3DataStore do
   end
 
   describe "urls for serving directly" do
-    
+
     before(:each) do
       @uid = 'some/path/on/s3'
     end
-    
+
     it "should use the bucket subdomain" do
       @data_store.url_for(@uid).should == "http://#{BUCKET_NAME}.s3.amazonaws.com/some/path/on/s3"
     end
-    
+
     it "should use the bucket subdomain for other regions too" do
       @data_store.region = 'eu-west-1'
       @data_store.url_for(@uid).should == "http://#{BUCKET_NAME}.s3.amazonaws.com/some/path/on/s3"
     end
-    
+
     it "should give an expiring url" do
       @data_store.url_for(@uid, :expires => 1301476942).should =~
         %r{^https://#{@data_store.domain}/#{BUCKET_NAME}/some/path/on/s3\?AWSAccessKeyId=#{@data_store.access_key_id}&Signature=[\w%]+&Expires=1301476942$}
     end
-    
+
   end
 
 end
