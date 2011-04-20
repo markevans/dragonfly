@@ -11,18 +11,23 @@ module Dragonfly
 
     extend Forwardable
     def_delegator :url_mapper, :params_in_url
-    
+
     def initialize(app)
       @app = app
       use_same_log_as(app)
       use_as_fallback_config(app)
     end
-    
+
     def before_serve(&block)
       self.before_serve_callback = block
     end
     configuration_method :before_serve
-    
+
+    def after_serve(&block)
+      self.after_serve_callback = block
+    end
+    configuration_method :after_serve
+
     def call(env)
       if dragonfly_url == env["PATH_INFO"]
         dragonfly_response
@@ -33,7 +38,11 @@ module Dragonfly
         if before_serve_callback && response.served?
           before_serve_callback.call(job, env)
         end
-        response.to_response
+        resp = response.to_response
+        if after_serve_callback && resp[0] == 200 && resp[2].is_a?(Dragonfly::TempObject)
+          after_serve_callback.call(job, env)
+        end
+        resp
       else
         [404, {'Content-Type' => 'text/plain', 'X-Cascade' => 'pass'}, ['Not found']]
       end
@@ -57,9 +66,10 @@ module Dragonfly
     end
 
     private
-    
+
     attr_reader :app
     attr_accessor :before_serve_callback
+    attr_accessor :after_serve_callback
 
     def url_mapper
       @url_mapper ||= UrlMapper.new(url_format,

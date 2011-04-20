@@ -218,13 +218,40 @@ describe Dragonfly::Server do
       response.body.should == 'TEST'
       @x.should == 'TEST'
     end
-    
+
     it "should not be called before serving a 404 page" do
       response = request(@server, "blah")
       response.status.should == 404
       @x.should == ""
     end
-    
+
   end
-  
+
+  describe "after_serve callback" do
+
+    before(:each) do
+      @app = test_app
+      @app.generator.add(:test){ "TEST" }
+      @server = Dragonfly::Server.new(@app)
+      @job = @app.generate(:test)
+      @x = x = ""
+      @server.after_serve do |job, env|
+        x << job.data
+      end
+    end
+
+    it "should be called after serving" do
+      response = request(@server, "/#{@job.serialize}")
+      response.body.should == 'TEST'
+      @x.should == 'TEST'
+    end
+
+    it "should not be called after serving a 404 page" do
+      response = request(@server, "blah")
+      response.status.should == 404
+      @x.should == ""
+    end
+
+  end
+
 end
