@@ -9,10 +9,6 @@ describe Dragonfly::DataStorage::CouchDataStore do
   before(:each) do
     WebMock.allow_net_connect!
     @data_store = Dragonfly::DataStorage::CouchDataStore.new(
-      :host => "localhost", 
-      :port => "5984", 
-      :username => "", 
-      :password => "", 
       :database => "dragonfly_test"
     )
     begin

@@ -14,8 +14,8 @@ module Dragonfly
       configurable_attr :password
 
       def initialize(opts={})
-        self.host = opts[:host]
-        self.port = opts[:port]
+        self.host = opts[:host] if opts[:host]
+        self.port = opts[:port] if opts[:port]
         self.database = opts[:database] if opts[:database]
         self.username = opts[:username]
         self.password = opts[:password]
