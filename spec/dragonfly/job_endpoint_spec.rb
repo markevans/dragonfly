@@ -169,5 +169,28 @@ describe Dragonfly::JobEndpoint do
       end
     end
   end
+  
+  describe "custom headers" do
+    before(:each) do
+      @app.configure{|c| c.response_headers['This-is'] = 'brill' }
+    end
+    it "should allow specifying custom headers" do
+      make_request(@job).headers['This-is'].should == 'brill'
+    end
+    it "should not interfere with other headers" do
+      make_request(@job).headers['Content-Length'].should == '6'
+    end
+    it "should allow overridding other headers" do
+      @app.response_headers['Cache-Control'] = 'try me'
+      make_request(@job).headers['Cache-Control'].should == 'try me'
+    end
+    it "should allow giving a proc" do
+      @app.response_headers['Cache-Control'] = proc{|job, request|
+        job.basename.reverse.upcase + request['a']
+      }
+      response = make_request(@job, 'QUERY_STRING' => 'a=egg')
+      response['Cache-Control'].should == 'GNUGegg'
+    end
+  end
 
 end

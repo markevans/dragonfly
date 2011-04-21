@@ -21,9 +21,11 @@ module Dragonfly
       elsif etag_matches?
         [304, cache_headers, []]
       elsif request.head?
-        [200, success_headers.merge(cache_headers), []]
+        job.apply
+        [200, success_headers, []]
       elsif request.get?
-        [200, success_headers.merge(cache_headers), job.result]
+        job.apply
+        [200, success_headers, job.result]
       end
     rescue DataStorage::DataNotFound => e
       app.log.warn(e.message)
@@ -64,7 +66,9 @@ module Dragonfly
       {
         "Content-Type" => job.mime_type,
         "Content-Length" => job.size.to_s
-      }.merge(content_disposition_header)
+      }.merge(content_disposition_header).
+        merge(cache_headers).
+        merge(custom_headers)
     end
 
     def content_disposition_header
@@ -87,6 +91,13 @@ module Dragonfly
 
     def filename
       @filename ||= evaluate(app.content_filename)
+    end
+
+    def custom_headers
+      @custom_headers ||= app.response_headers.inject({}) do |headers, (k, v)|
+        headers[k] = evaluate(v)
+        headers
+      end
     end
 
     def evaluate(attribute)

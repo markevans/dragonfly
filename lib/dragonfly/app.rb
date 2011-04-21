@@ -103,6 +103,11 @@ module Dragonfly
       registered_mime_types[file_ext_string(format)]
     end
 
+    def response_headers
+      @response_headers ||= {}
+    end
+    configuration_method :response_headers
+
     def define_url(&block)
       @url_proc = block
     end
