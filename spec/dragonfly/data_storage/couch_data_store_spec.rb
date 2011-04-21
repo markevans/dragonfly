@@ -2,6 +2,7 @@
 require 'spec_helper'
 require File.dirname(__FILE__) + '/shared_data_store_examples'
 require 'net/http'
+require 'uri'
 
 describe Dragonfly::DataStorage::CouchDataStore do
 
@@ -39,11 +40,22 @@ describe Dragonfly::DataStorage::CouchDataStore do
     end
   end
   
+  describe "url_for" do
+    it "should give the correct url" do
+      @data_store.url_for('asd7fas9df/thing.txt').should == 'http://localhost:5984/dragonfly_test/asd7fas9df/thing.txt'
+    end
+    
+    it "should assume the attachment is called 'file' if not given" do
+      @data_store.url_for('asd7fas9df').should == 'http://localhost:5984/dragonfly_test/asd7fas9df/file'
+    end
+  end
+  
   describe "serving from couchdb" do
 
-    def get_content(uid, name)
-      Net::HTTP.start('localhost', 5984) {|http|
-        http.get("/dragonfly_test/#{uid}/#{name}")
+    def get_content(url)
+      uri = URI.parse(url)
+      Net::HTTP.start(uri.host, uri.port) {|http|
+        http.get(uri.path)
       }
     end
 
@@ -53,21 +65,21 @@ describe Dragonfly::DataStorage::CouchDataStore do
     
     it "should use the fallback by default" do
       uid = @data_store.store(@temp_object)
-      response = get_content(uid, 'file')
+      response = get_content(@data_store.url_for(uid))
       response.body.should == 'testingyo'
       response['Content-Type'].should == 'application/octet-stream'
     end
     
     it "should allow setting on store with 'content_type'" do
       uid = @data_store.store(@temp_object, :content_type => 'text/plain')
-      response = get_content(uid, 'file')
+      response = get_content(@data_store.url_for(uid))
       response.body.should == 'testingyo'
       response['Content-Type'].should == 'text/plain'
     end
     
     it "should allow setting on store with 'mime_type'" do
       uid = @data_store.store(@temp_object, :mime_type => 'text/plain-yo')
-      response = get_content(uid, 'file')
+      response = get_content(@data_store.url_for(uid))
       response.body.should == 'testingyo'
       response['Content-Type'].should == 'text/plain-yo'
     end

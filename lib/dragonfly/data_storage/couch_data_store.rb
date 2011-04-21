@@ -30,22 +30,23 @@ module Dragonfly
           doc = CouchRest::Document.new(:meta => marshal_encode(meta))
           response = db.save_doc(doc)
           doc.put_attachment(name, f, {:content_type => content_type})
-          response['id']
+          form_uid(response['id'], name)
         end
       rescue RuntimeError => e
         raise UnableToStore, "#{e} - #{temp_object.inspect}"
       end
 
       def retrieve(uid)
-        doc = db.get(uid)
-        name = doc['_attachments'].keys.first
-        [doc.fetch_attachment(name), marshal_decode(doc['meta'])]
+        doc_id, attachment = parse_uid(uid)
+        doc = db.get(doc_id)
+        [doc.fetch_attachment(attachment), marshal_decode(doc['meta'])]
       rescue RestClient::ResourceNotFound => e
         raise DataNotFound, "#{e} - #{uid}"
       end
 
       def destroy(uid)
-        doc = db.get(uid)
+        doc_id, attachment = parse_uid(uid)
+        doc = db.get(doc_id)
         db.delete_doc(doc)
       rescue RestClient::ResourceNotFound => e
         raise DataNotFound, "#{e} - #{uid}"
@@ -53,10 +54,29 @@ module Dragonfly
 
       def db
         @db ||= begin
-          auth = username.blank? ? nil : "#{username}:#{password}@"
           url = "http://#{auth}#{host}:#{port}"
           CouchRest.new(url).database!(database)
         end
+      end
+
+      def url_for(uid, opts={})
+        doc_id, attachment = parse_uid(uid)
+        "http://#{host}:#{port}/#{database}/#{doc_id}/#{attachment}"
+      end
+      
+      private
+      
+      def auth
+        username.blank? ? nil : "#{username}:#{password}@"
+      end
+      
+      def form_uid(doc_id, attachment)
+        "#{doc_id}/#{attachment}"
+      end
+      
+      def parse_uid(uid)
+        doc_id, attachment = uid.split('/')
+        [doc_id, (attachment || 'file')]
       end
 
     end
