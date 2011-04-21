@@ -1,4 +1,4 @@
-0.9.0 (2011-04-19)
+0.9.0 (2011-04-??)
 ==================
 Features
 --------
@@ -15,6 +15,7 @@ Features
 - Added imagemagick `plain` generator
 - Added CouchDataStore that uses a CouchDB as a data storage engine
 - Added `before_serve` callback
+- Allowed for configurable response headers
 - Made url re-definable with `define_url`
 - `validates_property` can take a proc for the message
 - Saved configs can be registered now so they can be used with `configure_with(:symbol)`
