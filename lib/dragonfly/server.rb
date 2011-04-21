@@ -30,7 +30,7 @@ module Dragonfly
         job = Job.deserialize(params['job'], app)
         job.validate_sha!(params['sha']) if protect_from_dos_attacks
         response = Response.new(job, env)
-        if before_serve_callback && response.served?
+        if before_serve_callback && response.will_be_served?
           before_serve_callback.call(job, env)
         end
         response.to_response

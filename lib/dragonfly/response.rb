@@ -3,12 +3,9 @@ require 'uri'
 module Dragonfly
   class Response
 
-    DEFAULT_FILENAME = proc{|job, request|
-      if job.basename
-        extname = job.encoded_extname || (".#{job.ext}" if job.ext)
-        "#{job.basename}#{extname}"
-      end
-    }
+    DEFAULT_FILENAME = proc do |job, request|
+      [job.basename, job.format].compact.join('.') if job.basename
+    end
 
     def initialize(job, env)
       @job, @env = job, env
@@ -32,7 +29,7 @@ module Dragonfly
       [404, {"Content-Type" => 'text/plain'}, ['Not found']]
     end
 
-    def served?
+    def will_be_served?
       request.get? && !etag_matches?
     end
 
