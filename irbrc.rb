@@ -2,6 +2,7 @@ require "rubygems"
 require "bundler/setup"
 $:.unshift(File.expand_path('../lib', __FILE__))
 require 'dragonfly'
+include Dragonfly::Serializer
 APP = Dragonfly[:images].configure_with(:imagemagick)
 
 # available_uids = `find #{APP.datastore.root_path} ! -type d`.split("\n").map do |file|
