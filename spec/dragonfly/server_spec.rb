@@ -210,12 +210,15 @@ describe Dragonfly::Server do
 
   describe "before_serve callback" do
 
+    before(:each) do
+      @app = test_app
+      @app.generator.add(:test){ "TEST" }
+      @server = Dragonfly::Server.new(@app)
+      @job = @app.generate(:test)
+    end
+
     context "with no stop in the callback" do
       before(:each) do
-        @app = test_app
-        @app.generator.add(:test){ "TEST" }
-        @server = Dragonfly::Server.new(@app)
-        @job = @app.generate(:test)
         @x = x = ""
         @server.before_serve do |job, env|
           x << job.data
@@ -237,20 +240,19 @@ describe Dragonfly::Server do
 
     context "with a throw :halt in the callback" do
       before(:each) do
-        @app = test_app
-        @app.generator.add(:test){ "TEST" }
-        @server = Dragonfly::Server.new(@app)
-        @job = @app.generate(:test)
-        @x = x = ""
         @server.before_serve do |job, env|
-          x << job.data
-          throw :halt, [200, {}, 'hello']
+          throw :halt, [200, {}, ['hello']]
         end
       end
-      it 'return the response instead the job.result' do
+      
+      it 'return the specified response instead of job.result' do
         response = request(@server, "/#{@job.serialize}")
         response.body.should == 'hello'
-        @x.should == 'TEST'
+      end
+      
+      it "should not apply the job if not asked to" do
+        @app.generator.should_not_receive(:generate)
+        response = request(@server, "/#{@job.serialize}")
       end
     end
 
