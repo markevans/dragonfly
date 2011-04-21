@@ -30,10 +30,12 @@ module Dragonfly
         job = Job.deserialize(params['job'], app)
         job.validate_sha!(params['sha']) if protect_from_dos_attacks
         response = Response.new(job, env)
-        if before_serve_callback && response.will_be_served?
-          before_serve_callback.call(job, env)
+        catch(:halt) do
+          if before_serve_callback && response.will_be_served?
+            before_serve_callback.call(job, env)
+          end
+          response.to_response
         end
-        response.to_response
       else
         [404, {'Content-Type' => 'text/plain', 'X-Cascade' => 'pass'}, ['Not found']]
       end
