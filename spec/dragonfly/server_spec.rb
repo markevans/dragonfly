@@ -51,6 +51,14 @@ describe Dragonfly::Server do
         response.body.should == 'HELLO THERE'
       end
 
+      
+      it "should work ok with + symbols" do
+        @app.processor.add(:thumb){|t, geometry| "eggs" }
+        @app.datastore.should_receive(:retrieve).with('2011/04/20/20_55_04_114_female_1.jpg').and_return "EGGS"
+        response = request(@server, '/media/BAhbB1sHOgZmSSIpMjAxMS8wNC8yMC8yMF81NV8wNF8xMTRfZmVtYWxlXzEuanBnBjoGRVRbCDoGcDoKdGh1bWJJIgwxMDB4NzU+BjsGVA')
+        response.status.should == 200
+        response.body.should == 'eggs'
+      end
     end
 
     it "should return successfully even if the job is in the query string" do
