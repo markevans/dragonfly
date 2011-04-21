@@ -50,7 +50,7 @@ module Dragonfly
           set_magic_attributes
           update_meta
           self.class.run_callbacks(:after_assign, model, self) if should_run_callbacks?
-          retain! if should_retain_when_changed?
+          retain! if should_retain?
         end
         value
       end
@@ -116,10 +116,10 @@ module Dragonfly
         end
       end
 
-      attr_writer :should_retain_when_changed
+      attr_writer :should_retain
       
-      def should_retain_when_changed?
-        !!@should_retain_when_changed
+      def should_retain?
+        !!@should_retain
       end
       
       def retained?

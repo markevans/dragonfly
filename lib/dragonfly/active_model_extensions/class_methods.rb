@@ -59,7 +59,7 @@ module Dragonfly
                   app.log.warn("*** WARNING ***: couldn't update attachment with serialized retained_#{attribute} string #{string.inspect}")              
                 end
               end
-              dragonfly_attachments[attribute].should_retain_when_changed = true
+              dragonfly_attachments[attribute].should_retain = true
               dragonfly_attachments[attribute].retain!
               string
             end
