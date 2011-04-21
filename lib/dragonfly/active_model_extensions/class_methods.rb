@@ -52,17 +52,16 @@ module Dragonfly
 
             # Define the retained setter
             define_method "retained_#{attribute}=" do |string|
-              case string
-              when ""
-                dragonfly_attachments[attribute].should_retain_when_changed = true
-                dragonfly_attachments[attribute].retain_if_should_when_changed
-              when String
+              unless string.blank?
                 begin
                   dragonfly_attachments[attribute].retained_attrs = Serializer.marshal_decode(string)
                 rescue Serializer::BadString => e
                   app.log.warn("*** WARNING ***: couldn't update attachment with serialized retained_#{attribute} string #{string.inspect}")              
                 end
               end
+              dragonfly_attachments[attribute].should_retain_when_changed = true
+              dragonfly_attachments[attribute].retain!
+              string
             end
             
             # Define the retained getter

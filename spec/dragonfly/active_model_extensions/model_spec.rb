@@ -1321,20 +1321,6 @@ describe Item do
         Dragonfly::Serializer.marshal_decode(@pending_string)
     end
     
-    describe "automatically retaining (hack to test for existence of hidden form field)" do
-      it "should automatically retain if set as an empty string then changed" do
-        @item.retained_preview_image = ""
-        @item.dragonfly_attachments[:preview_image].should_receive(:retain!)
-        @item.preview_image = "hello"
-      end
-    
-      it "should automatically retain if changed then set as an empty string" do
-        @item.preview_image = "hello"
-        @item.preview_image.should_receive(:retain!)
-        @item.retained_preview_image = ""
-      end
-    end
-    
     it "should destroy the old one on save" do
       @item.preview_image = 'oldone'
       @app.datastore.should_receive(:store).with(a_temp_object_with_data('oldone'), anything).and_return('old/uid')
@@ -1368,6 +1354,32 @@ describe Item do
         @item.preview_image = nil
         @app.datastore.should_receive(:destroy).with('new/uid')
         @item.retained_preview_image = @pending_string
+      end
+      
+      describe "automatically retaining (hack to test for existence of hidden form field)" do
+        it "should automatically retain if set as an empty string then changed" do
+          @item.retained_preview_image = ""
+          @item.dragonfly_attachments[:preview_image].should_receive(:retain!)
+          @item.preview_image = "hello"
+        end
+
+        it "should automatically retain if changed then set as an empty string" do
+          @item.preview_image = "hello"
+          @item.preview_image.should_receive(:retain!)
+          @item.retained_preview_image = ""
+        end
+
+        it "should retain if retained_string then accessor is assigned" do
+          @item.retained_preview_image = @pending_string
+          @item.preview_image.should_receive(:retain!)
+          @item.preview_image = 'yet another new thing'
+        end
+
+        it "should retain if accessor then retained_string is assigned" do
+          @item.preview_image = 'yet another new thing'
+          @item.preview_image.should_receive(:retain!)
+          @item.retained_preview_image = @pending_string
+        end
       end
     end
 
