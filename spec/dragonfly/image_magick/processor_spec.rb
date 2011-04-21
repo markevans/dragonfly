@@ -173,6 +173,16 @@ describe Dragonfly::ImageMagick::Processor do
 
   end
 
+  describe "strip" do
+    it "should strip exif data" do
+      jpg = Dragonfly::TempObject.new(Pathname.new(File.dirname(__FILE__) + '/../../../samples/taj.jpg'))
+      image = @processor.strip(jpg)
+      image.should have_width(300)
+      image.should have_height(300)
+      image.size.should < jpg.size
+    end
+  end
+
   describe "thumb" do
     it "should call resize if the correct string given" do
       @processor.should_receive(:resize).with(@image, '30x40').and_return(image = mock)
