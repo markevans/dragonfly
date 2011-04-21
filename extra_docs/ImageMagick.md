@@ -20,6 +20,7 @@ Shortcuts
     image.jpg                         # same as image.encode(:jpg)
     image.png                         # same as image.encode(:png)
     image.gif                         # same as image.encode(:gif)
+    image.strip                       # same as image.process(:strip)
     image.convert('-scale 30x30')     # same as image.process(:convert, '-scale 30x30')
 
 `thumb` and `convert` can optionally take a format (e.g. :gif) as the second argument.

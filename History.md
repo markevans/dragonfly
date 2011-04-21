@@ -13,6 +13,7 @@ Features
 - Added `retain` and `retain!` for avoiding multiple uploads when validations fail
 - Added `image?` to imagemagick analyser
 - Added imagemagick `plain` generator
+- Added `strip` to imagemagick processor
 - Added CouchDataStore that uses a CouchDB as a data storage engine
 - Added `before_serve` callback
 - Allowed for configurable response headers
