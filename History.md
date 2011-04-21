@@ -10,7 +10,7 @@ Features
 - Added model `remove_xxxxx` for using with checkboxes
 - Added model `xxxx_url` for assigning content from a url
 - Added job step `fetch_url`
-- Added `retain` and `retain!` for avoiding multiple uploads when validations fail
+- Added `retain!` and model `retained_xxxxx` for avoiding multiple uploads when validations fail
 - Added `image?` to imagemagick analyser
 - Added imagemagick `plain` generator
 - Added `strip` to imagemagick processor

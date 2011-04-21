@@ -1308,7 +1308,7 @@ describe Item do
       }.should raise_error(Dragonfly::ActiveModelExtensions::Attachment::BadAssignmentKey)
     end
     
-    [nil, "", "asdfsad"].each do |value|
+    [nil, "asdfsad"].each do |value|
       it "should do nothing if assigned with #{value}" do
         @item.retained_preview_image = value
         @item.preview_image_uid.should be_nil
@@ -1319,6 +1319,20 @@ describe Item do
       @item.retained_preview_image = @pending_string
       Dragonfly::Serializer.marshal_decode(@item.retained_preview_image).should ==
         Dragonfly::Serializer.marshal_decode(@pending_string)
+    end
+    
+    describe "automatically retaining (hack to test for existence of hidden form field)" do
+      it "should automatically retain if set as an empty string then changed" do
+        @item.retained_preview_image = ""
+        @item.dragonfly_attachments[:preview_image].should_receive(:retain!)
+        @item.preview_image = "hello"
+      end
+    
+      it "should automatically retain if changed then set as an empty string" do
+        @item.preview_image = "hello"
+        @item.preview_image.should_receive(:retain!)
+        @item.retained_preview_image = ""
+      end
     end
     
     it "should destroy the old one on save" do
@@ -1332,8 +1346,6 @@ describe Item do
     end
 
     describe "combinations of assignment" do
-      before(:each) do
-      end
       it "should destroy the previously retained one if something new is then assigned" do
         @item.retained_preview_image = @pending_string
         @app.datastore.should_receive(:destroy).with('new/uid')
@@ -1359,26 +1371,6 @@ describe Item do
       end
     end
 
-  end
-  
-  describe "retain macro" do
-    
-    before(:each) do
-      @app = test_app
-      @app.define_macro(MyModel, :image_accessor)
-      Item.class_eval do
-        image_accessor :preview_image do
-          retain
-        end
-      end
-      @item = Item.new
-    end
-    
-    it "should retain if specified" do
-      @app.datastore.should_receive(:store).with(a_temp_object_with_data('boo'), anything).and_return('uidyo')
-      @item.preview_image = 'boo'
-      @item.retained_preview_image.should =~ /^\w+$/
-    end
   end
   
   describe "format and mime type" do
