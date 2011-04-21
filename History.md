@@ -24,7 +24,7 @@ Features
 - Allowed initializing data by using a pathname
 - `convert_command` and `identify_command` can be configured on a per-app basis
 - Added `remote_url` and ability for datastores to form urls
-  - Added for File and S3 datastores
+  - Added for File, Couch and S3 datastores
 - Models automatically copy magic attributes into meta
 - S3DataStore configurable headers
 - 'dragonfly/rails/images' slightly smarter and added `file_accessor` for more semantic use of non-image attachments
