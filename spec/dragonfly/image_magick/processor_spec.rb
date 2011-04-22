@@ -118,10 +118,10 @@ describe Dragonfly::ImageMagick::Processor do
       image1 = @processor.crop(@image,  :x => '10', :y => '10', :width => '100', :height => '100')
       @image1 = Dragonfly::TempObject.new(image1)
       image2 = @processor.crop(@image1, :x => '0' , :y => '0' , :width => '50' , :height => '50' )
-      image_properties(image2)[:width].to_i.should eql(50)
-      image_properties(image2)[:height].to_i.should eql(50)
-      # image2.should have_width(50)
-      # image2.should have_height(50)
+      image2.should_not have_width(40)
+      image2.should_not have_height(40)
+      image2.should have_width(50)
+      image2.should have_height(50)
     end
 
   end
