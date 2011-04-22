@@ -23,7 +23,7 @@ config/initializers/dragonfly.rb:
 
 application.rb:
 
-    config.middleware.insert_after 'Rack::Lock', 'Dragonfly::Middleware', :images
+    config.middleware.insert 0, 'Dragonfly::Middleware', :images
     config.middleware.insert_before 'Dragonfly::Middleware', 'Rack::Cache', {
       :verbose     => true,
       :metastore   => "file:#{Rails.root}/tmp/dragonfly/cache/meta",
@@ -52,11 +52,3 @@ Use it!
 -------
 
 To see what you can do with the model accessors, see {file:Models}.
-
-Mounting in routes.rb
----------------------
-Instead of mounting as a middleware, you could skip that bit and mount directly in the routes.rb file:
-
-    match '/media/*:dragonfly', :to => Dragonfly[:images]
-
-Make sure the the path prefix matches the Dragonfly app's configured url_path_prefix (which is /media by default for Rails).
