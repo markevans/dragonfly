@@ -34,7 +34,7 @@ module Dragonfly
         x = '+' + x unless x[/^[+-]/]
         y       = "#{opts[:y] || 0}"
         y = '+' + y unless y[/^[+-]/]
-        repage  = opts[:reset_dimensions] == false ? '' : '+repage'
+        repage  = opts[:reset_geometry] == false ? '' : '+repage'
     
         convert(temp_object, "-crop #{width}x#{height}#{x}#{y}#{" -gravity #{gravity}" if gravity} #{repage}")
       end
