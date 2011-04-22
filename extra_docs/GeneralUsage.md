@@ -11,11 +11,13 @@ Each app has a name, and is referred to by that name.
 
 Getting/generating content
 --------------------------
-Three methods can be used to get content:
+Four methods can be used to get content:
 
     app.fetch('some_uid')                   # Fetch from datastore (default filesystem)
 
     app.fetch_file('~/path/to/file.png')    # Fetch from a local file
+
+    app.fetch_url('somewhere.com/img.png')  # Fetch from a url (will work with http, https)
 
     app.generate(:plasma, 400, 300)         # Generates using a method from the configured
                                             # generator (in this case a plasma image)
@@ -59,18 +61,7 @@ We can encode it (see {file:Encoding} for more info) ...
 
 Chaining
 --------
-Because the methods
-
-  - `fetch`
-
-  - `fetch_file`
-
-  - `generate`
-
-  - `process`
-
-  - `encode`
-
+Because the methods `fetch`, `fetch_file`, `fetch_url`, `generate`, `process` and `encode`
 all return {Dragonfly::Job Job} objects, we can chain them as much as we want...
 
     image = app.fetch('some_uid').process(:greyscale).process(:thumb, '40x20#').encode(:gif)
@@ -109,13 +100,3 @@ To define this shortcut:
       end
       # ...
     end
-
-The {Dragonfly::ImageMagick::Config ImageMagick} configuration comes with the pre-defined shortcuts:
-
-    image.thumb('40x30')              # same as image.process(:thumb, '40x30')
-    image.jpg                         # same as image.encode(:jpg)
-    image.png                         # same as image.encode(:png)
-    image.gif                         # same as image.encode(:gif)
-    image.convert('-scale 30x30')     # same as image.process(:convert, '-scale 30x30')
-
-`thumb` and `convert` can optionally take a format (e.g. :gif) as the second argument.
