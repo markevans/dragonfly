@@ -11,7 +11,7 @@ Each app has a name, and is referred to by that name.
 
 Getting/generating content
 --------------------------
-Four methods can be used to get content:
+A number of methods can be used to get content:
 
     app.fetch('some_uid')                   # Fetch from datastore (default filesystem)
 
@@ -21,6 +21,8 @@ Four methods can be used to get content:
 
     app.generate(:plasma, 400, 300)         # Generates using a method from the configured
                                             # generator (in this case a plasma image)
+
+    app.create("CONTENT")                   # Can pass in a String, Pathname, File or Tempfile
 
 These all return {Dragonfly::Job Job} objects. These objects are lazy - they don't do any fetching/generating until
 some other method is called on them.
@@ -46,6 +48,7 @@ We can get the data a number of ways...
 We can get its url...
 
     image.url                            # => "/media/BAhbBlsHOgZmIg9hc..."
+                                         # this won't work if we've used create to get the content
 
 We can analyse it (see {file:Analysers} for more info) ...
 
@@ -61,7 +64,7 @@ We can encode it (see {file:Encoding} for more info) ...
 
 Chaining
 --------
-Because the methods `fetch`, `fetch_file`, `fetch_url`, `generate`, `process` and `encode`
+Because the methods `fetch`, `fetch_file`, `fetch_url`, `generate`, `create`, `process` and `encode`
 all return {Dragonfly::Job Job} objects, we can chain them as much as we want...
 
     image = app.fetch('some_uid').process(:greyscale).process(:thumb, '40x20#').encode(:gif)
