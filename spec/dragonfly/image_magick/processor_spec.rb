@@ -124,6 +124,14 @@ describe Dragonfly::ImageMagick::Processor do
       image2.should have_height(50)
     end
 
+    it "should crop twice in a row while consciously keeping dimensions" do
+      image1 = @processor.crop(@image,  :x => '10', :y => '10', :width => '100', :height => '100', :reset_dimensions => false)
+      @image1 = Dragonfly::TempObject.new(image1)
+      image2 = @processor.crop(@image1, :x => '0' , :y => '0' , :width => '50' , :height => '50')
+      image2.should have_width(40)
+      image2.should have_height(40)
+    end
+
   end
 
   describe "greyscale" do
