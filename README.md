@@ -10,7 +10,7 @@ For the lazy Rails user...
 **Gemfile**:
 
     gem 'rack-cache', :require => 'rack/cache'
-    gem 'dragonfly', '~>0.8.2'
+    gem 'dragonfly', '~>0.9.0'
 
 **Initializer** (e.g. config/initializers/dragonfly.rb):
 
@@ -18,7 +18,9 @@ For the lazy Rails user...
 
 **Migration**:
 
-    add_column :albums, :cover_image_uid, :string
+    add_column :albums, :cover_image_uid,  :string
+    add_column :albums, :cover_image_name, :string  # Optional - only if you want urls
+                                                    # to end with the original filename
 
 **Model**:
 
@@ -59,9 +61,9 @@ If using Capistrano with the above, you probably will want to keep the cache bet
     end
     after 'deploy:update_code', 'dragonfly:symlink'
 
-Using outside of rails, custom storage/processing/encoding/analysis, and more...
---------------------------------------------------------------------------------
-Dragonfly is primarily a Rack app, so you can use it as a standalone app, or with Sinatra, Merb, etc.
+Sinatra, CouchDB, Mongo, Rack, S3, custom storage, processing, and more...
+--------------------------------------------------------------------------
+Dragonfly is not just for Rails - it's primarily a Rack app, so you can use it as a standalone app, or with Sinatra, Merb, etc.
 
 It's highly customizable, and works with any data type (not just images).
 
