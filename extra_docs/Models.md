@@ -28,7 +28,7 @@ CouchRest::Model
 -------
     app.define_macro(CouchRest::Model::Base, :image_accessor)
 
-defines the macro `image_accessor` on any models that include `CouchRest::Model::Base`
+defines the macro `image_accessor` on any models inherited from `CouchRest::Model::Base`.
 
 Adding accessors
 ----------------
@@ -68,6 +68,7 @@ We can use the attribute much like other other model attributes:
     @album.cover_image = "\377???JFIF\000\..."             # can assign as a string...
     @album.cover_image = File.new('path/to/my_image.png')  # ... or as a file...
     @album.cover_image = some_tempfile                     # ... or as a tempfile...
+    @album.cover_image = Pathname.new('some/path.gif')     # ... or as a pathname...
     @album.cover_image = @album.band_photo                 # ... or as another Dragonfly attachment
 
     @album.cover_image          # => #<Dragonfly::ActiveModelExtensions::Attachment:0x103ef6128...
@@ -124,6 +125,42 @@ Because the processing/encoding methods are lazy, no actual processing or encodi
 You can force the processing to be done if you must by then calling `apply`.
 
     @album.cover_image.process(:greyscale).apply
+
+Assigning from a url
+--------------------
+Dragonfly provides an accessor for assigning directly from a url:
+
+    @album.cover_image_url = 'http://some.url/file.jpg'
+
+You can put this in a form view, e.g. in rails erb:
+
+    <% form_for @album, :html => {:multipart => true} do |f| %>
+      ...
+      <%= f.text_field :cover_image_url %>
+      ...
+    <% end %>
+
+Removing an attachment via a form
+---------------------------------
+Normally unassignment of an attachment is done like any other attribute, by setting to nil
+
+    @album.cover_image = nil
+
+but this can't be done via a form - instead `remove_<attachment_name>` is provided, which can be used with a checkbox:
+
+    <%= f.check_box :remove_cover_image %>
+
+Retaining across form redisplays
+--------------------------------
+When a model fails validation, you don't normally want to have to upload your attachment again, so you can avoid having to do this by
+including a hidden field in your form `retained_<attribute_name>`, e.g.
+
+    <% form_for @album, :html => {:multipart => true} do |f| %>
+      ...
+      <%= f.file_field :cover_image %>
+      <%= f.hidden_field :retained_cover_image %>
+      ...
+    <% end %>
 
 Persisting
 ----------
@@ -196,6 +233,124 @@ As you can see, a couple of things are added by the model. You can also access t
 
     app.fetch(@album.cover_image_uid).meta     # => {:model_class=>"Album", ...}
 
+Meta data can be useful because at the time that Dragonfly serves content, it doesn't have access to your model, but it does
+have access to the meta data that was stored alongside the content, so you could use it to provide custom response headers, etc.
+(see {file:Configuration}).
+
+Callbacks
+---------
+**after_assign**
+
+`after_assign` can be used to do something every time content is assigned:
+
+    class Person
+      image_accessor :mugshot do
+        after_assign{|a| a.process!(:rotate, 90) }  # 'a' is the attachment itself
+      end
+    end
+
+    person.mugshot = Pathname.new('some/path.png')  # after_assign callback is called
+    person.mugshot = nil                            # after_assign callback is NOT called
+    
+Inside the block, you can call methods on the model instance directly (`self` is the model):
+
+    class Person
+      image_accessor :mugshot do
+        after_assign{|a| a.process!(:rotate, angle) }
+      end
+
+      def angle
+        90
+      end
+    end
+
+Alternatively you can pass in a symbol, corresponding to a model instance method:
+
+    class Person
+      image_accessor :mugshot do
+        after_assign :rotate_it
+      end
+
+      def rotate_it
+        mugshot.process!(:rotate, 90)
+      end
+    end
+
+You can register more than one `after_assign` callback.
+
+**after_unassign**
+
+`after_unassign` is similar to `after_assign`, but is only called when the attachment is unassigned
+
+    person.mugshot = Pathname.new('some/path.png')  # after_unassign callback is NOT called
+    person.mugshot = nil                            # after_unassign callback is called
+
+Up-front thumbnailing
+---------------------
+The best way to create different versions of content such as thumbnails is generally on-the-fly, however if you _must_
+create another version _on-upload_, then you could create another accessor and automatically copy to it using `copy_to`.
+
+    class Person
+      image_accessor :mugshot do
+        copy_to(:smaller_mugshot){|a| a.thumb('200x200#') }
+      end
+      image_accessor :smaller_mugshot
+    end
+
+    person.mugshot = Pathname.new('some/400x300/image.png')
+    
+    person.mugshot            # ---> 400x300 image
+    person.smaller_mugshot    # ---> 200x200 image
+
+In the above example you would need both a `mugshot_uid` field and a `smaller_mugshot_uid` field on your model.
+
+Storage options
+---------------
+Some datastores take options when calling `store` - you can pass these through using `storage_xxx` methods, e.g.
+
+**storage_path**
+
+The {Dragonfly::DataStorage::FileDataStore FileDataStore} and {Dragonfly::DataStorage::S3DataStore S3DataStore} both
+can take a `:path` option to specify where to store the content (which will also become the uid for that content)
+
+    class Person
+      image_accessor :mugshot do
+        storage_path{ "some/path/#{id}/#{rand(100)}" }  # You can call model instance methods (like 'id') directly
+      end
+    end
+
+or
+
+    class Person
+      image_accessor :mugshot do
+        storage_path :path_for_mugshot
+      end
+      
+      def path_for_mugshot
+        "some/path/#{id}/#{rand(100)}"
+      end
+    end
+
+or you can also yield the attachment itself
+
+        storage_path{|a| "some/path/#{a.width}x#{a.height}.#{a.format}" }
+
+**BEWARE!!!!** you must make sure the path (which will become the uid for the content) is unique and changes each time the content
+is changed, otherwise you could have caching problems, as the generated urls will be the same for the same uid.
+
+You can pass any options through to the datastore using `storage_xxx` methods, or all at once using `storage_opts`:
+
+    class Person
+      image_accessor :mugshot do
+        storage_opts do |a|
+          {
+            :path => "some/path/#{id}/#{rand(100)}",
+            :other => 'option'
+          }
+        end
+      end
+    end
+
 "Magic" Attributes
 ------------------
 An accessor like `cover_image` only relies on the accessor `cover_image_uid` to work.
@@ -222,6 +377,8 @@ They can be used to avoid retrieving data from the datastore for analysis
     @album.cover_image.width     # => 280    - no need to retrieve data - takes it from `cover_image_width`
     @album.cover_image.size      # => 134507 - but this needs to retrieve data from the data store, then analyse
 
+Furthermore, any magic attributes you add a field for will be added to the meta data for that attachment (and so can be used when Dragonfly serves the content
+for e.g. setting custom response headers based on that meta - see {file:Configuration}).
 
 Custom Model
 ------------
