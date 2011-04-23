@@ -10,13 +10,13 @@ You can use {Dragonfly::Job Job}'s `to_response` method like so:
 
 `to_response` returns a rack-style response array with status, headers and body.
 
-NOTE: uids from the datastore currently have slashes and dots in them so may cause problems when using ':uid' as
+NOTE: uids from the datastore may have slashes and dots in them so make sure you escape url-escape them when using ':uid' as
 a path segment.
 
 or you can mount as a middleware, like in rails:
 
     Dragonfly[:images].configure_with(:imagemagick) do |c|
-      c.url_path_prefix = '/media'
+      c.url_format = '/media/:job'
     end
 
     use Dragonfly::Middleware, :images

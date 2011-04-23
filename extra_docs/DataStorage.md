@@ -83,7 +83,9 @@ It won't normally need configuring, but if you wish to:
       c.password = 'some_password'                    # only needed if mongo is running in auth mode
     end
 
-You can also pass these options to `MongoDataStore.new` as an options hash.
+If you already have a mongo database or connection available, you can skip setting these and set `db` or `connection` instead.
+
+You can also pass any options to `MongoDataStore.new` as an options hash.
 
 Couch datastore
 ---------------
