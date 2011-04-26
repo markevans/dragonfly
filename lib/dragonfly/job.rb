@@ -359,6 +359,10 @@ module Dragonfly
       last_step_of_type(Encode)
     end
 
+    def step_types
+      steps.map{|s| s.class.step_name }
+    end
+
     # Misc
 
     def store(opts={})

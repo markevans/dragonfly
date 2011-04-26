@@ -723,7 +723,7 @@ describe Dragonfly::Job do
         step.uid.should == 'hello'
       end
     end
-    describe "fetched uid" do
+    describe "uid" do
       describe "when there's no fetch step" do
         before(:each) do
           @job = @app.new_job("AGG")
@@ -796,6 +796,12 @@ describe Dragonfly::Job do
       end
     end
     
+    describe "step_types" do
+      it "should return the step types" do
+        job = @app.fetch('eggs').process(:beat, 'strongly').encode(:meringue)
+        job.step_types.should == [:fetch, :process, :encode]
+      end
+    end
   end
 
   describe "meta" do
