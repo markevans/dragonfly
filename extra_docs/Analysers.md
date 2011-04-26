@@ -21,10 +21,12 @@ gives us:
 
     image.mime_type    # => 'image/png'
 
-It doesn't use the filesystem by default (it operates on in-memory strings), but we can make it do so by using
+You shouldn't need to configure it but if you need to:
 
     app.analyser.register(Dragonfly::Analysis::FileCommandAnalyser) do |a|
-      a.use_filesystem = true
+      a.use_filesystem = false                 # defaults to true
+      a.file_command = '/opt/local/bin/file'   # defaults to 'file'
+      a.num_bytes_to_check = 1024              # defaults to 255 - only applies if not using the filesystem
     end
 
 Custom Analysers

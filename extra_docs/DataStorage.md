@@ -8,7 +8,8 @@ Lets say we have an app
 
 Then we can store data like so:
 
-    uid = app.store('SOME CONTENT')  # Can pass in a String, Pathname, File or Tempfile
+    # Can pass in a String, Pathname, File or Tempfile
+    uid = app.store('SOME CONTENT')
 
 We can also save metadata at the same time, and any other options the configured datastore accepts
 

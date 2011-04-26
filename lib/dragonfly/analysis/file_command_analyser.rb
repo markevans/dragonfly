@@ -6,7 +6,7 @@ module Dragonfly
       include Configurable
       
       configurable_attr :file_command, "file"
-      configurable_attr :use_filesystem, false
+      configurable_attr :use_filesystem, true
       configurable_attr :num_bytes_to_check, 255
       
       def mime_type(temp_object)
