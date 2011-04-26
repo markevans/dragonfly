@@ -61,6 +61,10 @@ describe Dragonfly::UrlMapper do
     it "should not worry if params aren't given" do
       @url_mapper.url_for('job' => 'asdf', 'when' => 'now', 'then' => 'soon').should == '/media/asdf?when=now&then=soon'
     end
+    
+    it "should call to_s on non-string values" do
+      @url_mapper.url_for('job' => 'asdf', 'size' => 500).should == '/media/asdf-500'
+    end
   end
 
   describe "params_for" do

@@ -45,7 +45,7 @@ module Dragonfly
       url = url_format.dup
       segments.each do |seg|
         value = params[seg.param]
-        value ? url.sub!(/:[\w_]+/, value) : url.sub!(/.:[\w_]+/, '')
+        value ? url.sub!(/:[\w_]+/, value.to_s) : url.sub!(/.:[\w_]+/, '')
         params.delete(seg.param)
       end
       url << "?#{Rack::Utils.build_query(params)}" if params.any?
