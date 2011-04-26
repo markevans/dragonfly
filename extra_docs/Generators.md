@@ -23,12 +23,11 @@ Custom Generators
 -----------------
 To register a single custom generator:
 
-    app.generator.add :blank_image do |colour|
-      SomeLibrary.create_blank_image(colour)     # return a String, Pathname, File or Tempfile
+    app.generator.add :triangle do |height|
+      SomeLibrary.create_triangle(height)     # return a String, Pathname, File or Tempfile
     end
 
-    app.generate(:blank_image, 'red')      # => 'Job' object which we can get data, etc.
-
+    app.generate(:triangle, 10)      # => 'Job' object which we can get data, etc.
 
 Or create a class like the ImageMagick one above, in which case all public methods will be counted as generator methods.
 
@@ -58,3 +57,12 @@ Or create a class like the ImageMagick one above, in which case all public metho
 
     app.generate(:top_left_corner, :colour => 'green')
     app.generate(:bottom_right_corner, :colour => 'mauve')
+
+You can also return meta data like name and format if you return an array from the generator
+
+    app.generator.add :triangle do |height|
+      [
+        SomeLibrary.create_triangle(height),
+        {:name => 'triangle.png', :format => :png}
+      ]
+    end
