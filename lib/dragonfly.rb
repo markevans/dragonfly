@@ -48,7 +48,6 @@ module Dragonfly
     App.register_configuration(:imagemagick){ ImageMagick::Config }
     App.register_configuration(:image_magick){ ImageMagick::Config }
     App.register_configuration(:rails){ Config::Rails }
-    App.register_configuration(:s3){ Config::S3 }
     App.register_configuration(:heroku){ Config::Heroku }
 
   end
