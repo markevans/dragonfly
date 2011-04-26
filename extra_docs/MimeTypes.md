@@ -7,8 +7,8 @@ This is decided by the first found from:
 
 1. The requested format (e.g. when encode is specifically called)
 2. The original file extension (you can configure it to ignore this if you wish)
-3. Analyse the content using the analyser's 'mime_type' method (if exists)
-4. Analyse the content using the analyser's 'format' method (if exists)
+3. Analyse the content using the analyser's 'format' method (if exists)
+4. Analyse the content using the analyser's 'mime_type' method (if exists)
 5. Use the fallback mime-type (default 'application/octet-stream')
 
 Note that 'format' means 'jpg', 'png', etc. whereas mime-type would be 'image/jpeg', image/png', etc.
