@@ -8,53 +8,61 @@ We can get urls for any kind of job:
     app.fetch('my_uid').process(:flip).url                    # "/BAhbBlsH..."
     app.generate(:text, 'hello').thumb('500x302').gif.url     # "/BAhbCFsHOgZ..."
 
-Path prefix
+Path format
 -----------
-If the app is mounted with a path prefix (such as when using in Rails), then we need to add this prefix
-to the urls:
+The format of the standard urls can be configured using `url_format`:
 
-    app.url_path_prefix = '/media'
+    app.configure do |c|
+      c.url_format = '/:job'
+    end
 
-(or done in a configuration block).
+(or call `app.server.url_format=` directly).
 
-    app.fetch('my_uid').url                                  # "/media/BAhbBlsH..."
+`url_format = '/:job/:basename.:format'`:
 
-This is done for you when using {file:Configuration Rails defaults}.
+    media = app.fetch('my_uid')
+    media.url                        # "/BAhbBlsHOgZmSSIJbWlsawY6BkVU"
+    media.name = 'milk.txt'
+    media.url                        # "/BAhbBlsHOgZmSSIJbWlsawY6BkVU/milk.txt"
+    media.encode(:pdf).url           # "/BAhbB1sHOgZ...RbBzoGZToIcGRm/milk.pdf"
+    media.url(:format => 'bang')     # "/BAhbBlsHOgZmSSIJbWlsawY6BkVU/milk.bang"
+    media.url(:some => 'thing')      # "/BAhbBlsHOgZmSSIJbWlsawY6BkVU/milk.txt?some=thing"
 
-You can override it using
+`url_format = '/some-prefix/:job'`:
 
-    app.fetch('my_uid').url(:path_prefix => '/images')       # "/images/BAhbBlsH..."
+    media = app.fetch('my_uid')
+    media.url                        # "/some-prefix/BAhbBlsHOgZmSSIJbWlsawY6BkVU"
+
+`url_format = '/blah'`:
+
+    media = app.fetch('my_uid')
+    media.url                        # "/blah?job=BAhbBlsHOgZmSSIJbWlsawY6BkVU"
+
+When using {file:Models}, any {file:Models#_Magic__Attributes magic attributes} will be used in url generation, e.g.
+
+    app.server.url_format = '/frogs/:job/:basename-:width.:format'
+
+with
+
+    class Frog
+      image_accessor :face  # columns face_uid, face_name and face_width
+    end
+
+gives
+
+    frog = Frog.new :face => Pathname.new('froggie.jpg')  # image with width 400
+    
+    frog.face.url                   # "/frogs/BAhbBlsHOgZmSSIIc2RmBjoGRVQ/froggie-400.jpg"
 
 Host
 ----
 You can also set a host for the urls
 
-    app.url_host = 'http://some.host'
+    app.configure{|c| c.url_host = 'http://some.host' }      # or directly on app.server
+    
     app.fetch('my_uid').url                                  # "http://some.host/BAhb..."
 
     app.fetch('my_uid').url(:host => 'http://localhost:80')  # "http://localhost:80/BAh..."
-
-Suffix
-------
-You can set a suffix for the urls (for example if some other component behaves badly with urls that have no file extension).
-
-Note that this has no effect on the response.
-
-    app.url_suffix = '.jpg'
-    app.fetch('some/uid').url                                # "...b21lL3VpZA.jpg"
-
-You can also pass it a block, that yields the {Dragonfly::Job Job}, for example:
-
-    app.url_suffix = proc{|job|
-      "/#{job.uid_basename}#{job.encoded_extname || job.uid_extname}"
-    }
-
-    app.fetch('2007/painting.pdf').url                       # "...eS5ib2R5/painting.pdf"
-    app.fetch('2007/painting.pdf').encode(:png).url          # "...gZlOgbmc/painting.png"
-
-And you can override it:
-
-    app.fetch('some/uid').url(:suffix => '/yellowbelly')     # "...b21lL3VpZA/yellowbelly"
 
 Content-Disposition
 -------------------
@@ -79,7 +87,7 @@ Downloaded filename
 To specify the filename the browser uses for 'Save As' dialogues:
 
     app.content_filename = proc{|job, request|
-      "#{job.basename}_#{job.process_steps.first.name}.#{job.encoded_format || job.ext}"
+      "#{job.basename}_#{job.process_steps.first.name}.#{job.format}"
     }
 
 This will for example give the following filenames for the following jobs:
