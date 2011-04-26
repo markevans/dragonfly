@@ -731,12 +731,6 @@ describe Dragonfly::Job do
         it "should return nil for uid" do
           @job.uid.should be_nil
         end
-        it "should return nil for uid_basename" do
-          @job.uid_basename.should be_nil
-        end
-        it "should return nil for uid_extname" do
-          @job.uid_extname.should be_nil
-        end
       end
       describe "when there is a fetch step" do
         before(:each) do
@@ -744,12 +738,6 @@ describe Dragonfly::Job do
         end
         it "should return the uid" do
           @job.uid.should == 'gungedin/innit.blud'
-        end
-        it "should return the uid_basename" do
-          @job.uid_basename.should == 'innit'
-        end
-        it "should return the uid_extname" do
-          @job.uid_extname.should == '.blud'
         end
       end
     end
@@ -807,22 +795,7 @@ describe Dragonfly::Job do
         step.format.should == :cheese
       end
     end
-    describe "encoded_format" do
-      it "should return nil if there's no encode step" do
-        @app.new_job('asdf').encoded_format.should be_nil
-      end
-      it "should return the last encoded format if it exists" do
-        @app.fetch('gungedin').encode(:a).encode(:b).encoded_format.should == :b
-      end
-    end
-    describe "encoded_extname" do
-      it "should return nil if there's no encode step" do
-        @app.new_job('asdf').encoded_extname.should be_nil
-      end
-      it "should return the last encoded format as an extname if it exists" do
-        @app.fetch('gungedin').encode(:a).encode(:b).encoded_extname.should == '.b'
-      end
-    end
+    
   end
 
   describe "meta" do

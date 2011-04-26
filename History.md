@@ -43,6 +43,7 @@ Changes
 - Renamed SimpleEndpoint -> Server
 - moved name and meta into Job, simplified, and now they don't cause the job to be applied
 - FileDataStore stores metadata in xxx.meta now, not xxx.extra
+- removed Job methods `uid_basename`, `uid_extname`, `encoded_format` and `encoded_extname` as they are now unnecessary
 
 Fixes
 -----

@@ -330,21 +330,13 @@ module Dragonfly
 
     # Step inspection
 
-    def fetch_step
-      last_step_of_type(Fetch)
-    end
-
     def uid
       step = fetch_step
       step.uid if step
     end
 
-    def uid_basename
-      File.basename(uid, '.*') if uid
-    end
-
-    def uid_extname
-      File.extname(uid) if uid
+    def fetch_step
+      last_step_of_type(Fetch)
     end
 
     def generate_step
@@ -365,16 +357,6 @@ module Dragonfly
 
     def encode_step
       last_step_of_type(Encode)
-    end
-
-    def encoded_format
-      step = encode_step
-      step.format if step
-    end
-
-    def encoded_extname
-      format = encoded_format
-      ".#{format}" if format
     end
 
     # Misc
