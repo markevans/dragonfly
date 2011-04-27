@@ -152,6 +152,7 @@ describe Dragonfly::DataStorage::FileDataStore do
       pathname, meta = @data_store.retrieve(uid)
       pathname.should be_a(Pathname)
     end
+    
     it "should be able to retrieve any file, stored or not (and without meta data)" do
       FileUtils.mkdir_p("#{@data_store.root_path}/jelly_beans/are")
       File.open("#{@data_store.root_path}/jelly_beans/are/good", 'w'){|f| f.write('hey dog') }
@@ -159,16 +160,22 @@ describe Dragonfly::DataStorage::FileDataStore do
       pathname.read.should == 'hey dog'
       meta.should == {}
     end
+    
     it "should work even if meta is stored in old .extra file" do
       uid = @data_store.store(@temp_object, :meta => {:dog => 'food'})
       FileUtils.mv("#{@data_store.root_path}/#{uid}.meta", "#{@data_store.root_path}/#{uid}.extra")
       pathname, meta = @data_store.retrieve(uid)
       meta.should == {:dog => 'food'}
     end
+    
+    it "should raise an error if the file path has .. in it" do
+      expect{
+        @data_store.retrieve('jelly_beans/../are/good')
+      }.to raise_error(Dragonfly::DataStorage::FileDataStore::BadUID)
+    end
   end
   
   describe "destroying" do
-
     it "should prune empty directories when destroying" do
       uid = @data_store.store(@temp_object)
       @data_store.destroy(uid)
@@ -192,6 +199,11 @@ describe Dragonfly::DataStorage::FileDataStore do
       File.exist?("#{@data_store.root_path}/#{uid}.extra").should be_false
     end
 
+    it "should raise an error if the file path has .. in it" do
+      expect{
+        @data_store.destroy('jelly_beans/../are/good')
+      }.to raise_error(Dragonfly::DataStorage::FileDataStore::BadUID)
+    end
   end
 
   describe "relative paths" do

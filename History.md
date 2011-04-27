@@ -49,6 +49,12 @@ Fixes
 -----
 - Performance tweaks regarding temp_objects model accessors and job objects
 
+0.8.4 (2010-04-27)
+==================
+Fixes
+-----
+- Security fix for file data store
+
 0.8.2 (2010-01-11)
 ==================
 Fixes

@@ -6,6 +6,7 @@ module Dragonfly
     class FileDataStore
 
       # Exceptions
+      class BadUID < RuntimeError; end
       class UnableToFormUrl < RuntimeError; end
 
       include Configurable
@@ -39,6 +40,7 @@ module Dragonfly
       end
 
       def retrieve(relative_path)
+        validate_uid!(relative_path)
         path = absolute(relative_path)
         pathname = Pathname.new(path)
         raise DataNotFound, "couldn't find file #{path}" unless pathname.exist?
@@ -49,6 +51,7 @@ module Dragonfly
       end
 
       def destroy(relative_path)
+        validate_uid!(relative_path)
         path = absolute(relative_path)
         FileUtils.rm path
         FileUtils.rm_f meta_data_path(path)
@@ -133,6 +136,10 @@ module Dragonfly
           dir = absolute(relative_dir)
           FileUtils.rmdir dir if directory_empty?(dir)
         end
+      end
+
+      def validate_uid!(uid)
+        raise BadUID, "tried to fetch uid #{uid.inspect} - perhaps due to a malicious user" if uid['..']
       end
 
     end
