@@ -258,6 +258,11 @@ describe Dragonfly::ImageMagick::Processor do
       image.should have_format('gif')
       extra[:format].should == :gif
     end
+
+    it "should work for commands with parenthesis" do
+      image = @processor.convert(@image, "\\( +clone -sparse-color Barycentric '0,0 black 0,%[fx:h-1] white' -function polynomial 2,-2,0.5 \\) -compose Blur -set option:compose:args 15 -composite")
+      image.should have_width(280)
+    end
   end
   
 end
