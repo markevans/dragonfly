@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Class: Dragonfly::ActiveModelExtensions::Attachment</title>
 <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -14,6 +14,8 @@
 <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
     <script type="text/javascript" charset="utf-8">
       (function($){
         // YARD automatically creates a table of contents
@@ -48,7 +50,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.2)</div>
+      <div id="logo">DRAGONFLY (v 0.9.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -98,17 +100,387 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/dragonfly/active_model_extensions/attachment.rb</dd>
+    <dd class="r1 last">lib/dragonfly/active_model_extensions/attachment.rb<span class="defines">,<br />
+  lib/dragonfly/active_model_extensions/attachment_class_methods.rb</span>
+</dd>
   
 </dl>
 <div class="clear"></div>
 
+<h2>Defined Under Namespace</h2>
+<p class="children">
+   
+    
+   
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Attachment/BadAssignmentKey.html" title="Dragonfly::ActiveModelExtensions::Attachment::BadAssignmentKey (class)">BadAssignmentKey</a></span>, <span class='object_link'><a href="Attachment/ConfigProxy.html" title="Dragonfly::ActiveModelExtensions::Attachment::ConfigProxy (class)">ConfigProxy</a></span>
+    
+  
+</p>
 
 
   
+  <h2>Class Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#app-class_method" title="app (class method)">+ (Object) <strong>app</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title readonly">readonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute app.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#attribute-class_method" title="attribute (class method)">+ (Object) <strong>attribute</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title readonly">readonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute attribute.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#config_block-class_method" title="config_block (class method)">+ (Object) <strong>config_block</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title readonly">readonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute config_block.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#model_class-class_method" title="model_class (class method)">+ (Object) <strong>model_class</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title readonly">readonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute model_class.
+</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#should_retain%3D-instance_method" title="#should_retain= (instance method)">- (Object) <strong>should_retain</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    <span class="note title writeonly">writeonly</span>
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Sets the attribute should_retain.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#should_run_callbacks%3D-instance_method" title="#should_run_callbacks= (instance method)">- (Object) <strong>should_run_callbacks</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    <span class="note title writeonly">writeonly</span>
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Sets the attribute should_run_callbacks.
+</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
 
 
 
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#allowed_magic_attributes-class_method" title="allowed_magic_attributes (class method)">+ (Object) <strong>allowed_magic_attributes</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Magic attributes.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#callbacks-class_method" title="callbacks (class method)">+ (Object) <strong>callbacks</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Callbacks.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ensure_uses_cached_magic_attributes-class_method" title="ensure_uses_cached_magic_attributes (class method)">+ (Object) <strong>ensure_uses_cached_magic_attributes</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#evaluate_storage_opts-class_method" title="evaluate_storage_opts (class method)">+ (Object) <strong>evaluate_storage_opts</strong>(model, attachment) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#init-class_method" title="init (class method)">+ (Object) <strong>init</strong>(model_class, attribute, app, config_block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#magic_attributes-class_method" title="magic_attributes (class method)">+ (Object) <strong>magic_attributes</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#run_callbacks-class_method" title="run_callbacks (class method)">+ (Object) <strong>run_callbacks</strong>(name, model, attachment) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#storage_opts_specs-class_method" title="storage_opts_specs (class method)">+ (Object) <strong>storage_opts_specs</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Storage options.
+</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
   
     <h2>
       Instance Method Summary
@@ -120,7 +492,28 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#analyse-instance_method" title="#analyse (instance method)">- (Object) <strong>analyse</strong>(meth, *args) </a>
+      <a href="#app-instance_method" title="#app (instance method)">- (Object) <strong>app</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#apply-instance_method" title="#apply (instance method)">- (Object) <strong>apply</strong> </a>
     
 
     
@@ -162,7 +555,70 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#attribute-instance_method" title="#attribute (instance method)">- (Object) <strong>attribute</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#changed%3F-instance_method" title="#changed? (instance method)">- (Boolean) <strong>changed?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#destroy%21-instance_method" title="#destroy! (instance method)">- (Object) <strong>destroy!</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#destroy_retained%21-instance_method" title="#destroy_retained! (instance method)">- (Object) <strong>destroy_retained!</strong> </a>
     
 
     
@@ -204,7 +660,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Attachment) <strong>initialize</strong>(app, parent_model, attribute_name) </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Attachment) <strong>initialize</strong>(model) </a>
     
 
     
@@ -223,6 +679,27 @@
 A new instance of Attachment.
 </p>
 </div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#inspect-instance_method" title="#inspect (instance method)">- (Object) <strong>inspect</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -272,7 +749,157 @@ A new instance of Attachment.
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#remote_url-instance_method" title="#remote_url (instance method)">- (Object) <strong>remote_url</strong>(opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#retain%21-instance_method" title="#retain! (instance method)">- (Object) <strong>retain!</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Retaining for avoiding uploading more than once.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#retained%3F-instance_method" title="#retained? (instance method)">- (Boolean) <strong>retained?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#retained_attrs-instance_method" title="#retained_attrs (instance method)">- (Object) <strong>retained_attrs</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#retained_attrs%3D-instance_method" title="#retained_attrs= (instance method)">- (Object) <strong>retained_attrs=</strong>(attrs) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#save%21-instance_method" title="#save! (instance method)">- (Object) <strong>save!</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#should_retain%3F-instance_method" title="#should_retain? (instance method)">- (Boolean) <strong>should_retain?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#should_run_callbacks%3F-instance_method" title="#should_run_callbacks? (instance method)">- (Boolean) <strong>should_run_callbacks?</strong> </a>
     
 
     
@@ -321,7 +948,7 @@ A new instance of Attachment.
     <div class="method_details first">
   <p class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Dragonfly::ActiveModelExtensions::Attachment (class)">Attachment</a></span></tt>) <strong>initialize</strong>(app, parent_model, attribute_name) 
+    - (<tt><span class='object_link'><a href="" title="Dragonfly::ActiveModelExtensions::Attachment (class)">Attachment</a></span></tt>) <strong>initialize</strong>(model) 
   
 
   
@@ -342,24 +969,25 @@ A new instance of Attachment
       <pre class="lines">
 
 
-15
-16
-17
-18
-19
 20
-21</pre>
+21
+22
+23
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 20</span>
 
-<span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id app'>app</span><span class='comma'>,</span> <span class='id parent_model'>parent_model</span><span class='comma'>,</span> <span class='id attribute_name'>attribute_name</span><span class='rparen'>)</span>
-  <span class='ivar'>@app</span><span class='comma'>,</span> <span class='ivar'>@parent_model</span><span class='comma'>,</span> <span class='ivar'>@attribute_name</span> <span class='op'>=</span> <span class='id app'>app</span><span class='comma'>,</span> <span class='id parent_model'>parent_model</span><span class='comma'>,</span> <span class='id attribute_name'>attribute_name</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id extend'>extend</span> <span class='id app'>app</span><span class='period'>.</span><span class='id analyser'>analyser</span><span class='period'>.</span><span class='id analysis_methods'>analysis_methods</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id extend'>extend</span> <span class='id app'>app</span><span class='period'>.</span><span class='id job_definitions'>job_definitions</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id uid'>uid</span> <span class='op'>=</span> <span class='id parent_uid'>parent_uid</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id job'>job</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id uid'>uid</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='model identifier id'>model</span><span class='rparen token'>)</span>
+  <span class='@model ivar id'>@model</span> <span class='assign token'>=</span> <span class='model identifier id'>model</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='model_uid identifier id'>model_uid</span>
+  <span class='update_from_uid identifier id'>update_from_uid</span> <span class='if if_mod kw'>if</span> <span class='uid identifier id'>uid</span>
+  <span class='@should_run_callbacks ivar id'>@should_run_callbacks</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='ensure_uses_cached_magic_attributes identifier id'>ensure_uses_cached_magic_attributes</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -367,15 +995,405 @@ A new instance of Attachment
   
 </div>
 
+  <div id="class_attr_details" class="attr_details">
+    <h2>Class Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <span id="app-class_method"></span>
+      <div class="method_details first">
+  <p class="signature first" id="app-class_method">
+  
+    + (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>app</strong>  <span class="extras">(readonly)</span>
+  
 
-  <div id="instance_method_details" class="method_details_list">
-    <h2>Instance Method Details</h2>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute app
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 78</span>
+
+<span class='def def kw'>def</span> <span class='app identifier id'>app</span>
+  <span class='@app ivar id'>@app</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <span id="attribute-class_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="attribute-class_method">
+  
+    + (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>attribute</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute attribute
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 78</span>
+
+<span class='def def kw'>def</span> <span class='attribute identifier id'>attribute</span>
+  <span class='@attribute ivar id'>@attribute</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <span id="config_block-class_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="config_block-class_method">
+  
+    + (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>config_block</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute config_block
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 78</span>
+
+<span class='def def kw'>def</span> <span class='config_block identifier id'>config_block</span>
+  <span class='@config_block ivar id'>@config_block</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <span id="model_class-class_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="model_class-class_method">
+  
+    + (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>model_class</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute model_class
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 78</span>
+
+<span class='def def kw'>def</span> <span class='model_class identifier id'>model_class</span>
+  <span class='@model_class ivar id'>@model_class</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="should_retain=-instance_method"></span>
+      <span id=""></span>
+      <div class="method_details first">
+  <p class="signature first" id="should_retain=-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>should_retain=</strong>(value)  <span class="extras">(writeonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Sets the attribute should_retain
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'>value</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the value to set the attribute should_retain to.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+119
+120
+121</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 119</span>
+
+<span class='def def kw'>def</span> <span class='should_retain= identifier id'>should_retain=</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='@should_retain ivar id'>@should_retain</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="should_run_callbacks=-instance_method"></span>
+      <span id=""></span>
+      <div class="method_details ">
+  <p class="signature " id="should_run_callbacks=-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>should_run_callbacks=</strong>(value)  <span class="extras">(writeonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Sets the attribute should_run_callbacks
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'></span>
+      
+      
+        <span class='name'>value</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the value to set the attribute should_run_callbacks to.
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+104
+105
+106</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 104</span>
+
+<span class='def def kw'>def</span> <span class='should_run_callbacks= identifier id'>should_run_callbacks=</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='@should_run_callbacks ivar id'>@should_run_callbacks</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
     
     
       <div class="method_details first">
-  <p class="signature first" id="analyse-instance_method">
+  <p class="signature first" id="allowed_magic_attributes-class_method">
   
-    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>analyse</strong>(meth, *args) 
+    + (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>allowed_magic_attributes</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Magic attributes
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+97
+98
+99</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 97</span>
+
+<span class='def def kw'>def</span> <span class='allowed_magic_attributes identifier id'>allowed_magic_attributes</span>
+  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='analysis_method_names identifier id'>analysis_method_names</span> <span class='plus op'>+</span> <span class='lbrack token'>[</span><span class='symbol val'>:size</span><span class='comma token'>,</span> <span class='symbol val'>:basename</span><span class='comma token'>,</span> <span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='symbol val'>:ext</span><span class='comma token'>,</span> <span class='symbol val'>:meta</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="callbacks-class_method">
+  
+    + (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>callbacks</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Callbacks
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+81
+82
+83</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 81</span>
+
+<span class='def def kw'>def</span> <span class='callbacks identifier id'>callbacks</span>
+  <span class='@callbacks ivar id'>@callbacks</span> <span class='opasgn op'>||=</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='h identifier id'>h</span><span class='comma token'>,</span><span class='k identifier id'>k</span><span class='bitor op'>|</span> <span class='h identifier id'>h</span><span class='lbrack token'>[</span><span class='k identifier id'>k</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="ensure_uses_cached_magic_attributes-class_method">
+  
+    + (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>ensure_uses_cached_magic_attributes</strong> 
   
 
   
@@ -385,16 +1403,319 @@ A new instance of Attachment
       <pre class="lines">
 
 
-62
-63
-64</pre>
+114
+115
+116
+117
+118
+119
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 114</span>
 
-<span class='kw'>def</span> <span class='id analyse'>analyse</span><span class='lparen'>(</span><span class='id meth'>meth</span><span class='comma'>,</span> <span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
-  <span class='id has_magic_attribute_for?'>has_magic_attribute_for?</span><span class='lparen'>(</span><span class='id meth'>meth</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id magic_attribute_for'>magic_attribute_for</span><span class='lparen'>(</span><span class='id meth'>meth</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id job'>job</span><span class='period'>.</span><span class='id send'>send</span><span class='lparen'>(</span><span class='id meth'>meth</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='ensure_uses_cached_magic_attributes identifier id'>ensure_uses_cached_magic_attributes</span>
+  <span class='return return kw'>return</span> <span class='if if_mod kw'>if</span> <span class='@uses_cached_magic_attributes ivar id'>@uses_cached_magic_attributes</span>
+  <span class='magic_attributes identifier id'>magic_attributes</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='attr identifier id'>attr</span><span class='bitor op'>|</span>
+    <span class='define_method identifier id'>define_method</span> <span class='attr identifier id'>attr</span> <span class='do do kw'>do</span>
+      <span class='magic_attribute_for identifier id'>magic_attribute_for</span><span class='lparen token'>(</span><span class='attr identifier id'>attr</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='@uses_cached_magic_attributes ivar id'>@uses_cached_magic_attributes</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="evaluate_storage_opts-class_method">
+  
+    + (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>evaluate_storage_opts</strong>(model, attachment) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 129</span>
+
+<span class='def def kw'>def</span> <span class='evaluate_storage_opts identifier id'>evaluate_storage_opts</span><span class='lparen token'>(</span><span class='model identifier id'>model</span><span class='comma token'>,</span> <span class='attachment identifier id'>attachment</span><span class='rparen token'>)</span>
+  <span class='storage_opts_specs identifier id'>storage_opts_specs</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='opts identifier id'>opts</span><span class='comma token'>,</span> <span class='spec identifier id'>spec</span><span class='bitor op'>|</span>
+    <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='spec identifier id'>spec</span>
+    <span class='when when kw'>when</span> <span class='Proc constant id'>Proc</span> <span class='then then kw'>then</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='instance_exec identifier id'>instance_exec</span><span class='lparen token'>(</span><span class='attachment identifier id'>attachment</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='spec identifier id'>spec</span><span class='rparen token'>)</span>
+    <span class='when when kw'>when</span> <span class='Symbol constant id'>Symbol</span> <span class='then then kw'>then</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='spec identifier id'>spec</span><span class='rparen token'>)</span>
+    <span class='else else kw'>else</span> <span class='spec identifier id'>spec</span>
+    <span class='end end kw'>end</span>
+    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+    <span class='opts identifier id'>opts</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="init-class_method">
+  
+    + (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>init</strong>(model_class, attribute, app, config_block) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 64</span>
+
+<span class='def def kw'>def</span> <span class='init identifier id'>init</span><span class='lparen token'>(</span><span class='model_class identifier id'>model_class</span><span class='comma token'>,</span> <span class='attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='comma token'>,</span> <span class='config_block identifier id'>config_block</span><span class='rparen token'>)</span>
+  <span class='@model_class ivar id'>@model_class</span><span class='comma token'>,</span> <span class='@attribute ivar id'>@attribute</span><span class='comma token'>,</span> <span class='@app ivar id'>@app</span><span class='comma token'>,</span> <span class='@config_block ivar id'>@config_block</span> <span class='assign token'>=</span> <span class='model_class identifier id'>model_class</span><span class='comma token'>,</span> <span class='attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='comma token'>,</span> <span class='config_block identifier id'>config_block</span>
+  <span class='include identifier id'>include</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='analysis_methods identifier id'>analysis_methods</span>
+  <span class='include identifier id'>include</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='job_definitions identifier id'>job_definitions</span>
+  <span class='define_method identifier id'>define_method</span> <span class='symbol val'>:format</span> <span class='do do kw'>do</span>
+    <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='format identifier id'>format</span>
+  <span class='end end kw'>end</span>
+  <span class='define_method identifier id'>define_method</span> <span class='symbol val'>:mime_type</span> <span class='do do kw'>do</span>
+    <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='mime_type identifier id'>mime_type</span>
+  <span class='end end kw'>end</span>
+  <span class='ConfigProxy constant id'>ConfigProxy</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='config_block identifier id'>config_block</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='config_block identifier id'>config_block</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="magic_attributes-class_method">
+  
+    + (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>magic_attributes</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 101</span>
+
+<span class='def def kw'>def</span> <span class='magic_attributes identifier id'>magic_attributes</span>
+  <span class='@magic_attributes ivar id'>@magic_attributes</span> <span class='opasgn op'>||=</span> <span class='begin begin kw'>begin</span>
+    <span class='prefix identifier id'>prefix</span> <span class='assign token'>=</span> <span class='attribute identifier id'>attribute</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='plus op'>+</span> <span class='string val'>'_'</span>
+    <span class='model_class identifier id'>model_class</span><span class='dot token'>.</span><span class='public_instance_methods identifier id'>public_instance_methods</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='attrs identifier id'>attrs</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='bitor op'>|</span>
+      <span class='_ identifier id'>_</span><span class='comma token'>,</span> <span class='__ identifier id'>__</span><span class='comma token'>,</span> <span class='suffix identifier id'>suffix</span>  <span class='assign token'>=</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='partition identifier id'>partition</span><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span><span class='rparen token'>)</span>
+      <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='suffix identifier id'>suffix</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='andop op'>&amp;&amp;</span> <span class='allowed_magic_attributes identifier id'>allowed_magic_attributes</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='suffix identifier id'>suffix</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
+        <span class='attrs identifier id'>attrs</span> <span class='lshft op'>&lt;&lt;</span> <span class='suffix identifier id'>suffix</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
+      <span class='end end kw'>end</span>
+      <span class='attrs identifier id'>attrs</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="run_callbacks-class_method">
+  
+    + (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>run_callbacks</strong>(name, model, attachment) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 85</span>
+
+<span class='def def kw'>def</span> <span class='run_callbacks identifier id'>run_callbacks</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='comma token'>,</span> <span class='attachment identifier id'>attachment</span><span class='rparen token'>)</span>
+  <span class='attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='should_run_callbacks identifier id'>should_run_callbacks</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+  <span class='callbacks identifier id'>callbacks</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='callback identifier id'>callback</span><span class='bitor op'>|</span>
+    <span class='case case kw'>case</span> <span class='callback identifier id'>callback</span>
+    <span class='when when kw'>when</span> <span class='Symbol constant id'>Symbol</span> <span class='then then kw'>then</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='callback identifier id'>callback</span><span class='rparen token'>)</span>
+    <span class='when when kw'>when</span> <span class='Proc constant id'>Proc</span> <span class='then then kw'>then</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='instance_exec identifier id'>instance_exec</span><span class='lparen token'>(</span><span class='attachment identifier id'>attachment</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='callback identifier id'>callback</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='should_run_callbacks identifier id'>should_run_callbacks</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="storage_opts_specs-class_method">
+  
+    + (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>storage_opts_specs</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Storage options
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+125
+126
+127</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 125</span>
+
+<span class='def def kw'>def</span> <span class='storage_opts_specs identifier id'>storage_opts_specs</span>
+  <span class='@storage_opts_specs ivar id'>@storage_opts_specs</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="app-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>app</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+28
+29
+30</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 28</span>
+
+<span class='def def kw'>def</span> <span class='app identifier id'>app</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='app identifier id'>app</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="apply-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>apply</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+99
+100
+101
+102</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 99</span>
+
+<span class='def def kw'>def</span> <span class='apply identifier id'>apply</span>
+  <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='apply identifier id'>apply</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -413,40 +1734,132 @@ A new instance of Attachment
       <pre class="lines">
 
 
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
 36
-37</pre>
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 36</span>
 
-<span class='kw'>def</span> <span class='id assign'>assign</span><span class='lparen'>(</span><span class='id value'>value</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id value'>value</span><span class='period'>.</span><span class='id nil?'>nil?</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id job'>job</span> <span class='op'>=</span> <span class='kw'>nil</span>
-    <span class='id reset_magic_attributes'>reset_magic_attributes</span>
-  <span class='kw'>else</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id job'>job</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id value'>value</span>
-    <span class='kw'>when</span> <span class='const'>Job</span> <span class='kw'>then</span> <span class='id value'>value</span><span class='period'>.</span><span class='id dup'>dup</span>
-    <span class='kw'>when</span> <span class='kw'>self</span><span class='period'>.</span><span class='id class'>class</span> <span class='kw'>then</span> <span class='id value'>value</span><span class='period'>.</span><span class='id job'>job</span><span class='period'>.</span><span class='id dup'>dup</span>
-    <span class='kw'>else</span> <span class='id app'>app</span><span class='period'>.</span><span class='id new_job'>new_job</span><span class='lparen'>(</span><span class='id value'>value</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='id set_magic_attributes'>set_magic_attributes</span>
-  <span class='kw'>end</span>
-  <span class='id set_uid_and_parent_uid'>set_uid_and_parent_uid</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='id value'>value</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='assign identifier id'>assign</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='changed identifier id'>changed</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='destroy_retained! fid id'>destroy_retained!</span> <span class='if if_mod kw'>if</span> <span class='retained? fid id'>retained?</span>
+  <span class='set_uid_and_model_uid identifier id'>set_uid_and_model_uid</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+    <span class='reset_magic_attributes identifier id'>reset_magic_attributes</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='run_callbacks identifier id'>run_callbacks</span><span class='lparen token'>(</span><span class='symbol val'>:after_unassign</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='should_run_callbacks? fid id'>should_run_callbacks?</span>
+  <span class='else else kw'>else</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='value identifier id'>value</span>
+    <span class='when when kw'>when</span> <span class='Job constant id'>Job</span> <span class='then then kw'>then</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+    <span class='when when kw'>when</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span> <span class='then then kw'>then</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='job identifier id'>job</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+    <span class='else else kw'>else</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='new_job identifier id'>new_job</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='set_magic_attributes identifier id'>set_magic_attributes</span>
+    <span class='update_meta identifier id'>update_meta</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='run_callbacks identifier id'>run_callbacks</span><span class='lparen token'>(</span><span class='symbol val'>:after_assign</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='should_run_callbacks? fid id'>should_run_callbacks?</span>
+    <span class='retain! fid id'>retain!</span> <span class='if if_mod kw'>if</span> <span class='should_retain? fid id'>should_retain?</span>
+  <span class='end end kw'>end</span>
+  <span class='value identifier id'>value</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="attribute-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>attribute</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 32</span>
+
+<span class='def def kw'>def</span> <span class='attribute identifier id'>attribute</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='attribute identifier id'>attribute</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="changed?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>changed?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+58
+59
+60</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 58</span>
+
+<span class='def def kw'>def</span> <span class='changed? fid id'>changed?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='@changed ivar id'>@changed</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -465,18 +1878,48 @@ A new instance of Attachment
       <pre class="lines">
 
 
-39
-40
-41
-42</pre>
+62
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 62</span>
 
-<span class='kw'>def</span> <span class='id destroy!'>destroy!</span>
-  <span class='id destroy_previous!'>destroy_previous!</span>
-  <span class='id destroy_content'>destroy_content</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id uid'>uid</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='destroy! fid id'>destroy!</span>
+  <span class='destroy_previous! fid id'>destroy_previous!</span>
+  <span class='destroy_content identifier id'>destroy_content</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='uid identifier id'>uid</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="destroy_retained!-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>destroy_retained!</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+129
+130
+131</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 129</span>
+
+<span class='def def kw'>def</span> <span class='destroy_retained! fid id'>destroy_retained!</span>
+  <span class='destroy_content identifier id'>destroy_content</span><span class='lparen token'>(</span><span class='retained_attrs identifier id'>retained_attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:uid</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -495,18 +1938,48 @@ A new instance of Attachment
       <pre class="lines">
 
 
-83
-84
-85
-86</pre>
+90
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 90</span>
 
-<span class='kw'>def</span> <span class='id encode!'>encode!</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
-  <span class='id assign'>assign</span><span class='lparen'>(</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='kw'>self</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='encode! fid id'>encode!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='assign identifier id'>assign</span><span class='lparen token'>(</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="inspect-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>inspect</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+156
+157
+158</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 156</span>
+
+<span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
+  <span class='dstring node'>&quot;&lt;Dragonfly Attachment uid=#{uid.inspect}, app=#{app.inspect}&gt;&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -525,20 +1998,21 @@ A new instance of Attachment
       <pre class="lines">
 
 
-72
-73
-74
-75
-76</pre>
+79
+80
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 79</span>
 
-<span class='kw'>def</span> <span class='id name='>name=</span><span class='lparen'>(</span><span class='id name'>name</span><span class='rparen'>)</span>
-  <span class='id job'>job</span><span class='period'>.</span><span class='id name'>name</span> <span class='op'>=</span> <span class='id name'>name</span>
-  <span class='id set_magic_attribute'>set_magic_attribute</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='comma'>,</span> <span class='id name'>name</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id has_magic_attribute_for?'>has_magic_attribute_for?</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span>
-  <span class='id name'>name</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='name= identifier id'>name=</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span>
+  <span class='set_magic_attribute identifier id'>set_magic_attribute</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='has_magic_attribute_for? fid id'>has_magic_attribute_for?</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='rparen token'>)</span>
+  <span class='name identifier id'>name</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -557,18 +2031,232 @@ A new instance of Attachment
       <pre class="lines">
 
 
-78
-79
-80
-81</pre>
+85
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 85</span>
 
-<span class='kw'>def</span> <span class='id process!'>process!</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span>
-  <span class='id assign'>assign</span><span class='lparen'>(</span><span class='id process'>process</span><span class='lparen'>(</span><span class='op'>*</span><span class='id args'>args</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='kw'>self</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='assign identifier id'>assign</span><span class='lparen token'>(</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="remote_url-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>remote_url</strong>(opts = {}) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+95
+96
+97</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 95</span>
+
+<span class='def def kw'>def</span> <span class='remote_url identifier id'>remote_url</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='remote_url_for identifier id'>remote_url_for</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='uid identifier id'>uid</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="retain!-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>retain!</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Retaining for avoiding uploading more than once
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+112
+113
+114
+115
+116
+117</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 112</span>
+
+<span class='def def kw'>def</span> <span class='retain! fid id'>retain!</span>
+  <span class='if if kw'>if</span> <span class='changed? fid id'>changed?</span> <span class='andop op'>&amp;&amp;</span> <span class='job identifier id'>job</span>
+    <span class='store_job! fid id'>store_job!</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='retained identifier id'>retained</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="retained?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>retained?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+125
+126
+127</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 125</span>
+
+<span class='def def kw'>def</span> <span class='retained? fid id'>retained?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='@retained ivar id'>@retained</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="retained_attrs-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>retained_attrs</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+133
+134
+135
+136
+137
+138</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 133</span>
+
+<span class='def def kw'>def</span> <span class='retained_attrs identifier id'>retained_attrs</span>
+  <span class='attribute_keys identifier id'>attribute_keys</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='hash identifier id'>hash</span><span class='comma token'>,</span> <span class='key identifier id'>key</span><span class='bitor op'>|</span>
+    <span class='hash identifier id'>hash</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+    <span class='hash identifier id'>hash</span>
+  <span class='end end kw'>end</span> <span class='if if_mod kw'>if</span> <span class='retained? fid id'>retained?</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="retained_attrs=-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>retained_attrs=</strong>(attrs) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 140</span>
+
+<span class='def def kw'>def</span> <span class='retained_attrs= identifier id'>retained_attrs=</span><span class='lparen token'>(</span><span class='attrs identifier id'>attrs</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='changed? fid id'>changed?</span> <span class='comment val'># if already set, ignore and destroy this retained content</span>
+    <span class='destroy_content identifier id'>destroy_content</span><span class='lparen token'>(</span><span class='attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:uid</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='attrs identifier id'>attrs</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='bitor op'>|</span>
+      <span class='unless unless kw'>unless</span> <span class='attribute_keys identifier id'>attribute_keys</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+        <span class='raise identifier id'>raise</span> <span class='BadAssignmentKey constant id'>BadAssignmentKey</span><span class='comma token'>,</span> <span class='dstring node'>&quot;trying to call #{attribute}_#{key} = #{value.inspect} via retained_#{attribute} but this is not allowed!&quot;</span>
+      <span class='end end kw'>end</span>
+      <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{attribute}_#{key}=&quot;</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='sync_with_model identifier id'>sync_with_model</span>
+    <span class='update_from_uid identifier id'>update_from_uid</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='retained identifier id'>retained</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -587,36 +2275,125 @@ A new instance of Attachment
       <pre class="lines">
 
 
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56</pre>
+67
+68
+69
+70
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 67</span>
 
-<span class='kw'>def</span> <span class='id save!'>save!</span>
-  <span class='id sync_with_parent!'>sync_with_parent!</span>
-  <span class='id destroy_previous!'>destroy_previous!</span>
-  <span class='kw'>if</span> <span class='id job'>job</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id uid'>uid</span>
-    <span class='id set_uid_and_parent_uid'>set_uid_and_parent_uid</span> <span class='id job'>job</span><span class='period'>.</span><span class='id store'>store</span><span class='lparen'>(</span>
-      <span class='symbol'>:meta</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
-        <span class='symbol'>:model_class</span> <span class='op'>=&gt;</span> <span class='id parent_model'>parent_model</span><span class='period'>.</span><span class='id class'>class</span><span class='period'>.</span><span class='id name'>name</span><span class='comma'>,</span>
-        <span class='symbol'>:model_attachment</span> <span class='op'>=&gt;</span> <span class='id attribute_name'>attribute_name</span>
-      <span class='rbrace'>}</span>
-    <span class='rparen'>)</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id job'>job</span> <span class='op'>=</span> <span class='id job'>job</span><span class='period'>.</span><span class='id to_fetched_job'>to_fetched_job</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='save! fid id'>save!</span>
+  <span class='sync_with_model identifier id'>sync_with_model</span>
+  <span class='store_job! fid id'>store_job!</span> <span class='if if_mod kw'>if</span> <span class='job identifier id'>job</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='uid identifier id'>uid</span>
+  <span class='destroy_previous! fid id'>destroy_previous!</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='changed identifier id'>changed</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='retained identifier id'>retained</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="should_retain?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>should_retain?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+121
+122
+123</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 121</span>
+
+<span class='def def kw'>def</span> <span class='should_retain? fid id'>should_retain?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='@should_retain ivar id'>@should_retain</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="should_run_callbacks?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>should_run_callbacks?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+106
+107
+108</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 106</span>
+
+<span class='def def kw'>def</span> <span class='should_run_callbacks? fid id'>should_run_callbacks?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='@should_run_callbacks ivar id'>@should_run_callbacks</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -635,16 +2412,17 @@ A new instance of Attachment
       <pre class="lines">
 
 
-58
-59
-60</pre>
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 75</span>
 
-<span class='kw'>def</span> <span class='id to_value'>to_value</span>
-  <span class='kw'>self</span> <span class='kw'>if</span> <span class='id job'>job</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='to_value identifier id'>to_value</span>
+  <span class='self self kw'>self</span> <span class='if if_mod kw'>if</span> <span class='job identifier id'>job</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -656,15 +2434,15 @@ A new instance of Attachment
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../../file.Index.html" title="Home">Home</a></li><li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../../file.Rack.html" title="Rack">Rack</a></li><li><a href="../../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../../file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Generators.html" title="Generators">Generators</a></li><li><a href="../../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../../file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.Caching.html" title="Caching">Caching</a></li><li><a href="../../file.History.html" title="History">History</a></li>
+          <li><a href="../../file.Index.html" title="Home">Home</a></li><li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../../file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="../../file.Rack.html" title="Rack">Rack</a></li><li><a href="../../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../../file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="../../file.Couch.html" title="Couch">Couch</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Generators.html" title="Generators">Generators</a></li><li><a href="../../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../../file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.Caching.html" title="Caching">Caching</a></li><li><a href="../../file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="../../file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
 
     <div id="footer">
-  Generated on Tue Jan 11 14:48:16 2011 by 
+  Generated on Wed Apr 27 23:43:37 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.4 (ruby-1.9.2).
+  0.6.8 (ruby-1.9.2).
 </div>
 
   </body>

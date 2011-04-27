@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Class: Dragonfly::DataStorage::S3DataStore</title>
 <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -14,6 +14,8 @@
 <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
     <script type="text/javascript" charset="utf-8">
       (function($){
         // YARD automatically creates a table of contents
@@ -48,7 +50,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.2)</div>
+      <div id="logo">DRAGONFLY (v 0.9.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -91,7 +93,7 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2">AWS::S3, <span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span>, <span class='object_link'><a href="../Serializer.html" title="Dragonfly::Serializer (module)">Serializer</a></span></dd>
+      <dd class="r2"><span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span>, <span class='object_link'><a href="../Serializer.html" title="Dragonfly::Serializer (module)">Serializer</a></span></dd>
       
     
   
@@ -104,6 +106,24 @@
 <div class="clear"></div>
 
 
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="REGIONS-constant" class="">REGIONS =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace token'>{</span>
+  <span class='string val'>'us-east-1'</span>      <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'s3.amazonaws.com'</span><span class='comma token'>,</span>  <span class='comment val'>#default</span>
+  <span class='string val'>'eu-west-1'</span>      <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'s3-eu-west-1.amazonaws.com'</span><span class='comma token'>,</span>
+  <span class='string val'>'ap-southeast-1'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'s3-ap-southeast-1.amazonaws.com'</span><span class='comma token'>,</span>
+  <span class='string val'>'us-west-1'</span>      <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'s3-us-west-1.amazonaws.com'</span>
+<span class='rbrace token'>}</span>
+</pre></dd>
+      
+    </dl>
+  
+
 
   
   
@@ -113,8 +133,74 @@
   
   
   
-  
 
+
+<h2>Configuration Summary</h2>
+<h3>Configurable attributes</h3>
+Configurable attributes for an object in general <code>object</code> can be configured either by using something like
+<pre class="code">
+  object.configure <span class="kw">do</span> |c|
+    c.some_configurable_attribute = <span class="string val">"some value"</span>
+    c.some_other_configurable_attribute = <span class="integer val">42</span>
+    ...
+  <span class="kw">end</span>
+</pre>
+or
+<pre class="code">
+  object.some_configurable_attribute = <span class="string val">"some value"</span>
+</pre>
+<h4>Configurable attributes for instances of Dragonfly::DataStorage::S3DataStore</h4>
+<ul>
+  
+  <li>
+    <code>bucket_name</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>access_key_id</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>secret_access_key</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>use_filesystem</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>region</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>storage_headers</code>
+    
+     - default <code>{"x-amz-acl"=>"public-read"}</code>
+    
+    
+  </li>
+  
+</ul>
 
 
   
@@ -128,28 +214,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#connect%21-instance_method" title="#connect! (instance method)">- (Object) <strong>connect!</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#create_bucket%21-instance_method" title="#create_bucket! (instance method)">- (Object) <strong>create_bucket!</strong> </a>
+      <a href="#bucket_exists%3F-instance_method" title="#bucket_exists? (instance method)">- (Boolean) <strong>bucket_exists?</strong> </a>
     
 
     
@@ -171,6 +236,27 @@
   <span class="summary_signature">
     
       <a href="#destroy-instance_method" title="#destroy (instance method)">- (Object) <strong>destroy</strong>(uid) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#domain-instance_method" title="#domain (instance method)">- (Object) <strong>domain</strong> </a>
     
 
     
@@ -238,7 +324,49 @@ A new instance of S3DataStore.
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#storage-instance_method" title="#storage (instance method)">- (Object) <strong>storage</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#store-instance_method" title="#store (instance method)">- (Object) <strong>store</strong>(temp_object, opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#url_for-instance_method" title="#url_for (instance method)">- (Object) <strong>url_for</strong>(uid, opts = {}) </a>
     
 
     
@@ -277,7 +405,6 @@ A new instance of S3DataStore.
   
   
   
-  
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></span></p>
 <div id="constructor_details" class="method_details_list">
@@ -307,20 +434,23 @@ A new instance of S3DataStore
       <pre class="lines">
 
 
-17
-18
-19
-20
-21</pre>
+25
+26
+27
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 25</span>
 
-<span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id bucket_name'>bucket_name</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:bucket_name</span><span class='rbracket'>]</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id access_key_id'>access_key_id</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:access_key_id</span><span class='rbracket'>]</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id secret_access_key'>secret_access_key</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:secret_access_key</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='bucket_name identifier id'>bucket_name</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:bucket_name</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='access_key_id identifier id'>access_key_id</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:access_key_id</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='secret_access_key identifier id'>secret_access_key</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:secret_access_key</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='region identifier id'>region</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:region</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -334,62 +464,56 @@ A new instance of S3DataStore
     
     
       <div class="method_details first">
-  <p class="signature first" id="connect!-instance_method">
+  <p class="signature first" id="bucket_exists?-instance_method">
   
-    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>connect!</strong> 
+    - (<tt>Boolean</tt>) <strong>bucket_exists?</strong> 
   
 
   
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-23
-24
-25
-26
-27
-28</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 23</span>
-
-<span class='kw'>def</span> <span class='id connect!'>connect!</span>
-  <span class='const'>AWS</span><span class='op'>::</span><span class='const'>S3</span><span class='op'>::</span><span class='const'>Base</span><span class='period'>.</span><span class='id establish_connection!'>establish_connection!</span><span class='lparen'>(</span>
-    <span class='symbol'>:access_key_id</span> <span class='op'>=&gt;</span> <span class='id access_key_id'>access_key_id</span><span class='comma'>,</span>
-    <span class='symbol'>:secret_access_key</span> <span class='op'>=&gt;</span> <span class='id secret_access_key'>secret_access_key</span>
-  <span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
+</p><div class="docstring">
+  <div class="discussion">
     
-      <div class="method_details ">
-  <p class="signature " id="create_bucket!-instance_method">
-  
-    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>create_bucket!</strong> 
-  
 
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
   
-</p><table class="source_code">
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-30
-31
-32</pre>
+89
+90
+91
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 89</span>
 
-<span class='kw'>def</span> <span class='id create_bucket!'>create_bucket!</span>
-  <span class='const'>Bucket</span><span class='period'>.</span><span class='id create'>create</span><span class='lparen'>(</span><span class='id bucket_name'>bucket_name</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id bucket_names'>bucket_names</span><span class='period'>.</span><span class='id include?'>include?</span><span class='lparen'>(</span><span class='id bucket_name'>bucket_name</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='bucket_exists? fid id'>bucket_exists?</span>
+  <span class='storage identifier id'>storage</span><span class='dot token'>.</span><span class='get_bucket_location identifier id'>get_bucket_location</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='rparen token'>)</span>
+  <span class='true true kw'>true</span>
+<span class='rescue rescue kw'>rescue</span> <span class='Excon constant id'>Excon</span><span class='colon2 op'>::</span><span class='Errors constant id'>Errors</span><span class='colon2 op'>::</span><span class='NotFound constant id'>NotFound</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -429,22 +553,50 @@ A new instance of S3DataStore
       <pre class="lines">
 
 
-59
-60
-61
 62
 63
-64</pre>
+64
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 62</span>
 
-<span class='kw'>def</span> <span class='id destroy'>destroy</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span>
-  <span class='id ensure_initialized'>ensure_initialized</span>
-  <span class='const'>S3Object</span><span class='period'>.</span><span class='id delete'>delete</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='comma'>,</span> <span class='id bucket_name'>bucket_name</span><span class='rparen'>)</span>
-<span class='kw'>rescue</span> <span class='const'>AWS</span><span class='op'>::</span><span class='const'>S3</span><span class='op'>::</span><span class='const'>NoSuchKey</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
-  <span class='id raise'>raise</span> <span class='const'>DataNotFound</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id e'>e</span><span class='rbrace'>}</span><span class='tstring_content'> - </span><span class='embexpr_beg'>#{</span><span class='id uid'>uid</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='storage identifier id'>storage</span><span class='dot token'>.</span><span class='delete_object identifier id'>delete_object</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+<span class='rescue rescue kw'>rescue</span> <span class='Excon constant id'>Excon</span><span class='colon2 op'>::</span><span class='Errors constant id'>Errors</span><span class='colon2 op'>::</span><span class='NotFound constant id'>NotFound</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="domain-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>domain</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+76
+77
+78</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 76</span>
+
+<span class='def def kw'>def</span> <span class='domain identifier id'>domain</span>
+  <span class='REGIONS constant id'>REGIONS</span><span class='lbrack token'>[</span><span class='get_region identifier id'>get_region</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -484,30 +636,70 @@ A new instance of S3DataStore
       <pre class="lines">
 
 
-48
-49
-50
 51
 52
 53
 54
 55
 56
-57</pre>
+57
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 51</span>
 
-<span class='kw'>def</span> <span class='id retrieve'>retrieve</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span>
-  <span class='id ensure_initialized'>ensure_initialized</span>
-  <span class='id s3_object'>s3_object</span> <span class='op'>=</span> <span class='const'>S3Object</span><span class='period'>.</span><span class='id find'>find</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='comma'>,</span> <span class='id bucket_name'>bucket_name</span><span class='rparen'>)</span>
-  <span class='lbracket'>[</span>
-    <span class='id s3_object'>s3_object</span><span class='period'>.</span><span class='id value'>value</span><span class='comma'>,</span>
-    <span class='id parse_s3_metadata'>parse_s3_metadata</span><span class='lparen'>(</span><span class='id s3_object'>s3_object</span><span class='period'>.</span><span class='id metadata'>metadata</span><span class='rparen'>)</span>
-  <span class='rbracket'>]</span>
-<span class='kw'>rescue</span> <span class='const'>AWS</span><span class='op'>::</span><span class='const'>S3</span><span class='op'>::</span><span class='const'>NoSuchKey</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
-  <span class='id raise'>raise</span> <span class='const'>DataNotFound</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id e'>e</span><span class='rbrace'>}</span><span class='tstring_content'> - </span><span class='embexpr_beg'>#{</span><span class='id uid'>uid</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='ensure_configured identifier id'>ensure_configured</span>
+  <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='storage identifier id'>storage</span><span class='dot token'>.</span><span class='get_object identifier id'>get_object</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='lbrack token'>[</span>
+    <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='body identifier id'>body</span><span class='comma token'>,</span>
+    <span class='parse_s3_metadata identifier id'>parse_s3_metadata</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='dot token'>.</span><span class='headers identifier id'>headers</span><span class='rparen token'>)</span>
+  <span class='rbrack token'>]</span>
+<span class='rescue rescue kw'>rescue</span> <span class='Excon constant id'>Excon</span><span class='colon2 op'>::</span><span class='Errors constant id'>Errors</span><span class='colon2 op'>::</span><span class='NotFound constant id'>NotFound</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="storage-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>storage</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+80
+81
+82
+83
+84
+85
+86
+87</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 80</span>
+
+<span class='def def kw'>def</span> <span class='storage identifier id'>storage</span>
+  <span class='@storage ivar id'>@storage</span> <span class='opasgn op'>||=</span> <span class='Fog constant id'>Fog</span><span class='colon2 op'>::</span><span class='Storage constant id'>Storage</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
+    <span class='symbol val'>:provider</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'AWS'</span><span class='comma token'>,</span>
+    <span class='symbol val'>:aws_access_key_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='access_key_id identifier id'>access_key_id</span><span class='comma token'>,</span>
+    <span class='symbol val'>:aws_secret_access_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='secret_access_key identifier id'>secret_access_key</span><span class='comma token'>,</span>
+    <span class='symbol val'>:region</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='region identifier id'>region</span>
+  <span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -526,6 +718,8 @@ A new instance of S3DataStore
       <pre class="lines">
 
 
+32
+33
 34
 35
 36
@@ -538,24 +732,70 @@ A new instance of S3DataStore
 43
 44
 45
-46</pre>
+46
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 32</span>
 
-<span class='kw'>def</span> <span class='id store'>store</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id uid'>uid</span> <span class='op'>=</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:path</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id generate_uid'>generate_uid</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id name'>name</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>file</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-  <span class='id ensure_initialized'>ensure_initialized</span>
-  <span class='id extra_data'>extra_data</span> <span class='op'>=</span> <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id attributes'>attributes</span>
-  <span class='kw'>if</span> <span class='id use_filesystem'>use_filesystem</span>
-    <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id file'>file</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id f'>f</span><span class='op'>|</span>
-      <span class='const'>S3Object</span><span class='period'>.</span><span class='id store'>store</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='comma'>,</span> <span class='id f'>f</span><span class='comma'>,</span> <span class='id bucket_name'>bucket_name</span><span class='comma'>,</span> <span class='id s3_metadata_for'>s3_metadata_for</span><span class='lparen'>(</span><span class='id extra_data'>extra_data</span><span class='rparen'>)</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-  <span class='kw'>else</span>
-    <span class='const'>S3Object</span><span class='period'>.</span><span class='id store'>store</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='comma'>,</span> <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id data'>data</span><span class='comma'>,</span> <span class='id bucket_name'>bucket_name</span><span class='comma'>,</span> <span class='id s3_metadata_for'>s3_metadata_for</span><span class='lparen'>(</span><span class='id extra_data'>extra_data</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-  <span class='id uid'>uid</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='ensure_configured identifier id'>ensure_configured</span>
+  <span class='ensure_bucket_initialized identifier id'>ensure_bucket_initialized</span>
+  
+  <span class='meta identifier id'>meta</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:meta</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='headers identifier id'>headers</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:headers</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='generate_uid identifier id'>generate_uid</span><span class='lparen token'>(</span><span class='meta identifier id'>meta</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='original_filename identifier id'>original_filename</span> <span class='orop op'>||</span> <span class='string val'>'file'</span><span class='rparen token'>)</span>
+  
+  <span class='if if kw'>if</span> <span class='use_filesystem identifier id'>use_filesystem</span>
+    <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span>
+      <span class='storage identifier id'>storage</span><span class='dot token'>.</span><span class='put_object identifier id'>put_object</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='f identifier id'>f</span><span class='comma token'>,</span> <span class='full_storage_headers identifier id'>full_storage_headers</span><span class='lparen token'>(</span><span class='headers identifier id'>headers</span><span class='comma token'>,</span> <span class='meta identifier id'>meta</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='else else kw'>else</span>
+    <span class='storage identifier id'>storage</span><span class='dot token'>.</span><span class='put_object identifier id'>put_object</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span><span class='comma token'>,</span> <span class='full_storage_headers identifier id'>full_storage_headers</span><span class='lparen token'>(</span><span class='headers identifier id'>headers</span><span class='comma token'>,</span> <span class='meta identifier id'>meta</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  
+  <span class='uid identifier id'>uid</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="url_for-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>url_for</strong>(uid, opts = {}) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70
+71
+72
+73
+74</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 68</span>
+
+<span class='def def kw'>def</span> <span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='opts identifier id'>opts</span> <span class='andop op'>&amp;&amp;</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:expires</span><span class='rbrack token'>]</span>
+    <span class='storage identifier id'>storage</span><span class='dot token'>.</span><span class='get_object_url identifier id'>get_object_url</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:expires</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='dstring node'>&quot;http://#{bucket_name}.s3.amazonaws.com/#{uid}&quot;</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -567,15 +807,15 @@ A new instance of S3DataStore
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../../file.Index.html" title="Home">Home</a></li><li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../../file.Rack.html" title="Rack">Rack</a></li><li><a href="../../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../../file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Generators.html" title="Generators">Generators</a></li><li><a href="../../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../../file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.Caching.html" title="Caching">Caching</a></li><li><a href="../../file.History.html" title="History">History</a></li>
+          <li><a href="../../file.Index.html" title="Home">Home</a></li><li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../../file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="../../file.Rack.html" title="Rack">Rack</a></li><li><a href="../../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../../file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="../../file.Couch.html" title="Couch">Couch</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Generators.html" title="Generators">Generators</a></li><li><a href="../../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../../file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.Caching.html" title="Caching">Caching</a></li><li><a href="../../file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="../../file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
 
     <div id="footer">
-  Generated on Tue Jan 11 14:48:15 2011 by 
+  Generated on Wed Apr 27 23:43:36 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.4 (ruby-1.9.2).
+  0.6.8 (ruby-1.9.2).
 </div>
 
   </body>

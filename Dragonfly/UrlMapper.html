@@ -1,0 +1,643 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Class: Dragonfly::UrlMapper</title>
+<link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
+  </head>
+  <body>
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.9.0)</div>
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+    </div>
+
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <h1>Class: Dragonfly::UrlMapper
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">Dragonfly::UrlMapper</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/dragonfly/url_mapper.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+   
+    
+   
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="UrlMapper/BadUrlFormat.html" title="Dragonfly::UrlMapper::BadUrlFormat (class)">BadUrlFormat</a></span>, <span class='object_link'><a href="UrlMapper/Segment.html" title="Dragonfly::UrlMapper::Segment (class)">Segment</a></span>
+    
+  
+</p>
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#segments-instance_method" title="#segments (instance method)">- (Object) <strong>segments</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title readonly">readonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute segments.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#url_format-instance_method" title="#url_format (instance method)">- (Object) <strong>url_format</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title readonly">readonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute url_format.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#url_regexp-instance_method" title="#url_regexp (instance method)">- (Object) <strong>url_regexp</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title readonly">readonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute url_regexp.
+</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (UrlMapper) <strong>initialize</strong>(url_format, patterns = {}) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+A new instance of UrlMapper.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#params_for-instance_method" title="#params_for (instance method)">- (Object) <strong>params_for</strong>(path, query = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#params_in_url-instance_method" title="#params_in_url (instance method)">- (Object) <strong>params_in_url</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#url_for-instance_method" title="#url_for (instance method)">- (Object) <strong>url_for</strong>(params) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Dragonfly::UrlMapper (class)">UrlMapper</a></span></tt>) <strong>initialize</strong>(url_format, patterns = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+A new instance of UrlMapper
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Raises:</h3>
+<ul class="raise">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="UrlMapper/BadUrlFormat.html" title="Dragonfly::UrlMapper::BadUrlFormat (class)">BadUrlFormat</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+19
+20
+21
+22
+23
+24</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/url_mapper.rb', line 19</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='url_format identifier id'>url_format</span><span class='comma token'>,</span> <span class='patterns identifier id'>patterns</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='@url_format ivar id'>@url_format</span> <span class='assign token'>=</span> <span class='url_format identifier id'>url_format</span>
+  <span class='raise identifier id'>raise</span> <span class='BadUrlFormat constant id'>BadUrlFormat</span><span class='comma token'>,</span> <span class='dstring node'>&quot;bad url format #{url_format}&quot;</span> <span class='if if_mod kw'>if</span> <span class='url_format identifier id'>url_format</span><span class='lbrack token'>[</span><span class='regexp val'>/[\w_]:[\w_]/</span><span class='rbrack token'>]</span>
+  <span class='init_segments identifier id'>init_segments</span><span class='lparen token'>(</span><span class='patterns identifier id'>patterns</span><span class='rparen token'>)</span>
+  <span class='init_url_regexp identifier id'>init_url_regexp</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <span id="segments-instance_method"></span>
+      <div class="method_details first">
+  <p class="signature first" id="segments-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>segments</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute segments
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/url_mapper.rb', line 26</span>
+
+<span class='def def kw'>def</span> <span class='segments identifier id'>segments</span>
+  <span class='@segments ivar id'>@segments</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <span id="url_format-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="url_format-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>url_format</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute url_format
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/url_mapper.rb', line 26</span>
+
+<span class='def def kw'>def</span> <span class='url_format identifier id'>url_format</span>
+  <span class='@url_format ivar id'>@url_format</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <span id="url_regexp-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="url_regexp-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>url_regexp</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute url_regexp
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/url_mapper.rb', line 26</span>
+
+<span class='def def kw'>def</span> <span class='url_regexp identifier id'>url_regexp</span>
+  <span class='@url_regexp ivar id'>@url_regexp</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="params_for-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>params_for</strong>(path, query = nil) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/url_mapper.rb', line 28</span>
+
+<span class='def def kw'>def</span> <span class='params_for identifier id'>params_for</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='query identifier id'>query</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='path identifier id'>path</span> <span class='and and kw'>and</span> <span class='md identifier id'>md</span> <span class='assign token'>=</span> <span class='path identifier id'>path</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='url_regexp identifier id'>url_regexp</span><span class='rparen token'>)</span>
+    <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Utils constant id'>Utils</span><span class='dot token'>.</span><span class='parse_query identifier id'>parse_query</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+    <span class='params_in_url identifier id'>params_in_url</span><span class='dot token'>.</span><span class='each_with_index identifier id'>each_with_index</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='var identifier id'>var</span><span class='comma token'>,</span> <span class='i identifier id'>i</span><span class='bitor op'>|</span>
+      <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='md identifier id'>md</span><span class='lbrack token'>[</span><span class='i identifier id'>i</span><span class='plus op'>+</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='md identifier id'>md</span><span class='lbrack token'>[</span><span class='i identifier id'>i</span><span class='plus op'>+</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
+      <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='var identifier id'>var</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+    <span class='end end kw'>end</span>
+    <span class='params identifier id'>params</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="params_in_url-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>params_in_url</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39
+40
+41</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/url_mapper.rb', line 39</span>
+
+<span class='def def kw'>def</span> <span class='params_in_url identifier id'>params_in_url</span>
+  <span class='@params_in_url ivar id'>@params_in_url</span> <span class='opasgn op'>||=</span> <span class='url_format identifier id'>url_format</span><span class='dot token'>.</span><span class='scan identifier id'>scan</span><span class='lparen token'>(</span><span class='regexp val'>/\:[\w_]+/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span> <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='tr identifier id'>tr</span><span class='lparen token'>(</span><span class='string val'>':'</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="url_for-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>url_for</strong>(params) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/url_mapper.rb', line 43</span>
+
+<span class='def def kw'>def</span> <span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+  <span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='url_format identifier id'>url_format</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+  <span class='segments identifier id'>segments</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='seg identifier id'>seg</span><span class='bitor op'>|</span>
+    <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='seg identifier id'>seg</span><span class='dot token'>.</span><span class='param identifier id'>param</span><span class='rbrack token'>]</span>
+    <span class='value identifier id'>value</span> <span class='integer val'>? </span><span class='url identifier id'>url</span><span class='dot token'>.</span><span class='sub! fid id'>sub!</span><span class='lparen token'>(</span><span class='regexp val'>/:[\w_]+/</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='url identifier id'>url</span><span class='dot token'>.</span><span class='sub! fid id'>sub!</span><span class='lparen token'>(</span><span class='regexp val'>/.:[\w_]+/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span>
+    <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='seg identifier id'>seg</span><span class='dot token'>.</span><span class='param identifier id'>param</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='url identifier id'>url</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;?#{Rack::Utils.build_query(params)}&quot;</span> <span class='if if_mod kw'>if</span> <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='any? fid id'>any?</span>
+  <span class='url identifier id'>url</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="../file.Index.html" title="Home">Home</a></li><li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="../file.Rack.html" title="Rack">Rack</a></li><li><a href="../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="../file.Couch.html" title="Couch">Couch</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Generators.html" title="Generators">Generators</a></li><li><a href="../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.Caching.html" title="Caching">Caching</a></li><li><a href="../file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="../file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="../file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="footer">
+  Generated on Wed Apr 27 23:43:35 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.8 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

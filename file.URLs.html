@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>File: URLs</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -14,6 +14,8 @@
 <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
     <script type="text/javascript" charset="utf-8">
       (function($){
         // YARD automatically creates a table of contents
@@ -48,7 +50,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.2)</div>
+      <div id="logo">DRAGONFLY (v 0.9.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -67,101 +69,110 @@
 
 <p>We can get urls for any kind of job:</p>
 
-<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
+<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
 
-<span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>my_uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:flip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>                    <span class='comment'># &quot;/BAhbBlsH...&quot;
-</span><span class='id app'>app</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='symbol'>:text</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>hello</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id thumb'>thumb</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>500x302</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id gif'>gif</span><span class='period'>.</span><span class='id url'>url</span>     <span class='comment'># &quot;/BAhbCFsHOgZ...&quot;
-</span></pre>
-
-<h2>Path prefix</h2>
-
-<p>If the app is mounted with a path prefix (such as when using in Rails), then we need to add this prefix
-to the urls:</p>
-
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id url_path_prefix'>url_path_prefix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/media</span><span class='tstring_end'>'</span></span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:flip</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                    <span class='comment val'># &quot;/BAhbBlsH...&quot;</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='string val'>'hello'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'500x302'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='gif identifier id'>gif</span><span class='dot token'>.</span><span class='url identifier id'>url</span>     <span class='comment val'># &quot;/BAhbCFsHOgZ...&quot;</span>
 </pre>
 
-<p>(or done in a configuration block).</p>
+<h2>Path format</h2>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>my_uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>                                  <span class='comment'># &quot;/media/BAhbBlsH...&quot;
-</span></pre>
+<p>The format of the standard urls can be configured using <code>url_format</code>:</p>
 
-<p>This is done for you when using <a href="file.Configuration.html" title="Rails defaults">Rails defaults</a>.</p>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/:job'</span>
+<span class='end end kw'>end</span>
+</pre>
 
-<p>You can override it using</p>
+<p>(or call <code>app.server.url_format=</code> directly).</p>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>my_uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span><span class='lparen'>(</span><span class='symbol'>:path_prefix</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/images</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>       <span class='comment'># &quot;/images/BAhbBlsH...&quot;
-</span></pre>
+<p><code>url_format = '/:job/:basename.:format'</code>:</p>
+
+<pre class="code"><span class='media identifier id'>media</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span>
+<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                        <span class='comment val'># &quot;/BAhbBlsHOgZmSSIJbWlsawY6BkVU&quot;</span>
+<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='string val'>'milk.txt'</span>
+<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                        <span class='comment val'># &quot;/BAhbBlsHOgZmSSIJbWlsawY6BkVU/milk.txt&quot;</span>
+<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:pdf</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span>           <span class='comment val'># &quot;/BAhbB1sHOgZ...RbBzoGZToIcGRm/milk.pdf&quot;</span>
+<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='url identifier id'>url</span><span class='lparen token'>(</span><span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'bang'</span><span class='rparen token'>)</span>     <span class='comment val'># &quot;/BAhbBlsHOgZmSSIJbWlsawY6BkVU/milk.bang&quot;</span>
+<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='url identifier id'>url</span><span class='lparen token'>(</span><span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'thing'</span><span class='rparen token'>)</span>      <span class='comment val'># &quot;/BAhbBlsHOgZmSSIJbWlsawY6BkVU/milk.txt?some=thing&quot;</span>
+</pre>
+
+<p><code>url_format = '/some-prefix/:job'</code>:</p>
+
+<pre class="code"><span class='media identifier id'>media</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span>
+<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                        <span class='comment val'># &quot;/some-prefix/BAhbBlsHOgZmSSIJbWlsawY6BkVU&quot;</span>
+</pre>
+
+<p><code>url_format = '/blah'</code>:</p>
+
+<pre class="code"><span class='media identifier id'>media</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span>
+<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                        <span class='comment val'># &quot;/blah?job=BAhbBlsHOgZmSSIJbWlsawY6BkVU&quot;</span>
+</pre>
+
+<p>When using <a href="file.Models.html" title="Models">Models</a>, any <a href="file.Models.html#_Magic__Attributes" title="magic attributes">magic attributes</a> will be used in url generation, e.g.</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/frogs/:job/:basename-:width.:format'</span>
+</pre>
+
+<p>with</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Frog constant id'>Frog</span>
+  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:face</span>  <span class='comment val'># columns face_uid, face_name and face_width</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>gives</p>
+
+<pre class="code"><span class='frog identifier id'>frog</span> <span class='assign token'>=</span> <span class='Frog constant id'>Frog</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='symbol val'>:face</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'froggie.jpg'</span><span class='rparen token'>)</span>  <span class='comment val'># image with width 400</span>
+
+<span class='frog identifier id'>frog</span><span class='dot token'>.</span><span class='face identifier id'>face</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                   <span class='comment val'># &quot;/frogs/BAhbBlsHOgZmSSIIc2RmBjoGRVQ/froggie-400.jpg&quot;</span>
+</pre>
 
 <h2>Host</h2>
 
 <p>You can also set a host for the urls</p>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id url_host'>url_host</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>http://some.host</span><span class='tstring_end'>'</span></span>
-<span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>my_uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>                                  <span class='comment'># &quot;http://some.host/BAhb...&quot;
-</span>
-<span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>my_uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span><span class='lparen'>(</span><span class='symbol'>:host</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>http://localhost:80</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>  <span class='comment'># &quot;http://localhost:80/BAh...&quot;
-</span></pre>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span> <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_host identifier id'>url_host</span> <span class='assign token'>=</span> <span class='string val'>'http://some.host'</span> <span class='rbrace token'>}</span>      <span class='comment val'># or directly on app.server</span>
 
-<h2>Suffix</h2>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                                  <span class='comment val'># &quot;http://some.host/BAhb...&quot;</span>
 
-<p>You can set a suffix for the urls (for example if some other component behaves badly with urls that have no file extension).</p>
-
-<p>Note that this has no effect on the response.</p>
-
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id url_suffix'>url_suffix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.jpg</span><span class='tstring_end'>'</span></span>
-<span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>                                <span class='comment'># &quot;...b21lL3VpZA.jpg&quot;
-</span></pre>
-
-<p>You can also pass it a block, that yields the <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span>, for example:</p>
-
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id url_suffix'>url_suffix</span> <span class='op'>=</span> <span class='id proc'>proc</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id job'>job</span><span class='op'>|</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id job'>job</span><span class='period'>.</span><span class='id uid_basename'>uid_basename</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id job'>job</span><span class='period'>.</span><span class='id encoded_extname'>encoded_extname</span> <span class='op'>||</span> <span class='id job'>job</span><span class='period'>.</span><span class='id uid_extname'>uid_extname</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-<span class='rbrace'>}</span>
-
-<span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>2007/painting.pdf</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>                       <span class='comment'># &quot;...eS5ib2R5/painting.pdf&quot;
-</span><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>2007/painting.pdf</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:png</span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>          <span class='comment'># &quot;...gZlOgbmc/painting.png&quot;
-</span></pre>
-
-<p>And you can override it:</p>
-
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span><span class='lparen'>(</span><span class='symbol'>:suffix</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/yellowbelly</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>     <span class='comment'># &quot;...b21lL3VpZA/yellowbelly&quot;
-</span></pre>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span><span class='lparen token'>(</span><span class='symbol val'>:host</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://localhost:80'</span><span class='rparen token'>)</span>  <span class='comment val'># &quot;http://localhost:80/BAh...&quot;</span>
+</pre>
 
 <h2>Content-Disposition</h2>
 
 <p>You can manually set the content-disposition of the response:</p>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id content_disposition'>content_disposition</span> <span class='op'>=</span> <span class='symbol'>:attachment</span>    <span class='comment'># should be :inline or :attachment (or :hidden)
-</span></pre>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='content_disposition identifier id'>content_disposition</span> <span class='assign token'>=</span> <span class='symbol val'>:attachment</span>    <span class='comment val'># should be :inline or :attachment (or :hidden)</span>
+</pre>
 
 <p><code>:attachment</code> tells the browser to download it, <code>:inline</code> tells it to display in-browser if possible.</p>
 
 <p>You can also use a block:</p>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id content_disposition'>content_disposition</span> <span class='op'>=</span> <span class='id proc'>proc</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id job'>job</span><span class='comma'>,</span> <span class='id request'>request</span><span class='op'>|</span>
-  <span class='kw'>if</span> <span class='id job'>job</span><span class='period'>.</span><span class='id format'>format</span> <span class='op'>==</span> <span class='symbol'>:jpg</span> <span class='op'>||</span> <span class='id request'>request</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>d</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>inline</span><span class='tstring_end'>'</span></span> <span class='comment'># request is a Rack::Request object
-</span>    <span class='symbol'>:inline</span>
-  <span class='kw'>else</span>
-    <span class='symbol'>:attachment</span>
-  <span class='kw'>end</span>
-<span class='rbrace'>}</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='content_disposition identifier id'>content_disposition</span> <span class='assign token'>=</span> <span class='proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='request identifier id'>request</span><span class='bitor op'>|</span>
+  <span class='if if kw'>if</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='format identifier id'>format</span> <span class='eq op'>==</span> <span class='symbol val'>:jpg</span> <span class='orop op'>||</span> <span class='request identifier id'>request</span><span class='lbrack token'>[</span><span class='string val'>'d'</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>'inline'</span> <span class='comment val'># request is a Rack::Request object</span>
+    <span class='symbol val'>:inline</span>
+  <span class='else else kw'>else</span>
+    <span class='symbol val'>:attachment</span>
+  <span class='end end kw'>end</span>
+<span class='rbrace token'>}</span>
 </pre>
 
 <h2>Downloaded filename</h2>
 
 <p>To specify the filename the browser uses for 'Save As' dialogues:</p>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id content_filename'>content_filename</span> <span class='op'>=</span> <span class='id proc'>proc</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id job'>job</span><span class='comma'>,</span> <span class='id request'>request</span><span class='op'>|</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id job'>job</span><span class='period'>.</span><span class='id basename'>basename</span><span class='rbrace'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id job'>job</span><span class='period'>.</span><span class='id process_steps'>process_steps</span><span class='period'>.</span><span class='id first'>first</span><span class='period'>.</span><span class='id name'>name</span><span class='rbrace'>}</span><span class='tstring_content'>.</span><span class='embexpr_beg'>#{</span><span class='id job'>job</span><span class='period'>.</span><span class='id encoded_format'>encoded_format</span> <span class='op'>||</span> <span class='id job'>job</span><span class='period'>.</span><span class='id ext'>ext</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-<span class='rbrace'>}</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='content_filename identifier id'>content_filename</span> <span class='assign token'>=</span> <span class='proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='request identifier id'>request</span><span class='bitor op'>|</span>
+  <span class='dstring node'>&quot;#{job.basename}_#{job.process_steps.first.name}.#{job.format}&quot;</span>
+<span class='rbrace token'>}</span>
 </pre>
 
 <p>This will for example give the following filenames for the following jobs:</p>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/tree.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:greyscale</span><span class='rparen'>)</span>      <span class='comment'># -&gt; 'tree_greyscale.png'
-</span><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some/tree.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:greyscale</span><span class='rparen'>)</span><span class='period'>.</span><span class='id gif'>gif</span>  <span class='comment'># -&gt; 'tree_greyscale.gif'
-</span></pre>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some/tree.png'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span>      <span class='comment val'># -&gt; 'tree_greyscale.png'</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some/tree.png'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='gif identifier id'>gif</span>  <span class='comment val'># -&gt; 'tree_greyscale.gif'</span>
+</pre>
 
 <p>By default the original filename is used, with a modified extension if it's been encoded.</p>
 
@@ -171,45 +182,45 @@ to the urls:</p>
 
 <p>If we have an app set up for using ImageMagick:</p>
 
-<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:imagemagick</span><span class='rparen'>)</span>
+<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
 </pre>
 
 <p>Then to get the url '/text/hello' to display the text "hello"...</p>
 
 <p>Rails 3 (routes.rb):</p>
 
-<pre class="code"><span class='id match'>match</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/text/:text</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='id app'>app</span><span class='period'>.</span><span class='id endpoint'>endpoint</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id params'>params</span><span class='comma'>,</span> <span class='id app'>app</span><span class='op'>|</span>
-  <span class='id app'>app</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='symbol'>:text</span><span class='comma'>,</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:text</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-<span class='rbrace'>}</span>
+<pre class="code"><span class='match identifier id'>match</span> <span class='string val'>'/text/:text'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='endpoint identifier id'>endpoint</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='bitor op'>|</span>
+  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='rbrace token'>}</span>
 </pre>
 
 <p><a href="http://github.com/josh/rack-mount" target="_parent" title="Rack-Mount">Rack-Mount</a>:</p>
 
-<pre class="code"><span class='const'>Routes</span> <span class='op'>=</span> <span class='const'>Rack</span><span class='op'>::</span><span class='const'>Mount</span><span class='op'>::</span><span class='const'>RouteSet</span><span class='period'>.</span><span class='id new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id set'>set</span><span class='op'>|</span>
+<pre class="code"><span class='Routes constant id'>Routes</span> <span class='assign token'>=</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Mount constant id'>Mount</span><span class='colon2 op'>::</span><span class='RouteSet constant id'>RouteSet</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='set identifier id'>set</span><span class='bitor op'>|</span>
 
-  <span class='id set'>set</span><span class='period'>.</span><span class='id add_route'>add_route</span> <span class='id app'>app</span><span class='period'>.</span><span class='id endpoint'>endpoint</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id params'>params</span><span class='comma'>,</span> <span class='id a'>a</span><span class='op'>|</span> <span class='id a'>a</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='symbol'>:text</span><span class='comma'>,</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:text</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='comma'>,</span>
-                  <span class='symbol'>:path_info</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>/text/(?:&lt;text&gt;.+)</span><span class='regexp_end'>}</span></span>
+  <span class='set identifier id'>set</span><span class='dot token'>.</span><span class='add_route identifier id'>add_route</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='endpoint identifier id'>endpoint</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='a identifier id'>a</span><span class='bitor op'>|</span> <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='comma token'>,</span>
+                  <span class='symbol val'>:path_info</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='regexp val'>%r{/text/(?:&lt;text&gt;.+)}</span>
 
-  <span class='comment'># ...
-</span>
-<span class='kw'>end</span>
+  <span class='comment val'># ...</span>
+
+<span class='end end kw'>end</span>
 </pre>
 
 <p><a href="http://github.com/joshbuddy/usher" target="_parent" title="Usher">Usher</a>:</p>
 
-<pre class="code"><span class='id routes'>routes</span> <span class='op'>=</span> <span class='const'>Usher</span><span class='op'>::</span><span class='const'>Interface</span><span class='period'>.</span><span class='id for'>for</span><span class='lparen'>(</span><span class='symbol'>:rack</span><span class='rparen'>)</span> <span class='kw'>do</span>
-  <span class='id add'>add</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/text/:text</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id to'>to</span> <span class='id app'>app</span><span class='period'>.</span><span class='id endpoint'>endpoint</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id params'>params</span><span class='comma'>,</span> <span class='id app'>app</span><span class='op'>|</span>
-    <span class='id app'>app</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='symbol'>:text</span><span class='comma'>,</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:text</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-  <span class='rbrace'>}</span>
-<span class='kw'>end</span>
+<pre class="code"><span class='routes identifier id'>routes</span> <span class='assign token'>=</span> <span class='Usher constant id'>Usher</span><span class='colon2 op'>::</span><span class='Interface constant id'>Interface</span><span class='dot token'>.</span><span class='for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:rack</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+  <span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='string val'>'/text/:text'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='endpoint identifier id'>endpoint</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='bitor op'>|</span>
+    <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <p><a href="http://github.com/joshbuddy/http_router" target="_parent" title="HTTP Router">HTTP Router</a>:</p>
 
-<pre class="code"><span class='id r'>r</span> <span class='op'>=</span> <span class='const'>HttpRouter</span><span class='period'>.</span><span class='id new'>new</span>
-<span class='id r'>r</span><span class='period'>.</span><span class='id add'>add</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/text/:text</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id to'>to</span> <span class='id app'>app</span><span class='period'>.</span><span class='id endpoint'>endpoint</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id params'>params</span><span class='comma'>,</span> <span class='id app'>app</span><span class='op'>|</span>
-  <span class='id app'>app</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='symbol'>:text</span><span class='comma'>,</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:text</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-<span class='rbrace'>}</span>
+<pre class="code"><span class='r identifier id'>r</span> <span class='assign token'>=</span> <span class='HttpRouter constant id'>HttpRouter</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='r identifier id'>r</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='string val'>'/text/:text'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='endpoint identifier id'>endpoint</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='bitor op'>|</span>
+  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='rbrace token'>}</span>
 </pre>
 
 <p>In each case the url will need to be generated by the router of choice, or manually.</p>
@@ -218,7 +229,7 @@ to the urls:</p>
 
 <p><span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> objects can also be turned straight into Rack endpoints using <code>to_app</code>, e.g. in Rails 3:</p>
 
-<pre class="code"><span class='id match'>match</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/beach</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='id app'>app</span><span class='period'>.</span><span class='id fetch_file'>fetch_file</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>~/some/image.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id thumb'>thumb</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>100x100#</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id jpg'>jpg</span><span class='period'>.</span><span class='id to_app'>to_app</span>
+<pre class="code"><span class='match identifier id'>match</span> <span class='string val'>'/beach'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch_file identifier id'>fetch_file</span><span class='lparen token'>(</span><span class='string val'>'~/some/image.png'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'100x100#'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='jpg identifier id'>jpg</span><span class='dot token'>.</span><span class='to_app identifier id'>to_app</span>
 </pre>
 
 <h2>Denial-of-service attacks</h2>
@@ -228,42 +239,63 @@ work out how to generate urls to spam your server with heavy requests, e.g. resi
 
 <p>Therefore the app can be protected by requiring the presence of a "DOS-protection" SHA in the urls:</p>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
-  <span class='id c'>c</span><span class='period'>.</span><span class='id protect_from_dos_attacks'>protect_from_dos_attacks</span> <span class='op'>=</span> <span class='kw'>true</span>
-  <span class='id c'>c</span><span class='period'>.</span><span class='id secret'>secret</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>You should supply some random secret here</span><span class='tstring_end'>'</span></span>
-<span class='kw'>end</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='protect_from_dos_attacks identifier id'>protect_from_dos_attacks</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='secret identifier id'>secret</span> <span class='assign token'>=</span> <span class='string val'>'You should supply some random secret here'</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <p>Then the standard generated urls will have a SHA query parameter attached:</p>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>my_uid</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>          <span class='comment'># &quot;/BAhbBlsHOgZmIghzZGY?s=df76ba27&quot;
-</span></pre>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span>          <span class='comment val'># &quot;/BAhbBlsHOgZmIghzZGY?s=df76ba27&quot;</span>
+</pre>
 
 <p>Any requests without the correct SHA parameter result in a 400 (bad parameters) error response.</p>
 
 <p>You can also validate for a correct SHA using routed endpoints:</p>
 
-<pre class="code"><span class='id match'>match</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/text/:text</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='id app'>app</span><span class='period'>.</span><span class='id endpoint'>endpoint</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id params'>params</span><span class='comma'>,</span> <span class='id app'>app</span><span class='op'>|</span>
-  <span class='id app'>app</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='symbol'>:text</span><span class='comma'>,</span> <span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:text</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id validate_sha!'>validate_sha!</span><span class='lparen'>(</span><span class='id params'>params</span><span class='lbracket'>[</span><span class='symbol'>:sha</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-<span class='rbrace'>}</span>
+<pre class="code"><span class='match identifier id'>match</span> <span class='string val'>'/text/:text'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='endpoint identifier id'>endpoint</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='bitor op'>|</span>
+  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='validate_sha! fid id'>validate_sha!</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:sha</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='rbrace token'>}</span>
 </pre>
 
 <p>... where obviously you need to pass in a 'sha' parameter to the url, which can be found using</p>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id generate'>generate</span><span class='lparen'>(</span><span class='symbol'>:text</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>some text</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id sha'>sha</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='string val'>'some text'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='sha identifier id'>sha</span>
+</pre>
+
+<h2>Overriding responses</h2>
+
+<p>You can override/add headers using <code>response_headers</code>:</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='response_headers identifier id'>response_headers</span><span class='lbrack token'>[</span><span class='string val'>'X-Something'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'Custom header'</span>   <span class='comment val'># set directly..</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='response_headers identifier id'>response_headers</span><span class='lbrack token'>[</span><span class='string val'>'summink'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='request identifier id'>request</span><span class='bitor op'>|</span>   <span class='comment val'># ...or via a callback</span>
+    <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='image? fid id'>image?</span> <span class='integer val'>? </span><span class='string val'>'image yo'</span> <span class='colon op'>:</span> <span class='string val'>'not an image'</span>
+  <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>You can intercept the response from the dragonfly server by throwing <code>:halt</code> with a Rack response array from inside the <code>before_serve</code> callback:</p>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='before_serve identifier id'>before_serve</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='env identifier id'>env</span><span class='bitor op'>|</span>
+    <span class='throw identifier id'>throw</span> <span class='symbol val'>:halt</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='integer val'>200</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='string val'>'Content-type'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'text/plain'</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='string val'>'hello'</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.Couch.html" title="Couch">Couch</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
 
     <div id="footer">
-  Generated on Tue Jan 11 14:48:13 2011 by 
+  Generated on Wed Apr 27 23:43:33 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.4 (ruby-1.9.2).
+  0.6.8 (ruby-1.9.2).
 </div>
 
   </body>

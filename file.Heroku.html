@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>File: Heroku</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -14,6 +14,8 @@
 <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
     <script type="text/javascript" charset="utf-8">
       (function($){
         // YARD automatically creates a table of contents
@@ -48,7 +50,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.2)</div>
+      <div id="logo">DRAGONFLY (v 0.9.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -79,28 +81,27 @@
 
 <p>Gem dependencies:</p>
 
-<pre class="code">- aws-s3 (require as aws/s3)
-- dragonfly
+<pre class="code"><span class='minus op'>-</span> <span class='fog identifier id'>fog</span>
+<span class='minus op'>-</span> <span class='dragonfly identifier id'>dragonfly</span>
 </pre>
 
-<p>Initializer (e.g. config/initializers/dragonfly.rb):</p>
+<p>Initializer (e.g. config/initializers/dragonfly.rb in Rails):</p>
 
-<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span>
-<span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
+<span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
 
-<span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:imagemagick</span><span class='rparen'>)</span>
-<span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:rails</span><span class='rparen'>)</span>
-<span class='id app'>app</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:heroku</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>my_bucket_name</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id env'>env</span><span class='period'>.</span><span class='id production?'>production?</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:heroku</span><span class='comma token'>,</span> <span class='string val'>'my_bucket_name'</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='env identifier id'>env</span><span class='dot token'>.</span><span class='production? fid id'>production?</span>
 
-<span class='id app'>app</span><span class='period'>.</span><span class='id define_macro'>define_macro</span><span class='lparen'>(</span><span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Base</span><span class='comma'>,</span> <span class='symbol'>:image_accessor</span><span class='rparen'>)</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
 </pre>
 
 <p>The datastore remains as the <span class='object_link'><a href="Dragonfly/DataStorage/FileDataStore.html" title="Dragonfly::DataStorage::FileDataStore (class)">FileDataStore</a></span> for non-production environments.</p>
 
-<p>environment.rb (application.rb in Rails 3):</p>
+<p>application.rb if using with Rails:</p>
 
-<pre class="code"><span class='comment'># make sure the last arg is the same as the app's configured prefix
-</span><span class='id config'>config</span><span class='period'>.</span><span class='id middleware'>middleware</span><span class='period'>.</span><span class='id insert_before'>insert_before</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Rack::Lock</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Dragonfly::Middleware</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:images</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/media</span><span class='tstring_end'>'</span></span>
+<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert identifier id'>insert</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='string val'>'Dragonfly::Middleware'</span><span class='comma token'>,</span> <span class='symbol val'>:images</span>
 </pre>
 
 <p>We don't store the S3 access key and secret in the repository, rather we use Heroku's
@@ -108,29 +109,29 @@
 
 <p>From your app's directory:</p>
 
-<pre class="code">heroku config:add S3_KEY=XXXXXXXXX S3_SECRET=XXXXXXXXXX
+<pre class="code"><span class='heroku identifier id'>heroku</span> <span class='config identifier id'>config</span><span class='symbol val'>:add</span> <span class='S3_KEY constant id'>S3_KEY</span><span class='assign token'>=</span><span class='XXXXXXXXX constant id'>XXXXXXXXX</span> <span class='S3_SECRET constant id'>S3_SECRET</span><span class='assign token'>=</span><span class='XXXXXXXXXX constant id'>XXXXXXXXXX</span>
 </pre>
 
-<p>Obviously replace 'XXXXXXXXX' with your access key and secret.</p>
+<p>Replace 'XXXXXXXXX' with your access key and secret.</p>
 
 <p>Now you can benefit from super-fast images served straight from Heroku's cache!</p>
 
-<p>NOTE: HEROKU'S CACHE IS CLEARED EVERY TIME YOU DEPLOY!!!</p>
+<p><strong>NOTE</strong>: HEROKU'S CACHE IS CLEARED EVERY TIME YOU DEPLOY!!!</p>
 
-<p>If this is an issue, you may want to look into using something like a Memcached add-on, or maybe an after-deploy hook for hitting specific Dragonfly urls you want to cache, etc.
+<p>If this is an issue, you may want to look into storing thumbnails on S3 (see <a href="file.ExampleUseCases.html" title="ExampleUseCases">ExampleUseCases</a>), or maybe an after-deploy hook for hitting specific Dragonfly urls you want to cache, etc.
 It won't be a problem for most sites though.</p></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.Couch.html" title="Couch">Couch</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
 
     <div id="footer">
-  Generated on Tue Jan 11 14:48:12 2011 by 
+  Generated on Wed Apr 27 23:43:33 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.4 (ruby-1.9.2).
+  0.6.8 (ruby-1.9.2).
 </div>
 
   </body>

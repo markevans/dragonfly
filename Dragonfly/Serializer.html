@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Module: Dragonfly::Serializer</title>
 <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -14,6 +14,8 @@
 <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
     <script type="text/javascript" charset="utf-8">
       (function($){
         // YARD automatically creates a table of contents
@@ -48,7 +50,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.2)</div>
+      <div id="logo">DRAGONFLY (v 0.9.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -82,7 +84,7 @@
   
   
     <dt class="r2">Included in:</dt>
-    <dd class="r2"><span class='object_link'><a href="DataStorage/MongoDataStore.html" title="Dragonfly::DataStorage::MongoDataStore (class)">DataStorage::MongoDataStore</a></span>, <span class='object_link'><a href="DataStorage/S3DataStore.html" title="Dragonfly::DataStorage::S3DataStore (class)">DataStorage::S3DataStore</a></span>, <span class='object_link'><a href="" title="Dragonfly::Serializer (module)">Serializer</a></span></dd>
+    <dd class="r2"><span class='object_link'><a href="DataStorage/CouchDataStore.html" title="Dragonfly::DataStorage::CouchDataStore (class)">DataStorage::CouchDataStore</a></span>, <span class='object_link'><a href="DataStorage/MongoDataStore.html" title="Dragonfly::DataStorage::MongoDataStore (class)">DataStorage::MongoDataStore</a></span>, <span class='object_link'><a href="DataStorage/S3DataStore.html" title="Dragonfly::DataStorage::S3DataStore (class)">DataStorage::S3DataStore</a></span>, <span class='object_link'><a href="" title="Dragonfly::Serializer (module)">Serializer</a></span></dd>
     
   
   
@@ -229,10 +231,11 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/serializer.rb', line 16</span>
 
-<span class='kw'>def</span> <span class='id b64_decode'>b64_decode</span><span class='lparen'>(</span><span class='id string'>string</span><span class='rparen'>)</span>
-  <span class='id padding_length'>padding_length</span> <span class='op'>=</span> <span class='id string'>string</span><span class='period'>.</span><span class='id length'>length</span> <span class='op'>%</span> <span class='int'>4</span>
-  <span class='const'>Base64</span><span class='period'>.</span><span class='id decode64'>decode64</span><span class='lparen'>(</span><span class='id string'>string</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>=</span><span class='tstring_end'>'</span></span> <span class='op'>*</span> <span class='id padding_length'>padding_length</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='b64_decode identifier id'>b64_decode</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='padding_length identifier id'>padding_length</span> <span class='assign token'>=</span> <span class='string identifier id'>string</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='mod op'>%</span> <span class='integer val'>4</span>
+  <span class='Base64 constant id'>Base64</span><span class='dot token'>.</span><span class='decode64 identifier id'>decode64</span><span class='lparen token'>(</span><span class='string identifier id'>string</span> <span class='plus op'>+</span> <span class='string val'>'='</span> <span class='mult op'>*</span> <span class='padding_length identifier id'>padding_length</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -258,9 +261,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/serializer.rb', line 12</span>
 
-<span class='kw'>def</span> <span class='id b64_encode'>b64_encode</span><span class='lparen'>(</span><span class='id string'>string</span><span class='rparen'>)</span>
-  <span class='const'>Base64</span><span class='period'>.</span><span class='id encode64'>encode64</span><span class='lparen'>(</span><span class='id string'>string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id tr'>tr</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='b64_encode identifier id'>b64_encode</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='Base64 constant id'>Base64</span><span class='dot token'>.</span><span class='encode64 identifier id'>encode64</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='tr identifier id'>tr</span><span class='lparen token'>(</span><span class='string val'>&quot;\n=&quot;</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -309,11 +313,12 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/serializer.rb', line 25</span>
 
-<span class='kw'>def</span> <span class='id marshal_decode'>marshal_decode</span><span class='lparen'>(</span><span class='id string'>string</span><span class='rparen'>)</span>
-  <span class='const'>Marshal</span><span class='period'>.</span><span class='id load'>load</span><span class='lparen'>(</span><span class='id b64_decode'>b64_decode</span><span class='lparen'>(</span><span class='id string'>string</span><span class='rparen'>)</span><span class='rparen'>)</span>
-<span class='kw'>rescue</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
-  <span class='id raise'>raise</span> <span class='const'>BadString</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>couldn't decode </span><span class='embexpr_beg'>#{</span><span class='id string'>string</span><span class='rbrace'>}</span><span class='tstring_content'> - got </span><span class='embexpr_beg'>#{</span><span class='id e'>e</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='marshal_decode identifier id'>marshal_decode</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='b64_decode identifier id'>b64_decode</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='rescue rescue kw'>rescue</span> <span class='TypeError constant id'>TypeError</span><span class='comma token'>,</span> <span class='ArgumentError constant id'>ArgumentError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='raise identifier id'>raise</span> <span class='BadString constant id'>BadString</span><span class='comma token'>,</span> <span class='dstring node'>&quot;couldn't decode #{string} - got #{e}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -339,9 +344,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/serializer.rb', line 21</span>
 
-<span class='kw'>def</span> <span class='id marshal_encode'>marshal_encode</span><span class='lparen'>(</span><span class='id object'>object</span><span class='rparen'>)</span>
-  <span class='id b64_encode'>b64_encode</span><span class='lparen'>(</span><span class='const'>Marshal</span><span class='period'>.</span><span class='id dump'>dump</span><span class='lparen'>(</span><span class='id object'>object</span><span class='rparen'>)</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='marshal_encode identifier id'>marshal_encode</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+  <span class='b64_encode identifier id'>b64_encode</span><span class='lparen token'>(</span><span class='Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='dump identifier id'>dump</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -353,15 +359,15 @@
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../file.Index.html" title="Home">Home</a></li><li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../file.Rack.html" title="Rack">Rack</a></li><li><a href="../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Generators.html" title="Generators">Generators</a></li><li><a href="../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.Caching.html" title="Caching">Caching</a></li><li><a href="../file.History.html" title="History">History</a></li>
+          <li><a href="../file.Index.html" title="Home">Home</a></li><li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="../file.Rack.html" title="Rack">Rack</a></li><li><a href="../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="../file.Couch.html" title="Couch">Couch</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Generators.html" title="Generators">Generators</a></li><li><a href="../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.Caching.html" title="Caching">Caching</a></li><li><a href="../file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="../file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
 
     <div id="footer">
-  Generated on Tue Jan 11 14:48:14 2011 by 
+  Generated on Wed Apr 27 23:43:35 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.4 (ruby-1.9.2).
+  0.6.8 (ruby-1.9.2).
 </div>
 
   </body>

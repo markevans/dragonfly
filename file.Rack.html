@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>File: Rack</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -14,6 +14,8 @@
 <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
     <script type="text/javascript" charset="utf-8">
       (function($){
         // YARD automatically creates a table of contents
@@ -48,7 +50,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.2)</div>
+      <div id="logo">DRAGONFLY (v 0.9.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -72,14 +74,14 @@ then serving it in some form.</p>
 
 <p>A basic rackup file <code>config.ru</code>:</p>
 
-<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rubygems</span><span class='tstring_end'>'</span></span>
-<span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span>
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
+<span class='require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
 
-<span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:my_app_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id configure'>configure</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id c'>c</span><span class='op'>|</span>
-  <span class='comment'># ... configuration here
-</span><span class='kw'>end</span>
+<span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app_name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='comment val'># ... configuration here</span>
+<span class='end end kw'>end</span>
 
-<span class='id run'>run</span> <span class='label'>Dragonfly:</span><span class='const'>App</span><span class='lbracket'>[</span><span class='symbol'>:my_app_name</span><span class='rbracket'>]</span>
+<span class='run identifier id'>run</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='symbol val'>:App</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app_name</span><span class='rbrack token'>]</span>
 </pre>
 
 <p>See <a href="file.Configuration.html" title="Configuration">Configuration</a> for more details.</p>
@@ -90,12 +92,12 @@ then serving it in some form.</p>
 
 <p><code>config.ru</code>:</p>
 
-<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rubygems</span><span class='tstring_end'>'</span></span>
-<span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>dragonfly</span><span class='tstring_end'>'</span></span>
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
+<span class='require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
 
-<span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id configure_with'>configure_with</span><span class='lparen'>(</span><span class='symbol'>:imagemagick</span><span class='rparen'>)</span>
+<span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
 
-<span class='id run'>run</span> <span class='id app'>app</span>
+<span class='run identifier id'>run</span> <span class='app identifier id'>app</span>
 </pre>
 
 <p>This enables the app to use all the ImageMagick goodies provided by Dragonfly (see <a href="file.Configuration.html" title="Configuration">Configuration</a>).
@@ -103,14 +105,14 @@ By default the <span class='object_link'><a href="Dragonfly/DataStorage/FileData
 
 <p>In the console:</p>
 
-<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
+<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
 
-<span class='comment'># Store
-</span><span class='id uid'>uid</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id store'>store</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>path/to/image.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span>      <span class='comment'># ===&gt; unique uid
-</span>
-<span class='comment'># Get the url for a thumbnail
-</span><span class='id url'>url</span> <span class='op'>=</span> <span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='id uid'>uid</span><span class='rparen'>)</span><span class='period'>.</span><span class='id thumb'>thumb</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>400x300</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>           <span class='comment'># ===&gt; &quot;/media/BAhbBlsHOgZmIg9hc...&quot;
-</span></pre>
+<span class='comment val'># Store</span>
+<span class='uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/image.png'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>      <span class='comment val'># ===&gt; unique uid</span>
+
+<span class='comment val'># Get the url for a thumbnail</span>
+<span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'400x300'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span>           <span class='comment val'># ===&gt; &quot;/media/BAhbBlsHOgZmIg9hc...&quot;</span>
+</pre>
 
 <p>Now when we visit the url <code>/media/BAhbBlsHOgZmIg9hc...</code> in the browser, we get a resized image!</p>
 
@@ -120,15 +122,15 @@ By default the <span class='object_link'><a href="Dragonfly/DataStorage/FileData
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.Couch.html" title="Couch">Couch</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
 
     <div id="footer">
-  Generated on Tue Jan 11 14:48:12 2011 by 
+  Generated on Wed Apr 27 23:43:33 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.4 (ruby-1.9.2).
+  0.6.8 (ruby-1.9.2).
 </div>
 
   </body>

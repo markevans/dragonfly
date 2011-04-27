@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Class: Dragonfly::DataStorage::FileDataStore</title>
 <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -14,6 +14,8 @@
 <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
     <script type="text/javascript" charset="utf-8">
       (function($){
         // YARD automatically creates a table of contents
@@ -48,7 +50,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.2)</div>
+      <div id="logo">DRAGONFLY (v 0.9.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -103,6 +105,16 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Defined Under Namespace</h2>
+<p class="children">
+   
+    
+   
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="FileDataStore/BadUID.html" title="Dragonfly::DataStorage::FileDataStore::BadUID (class)">BadUID</a></span>, <span class='object_link'><a href="FileDataStore/UnableToFormUrl.html" title="Dragonfly::DataStorage::FileDataStore::UnableToFormUrl (class)">UnableToFormUrl</a></span>
+    
+  
+</p>
 
 
   
@@ -110,6 +122,49 @@
   
   
 
+
+<h2>Configuration Summary</h2>
+<h3>Configurable attributes</h3>
+Configurable attributes for an object in general <code>object</code> can be configured either by using something like
+<pre class="code">
+  object.configure <span class="kw">do</span> |c|
+    c.some_configurable_attribute = <span class="string val">"some value"</span>
+    c.some_other_configurable_attribute = <span class="integer val">42</span>
+    ...
+  <span class="kw">end</span>
+</pre>
+or
+<pre class="code">
+  object.some_configurable_attribute = <span class="string val">"some value"</span>
+</pre>
+<h4>Configurable attributes for instances of Dragonfly::DataStorage::FileDataStore</h4>
+<ul>
+  
+  <li>
+    <code>root_path</code>
+    
+     - default <code><span class="string val">"/var/tmp/dragonfly"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>server_root</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>store_meta</code>
+    
+     - default <code><span class="kw">true</span></code>
+    
+    
+  </li>
+  
+</ul>
 
 
   
@@ -204,6 +259,27 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#url_for-instance_method" title="#url_for (instance method)">- (Object) <strong>url_for</strong>(relative_path, opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -257,26 +333,31 @@
       <pre class="lines">
 
 
-47
-48
-49
-50
-51
-52
 53
-54</pre>
+54
+55
+56
+57
+58
+59
+60
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 53</span>
 
-<span class='kw'>def</span> <span class='id destroy'>destroy</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span>
-  <span class='id path'>path</span> <span class='op'>=</span> <span class='id absolute'>absolute</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span>
-  <span class='const'>FileUtils</span><span class='period'>.</span><span class='id rm'>rm</span> <span class='id path'>path</span>
-  <span class='const'>FileUtils</span><span class='period'>.</span><span class='id rm'>rm</span> <span class='id extra_data_path'>extra_data_path</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
-  <span class='id purge_empty_directories'>purge_empty_directories</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span>
-<span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>ENOENT</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
-  <span class='id raise'>raise</span> <span class='const'>DataNotFound</span><span class='comma'>,</span> <span class='id e'>e</span><span class='period'>.</span><span class='id message'>message</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+  <span class='validate_uid! fid id'>validate_uid!</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='absolute identifier id'>absolute</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+  <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rm identifier id'>rm</span> <span class='path identifier id'>path</span>
+  <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rm_f identifier id'>rm_f</span> <span class='meta_data_path identifier id'>meta_data_path</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rm_f identifier id'>rm_f</span> <span class='deprecated_meta_data_path identifier id'>deprecated_meta_data_path</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='purge_empty_directories identifier id'>purge_empty_directories</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+<span class='rescue rescue kw'>rescue</span> <span class='Errno constant id'>Errno</span><span class='colon2 op'>::</span><span class='ENOENT constant id'>ENOENT</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='message identifier id'>message</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -295,22 +376,23 @@
       <pre class="lines">
 
 
-56
-57
-58
-59
-60
-61</pre>
+77
+78
+79
+80
+81
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 77</span>
 
-<span class='kw'>def</span> <span class='id disambiguate'>disambiguate</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
-  <span class='id dirname'>dirname</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id dirname'>dirname</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
-  <span class='id basename'>basename</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id basename'>basename</span><span class='lparen'>(</span><span class='id path'>path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.*</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-  <span class='id extname'>extname</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id extname'>extname</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id dirname'>dirname</span><span class='rbrace'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id basename'>basename</span><span class='rbrace'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='lparen'>(</span><span class='const'>Time</span><span class='period'>.</span><span class='id now'>now</span><span class='period'>.</span><span class='id usec'>usec</span><span class='op'>*</span><span class='int'>10</span> <span class='op'>+</span> <span class='id rand'>rand</span><span class='lparen'>(</span><span class='int'>100</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id to_s'>to_s</span><span class='lparen'>(</span><span class='int'>32</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='embexpr_beg'>#{</span><span class='id extname'>extname</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='disambiguate identifier id'>disambiguate</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='dirname identifier id'>dirname</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='dirname identifier id'>dirname</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='basename identifier id'>basename</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='string val'>'.*'</span><span class='rparen token'>)</span>
+  <span class='extname identifier id'>extname</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='extname identifier id'>extname</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='dstring node'>&quot;#{dirname}/#{basename}_#{(Time.now.usec*10 + rand(100)).to_s(32)}#{extname}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -350,32 +432,31 @@
       <pre class="lines">
 
 
-35
-36
-37
-38
-39
-40
-41
 42
 43
 44
-45</pre>
+45
+46
+47
+48
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 42</span>
 
-<span class='kw'>def</span> <span class='id retrieve'>retrieve</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span>
-  <span class='id path'>path</span> <span class='op'>=</span> <span class='id absolute'>absolute</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span>
-  <span class='id file'>file</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
-  <span class='id file'>file</span><span class='period'>.</span><span class='id close'>close</span>
-  <span class='lbracket'>[</span>
-    <span class='id file'>file</span><span class='comma'>,</span>
-    <span class='id retrieve_extra_data'>retrieve_extra_data</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
-  <span class='rbracket'>]</span>
-<span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>ENOENT</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
-  <span class='id raise'>raise</span> <span class='const'>DataNotFound</span><span class='comma'>,</span> <span class='id e'>e</span><span class='period'>.</span><span class='id message'>message</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+  <span class='validate_uid! fid id'>validate_uid!</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='absolute identifier id'>absolute</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+  <span class='pathname identifier id'>pathname</span> <span class='assign token'>=</span> <span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;couldn't find file #{path}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='pathname identifier id'>pathname</span><span class='dot token'>.</span><span class='exist? fid id'>exist?</span>
+  <span class='lbrack token'>[</span>
+    <span class='pathname identifier id'>pathname</span><span class='comma token'>,</span>
+    <span class='lparen token'>(</span><span class='store_meta identifier id'>store_meta</span> <span class='integer val'>? </span><span class='retrieve_meta_data identifier id'>retrieve_meta_data</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -394,12 +475,6 @@
       <pre class="lines">
 
 
-12
-13
-14
-15
-16
-17
 18
 19
 20
@@ -415,33 +490,89 @@
 30
 31
 32
-33</pre>
+33
+34
+35
+36
+37
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 18</span>
 
-<span class='kw'>def</span> <span class='id store'>store</span><span class='lparen'>(</span><span class='id temp_object'>temp_object</span><span class='comma'>,</span> <span class='id opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id relative_path'>relative_path</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:path</span><span class='rbracket'>]</span>
-    <span class='id opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:path</span><span class='rbracket'>]</span>
-  <span class='kw'>else</span>
-    <span class='id filename'>filename</span> <span class='op'>=</span> <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id name'>name</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>file</span><span class='tstring_end'>'</span></span>
-    <span class='id relative_path'>relative_path</span> <span class='op'>=</span> <span class='id relative_path_for'>relative_path_for</span><span class='lparen'>(</span><span class='id filename'>filename</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+<span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='meta identifier id'>meta</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:meta</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='relative_path identifier id'>relative_path</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span>
+    <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span>
+  <span class='else else kw'>else</span>
+    <span class='filename identifier id'>filename</span> <span class='assign token'>=</span> <span class='meta identifier id'>meta</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='original_filename identifier id'>original_filename</span> <span class='orop op'>||</span> <span class='string val'>'file'</span>
+    <span class='relative_path identifier id'>relative_path</span> <span class='assign token'>=</span> <span class='relative_path_for identifier id'>relative_path_for</span><span class='lparen token'>(</span><span class='filename identifier id'>filename</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
 
-  <span class='kw'>begin</span>
-    <span class='id path'>path</span> <span class='op'>=</span> <span class='id absolute'>absolute</span><span class='lparen'>(</span><span class='id relative_path'>relative_path</span><span class='rparen'>)</span>
-    <span class='kw'>until</span> <span class='op'>!</span><span class='const'>File</span><span class='period'>.</span><span class='id exist?'>exist?</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
-      <span class='id path'>path</span> <span class='op'>=</span> <span class='id disambiguate'>disambiguate</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='id prepare_path'>prepare_path</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
-    <span class='id temp_object'>temp_object</span><span class='period'>.</span><span class='id to_file'>to_file</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id close'>close</span>
-    <span class='id store_extra_data'>store_extra_data</span><span class='lparen'>(</span><span class='id path'>path</span><span class='comma'>,</span> <span class='id temp_object'>temp_object</span><span class='rparen'>)</span>
-  <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EACCES</span> <span class='op'>=&gt;</span> <span class='id e'>e</span>
-    <span class='id raise'>raise</span> <span class='const'>UnableToStore</span><span class='comma'>,</span> <span class='id e'>e</span><span class='period'>.</span><span class='id message'>message</span>
-  <span class='kw'>end</span>
+  <span class='begin begin kw'>begin</span>
+    <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='absolute identifier id'>absolute</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+    <span class='until until kw'>until</span> <span class='notop op'>!</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='exist? fid id'>exist?</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+      <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='disambiguate identifier id'>disambiguate</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='prepare_path identifier id'>prepare_path</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+    <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='to_file identifier id'>to_file</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='close identifier id'>close</span>
+    <span class='store_meta_data identifier id'>store_meta_data</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='meta identifier id'>meta</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='store_meta identifier id'>store_meta</span>
+  <span class='rescue rescue kw'>rescue</span> <span class='Errno constant id'>Errno</span><span class='colon2 op'>::</span><span class='EACCES constant id'>EACCES</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+    <span class='raise identifier id'>raise</span> <span class='UnableToStore constant id'>UnableToStore</span><span class='comma token'>,</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='message identifier id'>message</span>
+  <span class='end end kw'>end</span>
 
-  <span class='id relative'>relative</span><span class='lparen'>(</span><span class='id path'>path</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+  <span class='relative identifier id'>relative</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="url_for-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>url_for</strong>(relative_path, opts = {}) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 64</span>
+
+<span class='def def kw'>def</span> <span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='server_root identifier id'>server_root</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='raise identifier id'>raise</span> <span class='NotConfigured constant id'>NotConfigured</span><span class='comma token'>,</span> <span class='dstring node'>&quot;you need to configure server_root for #{self.class.name} in order to form urls&quot;</span>
+  <span class='else else kw'>else</span>
+    <span class='_ identifier id'>_</span><span class='comma token'>,</span> <span class='__ identifier id'>__</span><span class='comma token'>,</span> <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='absolute identifier id'>absolute</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='partition identifier id'>partition</span><span class='lparen token'>(</span><span class='server_root identifier id'>server_root</span><span class='rparen token'>)</span>
+    <span class='if if kw'>if</span> <span class='path identifier id'>path</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+      <span class='raise identifier id'>raise</span> <span class='UnableToFormUrl constant id'>UnableToFormUrl</span><span class='comma token'>,</span> <span class='dstring node'>&quot;couldn't form url for uid #{relative_path.inspect} with root_path #{root_path.inspect} and server_root #{server_root.inspect}&quot;</span>
+    <span class='else else kw'>else</span>
+      <span class='path identifier id'>path</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -453,15 +584,15 @@
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../../file.Index.html" title="Home">Home</a></li><li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../../file.Rack.html" title="Rack">Rack</a></li><li><a href="../../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../../file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Generators.html" title="Generators">Generators</a></li><li><a href="../../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../../file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.Caching.html" title="Caching">Caching</a></li><li><a href="../../file.History.html" title="History">History</a></li>
+          <li><a href="../../file.Index.html" title="Home">Home</a></li><li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../../file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="../../file.Rack.html" title="Rack">Rack</a></li><li><a href="../../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../../file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="../../file.Couch.html" title="Couch">Couch</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Generators.html" title="Generators">Generators</a></li><li><a href="../../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../../file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.Caching.html" title="Caching">Caching</a></li><li><a href="../../file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="../../file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
 
     <div id="footer">
-  Generated on Tue Jan 11 14:48:15 2011 by 
+  Generated on Wed Apr 27 23:43:37 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.4 (ruby-1.9.2).
+  0.6.8 (ruby-1.9.2).
 </div>
 
   </body>

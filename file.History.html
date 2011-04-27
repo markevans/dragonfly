@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>File: History</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -14,6 +14,8 @@
 <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
     <script type="text/javascript" charset="utf-8">
       (function($){
         // YARD automatically creates a table of contents
@@ -48,7 +50,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.2)</div>
+      <div id="logo">DRAGONFLY (v 0.9.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -63,7 +65,88 @@
 
     <div id="content" class="clearfix">
       <div class="col1">
-        <div id='filecontents'><h1>0.8.2 (2010-01-11)</h1>
+        <div id='filecontents'><h1>0.9.0 (2011-04-27)</h1>
+
+<h2>Features</h2>
+
+<ul>
+<li>Model accessors are configurable
+
+<ul>
+<li>added <code>after_assign</code> callback</li>
+<li>added <code>after_unassign</code> callback</li>
+<li>added <code>copy_to</code> for e.g. up-front thumbnailing</li>
+<li>added <code>storage_opts</code> and <code>storage_xxx</code></li>
+</ul>
+</li>
+<li>Added model <code>remove_xxxxx</code> for using with checkboxes</li>
+<li>Added model <code>xxxx_url</code> for assigning content from a url</li>
+<li>Added job step <code>fetch_url</code></li>
+<li>Added <code>retain!</code> and model <code>retained_xxxxx</code> for avoiding multiple uploads when validations fail</li>
+<li>Added <code>image?</code> to imagemagick analyser</li>
+<li>Added imagemagick <code>plain</code> generator</li>
+<li>Added <code>strip</code> to imagemagick processor</li>
+<li>Added CouchDataStore that uses a CouchDB as a data storage engine</li>
+<li>Added <code>before_serve</code> callback</li>
+<li>Allowed for configurable response headers</li>
+<li>Made url re-definable with <code>define_url</code></li>
+<li><code>validates_property</code> can take a proc for the message</li>
+<li>Saved configs can be registered now so they can be used with <code>configure_with(:symbol)</code></li>
+<li>Configurable objects can fallback to a parent configuration, so e.g. the server can be configured through the parent app's configure block.</li>
+<li>Allowed initializing data by using a pathname</li>
+<li><code>convert_command</code> and <code>identify_command</code> can be configured on a per-app basis</li>
+<li>Added <code>remote_url</code> and ability for datastores to form urls
+
+<ul>
+<li>Added for File, Couch and S3 datastores</li>
+</ul>
+</li>
+<li>Models automatically copy magic attributes into meta</li>
+<li>S3DataStore configurable headers</li>
+<li>'dragonfly/rails/images' slightly smarter and added <code>file_accessor</code> for more semantic use of non-image attachments</li>
+<li>Made dragonfly response configurable</li>
+<li>Mongo datastore can reuse an existing connection/db</li>
+<li>FileDataStore can be configured not to store meta (save on extra file)</li>
+</ul>
+
+
+<h2>Changes</h2>
+
+<ul>
+<li>Removed <code>url_path_prefix</code> and <code>url_suffix</code> in favour of <code>url_format</code>
+
+<ul>
+<li>Middleware doesn't need mount point argument now</li>
+</ul>
+</li>
+<li>Removed support for rails 2.3</li>
+<li>Removed RMagick support (and extracted into a plugin)</li>
+<li>ImageMagick processors etc. moved into the ImageMagick namespace</li>
+<li>moved from aws/s3 -> fog for S3 support</li>
+<li>Renamed SimpleEndpoint -> Server</li>
+<li>moved name and meta into Job, simplified, and now they don't cause the job to be applied</li>
+<li>FileDataStore stores metadata in xxx.meta now, not xxx.extra</li>
+<li>removed Job methods <code>uid_basename</code>, <code>uid_extname</code>, <code>encoded_format</code> and <code>encoded_extname</code> as they are now unnecessary</li>
+</ul>
+
+
+<h2>Fixes</h2>
+
+<ul>
+<li>Performance tweaks regarding temp_objects model accessors and job objects</li>
+</ul>
+
+
+<h1>0.8.4 (2010-04-27)</h1>
+
+<h2>Fixes</h2>
+
+<ul>
+<li>Security fix for file data store</li>
+</ul>
+
+
+<h1>0.8.2 (2010-01-11)</h1>
 
 <h2>Fixes</h2>
 
@@ -123,7 +206,7 @@
 <li>Added methods for querying job steps, and Job#uid, Job#uid_basename, etc.</li>
 <li>Added Job#b64_data</li>
 <li>Added configurable url_suffix</li>
-<li>Added configurable content_disposition and content_filename</li>
+<li>Added configurable content<em>disposition and content</em>filename</li>
 <li>Can pass extra GET params to url_for</li>
 <li>Can manually set uid on FileDataStore and S3DataStore
   (not yet documented because attachments have no way to pass it on yet)</li>
@@ -310,10 +393,10 @@ They can be configured to use in-memory strings with the use_filesystem config o
 <h2>Changes</h2>
 
 <ul>
-<li>temp_object.tempfile now returns a closed tempfile, which temp_object.file returns an open file.
+<li>temp<em>object.tempfile now returns a closed tempfile, which temp</em>object.file returns an open file.
 Can also pass a block to temp_object.file which closes the file automatically</li>
 <li>Processors/Analysers/Encoders know about app now so can log to app's log</li>
-<li>Imagemagick errors in RMagick processor/analyser/encoder now throw unable_to_handle and log a warning</li>
+<li>Imagemagick errors in RMagick processor/analyser/encoder now throw unable<em>to</em>handle and log a warning</li>
 <li>Removed Rails generators - better being more explicit with saved configurations which are more concise now</li>
 </ul>
 
@@ -412,7 +495,7 @@ Can also pass a block to temp_object.file which closes the file automatically</l
 <h2>New features</h2>
 
 <ul>
-<li>added aspect_ratio to rmagick_analyser</li>
+<li>added aspect<em>ratio to rmagick</em>analyser</li>
 </ul>
 
 
@@ -426,15 +509,15 @@ Can also pass a block to temp_object.file which closes the file automatically</l
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.Couch.html" title="Couch">Couch</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
 
     <div id="footer">
-  Generated on Tue Jan 11 14:48:13 2011 by 
+  Generated on Wed Apr 27 23:43:33 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.4 (ruby-1.9.2).
+  0.6.8 (ruby-1.9.2).
 </div>
 
   </body>

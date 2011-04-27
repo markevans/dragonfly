@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>File: Models</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -14,6 +14,8 @@
 <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
     <script type="text/javascript" charset="utf-8">
       (function($){
         // YARD automatically creates a table of contents
@@ -48,7 +50,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.2)</div>
+      <div id="logo">DRAGONFLY (v 0.9.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -70,7 +72,7 @@ as easy as working with strings or numbers!</p>
 
 <p>The examples below assume an initialized Dragonfly app, e.g.</p>
 
-<pre class="code"><span class='id app'>app</span> <span class='op'>=</span> <span class='const'>Dragonfly</span><span class='lbracket'>[</span><span class='symbol'>:images</span><span class='rbracket'>]</span>
+<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
 </pre>
 
 <h2>ActiveRecord</h2>
@@ -78,26 +80,33 @@ as easy as working with strings or numbers!</p>
 <p>If you've required 'dragonfly/rails/images', then the following step will be already done for you.
 Otherwise:</p>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id define_macro'>define_macro</span><span class='lparen'>(</span><span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Base</span><span class='comma'>,</span> <span class='symbol'>:image_accessor</span><span class='rparen'>)</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
 </pre>
 
 <p>defines the macro <code>image_accessor</code> on any ActiveRecord models.</p>
 
 <h2>Mongoid</h2>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id define_macro_on_include'>define_macro_on_include</span><span class='lparen'>(</span><span class='const'>Mongoid</span><span class='op'>::</span><span class='const'>Document</span><span class='comma'>,</span> <span class='symbol'>:image_accessor</span><span class='rparen'>)</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='define_macro_on_include identifier id'>define_macro_on_include</span><span class='lparen token'>(</span><span class='Mongoid constant id'>Mongoid</span><span class='colon2 op'>::</span><span class='Document constant id'>Document</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
 </pre>
 
 <p>defines the macro <code>image_accessor</code> on any models that include <code>Mongoid::Document</code></p>
+
+<h2>CouchRest::Model</h2>
+
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='CouchRest constant id'>CouchRest</span><span class='colon2 op'>::</span><span class='Model constant id'>Model</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
+</pre>
+
+<p>defines the macro <code>image_accessor</code> on any models inherited from <code>CouchRest::Model::Base</code>.</p>
 
 <h2>Adding accessors</h2>
 
 <p>Now we have the method <code>image_accessor</code> available in our model classes, which we can use as many times as we like</p>
 
-<pre class="code"><span class='kw'>class</span> <span class='const'>Album</span>
-  <span class='id image_accessor'>image_accessor</span> <span class='symbol'>:cover_image</span>
-  <span class='id image_accessor'>image_accessor</span> <span class='symbol'>:band_photo</span>  <span class='comment'># Note: this is a different image altogether, not a thumbnail of cover_image
-</span><span class='kw'>end</span>
+<pre class="code"><span class='class class kw'>class</span> <span class='Album constant id'>Album</span>
+  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:cover_image</span>
+  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:band_photo</span>  <span class='comment val'># Note: this is a different image altogether, not a thumbnail of cover_image</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <p>Each accessor (e.g. <code>cover_image</code>) depends on a string field to actually hold the datastore uid,
@@ -105,119 +114,161 @@ named by appending the suffix <code>_uid</code> (e.g. <code>cover_image_uid</cod
 
 <p>For example, ActiveRecord models need a migration such as:</p>
 
-<pre class="code"><span class='kw'>class</span> <span class='const'>MyMigration</span> <span class='op'>&lt;</span> <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Migration</span>
+<pre class="code"><span class='class class kw'>class</span> <span class='MyMigration constant id'>MyMigration</span> <span class='lt op'>&lt;</span> <span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Migration constant id'>Migration</span>
 
-  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id up'>up</span>
-    <span class='id add_column'>add_column</span> <span class='symbol'>:albums</span><span class='comma'>,</span> <span class='symbol'>:cover_image_uid</span><span class='comma'>,</span> <span class='symbol'>:string</span>
-    <span class='id add_column'>add_column</span> <span class='symbol'>:albums</span><span class='comma'>,</span> <span class='symbol'>:band_photo_uid</span><span class='comma'>,</span> <span class='symbol'>:string</span>
-  <span class='kw'>end</span>
+  <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='up identifier id'>up</span>
+    <span class='add_column identifier id'>add_column</span> <span class='symbol val'>:albums</span><span class='comma token'>,</span> <span class='symbol val'>:cover_image_uid</span><span class='comma token'>,</span> <span class='symbol val'>:string</span>
+    <span class='add_column identifier id'>add_column</span> <span class='symbol val'>:albums</span><span class='comma token'>,</span> <span class='symbol val'>:band_photo_uid</span><span class='comma token'>,</span> <span class='symbol val'>:string</span>
+  <span class='end end kw'>end</span>
 
-  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id down'>down</span>
-    <span class='id remove_column'>remove_column</span> <span class='symbol'>:albums</span><span class='comma'>,</span> <span class='symbol'>:cover_image_uid</span>
-    <span class='id remove_column'>remove_column</span> <span class='symbol'>:albums</span><span class='comma'>,</span> <span class='symbol'>:band_photo_uid</span>
-  <span class='kw'>end</span>
+  <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='down identifier id'>down</span>
+    <span class='remove_column identifier id'>remove_column</span> <span class='symbol val'>:albums</span><span class='comma token'>,</span> <span class='symbol val'>:cover_image_uid</span>
+    <span class='remove_column identifier id'>remove_column</span> <span class='symbol val'>:albums</span><span class='comma token'>,</span> <span class='symbol val'>:band_photo_uid</span>
+  <span class='end end kw'>end</span>
 
-<span class='kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <h2>Using the accessors</h2>
 
 <p>We can use the attribute much like other other model attributes:</p>
 
-<pre class="code"><span class='ivar'>@album</span> <span class='op'>=</span> <span class='const'>Album</span><span class='period'>.</span><span class='id new'>new</span>
+<pre class="code"><span class='@album ivar id'>@album</span> <span class='assign token'>=</span> <span class='Album constant id'>Album</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
 
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\377???JFIF\000\...</span><span class='tstring_end'>&quot;</span></span>             <span class='comment'># can assign as a string...
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>path/to/my_image.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>  <span class='comment'># ... or as a file...
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span> <span class='op'>=</span> <span class='id some_tempfile'>some_tempfile</span>                     <span class='comment'># ... or as a tempfile...
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span> <span class='op'>=</span> <span class='ivar'>@album</span><span class='period'>.</span><span class='id band_photo'>band_photo</span>                 <span class='comment'># ... or as another Dragonfly attachment
-</span>
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span>          <span class='comment'># =&gt; #&lt;Dragonfly::ActiveModelExtensions::Attachment:0x103ef6128...
-</span>
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span> <span class='op'>=</span> <span class='kw'>nil</span>
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span>          <span class='comment'># =&gt; nil
-</span></pre>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='string val'>&quot;\377???JFIF\000\...&quot;</span>             <span class='comment val'># can assign as a string...</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/my_image.png'</span><span class='rparen token'>)</span>  <span class='comment val'># ... or as a file...</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='some_tempfile identifier id'>some_tempfile</span>                     <span class='comment val'># ... or as a tempfile...</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'some/path.gif'</span><span class='rparen token'>)</span>     <span class='comment val'># ... or as a pathname...</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='band_photo identifier id'>band_photo</span>                 <span class='comment val'># ... or as another Dragonfly attachment</span>
+
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span>          <span class='comment val'># =&gt; #&lt;Dragonfly::ActiveModelExtensions::Attachment:0x103ef6128...</span>
+
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span>          <span class='comment val'># =&gt; nil</span>
+</pre>
 
 <p>We can inspect properties of the attribute</p>
 
-<pre class="code"><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id width'>width</span>                          <span class='comment'># =&gt; 280
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id height'>height</span>                         <span class='comment'># =&gt; 140
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id number_of_colours'>number_of_colours</span>              <span class='comment'># =&gt; 34703
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id mime_type'>mime_type</span>                      <span class='comment'># =&gt; 'image/png'
-</span></pre>
+<pre class="code"><span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='width identifier id'>width</span>                          <span class='comment val'># =&gt; 280</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='height identifier id'>height</span>                         <span class='comment val'># =&gt; 140</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='number_of_colours identifier id'>number_of_colours</span>              <span class='comment val'># =&gt; 34703</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='mime_type identifier id'>mime_type</span>                      <span class='comment val'># =&gt; 'image/png'</span>
+</pre>
 
 <p>The properties available (i.e. 'width', etc.) come from the app's registered analysers - see <a href="file.Analysers.html" title="Analysers">Analysers</a>.</p>
 
 <p>We can play around with the data</p>
 
-<pre class="code"><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id data'>data</span>                           <span class='comment'># =&gt; &quot;\377???JFIF\000\...&quot;
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id to_file'>to_file</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>out.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>             <span class='comment'># writes to file 'out.png' and returns a readable file object
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id tempfile'>tempfile</span>                       <span class='comment'># =&gt; #&lt;File:/var/folders/st/strHv74sH044JPabSiODz... a closed Tempfile object
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id file'>file</span>                           <span class='comment'># =&gt; #&lt;File:/var/folders/st/strHv74sH044JPabSiODz... a readable (open) File object
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id file'>file</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id f'>f</span><span class='op'>|</span>                    <span class='comment'># Yields an open file object, returns the return value of
-</span>  <span class='id data'>data</span> <span class='op'>=</span> <span class='id f'>f</span><span class='period'>.</span><span class='id read'>read</span><span class='lparen'>(</span><span class='int'>256</span><span class='rparen'>)</span>                              <span class='comment'>#  the block, and closes the file object
-</span><span class='kw'>end</span>
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id path'>path</span>                           <span class='comment'># =&gt; '/var/folders/st/strHv74sH044JPabSiODz...' i.e. the path of the tempfile
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id size'>size</span>                           <span class='comment'># =&gt; 134507 (size in bytes)
-</span></pre>
+<pre class="code"><span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='data identifier id'>data</span>                           <span class='comment val'># =&gt; &quot;\377???JFIF\000\...&quot;</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='to_file identifier id'>to_file</span><span class='lparen token'>(</span><span class='string val'>'out.png'</span><span class='rparen token'>)</span>             <span class='comment val'># writes to file 'out.png' and returns a readable file object</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='tempfile identifier id'>tempfile</span>                       <span class='comment val'># =&gt; #&lt;File:/var/folders/st/strHv74sH044JPabSiODz... a closed Tempfile object</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='file identifier id'>file</span>                           <span class='comment val'># =&gt; #&lt;File:/var/folders/st/strHv74sH044JPabSiODz... a readable (open) File object</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='file identifier id'>file</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span>                    <span class='comment val'># Yields an open file object, returns the return value of</span>
+  <span class='data identifier id'>data</span> <span class='assign token'>=</span> <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='integer val'>256</span><span class='rparen token'>)</span>                              <span class='comment val'>#  the block, and closes the file object</span>
+<span class='end end kw'>end</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='path identifier id'>path</span>                           <span class='comment val'># =&gt; '/var/folders/st/strHv74sH044JPabSiODz...' i.e. the path of the tempfile</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='size identifier id'>size</span>                           <span class='comment val'># =&gt; 134507 (size in bytes)</span>
+</pre>
 
 <p>We can process the data</p>
 
-<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:thumb</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>20x20</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>   <span class='comment'># returns a 'Job' object, with similar properties
-</span><span class='id image'>image</span><span class='period'>.</span><span class='id width'>width</span>                                          <span class='comment'># =&gt; 20
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id width'>width</span>                              <span class='comment'># =&gt; 280 (no change)
-</span></pre>
+<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>'20x20'</span><span class='rparen token'>)</span>   <span class='comment val'># returns a 'Job' object, with similar properties</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='width identifier id'>width</span>                                          <span class='comment val'># =&gt; 20</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='width identifier id'>width</span>                              <span class='comment val'># =&gt; 280 (no change)</span>
+</pre>
 
 <p>The available processing methods available (i.e. 'thumb', etc.) come from the <span class='object_link'><a href="Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span> app's registered processors - see <a href="file.Processing.html" title="Processing">Processing</a></p>
 
 <p>We can encode the data</p>
 
-<pre class="code"><span class='id image'>image</span> <span class='op'>=</span> <span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:gif</span><span class='rparen'>)</span>   <span class='comment'># returns a 'Job' object, with similar properties
-</span><span class='id image'>image</span><span class='period'>.</span><span class='id format'>format</span>                              <span class='comment'># =&gt; :gif
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id format'>format</span>                 <span class='comment'># =&gt; :png (no change)
-</span></pre>
+<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>   <span class='comment val'># returns a 'Job' object, with similar properties</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='format identifier id'>format</span>                              <span class='comment val'># =&gt; :gif</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='format identifier id'>format</span>                 <span class='comment val'># =&gt; :png (no change)</span>
+</pre>
 
 <p>The encoding is implemented by the <span class='object_link'><a href="Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span> app's registered encoders (which will usually just be one) - see <a href="file.Encoding.html" title="Encoding">Encoding</a></p>
 
 <p>We can use configured shortcuts for processing/encoding, and chain them:</p>
 
-<pre class="code"><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id thumb'>thumb</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>300x200#ne</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>     <span class='comment'># =&gt; returns a 'Job' object, with similar properties
-</span></pre>
+<pre class="code"><span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'300x200#ne'</span><span class='rparen token'>)</span>     <span class='comment val'># =&gt; returns a 'Job' object, with similar properties</span>
+</pre>
 
 <p>We can chain all these things much like ActiveRecord scopes:</p>
 
-<pre class="code"><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id png'>png</span><span class='period'>.</span><span class='id thumb'>thumb</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>300x200#ne</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:greyscale</span><span class='rparen'>)</span><span class='period'>.</span><span class='id encode'>encode</span><span class='lparen'>(</span><span class='symbol'>:tiff</span><span class='rparen'>)</span>
+<pre class="code"><span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='png identifier id'>png</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'300x200#ne'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:tiff</span><span class='rparen token'>)</span>
 </pre>
 
 <p>Because the processing/encoding methods are lazy, no actual processing or encoding is done until a method like <code>data</code>, <code>file</code>, <code>to_file</code>, <code>width</code>, etc. is called.
 You can force the processing to be done if you must by then calling <code>apply</code>.</p>
 
-<pre class="code"><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:greyscale</span><span class='rparen'>)</span><span class='period'>.</span><span class='id apply'>apply</span>
+<pre class="code"><span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='apply identifier id'>apply</span>
 </pre>
+
+<h2>Assigning from a url</h2>
+
+<p>Dragonfly provides an accessor for assigning directly from a url:</p>
+
+<pre class="code"><span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image_url identifier id'>cover_image_url</span> <span class='assign token'>=</span> <span class='string val'>'http://some.url/file.jpg'</span>
+</pre>
+
+<p>You can put this in a form view, e.g. in rails erb:</p>
+
+<pre class="code"><span class='lt op'>&lt;</span><span class='string val'>% form_for </span><span class='@album ivar id'>@album</span><span class='comma token'>,</span> <span class='symbol val'>:html</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:multipart</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rbrace token'>}</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span> <span class='string val'>%&gt;
+  ...
+  &lt;%= f.text_field :cover_image_url %&gt;</span>
+  <span class='dot3 op'>...</span>
+<span class='lt op'>&lt;</span><span class='string val'>% end </span><span class='mod op'>%</span><span class='gt op'>&gt;</span>
+</pre>
+
+<h2>Removing an attachment via a form</h2>
+
+<p>Normally unassignment of an attachment is done like any other attribute, by setting to nil</p>
+
+<pre class="code"><span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+</pre>
+
+<p>but this can't be done via a form - instead <code>remove_&lt;attachment_name&gt;</code> is provided, which can be used with a checkbox:</p>
+
+<pre class="code"><span class='lt op'>&lt;</span><span class='string val'>%= f.check_box :remove_cover_image %&gt;
+</span></pre>
+
+<h2>Retaining across form redisplays</h2>
+
+<p>When a model fails validation, you don't normally want to have to upload your attachment again, so you can avoid having to do this by
+including a hidden field in your form <code>retained_&lt;attribute_name&gt;</code>, e.g.</p>
+
+<pre class="code"><span class='lt op'>&lt;</span><span class='string val'>% form_for </span><span class='@album ivar id'>@album</span><span class='comma token'>,</span> <span class='symbol val'>:html</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:multipart</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rbrace token'>}</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span> <span class='string val'>%&gt;
+  ...
+  &lt;%= f.file_field :cover_image %&gt;</span>
+  <span class='lt op'>&lt;</span><span class='string val'>%= f.hidden_field :retained_cover_image %&gt;
+  ...
+&lt;% end %&gt;
+</span></pre>
 
 <h2>Persisting</h2>
 
 <p>When the model is saved, a before_save callback persists the data to the <span class='object_link'><a href="Dragonfly/App.html" title="Dragonfly::App (class)">App</a></span>'s configured datastore (see <a href="file.DataStorage.html" title="DataStorage">DataStorage</a>)
 The uid column is then filled in.</p>
 
-<pre class="code"><span class='ivar'>@album</span> <span class='op'>=</span> <span class='const'>Album</span><span class='period'>.</span><span class='id new'>new</span>
+<pre class="code"><span class='@album ivar id'>@album</span> <span class='assign token'>=</span> <span class='Album constant id'>Album</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
 
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image_uid'>cover_image_uid</span>                                   <span class='comment'># =&gt; nil
-</span>
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>path/to/my_image.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image_uid'>cover_image_uid</span>                                   <span class='comment'># =&gt; nil
-</span>
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id save'>save</span>
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image_uid'>cover_image_uid</span>                                   <span class='comment'># =&gt; '2009/12/05/file.png' (some unique uid, used by the datastore)
-</span></pre>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image_uid identifier id'>cover_image_uid</span>                                   <span class='comment val'># =&gt; nil</span>
+
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/my_image.png'</span><span class='rparen token'>)</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image_uid identifier id'>cover_image_uid</span>                                   <span class='comment val'># =&gt; nil</span>
+
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='save identifier id'>save</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image_uid identifier id'>cover_image_uid</span>                                   <span class='comment val'># =&gt; '2009/12/05/file.png' (some unique uid, used by the datastore)</span>
+</pre>
 
 <h2>URLs</h2>
 
 <p>Once the model is saved, we can get a url for the image (which is served by the Dragonfly <span class='object_link'><a href="Dragonfly/App.html" title="Dragonfly::App (class)">App</a></span> itself), and for its processed/encoded versions:</p>
 
-<pre class="code"><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id url'>url</span>                           <span class='comment'># =&gt; '/media/BAhbBlsHOgZmIhgy...'
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id thumb'>thumb</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>300x200#nw</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id url'>url</span>       <span class='comment'># =&gt; '/media/BAhbB1sYusgZhgyM...'
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id process'>process</span><span class='lparen'>(</span><span class='symbol'>:greyscale</span><span class='rparen'>)</span><span class='period'>.</span><span class='id jpg'>jpg</span><span class='period'>.</span><span class='id url'>url</span>   <span class='comment'># =&gt; '/media/BnA6CnRodW1iIg8z...'
-</span></pre>
+<pre class="code"><span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                           <span class='comment val'># =&gt; '/media/BAhbBlsHOgZmIhgy...'</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'300x200#nw'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span>       <span class='comment val'># =&gt; '/media/BAhbB1sYusgZhgyM...'</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='jpg identifier id'>jpg</span><span class='dot token'>.</span><span class='url identifier id'>url</span>   <span class='comment val'># =&gt; '/media/BnA6CnRodW1iIg8z...'</span>
+</pre>
 
 <p>Because the processing/encoding methods (including shortcuts like <code>thumb</code> and <code>jpg</code>) are lazy, no processing or encoding is actually done.</p>
 
@@ -225,19 +276,19 @@ The uid column is then filled in.</p>
 
 <p><code>validates_presence_of</code> and <code>validates_size_of</code> work out of the box, and Dragonfly also provides <code>validates_property</code>.</p>
 
-<pre class="code"><span class='kw'>class</span> <span class='const'>Album</span>
+<pre class="code"><span class='class class kw'>class</span> <span class='Album constant id'>Album</span>
 
-  <span class='id validates_presence_of'>validates_presence_of</span> <span class='symbol'>:cover_image</span>
-  <span class='id validates_size_of'>validates_size_of</span> <span class='symbol'>:cover_image</span><span class='comma'>,</span> <span class='symbol'>:maximum</span> <span class='op'>=&gt;</span> <span class='int'>500</span><span class='period'>.</span><span class='id kilobytes'>kilobytes</span>
+  <span class='validates_presence_of identifier id'>validates_presence_of</span> <span class='symbol val'>:cover_image</span>
+  <span class='validates_size_of identifier id'>validates_size_of</span> <span class='symbol val'>:cover_image</span><span class='comma token'>,</span> <span class='symbol val'>:maximum</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='float val'>500</span><span class='dot token'>.</span><span class='kilobytes identifier id'>kilobytes</span>
 
-  <span class='id validates_property'>validates_property</span> <span class='symbol'>:format</span><span class='comma'>,</span> <span class='symbol'>:of</span> <span class='op'>=&gt;</span> <span class='symbol'>:cover_image</span><span class='comma'>,</span> <span class='symbol'>:in</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='symbol'>:jpeg</span><span class='comma'>,</span> <span class='symbol'>:png</span><span class='comma'>,</span> <span class='symbol'>:gif</span><span class='rbracket'>]</span>
-  <span class='comment'># ..or..
-</span>  <span class='id validates_property'>validates_property</span> <span class='symbol'>:mime_type</span><span class='comma'>,</span> <span class='symbol'>:of</span> <span class='op'>=&gt;</span> <span class='symbol'>:cover_image</span><span class='comma'>,</span> <span class='symbol'>:in</span> <span class='op'>=&gt;</span> <span class='qwords_beg'>%w(</span><span class='tstring_content'>image/jpeg</span><span class='words_sep'> </span><span class='tstring_content'>image/png</span><span class='words_sep'> </span><span class='tstring_content'>image/gif</span><span class='words_sep'>)</span>
+  <span class='validates_property identifier id'>validates_property</span> <span class='symbol val'>:format</span><span class='comma token'>,</span> <span class='symbol val'>:of</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:cover_image</span><span class='comma token'>,</span> <span class='symbol val'>:in</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:jpeg</span><span class='comma token'>,</span> <span class='symbol val'>:png</span><span class='comma token'>,</span> <span class='symbol val'>:gif</span><span class='rbrack token'>]</span>
+  <span class='comment val'># ..or..</span>
+  <span class='validates_property identifier id'>validates_property</span> <span class='symbol val'>:mime_type</span><span class='comma token'>,</span> <span class='symbol val'>:of</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:cover_image</span><span class='comma token'>,</span> <span class='symbol val'>:in</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>%w(image/jpeg image/png image/gif)</span>
 
-  <span class='id validates_property'>validates_property</span> <span class='symbol'>:width</span><span class='comma'>,</span> <span class='symbol'>:of</span> <span class='op'>=&gt;</span> <span class='symbol'>:cover_image</span><span class='comma'>,</span> <span class='symbol'>:in</span> <span class='op'>=&gt;</span> <span class='lparen'>(</span><span class='int'>0</span><span class='op'>..</span><span class='int'>400</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>é demais cara!</span><span class='tstring_end'>&quot;</span></span>
+  <span class='validates_property identifier id'>validates_property</span> <span class='symbol val'>:width</span><span class='comma token'>,</span> <span class='symbol val'>:of</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:cover_image</span><span class='comma token'>,</span> <span class='symbol val'>:in</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='integer val'>0</span><span class='dot2 op'>..</span><span class='integer val'>400</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:message</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;é demais cara!&quot;</span>
 
-  <span class='comment'># ...
-</span><span class='kw'>end</span>
+  <span class='comment val'># ...</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <p>The property argument of <code>validates_property</code> will generally be one of the registered analyser properties as described in <a href="file.Analysers.html" title="Analysers">Analysers</a>.
@@ -247,29 +298,156 @@ However it would actually work for arbitrary properties, including those of non-
 
 <p>If the object assigned is a file, or responds to <code>original_filename</code> (as is the case with file uploads in Rails, etc.), then <code>name</code> will be set.</p>
 
-<pre class="code"><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>path/to/my_image.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<pre class="code"><span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/my_image.png'</span><span class='rparen token'>)</span>
 
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id name'>name</span>    <span class='comment'># =&gt; 'my_image.png'
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id ext'>ext</span>     <span class='comment'># =&gt; 'png'
-</span></pre>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='name identifier id'>name</span>    <span class='comment val'># =&gt; 'my_image.png'</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='ext identifier id'>ext</span>     <span class='comment val'># =&gt; 'png'</span>
+</pre>
 
 <h2>Meta data</h2>
 
 <p>You can store metadata along with the content data of your attachment:</p>
 
-<pre class="code"><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>path/to/my_image.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id meta'>meta</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='symbol'>:taken</span> <span class='op'>=&gt;</span> <span class='const'>Date</span><span class='period'>.</span><span class='id yesterday'>yesterday</span><span class='rbrace'>}</span>
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id save!'>save!</span>
+<pre class="code"><span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/my_image.png'</span><span class='rparen token'>)</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='meta identifier id'>meta</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:taken</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Date constant id'>Date</span><span class='dot token'>.</span><span class='yesterday identifier id'>yesterday</span><span class='rbrace token'>}</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='save! fid id'>save!</span>
 
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id meta'>meta</span>      <span class='comment'># =&gt; {:model_class=&gt;&quot;Album&quot;,
-</span>                             <span class='comment'>#     :model_attachment=&gt;:cover_image,
-</span>                             <span class='comment'>#     :taken=&gt;Sat, 11 Sep 2010}
-</span></pre>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='meta identifier id'>meta</span>      <span class='comment val'># =&gt; {:model_class=&gt;&quot;Album&quot;,</span>
+                             <span class='comment val'>#     :model_attachment=&gt;:cover_image,</span>
+                             <span class='comment val'>#     :taken=&gt;Sat, 11 Sep 2010}</span>
+</pre>
 
 <p>As you can see, a couple of things are added by the model. You can also access this directly on the <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object.</p>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id fetch'>fetch</span><span class='lparen'>(</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image_uid'>cover_image_uid</span><span class='rparen'>)</span><span class='period'>.</span><span class='id meta'>meta</span>     <span class='comment'># =&gt; {:model_class=&gt;&quot;Album&quot;, ...}
-</span></pre>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image_uid identifier id'>cover_image_uid</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='meta identifier id'>meta</span>     <span class='comment val'># =&gt; {:model_class=&gt;&quot;Album&quot;, ...}</span>
+</pre>
+
+<p>Meta data can be useful because at the time that Dragonfly serves content, it doesn't have access to your model, but it does
+have access to the meta data that was stored alongside the content, so you could use it to provide custom response headers, etc.
+(see <a href="file.Configuration.html" title="Configuration">Configuration</a>).</p>
+
+<h2>Callbacks</h2>
+
+<p><strong>after_assign</strong></p>
+
+<p><code>after_assign</code> can be used to do something every time content is assigned:</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Person constant id'>Person</span>
+  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span> <span class='do do kw'>do</span>
+    <span class='after_assign identifier id'>after_assign</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span> <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='symbol val'>:rotate</span><span class='comma token'>,</span> <span class='integer val'>90</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>  <span class='comment val'># 'a' is the attachment itself</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+
+<span class='person identifier id'>person</span><span class='dot token'>.</span><span class='mugshot identifier id'>mugshot</span> <span class='assign token'>=</span> <span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'some/path.png'</span><span class='rparen token'>)</span>  <span class='comment val'># after_assign callback is called</span>
+<span class='person identifier id'>person</span><span class='dot token'>.</span><span class='mugshot identifier id'>mugshot</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>                            <span class='comment val'># after_assign callback is NOT called</span>
+</pre>
+
+<p>Inside the block, you can call methods on the model instance directly (<code>self</code> is the model):</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Person constant id'>Person</span>
+  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span> <span class='do do kw'>do</span>
+    <span class='after_assign identifier id'>after_assign</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span> <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='symbol val'>:rotate</span><span class='comma token'>,</span> <span class='angle identifier id'>angle</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+
+  <span class='def def kw'>def</span> <span class='angle identifier id'>angle</span>
+    <span class='integer val'>90</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>Alternatively you can pass in a symbol, corresponding to a model instance method:</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Person constant id'>Person</span>
+  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span> <span class='do do kw'>do</span>
+    <span class='after_assign identifier id'>after_assign</span> <span class='symbol val'>:rotate_it</span>
+  <span class='end end kw'>end</span>
+
+  <span class='def def kw'>def</span> <span class='rotate_it identifier id'>rotate_it</span>
+    <span class='mugshot identifier id'>mugshot</span><span class='dot token'>.</span><span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='symbol val'>:rotate</span><span class='comma token'>,</span> <span class='integer val'>90</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>You can register more than one <code>after_assign</code> callback.</p>
+
+<p><strong>after_unassign</strong></p>
+
+<p><code>after_unassign</code> is similar to <code>after_assign</code>, but is only called when the attachment is unassigned</p>
+
+<pre class="code"><span class='person identifier id'>person</span><span class='dot token'>.</span><span class='mugshot identifier id'>mugshot</span> <span class='assign token'>=</span> <span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'some/path.png'</span><span class='rparen token'>)</span>  <span class='comment val'># after_unassign callback is NOT called</span>
+<span class='person identifier id'>person</span><span class='dot token'>.</span><span class='mugshot identifier id'>mugshot</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>                            <span class='comment val'># after_unassign callback is called</span>
+</pre>
+
+<h2>Up-front thumbnailing</h2>
+
+<p>The best way to create different versions of content such as thumbnails is generally on-the-fly, however if you <em>must</em>
+create another version <em>on-upload</em>, then you could create another accessor and automatically copy to it using <code>copy_to</code>.</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Person constant id'>Person</span>
+  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span> <span class='do do kw'>do</span>
+    <span class='copy_to identifier id'>copy_to</span><span class='lparen token'>(</span><span class='symbol val'>:smaller_mugshot</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span> <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'200x200#'</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:smaller_mugshot</span>
+<span class='end end kw'>end</span>
+
+<span class='person identifier id'>person</span><span class='dot token'>.</span><span class='mugshot identifier id'>mugshot</span> <span class='assign token'>=</span> <span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'some/400x300/image.png'</span><span class='rparen token'>)</span>
+
+<span class='person identifier id'>person</span><span class='dot token'>.</span><span class='mugshot identifier id'>mugshot</span>            <span class='comment val'># ---&gt; 400x300 image</span>
+<span class='person identifier id'>person</span><span class='dot token'>.</span><span class='smaller_mugshot identifier id'>smaller_mugshot</span>    <span class='comment val'># ---&gt; 200x200 image</span>
+</pre>
+
+<p>In the above example you would need both a <code>mugshot_uid</code> field and a <code>smaller_mugshot_uid</code> field on your model.</p>
+
+<h2>Storage options</h2>
+
+<p>Some datastores take options when calling <code>store</code> - you can pass these through using <code>storage_xxx</code> methods, e.g.</p>
+
+<p><strong>storage_path</strong></p>
+
+<p>The {Dragonfly::DataStorage::FileDataStore FileDataStore} and {Dragonfly::DataStorage::S3DataStore S3DataStore} both
+can take a <code>:path</code> option to specify where to store the content (which will also become the uid for that content)</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Person constant id'>Person</span>
+  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span> <span class='do do kw'>do</span>
+    <span class='storage_path identifier id'>storage_path</span><span class='lbrace token'>{</span> <span class='dstring node'>&quot;some/path/#{id}/#{rand(100)}&quot;</span> <span class='rbrace token'>}</span>  <span class='comment val'># You can call model instance methods (like 'id') directly</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>or</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Person constant id'>Person</span>
+  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span> <span class='do do kw'>do</span>
+    <span class='storage_path identifier id'>storage_path</span> <span class='symbol val'>:path_for_mugshot</span>
+  <span class='end end kw'>end</span>
+
+  <span class='def def kw'>def</span> <span class='path_for_mugshot identifier id'>path_for_mugshot</span>
+    <span class='dstring node'>&quot;some/path/#{id}/#{rand(100)}&quot;</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>or you can also yield the attachment itself</p>
+
+<pre class="code">    <span class='storage_path identifier id'>storage_path</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span> <span class='dstring node'>&quot;some/path/#{a.width}x#{a.height}.#{a.format}&quot;</span> <span class='rbrace token'>}</span>
+</pre>
+
+<p><strong>BEWARE!!!!</strong> you must make sure the path (which will become the uid for the content) is unique and changes each time the content
+is changed, otherwise you could have caching problems, as the generated urls will be the same for the same uid.</p>
+
+<p>You can pass any options through to the datastore using <code>storage_xxx</code> methods, or all at once using <code>storage_opts</code>:</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Person constant id'>Person</span>
+  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span> <span class='do do kw'>do</span>
+    <span class='storage_opts identifier id'>storage_opts</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span>
+      <span class='lbrace token'>{</span>
+        <span class='symbol val'>:path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;some/path/#{id}/#{rand(100)}&quot;</span><span class='comma token'>,</span>
+        <span class='symbol val'>:other</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span>
+      <span class='rbrace token'>}</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
 
 <h2>"Magic" Attributes</h2>
 
@@ -282,23 +460,26 @@ this is done automatically for you, if the corresponding accessor exists.</p>
 
 <p>For example - with ActiveRecord, given the migration:</p>
 
-<pre class="code"><span class='id add_column'>add_column</span> <span class='symbol'>:albums</span><span class='comma'>,</span> <span class='symbol'>:cover_image_width</span><span class='comma'>,</span> <span class='symbol'>:integer</span>
+<pre class="code"><span class='add_column identifier id'>add_column</span> <span class='symbol val'>:albums</span><span class='comma token'>,</span> <span class='symbol val'>:cover_image_width</span><span class='comma token'>,</span> <span class='symbol val'>:integer</span>
 </pre>
 
 <p>This will automatically be set when assigned:</p>
 
-<pre class="code"><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>path/to/my_image.png</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<pre class="code"><span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/my_image.png'</span><span class='rparen token'>)</span>
 
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image_width'>cover_image_width</span>  <span class='comment'># =&gt; 280
-</span></pre>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image_width identifier id'>cover_image_width</span>  <span class='comment val'># =&gt; 280</span>
+</pre>
 
 <p>They can be used to avoid retrieving data from the datastore for analysis</p>
 
-<pre class="code"><span class='ivar'>@album</span> <span class='op'>=</span> <span class='const'>Album</span><span class='period'>.</span><span class='id first'>first</span>
+<pre class="code"><span class='@album ivar id'>@album</span> <span class='assign token'>=</span> <span class='Album constant id'>Album</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
 
-<span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id width'>width</span>     <span class='comment'># =&gt; 280    - no need to retrieve data - takes it from `cover_image_width`
-</span><span class='ivar'>@album</span><span class='period'>.</span><span class='id cover_image'>cover_image</span><span class='period'>.</span><span class='id size'>size</span>      <span class='comment'># =&gt; 134507 - but this needs to retrieve data from the data store, then analyse
-</span></pre>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='width identifier id'>width</span>     <span class='comment val'># =&gt; 280    - no need to retrieve data - takes it from `cover_image_width`</span>
+<span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='size identifier id'>size</span>      <span class='comment val'># =&gt; 134507 - but this needs to retrieve data from the data store, then analyse</span>
+</pre>
+
+<p>Furthermore, any magic attributes you add a field for will be added to the meta data for that attachment (and so can be used when Dragonfly serves the content
+for e.g. setting custom response headers based on that meta - see {file:Configuration}).</p>
 
 <h2>Custom Model</h2>
 
@@ -307,61 +488,61 @@ this is done automatically for you, if the corresponding accessor exists.</p>
 
 <p>Here is an example of a minimal ActiveModel <code>Album</code> model:</p>
 
-<pre class="code"><span class='kw'>class</span> <span class='const'>CustomModel</span><span class='op'>::</span><span class='const'>Base</span>
+<pre class="code"><span class='class class kw'>class</span> <span class='CustomModel constant id'>CustomModel</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
 
-  <span class='id extend'>extend</span> <span class='const'>ActiveModel</span><span class='op'>::</span><span class='const'>Callbacks</span>
-  <span class='id define_model_callbacks'>define_model_callbacks</span> <span class='symbol'>:save</span><span class='comma'>,</span> <span class='symbol'>:destroy</span>
+  <span class='extend identifier id'>extend</span> <span class='ActiveModel constant id'>ActiveModel</span><span class='colon2 op'>::</span><span class='Callbacks constant id'>Callbacks</span>
+  <span class='define_model_callbacks identifier id'>define_model_callbacks</span> <span class='symbol val'>:save</span><span class='comma token'>,</span> <span class='symbol val'>:destroy</span>
 
-  <span class='id include'>include</span> <span class='const'>ActiveModel</span><span class='op'>::</span><span class='const'>Validations</span>   <span class='comment'># if needed
-</span>
-  <span class='kw'>def</span> <span class='id save'>save</span>
-    <span class='id _run_save_callbacks'>_run_save_callbacks</span> <span class='lbrace'>{</span>
-      <span class='comment'># do some saving!
-</span>    <span class='rbrace'>}</span>
-  <span class='kw'>end</span>
+  <span class='include identifier id'>include</span> <span class='ActiveModel constant id'>ActiveModel</span><span class='colon2 op'>::</span><span class='Validations constant id'>Validations</span>   <span class='comment val'># if needed</span>
 
-  <span class='kw'>def</span> <span class='id destroy'>destroy</span>
-    <span class='id _run_destroy_callbacks'>_run_destroy_callbacks</span> <span class='lbrace'>{</span>
-      <span class='comment'># do some destroying!
-</span>    <span class='rbrace'>}</span>
-  <span class='kw'>end</span>
+  <span class='def def kw'>def</span> <span class='save identifier id'>save</span>
+    <span class='_run_save_callbacks identifier id'>_run_save_callbacks</span> <span class='lbrace token'>{</span>
+      <span class='comment val'># do some saving!</span>
+    <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
 
-<span class='kw'>end</span>
+  <span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span>
+    <span class='_run_destroy_callbacks identifier id'>_run_destroy_callbacks</span> <span class='lbrace token'>{</span>
+      <span class='comment val'># do some destroying!</span>
+    <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+
+<span class='end end kw'>end</span>
 </pre>
 
 <p>Define our <code>image_accessor</code> macro...</p>
 
-<pre class="code"><span class='id app'>app</span><span class='period'>.</span><span class='id define_macro'>define_macro</span><span class='lparen'>(</span><span class='const'>CustomModel</span><span class='op'>::</span><span class='const'>Base</span><span class='comma'>,</span> <span class='symbol'>:image_accessor</span><span class='rparen'>)</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='CustomModel constant id'>CustomModel</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
 </pre>
 
 <p>...which is used by <code>Album</code>:</p>
 
-<pre class="code"><span class='kw'>class</span> <span class='const'>Album</span> <span class='op'>&lt;</span> <span class='const'>CustomModel</span><span class='op'>::</span><span class='const'>Base</span>
+<pre class="code"><span class='class class kw'>class</span> <span class='Album constant id'>Album</span> <span class='lt op'>&lt;</span> <span class='CustomModel constant id'>CustomModel</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
 
-  <span class='kw'>def</span> <span class='id cover_image_uid='>cover_image_uid=</span>
-    <span class='comment'># ...
-</span>  <span class='kw'>end</span>
+  <span class='def def kw'>def</span> <span class='cover_image_uid= identifier id'>cover_image_uid=</span>
+    <span class='comment val'># ...</span>
+  <span class='end end kw'>end</span>
 
-  <span class='kw'>def</span> <span class='id cover_image_uid'>cover_image_uid</span>
-    <span class='comment'># ...
-</span>  <span class='kw'>end</span>
+  <span class='def def kw'>def</span> <span class='cover_image_uid identifier id'>cover_image_uid</span>
+    <span class='comment val'># ...</span>
+  <span class='end end kw'>end</span>
 
-  <span class='id image_accessor'>image_accessor</span> <span class='symbol'>:cover_image</span>
+  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:cover_image</span>
 
-<span class='kw'>end</span>
+<span class='end end kw'>end</span>
 </pre></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.Couch.html" title="Couch">Couch</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
 
     <div id="footer">
-  Generated on Tue Jan 11 14:48:12 2011 by 
+  Generated on Wed Apr 27 23:43:33 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.4 (ruby-1.9.2).
+  0.6.8 (ruby-1.9.2).
 </div>
 
   </body>

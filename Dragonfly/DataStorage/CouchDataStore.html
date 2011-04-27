@@ -1,0 +1,672 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Class: Dragonfly::DataStorage::CouchDataStore</title>
+<link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '../..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
+  </head>
+  <body>
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.9.0)</div>
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+    </div>
+
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <h1>Class: Dragonfly::DataStorage::CouchDataStore
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">Dragonfly::DataStorage::CouchDataStore</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span>, <span class='object_link'><a href="../Serializer.html" title="Dragonfly::Serializer (module)">Serializer</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/dragonfly/data_storage/couch_data_store.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+<h2>Configuration Summary</h2>
+<h3>Configurable attributes</h3>
+Configurable attributes for an object in general <code>object</code> can be configured either by using something like
+<pre class="code">
+  object.configure <span class="kw">do</span> |c|
+    c.some_configurable_attribute = <span class="string val">"some value"</span>
+    c.some_other_configurable_attribute = <span class="integer val">42</span>
+    ...
+  <span class="kw">end</span>
+</pre>
+or
+<pre class="code">
+  object.some_configurable_attribute = <span class="string val">"some value"</span>
+</pre>
+<h4>Configurable attributes for instances of Dragonfly::DataStorage::CouchDataStore</h4>
+<ul>
+  
+  <li>
+    <code>host</code>
+    
+     - default <code><span class="string val">"localhost"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>port</code>
+    
+     - default <code><span class="string val">"5984"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>database</code>
+    
+     - default <code><span class="string val">"dragonfly"</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>username</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>password</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+</ul>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#db-instance_method" title="#db (instance method)">- (Object) <strong>db</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#destroy-instance_method" title="#destroy (instance method)">- (Object) <strong>destroy</strong>(uid) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (CouchDataStore) <strong>initialize</strong>(opts = {}) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+A new instance of CouchDataStore.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#retrieve-instance_method" title="#retrieve (instance method)">- (Object) <strong>retrieve</strong>(uid) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#store-instance_method" title="#store (instance method)">- (Object) <strong>store</strong>(temp_object, opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#url_for-instance_method" title="#url_for (instance method)">- (Object) <strong>url_for</strong>(uid, opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Serializer.html" title="Dragonfly::Serializer (module)">Serializer</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Serializer.html#b64_decode-instance_method" title="Dragonfly::Serializer#b64_decode (method)">#b64_decode</a></span>, <span class='object_link'><a href="../Serializer.html#b64_encode-instance_method" title="Dragonfly::Serializer#b64_encode (method)">#b64_encode</a></span>, <span class='object_link'><a href="../Serializer.html#marshal_decode-instance_method" title="Dragonfly::Serializer#marshal_decode (method)">#marshal_decode</a></span>, <span class='object_link'><a href="../Serializer.html#marshal_encode-instance_method" title="Dragonfly::Serializer#marshal_encode (method)">#marshal_encode</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Dragonfly::DataStorage::CouchDataStore (class)">CouchDataStore</a></span></tt>) <strong>initialize</strong>(opts = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+A new instance of CouchDataStore
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+16
+17
+18
+19
+20
+21
+22</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/couch_data_store.rb', line 16</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='host identifier id'>host</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:host</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:host</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='port identifier id'>port</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='database identifier id'>database</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:database</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:database</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='username identifier id'>username</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:username</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='password identifier id'>password</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:password</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="db-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>db</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+55
+56
+57
+58
+59
+60</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/couch_data_store.rb', line 55</span>
+
+<span class='def def kw'>def</span> <span class='db identifier id'>db</span>
+  <span class='@db ivar id'>@db</span> <span class='opasgn op'>||=</span> <span class='begin begin kw'>begin</span>
+    <span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;http://#{auth}#{host}:#{port}&quot;</span>
+    <span class='CouchRest constant id'>CouchRest</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='url identifier id'>url</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='database! fid id'>database!</span><span class='lparen token'>(</span><span class='database identifier id'>database</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="destroy-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>destroy</strong>(uid) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Raises:</h3>
+<ul class="raise">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="DataNotFound.html" title="Dragonfly::DataStorage::DataNotFound (class)">DataNotFound</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47
+48
+49
+50
+51
+52
+53</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/couch_data_store.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='doc_id identifier id'>doc_id</span><span class='comma token'>,</span> <span class='attachment identifier id'>attachment</span> <span class='assign token'>=</span> <span class='parse_uid identifier id'>parse_uid</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='doc identifier id'>doc</span> <span class='assign token'>=</span> <span class='db identifier id'>db</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='doc_id identifier id'>doc_id</span><span class='rparen token'>)</span>
+  <span class='db identifier id'>db</span><span class='dot token'>.</span><span class='delete_doc identifier id'>delete_doc</span><span class='lparen token'>(</span><span class='doc identifier id'>doc</span><span class='rparen token'>)</span>
+<span class='rescue rescue kw'>rescue</span> <span class='RestClient constant id'>RestClient</span><span class='colon2 op'>::</span><span class='ResourceNotFound constant id'>ResourceNotFound</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="retrieve-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>retrieve</strong>(uid) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Raises:</h3>
+<ul class="raise">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="DataNotFound.html" title="Dragonfly::DataStorage::DataNotFound (class)">DataNotFound</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39
+40
+41
+42
+43
+44
+45</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/couch_data_store.rb', line 39</span>
+
+<span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='doc_id identifier id'>doc_id</span><span class='comma token'>,</span> <span class='attachment identifier id'>attachment</span> <span class='assign token'>=</span> <span class='parse_uid identifier id'>parse_uid</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='doc identifier id'>doc</span> <span class='assign token'>=</span> <span class='db identifier id'>db</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='doc_id identifier id'>doc_id</span><span class='rparen token'>)</span>
+  <span class='lbrack token'>[</span><span class='doc identifier id'>doc</span><span class='dot token'>.</span><span class='fetch_attachment identifier id'>fetch_attachment</span><span class='lparen token'>(</span><span class='attachment identifier id'>attachment</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='marshal_decode identifier id'>marshal_decode</span><span class='lparen token'>(</span><span class='doc identifier id'>doc</span><span class='lbrack token'>[</span><span class='string val'>'meta'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+<span class='rescue rescue kw'>rescue</span> <span class='RestClient constant id'>RestClient</span><span class='colon2 op'>::</span><span class='ResourceNotFound constant id'>ResourceNotFound</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="store-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>store</strong>(temp_object, opts = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Raises:</h3>
+<ul class="raise">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="UnableToStore.html" title="Dragonfly::DataStorage::UnableToStore (class)">UnableToStore</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/couch_data_store.rb', line 24</span>
+
+<span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='meta identifier id'>meta</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:meta</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='meta identifier id'>meta</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='original_filename identifier id'>original_filename</span> <span class='orop op'>||</span> <span class='string val'>'file'</span>
+  <span class='content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:mime_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'application/octet-stream'</span>
+  
+  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span>
+    <span class='doc identifier id'>doc</span> <span class='assign token'>=</span> <span class='CouchRest constant id'>CouchRest</span><span class='colon2 op'>::</span><span class='Document constant id'>Document</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:meta</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='marshal_encode identifier id'>marshal_encode</span><span class='lparen token'>(</span><span class='meta identifier id'>meta</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='db identifier id'>db</span><span class='dot token'>.</span><span class='save_doc identifier id'>save_doc</span><span class='lparen token'>(</span><span class='doc identifier id'>doc</span><span class='rparen token'>)</span>
+    <span class='doc identifier id'>doc</span><span class='dot token'>.</span><span class='put_attachment identifier id'>put_attachment</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='f identifier id'>f</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:content_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='content_type identifier id'>content_type</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+    <span class='form_uid identifier id'>form_uid</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='string val'>'id'</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='rescue rescue kw'>rescue</span> <span class='RuntimeError constant id'>RuntimeError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='raise identifier id'>raise</span> <span class='UnableToStore constant id'>UnableToStore</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{temp_object.inspect}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="url_for-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>url_for</strong>(uid, opts = {}) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+62
+63
+64
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/couch_data_store.rb', line 62</span>
+
+<span class='def def kw'>def</span> <span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='doc_id identifier id'>doc_id</span><span class='comma token'>,</span> <span class='attachment identifier id'>attachment</span> <span class='assign token'>=</span> <span class='parse_uid identifier id'>parse_uid</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='dstring node'>&quot;http://#{host}:#{port}/#{database}/#{doc_id}/#{attachment}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="../../file.Index.html" title="Home">Home</a></li><li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../../file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="../../file.Rack.html" title="Rack">Rack</a></li><li><a href="../../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../../file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="../../file.Couch.html" title="Couch">Couch</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Generators.html" title="Generators">Generators</a></li><li><a href="../../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../../file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.Caching.html" title="Caching">Caching</a></li><li><a href="../../file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="../../file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="footer">
+  Generated on Wed Apr 27 23:43:37 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.8 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

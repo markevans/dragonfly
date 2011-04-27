@@ -1,0 +1,496 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Class: Dragonfly::ImageMagick::Generator</title>
+<link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '../..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
+  </head>
+  <body>
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.9.0)</div>
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+    </div>
+
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <h1>Class: Dragonfly::ImageMagick::Generator
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">Dragonfly::ImageMagick::Generator</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span>, <span class='object_link'><a href="Utils.html" title="Dragonfly::ImageMagick::Utils (module)">Utils</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/dragonfly/image_magick/generator.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="FONT_STYLES-constant" class="">FONT_STYLES =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace token'>{</span>
+  <span class='string val'>'normal'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'normal'</span><span class='comma token'>,</span>
+  <span class='string val'>'italic'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'italic'</span><span class='comma token'>,</span>
+  <span class='string val'>'oblique'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'oblique'</span>
+<span class='rbrace token'>}</span>
+</pre></dd>
+      
+        <dt id="FONT_STRETCHES-constant" class="">FONT_STRETCHES =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace token'>{</span>
+  <span class='string val'>'normal'</span>          <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'normal'</span><span class='comma token'>,</span>
+  <span class='string val'>'semi-condensed'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'semi-condensed'</span><span class='comma token'>,</span>
+  <span class='string val'>'condensed'</span>       <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'condensed'</span><span class='comma token'>,</span>
+  <span class='string val'>'extra-condensed'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'extra-condensed'</span><span class='comma token'>,</span>
+  <span class='string val'>'ultra-condensed'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ultra-condensed'</span><span class='comma token'>,</span>
+  <span class='string val'>'semi-expanded'</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'semi-expanded'</span><span class='comma token'>,</span>
+  <span class='string val'>'expanded'</span>        <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'expanded'</span><span class='comma token'>,</span>
+  <span class='string val'>'extra-expanded'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'extra-expanded'</span><span class='comma token'>,</span>
+  <span class='string val'>'ultra-expanded'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ultra-expanded'</span>
+<span class='rbrace token'>}</span>
+</pre></dd>
+      
+        <dt id="FONT_WEIGHTS-constant" class="">FONT_WEIGHTS =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace token'>{</span>
+  <span class='string val'>'normal'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'normal'</span><span class='comma token'>,</span>
+  <span class='string val'>'bold'</span>    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'bold'</span><span class='comma token'>,</span>
+  <span class='string val'>'bolder'</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'bolder'</span><span class='comma token'>,</span>
+  <span class='string val'>'lighter'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'lighter'</span><span class='comma token'>,</span>
+  <span class='string val'>'100'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>100</span><span class='comma token'>,</span>
+  <span class='string val'>'200'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>200</span><span class='comma token'>,</span>
+  <span class='string val'>'300'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>300</span><span class='comma token'>,</span>
+  <span class='string val'>'400'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>400</span><span class='comma token'>,</span>
+  <span class='string val'>'500'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>500</span><span class='comma token'>,</span>
+  <span class='string val'>'600'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>600</span><span class='comma token'>,</span>
+  <span class='string val'>'700'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>700</span><span class='comma token'>,</span>
+  <span class='string val'>'800'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>800</span><span class='comma token'>,</span>
+  <span class='string val'>'900'</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>900</span>
+<span class='rbrace token'>}</span>
+</pre></dd>
+      
+    </dl>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#plain-instance_method" title="#plain (instance method)">- (Object) <strong>plain</strong>(width, height, colour, opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#plasma-instance_method" title="#plasma (instance method)">- (Object) <strong>plasma</strong>(width, height, format = 'png') </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#text-instance_method" title="#text (instance method)">- (Object) <strong>text</strong>(string, opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Loggable.html#log-instance_method" title="Dragonfly::Loggable#log (method)">#log</a></span>, <span class='object_link'><a href="../Loggable.html#log%3D-instance_method" title="Dragonfly::Loggable#log= (method)">#log=</a></span>, <span class='object_link'><a href="../Loggable.html#use_same_log_as-instance_method" title="Dragonfly::Loggable#use_same_log_as (method)">#use_same_log_as</a></span></p>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="plain-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>plain</strong>(width, height, colour, opts = {}) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+42
+43
+44
+45
+46
+47
+48</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/generator.rb', line 42</span>
+
+<span class='def def kw'>def</span> <span class='plain identifier id'>plain</span><span class='lparen token'>(</span><span class='width identifier id'>width</span><span class='comma token'>,</span> <span class='height identifier id'>height</span><span class='comma token'>,</span> <span class='colour identifier id'>colour</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:format</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'png'</span>
+  <span class='lbrack token'>[</span>
+    <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='dstring node'>&quot;-size #{width}x#{height} \&quot;xc:#{colour}\&quot;&quot;</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+    <span class='lbrace token'>{</span><span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='comma token'>,</span> <span class='symbol val'>:name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;plain.#{format}&quot;</span><span class='rbrace token'>}</span>
+  <span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="plasma-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>plasma</strong>(width, height, format = 'png') 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+50
+51
+52
+53
+54
+55</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/generator.rb', line 50</span>
+
+<span class='def def kw'>def</span> <span class='plasma identifier id'>plasma</span><span class='lparen token'>(</span><span class='width identifier id'>width</span><span class='comma token'>,</span> <span class='height identifier id'>height</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='assign token'>=</span><span class='string val'>'png'</span><span class='rparen token'>)</span>
+  <span class='lbrack token'>[</span>
+    <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='dstring node'>&quot;-size #{width}x#{height} plasma:fractal&quot;</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+    <span class='lbrace token'>{</span><span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='comma token'>,</span> <span class='symbol val'>:name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;plasma.#{format}&quot;</span><span class='rbrace token'>}</span>
+  <span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="text-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>text</strong>(string, opts = {}) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/generator.rb', line 57</span>
+
+<span class='def def kw'>def</span> <span class='text identifier id'>text</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='HashWithCssStyleKeys constant id'>HashWithCssStyleKeys</span><span class='lbrack token'>[</span><span class='opts identifier id'>opts</span><span class='rbrack token'>]</span>
+  <span class='args identifier id'>args</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:format</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='symbol val'>:png</span><span class='rparen token'>)</span>
+  <span class='background identifier id'>background</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:background_color</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'none'</span>
+  <span class='font_size identifier id'>font_size</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_size</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='integer val'>12</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+  <span class='escaped_string identifier id'>escaped_string</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;\&quot;#{string.gsub(/&quot;/, '\&quot;')}\&quot;&quot;</span>
+
+  <span class='comment val'># Settings</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='string val'>&quot;-gravity NorthWest&quot;</span><span class='rparen token'>)</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='string val'>&quot;-antialias&quot;</span><span class='rparen token'>)</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;-pointsize #{font_size}&quot;</span><span class='rparen token'>)</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;-font \&quot;#{opts[:font]}\&quot;&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font</span><span class='rbrack token'>]</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;-family '#{opts[:font_family]}'&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_family</span><span class='rbrack token'>]</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;-fill #{opts[:color]}&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:color</span><span class='rbrack token'>]</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;-stroke #{opts[:stroke_color]}&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:stroke_color</span><span class='rbrack token'>]</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;-style #{FONT_STYLES[opts[:font_style]]}&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_style</span><span class='rbrack token'>]</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;-stretch #{FONT_STRETCHES[opts[:font_stretch]]}&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_stretch</span><span class='rbrack token'>]</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;-weight #{FONT_WEIGHTS[opts[:font_weight]]}&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_weight</span><span class='rbrack token'>]</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;-background #{background}&quot;</span><span class='rparen token'>)</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;label:#{escaped_string}&quot;</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># Padding</span>
+  <span class='pt identifier id'>pt</span><span class='comma token'>,</span> <span class='pr identifier id'>pr</span><span class='comma token'>,</span> <span class='pb identifier id'>pb</span><span class='comma token'>,</span> <span class='pl identifier id'>pl</span> <span class='assign token'>=</span> <span class='parse_padding_string identifier id'>parse_padding_string</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:padding</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:padding</span><span class='rbrack token'>]</span>
+  <span class='padding_top identifier id'>padding_top</span>    <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:padding_top</span><span class='rbrack token'>]</span>    <span class='orop op'>||</span> <span class='pt identifier id'>pt</span> <span class='orop op'>||</span> <span class='integer val'>0</span><span class='rparen token'>)</span>
+  <span class='padding_right identifier id'>padding_right</span>  <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:padding_right</span><span class='rbrack token'>]</span>  <span class='orop op'>||</span> <span class='pr identifier id'>pr</span> <span class='orop op'>||</span> <span class='integer val'>0</span><span class='rparen token'>)</span>
+  <span class='padding_bottom identifier id'>padding_bottom</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:padding_bottom</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='pb identifier id'>pb</span> <span class='orop op'>||</span> <span class='integer val'>0</span><span class='rparen token'>)</span>
+  <span class='padding_left identifier id'>padding_left</span>   <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:padding_left</span><span class='rbrack token'>]</span>   <span class='orop op'>||</span> <span class='pl identifier id'>pl</span> <span class='orop op'>||</span> <span class='integer val'>0</span><span class='rparen token'>)</span>
+
+  <span class='tempfile identifier id'>tempfile</span> <span class='assign token'>=</span> <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>' '</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='rparen token'>)</span>
+
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='padding_top identifier id'>padding_top</span> <span class='orop op'>||</span> <span class='padding_right identifier id'>padding_right</span> <span class='orop op'>||</span> <span class='padding_bottom identifier id'>padding_bottom</span> <span class='orop op'>||</span> <span class='padding_left identifier id'>padding_left</span><span class='rparen token'>)</span>
+    <span class='attrs identifier id'>attrs</span>  <span class='assign token'>=</span> <span class='identify identifier id'>identify</span><span class='lparen token'>(</span><span class='tempfile identifier id'>tempfile</span><span class='rparen token'>)</span>
+    <span class='text_width identifier id'>text_width</span>  <span class='assign token'>=</span> <span class='attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:width</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+    <span class='text_height identifier id'>text_height</span> <span class='assign token'>=</span> <span class='attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:height</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span>
+    <span class='width identifier id'>width</span>  <span class='assign token'>=</span> <span class='padding_left identifier id'>padding_left</span> <span class='plus op'>+</span> <span class='text_width identifier id'>text_width</span>  <span class='plus op'>+</span> <span class='padding_right identifier id'>padding_right</span>
+    <span class='height identifier id'>height</span> <span class='assign token'>=</span> <span class='padding_top identifier id'>padding_top</span>  <span class='plus op'>+</span> <span class='text_height identifier id'>text_height</span> <span class='plus op'>+</span> <span class='padding_bottom identifier id'>padding_bottom</span>
+
+    <span class='args identifier id'>args</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='slice identifier id'>slice</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='minus op'>-</span> <span class='integer val'>2</span><span class='rparen token'>)</span>
+    <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;-size #{width}x#{height}&quot;</span><span class='rparen token'>)</span>
+    <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;xc:#{background}&quot;</span><span class='rparen token'>)</span>
+    <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;-annotate 0x0+#{padding_left}+#{padding_top} #{escaped_string}&quot;</span><span class='rparen token'>)</span>
+    <span class='run identifier id'>run</span> <span class='dstring node'>&quot;#{convert_command} #{args.join(' ')} #{tempfile.path}&quot;</span>
+  <span class='end end kw'>end</span>
+
+  <span class='lbrack token'>[</span>
+    <span class='tempfile identifier id'>tempfile</span><span class='comma token'>,</span>
+    <span class='lbrace token'>{</span><span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='symbol val'>:name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;text.#{format}&quot;</span><span class='rbrace token'>}</span>
+  <span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="../../file.Index.html" title="Home">Home</a></li><li><a href="../../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../../file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="../../file.Rack.html" title="Rack">Rack</a></li><li><a href="../../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../../file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="../../file.Couch.html" title="Couch">Couch</a></li><li><a href="../../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../../file.Processing.html" title="Processing">Processing</a></li><li><a href="../../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../../file.Generators.html" title="Generators">Generators</a></li><li><a href="../../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../../file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="../../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../../file.Caching.html" title="Caching">Caching</a></li><li><a href="../../file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="../../file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="../../file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="footer">
+  Generated on Wed Apr 27 23:43:36 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.8 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

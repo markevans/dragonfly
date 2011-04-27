@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Class: Object</title>
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -14,6 +14,8 @@
 <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
     <script type="text/javascript" charset="utf-8">
       (function($){
         // YARD automatically creates a table of contents
@@ -48,7 +50,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.2)</div>
+      <div id="logo">DRAGONFLY (v 0.9.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -121,7 +123,7 @@
 
   
     <span class="summary_desc"><div class='inline'><p>
-Will eventually get this by cherry-picking from activesupport.
+Don&#8217;t want to depend on activesupport for this.
 </p>
 </div></span>
   
@@ -168,7 +170,7 @@ Will eventually get this by cherry-picking from activesupport.
 </p><div class="docstring">
   <div class="discussion">
     <p>
-Will eventually get this by cherry-picking from activesupport
+Don&#8217;t want to depend on activesupport for this
 </p>
 
 
@@ -202,9 +204,10 @@ Will eventually get this by cherry-picking from activesupport
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/core_ext/object.rb', line 4</span>
 
-<span class='kw'>def</span> <span class='id blank?'>blank?</span>
-  <span class='id respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:empty?</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id empty?'>empty?</span> <span class='op'>:</span> <span class='op'>!</span><span class='kw'>self</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='blank? fid id'>blank?</span>
+  <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:empty?</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='empty? fid id'>empty?</span> <span class='colon op'>:</span> <span class='notop op'>!</span><span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -230,9 +233,10 @@ Will eventually get this by cherry-picking from activesupport
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/core_ext/object.rb', line 8</span>
 
-<span class='kw'>def</span> <span class='id to_dragonfly_unique_s'>to_dragonfly_unique_s</span>
-  <span class='id to_s'>to_s</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='to_dragonfly_unique_s identifier id'>to_dragonfly_unique_s</span>
+  <span class='to_s identifier id'>to_s</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -244,15 +248,15 @@ Will eventually get this by cherry-picking from activesupport
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.History.html" title="History">History</a></li>
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.Couch.html" title="Couch">Couch</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
 
     <div id="footer">
-  Generated on Tue Jan 11 14:48:15 2011 by 
+  Generated on Wed Apr 27 23:43:36 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.4 (ruby-1.9.2).
+  0.6.8 (ruby-1.9.2).
 </div>
 
   </body>

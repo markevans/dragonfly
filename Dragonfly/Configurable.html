@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta name="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Module: Dragonfly::Configurable</title>
 <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
@@ -14,6 +14,8 @@
 <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
     <script type="text/javascript" charset="utf-8">
       (function($){
         // YARD automatically creates a table of contents
@@ -48,7 +50,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.8.2)</div>
+      <div id="logo">DRAGONFLY (v 0.9.0)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -78,7 +80,7 @@
   
   
     <dt class="r1">Included in:</dt>
-    <dd class="r1"><span class='object_link'><a href="Analyser.html" title="Dragonfly::Analyser (class)">Analyser</a></span>, <span class='object_link'><a href="Analysis/FileCommandAnalyser.html" title="Dragonfly::Analysis::FileCommandAnalyser (class)">Analysis::FileCommandAnalyser</a></span>, <span class='object_link'><a href="Analysis/ImageMagickAnalyser.html" title="Dragonfly::Analysis::ImageMagickAnalyser (class)">Analysis::ImageMagickAnalyser</a></span>, <span class='object_link'><a href="Analysis/RMagickAnalyser.html" title="Dragonfly::Analysis::RMagickAnalyser (class)">Analysis::RMagickAnalyser</a></span>, <span class='object_link'><a href="App.html" title="Dragonfly::App (class)">App</a></span>, <span class='object_link'><a href="DataStorage/FileDataStore.html" title="Dragonfly::DataStorage::FileDataStore (class)">DataStorage::FileDataStore</a></span>, <span class='object_link'><a href="DataStorage/MongoDataStore.html" title="Dragonfly::DataStorage::MongoDataStore (class)">DataStorage::MongoDataStore</a></span>, <span class='object_link'><a href="DataStorage/S3DataStore.html" title="Dragonfly::DataStorage::S3DataStore (class)">DataStorage::S3DataStore</a></span>, <span class='object_link'><a href="Encoding/ImageMagickEncoder.html" title="Dragonfly::Encoding::ImageMagickEncoder (class)">Encoding::ImageMagickEncoder</a></span>, <span class='object_link'><a href="Encoding/RMagickEncoder.html" title="Dragonfly::Encoding::RMagickEncoder (class)">Encoding::RMagickEncoder</a></span>, <span class='object_link'><a href="Generation/ImageMagickGenerator.html" title="Dragonfly::Generation::ImageMagickGenerator (class)">Generation::ImageMagickGenerator</a></span>, <span class='object_link'><a href="Generation/RMagickGenerator.html" title="Dragonfly::Generation::RMagickGenerator (class)">Generation::RMagickGenerator</a></span>, <span class='object_link'><a href="ImageMagickUtils.html" title="Dragonfly::ImageMagickUtils (module)">ImageMagickUtils</a></span>, <span class='object_link'><a href="Processing/RMagickProcessor.html" title="Dragonfly::Processing::RMagickProcessor (class)">Processing::RMagickProcessor</a></span>, <span class='object_link'><a href="TempObject.html" title="Dragonfly::TempObject (class)">TempObject</a></span></dd>
+    <dd class="r1"><span class='object_link'><a href="Analysis/FileCommandAnalyser.html" title="Dragonfly::Analysis::FileCommandAnalyser (class)">Analysis::FileCommandAnalyser</a></span>, <span class='object_link'><a href="App.html" title="Dragonfly::App (class)">App</a></span>, <span class='object_link'><a href="DataStorage/CouchDataStore.html" title="Dragonfly::DataStorage::CouchDataStore (class)">DataStorage::CouchDataStore</a></span>, <span class='object_link'><a href="DataStorage/FileDataStore.html" title="Dragonfly::DataStorage::FileDataStore (class)">DataStorage::FileDataStore</a></span>, <span class='object_link'><a href="DataStorage/MongoDataStore.html" title="Dragonfly::DataStorage::MongoDataStore (class)">DataStorage::MongoDataStore</a></span>, <span class='object_link'><a href="DataStorage/S3DataStore.html" title="Dragonfly::DataStorage::S3DataStore (class)">DataStorage::S3DataStore</a></span>, <span class='object_link'><a href="FunctionManager.html" title="Dragonfly::FunctionManager (class)">FunctionManager</a></span>, <span class='object_link'><a href="ImageMagick/Analyser.html" title="Dragonfly::ImageMagick::Analyser (class)">ImageMagick::Analyser</a></span>, <span class='object_link'><a href="ImageMagick/Encoder.html" title="Dragonfly::ImageMagick::Encoder (class)">ImageMagick::Encoder</a></span>, <span class='object_link'><a href="ImageMagick/Generator.html" title="Dragonfly::ImageMagick::Generator (class)">ImageMagick::Generator</a></span>, <span class='object_link'><a href="ImageMagick/Utils.html" title="Dragonfly::ImageMagick::Utils (module)">ImageMagick::Utils</a></span>, <span class='object_link'><a href="Server.html" title="Dragonfly::Server (class)">Server</a></span>, <span class='object_link'><a href="TempObject.html" title="Dragonfly::TempObject (class)">TempObject</a></span></dd>
     
   
   
@@ -96,7 +98,7 @@
     
    
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Configurable/BadConfigAttribute.html" title="Dragonfly::Configurable::BadConfigAttribute (class)">BadConfigAttribute</a></span>, <span class='object_link'><a href="Configurable/ConfigurationProxy.html" title="Dragonfly::Configurable::ConfigurationProxy (class)">ConfigurationProxy</a></span>, <span class='object_link'><a href="Configurable/DeferredBlock.html" title="Dragonfly::Configurable::DeferredBlock (class)">DeferredBlock</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Configurable/BadConfigAttribute.html" title="Dragonfly::Configurable::BadConfigAttribute (class)">BadConfigAttribute</a></span>, <span class='object_link'><a href="Configurable/ConfigurationProxy.html" title="Dragonfly::Configurable::ConfigurationProxy (class)">ConfigurationProxy</a></span>, <span class='object_link'><a href="Configurable/DeferredBlock.html" title="Dragonfly::Configurable::DeferredBlock (class)">DeferredBlock</a></span>, <span class='object_link'><a href="Configurable/NotConfigured.html" title="Dragonfly::Configurable::NotConfigured (class)">NotConfigured</a></span>
     
   
 </p>
@@ -156,7 +158,6 @@
       <pre class="lines">
 
 
-7
 8
 9
 10
@@ -169,37 +170,25 @@
 17
 18
 19
-20
-21
-22
-23
-24
-25
-26</pre>
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 7</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 8</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id included'>included</span><span class='lparen'>(</span><span class='id klass'>klass</span><span class='rparen'>)</span>
-  <span class='id klass'>klass</span><span class='period'>.</span><span class='id class_eval'>class_eval</span> <span class='kw'>do</span>
-    <span class='id include'>include</span> <span class='const'>Configurable</span><span class='op'>::</span><span class='const'>InstanceMethods</span>
-    <span class='id extend'>extend</span> <span class='const'>Configurable</span><span class='op'>::</span><span class='const'>ClassMethods</span>
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='included identifier id'>included</span><span class='lparen token'>(</span><span class='klass identifier id'>klass</span><span class='rparen token'>)</span>
+  <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
+    <span class='include identifier id'>include</span> <span class='Configurable constant id'>Configurable</span><span class='colon2 op'>::</span><span class='InstanceMethods constant id'>InstanceMethods</span>
+    <span class='extend identifier id'>extend</span> <span class='Configurable constant id'>Configurable</span><span class='colon2 op'>::</span><span class='ClassMethods constant id'>ClassMethods</span>
 
-    <span class='comment'># These aren't included in InstanceMethods because we need access to 'klass'
-</span>    <span class='comment'># We can't just put them into InstanceMethods and use 'self.class' because
-</span>    <span class='comment'># this won't always point to the class in which we've included Configurable,
-</span>    <span class='comment'># e.g. if we've included it in an eigenclasse
-</span>    <span class='id define_method'>define_method</span> <span class='symbol'>:configuration_hash</span> <span class='kw'>do</span>
-      <span class='ivar'>@configuration_hash</span> <span class='op'>||=</span> <span class='id klass'>klass</span><span class='period'>.</span><span class='id default_configuration'>default_configuration</span><span class='period'>.</span><span class='id dup'>dup</span>
-    <span class='kw'>end</span>
-    <span class='id private'>private</span> <span class='symbol'>:configuration_hash</span>
-
-    <span class='id define_method'>define_method</span> <span class='symbol'>:configuration_methods</span> <span class='kw'>do</span>
-      <span class='id klass'>klass</span><span class='period'>.</span><span class='id configuration_methods'>configuration_methods</span>
-    <span class='kw'>end</span>
-
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+    <span class='comment val'># We should use configured_class rather than self.class</span>
+    <span class='comment val'># because sometimes this will be the eigenclass of an object</span>
+    <span class='comment val'># e.g. if we configure a module, etc.</span>
+    <span class='define_method identifier id'>define_method</span> <span class='symbol val'>:configured_class</span> <span class='do do kw'>do</span>
+      <span class='klass identifier id'>klass</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -211,15 +200,15 @@
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
-          <li><a href="../file.Index.html" title="Home">Home</a></li><li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../file.Rack.html" title="Rack">Rack</a></li><li><a href="../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Generators.html" title="Generators">Generators</a></li><li><a href="../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.Caching.html" title="Caching">Caching</a></li><li><a href="../file.History.html" title="History">History</a></li>
+          <li><a href="../file.Index.html" title="Home">Home</a></li><li><a href="../file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="../file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="../file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="../file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="../file.Models.html" title="Models (ActiveRecord, ActiveModel, etc.)">Models (ActiveRecord, ActiveModel, etc.)</a></li><li><a href="../file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="../file.Rack.html" title="Rack">Rack</a></li><li><a href="../file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="../file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="../file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="../file.Couch.html" title="Couch">Couch</a></li><li><a href="../file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="../file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="../file.Processing.html" title="Processing">Processing</a></li><li><a href="../file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="../file.Generators.html" title="Generators">Generators</a></li><li><a href="../file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="../file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="../file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="../file.Caching.html" title="Caching">Caching</a></li><li><a href="../file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="../file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="../file.History.html" title="History">History</a></li>
         </ul>
       </div>
     </div>
 
     <div id="footer">
-  Generated on Tue Jan 11 14:48:14 2011 by 
+  Generated on Wed Apr 27 23:43:35 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.4 (ruby-1.9.2).
+  0.6.8 (ruby-1.9.2).
 </div>
 
   </body>
