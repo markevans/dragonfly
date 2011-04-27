@@ -70,7 +70,7 @@ Setting the attachment sets the uid field (this example uses the {file:DataStora
 
 We can set up a Dragonfly endpoint in routes.rb for generating thumbnails:
 
-    match '/thumbs/:geometry' => app.endpoint{|params, app|
+    match '/thumbs/:geometry' => app.endpoint { |params, app|
       app.fetch(params[:uid]).thumb(params[:geometry])
     }
 
@@ -109,5 +109,5 @@ You can create custom {file:DataStorage#Custom\_datastore data stores}, {file:Pr
 {file:Encoding#Custom\_Encoders encoders}, {file:Analysers#Custom\_Analysers analysers} and {file:Generators#Custom\_Generators generators}, and
 then tie them all together with a {file:Configuration#Custom\_Saved\_Configuration saved configuration}.
 
-See {Dragonfly-RMagick} for an example.
+See [Dragonfly-RMagick](http://github.com/markevans/dragonfly-rmagick) for an example.
 NOTE: you will probably want to create classes and modules in your own namespace, rather than the `Dragonfly` namespace (even though Dragonfly-RMagick uses it).

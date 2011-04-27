@@ -109,7 +109,7 @@ Then to get the url '/text/hello' to display the text "hello"...
 
 Rails 3 (routes.rb):
 
-    match '/text/:text' => app.endpoint{|params, app|
+    match '/text/:text' => app.endpoint { |params, app|
       app.generate(:text, params[:text])
     }
 
@@ -127,7 +127,7 @@ Rails 3 (routes.rb):
 {http://github.com/joshbuddy/usher Usher}:
 
     routes = Usher::Interface.for(:rack) do
-      add('/text/:text').to app.endpoint{|params, app|
+      add('/text/:text').to app.endpoint { |params, app|
         app.generate(:text, params[:text])
       }
     end
@@ -135,7 +135,7 @@ Rails 3 (routes.rb):
 {http://github.com/joshbuddy/http_router HTTP Router}:
 
     r = HttpRouter.new
-    r.add('/text/:text').to app.endpoint{|params, app|
+    r.add('/text/:text').to app.endpoint { |params, app|
       app.generate(:text, params[:text])
     }
 
