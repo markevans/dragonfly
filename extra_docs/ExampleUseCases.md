@@ -60,9 +60,48 @@ See {file:ImageMagick} for more info.
 
 Using Javascript to generate on-the-fly thumbnails in Rails
 -----------------------------------------------------------
+Supposing we have a `Pancake` model with an image attachment
+
+    pancake = Pancake.create! :image => Pathname.new('path/to/pancake.png')
+
+Setting the attachment sets the uid field (this example uses the {file:DataStorage#File\_datastore FileDataStore})
+
+    pancake.image_uid    # '2011/04/27/17_04_32_705_pancake.png'
+
+We can set up a Dragonfly endpoint in routes.rb for generating thumbnails:
+
+    match '/thumbs/:geometry' => app.endpoint{|params, app|
+      app.fetch(params[:uid]).thumb(params[:geometry])
+    }
+
+If we have access to the image uid in javascript, we can create the url like so:
+
+    var url = '/thumbs/400x300?uid=' + uid
+
+Then we can get the content with ajax, create an img tag, etc.
+
+NB: in the above example we've put the uid in the query string and not the path because the dot in it confuses Rails' pattern recognition.
+You could always put it in the path and escape/unescape it either side of the request.
+
+Also javascript's built-in `encodeURIComponent` function may be useful when Rails has difficulty matching routes due to special characters like '#' and '/'.
 
 Text generation with Sinatra
 ----------------------------
+We can easily generate on-the-fly text with Sinatra and the {Dragonfly::ImageMagick::Generator ImageMagick Generator}:
+
+    require 'rubygems'
+    require 'sinatra'
+    require 'dragonfly'
+
+    app = Dragonfly[:images].configure_with(:imagemagick)
+
+    get '/:text' do |text|
+      app.generate(:text, text, :font_size => 30).to_response(env)
+    end
+
+When we visit '/hello!' we get a generated image of the text "hello!".
+
+See {file:ImageMagick#Generator} for more details.
 
 Creating a Dragonfly plugin
 ---------------------------
