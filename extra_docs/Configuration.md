@@ -69,6 +69,11 @@ Here is an example of an app with all attributes configured:
       c.response_headers['summink'] = proc{|job, request|   # either directly or via a callback
         job.image? ? 'image yo' : 'not an image'
       }
+      
+      # When using ImageMagick only...
+      c.convert_command = "/opt/local/bin/convert"          # defaults to "convert"
+      c.identify_command = "/opt/local/bin/convert"         # defaults to "convert"
+      c.log_commands = true                                 # defaults to false
     end
 
 Where is configuration done?
