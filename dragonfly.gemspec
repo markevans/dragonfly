@@ -182,7 +182,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/markevans/dragonfly}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.5.1}
+  s.rubygems_version = %q{1.5.2}
   s.summary = %q{Ideal gem for handling attachments in Rails, Sinatra and Rack applications.}
   s.test_files = [
     "spec/dragonfly/active_model_extensions/model_spec.rb",
@@ -249,9 +249,9 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rspec>, ["~> 2.5"])
       s.add_development_dependency(%q<webmock>, [">= 0"])
       s.add_development_dependency(%q<yard>, [">= 0"])
-      s.add_development_dependency(%q<jdbc-sqlite3>, [">= 0"])
-      s.add_development_dependency(%q<activerecord-jdbcsqlite3-adapter>, [">= 0"])
-      s.add_development_dependency(%q<jruby-openssl>, [">= 0"])
+      s.add_development_dependency(%q<bluecloth>, [">= 0"])
+      s.add_development_dependency(%q<bson_ext>, [">= 0"])
+      s.add_development_dependency(%q<sqlite3-ruby>, [">= 0"])
       s.add_runtime_dependency(%q<rack>, [">= 0"])
     else
       s.add_dependency(%q<rack>, [">= 0"])
@@ -269,9 +269,9 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rspec>, ["~> 2.5"])
       s.add_dependency(%q<webmock>, [">= 0"])
       s.add_dependency(%q<yard>, [">= 0"])
-      s.add_dependency(%q<jdbc-sqlite3>, [">= 0"])
-      s.add_dependency(%q<activerecord-jdbcsqlite3-adapter>, [">= 0"])
-      s.add_dependency(%q<jruby-openssl>, [">= 0"])
+      s.add_dependency(%q<bluecloth>, [">= 0"])
+      s.add_dependency(%q<bson_ext>, [">= 0"])
+      s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
       s.add_dependency(%q<rack>, [">= 0"])
     end
   else
@@ -290,9 +290,9 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rspec>, ["~> 2.5"])
     s.add_dependency(%q<webmock>, [">= 0"])
     s.add_dependency(%q<yard>, [">= 0"])
-    s.add_dependency(%q<jdbc-sqlite3>, [">= 0"])
-    s.add_dependency(%q<activerecord-jdbcsqlite3-adapter>, [">= 0"])
-    s.add_dependency(%q<jruby-openssl>, [">= 0"])
+    s.add_dependency(%q<bluecloth>, [">= 0"])
+    s.add_dependency(%q<bson_ext>, [">= 0"])
+    s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
     s.add_dependency(%q<rack>, [">= 0"])
   end
 end
