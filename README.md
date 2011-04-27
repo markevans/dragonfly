@@ -5,6 +5,8 @@ Dragonfly is a <a href="http://rack.rubyforge.org">Rack</a> framework for on-the
 
 Ideal for using with Ruby on Rails (2.3 and 3), Sinatra and all that gubbins.
 
+However, Dragonfly is NOT JUST FOR RAILS, and NOT JUST FOR IMAGES!!
+
 For the lazy Rails user...
 --------------------------
 **Gemfile**:
