@@ -23,11 +23,16 @@ html[xmlns] .clearfix {
 }
  /************/
 
+body {
+  font-family: "PT Sans",Verdana,Arial,sans-serif;
+  font-size: 14px;
+}
+
 pre, code, .code,
 #filecontents pre.code,
 .docstring pre.code,
 .source_code pre {
-  font-family: monaco, 'Trebuchet MS', monospace;
+  font-family: Inconsolata,Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
 }
 
 pre.code, code {
@@ -63,19 +68,16 @@ ul.main_files li {
   margin:0;
   padding:0;
 }
-ul.main_files li:nth-child(odd) {
-  background-color:#fff;
-}
-ul.main_files li:nth-child(even) {
-  background-color:#eee;
-}
 
 ul.main_files li a {
   margin: 0;
-  padding:7px 12px;
+  padding:4px 12px;
   display:block;
+  cursor:pointer;
 }
-
+#content ul.main_files li a:hover {
+  background-color:#F4F9E4;
+}
 /* Layout */
 #header,
 #content,
@@ -100,7 +102,7 @@ ul.main_files li a {
 }
 #content .col2 {
   float:left;
-  margin: 20px 0 0 20px;
+  margin: 0 0 0 20px;
   padding: 0 0 0 20px;
   width: 200px;
   border-left: 1px dotted #D5D5D5;
