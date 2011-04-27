@@ -23,7 +23,7 @@ module Dragonfly
       include Utils
       
       def resize(temp_object, geometry)
-        convert(temp_object, "-resize '#{geometry}'")
+        convert(temp_object, "-resize \"#{geometry}\"")
       end
       
       def crop(temp_object, opts={})
@@ -70,7 +70,7 @@ module Dragonfly
       end
       
       def rotate(temp_object, amount, opts={})
-        convert(temp_object, "-rotate '#{amount}#{opts[:qualifier]}'")
+        convert(temp_object, "-rotate \"#{amount}#{opts[:qualifier]}\"")
       end
 
       def strip(temp_object)
