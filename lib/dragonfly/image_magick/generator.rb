@@ -42,7 +42,7 @@ module Dragonfly
       def plain(width, height, colour, opts={})
         format = opts[:format] || 'png'
         [
-          convert(nil, "-size #{width}x#{height} 'xc:#{colour}'", format),
+          convert(nil, "-size #{width}x#{height} \"xc:#{colour}\"", format),
           {:format => format.to_sym, :name => "plain.#{format}"}
         ]
       end
@@ -66,7 +66,7 @@ module Dragonfly
         args.push("-gravity NorthWest")
         args.push("-antialias")
         args.push("-pointsize #{font_size}")
-        args.push("-font '#{opts[:font]}'") if opts[:font]
+        args.push("-font \"#{opts[:font]}\"") if opts[:font]
         args.push("-family '#{opts[:font_family]}'") if opts[:font_family]
         args.push("-fill #{opts[:color]}") if opts[:color]
         args.push("-stroke #{opts[:stroke_color]}") if opts[:stroke_color]
