@@ -37,8 +37,26 @@ You can always define your own macro for dealing with non-image attachments:
 
 see {file:Models} for how to define macros with non-ActiveRecord libraries.
 
-Quick custom processing in Rails
---------------------------------
+Quick custom image processing in Rails
+--------------------------------------
+With the imagemagick configuration, we can easily use `convert` to do some custom processing, e.g. in the view:
+
+    <%= image_tag @user.mugshot.thumb('300x300#').convert('-blur 4x2').url %>
+
+If we use this a lot, we can define a shortcut for it - in config/initializers/dragonfly.rb:
+
+    Dragonfly[:images].configure do |c|
+      c.job :blurred_square do |size|
+        process :resize_and_crop, :width => size, :height => size
+        process :convert, '-blur 4x2'
+      end
+    end
+
+then in the view:
+
+    <%= image_tag @user.mugshot.blurred_square(300).url %>
+
+See {file:ImageMagick} for more info.
 
 Using Javascript to generate on-the-fly thumbnails in Rails
 -----------------------------------------------------------
