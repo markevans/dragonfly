@@ -208,6 +208,11 @@ Validations
 The property argument of `validates_property` will generally be one of the registered analyser properties as described in {file:Analysers.md Analysers}.
 However it would actually work for arbitrary properties, including those of non-dragonfly model attributes.
 
+`validates_property` can also take a proc for the message, yielding the actual value and the model
+
+    validates_property :width, :of => :cover_image, :in => (0..400),
+                               :message => proc{|actual, model| "Unlucky #{model.title} - was #{actual}" }
+
 Name and extension
 ------------------
 If the object assigned is a file, or responds to `original_filename` (as is the case with file uploads in Rails, etc.), then `name` will be set.
