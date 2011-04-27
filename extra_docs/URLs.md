@@ -175,3 +175,22 @@ You can also validate for a correct SHA using routed endpoints:
 ... where obviously you need to pass in a 'sha' parameter to the url, which can be found using
 
     app.generate(:text, 'some text').sha
+
+Overriding responses
+--------------------
+You can override/add headers using `response_headers`:
+
+    app.configure do |c|
+      c.response_headers['X-Something'] = 'Custom header'   # set directly..
+      c.response_headers['summink'] = proc{|job, request|   # ...or via a callback
+        job.image? ? 'image yo' : 'not an image'
+      }
+    end
+
+You can intercept the response from the dragonfly server by throwing `:halt` with a Rack response array from inside the `before_serve` callback:
+
+    app.configure do |c|
+      c.server.before_serve do |job, env|
+        throw :halt, [200, {'Content-type' => 'text/plain'}, ['hello']]
+      end
+    end

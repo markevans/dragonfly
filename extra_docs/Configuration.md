@@ -61,7 +61,7 @@ Here is an example of an app with all attributes configured:
         end
       end
       
-      c.before_serve do |job, env|                          # allows you to do something before content is served
+      c.server.before_serve do |job, env|                   # allows you to do something before content is served
         # do something
       end
       
