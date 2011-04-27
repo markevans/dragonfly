@@ -40,6 +40,22 @@ For the lazy Rails user...
 
 NB: REMEMBER THE MULTIPART BIT!!!
 
+You can avoid having to re-upload when validations fail with
+
+      <%= f.hidden_field :retained_cover_image %>
+
+remove the attachment with
+
+      <%= f.check_box :remove_cover_image %>
+
+assign from some other url with
+
+      <%= f.text_field :cover_image_url %>
+
+and display a thumbnail (on the upload form) with
+
+      <%= image_tag @album.cover_image.thumb('100x100').url if @album.cover_image_uid %>
+
 **View** (to display):
 
     <%= image_tag @album.cover_image.url %>
