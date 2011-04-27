@@ -294,6 +294,12 @@ The uid column is then filled in.</p>
 <p>The property argument of <code>validates_property</code> will generally be one of the registered analyser properties as described in <a href="file.Analysers.html" title="Analysers">Analysers</a>.
 However it would actually work for arbitrary properties, including those of non-dragonfly model attributes.</p>
 
+<p><code>validates_property</code> can also take a proc for the message, yielding the actual value and the model</p>
+
+<pre class="code"><span class='validates_property identifier id'>validates_property</span> <span class='symbol val'>:width</span><span class='comma token'>,</span> <span class='symbol val'>:of</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:cover_image</span><span class='comma token'>,</span> <span class='symbol val'>:in</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='integer val'>0</span><span class='dot2 op'>..</span><span class='integer val'>400</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+                           <span class='symbol val'>:message</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='actual identifier id'>actual</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='bitor op'>|</span> <span class='dstring node'>&quot;Unlucky #{model.title} - was #{actual}&quot;</span> <span class='rbrace token'>}</span>
+</pre>
+
 <h2>Name and extension</h2>
 
 <p>If the object assigned is a file, or responds to <code>original_filename</code> (as is the case with file uploads in Rails, etc.), then <code>name</code> will be set.</p>
@@ -540,9 +546,9 @@ for e.g. setting custom response headers based on that meta - see {file:Configur
     </div>
 
     <div id="footer">
-  Generated on Wed Apr 27 23:43:33 2011 by 
+  Generated on Wed Apr 27 23:58:42 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.8 (ruby-1.9.2).
+  0.6.8 (ruby-1.8.7).
 </div>
 
   </body>
