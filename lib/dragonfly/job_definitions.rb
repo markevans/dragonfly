@@ -17,6 +17,10 @@ module Dragonfly
         jd[name].build!(self, *args)
       end
     end
+    
+    def jobs
+      job_definitions.keys
+    end
 
     private
 
