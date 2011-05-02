@@ -45,5 +45,5 @@ Now you can benefit from super-fast images served straight from Heroku's cache!
 
 **NOTE**: HEROKU'S CACHE IS CLEARED EVERY TIME YOU DEPLOY!!!
 
-If this is an issue, you may want to look into storing thumbnails on S3 (see {file:ExampleUseCases}), or maybe an after-deploy hook for hitting specific Dragonfly urls you want to cache, etc.
+If this is an issue, you may want to look into storing thumbnails on S3 (see {file:ServingRemotely}), or maybe an after-deploy hook for hitting specific Dragonfly urls you want to cache, etc.
 It won't be a problem for most sites though.

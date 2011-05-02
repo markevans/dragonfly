@@ -124,3 +124,13 @@ You can use `padding-top`, `padding-left`, etc., as well as the standard css sho
 
 An alternative for `:font_family` is `:font` (see {http://www.imagemagick.org/script/command-line-options.php#font}), which could be a complete filename.
 Available fonts are those available on your system.
+
+Configuration
+-------------
+There are some options that can be set, e.g. if the imagemagick convert command can't be found:
+
+    app.configure do |c|
+      c.convert_command = "/opt/local/bin/convert"          # defaults to "convert"
+      c.identify_command = "/opt/local/bin/convert"         # defaults to "convert"
+      c.log_commands = true                                 # defaults to false
+    end
