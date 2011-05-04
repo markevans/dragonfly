@@ -83,7 +83,7 @@ To configure with the {Dragonfly::DataStorage::S3DataStore S3DataStore}:
 
     app.datastore = Dragonfly::DataStorage::S3DataStore.new
 
-    app.datastore.configure do |d|
+    app.datastore.configure do |c|
       c.bucket_name = 'my_bucket'
       c.access_key_id = 'salfjasd34u23'
       c.secret_access_key = '8u2u3rhkhfo23...'
