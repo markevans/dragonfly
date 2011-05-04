@@ -6,7 +6,7 @@ The default configuration won't work out of the box for Heroku, because
 - Heroku doesn't allow saving files to the filesystem (although it does use tempfiles)
 - We won't need {http://tomayko.com/src/rack-cache/ Rack::Cache} on Heroku because it already uses the caching proxy {http://varnish.projects.linpro.no/ Varnish}, which we can make use of
 
-Instead of the normal {Dragonfly::DataStorage::FileDataStore FileDataStore}, we can use the {Dragonfly::DataStorage::S3DataStore S3DataStore}.
+Instead of the normal {file:DataStorage#File\_datastore FileDataStore}, we can use the {file:DataStorage#S3\_datastore S3DataStore}.
 
 Assuming you have an S3 account set up...
 
