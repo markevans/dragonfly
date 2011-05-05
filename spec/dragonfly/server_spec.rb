@@ -22,7 +22,7 @@ describe Dragonfly::Server do
       @app.destroy(@uid)
     end
 
-    describe "successful urls" do
+    describe "successful requests" do
       before(:each) do
         @server.url_format = '/media/:job/:name.:format'
       end
@@ -59,74 +59,90 @@ describe Dragonfly::Server do
         response.status.should == 200
         response.body.should == 'eggs'
       end
-    end
+      
+      it "should return a cacheable response" do
+        url = "/media/#{@job.serialize}"
+        cache = Rack::Cache.new(@server, :entitystore => 'heap:/')
+        response = request(cache, url)
+        response.status.should == 200
+        response.headers['X-Rack-Cache'].should == "miss, store"
+        response = request(cache, url)
+        response.status.should == 200
+        response.headers['X-Rack-Cache'].should == "fresh"
+      end
 
-    it "should return successfully even if the job is in the query string" do
-      @server.url_format = '/'
-      url = "/?job=#{@job.serialize}"
-      response = request(@server, url)
-      response.status.should == 200
-      response.body.should == 'HELLO THERE'
-    end
-
-    it "should return a 400 if no sha given but protection on" do
-      @server.protect_from_dos_attacks = true
-      url = "/media/#{@job.serialize}"
-      response = request(@server, url)
-      response.status.should == 400
-    end
-  
-    it "should return a 400 if wrong sha given and protection on" do
-      @server.protect_from_dos_attacks = true
-      url = "/media/#{@job.serialize}?sha=asdfs"
-      response = request(@server, url)
-      response.status.should == 400
-    end
-
-    ['/media', '/media/'].each do |url|
-      it "should return a 404 when no job given, e.g. #{url.inspect}" do
+      it "should return successfully even if the job is in the query string" do
+        @server.url_format = '/'
+        url = "/?job=#{@job.serialize}"
         response = request(@server, url)
+        response.status.should == 200
+        response.body.should == 'HELLO THERE'
+      end
+    end
+
+    describe "unsuccessful requests" do
+      it "should return a 400 if no sha given but protection on" do
+        @server.protect_from_dos_attacks = true
+        url = "/media/#{@job.serialize}"
+        response = request(@server, url)
+        response.status.should == 400
+      end
+  
+      it "should return a 400 if wrong sha given and protection on" do
+        @server.protect_from_dos_attacks = true
+        url = "/media/#{@job.serialize}?sha=asdfs"
+        response = request(@server, url)
+        response.status.should == 400
+      end
+
+      ['/media', '/media/'].each do |url|
+        it "should return a 404 when no job given, e.g. #{url.inspect}" do
+          response = request(@server, url)
+          response.status.should == 404
+          response.body.should == 'Not found'
+          response.content_type.should == 'text/plain'
+          response.headers['X-Cascade'].should == 'pass'
+        end
+      end
+  
+      it "should return a 404 when the url matches but doesn't correspond to a job" do
+        response = request(@server, '/media/sadhfasdfdsfsdf')
+        response.status.should == 404
+        response.body.should == 'Not found'
+        response.content_type.should == 'text/plain'
+        response.headers['X-Cascade'].should be_nil
+      end
+  
+      it "should return a 404 when the url isn't known at all" do
+        response = request(@server, '/jfasd/dsfa')
         response.status.should == 404
         response.body.should == 'Not found'
         response.content_type.should == 'text/plain'
         response.headers['X-Cascade'].should == 'pass'
       end
-    end
   
-    it "should return a 404 when the url matches but doesn't correspond to a job" do
-      response = request(@server, '/media/sadhfasdfdsfsdf')
-      response.status.should == 404
-      response.body.should == 'Not found'
-      response.content_type.should == 'text/plain'
-      response.headers['X-Cascade'].should be_nil
-    end
-  
-    it "should return a 404 when the url isn't known at all" do
-      response = request(@server, '/jfasd/dsfa')
-      response.status.should == 404
-      response.body.should == 'Not found'
-      response.content_type.should == 'text/plain'
-      response.headers['X-Cascade'].should == 'pass'
-    end
-  
-    it "should return a 404 when the url is a well-encoded but bad array" do
-      url = "/media/#{Dragonfly::Serializer.marshal_encode([[:egg, {:some => 'args'}]])}"
-      response = request(@server, url)
-      response.status.should == 404
-      response.body.should == 'Not found'
-      response.content_type.should == 'text/plain'
-      response.headers['X-Cascade'].should be_nil
-    end
-
-    it "should return a cacheable response" do
-      url = "/media/#{@job.serialize}"
-      cache = Rack::Cache.new(@server, :entitystore => 'heap:/')
-      response = request(cache, url)
-      response.status.should == 200
-      response.headers['X-Rack-Cache'].should == "miss, store"
-      response = request(cache, url)
-      response.status.should == 200
-      response.headers['X-Rack-Cache'].should == "fresh"
+      it "should return a 404 when the url is a well-encoded but bad array" do
+        url = "/media/#{Dragonfly::Serializer.marshal_encode([[:egg, {:some => 'args'}]])}"
+        response = request(@server, url)
+        response.status.should == 404
+        response.body.should == 'Not found'
+        response.content_type.should == 'text/plain'
+        response.headers['X-Cascade'].should be_nil
+      end
+      
+      it "should return a 403 Forbidden when someone uses fetch_file" do
+        response = request(@server, "/media/#{@app.fetch_file('/some/file.txt').serialize}")
+        response.status.should == 403
+        response.body.should == 'Forbidden'
+        response.content_type.should == 'text/plain'
+      end
+      
+      it "should return a 403 Forbidden when someone uses fetch_url" do
+        response = request(@server, "/media/#{@app.fetch_url('some.url').serialize}")
+        response.status.should == 403
+        response.body.should == 'Forbidden'
+        response.content_type.should == 'text/plain'
+      end
     end
 
   end
