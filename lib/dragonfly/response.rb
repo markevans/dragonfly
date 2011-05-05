@@ -24,7 +24,7 @@ module Dragonfly
         job.apply
         [200, success_headers, job.result]
       end
-    rescue DataStorage::DataNotFound => e
+    rescue DataStorage::DataNotFound, DataStorage::BadUID => e
       app.log.warn(e.message)
       [404, {"Content-Type" => 'text/plain'}, ['Not found']]
     end

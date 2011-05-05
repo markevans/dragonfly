@@ -6,7 +6,6 @@ module Dragonfly
     class FileDataStore
 
       # Exceptions
-      class BadUID < RuntimeError; end
       class UnableToFormUrl < RuntimeError; end
 
       include Configurable
@@ -139,7 +138,7 @@ module Dragonfly
       end
 
       def validate_uid!(uid)
-        raise BadUID, "tried to fetch uid #{uid.inspect} - perhaps due to a malicious user" if uid['..']
+        raise BadUID, "tried to retrieve uid #{uid.inspect}" if uid.blank? || uid['../']
       end
 
     end

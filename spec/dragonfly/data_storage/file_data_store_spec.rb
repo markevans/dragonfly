@@ -168,10 +168,16 @@ describe Dragonfly::DataStorage::FileDataStore do
       meta.should == {:dog => 'food'}
     end
     
-    it "should raise an error if the file path has .. in it" do
+    it "should raise a BadUID error if the file path has ../ in it" do
       expect{
         @data_store.retrieve('jelly_beans/../are/good')
-      }.to raise_error(Dragonfly::DataStorage::FileDataStore::BadUID)
+      }.to raise_error(Dragonfly::DataStorage::BadUID)
+    end
+
+    it "should not raise a BadUID error if the file path has .. but not ../ in it" do
+      expect{
+        @data_store.retrieve('jelly_beans..good')
+      }.to raise_error(Dragonfly::DataStorage::DataNotFound)
     end
   end
   
@@ -199,10 +205,10 @@ describe Dragonfly::DataStorage::FileDataStore do
       File.exist?("#{@data_store.root_path}/#{uid}.extra").should be_false
     end
 
-    it "should raise an error if the file path has .. in it" do
+    it "should raise an error if the file path has ../ in it" do
       expect{
         @data_store.destroy('jelly_beans/../are/good')
-      }.to raise_error(Dragonfly::DataStorage::FileDataStore::BadUID)
+      }.to raise_error(Dragonfly::DataStorage::BadUID)
     end
   end
 

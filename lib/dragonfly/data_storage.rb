@@ -2,8 +2,9 @@ module Dragonfly
   module DataStorage
 
     # Exceptions
-    class DataNotFound < StandardError; end
-    class UnableToStore < StandardError; end
+    class BadUID < RuntimeError; end
+    class DataNotFound < RuntimeError; end
+    class UnableToStore < RuntimeError; end
 
   end
 end

@@ -86,6 +86,12 @@ describe Dragonfly::JobEndpoint do
     response.status.should == 404
   end
 
+  it "should return a 404 if the datastore raises bad uid" do
+    @job.should_receive(:apply).and_raise(Dragonfly::DataStorage::BadUID)
+    response = make_request(@job)
+    response.status.should == 404
+  end
+
   describe "ETag" do
     it "should return an ETag" do
       response = make_request(@job)
