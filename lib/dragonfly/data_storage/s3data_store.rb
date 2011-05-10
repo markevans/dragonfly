@@ -37,12 +37,14 @@ module Dragonfly
         headers = opts[:headers] || {}
         uid = opts[:path] || generate_uid(meta[:name] || temp_object.original_filename || 'file')
         
-        if use_filesystem
-          temp_object.file do |f|
-            storage.put_object(bucket_name, uid, f, full_storage_headers(headers, meta))
+        rescuing_socket_errors do
+          if use_filesystem
+            temp_object.file do |f|
+              storage.put_object(bucket_name, uid, f, full_storage_headers(headers, meta))
+            end
+          else
+            storage.put_object(bucket_name, uid, temp_object.data, full_storage_headers(headers, meta))
           end
-        else
-          storage.put_object(bucket_name, uid, temp_object.data, full_storage_headers(headers, meta))
         end
         
         uid
@@ -50,7 +52,7 @@ module Dragonfly
 
       def retrieve(uid)
         ensure_configured
-        response = storage.get_object(bucket_name, uid)
+        response = rescuing_socket_errors{ storage.get_object(bucket_name, uid) }
         [
           response.body,
           parse_s3_metadata(response.headers)
@@ -60,7 +62,7 @@ module Dragonfly
       end
 
       def destroy(uid)
-        storage.delete_object(bucket_name, uid)
+        rescuing_socket_errors{ storage.delete_object(bucket_name, uid) }
       rescue Excon::Errors::NotFound => e
         raise DataNotFound, "#{e} - #{uid}"
       end
@@ -87,7 +89,7 @@ module Dragonfly
       end
 
       def bucket_exists?
-        storage.get_bucket_location(bucket_name)
+        rescuing_socket_errors{ storage.get_bucket_location(bucket_name) }
         true
       rescue Excon::Errors::NotFound => e
         false
@@ -106,7 +108,7 @@ module Dragonfly
 
       def ensure_bucket_initialized
         unless @bucket_initialized
-          storage.put_bucket(bucket_name, 'LocationConstraint' => region) unless bucket_exists?
+          rescuing_socket_errors{ storage.put_bucket(bucket_name, 'LocationConstraint' => region) } unless bucket_exists?
           @bucket_initialized = true
         end
       end
@@ -132,6 +134,13 @@ module Dragonfly
 
       def valid_regions
         REGIONS.keys
+      end
+
+      def rescuing_socket_errors(&block)
+        yield
+      rescue Excon::Errors::SocketError => e
+        storage.reload
+        yield
       end
 
     end
