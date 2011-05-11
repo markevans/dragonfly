@@ -81,6 +81,11 @@ Where is configuration done?
 In Rails, it should be done in an initializer, e.g. 'config/initializers/dragonfly.rb'.
 Otherwise it should be done anywhere where general setup is done, early on.
 
+Reflecting on configuration
+---------------------------
+There are a few methods you can call on the `app` to see what processors etc. are registered: `processor_methods`, `generator_methods`
+and `job_methods`.
+
 Saved configurations
 ====================
 Saved configurations are useful if you often configure the app the same way.
