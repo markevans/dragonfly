@@ -64,7 +64,7 @@ module Dragonfly
 
         opts[:gravity] ||= 'c'
 
-        opts[:resize]  = "#{opts[:width]}x#{opts[:height]}^"
+        opts[:resize]  = "#{opts[:width]}x#{opts[:height]}^^"
         crop(temp_object, opts)
       end
       
