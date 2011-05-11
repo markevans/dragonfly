@@ -103,7 +103,7 @@ describe Dragonfly::ImageMagick::Processor do
     it "should take into account the gravity given" do
       image1 = @processor.crop(@image, :width => '10', :height => '10', :gravity => 'nw')
       image2 = @processor.crop(@image, :width => '10', :height => '10', :gravity => 'se')
-      Digest::MD5.hexdigest(File.read(image1)).should_not == Digest::MD5.hexdigest(File.read(image2))
+      image1.should_not equal_image(image2)
     end
 
     it "should clip bits of the image outside of the requested crop area when not nw gravity" do
@@ -163,7 +163,7 @@ describe Dragonfly::ImageMagick::Processor do
     it "should actually resize before cropping" do
       image1 = @processor.resize_and_crop(@image, :width => '100', :height => '100')
       image2 = @processor.crop(@image, :width => '100', :height => '100', :gravity => 'c')
-      Digest::MD5.hexdigest(File.read(image1)).should_not == Digest::MD5.hexdigest(File.read(image2))
+      image1.should_not equal_image(image2)
     end
 
     it "should allow cropping in one dimension" do
@@ -175,7 +175,7 @@ describe Dragonfly::ImageMagick::Processor do
     it "should take into account the gravity given" do
       image1 = @processor.resize_and_crop(@image, :width => '10', :height => '10', :gravity => 'nw')
       image2 = @processor.resize_and_crop(@image, :width => '10', :height => '10', :gravity => 'se')
-      Digest::MD5.hexdigest(File.read(image1)).should_not == Digest::MD5.hexdigest(File.read(image2))
+      image1.should_not equal_image(image2)
     end
 
   end

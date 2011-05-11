@@ -45,3 +45,13 @@ RSpec::Matchers.define :have_size do |size|
     image_properties(given)[:size].should == size
   end
 end
+
+RSpec::Matchers.define :equal_image do |other|
+  match do |given|
+    image_data = given.open.read
+    other_image_data = other.open.read
+    given.close
+    other.close
+    image_data == other_image_data
+  end
+end
