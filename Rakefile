@@ -19,7 +19,6 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/markevans/dragonfly"
   gem.license = "MIT"
   gem.authors = ["Mark Evans"]
-  gem.add_runtime_dependency('rack')
 end
 Jeweler::RubygemsDotOrgTasks.new
 
