@@ -79,6 +79,8 @@
 <ul>
 <li>Improved performance of <code>resize_and_crop</code> method, using imagemagick built-in '^' operator</li>
 <li>Improved server security validations</li>
+<li>Deal with Excon::Errors::SocketError: EOFError errors which get thrown sometimes from S3 connection</li>
+<li>Allow files with '..' (but not '../') in the middle of their name in file data store</li>
 </ul>
 
 
@@ -532,9 +534,9 @@ Can also pass a block to temp_object.file which closes the file automatically</l
     </div>
 
     <div id="footer">
-  Generated on Wed May 11 15:34:39 2011 by 
+  Generated on Wed May 11 16:02:58 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.8 (ruby-1.9.2).
+  0.6.8 (ruby-1.8.7).
 </div>
 
   </body>
