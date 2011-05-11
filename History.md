@@ -1,3 +1,14 @@
+0.9.1 (2011-05-11)
+==================
+Features
+--------
+- Added reflection methods `app.processor_methods`, `app.generator_methods` and `app.job_methods`
+
+Fixes
+-----
+- Improved performance of `resize_and_crop` method, using imagemagick built-in '^' operator
+- Improved server security validations
+
 0.9.0 (2011-04-27)
 ==================
 Features
