@@ -114,7 +114,7 @@ module Dragonfly
       end
 
       def validate_uid!(uid)
-        raise BadUID, "tried to fetch uid #{uid.inspect} - perhaps due to a malicious user" if uid['..']
+        raise BadUID, "tried to fetch uid #{uid.inspect} - perhaps due to a malicious user" if uid['../']
       end
 
     end

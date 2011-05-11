@@ -2,6 +2,7 @@
 ==================
 Fixes
 -----
+- Allow filenames that have '..' in them (but not '../') in the filedatastore
 - Better security for server
 
 0.8.4 (2011-04-27)
