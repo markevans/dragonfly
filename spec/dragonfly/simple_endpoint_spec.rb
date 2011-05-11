@@ -56,6 +56,14 @@ describe Dragonfly::SimpleEndpoint do
     response.content_type.should == 'text/plain'
   end
 
+  it "should return a 403 forbidden when fetch_file is requested" do
+    url = @app.fetch_file('/some/file.txt').url
+    response = request(@endpoint, url)
+    response.status.should == 403
+    response.body.should == 'Forbidden'
+    response.content_type.should == 'text/plain'
+  end
+
   it "should still work when mapped to a prefix" do
     endpoint = @endpoint
     rack_app = Rack::Builder.new do
