@@ -8,6 +8,7 @@ Fixes
 -----
 - Improved performance of `resize_and_crop` method, using imagemagick built-in '^' operator
 - Improved server security validations
+- Deal with Excon::Errors::SocketError: EOFError errors which get thrown sometimes from S3 connection
 
 0.9.0 (2011-04-27)
 ==================
