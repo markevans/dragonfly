@@ -33,7 +33,7 @@ describe Dragonfly::JobDefinitions do
   end
   
   
-  describe "#jobs" do
+  describe "#definition_names" do
     
     before(:each) do
       @job_definitions = Dragonfly::JobDefinitions.new
@@ -41,19 +41,15 @@ describe Dragonfly::JobDefinitions do
       @object.extend @job_definitions
     end
     
-    it "should provide an empty list when no jobs have been definded" do
-      jobs = @job_definitions.jobs
-      jobs.should be_an Array
-      jobs.should be_empty
+    it "should provide an empty list when no jobs have been defined" do
+      @job_definitions.definition_names.should == []
     end
     
     it "should contain the job name when one is defined" do
-      job_name = :foo
-      @job_definitions.add job_name do |size|
+      @job_definitions.add :foo do |size|
         process :thumb, size
       end
-      
-      @job_definitions.jobs.should eq [job_name]
+      @job_definitions.definition_names.should eq [:foo]
     end
     
   end

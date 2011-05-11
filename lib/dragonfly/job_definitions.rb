@@ -18,7 +18,7 @@ module Dragonfly
       end
     end
     
-    def jobs
+    def definition_names
       job_definitions.keys
     end
 

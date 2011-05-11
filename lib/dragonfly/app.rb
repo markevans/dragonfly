@@ -145,6 +145,19 @@ module Dragonfly
       end
     end
     
+    # Reflection
+    def processor_methods
+      processor.functions.keys
+    end
+    
+    def generator_methods
+      generator.functions.keys
+    end
+    
+    def job_methods
+      job_definitions.definition_names
+    end
+    
     # Deprecated methods
     def url_path_prefix=(thing)
       raise NoMethodError, "url_path_prefix is deprecated - please use url_format, e.g. url_format = '/media/:job/:basename.:format' - see docs for more details"

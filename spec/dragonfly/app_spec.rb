@@ -132,4 +132,24 @@ describe Dragonfly::App do
     end
   end
 
+  describe "reflection methods" do
+    before(:each) do
+      @app = test_app.configure do |c|
+        c.processor.add(:milk){}
+        c.generator.add(:butter){}
+        c.job(:bacon){}
+      end
+      
+    end
+    it "should return processor methods" do
+      @app.processor_methods.should == [:milk]
+    end
+    it "should return generator methods" do
+      @app.generator_methods.should == [:butter]
+    end
+    it "should return job methods" do
+      @app.job_methods.should == [:bacon]
+    end
+  end
+
 end
