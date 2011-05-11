@@ -50,7 +50,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.0)</div>
+      <div id="logo">DRAGONFLY (v 0.9.1)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -151,6 +151,11 @@ Here is an example of an app with all attributes configured:</p>
 <p>In Rails, it should be done in an initializer, e.g. 'config/initializers/dragonfly.rb'.
 Otherwise it should be done anywhere where general setup is done, early on.</p>
 
+<h2>Reflecting on configuration</h2>
+
+<p>There are a few methods you can call on the <code>app</code> to see what processors etc. are registered: <code>processor_methods</code>, <code>generator_methods</code>
+and <code>job_methods</code>.</p>
+
 <h1>Saved configurations</h1>
 
 <p>Saved configurations are useful if you often configure the app the same way.
@@ -235,9 +240,9 @@ globally as a one-off:</p>
     </div>
 
     <div id="footer">
-  Generated on Wed May  4 10:36:48 2011 by 
+  Generated on Wed May 11 15:34:39 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.8 (ruby-1.8.7).
+  0.6.8 (ruby-1.9.2).
 </div>
 
   </body>

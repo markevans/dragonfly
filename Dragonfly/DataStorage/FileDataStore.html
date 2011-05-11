@@ -50,7 +50,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.0)</div>
+      <div id="logo">DRAGONFLY (v 0.9.1)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -111,7 +111,7 @@
     
    
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="FileDataStore/BadUID.html" title="Dragonfly::DataStorage::FileDataStore::BadUID (class)">BadUID</a></span>, <span class='object_link'><a href="FileDataStore/UnableToFormUrl.html" title="Dragonfly::DataStorage::FileDataStore::UnableToFormUrl (class)">UnableToFormUrl</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="FileDataStore/UnableToFormUrl.html" title="Dragonfly::DataStorage::FileDataStore::UnableToFormUrl (class)">UnableToFormUrl</a></span>
     
   
 </p>
@@ -333,6 +333,7 @@ or
       <pre class="lines">
 
 
+52
 53
 54
 55
@@ -341,11 +342,10 @@ or
 58
 59
 60
-61
-62</pre>
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 52</span>
 
 <span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
   <span class='validate_uid! fid id'>validate_uid!</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
@@ -376,15 +376,15 @@ or
       <pre class="lines">
 
 
+76
 77
 78
 79
 80
-81
-82</pre>
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 76</span>
 
 <span class='def def kw'>def</span> <span class='disambiguate identifier id'>disambiguate</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
   <span class='dirname identifier id'>dirname</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='dirname identifier id'>dirname</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
@@ -432,6 +432,7 @@ or
       <pre class="lines">
 
 
+41
 42
 43
 44
@@ -440,11 +441,10 @@ or
 47
 48
 49
-50
-51</pre>
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 41</span>
 
 <span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
   <span class='validate_uid! fid id'>validate_uid!</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
@@ -475,6 +475,7 @@ or
       <pre class="lines">
 
 
+17
 18
 19
 20
@@ -496,11 +497,10 @@ or
 36
 37
 38
-39
-40</pre>
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 17</span>
 
 <span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='meta identifier id'>meta</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:meta</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
@@ -544,6 +544,7 @@ or
       <pre class="lines">
 
 
+63
 64
 65
 66
@@ -554,11 +555,10 @@ or
 71
 72
 73
-74
-75</pre>
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 63</span>
 
 <span class='def def kw'>def</span> <span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='if if kw'>if</span> <span class='server_root identifier id'>server_root</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
@@ -590,9 +590,9 @@ or
     </div>
 
     <div id="footer">
-  Generated on Wed May  4 10:36:54 2011 by 
+  Generated on Wed May 11 15:34:43 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.8 (ruby-1.8.7).
+  0.6.8 (ruby-1.9.2).
 </div>
 
   </body>
