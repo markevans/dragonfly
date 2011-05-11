@@ -62,13 +62,20 @@ Fixes
 -----
 - Performance tweaks regarding temp_objects model accessors and job objects
 
-0.8.4 (2010-04-27)
+0.8.5 (2011-05-11)
+==================
+Fixes
+-----
+- Allow filenames that have '..' in them (but not '../') in the filedatastore
+- Better security for server
+
+0.8.4 (2011-04-27)
 ==================
 Fixes
 -----
 - Security fix for file data store
 
-0.8.2 (2010-01-11)
+0.8.2 (2011-01-11)
 ==================
 Fixes
 -----

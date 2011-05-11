@@ -1,7 +1,7 @@
 Using With Rails 2.3
 ====================
 
-**NOTE: RAILS 2.3 IS NOT SUPPORTED IN NEW VERSIONS OF DRAGONFLY SO PLEASE USE VERSION 0.8.4**
+**NOTE: RAILS 2.3 IS NOT SUPPORTED IN NEW VERSIONS OF DRAGONFLY SO PLEASE USE VERSION 0.8.5**
 
 Setting up the quick way
 ------------------------
