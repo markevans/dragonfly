@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.8.4"
+  s.version = "0.8.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2011-04-27}
+  s.date = %q{2011-05-11}
   s.email = %q{mark@new-bamboo.co.uk}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -178,54 +178,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.5.2}
   s.summary = %q{Dragonfly is an on-the-fly Rack-based image handling framework. It is suitable for use with Rails, Sinatra and other web frameworks. Although it's mainly used for images, it can handle any content type.}
-  s.test_files = [
-    "spec/argument_matchers.rb",
-    "spec/dragonfly/active_model_extensions/active_model_setup.rb",
-    "spec/dragonfly/active_model_extensions/active_record_setup.rb",
-    "spec/dragonfly/active_model_extensions/model_spec.rb",
-    "spec/dragonfly/active_model_extensions/spec_helper.rb",
-    "spec/dragonfly/analyser_spec.rb",
-    "spec/dragonfly/analysis/file_command_analyser_spec.rb",
-    "spec/dragonfly/analysis/image_magick_analyser_spec.rb",
-    "spec/dragonfly/analysis/r_magick_analyser_spec.rb",
-    "spec/dragonfly/analysis/shared_analyser_spec.rb",
-    "spec/dragonfly/app_spec.rb",
-    "spec/dragonfly/config/r_magick_spec.rb",
-    "spec/dragonfly/configurable_spec.rb",
-    "spec/dragonfly/core_ext/array_spec.rb",
-    "spec/dragonfly/core_ext/hash_spec.rb",
-    "spec/dragonfly/core_ext/string_spec.rb",
-    "spec/dragonfly/core_ext/symbol_spec.rb",
-    "spec/dragonfly/data_storage/data_store_spec.rb",
-    "spec/dragonfly/data_storage/file_data_store_spec.rb",
-    "spec/dragonfly/data_storage/mongo_data_store_spec.rb",
-    "spec/dragonfly/data_storage/s3_data_store_spec.rb",
-    "spec/dragonfly/encoding/image_magick_encoder_spec.rb",
-    "spec/dragonfly/encoding/r_magick_encoder_spec.rb",
-    "spec/dragonfly/function_manager_spec.rb",
-    "spec/dragonfly/generation/hash_with_css_style_keys_spec.rb",
-    "spec/dragonfly/generation/image_magick_generator_spec.rb",
-    "spec/dragonfly/generation/r_magick_generator_spec.rb",
-    "spec/dragonfly/generation/shared_generator_spec.rb",
-    "spec/dragonfly/image_magick_utils_spec.rb",
-    "spec/dragonfly/job_builder_spec.rb",
-    "spec/dragonfly/job_definitions_spec.rb",
-    "spec/dragonfly/job_endpoint_spec.rb",
-    "spec/dragonfly/job_spec.rb",
-    "spec/dragonfly/loggable_spec.rb",
-    "spec/dragonfly/middleware_spec.rb",
-    "spec/dragonfly/processing/image_magick_processor_spec.rb",
-    "spec/dragonfly/processing/r_magick_processor_spec.rb",
-    "spec/dragonfly/processing/shared_processing_spec.rb",
-    "spec/dragonfly/routed_endpoint_spec.rb",
-    "spec/dragonfly/serializer_spec.rb",
-    "spec/dragonfly/simple_cache_spec.rb",
-    "spec/dragonfly/simple_endpoint_spec.rb",
-    "spec/dragonfly/temp_object_spec.rb",
-    "spec/image_matchers.rb",
-    "spec/simple_matchers.rb",
-    "spec/spec_helper.rb"
-  ]
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
