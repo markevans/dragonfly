@@ -7,6 +7,8 @@ module Dragonfly
     include Loggable
     include Configurable
     
+    configurable_attr :allow_fetch_file, false
+    configurable_attr :allow_fetch_url, false
     configurable_attr :dragonfly_url, '/dragonfly'
     configurable_attr :protect_from_dos_attacks, false
     configurable_attr :url_format, '/:job/:basename.:format'
@@ -107,7 +109,8 @@ module Dragonfly
     end
 
     def validate_job!(job)
-      if job.fetch_file_step || job.fetch_url_step
+      if job.fetch_file_step && !allow_fetch_file ||
+         job.fetch_url_step && !allow_fetch_url
         raise JobNotAllowed, "Dragonfly Server doesn't allow requesting job with steps #{job.steps.inspect}"
       end
     end
