@@ -103,7 +103,7 @@ describe Dragonfly::ImageMagick::Processor do
     it "should take into account the gravity given" do
       image1 = @processor.crop(@image, :width => '10', :height => '10', :gravity => 'nw')
       image2 = @processor.crop(@image, :width => '10', :height => '10', :gravity => 'se')
-      image1.should_not == image2
+      Digest::MD5.hexdigest(File.read(image1)).should_not == Digest::MD5.hexdigest(File.read(image2))
     end
 
     it "should clip bits of the image outside of the requested crop area when not nw gravity" do
@@ -147,10 +147,23 @@ describe Dragonfly::ImageMagick::Processor do
       image.should have_height(355)
     end
 
+    it "should do nothing if called without width and height" do
+      image = @processor.resize_and_crop(@image)
+      image.should have_width(280)
+      image.should have_height(355)
+      image.should eq @image
+    end
+
     it "should crop to the correct dimensions" do
       image = @processor.resize_and_crop(@image, :width => '100', :height => '100')
       image.should have_width(100)
       image.should have_height(100)
+    end
+
+    it "should actually resize before cropping" do
+      image1 = @processor.resize_and_crop(@image, :width => '100', :height => '100')
+      image2 = @processor.crop(@image, :width => '100', :height => '100', :gravity => 'c')
+      Digest::MD5.hexdigest(File.read(image1)).should_not == Digest::MD5.hexdigest(File.read(image2))
     end
 
     it "should allow cropping in one dimension" do
@@ -162,7 +175,7 @@ describe Dragonfly::ImageMagick::Processor do
     it "should take into account the gravity given" do
       image1 = @processor.resize_and_crop(@image, :width => '10', :height => '10', :gravity => 'nw')
       image2 = @processor.resize_and_crop(@image, :width => '10', :height => '10', :gravity => 'se')
-      image1.should_not == image2
+      Digest::MD5.hexdigest(File.read(image1)).should_not == Digest::MD5.hexdigest(File.read(image2))
     end
 
   end
