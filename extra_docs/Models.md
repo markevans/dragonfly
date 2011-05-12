@@ -256,7 +256,7 @@ Callbacks
 
     person.mugshot = Pathname.new('some/path.png')  # after_assign callback is called
     person.mugshot = nil                            # after_assign callback is NOT called
-    
+
 Inside the block, you can call methods on the model instance directly (`self` is the model):
 
     class Person
@@ -290,6 +290,21 @@ You can register more than one `after_assign` callback.
     person.mugshot = Pathname.new('some/path.png')  # after_unassign callback is NOT called
     person.mugshot = nil                            # after_unassign callback is called
 
+Default Image
+-------------
+
+You can want a default image if no image_uid is save. You can define it
+in your image_accessor
+
+  class Person
+    image_accessor :avatar do
+      default { |app| app.fetch('default_avatar') }
+    end
+  end
+
+Now if you Person object has no avatar_uid, the avatar object return is
+an attachment with your file default_avatar uid used.
+
 Up-front thumbnailing
 ---------------------
 The best way to create different versions of content such as thumbnails is generally on-the-fly, however if you _must_
@@ -303,7 +318,7 @@ create another version _on-upload_, then you could create another accessor and a
     end
 
     person.mugshot = Pathname.new('some/400x300/image.png')
-    
+
     person.mugshot            # ---> 400x300 image
     person.smaller_mugshot    # ---> 200x200 image
 
@@ -330,7 +345,7 @@ or
       image_accessor :mugshot do
         storage_path :path_for_mugshot
       end
-      
+
       def path_for_mugshot
         "some/path/#{id}/#{rand(100)}"
       end
