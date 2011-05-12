@@ -107,44 +107,38 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>
-A TempObject is used for HOLDING DATA. It&#8217;s the thing that is passed
+    
+<p>A TempObject is used for HOLDING DATA. It’s the thing that is passed
 between the datastore, the processor and the encoder, and is useful for
-separating how the data was created and how it is later accessed.
-</p>
-<p>
-You can initialize it various ways:
-</p>
-<pre class="code">
-  <span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'this is the content'</span><span class='rparen token'>)</span>           <span class='comment val'># with a String</span>
-  <span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/content'</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='comment val'># with a Pathname</span>
-  <span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/content'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>     <span class='comment val'># with a File</span>
-  <span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='some_tempfile identifier id'>some_tempfile</span><span class='rparen token'>)</span>                   <span class='comment val'># with a Tempfile</span>
-  <span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='some_other_temp_object identifier id'>some_other_temp_object</span><span class='rparen token'>)</span>          <span class='comment val'># with another TempObject</span>
+separating how the data was created and how it is later accessed.</p>
+
+<p>You can initialize it various ways:</p>
+
+<pre class="code"><span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'this is the content'</span><span class='rparen token'>)</span>           <span class='comment val'># with a String</span>
+<span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/content'</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='comment val'># with a Pathname</span>
+<span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/content'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>     <span class='comment val'># with a File</span>
+<span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='some_tempfile identifier id'>some_tempfile</span><span class='rparen token'>)</span>                   <span class='comment val'># with a Tempfile</span>
+<span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='some_other_temp_object identifier id'>some_other_temp_object</span><span class='rparen token'>)</span>          <span class='comment val'># with another TempObject</span>
 </pre>
-<p>
-However, no matter how it was initialized, you can always access the data a
-number of ways:
-</p>
-<pre class="code">
-  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span>      <span class='comment val'># returns a data string</span>
-  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span>      <span class='comment val'># returns a file object holding the data</span>
-  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='path identifier id'>path</span>      <span class='comment val'># returns a path for the file</span>
+
+<p>However, no matter how it was initialized, you can always access the data a
+number of ways:</p>
+
+<pre class="code"><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span>      <span class='comment val'># returns a data string</span>
+<span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span>      <span class='comment val'># returns a file object holding the data</span>
+<span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='path identifier id'>path</span>      <span class='comment val'># returns a path for the file</span>
 </pre>
-<p>
-The data/file are created lazily, something which you may wish to take
-advantage of.
-</p>
-<p>
-For example, if a TempObject is initialized with a file, and
+
+<p>The data/file are created lazily, something which you may wish to take
+advantage of.</p>
+
+<p>For example, if a TempObject is initialized with a file, and
 temp_object.data is never called, then the data string will never be loaded
-into memory.
-</p>
-<p>
-Conversely, if the TempObject is initialized with a data string, and
+into memory.</p>
+
+<p>Conversely, if the TempObject is initialized with a data string, and
 neither temp_object.file nor temp_object.path are ever called, then the
-filesystem will never be hit.
-</p>
+filesystem will never be hit.</p>
 
 
   </div>
@@ -179,9 +173,8 @@ filesystem will never be hit.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute original_filename.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute original_filename.</p>
 </div></span>
   
 </li>
@@ -308,9 +301,8 @@ or
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Instance Methods.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>Instance Methods.</p>
 </div></span>
   
 </li>
@@ -467,9 +459,8 @@ Instance Methods.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Instance Methods
-</p>
+    
+<p>Instance Methods</p>
 
 
   </div>
@@ -555,9 +546,8 @@ Instance Methods
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Returns the value of attribute original_filename
-</p>
+    
+<p>Returns the value of attribute original_filename</p>
 
 
   </div>
@@ -930,9 +920,9 @@ Returns the value of attribute original_filename
     </div>
 
     <div id="footer">
-  Generated on Wed May 11 18:46:16 2011 by 
+  Generated on Thu May 12 10:45:01 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.8 (ruby-1.9.2).
+  0.6.8 (ruby-1.8.7).
 </div>
 
   </body>
