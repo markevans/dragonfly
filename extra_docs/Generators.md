@@ -17,7 +17,7 @@ where `:some_method` is added by the configured generators.
 
 ImageMagick Generator
 ---------------------
-See {file:Imagemagick}.
+See {file:ImageMagick}.
 
 Custom Generators
 -----------------
