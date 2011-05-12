@@ -20,7 +20,7 @@ module Dragonfly
       def initialize(model)
         @model = model
         self.uid = model_uid
-        update_from_uid if uid
+        update_from_uid
         @should_run_callbacks = true
         self.class.ensure_uses_cached_magic_attributes
       end
@@ -28,7 +28,7 @@ module Dragonfly
       def app
         self.class.app
       end
-      
+
       def attribute
         self.class.attribute
       end
@@ -91,18 +91,18 @@ module Dragonfly
         assign(encode(*args))
         self
       end
-      
+
       def remote_url(opts={})
         app.remote_url_for(uid, opts) if uid
       end
-      
+
       def apply
         job.apply
         self
       end
 
       attr_writer :should_run_callbacks
-      
+
       def should_run_callbacks?
         !!@should_run_callbacks
       end
@@ -117,26 +117,26 @@ module Dragonfly
       end
 
       attr_writer :should_retain
-      
+
       def should_retain?
         !!@should_retain
       end
-      
+
       def retained?
         !!@retained
       end
-      
+
       def destroy_retained!
         destroy_content(retained_attrs[:uid])
       end
-      
+
       def retained_attrs
         attribute_keys.inject({}) do |hash, key|
           hash[key] = send(key)
           hash
         end if retained?
       end
-      
+
       def retained_attrs=(attrs)
         if changed? # if already set, ignore and destroy this retained content
           destroy_content(attrs[:uid])
@@ -152,7 +152,7 @@ module Dragonfly
           self.retained = true
         end
       end
-      
+
       def inspect
         "<Dragonfly Attachment uid=#{uid.inspect}, app=#{app.inspect}>"
       end
@@ -224,8 +224,12 @@ module Dragonfly
       end
 
       def update_from_uid
-        self.job = app.fetch(uid)
-        update_meta
+        self.job = if uid
+                     app.fetch(uid)
+                   else
+                     self.class.default
+                   end
+        update_meta if self.job
       end
 
       def magic_attributes
