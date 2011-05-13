@@ -118,18 +118,26 @@ describe Dragonfly::App do
   end
 
   describe "remote_url_for" do
+    let(:app) { test_app }
     before(:each) do
-      @app = test_app
-      @app.datastore = Object.new
+      app.datastore = Object.new
     end
     it "should raise an error if the datastore doesn't provide it" do
       lambda{
-        @app.remote_url_for('some_uid')
+        app.remote_url_for('some_uid')
       }.should raise_error(NotImplementedError)
     end
     it "should correctly call it if the datastore provides it" do
-      @app.datastore.should_receive(:url_for).with('some_uid', :some => :opts).and_return 'http://egg.head'
-      @app.remote_url_for('some_uid', :some => :opts).should == 'http://egg.head'
+      app.datastore.should_receive(:url_for).with('some_uid', :some => :opts).and_return 'http://egg.head'
+      app.remote_url_for('some_uid', :some => :opts).should == 'http://egg.head'
+    end
+    context "with alternate datastore define" do
+      let(:second_datastore) { Dragonfly::DataStorage::FileDataStore.new }
+      before { app.alternate_datastore = {:second => second_datastore} }
+      it 'should use the second datastore if :datastore option is pass' do
+        app.datastore(:second).should_receive(:url_for).with('some_uid', :some => :opts).and_return 'http://egg.head'
+        app.remote_url_for('some_uid', :some => :opts, :datastore => :second).should == 'http://egg.head'
+      end
     end
   end
 

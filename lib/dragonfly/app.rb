@@ -162,7 +162,8 @@ module Dragonfly
     end
 
     def remote_url_for(uid, opts={})
-      datastore.url_for(uid, opts)
+      alt_datastore = opts.delete(:datastore) || :default
+      datastore(alt_datastore).url_for(uid, opts)
     rescue NoMethodError => e
       raise NotImplementedError, "The datastore doesn't support serving content directly - #{datastore.inspect}"
     end
