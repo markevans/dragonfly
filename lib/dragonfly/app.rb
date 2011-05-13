@@ -68,6 +68,45 @@ module Dragonfly
       block ? RoutedEndpoint.new(self, &block) : JobEndpoint.new(job)
     end
 
+    ##
+    # Define your alternate datastore
+    #
+    # @params[Hash] the list of your alternate datastore
+    #
+    def alternate_datastore=(hash)
+      @alternate_datastore ||= {}
+      @alternate_datastore = hash
+    end
+    configuration_method :alternate_datastore=
+
+    ##
+    # Get a datastore from your alternate datastore
+    #
+    # @params[String] key the name of your alternate_datastore
+    # @return[Datastore] The datastore save with this name
+    def alternate_datastore(key)
+      @alternate_datastore ||= {}
+      @alternate_datastore[key]
+    end
+    configuration_method :alternate_datastore
+
+    ##
+    # Find the datastore you want.
+    #
+    # If no params search the default datastore
+    # With params you can choose which datastore you want
+    #
+    # @params[key] key The name of your alternate datastore you want
+    # @return[Datastore] The datastore choose. Default or an alternate
+    #
+    def datastore(key=:default)
+      if key == :default
+        configuration.has_key?(:datastore) ? configuration[:datastore] : default_value(:datastore)
+      else
+        @alternate_datastore[key.to_sym] || @alternate_datastore[key.to_s]
+      end
+    end
+
     def job(name, &block)
       job_definitions.add(name, &block)
     end
@@ -144,20 +183,20 @@ module Dragonfly
         alias included included_with_dragonfly
       end
     end
-    
+
     # Reflection
     def processor_methods
       processor.functions.keys
     end
-    
+
     def generator_methods
       generator.functions.keys
     end
-    
+
     def job_methods
       job_definitions.definition_names
     end
-    
+
     # Deprecated methods
     def url_path_prefix=(thing)
       raise NoMethodError, "url_path_prefix is deprecated - please use url_format, e.g. url_format = '/media/:job/:basename.:format' - see docs for more details"

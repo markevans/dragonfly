@@ -33,6 +33,52 @@ describe Dragonfly::App do
     end
   end
 
+  describe "#datastore" do
+    let(:app) { test_app }
+    context "with no datastore define" do
+      it 'should return the default datastore if no define' do
+        app.datastore.should be_a Dragonfly::DataStorage::FileDataStore
+      end
+    end
+
+    context "with a datastore define" do
+      before { app.datastore = Dragonfly::DataStorage::S3DataStore.new }
+      it 'should return the default datastore define' do
+        app.datastore.should be_a Dragonfly::DataStorage::S3DataStore
+      end
+    end
+
+    context "with alternate_datastore define" do
+      before { app.alternate_datastore = {:s3 => Dragonfly::DataStorage::S3DataStore.new } }
+      it 'should return the default if not arg pass' do
+        app.datastore.should be_a Dragonfly::DataStorage::FileDataStore
+      end
+      it 'should return the s3 storage if s3 is call' do
+        app.datastore(:s3).should be_a Dragonfly::DataStorage::S3DataStore
+      end
+
+    end
+
+  end
+  describe "#alternate_datastore" do
+    let(:app) { test_app }
+    context "with no define" do
+      it 'should return an empty value' do
+        app.alternate_datastore(:fs).should be_nil
+      end
+    end
+
+    context "with define some alternate_datastore" do
+      before { app.alternate_datastore = {:s3 => Dragonfly::DataStorage::S3DataStore.new } }
+      it 'should return a datastore if key is define' do
+        app.alternate_datastore(:s3).should be_a Dragonfly::DataStorage::S3DataStore
+      end
+      it 'should return an empty value if key unknow' do
+        app.alternate_datastore(:fs).should be_nil
+      end
+    end
+  end
+
   describe "mime types" do
     describe "#mime_type_for" do
       before(:each) do
@@ -139,7 +185,7 @@ describe Dragonfly::App do
         c.generator.add(:butter){}
         c.job(:bacon){}
       end
-      
+
     end
     it "should return processor methods" do
       @app.processor_methods.should == [:milk]
