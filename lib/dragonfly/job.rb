@@ -59,8 +59,17 @@ module Dragonfly
       def uid
         args.first
       end
+
+      def alt_datastore
+        if args[1] && args[1].respond_to?(:[])
+          args[1][:datastore] || :default
+        else
+          :default
+        end
+      end
+
       def apply
-        content, meta = job.app.datastore.retrieve(uid)
+        content, meta = job.app.datastore(alt_datastore).retrieve(uid)
         job.update(content, meta)
       end
     end
@@ -180,20 +189,20 @@ module Dragonfly
     # If we had traits/classboxes in ruby maybe this wouldn't be needed
     # Think of it as like a normal instance method but with a css-like !important after it
     module OverrideInstanceMethods
-      
+
       def format
         apply
         format_from_meta || analyse(:format)
       end
-      
+
       def mime_type
         app.mime_type_for(format) || analyse(:mime_type) || app.fallback_mime_type
       end
-      
+
       def to_s
         super.sub(/#<Class:\w+>/, 'Extended Dragonfly::Job')
       end
-      
+
     end
 
     def initialize(app, content=nil, meta={})
@@ -374,7 +383,7 @@ module Dragonfly
     end
 
     # Name and stuff
-        
+
     attr_reader :meta
 
     def meta=(hash)
@@ -389,7 +398,7 @@ module Dragonfly
     def name=(name)
       meta[:name] = name
     end
-    
+
     def basename
       meta[:basename] || (File.basename(name, '.*') if name)
     end
@@ -397,7 +406,7 @@ module Dragonfly
     def ext
       meta[:ext] || (File.extname(name)[/\.(.*)/, 1] if name)
     end
-    
+
     def attributes_for_url
       attrs = meta.reject{|k, v| !server.params_in_url.include?(k.to_s) }
       attrs[:basename] ||= basename if server.params_in_url.include?('basename')
@@ -406,7 +415,7 @@ module Dragonfly
       attrs.delete_if{|k, v| v.blank? }
       attrs
     end
-    
+
     def update(content, meta)
       if meta
         meta.merge!(meta.delete(:meta)) if meta[:meta] # legacy data etc. may have nested meta hash - deprecate gracefully here
@@ -417,7 +426,7 @@ module Dragonfly
         self.name = temp_object.original_filename if name.nil? && temp_object.original_filename
       end
     end
-    
+
     protected
 
     attr_writer :steps
