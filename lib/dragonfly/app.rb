@@ -126,7 +126,8 @@ module Dragonfly
 
     def store(object, opts={})
       temp_object = object.is_a?(TempObject) ? object : TempObject.new(object)
-      datastore.store(temp_object, opts)
+      alt_datastore = opts.delete(:datastore) || :default
+      datastore(alt_datastore).store(temp_object, opts)
     end
 
     def register_mime_type(format, mime_type)
