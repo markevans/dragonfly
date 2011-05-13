@@ -204,3 +204,28 @@ You can also optionally serve data directly from the datastore if it implements 
       end
 
     end
+
+Alternate Datastore
+------------------
+
+You can add some other Datastore with the default datastore. You can add
+several datastore and each datastore is call by a name.
+
+    Dragonfly[:my_app_name].alternate_datastore = { :public => Dragonfy::DataStorage::FileDataStore.new }
+
+And you can configure it by datastore(:public) to access it by example
+if you datastore(:public) is a FileDataStore you can configure it :
+
+    app.datastore(:public).configure do |d|
+      d.root_path = Rails.root.join('public')
+    end
+
+You can use the alternate datastore in #fetch #store or #remote_url by
+pass args :datastore
+
+    app.fetch(uid, :datastore => :public)
+    uid = app.store('SOME CONTENT',
+      :meta => {:name => 'great_content.txt'},
+      :datastore => :public,
+      :some_other => :option
+    )
