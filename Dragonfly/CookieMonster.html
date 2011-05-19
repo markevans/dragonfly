@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Class: Dragonfly::Processor</title>
+<title>Class: Dragonfly::CookieMonster</title>
 <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -65,7 +65,7 @@
 
     <div id="content" class="clearfix">
       <div class="col1">
-        <h1>Class: Dragonfly::Processor
+        <h1>Class: Dragonfly::CookieMonster
   
   
   
@@ -75,14 +75,12 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><span class='object_link'><a href="FunctionManager.html" title="Dragonfly::FunctionManager (class)">FunctionManager</a></span></span>
+      <span class="inheritName"><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></span>
       
         <ul class="fullTree">
           <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
           
-            <li class="next"><span class='object_link'><a href="FunctionManager.html" title="Dragonfly::FunctionManager (class)">FunctionManager</a></span></li>
-          
-            <li class="next">Dragonfly::Processor</li>
+            <li class="next">Dragonfly::CookieMonster</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -98,25 +96,13 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/dragonfly/processor.rb</dd>
+    <dd class="r2 last">lib/dragonfly/cookie_monster.rb</dd>
   
 </dl>
 <div class="clear"></div>
 
 
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 
 
 
@@ -131,7 +117,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#process-instance_method" title="#process (instance method)">- (Object) <strong>process</strong>(temp_object, method, *args) </a>
+      <a href="#call-instance_method" title="#call (instance method)">- (Object) <strong>call</strong>(env) </a>
     
 
     
@@ -149,59 +135,55 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (CookieMonster) <strong>initialize</strong>(app) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of CookieMonster.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
-
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="FunctionManager.html" title="Dragonfly::FunctionManager (class)">FunctionManager</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="FunctionManager.html#add-instance_method" title="Dragonfly::FunctionManager#add (method)">#add</a></span>, <span class='object_link'><a href="FunctionManager.html#call_last-instance_method" title="Dragonfly::FunctionManager#call_last (method)">#call_last</a></span>, <span class='object_link'><a href="FunctionManager.html#get_registered-instance_method" title="Dragonfly::FunctionManager#get_registered (method)">#get_registered</a></span>, <span class='object_link'><a href="FunctionManager.html#initialize-instance_method" title="Dragonfly::FunctionManager#initialize (method)">#initialize</a></span>, <span class='object_link'><a href="FunctionManager.html#inspect-instance_method" title="Dragonfly::FunctionManager#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="FunctionManager.html#register-instance_method" title="Dragonfly::FunctionManager#register (method)">#register</a></span></p>
-
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></span></p>
-
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Loggable.html#log-instance_method" title="Dragonfly::Loggable#log (method)">#log</a></span>, <span class='object_link'><a href="Loggable.html#log%3D-instance_method" title="Dragonfly::Loggable#log= (method)">#log=</a></span>, <span class='object_link'><a href="Loggable.html#use_same_log_as-instance_method" title="Dragonfly::Loggable#use_same_log_as (method)">#use_same_log_as</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
-    <p class="notice">This class inherits a constructor from <span class='object_link'><a href="FunctionManager.html#initialize-instance_method" title="Dragonfly::FunctionManager#initialize (method)">Dragonfly::FunctionManager</a></span></p>
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
   
+    - (<tt><span class='object_link'><a href="" title="Dragonfly::CookieMonster (class)">CookieMonster</a></span></tt>) <strong>initialize</strong>(app) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+<p>A new instance of CookieMonster</p>
+
+
+  </div>
 </div>
-
-
-  <div id="instance_method_details" class="method_details_list">
-    <h2>Instance Method Details</h2>
-    
-    
-      <div class="method_details first">
-  <p class="signature first" id="process-instance_method">
+<div class="tags">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>process</strong>(temp_object, method, *args) 
-  
-
-  
-</p><table class="source_code">
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -212,10 +194,50 @@
 6</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/processor.rb', line 4</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/cookie_monster.rb', line 4</span>
 
-<span class='def def kw'>def</span> <span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='call_last identifier id'>call_last</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='app identifier id'>app</span><span class='rparen token'>)</span>
+  <span class='@app ivar id'>@app</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="call-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>call</strong>(env) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+8
+9
+10
+11
+12</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/cookie_monster.rb', line 8</span>
+
+<span class='def def kw'>def</span> <span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
+  <span class='status identifier id'>status</span><span class='comma token'>,</span> <span class='headers identifier id'>headers</span><span class='comma token'>,</span> <span class='body identifier id'>body</span> <span class='assign token'>=</span> <span class='@app ivar id'>@app</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
+  <span class='headers identifier id'>headers</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='string val'>'Set-Cookie'</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='env identifier id'>env</span><span class='lbrack token'>[</span><span class='string val'>'dragonfly.job'</span><span class='rbrack token'>]</span>
+  <span class='lbrack token'>[</span><span class='status identifier id'>status</span><span class='comma token'>,</span> <span class='headers identifier id'>headers</span><span class='comma token'>,</span> <span class='body identifier id'>body</span><span class='rbrack token'>]</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -235,7 +257,7 @@
     </div>
 
     <div id="footer">
-  Generated on Thu May 19 14:58:35 2011 by 
+  Generated on Thu May 19 14:58:45 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.6.8 (ruby-1.8.7).
 </div>

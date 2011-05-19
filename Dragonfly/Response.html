@@ -50,7 +50,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.1)</div>
+      <div id="logo">DRAGONFLY (v 0.9.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -276,7 +276,9 @@
 27
 28
 29
-30</pre>
+30
+31
+32</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/response.rb', line 15</span>
@@ -288,9 +290,11 @@
     <span class='lbrack token'>[</span><span class='integer val'>304</span><span class='comma token'>,</span> <span class='cache_headers identifier id'>cache_headers</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
   <span class='elsif elsif kw'>elsif</span> <span class='request identifier id'>request</span><span class='dot token'>.</span><span class='head? fid id'>head?</span>
     <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='apply identifier id'>apply</span>
+    <span class='env identifier id'>env</span><span class='lbrack token'>[</span><span class='string val'>'dragonfly.job'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='job identifier id'>job</span>
     <span class='lbrack token'>[</span><span class='integer val'>200</span><span class='comma token'>,</span> <span class='success_headers identifier id'>success_headers</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
   <span class='elsif elsif kw'>elsif</span> <span class='request identifier id'>request</span><span class='dot token'>.</span><span class='get? fid id'>get?</span>
     <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='apply identifier id'>apply</span>
+    <span class='env identifier id'>env</span><span class='lbrack token'>[</span><span class='string val'>'dragonfly.job'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='job identifier id'>job</span>
     <span class='lbrack token'>[</span><span class='integer val'>200</span><span class='comma token'>,</span> <span class='success_headers identifier id'>success_headers</span><span class='comma token'>,</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='result identifier id'>result</span><span class='rbrack token'>]</span>
   <span class='end end kw'>end</span>
 <span class='rescue rescue kw'>rescue</span> <span class='DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='BadUID constant id'>BadUID</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
@@ -337,12 +341,12 @@
       <pre class="lines">
 
 
-32
-33
-34</pre>
+34
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/response.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/response.rb', line 34</span>
 
 <span class='def def kw'>def</span> <span class='will_be_served? fid id'>will_be_served?</span>
   <span class='request identifier id'>request</span><span class='dot token'>.</span><span class='get? fid id'>get?</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='etag_matches? fid id'>etag_matches?</span>
@@ -365,7 +369,7 @@
     </div>
 
     <div id="footer">
-  Generated on Thu May 12 10:44:53 2011 by 
+  Generated on Thu May 19 14:58:39 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.6.8 (ruby-1.8.7).
 </div>

@@ -50,7 +50,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.1)</div>
+      <div id="logo">DRAGONFLY (v 0.9.2)</div>
       <div id="search">
   <a id="class_list_link" href="#">Class List</a>
   <a id="method_list_link" href="#">Method List</a>
@@ -65,7 +65,24 @@
 
     <div id="content" class="clearfix">
       <div class="col1">
-        <div id='filecontents'><h1>0.9.1 (2011-05-11)</h1>
+        <div id='filecontents'><h1>0.9.2 (2011-05-19)</h1>
+
+<h2>Features</h2>
+
+<ul>
+<li>Added env['dragonfly.job'] for use in other Rack middlewares</li>
+<li>Added CookieMonster middleware for removing 'Set-Cookie' headers</li>
+</ul>
+
+
+<h2>Fixes</h2>
+
+<ul>
+<li>Remove 'Set-Cookie' header from any requests coming from a rails route</li>
+</ul>
+
+
+<h1>0.9.1 (2011-05-11)</h1>
 
 <h2>Features</h2>
 
@@ -544,7 +561,7 @@ Can also pass a block to temp_object.file which closes the file automatically</l
     </div>
 
     <div id="footer">
-  Generated on Thu May 12 10:44:51 2011 by 
+  Generated on Thu May 19 14:58:33 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.6.8 (ruby-1.8.7).
 </div>
