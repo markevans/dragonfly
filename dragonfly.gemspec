@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.9.1"
+  s.version = "0.9.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2011-05-11}
+  s.date = %q{2011-05-19}
   s.description = %q{Dragonfly is a framework that enables on-the-fly processing for any content type.
   It is especially suited to image handling. Its uses range from image thumbnails to standard attachments to on-demand text generation.}
   s.email = %q{mark@new-bamboo.co.uk}
@@ -85,6 +85,7 @@ Gem::Specification.new do |s|
     "lib/dragonfly/config/image_magick.rb",
     "lib/dragonfly/config/rails.rb",
     "lib/dragonfly/configurable.rb",
+    "lib/dragonfly/cookie_monster.rb",
     "lib/dragonfly/core_ext/array.rb",
     "lib/dragonfly/core_ext/hash.rb",
     "lib/dragonfly/core_ext/object.rb",
@@ -117,6 +118,7 @@ Gem::Specification.new do |s|
     "lib/dragonfly/processing/image_magick_processor.rb",
     "lib/dragonfly/processor.rb",
     "lib/dragonfly/rails/images.rb",
+    "lib/dragonfly/railtie.rb",
     "lib/dragonfly/response.rb",
     "lib/dragonfly/routed_endpoint.rb",
     "lib/dragonfly/serializer.rb",
@@ -135,6 +137,7 @@ Gem::Specification.new do |s|
     "spec/dragonfly/analysis/file_command_analyser_spec.rb",
     "spec/dragonfly/app_spec.rb",
     "spec/dragonfly/configurable_spec.rb",
+    "spec/dragonfly/cookie_monster_spec.rb",
     "spec/dragonfly/core_ext/array_spec.rb",
     "spec/dragonfly/core_ext/hash_spec.rb",
     "spec/dragonfly/core_ext/string_spec.rb",
@@ -192,6 +195,7 @@ Gem::Specification.new do |s|
     "spec/dragonfly/analysis/file_command_analyser_spec.rb",
     "spec/dragonfly/app_spec.rb",
     "spec/dragonfly/configurable_spec.rb",
+    "spec/dragonfly/cookie_monster_spec.rb",
     "spec/dragonfly/core_ext/array_spec.rb",
     "spec/dragonfly/core_ext/hash_spec.rb",
     "spec/dragonfly/core_ext/string_spec.rb",
