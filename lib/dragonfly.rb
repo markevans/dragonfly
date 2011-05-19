@@ -36,6 +36,8 @@ require 'dragonfly/core_ext/symbol'
 require 'dragonfly/core_ext/array'
 require 'dragonfly/core_ext/hash'
 
+Dragonfly::Railtie if defined?(::Rails) # Coz it will autoload
+
 module Dragonfly
   class << self
 
