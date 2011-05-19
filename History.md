@@ -1,3 +1,14 @@
+0.9.2 (2011-05-19)
+==================
+Features
+--------
+- Added env['dragonfly.job'] for use in other Rack middlewares
+- Added CookieMonster middleware for removing 'Set-Cookie' headers
+
+Fixes
+-----
+- Remove 'Set-Cookie' header from any requests coming from a rails route
+
 0.9.1 (2011-05-11)
 ==================
 Features
