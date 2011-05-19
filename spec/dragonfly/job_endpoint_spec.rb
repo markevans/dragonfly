@@ -199,4 +199,31 @@ describe Dragonfly::JobEndpoint do
     end
   end
 
+  describe "setting the job in the env for communicating with other rack middlewares" do
+    before(:each) do
+      @app.generator.add(:test_data){ "TEST DATA" }
+      @job = @app.generate(:test_data)
+      @endpoint = Dragonfly::JobEndpoint.new(@job)
+      @middleware = Class.new do
+        def initialize(app)
+          @app = app
+        end
+        
+        def call(env)
+          @app.call(env)
+          throw :result, env['dragonfly.job']
+        end
+      end
+    end
+    it "should add the job to env" do
+      middleware, endpoint = @middleware, @endpoint
+      app = Rack::Builder.new do
+        use middleware
+        run endpoint
+      end
+      result = catch(:result){ Rack::MockRequest.new(app).get('/') }
+      result.should == @job
+    end
+  end
+
 end

@@ -19,9 +19,11 @@ module Dragonfly
         [304, cache_headers, []]
       elsif request.head?
         job.apply
+        env['dragonfly.job'] = job
         [200, success_headers, []]
       elsif request.get?
         job.apply
+        env['dragonfly.job'] = job
         [200, success_headers, job.result]
       end
     rescue DataStorage::DataNotFound, DataStorage::BadUID => e
