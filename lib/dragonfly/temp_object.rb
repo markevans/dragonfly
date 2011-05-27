@@ -117,6 +117,7 @@ module Dragonfly
         File.open(path, 'wb'){|f| f.write(@data) }
       else
         FileUtils.cp(self.path, path)
+        File.chmod(0644, path)
       end
       File.new(path, 'rb')
     end

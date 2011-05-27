@@ -135,6 +135,10 @@ describe Dragonfly::TempObject do
           file.should be_a(File)
           file.read.should == 'HELLO'
         end
+        it "should have 644 permissions" do
+          @temp_object.to_file(@filename)
+          File::Stat.new(@filename).mode.to_s(8).should =~ /644$/
+        end
       end
 
     end
