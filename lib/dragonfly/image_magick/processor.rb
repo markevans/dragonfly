@@ -54,19 +54,21 @@ module Dragonfly
       alias grayscale greyscale
       
       def resize_and_crop(temp_object, opts={})
-        if !opts[:width] && !opts[:height]
-          return temp_object
-        elsif !opts[:width] || !opts[:height]
-          attrs          = identify(temp_object)
-          opts[:width]   ||= attrs[:width]
-          opts[:height]  ||= attrs[:height]
-        end
+         attrs          = identify(temp_object)
+         current_width  = attrs[:width].to_i
+         current_height = attrs[:height].to_i
 
-        opts[:gravity] ||= 'c'
+         width   = opts[:width]  ? opts[:width].to_i  : current_width
+         height  = opts[:height] ? opts[:height].to_i : current_height
+         gravity = opts[:gravity] || 'c'
 
-        opts[:resize]  = "#{opts[:width]}x#{opts[:height]}^^"
-        crop(temp_object, opts)
-      end
+         if width != current_width || height != current_height
+           scale = [width.to_f / current_width, height.to_f / current_height].max
+           temp_object = TempObject.new(resize(temp_object, "#{(scale * current_width).ceil}x#{(scale * current_height).ceil}"))
+         end
+         crop(temp_object, :width => width, :height => height, :gravity => gravity)
+
+       end
       
       def rotate(temp_object, amount, opts={})
         convert(temp_object, "-rotate \"#{amount}#{opts[:qualifier]}\"")
