@@ -32,6 +32,9 @@ module Dragonfly
   #
   class TempObject
 
+    # Exceptions
+    class Closed < RuntimeError; end
+
     # Class configuration
     class << self
 
@@ -69,10 +72,12 @@ module Dragonfly
     attr_reader :original_filename
 
     def data
+      raise Closed, "can't read data as TempObject has been closed" if closed?
       @data ||= file{|f| f.read }
     end
 
     def tempfile
+      raise Closed, "can't read from tempfile as TempObject has been closed" if closed?
       @tempfile ||= begin
         case
         when @data
@@ -124,6 +129,16 @@ module Dragonfly
 
     def to_io(&block)
       @data ? StringIO.open(@data, 'rb', &block) : file(&block)
+    end
+
+    def close
+      @tempfile.close! if @tempfile
+      @data = nil
+      @closed = true
+    end
+
+    def closed?
+      !!@closed
     end
 
     def inspect

@@ -163,6 +163,33 @@ describe Dragonfly::TempObject do
         parts.last.length.should <= 3001
       end
     end
+    
+    describe "closing" do
+      before(:each) do
+        @temp_object = new_temp_object("wassup")
+      end
+      it "should delete its tempfile" do
+        tempfile = @temp_object.tempfile
+        tempfile.path.should_not be_empty
+        @temp_object.close
+        tempfile.path.should be_nil
+      end
+      %w(tempfile file data).each do |method|
+        it "should raise error when calling #{method}" do
+          @temp_object.close
+          expect{
+            @temp_object.send(method)
+          }.to raise_error(Dragonfly::TempObject::Closed)
+        end
+      end
+      it "should not report itself as closed to begin with" do
+        @temp_object.should_not be_closed
+      end
+      it "should report itself as closed after closing" do
+        @temp_object.close
+        @temp_object.should be_closed
+      end
+    end
 
   end
 
