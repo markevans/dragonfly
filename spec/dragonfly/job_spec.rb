@@ -58,21 +58,44 @@ describe Dragonfly::Job do
     end
 
     describe "fetch" do
-      before(:each) do
-        @job.fetch!('some_uid')
+      context "with no args" do
+        before(:each) do
+          @job.fetch!('some_uid')
+        end
+
+        it { @job.steps.should match_steps([Dragonfly::Job::Fetch]) }
+
+        it "should retrieve from the app's datastore when applied" do
+          @app.datastore.should_receive(:retrieve).with('some_uid').and_return('HELLO')
+          @job.data.should == 'HELLO'
+        end
+
+        it "should set extra data if returned from the datastore" do
+          @app.datastore.should_receive(:retrieve).with('some_uid').and_return(['HELLO', {:name => 'test.txt'}])
+          @job.data.should == 'HELLO'
+          @job.meta.should == {:name => 'test.txt'}
+        end
       end
+      context "with args" do
+        before(:each) do
+          @app = test_app
+          @app.alternate_datastore = {:second => Dragonfly::DataStorage::FileDataStore.new }
+          @job = Dragonfly::Job.new(@app)
+          @job.fetch!('some_uid', :datastore => :second)
+        end
 
-      it { @job.steps.should match_steps([Dragonfly::Job::Fetch]) }
+        it { @job.steps.should match_steps([Dragonfly::Job::Fetch]) }
 
-      it "should retrieve from the app's datastore when applied" do
-        @app.datastore.should_receive(:retrieve).with('some_uid').and_return('HELLO')
-        @job.data.should == 'HELLO'
-      end
+        it "should retrieve from the app's datastore second when applied" do
+          @app.datastore(:second).should_receive(:retrieve).with('some_uid').and_return('HELLO')
+          @job.data.should == 'HELLO'
+        end
 
-      it "should set extra data if returned from the datastore" do
-        @app.datastore.should_receive(:retrieve).with('some_uid').and_return(['HELLO', {:name => 'test.txt'}])
-        @job.data.should == 'HELLO'
-        @job.meta.should == {:name => 'test.txt'}
+        it "should set extra data if returned from the datastore second" do
+          @app.datastore(:second).should_receive(:retrieve).with('some_uid').and_return(['HELLO', {:name => 'test.txt'}])
+          @job.data.should == 'HELLO'
+          @job.meta.should == {:name => 'test.txt'}
+        end
       end
     end
 
@@ -131,7 +154,7 @@ describe Dragonfly::Job do
       it "should fetch the specified file when applied" do
         @job.size.should == 62664
       end
-      
+
       it "should set the name" do
         @job.meta[:name].should == 'egg.png'
       end
@@ -521,7 +544,7 @@ describe Dragonfly::Job do
     it "should return nil if there are no steps" do
       @job.url.should be_nil
     end
-    
+
     describe "using meta in the url" do
       before(:each) do
         @app.server.url_format = '/media/:job/:zoo'
@@ -545,7 +568,7 @@ describe Dragonfly::Job do
         @job.meta[:zoo] = 'hair'
         @job.url(:zoo => 'dare').should == "/media/#{@job.serialize}/dare"
       end
-      
+
       describe "basename" do
         before(:each) do
           @app.server.url_format = '/:job/:basename'
@@ -638,15 +661,15 @@ describe Dragonfly::Job do
       @app = test_app
       @job = @app.fetch('eggs')
     end
-    
+
     it "should be of the correct format" do
       @job.sha.should =~ /^\w{8}$/
     end
-    
+
     it "should be the same for the same job steps" do
       @app.fetch('eggs').sha.should == @job.sha
     end
-    
+
     it "should be different for different jobs" do
       @app.fetch('figs').sha.should_not == @job.sha
     end
@@ -712,7 +735,7 @@ describe Dragonfly::Job do
     before(:each) do
       @app = test_app
     end
-    
+
     describe "fetch_step" do
       it "should return nil if it doesn't exist" do
         @app.generate(:ponies).process(:jam).fetch_step.should be_nil
@@ -774,7 +797,7 @@ describe Dragonfly::Job do
         step.args.should == [:ponies]
       end
     end
-    
+
     describe "process_steps" do
       it "should return the processing steps" do
         job = @app.fetch('many/ponies').process(:jam).process(:eggs).encode(:gif)
@@ -795,7 +818,7 @@ describe Dragonfly::Job do
         step.format.should == :cheese
       end
     end
-    
+
     describe "step_types" do
       it "should return the step types" do
         job = @app.fetch('eggs').process(:beat, 'strongly').encode(:meringue)
@@ -849,7 +872,7 @@ describe Dragonfly::Job do
       job.name = "jonny.briggs"
       job.meta[:name].should == 'jonny.briggs'
     end
-    
+
     describe "ext" do
       before(:each) do
         @job = @app.new_job('asdf')
@@ -966,7 +989,7 @@ describe Dragonfly::Job do
     end
 
   end
-  
+
   describe "store" do
     before(:each) do
       @app = test_app
