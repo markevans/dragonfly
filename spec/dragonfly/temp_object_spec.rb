@@ -170,9 +170,10 @@ describe Dragonfly::TempObject do
       end
       it "should delete its tempfile" do
         tempfile = @temp_object.tempfile
-        tempfile.path.should_not be_empty
+        path = tempfile.path
+        path.should_not be_empty
         @temp_object.close
-        tempfile.path.should be_nil
+        File.exist?(path).should be_false
       end
       %w(tempfile file data).each do |method|
         it "should raise error when calling #{method}" do
