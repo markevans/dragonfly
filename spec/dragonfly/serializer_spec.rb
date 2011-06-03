@@ -33,7 +33,6 @@ describe Dragonfly::Serializer do
     end
     it "should correctly encode and decode to the same string" do
       str = b64_decode(b64_encode(@string))
-      str.force_encoding('UTF-8') if str.respond_to?(:force_encoding)
       str.should == @string
     end
   end
