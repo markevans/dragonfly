@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.9.2"
+  s.version = "0.9.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2011-05-19}
+  s.date = %q{2011-06-03}
   s.description = %q{Dragonfly is a framework that enables on-the-fly processing for any content type.
   It is especially suited to image handling. Its uses range from image thumbnails to standard attachments to on-demand text generation.}
   s.email = %q{mark@new-bamboo.co.uk}
