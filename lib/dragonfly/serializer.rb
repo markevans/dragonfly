@@ -10,12 +10,12 @@ module Dragonfly
     extend self # So we can do Serializer.b64_encode, etc.
     
     def b64_encode(string)
-      Base64.encode64(string).tr("\n=",'')
+      Base64.encode64(string).tr("\n=",'').tr('/','~')
     end
     
     def b64_decode(string)
       padding_length = string.length % 4
-      Base64.decode64(string + '=' * padding_length)
+      Base64.decode64(string.tr('~','/') + '=' * padding_length)
     end
     
     def marshal_encode(object)

@@ -23,6 +23,21 @@ describe Dragonfly::Serializer do
     end
   end
   
+  describe "replacing the '/' character in b64_encode" do
+    before(:each) do
+      @string = (127..255).map{|c| c.chr }.join
+    end
+    it "should replace '/' with '~'" do
+      b64_encode(@string).should_not =~ /\//
+      b64_encode(@string).should =~ /[\w+]+~[\w+]+/
+    end
+    it "should correctly encode and decode to the same string" do
+      str = b64_decode(b64_encode(@string))
+      str.force_encoding('UTF-8') if str.respond_to?(:force_encoding)
+      str.should == @string
+    end
+  end
+  
   [
     :hello,
     nil,
