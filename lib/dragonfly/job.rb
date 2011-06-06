@@ -201,6 +201,7 @@ module Dragonfly
       @steps = []
       @next_step_index = 0
       @meta = {}
+      @previous_temp_objects = []
       update(content, meta)
     end
 
@@ -211,8 +212,13 @@ module Dragonfly
       end
     end
 
-    attr_accessor :temp_object
     attr_reader :app, :steps
+    attr_reader :temp_object
+
+    def temp_object=(temp_object)
+      previous_temp_objects.push(@temp_object) if @temp_object
+      @temp_object = temp_object
+    end
 
     # define fetch(), fetch!(), process(), etc.
     STEPS.each do |step_class|
@@ -418,12 +424,19 @@ module Dragonfly
       end
     end
     
+    def close
+      previous_temp_objects.each{|temp_object| temp_object.close }
+      temp_object.close if temp_object
+    end
+    
     protected
 
     attr_writer :steps
     attr_accessor :next_step_index
 
     private
+
+    attr_reader :previous_temp_objects
 
     def format_from_meta
       meta[:format] || (ext.to_sym if ext && app.trust_file_extensions)
