@@ -19,7 +19,7 @@ module Dragonfly
 
     extend Forwardable
     def_delegators :result,
-                   :data, :file, :tempfile, :path, :to_file, :size
+                   :data, :file, :tempfile, :path, :to_file, :size, :each
     def_delegator :app, :server
 
     class Step
@@ -321,10 +321,6 @@ module Dragonfly
 
     def to_response(env={"REQUEST_METHOD" => "GET"})
       to_app.call(env)
-    end
-
-    def to_path
-      "/#{serialize}"
     end
 
     def to_fetched_job(uid)

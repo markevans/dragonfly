@@ -24,7 +24,7 @@ module Dragonfly
       elsif request.get?
         job.apply
         env['dragonfly.job'] = job
-        [200, success_headers, job.result]
+        [200, success_headers, job]
       end
     rescue DataStorage::DataNotFound, DataStorage::BadUID => e
       app.log.warn(e.message)
