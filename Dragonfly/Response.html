@@ -297,7 +297,7 @@ A new instance of Response
   <span class='elsif elsif kw'>elsif</span> <span class='request identifier id'>request</span><span class='dot token'>.</span><span class='get? fid id'>get?</span>
     <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='apply identifier id'>apply</span>
     <span class='env identifier id'>env</span><span class='lbrack token'>[</span><span class='string val'>'dragonfly.job'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='job identifier id'>job</span>
-    <span class='lbrack token'>[</span><span class='integer val'>200</span><span class='comma token'>,</span> <span class='success_headers identifier id'>success_headers</span><span class='comma token'>,</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='result identifier id'>result</span><span class='rbrack token'>]</span>
+    <span class='lbrack token'>[</span><span class='integer val'>200</span><span class='comma token'>,</span> <span class='success_headers identifier id'>success_headers</span><span class='comma token'>,</span> <span class='job identifier id'>job</span><span class='rbrack token'>]</span>
   <span class='end end kw'>end</span>
 <span class='rescue rescue kw'>rescue</span> <span class='DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='BadUID constant id'>BadUID</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
   <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='log identifier id'>log</span><span class='dot token'>.</span><span class='warn identifier id'>warn</span><span class='lparen token'>(</span><span class='e identifier id'>e</span><span class='dot token'>.</span><span class='message identifier id'>message</span><span class='rparen token'>)</span>
@@ -371,7 +371,7 @@ A new instance of Response
     </div>
 
     <div id="footer">
-  Generated on Fri Jun  3 11:27:02 2011 by 
+  Generated on Fri Jun 10 22:51:52 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.6.8 (ruby-1.9.2).
 </div>

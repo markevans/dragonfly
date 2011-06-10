@@ -510,6 +510,27 @@ Applying, etc.
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#close-instance_method" title="#close (instance method)">- (Object) <strong>close</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#encode_step-instance_method" title="#encode_step (instance method)">- (Object) <strong>encode_step</strong> </a>
     
 
@@ -965,27 +986,6 @@ to_stuff&#8230;
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#to_path-instance_method" title="#to_path (instance method)">- (Object) <strong>to_path</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#to_response-instance_method" title="#to_response (instance method)">- (Object) <strong>to_response</strong>(env = {&quot;REQUEST_METHOD&quot; =&gt; &quot;GET&quot;}) </a>
     
 
@@ -1176,7 +1176,8 @@ A new instance of Job
 202
 203
 204
-205</pre>
+205
+206</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 199</span>
@@ -1186,6 +1187,7 @@ A new instance of Job
   <span class='@steps ivar id'>@steps</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
   <span class='@next_step_index ivar id'>@next_step_index</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
   <span class='@meta ivar id'>@meta</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='@previous_temp_objects ivar id'>@previous_temp_objects</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
   <span class='update identifier id'>update</span><span class='lparen token'>(</span><span class='content identifier id'>content</span><span class='comma token'>,</span> <span class='meta identifier id'>meta</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -1269,12 +1271,12 @@ Name and stuff
       <pre class="lines">
 
 
-378
-379
-380</pre>
+380
+381
+382</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 378</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 380</span>
 
 <span class='def def kw'>def</span> <span class='meta identifier id'>meta</span>
   <span class='@meta ivar id'>@meta</span>
@@ -1355,12 +1357,12 @@ Returns the value of attribute temp_object
       <pre class="lines">
 
 
-214
-215
-216</pre>
+216
+217
+218</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 214</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 216</span>
 
 <span class='def def kw'>def</span> <span class='temp_object identifier id'>temp_object</span>
   <span class='@temp_object ivar id'>@temp_object</span>
@@ -1552,15 +1554,15 @@ Returns the value of attribute temp_object
       <pre class="lines">
 
 
-233
-234
-235
-236
-237
-238</pre>
+239
+240
+241
+242
+243
+244</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 233</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 239</span>
 
 <span class='def def kw'>def</span> <span class='analyse identifier id'>analyse</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='unless unless kw'>unless</span> <span class='result identifier id'>result</span>
@@ -1608,12 +1610,12 @@ Returns the value of attribute temp_object
       <pre class="lines">
 
 
-248
-249
-250</pre>
+254
+255
+256</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 254</span>
 
 <span class='def def kw'>def</span> <span class='applied? fid id'>applied?</span>
   <span class='next_step_index identifier id'>next_step_index</span> <span class='eq op'>==</span> <span class='steps identifier id'>steps</span><span class='dot token'>.</span><span class='length identifier id'>length</span>
@@ -1637,12 +1639,12 @@ Returns the value of attribute temp_object
       <pre class="lines">
 
 
-257
-258
-259</pre>
+263
+264
+265</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 257</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 263</span>
 
 <span class='def def kw'>def</span> <span class='applied_steps identifier id'>applied_steps</span>
   <span class='steps identifier id'>steps</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='dot3 op'>...</span><span class='next_step_index identifier id'>next_step_index</span><span class='rbrack token'>]</span>
@@ -1677,14 +1679,14 @@ Applying, etc.
       <pre class="lines">
 
 
-242
-243
-244
-245
-246</pre>
+248
+249
+250
+251
+252</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 242</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 248</span>
 
 <span class='def def kw'>def</span> <span class='apply identifier id'>apply</span>
   <span class='pending_steps identifier id'>pending_steps</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='step identifier id'>step</span><span class='bitor op'>|</span> <span class='step identifier id'>step</span><span class='dot token'>.</span><span class='apply identifier id'>apply</span> <span class='rbrace token'>}</span>
@@ -1710,17 +1712,17 @@ Applying, etc.
       <pre class="lines">
 
 
-401
-402
 403
 404
 405
 406
 407
-408</pre>
+408
+409
+410</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 401</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 403</span>
 
 <span class='def def kw'>def</span> <span class='attributes_for_url identifier id'>attributes_for_url</span>
   <span class='attrs identifier id'>attrs</span> <span class='assign token'>=</span> <span class='meta identifier id'>meta</span><span class='dot token'>.</span><span class='reject identifier id'>reject</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='notop op'>!</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='params_in_url identifier id'>params_in_url</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='k identifier id'>k</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
@@ -1749,12 +1751,12 @@ Applying, etc.
       <pre class="lines">
 
 
-306
-307
-308</pre>
+312
+313
+314</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 306</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 312</span>
 
 <span class='def def kw'>def</span> <span class='b64_data identifier id'>b64_data</span>
   <span class='dstring node'>&quot;data:#{mime_type};base64,#{Base64.encode64(data)}&quot;</span>
@@ -1778,15 +1780,46 @@ Applying, etc.
       <pre class="lines">
 
 
-393
-394
-395</pre>
+395
+396
+397</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 393</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 395</span>
 
 <span class='def def kw'>def</span> <span class='basename identifier id'>basename</span>
   <span class='meta identifier id'>meta</span><span class='lbrack token'>[</span><span class='symbol val'>:basename</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='string val'>'.*'</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="close-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>close</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+423
+424
+425
+426</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 423</span>
+
+<span class='def def kw'>def</span> <span class='close identifier id'>close</span>
+  <span class='previous_temp_objects identifier id'>previous_temp_objects</span><span class='dot token'>.</span><span class='each identifier id'>each</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='temp_object identifier id'>temp_object</span><span class='bitor op'>|</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='close identifier id'>close</span> <span class='rbrace token'>}</span>
+  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='close identifier id'>close</span> <span class='if if_mod kw'>if</span> <span class='temp_object identifier id'>temp_object</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -1807,12 +1840,12 @@ Applying, etc.
       <pre class="lines">
 
 
-358
-359
-360</pre>
+360
+361
+362</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 358</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 360</span>
 
 <span class='def def kw'>def</span> <span class='encode_step identifier id'>encode_step</span>
   <span class='last_step_of_type identifier id'>last_step_of_type</span><span class='lparen token'>(</span><span class='Encode constant id'>Encode</span><span class='rparen token'>)</span>
@@ -1836,12 +1869,12 @@ Applying, etc.
       <pre class="lines">
 
 
-397
-398
-399</pre>
+399
+400
+401</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 397</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 399</span>
 
 <span class='def def kw'>def</span> <span class='ext identifier id'>ext</span>
   <span class='meta identifier id'>meta</span><span class='lbrack token'>[</span><span class='symbol val'>:ext</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='extname identifier id'>extname</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='regexp val'>/\.(.*)/</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span>
@@ -1865,12 +1898,12 @@ Applying, etc.
       <pre class="lines">
 
 
-346
-347
-348</pre>
+348
+349
+350</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 346</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 348</span>
 
 <span class='def def kw'>def</span> <span class='fetch_file_step identifier id'>fetch_file_step</span>
   <span class='last_step_of_type identifier id'>last_step_of_type</span><span class='lparen token'>(</span><span class='FetchFile constant id'>FetchFile</span><span class='rparen token'>)</span>
@@ -1894,12 +1927,12 @@ Applying, etc.
       <pre class="lines">
 
 
-338
-339
-340</pre>
+340
+341
+342</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 338</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 340</span>
 
 <span class='def def kw'>def</span> <span class='fetch_step identifier id'>fetch_step</span>
   <span class='last_step_of_type identifier id'>last_step_of_type</span><span class='lparen token'>(</span><span class='Fetch constant id'>Fetch</span><span class='rparen token'>)</span>
@@ -1923,12 +1956,12 @@ Applying, etc.
       <pre class="lines">
 
 
-350
-351
-352</pre>
+352
+353
+354</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 350</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 352</span>
 
 <span class='def def kw'>def</span> <span class='fetch_url_step identifier id'>fetch_url_step</span>
   <span class='last_step_of_type identifier id'>last_step_of_type</span><span class='lparen token'>(</span><span class='FetchUrl constant id'>FetchUrl</span><span class='rparen token'>)</span>
@@ -1952,12 +1985,12 @@ Applying, etc.
       <pre class="lines">
 
 
-342
-343
-344</pre>
+344
+345
+346</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 342</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 344</span>
 
 <span class='def def kw'>def</span> <span class='generate_step identifier id'>generate_step</span>
   <span class='last_step_of_type identifier id'>last_step_of_type</span><span class='lparen token'>(</span><span class='Generate constant id'>Generate</span><span class='rparen token'>)</span>
@@ -1992,14 +2025,14 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-208
 209
 210
 211
-212</pre>
+212
+213</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 208</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 209</span>
 
 <span class='def def kw'>def</span> <span class='initialize_copy identifier id'>initialize_copy</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='rparen token'>)</span>
   <span class='self self kw'>self</span><span class='dot token'>.</span><span class='steps identifier id'>steps</span> <span class='assign token'>=</span> <span class='other identifier id'>other</span><span class='dot token'>.</span><span class='steps identifier id'>steps</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='step identifier id'>step</span><span class='bitor op'>|</span>
@@ -2025,12 +2058,12 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-372
-373
-374</pre>
+374
+375
+376</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 372</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 374</span>
 
 <span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
   <span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/&gt;$/</span><span class='comma token'>,</span> <span class='dstring node'>&quot; app=#{app}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} &gt;&quot;</span><span class='rparen token'>)</span>
@@ -2054,12 +2087,12 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-385
-386
-387</pre>
+387
+388
+389</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 385</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 387</span>
 
 <span class='def def kw'>def</span> <span class='name identifier id'>name</span>
   <span class='meta identifier id'>meta</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span>
@@ -2083,12 +2116,12 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-389
-390
-391</pre>
+391
+392
+393</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 389</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 391</span>
 
 <span class='def def kw'>def</span> <span class='name= identifier id'>name=</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
   <span class='meta identifier id'>meta</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span>
@@ -2112,12 +2145,12 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-261
-262
-263</pre>
+267
+268
+269</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 261</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 267</span>
 
 <span class='def def kw'>def</span> <span class='pending_steps identifier id'>pending_steps</span>
   <span class='steps identifier id'>steps</span><span class='lbrack token'>[</span><span class='next_step_index identifier id'>next_step_index</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rbrack token'>]</span>
@@ -2141,12 +2174,12 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-354
-355
-356</pre>
+356
+357
+358</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 354</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 356</span>
 
 <span class='def def kw'>def</span> <span class='process_steps identifier id'>process_steps</span>
   <span class='steps identifier id'>steps</span><span class='dot token'>.</span><span class='select identifier id'>select</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='bitor op'>|</span> <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Process constant id'>Process</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
@@ -2170,13 +2203,13 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-252
-253
-254
-255</pre>
+258
+259
+260
+261</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 252</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 258</span>
 
 <span class='def def kw'>def</span> <span class='result identifier id'>result</span>
   <span class='apply identifier id'>apply</span>
@@ -2201,12 +2234,12 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-277
-278
-279</pre>
+283
+284
+285</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 277</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 283</span>
 
 <span class='def def kw'>def</span> <span class='serialize identifier id'>serialize</span>
   <span class='Serializer constant id'>Serializer</span><span class='dot token'>.</span><span class='marshal_encode identifier id'>marshal_encode</span><span class='lparen token'>(</span><span class='to_a identifier id'>to_a</span><span class='rparen token'>)</span>
@@ -2230,12 +2263,12 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-285
-286
-287</pre>
+291
+292
+293</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 285</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 291</span>
 
 <span class='def def kw'>def</span> <span class='sha identifier id'>sha</span>
   <span class='Digest constant id'>Digest</span><span class='colon2 op'>::</span><span class='SHA1 constant id'>SHA1</span><span class='dot token'>.</span><span class='hexdigest identifier id'>hexdigest</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{to_unique_s}#{app.secret}&quot;</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='dot3 op'>...</span><span class='integer val'>8</span><span class='rbrack token'>]</span>
@@ -2259,12 +2292,12 @@ Used by &#8216;dup&#8217; and &#8216;clone&#8217;
       <pre class="lines">
 
 
-362
-363
-364</pre>
+364
+365
+366</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 362</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 364</span>
 
 <span class='def def kw'>def</span> <span class='step_types identifier id'>step_types</span>
   <span class='steps identifier id'>steps</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='bitor op'>|</span> <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='step_name identifier id'>step_name</span> <span class='rbrace token'>}</span>
@@ -2299,12 +2332,12 @@ Misc
       <pre class="lines">
 
 
-368
-369
-370</pre>
+370
+371
+372</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 368</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 370</span>
 
 <span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='result identifier id'>result</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:meta</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='meta identifier id'>meta</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
@@ -2328,14 +2361,14 @@ Misc
       <pre class="lines">
 
 
-265
-266
-267
-268
-269</pre>
+271
+272
+273
+274
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 265</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 271</span>
 
 <span class='def def kw'>def</span> <span class='to_a identifier id'>to_a</span>
   <span class='steps identifier id'>steps</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='step identifier id'>step</span><span class='bitor op'>|</span>
@@ -2372,12 +2405,12 @@ to_stuff&#8230;
       <pre class="lines">
 
 
-312
-313
-314</pre>
+318
+319
+320</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 312</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 318</span>
 
 <span class='def def kw'>def</span> <span class='to_app identifier id'>to_app</span>
   <span class='JobEndpoint constant id'>JobEndpoint</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
@@ -2401,50 +2434,21 @@ to_stuff&#8230;
       <pre class="lines">
 
 
-324
-325
 326
 327
 328
-329</pre>
+329
+330
+331</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 324</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 326</span>
 
 <span class='def def kw'>def</span> <span class='to_fetched_job identifier id'>to_fetched_job</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
   <span class='new_job identifier id'>new_job</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='app identifier id'>app</span><span class='comma token'>,</span> <span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='meta identifier id'>meta</span><span class='rparen token'>)</span>
   <span class='new_job identifier id'>new_job</span><span class='dot token'>.</span><span class='fetch! fid id'>fetch!</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
   <span class='new_job identifier id'>new_job</span><span class='dot token'>.</span><span class='next_step_index identifier id'>next_step_index</span> <span class='assign token'>=</span> <span class='integer val'>1</span>
   <span class='new_job identifier id'>new_job</span>
-<span class='end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="to_path-instance_method">
-  
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>to_path</strong> 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-320
-321
-322</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 320</span>
-
-<span class='def def kw'>def</span> <span class='to_path identifier id'>to_path</span>
-  <span class='dstring node'>&quot;/#{serialize}&quot;</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -2465,12 +2469,12 @@ to_stuff&#8230;
       <pre class="lines">
 
 
-316
-317
-318</pre>
+322
+323
+324</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 316</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 322</span>
 
 <span class='def def kw'>def</span> <span class='to_response identifier id'>to_response</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='string val'>&quot;REQUEST_METHOD&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;GET&quot;</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='to_app identifier id'>to_app</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
@@ -2505,12 +2509,12 @@ Serializing, etc.
       <pre class="lines">
 
 
-273
-274
-275</pre>
+279
+280
+281</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 273</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 279</span>
 
 <span class='def def kw'>def</span> <span class='to_unique_s identifier id'>to_unique_s</span>
   <span class='to_a identifier id'>to_a</span><span class='dot token'>.</span><span class='to_dragonfly_unique_s identifier id'>to_dragonfly_unique_s</span>
@@ -2545,13 +2549,13 @@ Step inspection
       <pre class="lines">
 
 
-333
-334
 335
-336</pre>
+336
+337
+338</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 333</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 335</span>
 
 <span class='def def kw'>def</span> <span class='uid identifier id'>uid</span>
   <span class='step identifier id'>step</span> <span class='assign token'>=</span> <span class='fetch_step identifier id'>fetch_step</span>
@@ -2576,12 +2580,12 @@ Step inspection
       <pre class="lines">
 
 
-281
-282
-283</pre>
+287
+288
+289</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 281</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 287</span>
 
 <span class='def def kw'>def</span> <span class='unique_signature identifier id'>unique_signature</span>
   <span class='Digest constant id'>Digest</span><span class='colon2 op'>::</span><span class='SHA1 constant id'>SHA1</span><span class='dot token'>.</span><span class='hexdigest identifier id'>hexdigest</span><span class='lparen token'>(</span><span class='to_unique_s identifier id'>to_unique_s</span><span class='rparen token'>)</span>
@@ -2605,8 +2609,6 @@ Step inspection
       <pre class="lines">
 
 
-410
-411
 412
 413
 414
@@ -2614,10 +2616,12 @@ Step inspection
 416
 417
 418
-419</pre>
+419
+420
+421</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 410</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 412</span>
 
 <span class='def def kw'>def</span> <span class='update identifier id'>update</span><span class='lparen token'>(</span><span class='content identifier id'>content</span><span class='comma token'>,</span> <span class='meta identifier id'>meta</span><span class='rparen token'>)</span>
   <span class='if if kw'>if</span> <span class='meta identifier id'>meta</span>
@@ -2659,12 +2663,12 @@ URLs, etc.
       <pre class="lines">
 
 
-302
-303
-304</pre>
+308
+309
+310</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 302</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 308</span>
 
 <span class='def def kw'>def</span> <span class='url identifier id'>url</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='attributes_for_url identifier id'>attributes_for_url</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='steps identifier id'>steps</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
@@ -2688,19 +2692,19 @@ URLs, etc.
       <pre class="lines">
 
 
-289
-290
-291
-292
-293
-294
 295
 296
 297
-298</pre>
+298
+299
+300
+301
+302
+303
+304</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 289</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 295</span>
 
 <span class='def def kw'>def</span> <span class='validate_sha! fid id'>validate_sha!</span><span class='lparen token'>(</span><span class='sha identifier id'>sha</span><span class='rparen token'>)</span>
   <span class='case case kw'>case</span> <span class='sha identifier id'>sha</span>
@@ -2730,7 +2734,7 @@ URLs, etc.
     </div>
 
     <div id="footer">
-  Generated on Fri Jun  3 11:27:01 2011 by 
+  Generated on Fri Jun 10 22:51:51 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.6.8 (ruby-1.9.2).
 </div>
