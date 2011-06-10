@@ -33,7 +33,7 @@ application.rb:
 Gemfile
 -------
 
-    gem 'dragonfly', '~>0.9.3'
+    gem 'dragonfly', '~>0.9.4'
     gem 'rack-cache', :require => 'rack/cache'
 
 Capistrano

@@ -1,3 +1,10 @@
+0.9.4 (2011-06-10)
+==================
+Fixes
+-----
+- Made use of Rack calling `close` on the response body to clean up tempfiles.
+  The response body is now the job, which delegates `each` to the temp_object.
+
 0.9.3 (2011-06-03)
 ==================
 Fixes
