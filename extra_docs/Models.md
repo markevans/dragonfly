@@ -320,7 +320,7 @@ can take a `:path` option to specify where to store the content (which will also
 
     class Person
       image_accessor :mugshot do
-        storage_path{ "some/path/#{id}/#{rand(100)}" }  # You can call model instance methods (like 'id') directly
+        storage_path{ "some/path/#{first_name}/#{rand(100)}" }  # You can call model instance methods (like 'first_name') directly
       end
     end
 
@@ -332,7 +332,7 @@ or
       end
       
       def path_for_mugshot
-        "some/path/#{id}/#{rand(100)}"
+        "some/path/#{first_name}/#{rand(100)}"
       end
     end
 
@@ -342,6 +342,9 @@ or you can also yield the attachment itself
 
 **BEWARE!!!!** you must make sure the path (which will become the uid for the content) is unique and changes each time the content
 is changed, otherwise you could have caching problems, as the generated urls will be the same for the same uid.
+
+**BEWARE No. 2!!!!** using `id` in the `storage_path` won't generally work on create, because Dragonfly stores the content in a call to `before_save`,
+at which point the `id` won't yet exist.
 
 You can pass any options through to the datastore using `storage_xxx` methods, or all at once using `storage_opts`:
 
