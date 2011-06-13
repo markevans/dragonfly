@@ -17,6 +17,8 @@ module Dragonfly
         :name, :basename, :ext, :size,
         :url
 
+      alias_method :length, :size
+      
       def initialize(model)
         @model = model
         self.uid = model_uid
