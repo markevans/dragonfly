@@ -1,3 +1,9 @@
+HEAD
+==================
+Features
+--------
+- Added reflection method `app.analyser_methods`
+
 0.9.4 (2011-06-10)
 ==================
 Fixes

@@ -83,8 +83,7 @@ Otherwise it should be done anywhere where general setup is done, early on.
 
 Reflecting on configuration
 ---------------------------
-There are a few methods you can call on the `app` to see what processors etc. are registered: `processor_methods`, `generator_methods`
-and `job_methods`.
+There are a few methods you can call on the `app` to see what processors etc. are registered: `processor_methods`, `generator_methods`, `analyser_methods` and `job_methods`.
 
 Saved configurations
 ====================
