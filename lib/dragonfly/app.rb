@@ -155,7 +155,7 @@ module Dragonfly
     end
     
     def analyser_methods
-      analyser.functions.keys
+      analyser.analysis_method_names
     end
     
     def job_methods
