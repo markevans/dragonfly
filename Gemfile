@@ -6,7 +6,7 @@ gem "rack"
 group :development, :test, :cucumber do
   gem 'capybara'
   gem 'cucumber', '~>0.10.0'
-  gem 'cucumber-rails', '~>0.3.2'
+  gem 'cucumber-rails', '~>0.5.2'
   gem 'database_cleaner'
   gem 'jeweler', '~> 1.5.2'
   gem 'fog'
