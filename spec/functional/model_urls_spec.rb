@@ -37,6 +37,14 @@ describe "model urls" do
     item.other_image.url.should =~ %r{^/media/\w+$}
   end
   
+  it "url should be identical for new and existing records" do
+    @item.other_image = new_tempfile
+    @item.save!
+    new_record_url = @item.other_image.url
+    reloaded_record_url = Item.find(@item.id).other_image.url
+    new_record_url.should == reloaded_record_url
+  end
+  
   it "should include the name in the url even if it has no ext" do
     @item.preview_image = new_tempfile("hello", 'hello')
     @item.save!
