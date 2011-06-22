@@ -17,7 +17,7 @@ module Dragonfly
 
       def convert(temp_object=nil, args='', format=nil)
         tempfile = new_tempfile(format)
-        run "#{convert_command} #{temp_object.path if temp_object} #{args} #{tempfile.path}"
+        run "#{convert_command} #{'"'+temp_object.path+'"' if temp_object} #{args} #{tempfile.path}"
         tempfile
       end
 
