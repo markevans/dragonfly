@@ -5,7 +5,7 @@ describe Dragonfly::TempObject do
   ####### Helper Methods #######
 
   def sample_path(filename)
-    File.join(SAMPLES_DIR, filename)
+    SAMPLES_DIR.join(filename)
   end
 
   def new_tempfile(data='HELLO')
@@ -324,7 +324,7 @@ describe Dragonfly::TempObject do
       Dragonfly::TempObject.new(@obj).original_filename.should be_nil
     end
     it "should set the name if the initial object is a file object" do
-      file = File.new(SAMPLES_DIR + '/round.gif')
+      file = File.new(SAMPLES_DIR.join('round.gif'))
       temp_object = Dragonfly::TempObject.new(file)
       temp_object.original_filename.should == 'round.gif'
     end
