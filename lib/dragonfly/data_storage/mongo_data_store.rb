@@ -1,5 +1,4 @@
 require 'mongo'
-require 'active_support/hash_with_indifferent_access'
 
 module Dragonfly
   module DataStorage
@@ -43,7 +42,7 @@ module Dragonfly
         grid_io = grid.get(bson_id(uid))
         [
           grid_io.read,
-          ActiveSupport::HashWithIndifferentAccess.new(grid_io.metadata.merge(:stored_at => grid_io.upload_date))
+          grid_io.metadata.merge(:stored_at => grid_io.upload_date)
         ]
       rescue Mongo::GridFileNotFound, INVALID_OBJECT_ID => e
         raise DataNotFound, "#{e} - #{uid}"
