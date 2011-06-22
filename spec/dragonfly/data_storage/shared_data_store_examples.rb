@@ -35,7 +35,7 @@ shared_examples_for "data_store" do
       it "should retrieve the stored data" do
         Dragonfly::TempObject.new(@obj).data.should == @temp_object.data
       end
-      
+
       it "should return a meta hash (probably empty)" do
         @meta.should be_a(Hash)
       end

@@ -1,4 +1,5 @@
 require 'mongo'
+require 'active_support/hash_with_indifferent_access'
 
 module Dragonfly
   module DataStorage
@@ -32,7 +33,7 @@ module Dragonfly
       def store(temp_object, opts={})
         ensure_authenticated!
         temp_object.file do |f|
-          mongo_id = grid.put(f, :metadata => marshal_encode(opts[:meta] || {}))
+          mongo_id = grid.put(f, :metadata => (opts[:meta] || {}))
           mongo_id.to_s
         end
       end
@@ -40,11 +41,9 @@ module Dragonfly
       def retrieve(uid)
         ensure_authenticated!
         grid_io = grid.get(bson_id(uid))
-        meta = marshal_decode(grid_io.metadata)
-        meta.merge!(:stored_at => grid_io.upload_date)
         [
           grid_io.read,
-          meta
+          ActiveSupport::HashWithIndifferentAccess.new(grid_io.metadata.merge(:stored_at => grid_io.upload_date))
         ]
       rescue Mongo::GridFileNotFound, INVALID_OBJECT_ID => e
         raise DataNotFound, "#{e} - #{uid}"
@@ -76,7 +75,7 @@ module Dragonfly
           @authenticated ||= db.authenticate(username, password)
         end
       end
-      
+
       def bson_id(uid)
         OBJECT_ID.from_string(uid)
       end
