@@ -24,21 +24,18 @@ module Dragonfly
       def identify(temp_object)
         # example of details string:
         # myimage.png PNG 200x100 200x100+0+0 8-bit DirectClass 31.2kb
-        details = raw_identify(temp_object)
-        filename, format, geometry, geometry_2, depth, image_class, size = details.split(' ')
+        format, geometry, depth = raw_identify(temp_object).scan(/([A-Z]+) (.+) .+ (\d)-bit/)[0]
         width, height = geometry.split('x')
         {
-          :filename => filename,
           :format => format.downcase.to_sym,
           :width => width.to_i,
           :height => height.to_i,
-          :depth => depth.to_i,
-          :image_class => image_class
+          :depth => depth.to_i
         }
       end
     
       def raw_identify(temp_object, args='')
-        run "#{identify_command} #{args} #{temp_object.path}"
+        run "#{identify_command} #{args} \"#{temp_object.path}\""
       end
     
       def new_tempfile(ext=nil)
