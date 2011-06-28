@@ -24,7 +24,7 @@ module Dragonfly
       def identify(temp_object)
         # example of details string:
         # myimage.png PNG 200x100 200x100+0+0 8-bit DirectClass 31.2kb
-        format, geometry, depth = raw_identify(temp_object).scan(/([A-Z]+) (.+) .+ (\d)-bit/)[0]
+        format, geometry, depth = raw_identify(temp_object).scan(/([A-Z]+) (.+) .+ (\d+)-bit/)[0]
         width, height = geometry.split('x')
         {
           :format => format.downcase.to_sym,
