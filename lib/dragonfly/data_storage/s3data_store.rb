@@ -69,7 +69,7 @@ module Dragonfly
 
       def url_for(uid, opts={})
         if opts && opts[:expires]
-          storage.get_object_url(bucket_name, uid, opts[:expires])
+          storage.get_object_https_url(bucket_name, uid, opts[:expires])
         else
           "http://#{bucket_name}.s3.amazonaws.com/#{uid}"
         end
