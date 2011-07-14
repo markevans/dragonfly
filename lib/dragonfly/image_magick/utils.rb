@@ -17,7 +17,7 @@ module Dragonfly
 
       def convert(temp_object=nil, args='', format=nil)
         tempfile = new_tempfile(format)
-        run "#{convert_command} #{temp_object.path if temp_object} #{args} #{tempfile.path}"
+        run "#{convert_command} #{quote(temp_object.path) if temp_object} #{args} #{quote(tempfile.path)}"
         tempfile
       end
 
@@ -38,7 +38,7 @@ module Dragonfly
       end
     
       def raw_identify(temp_object, args='')
-        run "#{identify_command} #{args} #{temp_object.path}"
+        run "#{identify_command} #{args} #{quote(temp_object.path)}"
       end
     
       def new_tempfile(ext=nil)
@@ -65,6 +65,10 @@ module Dragonfly
     
       def raise_shell_command_failed(command)
         raise ShellCommandFailed, "Command failed (#{command}) with exit status #{$?.exitstatus}"
+      end
+
+      def quote(path)
+        "'#{path}'"
       end
 
     end
