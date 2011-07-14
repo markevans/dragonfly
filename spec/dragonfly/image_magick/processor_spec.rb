@@ -272,6 +272,15 @@ describe Dragonfly::ImageMagick::Processor do
       image = @processor.convert(@image, "\\( +clone -sparse-color Barycentric '0,0 black 0,%[fx:h-1] white' -function polynomial 2,-2,0.5 \\) -compose Blur -set option:compose:args 15 -composite")
       image.should have_width(280)
     end
+
+    it "should work for filenames with spaces" do
+      sample_file = File.dirname(__FILE__) + '/../../../samples/spaces in filename.png' # 280x355
+      @image = Dragonfly::TempObject.new(File.new(sample_file))
+
+      image = @processor.convert(@image, '-scale 56x71')
+      image.should have_width(56)
+      image.should have_height(71)
+    end
   end
   
 end

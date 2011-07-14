@@ -61,4 +61,10 @@ describe Dragonfly::ImageMagick::Analyser do
     end
   end
 
+  it "should work for filenames with spaces" do
+    image_path = File.dirname(__FILE__) + '/../../../samples/spaces in filename.png' # 280x355
+    @image = Dragonfly::TempObject.new(File.new(image_path))
+    @analyser.image?(@image).should == true
+  end
+
 end
