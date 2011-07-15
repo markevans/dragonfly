@@ -190,4 +190,22 @@ describe Dragonfly::DataStorage::CloudfilesDataStore do
       proc{ @data_store.retrieve("gungle") }.should raise_error(Dragonfly::DataStorage::DataNotFound)
     end
   end
+  
+  describe "urls for serving directly" do
+    
+    before(:each) do
+      @uid = 'some/path/on/rackspace'
+      @cdn_host = @data_store.cdn_host
+    end
+    
+    it "should use the directory subdomain" do
+      @data_store.url_for(@uid).should == "#{@cdn_host}/some/path/on/rackspace"
+    end
+    
+    it "should use the directory subdomain for other regions too" do
+      @data_store.region = 'eu-west-1'
+      @data_store.url_for(@uid).should == "#{@cdn_host}/some/path/on/rackspace"
+    end
+  end
+
 end
