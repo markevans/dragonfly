@@ -13,5 +13,6 @@ fixtures/*/tmp_app
 spec/spec.log
 Gemfile.lock
 .s3_spec.yml
+.cloudfiles_spec.yml
 ***.rbc
 spec/support/tmp.rb

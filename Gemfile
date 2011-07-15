@@ -26,5 +26,6 @@ group :development, :test, :cucumber do
     gem 'bluecloth'
     gem 'bson_ext'
     gem 'sqlite3-ruby'
+    gem 'ruby-debug19'
   end
 end
