@@ -2,17 +2,27 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>File: Configuration</title>
-<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
-<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: Configuration
+  
+    &mdash; Documentation by YARD 0.7.2
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   relpath = '';
   if (relpath != '') relpath += '/';
 </script>
-<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
-<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
 
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
@@ -52,11 +62,14 @@
       
       <div id="logo">DRAGONFLY (v 0.9.4)</div>
       <div id="search">
-  <a id="class_list_link" href="#">Class List</a>
-  <a id="method_list_link" href="#">Method List</a>
-  <a id ="file_list_link" href="#">File List</a>
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
 </div>
-
     </div>
 
     <div>
@@ -153,8 +166,7 @@ Otherwise it should be done anywhere where general setup is done, early on.</p>
 
 <h2>Reflecting on configuration</h2>
 
-<p>There are a few methods you can call on the <code>app</code> to see what processors etc. are registered: <code>processor_methods</code>, <code>generator_methods</code>
-and <code>job_methods</code>.</p>
+<p>There are a few methods you can call on the <code>app</code> to see what processors etc. are registered: <code>processor_methods</code>, <code>generator_methods</code>, <code>analyser_methods</code> and <code>job_methods</code>.</p>
 
 <h1>Saved configurations</h1>
 
@@ -166,8 +178,8 @@ There are a number that are provided with Dragonfly:</p>
 <pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
 </pre>
 
-<p>The {Dragonfly::ImageMagick::Config ImageMagick configuration} registers the app with the {Dragonfly::ImageMagick::Analyser ImageMagick Analyser}, {Dragonfly::ImageMagick::Processor ImageMagick Processor},
-{Dragonfly::ImageMagick::Encoder ImageMagick Encoder} and {Dragonfly::ImageMagick::Generator ImageMagick Generator}, and a number of job shortcuts.</p>
+<p>The <span class='object_link'><a href="Dragonfly/ImageMagick/Config.html" title="Dragonfly::ImageMagick::Config (module)">ImageMagick configuration</a></span> registers the app with the <span class='object_link'><a href="Dragonfly/ImageMagick/Analyser.html" title="Dragonfly::ImageMagick::Analyser (class)">ImageMagick Analyser</a></span>, <span class='object_link'><a href="Dragonfly/ImageMagick/Processor.html" title="Dragonfly::ImageMagick::Processor (class)">ImageMagick Processor</a></span>,
+<span class='object_link'><a href="Dragonfly/ImageMagick/Encoder.html" title="Dragonfly::ImageMagick::Encoder (class)">ImageMagick Encoder</a></span> and <span class='object_link'><a href="Dragonfly/ImageMagick/Generator.html" title="Dragonfly::ImageMagick::Generator (class)">ImageMagick Generator</a></span>, and a number of job shortcuts.</p>
 
 <p>The file 'dragonfly/rails/images' does this for you.</p>
 
@@ -178,8 +190,8 @@ There are a number that are provided with Dragonfly:</p>
 <pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span>
 </pre>
 
-<p>The {Dragonfly::Config::Rails Rails configuration} points the log to the Rails logger, configures the file data store root path, sets the url path prefix to '/media', and
-registers the {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} for helping with mime_type validations.</p>
+<p>The <span class='object_link'><a href="Dragonfly/Config/Rails.html" title="Dragonfly::Config::Rails (module)">Rails configuration</a></span> points the log to the Rails logger, configures the file data store root path, sets the url path prefix to '/media', and
+registers the <span class='object_link'><a href="Dragonfly/Analysis/FileCommandAnalyser.html" title="Dragonfly::Analysis::FileCommandAnalyser (class)">FileCommandAnalyser</a></span> for helping with mime_type validations.</p>
 
 <p>The file 'dragonfly/rails/images' does this for you.</p>
 
@@ -188,8 +200,8 @@ registers the {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} for
 <pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:heroku</span><span class='comma token'>,</span> <span class='string val'>'s3_bucket_name'</span><span class='rparen token'>)</span>
 </pre>
 
-<p>The {Dragonfly::Config::Heroku Heroku configuration} configures it to use the {Dragonfly::DataStorage::S3DataStore}, using Heroku's config attributes.
-See {file:Heroku} for more info.</p>
+<p>The <span class='object_link'><a href="Dragonfly/Config/Heroku.html" title="Dragonfly::Config::Heroku (module)">Heroku configuration</a></span> configures it to use the <span class='object_link'><a href="Dragonfly/DataStorage/S3DataStore.html" title="Dragonfly::DataStorage::S3DataStore (class)">Dragonfly::DataStorage::S3DataStore</a></span>, using Heroku's config attributes.
+See <a href="file.Heroku.html" title="Heroku">Heroku</a> for more info.</p>
 
 <h2>Custom Saved Configuration</h2>
 
@@ -240,9 +252,9 @@ globally as a one-off:</p>
     </div>
 
     <div id="footer">
-  Generated on Fri Jun 10 22:57:17 2011 by 
+  Generated on Wed Jul 27 09:00:01 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.8 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

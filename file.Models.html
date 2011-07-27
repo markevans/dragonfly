@@ -2,17 +2,27 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>File: Models</title>
-<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
-<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: Models
+  
+    &mdash; Documentation by YARD 0.7.2
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   relpath = '';
   if (relpath != '') relpath += '/';
 </script>
-<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
-<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
 
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
@@ -52,11 +62,14 @@
       
       <div id="logo">DRAGONFLY (v 0.9.4)</div>
       <div id="search">
-  <a id="class_list_link" href="#">Class List</a>
-  <a id="method_list_link" href="#">Method List</a>
-  <a id ="file_list_link" href="#">File List</a>
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
 </div>
-
     </div>
 
     <div>
@@ -410,12 +423,12 @@ create another version <em>on-upload</em>, then you could create another accesso
 
 <p><strong>storage_path</strong></p>
 
-<p>The {Dragonfly::DataStorage::FileDataStore FileDataStore} and {Dragonfly::DataStorage::S3DataStore S3DataStore} both
+<p>The <span class='object_link'><a href="Dragonfly/DataStorage/FileDataStore.html" title="Dragonfly::DataStorage::FileDataStore (class)">FileDataStore</a></span> and <span class='object_link'><a href="Dragonfly/DataStorage/S3DataStore.html" title="Dragonfly::DataStorage::S3DataStore (class)">S3DataStore</a></span> both
 can take a <code>:path</code> option to specify where to store the content (which will also become the uid for that content)</p>
 
 <pre class="code"><span class='class class kw'>class</span> <span class='Person constant id'>Person</span>
   <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span> <span class='do do kw'>do</span>
-    <span class='storage_path identifier id'>storage_path</span><span class='lbrace token'>{</span> <span class='dstring node'>&quot;some/path/#{id}/#{rand(100)}&quot;</span> <span class='rbrace token'>}</span>  <span class='comment val'># You can call model instance methods (like 'id') directly</span>
+    <span class='storage_path identifier id'>storage_path</span><span class='lbrace token'>{</span> <span class='dstring node'>&quot;some/path/#{first_name}/#{rand(100)}&quot;</span> <span class='rbrace token'>}</span>  <span class='comment val'># You can call model instance methods (like 'first_name') directly</span>
   <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -428,7 +441,7 @@ can take a <code>:path</code> option to specify where to store the content (whic
   <span class='end end kw'>end</span>
 
   <span class='def def kw'>def</span> <span class='path_for_mugshot identifier id'>path_for_mugshot</span>
-    <span class='dstring node'>&quot;some/path/#{id}/#{rand(100)}&quot;</span>
+    <span class='dstring node'>&quot;some/path/#{first_name}/#{rand(100)}&quot;</span>
   <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -440,6 +453,9 @@ can take a <code>:path</code> option to specify where to store the content (whic
 
 <p><strong>BEWARE!!!!</strong> you must make sure the path (which will become the uid for the content) is unique and changes each time the content
 is changed, otherwise you could have caching problems, as the generated urls will be the same for the same uid.</p>
+
+<p><strong>BEWARE No. 2!!!!</strong> using <code>id</code> in the <code>storage_path</code> won't generally work on create, because Dragonfly stores the content in a call to <code>before_save</code>,
+at which point the <code>id</code> won't yet exist.</p>
 
 <p>You can pass any options through to the datastore using <code>storage_xxx</code> methods, or all at once using <code>storage_opts</code>:</p>
 
@@ -485,7 +501,7 @@ this is done automatically for you, if the corresponding accessor exists.</p>
 </pre>
 
 <p>Furthermore, any magic attributes you add a field for will be added to the meta data for that attachment (and so can be used when Dragonfly serves the content
-for e.g. setting custom response headers based on that meta - see {file:Configuration}).</p>
+for e.g. setting custom response headers based on that meta - see <a href="file.Configuration.html" title="Configuration">Configuration</a>).</p>
 
 <h2>Custom Model</h2>
 
@@ -546,9 +562,9 @@ for e.g. setting custom response headers based on that meta - see {file:Configur
     </div>
 
     <div id="footer">
-  Generated on Fri Jun 10 22:57:17 2011 by 
+  Generated on Wed Jul 27 09:00:01 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.8 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>
