@@ -1,8 +1,13 @@
-HEAD
+0.9.5 (2011-07-27)
 ==================
 Features
 --------
 - Added reflection method `app.analyser_methods`
+
+Fixes
+-----
+- Fixed `convert` and `identify` for files with spaces
+- Fixed size validations for Rails 3.0.7
 
 0.9.4 (2011-06-10)
 ==================
