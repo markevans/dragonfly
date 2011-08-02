@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dragonfly}
-  s.version = "0.9.4"
+  s.version = "0.9.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Evans"]
-  s.date = %q{2011-06-10}
+  s.date = %q{2011-08-02}
   s.description = %q{Dragonfly is a framework that enables on-the-fly processing for any content type.
   It is especially suited to image handling. Its uses range from image thumbnails to standard attachments to on-demand text generation.}
   s.email = %q{mark@new-bamboo.co.uk}
@@ -53,22 +53,22 @@ Gem::Specification.new do |s|
     "extra_docs/URLs.md",
     "features/images.feature",
     "features/no_processing.feature",
-    "features/rails_3.0.5.feature",
+    "features/rails.feature",
     "features/steps/common_steps.rb",
     "features/steps/dragonfly_steps.rb",
     "features/steps/rails_steps.rb",
     "features/support/env.rb",
     "features/support/setup.rb",
-    "fixtures/rails_3.0.5/files/app/models/album.rb",
-    "fixtures/rails_3.0.5/files/app/views/albums/new.html.erb",
-    "fixtures/rails_3.0.5/files/app/views/albums/show.html.erb",
-    "fixtures/rails_3.0.5/files/config/initializers/dragonfly.rb",
-    "fixtures/rails_3.0.5/files/features/manage_album_images.feature",
-    "fixtures/rails_3.0.5/files/features/step_definitions/helper_steps.rb",
-    "fixtures/rails_3.0.5/files/features/step_definitions/image_steps.rb",
-    "fixtures/rails_3.0.5/files/features/support/paths.rb",
-    "fixtures/rails_3.0.5/files/features/text_images.feature",
-    "fixtures/rails_3.0.5/template.rb",
+    "fixtures/rails/files/app/models/album.rb",
+    "fixtures/rails/files/app/views/albums/new.html.erb",
+    "fixtures/rails/files/app/views/albums/show.html.erb",
+    "fixtures/rails/files/config/initializers/dragonfly.rb",
+    "fixtures/rails/files/features/manage_album_images.feature",
+    "fixtures/rails/files/features/step_definitions/helper_steps.rb",
+    "fixtures/rails/files/features/step_definitions/image_steps.rb",
+    "fixtures/rails/files/features/support/paths.rb",
+    "fixtures/rails/files/features/text_images.feature",
+    "fixtures/rails/template.rb",
     "irbrc.rb",
     "lib/dragonfly.rb",
     "lib/dragonfly/active_model_extensions.rb",
@@ -131,6 +131,7 @@ Gem::Specification.new do |s|
     "samples/round.gif",
     "samples/sample.docx",
     "samples/taj.jpg",
+    "samples/white pixel.png",
     "spec/dragonfly/active_model_extensions/model_spec.rb",
     "spec/dragonfly/active_model_extensions/spec_helper.rb",
     "spec/dragonfly/analyser_spec.rb",
@@ -242,15 +243,15 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<rack>, [">= 0"])
       s.add_development_dependency(%q<capybara>, [">= 0"])
       s.add_development_dependency(%q<cucumber>, ["~> 0.10.0"])
-      s.add_development_dependency(%q<cucumber-rails>, ["~> 0.3.2"])
+      s.add_development_dependency(%q<cucumber-rails>, ["~> 0.5.2"])
       s.add_development_dependency(%q<database_cleaner>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.2"])
       s.add_development_dependency(%q<fog>, [">= 0"])
       s.add_development_dependency(%q<mongo>, [">= 0"])
       s.add_development_dependency(%q<couchrest>, ["~> 1.0"])
       s.add_development_dependency(%q<rack-cache>, [">= 0"])
-      s.add_development_dependency(%q<rails>, ["= 3.0.5"])
-      s.add_development_dependency(%q<rake>, [">= 0"])
+      s.add_development_dependency(%q<rails>, ["= 3.0.9"])
+      s.add_development_dependency(%q<rake>, ["= 0.8.7"])
       s.add_development_dependency(%q<rspec>, ["~> 2.5"])
       s.add_development_dependency(%q<webmock>, [">= 0"])
       s.add_development_dependency(%q<yard>, [">= 0"])
@@ -261,15 +262,15 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rack>, [">= 0"])
       s.add_dependency(%q<capybara>, [">= 0"])
       s.add_dependency(%q<cucumber>, ["~> 0.10.0"])
-      s.add_dependency(%q<cucumber-rails>, ["~> 0.3.2"])
+      s.add_dependency(%q<cucumber-rails>, ["~> 0.5.2"])
       s.add_dependency(%q<database_cleaner>, [">= 0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
       s.add_dependency(%q<fog>, [">= 0"])
       s.add_dependency(%q<mongo>, [">= 0"])
       s.add_dependency(%q<couchrest>, ["~> 1.0"])
       s.add_dependency(%q<rack-cache>, [">= 0"])
-      s.add_dependency(%q<rails>, ["= 3.0.5"])
-      s.add_dependency(%q<rake>, [">= 0"])
+      s.add_dependency(%q<rails>, ["= 3.0.9"])
+      s.add_dependency(%q<rake>, ["= 0.8.7"])
       s.add_dependency(%q<rspec>, ["~> 2.5"])
       s.add_dependency(%q<webmock>, [">= 0"])
       s.add_dependency(%q<yard>, [">= 0"])
@@ -281,15 +282,15 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rack>, [">= 0"])
     s.add_dependency(%q<capybara>, [">= 0"])
     s.add_dependency(%q<cucumber>, ["~> 0.10.0"])
-    s.add_dependency(%q<cucumber-rails>, ["~> 0.3.2"])
+    s.add_dependency(%q<cucumber-rails>, ["~> 0.5.2"])
     s.add_dependency(%q<database_cleaner>, [">= 0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
     s.add_dependency(%q<fog>, [">= 0"])
     s.add_dependency(%q<mongo>, [">= 0"])
     s.add_dependency(%q<couchrest>, ["~> 1.0"])
     s.add_dependency(%q<rack-cache>, [">= 0"])
-    s.add_dependency(%q<rails>, ["= 3.0.5"])
-    s.add_dependency(%q<rake>, [">= 0"])
+    s.add_dependency(%q<rails>, ["= 3.0.9"])
+    s.add_dependency(%q<rake>, ["= 0.8.7"])
     s.add_dependency(%q<rspec>, ["~> 2.5"])
     s.add_dependency(%q<webmock>, [">= 0"])
     s.add_dependency(%q<yard>, [">= 0"])
