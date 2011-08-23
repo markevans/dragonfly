@@ -11,6 +11,7 @@ class MyModel
   define_model_callbacks :save, :destroy
   
   include ActiveModel::Validations
+  include ActiveModel::Dirty
   
   class << self
     def create!(attrs={})
@@ -73,6 +74,7 @@ class Item < MyModel
     :created_at,
     :updated_at
   ]
+  define_attribute_methods ATTRIBUTES
   attr_accessor *ATTRIBUTES
 end
 
@@ -82,10 +84,12 @@ class Car < MyModel
     :reliant_image_uid,
     :type
   ]
+  define_attribute_methods ATTRIBUTES
   attr_accessor *ATTRIBUTES
 end
 
 class Photo < MyModel
   ATTRIBUTES = [:image_uid]
+  define_attribute_methods ATTRIBUTES
   attr_accessor *ATTRIBUTES
 end
