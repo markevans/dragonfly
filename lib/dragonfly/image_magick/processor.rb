@@ -37,7 +37,7 @@ module Dragonfly
         repage  = opts[:repage] == false ? '' : '+repage'
         resize  = opts[:resize]
     
-        convert(temp_object, "#{"-resize #{resize} " if resize}#{"-gravity #{gravity} " if gravity}-crop #{width}x#{height}#{x}#{y} #{repage}")
+        convert(temp_object, "#{"-resize #{Escape.shell_command([resize])} " if resize}#{"-gravity #{gravity} " if gravity}-crop #{width}x#{height}#{x}#{y} #{repage}")
       end
       
       def flip(temp_object)
