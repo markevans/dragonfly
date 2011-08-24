@@ -1,6 +1,7 @@
 source :rubygems
 
 gem "rack"
+gem 'escape'
 
 # These gems are needed for development and testing
 group :development, :test, :cucumber do

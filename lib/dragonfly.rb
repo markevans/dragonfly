@@ -30,6 +30,7 @@ end
 
 autoload_files_in_dir("#{File.dirname(__FILE__)}/dragonfly", 'Dragonfly')
 
+require 'escape'
 require 'dragonfly/core_ext/object'
 require 'dragonfly/core_ext/string'
 require 'dragonfly/core_ext/symbol'
