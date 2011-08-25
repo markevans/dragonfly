@@ -62,8 +62,12 @@ module Dragonfly
         @original_filename = @pathname.basename.to_s
       elsif obj.respond_to?(:tempfile)
         @tempfile = obj.tempfile
+      elsif obj.respond_to?(:path) && obj.respond_to?(:original_filename)
+        # Rack::Test::UploadedFile from Rack / Rails functional tests
+        @pathname = Pathname.new(obj.path)
+        @original_filename = obj.original_filename
       else
-        raise ArgumentError, "#{self.class.name} must be initialized with a String, a Pathname, a File, a Tempfile, another TempObject, or something that responds to .tempfile"
+        raise ArgumentError, "#{self.class.name} must be initialized with a String, a Pathname, a File, a Tempfile, another TempObject, something that responds to .tempfile, or something that responds to .path and .original_filename"
       end
       @tempfile.close if @tempfile
       @original_filename = obj.original_filename if obj.respond_to?(:original_filename)
