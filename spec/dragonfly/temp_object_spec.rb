@@ -310,6 +310,26 @@ describe Dragonfly::TempObject do
     end
   end
 
+  describe "initialize from a Rack::Test::UploadedFile" do
+    def initialization_object(data)
+      # The criteria we're using to determine if an object is a
+      # Rack::Test::UploadedFile is if it responds to path and original_filename.
+      #
+      # We can't just check if it is_a?(Rack::Test::UploadedFile) because that
+      # class may not always be present.
+      uploaded_file = mock("mock_uploadedfile")
+      uploaded_file.stub!(:path).and_return('/tmp/test_file')
+      uploaded_file.stub!(:original_filename).and_return('foo.jpg')
+
+      # Create a real file with the contents required at the correct path
+      new_file(data, '/tmp/test_file')
+
+      uploaded_file
+    end
+
+    it_should_behave_like "common behaviour"
+  end
+
   describe "original_filename" do
     before(:each) do
       @obj = new_tempfile
