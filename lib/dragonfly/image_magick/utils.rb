@@ -1,4 +1,5 @@
 require 'tempfile'
+require 'shellwords'
 
 module Dragonfly
   module ImageMagick
@@ -17,7 +18,7 @@ module Dragonfly
 
       def convert(temp_object=nil, args='', format=nil)
         tempfile = new_tempfile(format)
-        run "#{convert_command} #{'"'+temp_object.path+'"' if temp_object} #{args} #{tempfile.path}"
+        run convert_command, "#{temp_object.path if temp_object} #{args} #{tempfile.path}"
         tempfile
       end
 
@@ -35,7 +36,7 @@ module Dragonfly
       end
     
       def raw_identify(temp_object, args='')
-        run "#{identify_command} #{args} \"#{temp_object.path}\""
+        run identify_command, "#{args} #{temp_object.path}"
       end
     
       def new_tempfile(ext=nil)
@@ -45,23 +46,30 @@ module Dragonfly
         tempfile
       end
 
-      def run(command)
-        log.debug("Running command: #{command}") if log_commands
+      def run(command, args="")
+        full_command = "#{command} #{escape_args(args)}"
+        log.debug("Running command: #{full_command}") if log_commands
         begin
-          result = `#{command}`
+          result = `#{full_command}`
         rescue Errno::ENOENT
-          raise_shell_command_failed(command)
+          raise_shell_command_failed(full_command)
         end
         if $?.exitstatus == 1
           throw :unable_to_handle
         elsif !$?.success?
-          raise_shell_command_failed(command)
+          raise_shell_command_failed(full_command)
         end
         result
       end
     
       def raise_shell_command_failed(command)
         raise ShellCommandFailed, "Command failed (#{command}) with exit status #{$?.exitstatus}"
+      end
+      
+      def escape_args(args)
+        args.shellsplit.map do |arg|
+          "'" + arg.gsub(/\\?'/, %q('\\\\'')) + "'"
+        end.join(' ')
       end
 
     end
