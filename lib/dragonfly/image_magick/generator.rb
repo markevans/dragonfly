@@ -42,7 +42,7 @@ module Dragonfly
       def plain(width, height, colour, opts={})
         format = opts[:format] || 'png'
         [
-          convert(nil, "-size #{width}x#{height} \"xc:#{colour}\"", format),
+          convert(nil, "-size #{width}x#{height} xc:#{colour}", format),
           {:format => format.to_sym, :name => "plain.#{format}"}
         ]
       end
@@ -96,7 +96,7 @@ module Dragonfly
           args.push("-size #{width}x#{height}")
           args.push("xc:#{background}")
           args.push("-annotate 0x0+#{padding_left}+#{padding_top} #{escaped_string}")
-          run "#{convert_command} #{args.join(' ')} #{tempfile.path}"
+          run convert_command,  "#{args.join(' ')} '#{tempfile.path}'"
         end
 
         [

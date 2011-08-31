@@ -27,11 +27,6 @@ describe Dragonfly::ImageMagick::Generator do
       image.should have_width(1)
     end
 
-    it "should cope with rgb format with whitespace" do
-      image, meta = @generator.plain(1, 1, ' rgb ( 244 , 255 , 1 ) ')
-      image.should have_width(1)
-    end
-
     it "should cope with rgb percent format" do
       image, meta = @generator.plain(1, 1, 'rgb(100%,50%,20%)')
       image.should have_width(1)
