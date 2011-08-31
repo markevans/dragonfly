@@ -43,7 +43,7 @@ end
 def suppressing_stderr
   original_stderr = $stderr.dup
   tempfile = Tempfile.new('stderr')
-  $stderr.reopen(tempfile)
+  $stderr.reopen(tempfile) rescue
   yield
 ensure
   tempfile.close!
