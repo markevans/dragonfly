@@ -25,9 +25,10 @@ describe Dragonfly::ImageMagick::Utils do
       %q('hel\$(lo)') => %q('hel\$(lo)')
     }.each do |args, escaped_args|
       it "should escape #{args.inspect} -> #{escaped_args.inspect}" do
+        pending "not applicable to windows" if running_on_windows?
         escape_args(args).should == escaped_args
       end
     end
   end
-
+  
 end
