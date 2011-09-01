@@ -3,6 +3,7 @@ def image_properties(image)
     tempfile = image
   else
     tempfile = Tempfile.new('image')
+    tempfile.binmode
     tempfile.write(image.is_a?(Dragonfly::TempObject) ? image.data : image)
     tempfile.close
   end
