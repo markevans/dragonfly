@@ -313,7 +313,7 @@ describe Dragonfly::TempObject do
   describe "initialize from a Rack::Test::UploadedFile" do
     def initialization_object(data)
       # The criteria we're using to determine if an object is a
-      # Rack::Test::UploadedFile is if it responds to path and original_filename.
+      # Rack::Test::UploadedFile is if it responds to path
       #
       # We can't just check if it is_a?(Rack::Test::UploadedFile) because that
       # class may not always be present.
