@@ -3,6 +3,7 @@ module Dragonfly
     
     class FileCommandAnalyser
       
+      include Shell
       include Configurable
       
       configurable_attr :file_command, "file"
@@ -11,7 +12,7 @@ module Dragonfly
       
       def mime_type(temp_object)
         content_type = if use_filesystem
-          `#{file_command} -b --mime '#{temp_object.path}'`
+          `#{file_command} -b --mime #{quote temp_object.path}`
         else
           IO.popen("#{file_command} -b --mime -", 'r+') do |io|
             if num_bytes_to_check
