@@ -1,18 +1,14 @@
 require 'tempfile'
-require 'shellwords'
 
 module Dragonfly
   module ImageMagick
     module Utils
 
-      # Exceptions
-      class ShellCommandFailed < RuntimeError; end
-
+      include Shell
       include Loggable
       include Configurable
       configurable_attr :convert_command, "convert"
       configurable_attr :identify_command, "identify"
-      configurable_attr :log_commands, false
     
       private
 
@@ -44,41 +40,6 @@ module Dragonfly
         tempfile.binmode
         tempfile.close
         tempfile
-      end
-
-      def run(command, args="")
-        full_command = "#{command} #{escape_args(args)}"
-        log.debug("Running command: #{full_command}") if log_commands
-        begin
-          result = `#{full_command}`
-        rescue Errno::ENOENT
-          raise_shell_command_failed(full_command)
-        end
-        if $?.exitstatus == 1
-          throw :unable_to_handle
-        elsif !$?.success?
-          raise_shell_command_failed(full_command)
-        end
-        result
-      end
-    
-      def raise_shell_command_failed(command)
-        raise ShellCommandFailed, "Command failed (#{command}) with exit status #{$?.exitstatus}"
-      end
-      
-      def escape_args(args)
-        args.shellsplit.map do |arg|
-          quote arg.gsub(/\\?'/, %q('\\\\''))
-        end.join(' ')
-      end
-      
-      def quote(string)
-        q = running_on_windows? ? '"' : "'"
-        q + string + q
-      end
-
-      def running_on_windows?
-        ENV['OS'] && ENV['OS'].downcase == 'windows_nt'
       end
 
     end
