@@ -13,7 +13,7 @@ group :development, :test, :cucumber do
   gem 'mongo'
   gem 'couchrest', '~> 1.0'
   gem 'rack-cache'
-  gem 'rails', '3.0.9', :require => nil
+  gem 'rails', '~>3.1.0', :require => nil
   gem 'rake', '0.8.7'
   gem 'rspec', '~> 2.5'
   gem 'webmock'

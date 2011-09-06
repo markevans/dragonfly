@@ -14,14 +14,16 @@ describe Dragonfly::CookieMonster do
     response = Rack::MockRequest.new(app).get('')
     response.status.should == 200
     response.body.should == "body here"
-    response.headers.should == {"Set-Cookie" => "blah", "Something" => "else"}
+    response.headers["Set-Cookie"].should == "blah"
+    response.headers["Something"].should == "else"
   end
 
   it "should delete the set-cookie header from the response if the response comes from dragonfly" do
     response = Rack::MockRequest.new(app('dragonfly.job' => mock)).get('')
     response.status.should == 200
     response.body.should == "body here"
-    response.headers.should == {"Something" => "else"}
+    response.headers["Set-Cookie"].should be_nil
+    response.headers["Something"].should == "else"
   end
 
 end
