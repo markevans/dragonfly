@@ -5,8 +5,17 @@ require ROOT_PATH + '/spec/support/image_matchers.rb'
 # A hash of <name for reference> => <dragonfly uid> pairs
 TEMP_FILES = {}
 
-Dragonfly[:images].configure_with(:imagemagick)
+root_path = ROOT_PATH + '/tmp/dragonfly_cukes'
+logger = Logger.new(ROOT_PATH + '/tmp/dragonfly_cukes.log')
+
+Dragonfly[:images].configure_with(:imagemagick).configure do |c|
+  c.datastore.root_path = root_path
+  c.log = logger
+end
+
 Dragonfly[:files].configure do |c|
+  c.datastore.root_path = root_path
+  c.log = logger
   c.analyser.register(Dragonfly::Analysis::FileCommandAnalyser)
 end
 

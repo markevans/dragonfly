@@ -1,3 +1,5 @@
+require 'fileutils'
+
 RAILS_APP_NAME = 'tmp_app'
 FIXTURES_PATH = ROOT_PATH + "/fixtures"
 
@@ -12,17 +14,27 @@ end
 ##############################################################################
 
 Given "a Rails application set up for using dragonfly" do
-  raise "Problem setting up Rails app" unless `
-    cd #{fixture_path} &&
-    rm -rf #{RAILS_APP_NAME} &&
-    bundle exec rails new #{RAILS_APP_NAME} -m template.rb`
+  ok = nil
+  FileUtils.cd fixture_path do
+    FileUtils.rm_rf RAILS_APP_NAME
+    ok = `bundle exec rails new #{RAILS_APP_NAME} -m template.rb`
+  end
+  raise "Problem setting up Rails app" unless ok
 end
 
 Then /^the (.+) cucumber features in my Rails app should pass$/ do |filename|
   puts "\n*** RUNNING FEATURES IN THE RAILS APP... ***\n"
   path = File.join(fixture_path, RAILS_APP_NAME)
-  `cd #{path} && RAILS_ENV=cucumber rake db:migrate`
-  features_passed = system "cd #{path} && cucumber features/#{filename}.feature"
+  FileUtils.cd path do
+    env = ENV['RAILS_ENV']
+    ENV['RAILS_ENV'] = 'cucumber'
+    `rake db:migrate`
+    ENV['RAILS_ENV'] = env
+  end
+  features_passed = nil
+  FileUtils.cd path do
+    features_passed = system "cucumber features/#{filename}.feature"
+  end
   puts "\n*** FINISHED RUNNING FEATURES IN THE RAILS APP ***\n"
   raise "Features failed" unless features_passed
 end
