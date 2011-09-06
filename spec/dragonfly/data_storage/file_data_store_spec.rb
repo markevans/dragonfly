@@ -10,7 +10,7 @@ describe Dragonfly::DataStorage::FileDataStore do
   
   before(:each) do
     @data_store = Dragonfly::DataStorage::FileDataStore.new
-    @data_store.root_path = '/var/tmp/dragonfly_test'
+    @data_store.root_path = 'tmp/file_data_store_test'
   end
   
   after(:each) do
