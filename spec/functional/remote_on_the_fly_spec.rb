@@ -22,15 +22,15 @@ describe "remote on-the-fly urls" do
         end
       end
       c.datastore = Dragonfly::DataStorage::FileDataStore.new
-      c.datastore.root_path = '/var/tmp/dragonfly'
-      c.datastore.server_root = '/var/tmp'
+      c.datastore.root_path = 'tmp/dragonfly_test_urls'
+      c.datastore.server_root = 'tmp'
     end
     @job = @app.generate(:test)
   end
 
   after(:each) do
     THUMBS.delete_if{true}
-    FileUtils.rm_f('/var/tmp/dragonfly/yay.txt')
+    FileUtils.rm_f('tmp/dragonfly_test_urls/yay.txt')
   end
   
   it "should give the url for the server" do
@@ -38,14 +38,14 @@ describe "remote on-the-fly urls" do
   end
   
   it "should store the content when first called" do
-    File.exist?('/var/tmp/dragonfly/yay.txt').should be_false
+    File.exist?('tmp/dragonfly_test_urls/yay.txt').should be_false
     @app.server.call('PATH_INFO' => @job.url, 'REQUEST_METHOD' => 'GET')
-    File.read('/var/tmp/dragonfly/yay.txt').should == 'TEST'
+    File.read('tmp/dragonfly_test_urls/yay.txt').should == 'TEST'
   end
 
   it "should point to the external url the second time" do
     @app.server.call('PATH_INFO' => @job.url, 'REQUEST_METHOD' => 'GET')
-    @job.url.should == '/dragonfly/yay.txt'
+    @job.url.should == '/dragonfly_test_urls/yay.txt'
   end
 
 end
