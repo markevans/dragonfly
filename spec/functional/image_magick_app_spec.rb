@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "a configured imagemagick app" do
   
   before(:each) do
-    @app = Dragonfly[:images].configure_with(:imagemagick)
+    @app = test_app.configure_with(:imagemagick)
   end
   
   describe "convert command path" do
