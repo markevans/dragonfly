@@ -35,7 +35,7 @@ shared_examples_for "data_store" do
       it "should retrieve the stored data" do
         Dragonfly::TempObject.new(@obj).data.should == @temp_object.data
       end
-      
+
       it "should return a meta hash (probably empty)" do
         @meta.should be_a(Hash)
       end
@@ -45,13 +45,13 @@ shared_examples_for "data_store" do
     describe "when meta is given" do
       before(:each) do
         temp_object = Dragonfly::TempObject.new('gollum')
-        @uid = @data_store.store(temp_object, :meta => {:bitrate => '35', :name => 'danny.boy'})
+        @uid = @data_store.store(temp_object, :meta => {'bitrate' => '35', 'name' => 'danny.boy'})
         @obj, @meta = @data_store.retrieve(@uid)
       end
 
       it "should return the stored meta" do
-        @meta[:bitrate].should == '35'
-        @meta[:name].should == 'danny.boy'
+        @meta['bitrate'].should == '35'
+        @meta['name'].should == 'danny.boy'
       end
     end
 
