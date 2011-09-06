@@ -52,5 +52,9 @@ module Dragonfly
     App.register_configuration(:rails){ Config::Rails }
     App.register_configuration(:heroku){ Config::Heroku }
 
+    def running_on_windows?
+      ENV['OS'] && ENV['OS'].downcase == 'windows_nt'
+    end
+
   end
 end

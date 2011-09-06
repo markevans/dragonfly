@@ -104,7 +104,7 @@ describe Dragonfly::TempObject do
 
       describe "path" do
         it "should return an absolute file path" do
-          if running_on_windows?
+          if Dragonfly.running_on_windows?
             @temp_object.path.should =~ %r{^[a-zA-Z]:/\w+}
           else
             @temp_object.path.should =~ %r{^/\w+}
@@ -256,7 +256,7 @@ describe Dragonfly::TempObject do
     it "should return an absolute path even if the file wasn't instantiated like that" do
       file = new_file('HELLO', 'tmp/bongo')
       temp_object = Dragonfly::TempObject.new(file)
-      if running_on_windows?
+      if Dragonfly.running_on_windows?
         temp_object.path.should =~ %r{^[a-zA-Z]:/\w.*bongo}
       else
         temp_object.path.should =~ %r{^/\w.*bongo}
@@ -289,7 +289,7 @@ describe Dragonfly::TempObject do
     it "should return an absolute path even if the pathname is relative" do
       pathname = new_pathname('HELLO', 'tmp/bingo')
       temp_object = Dragonfly::TempObject.new(pathname)
-      if running_on_windows?
+      if Dragonfly.running_on_windows?
         temp_object.path.should =~ %r{^[a-zA-Z]:/\w.*bingo}
       else
         temp_object.path.should =~ %r{^/\w.*bingo}

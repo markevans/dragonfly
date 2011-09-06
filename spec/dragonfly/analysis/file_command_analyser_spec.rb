@@ -5,6 +5,7 @@ png_path = File.dirname(__FILE__) + '/../../../samples/egg.png'
 describe Dragonfly::Analysis::FileCommandAnalyser do
   
   before(:each) do
+    pending "not applicable to windows" if Dragonfly.running_on_windows?
     @analyser = Dragonfly::Analysis::FileCommandAnalyser.new
   end
   

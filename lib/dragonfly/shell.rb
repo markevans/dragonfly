@@ -36,13 +36,9 @@ module Dragonfly
     end
     
     def quote(string)
-      q = running_on_windows? ? '"' : "'"
+      q = Dragonfly.running_on_windows? ? '"' : "'"
       q + string + q
     end
 
-    def running_on_windows?
-      ENV['OS'] && ENV['OS'].downcase == 'windows_nt'
-    end
-    
   end
 end
