@@ -749,7 +749,11 @@ describe Dragonfly::Job do
       it "should return the fetch_file step otherwise" do
         step = @app.fetch_file('/my/file.png').process(:cheese).fetch_file_step
         step.should be_a(Dragonfly::Job::FetchFile)
-        step.path.should == '/my/file.png'
+        if running_on_windows?
+          step.path.should =~ %r(:/my/file\.png$)
+        else
+          step.path.should == '/my/file.png'
+        end
       end
     end
 

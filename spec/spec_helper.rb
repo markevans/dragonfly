@@ -51,3 +51,7 @@ ensure
   tempfile.close!
   $stderr.reopen(original_stderr)
 end
+
+def running_on_windows?
+  ENV['OS'] && ENV['OS'].downcase == 'windows_nt'
+end
