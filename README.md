@@ -12,7 +12,7 @@ For the lazy Rails user...
 **Gemfile**:
 
     gem 'rack-cache', :require => 'rack/cache'
-    gem 'dragonfly', '~>0.9.4'
+    gem 'dragonfly', '~>0.9.6'
 
 **Initializer** (e.g. config/initializers/dragonfly.rb):
 
