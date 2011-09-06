@@ -1,3 +1,20 @@
+0.9.6 (2011-09-06)
+==================
+Features
+--------
+- Allow setting `content_type` when storing in Mongo GridFS
+
+Changes
+-------
+- Tests use Rails 3.1
+
+Fixes
+-----
+- Moved from fog's deprecated `get_object_url` to `get_object_https_url`
+- Allow initializing a TempObject with Rack::Test::UploadedFile
+- Tests working in Windows (except feature that uses FileCommandAnalyser)
+- Better shell quoting
+
 0.9.5 (2011-07-27)
 ==================
 Features
