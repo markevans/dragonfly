@@ -31,7 +31,7 @@ module Dragonfly
 
       def store(temp_object, opts={})
         ensure_authenticated!
-        content_type = opts[:content_type] || 'application/octet-stream'
+        content_type = opts[:content_type] || opts[:mime_type] || 'application/octet-stream'
         temp_object.file do |f|
           mongo_id = grid.put(f, :content_type => content_type,
                                  :metadata => marshal_encode(opts[:meta] || {}))

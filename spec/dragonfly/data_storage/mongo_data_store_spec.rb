@@ -60,10 +60,12 @@ describe Dragonfly::DataStorage::MongoDataStore do
       @temp_object = Dragonfly::TempObject.new('testingyo')
     end
 
-    it "should allow setting on store with 'content_type'" do
-      uid = @data_store.store(@temp_object, :content_type => 'text/plain')
-      @data_store.grid.get(BSON::ObjectId(uid)).content_type.should == 'text/plain'
-      @data_store.grid.get(BSON::ObjectId(uid)).read.should == 'testingyo'
+    [:content_type, :mime_type].each do |key|
+      it "should allow setting on store with #{key.inspect}" do
+        uid = @data_store.store(@temp_object, key => 'text/plain')
+        @data_store.grid.get(BSON::ObjectId(uid)).content_type.should == 'text/plain'
+        @data_store.grid.get(BSON::ObjectId(uid)).read.should == 'testingyo'
+      end
     end
   end
 
