@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "getting rack response directly" do
   
   before(:each) do
-    @app = Dragonfly[:to_response].configure do |c|
+    @app = test_app.configure do |c|
       c.generator.add :test do
         "bunheads"
       end
