@@ -29,7 +29,7 @@ module Dragonfly
         temp_object.file do |f|
           doc = CouchRest::Document.new(:meta => marshal_encode(meta))
           response = db.save_doc(doc)
-          doc.put_attachment(name, f, :content_type => content_type)
+          doc.put_attachment(name, f.dup, :content_type => content_type)
           form_uid(response['id'], name)
         end
       rescue RuntimeError => e
