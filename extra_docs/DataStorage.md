@@ -132,6 +132,8 @@ You can also pass any options to `MongoDataStore.new` as an options hash.
 
 You can't serve directly from the mongo datastore.
 
+You can optionally pass in a `:content_type` option to `store` to tell it the content's MIME type.
+
 Couch datastore
 ---------------
 To configure with the {Dragonfly::DataStorage::CouchDataStore CouchDataStore}:
@@ -150,8 +152,9 @@ To configure:
 
 You can also pass these options to `CouchDataStore.new` as an options hash.
 
-You can serve directly from the couch datastore. You can optionally pass in a `:mime_type` option to `store`
-to tell it what to use for its 'Content-Type' header.
+You can serve directly from the couch datastore.
+
+You can optionally pass in a `:content_type` option to `store` to tell it what to use for its 'Content-Type' header.
 
 Custom datastore
 ----------------
