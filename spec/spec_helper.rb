@@ -39,6 +39,7 @@ end
 def test_app
   app = Dragonfly::App.send(:new)
   app.log = Logger.new(LOG_FILE)
+  app.datastore.root_path = 'tmp/file_data_store_test'
   app
 end
 
