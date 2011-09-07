@@ -1,5 +1,13 @@
-require 'dragonfly'
 require 'uri'
+require 'dragonfly'
+begin
+  require 'rack/cache'
+rescue LoadError => e
+  puts "Couldn't find rack-cache - make sure you have it in your Gemfile:"
+  puts "  gem 'rack-cache', :require => 'rack/cache'"
+  puts " or configure dragonfly manually instead of using 'dragonfly/rails/images'"
+  raise e
+end
 
 ### The dragonfly app ###
 app = Dragonfly[:images]
@@ -13,15 +21,12 @@ if defined?(ActiveRecord::Base)
 end
 
 ### Insert the middleware ###
-Rails.application.middleware.insert 0, 'Dragonfly::Middleware', :images
+rack_cache_already_inserted = Rails.application.config.action_controller.perform_caching && Rails.application.config.action_dispatch.rack_cache
 
-begin
-  require 'rack/cache'
-  Rails.application.middleware.insert_before 'Dragonfly::Middleware', 'Rack::Cache', {
-    :verbose     => true,
-    :metastore   => URI.encode("file:#{Rails.root}/tmp/dragonfly/cache/meta"), # URI encoded in case of spaces
-    :entitystore => URI.encode("file:#{Rails.root}/tmp/dragonfly/cache/body")
-  }
-rescue LoadError => e  
-  app.log.warn("Warning: couldn't find rack-cache for caching dragonfly content")
-end
+Rails.application.middleware.insert 0, Rack::Cache, {
+  :verbose     => true,
+  :metastore   => URI.encode("file:#{Rails.root}/tmp/dragonfly/cache/meta"), # URI encoded in case of spaces
+  :entitystore => URI.encode("file:#{Rails.root}/tmp/dragonfly/cache/body")
+} unless rack_cache_already_inserted
+
+Rails.application.middleware.insert_after Rack::Cache, Dragonfly::Middleware, :images
