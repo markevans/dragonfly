@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.5)</div>
+      <div id="logo">DRAGONFLY (v 0.9.6)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -229,6 +229,8 @@ is changed, otherwise you could have caching problems, as the generated urls wil
 
 <p>You can't serve directly from the mongo datastore.</p>
 
+<p>You can optionally pass in a <code>:content_type</code> option to <code>store</code> to tell it the content's MIME type.</p>
+
 <h2>Couch datastore</h2>
 
 <p>To configure with the <span class='object_link'><a href="Dragonfly/DataStorage/CouchDataStore.html" title="Dragonfly::DataStorage::CouchDataStore (class)">CouchDataStore</a></span>:</p>
@@ -249,8 +251,9 @@ is changed, otherwise you could have caching problems, as the generated urls wil
 
 <p>You can also pass these options to <code>CouchDataStore.new</code> as an options hash.</p>
 
-<p>You can serve directly from the couch datastore. You can optionally pass in a <code>:mime_type</code> option to <code>store</code>
-to tell it what to use for its 'Content-Type' header.</p>
+<p>You can serve directly from the couch datastore.</p>
+
+<p>You can optionally pass in a <code>:content_type</code> option to <code>store</code> to tell it what to use for its 'Content-Type' header.</p>
 
 <h2>Custom datastore</h2>
 
@@ -316,7 +319,7 @@ Any options, including <code>:meta</code>, get passed here</p>
     </div>
 
     <div id="footer">
-  Generated on Tue Aug  2 11:06:18 2011 by 
+  Generated on Wed Sep  7 23:53:21 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.9.2).
 </div>

@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.5)</div>
+      <div id="logo">DRAGONFLY (v 0.9.6)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -185,6 +185,10 @@
   
   
   
+  
+  
+  
+  
 
 
   
@@ -201,6 +205,9 @@
   <h3 class="inherited">Attributes included from <span class='object_link'><a href="../Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Loggable.html#log_object-instance_method" title="Dragonfly::Loggable#log_object (method)">log_object</a></span></p>
 
+  
+  
+  
 
 
 
@@ -304,6 +311,16 @@
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Loggable.html#log-instance_method" title="Dragonfly::Loggable#log (method)">#log</a></span>, <span class='object_link'><a href="../Loggable.html#log%3D-instance_method" title="Dragonfly::Loggable#log= (method)">#log=</a></span>, <span class='object_link'><a href="../Loggable.html#use_same_log_as-instance_method" title="Dragonfly::Loggable#use_same_log_as (method)">#use_same_log_as</a></span></p>
 
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Shell.html" title="Dragonfly::Shell (module)">Shell</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Shell.html#escape_args-instance_method" title="Dragonfly::Shell#escape_args (method)">#escape_args</a></span>, <span class='object_link'><a href="../Shell.html#quote-instance_method" title="Dragonfly::Shell#quote (method)">#quote</a></span>, <span class='object_link'><a href="../Shell.html#raise_shell_command_failed-instance_method" title="Dragonfly::Shell#raise_shell_command_failed (method)">#raise_shell_command_failed</a></span>, <span class='object_link'><a href="../Shell.html#run-instance_method" title="Dragonfly::Shell#run (method)">#run</a></span></p>
+
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -336,7 +353,7 @@
 <span class='def def kw'>def</span> <span class='plain identifier id'>plain</span><span class='lparen token'>(</span><span class='width identifier id'>width</span><span class='comma token'>,</span> <span class='height identifier id'>height</span><span class='comma token'>,</span> <span class='colour identifier id'>colour</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='format identifier id'>format</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:format</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'png'</span>
   <span class='lbrack token'>[</span>
-    <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='dstring node'>&quot;-size #{width}x#{height} \&quot;xc:#{colour}\&quot;&quot;</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+    <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='dstring node'>&quot;-size #{width}x#{height} xc:#{colour}&quot;</span><span class='comma token'>,</span> <span class='format identifier id'>format</span><span class='rparen token'>)</span><span class='comma token'>,</span>
     <span class='lbrace token'>{</span><span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='format identifier id'>format</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='comma token'>,</span> <span class='symbol val'>:name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;plain.#{format}&quot;</span><span class='rbrace token'>}</span>
   <span class='rbrack token'>]</span>
 <span class='end end kw'>end</span>
@@ -490,7 +507,7 @@
     <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;-size #{width}x#{height}&quot;</span><span class='rparen token'>)</span>
     <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;xc:#{background}&quot;</span><span class='rparen token'>)</span>
     <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='dstring node'>&quot;-annotate 0x0+#{padding_left}+#{padding_top} #{escaped_string}&quot;</span><span class='rparen token'>)</span>
-    <span class='run identifier id'>run</span> <span class='dstring node'>&quot;#{convert_command} #{args.join(' ')} #{tempfile.path}&quot;</span>
+    <span class='run identifier id'>run</span> <span class='convert_command identifier id'>convert_command</span><span class='comma token'>,</span>  <span class='dstring node'>&quot;#{args.join(' ')} #{quote tempfile.path}&quot;</span>
   <span class='end end kw'>end</span>
 
   <span class='lbrack token'>[</span>
@@ -516,7 +533,7 @@
     </div>
 
     <div id="footer">
-  Generated on Tue Aug  2 11:06:22 2011 by 
+  Generated on Wed Sep  7 23:53:25 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.9.2).
 </div>

@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.5)</div>
+      <div id="logo">DRAGONFLY (v 0.9.6)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -78,7 +78,33 @@
 
     <div id="content" class="clearfix">
       <div class="col1">
-        <div id='filecontents'><h1>0.9.5 (2011-07-27)</h1>
+        <div id='filecontents'><h1>0.9.6 (2011-09-06)</h1>
+
+<h2>Features</h2>
+
+<ul>
+<li>Allow setting <code>content_type</code> when storing in Mongo GridFS</li>
+</ul>
+
+
+<h2>Changes</h2>
+
+<ul>
+<li>Tests use Rails 3.1</li>
+</ul>
+
+
+<h2>Fixes</h2>
+
+<ul>
+<li>Moved from fog's deprecated <code>get_object_url</code> to <code>get_object_https_url</code></li>
+<li>Allow initializing a TempObject with Rack::Test::UploadedFile</li>
+<li>Tests working in Windows (except feature that uses FileCommandAnalyser)</li>
+<li>Better shell quoting</li>
+</ul>
+
+
+<h1>0.9.5 (2011-07-27)</h1>
 
 <h2>Features</h2>
 
@@ -612,7 +638,7 @@ Can also pass a block to temp_object.file which closes the file automatically</l
     </div>
 
     <div id="footer">
-  Generated on Tue Aug  2 11:06:18 2011 by 
+  Generated on Wed Sep  7 23:53:21 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.9.2).
 </div>

@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.5)</div>
+      <div id="logo">DRAGONFLY (v 0.9.6)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -106,7 +106,7 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2"><span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span></dd>
+      <dd class="r2"><span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span>, <span class='object_link'><a href="../Shell.html" title="Dragonfly::Shell (module)">Shell</a></span></dd>
       
     
   
@@ -124,8 +124,15 @@
   
   
   
+  
+  
+  
+  
 
 
+  
+  
+  
   
   
   
@@ -218,6 +225,16 @@ or
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></span></p>
 
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Shell.html" title="Dragonfly::Shell (module)">Shell</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Shell.html#escape_args-instance_method" title="Dragonfly::Shell#escape_args (method)">#escape_args</a></span>, <span class='object_link'><a href="../Shell.html#quote-instance_method" title="Dragonfly::Shell#quote (method)">#quote</a></span>, <span class='object_link'><a href="../Shell.html#raise_shell_command_failed-instance_method" title="Dragonfly::Shell#raise_shell_command_failed (method)">#raise_shell_command_failed</a></span>, <span class='object_link'><a href="../Shell.html#run-instance_method" title="Dragonfly::Shell#run (method)">#run</a></span></p>
+
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -236,7 +253,6 @@ or
       <pre class="lines">
 
 
-12
 13
 14
 15
@@ -251,14 +267,15 @@ or
 24
 25
 26
-27</pre>
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/file_command_analyser.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/file_command_analyser.rb', line 13</span>
 
 <span class='def def kw'>def</span> <span class='mime_type identifier id'>mime_type</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
   <span class='content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='use_filesystem identifier id'>use_filesystem</span>
-    <span class='dxstring node'>`#{file_command} -b --mime '#{temp_object.path}'`</span>
+    <span class='dxstring node'>`#{file_command} -b --mime #{quote temp_object.path}`</span>
   <span class='else else kw'>else</span>
     <span class='IO constant id'>IO</span><span class='dot token'>.</span><span class='popen identifier id'>popen</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{file_command} -b --mime -&quot;</span><span class='comma token'>,</span> <span class='string val'>'r+'</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='io identifier id'>io</span><span class='bitor op'>|</span>
       <span class='if if kw'>if</span> <span class='num_bytes_to_check identifier id'>num_bytes_to_check</span>
@@ -290,7 +307,7 @@ or
     </div>
 
     <div id="footer">
-  Generated on Tue Aug  2 11:06:23 2011 by 
+  Generated on Wed Sep  7 23:53:26 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.9.2).
 </div>

@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.5)</div>
+      <div id="logo">DRAGONFLY (v 0.9.6)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -629,7 +629,7 @@ A new instance of CouchDataStore
   <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span>
     <span class='doc identifier id'>doc</span> <span class='assign token'>=</span> <span class='CouchRest constant id'>CouchRest</span><span class='colon2 op'>::</span><span class='Document constant id'>Document</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:meta</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='marshal_encode identifier id'>marshal_encode</span><span class='lparen token'>(</span><span class='meta identifier id'>meta</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
     <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='db identifier id'>db</span><span class='dot token'>.</span><span class='save_doc identifier id'>save_doc</span><span class='lparen token'>(</span><span class='doc identifier id'>doc</span><span class='rparen token'>)</span>
-    <span class='doc identifier id'>doc</span><span class='dot token'>.</span><span class='put_attachment identifier id'>put_attachment</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='f identifier id'>f</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:content_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='content_type identifier id'>content_type</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+    <span class='doc identifier id'>doc</span><span class='dot token'>.</span><span class='put_attachment identifier id'>put_attachment</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span><span class='comma token'>,</span> <span class='symbol val'>:content_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='content_type identifier id'>content_type</span><span class='rparen token'>)</span>
     <span class='form_uid identifier id'>form_uid</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='string val'>'id'</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span>
   <span class='end end kw'>end</span>
 <span class='rescue rescue kw'>rescue</span> <span class='RuntimeError constant id'>RuntimeError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
@@ -684,7 +684,7 @@ A new instance of CouchDataStore
     </div>
 
     <div id="footer">
-  Generated on Tue Aug  2 11:06:23 2011 by 
+  Generated on Wed Sep  7 23:53:26 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.9.2).
 </div>

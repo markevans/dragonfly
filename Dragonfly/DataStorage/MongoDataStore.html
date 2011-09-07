@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.5)</div>
+      <div id="logo">DRAGONFLY (v 0.9.6)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -502,12 +502,12 @@ A new instance of MongoDataStore
       <pre class="lines">
 
 
-60
-61
-62</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 62</span>
 
 <span class='def def kw'>def</span> <span class='connection identifier id'>connection</span>
   <span class='@connection ivar id'>@connection</span> <span class='opasgn op'>||=</span> <span class='Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='Connection constant id'>Connection</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='host identifier id'>host</span><span class='comma token'>,</span> <span class='port identifier id'>port</span><span class='rparen token'>)</span>
@@ -531,12 +531,12 @@ A new instance of MongoDataStore
       <pre class="lines">
 
 
-64
-65
-66</pre>
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 66</span>
 
 <span class='def def kw'>def</span> <span class='db identifier id'>db</span>
   <span class='@db ivar id'>@db</span> <span class='opasgn op'>||=</span> <span class='connection identifier id'>connection</span><span class='dot token'>.</span><span class='db identifier id'>db</span><span class='lparen token'>(</span><span class='database identifier id'>database</span><span class='rparen token'>)</span>
@@ -581,15 +581,15 @@ A new instance of MongoDataStore
       <pre class="lines">
 
 
-53
-54
 55
 56
 57
-58</pre>
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 55</span>
 
 <span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
   <span class='ensure_authenticated! fid id'>ensure_authenticated!</span>
@@ -616,12 +616,12 @@ A new instance of MongoDataStore
       <pre class="lines">
 
 
-68
-69
-70</pre>
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 70</span>
 
 <span class='def def kw'>def</span> <span class='grid identifier id'>grid</span>
   <span class='@grid ivar id'>@grid</span> <span class='opasgn op'>||=</span> <span class='Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='Grid constant id'>Grid</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='db identifier id'>db</span><span class='rparen token'>)</span>
@@ -666,8 +666,6 @@ A new instance of MongoDataStore
       <pre class="lines">
 
 
-40
-41
 42
 43
 44
@@ -677,10 +675,12 @@ A new instance of MongoDataStore
 48
 49
 50
-51</pre>
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 42</span>
 
 <span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
   <span class='ensure_authenticated! fid id'>ensure_authenticated!</span>
@@ -719,15 +719,19 @@ A new instance of MongoDataStore
 35
 36
 37
-38</pre>
+38
+39
+40</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 32</span>
 
 <span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='ensure_authenticated! fid id'>ensure_authenticated!</span>
+  <span class='content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:mime_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'application/octet-stream'</span>
   <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span>
-    <span class='mongo_id identifier id'>mongo_id</span> <span class='assign token'>=</span> <span class='grid identifier id'>grid</span><span class='dot token'>.</span><span class='put identifier id'>put</span><span class='lparen token'>(</span><span class='f identifier id'>f</span><span class='comma token'>,</span> <span class='symbol val'>:metadata</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='marshal_encode identifier id'>marshal_encode</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:meta</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='mongo_id identifier id'>mongo_id</span> <span class='assign token'>=</span> <span class='grid identifier id'>grid</span><span class='dot token'>.</span><span class='put identifier id'>put</span><span class='lparen token'>(</span><span class='f identifier id'>f</span><span class='comma token'>,</span> <span class='symbol val'>:content_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='content_type identifier id'>content_type</span><span class='comma token'>,</span>
+                           <span class='symbol val'>:metadata</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='marshal_encode identifier id'>marshal_encode</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:meta</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
     <span class='mongo_id identifier id'>mongo_id</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
   <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
@@ -749,7 +753,7 @@ A new instance of MongoDataStore
     </div>
 
     <div id="footer">
-  Generated on Tue Aug  2 11:06:23 2011 by 
+  Generated on Wed Sep  7 23:53:26 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.9.2).
 </div>

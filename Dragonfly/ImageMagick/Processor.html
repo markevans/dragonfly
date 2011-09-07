@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.5)</div>
+      <div id="logo">DRAGONFLY (v 0.9.6)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -212,6 +212,10 @@ e.g. &#8216;30x30+10+10&#8217;
   
   
   
+  
+  
+  
+  
 
 
   
@@ -228,6 +232,9 @@ e.g. &#8216;30x30+10+10&#8217;
   <h3 class="inherited">Attributes included from <span class='object_link'><a href="../Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Loggable.html#log_object-instance_method" title="Dragonfly::Loggable#log_object (method)">log_object</a></span></p>
 
+  
+  
+  
 
 
 
@@ -480,6 +487,16 @@ e.g. &#8216;30x30+10+10&#8217;
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Loggable.html#log-instance_method" title="Dragonfly::Loggable#log (method)">#log</a></span>, <span class='object_link'><a href="../Loggable.html#log%3D-instance_method" title="Dragonfly::Loggable#log= (method)">#log=</a></span>, <span class='object_link'><a href="../Loggable.html#use_same_log_as-instance_method" title="Dragonfly::Loggable#use_same_log_as (method)">#use_same_log_as</a></span></p>
 
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Shell.html" title="Dragonfly::Shell (module)">Shell</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Shell.html#escape_args-instance_method" title="Dragonfly::Shell#escape_args (method)">#escape_args</a></span>, <span class='object_link'><a href="../Shell.html#quote-instance_method" title="Dragonfly::Shell#quote (method)">#quote</a></span>, <span class='object_link'><a href="../Shell.html#raise_shell_command_failed-instance_method" title="Dragonfly::Shell#raise_shell_command_failed (method)">#raise_shell_command_failed</a></span>, <span class='object_link'><a href="../Shell.html#run-instance_method" title="Dragonfly::Shell#run (method)">#run</a></span></p>
+
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -675,7 +692,7 @@ e.g. &#8216;30x30+10+10&#8217;
       <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 25</span>
 
 <span class='def def kw'>def</span> <span class='resize identifier id'>resize</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='geometry identifier id'>geometry</span><span class='rparen token'>)</span>
-  <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='dstring node'>&quot;-resize \&quot;#{geometry}\&quot;&quot;</span><span class='rparen token'>)</span>
+  <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='dstring node'>&quot;-resize #{geometry}&quot;</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -755,7 +772,7 @@ e.g. &#8216;30x30+10+10&#8217;
       <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 71</span>
 
 <span class='def def kw'>def</span> <span class='rotate identifier id'>rotate</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='amount identifier id'>amount</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='dstring node'>&quot;-rotate \&quot;#{amount}#{opts[:qualifier]}\&quot;&quot;</span><span class='rparen token'>)</span>
+  <span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='dstring node'>&quot;-rotate #{amount}#{opts[:qualifier]}&quot;</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -861,7 +878,7 @@ e.g. &#8216;30x30+10+10&#8217;
     </div>
 
     <div id="footer">
-  Generated on Tue Aug  2 11:06:22 2011 by 
+  Generated on Wed Sep  7 23:53:26 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.9.2).
 </div>

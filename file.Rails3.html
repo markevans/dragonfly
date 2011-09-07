@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.5)</div>
+      <div id="logo">DRAGONFLY (v 0.9.6)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -104,17 +104,19 @@
 
 <p>application.rb:</p>
 
-<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert identifier id'>insert</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='string val'>'Dragonfly::Middleware'</span><span class='comma token'>,</span> <span class='symbol val'>:images</span>
-<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert_before identifier id'>insert_before</span> <span class='string val'>'Dragonfly::Middleware'</span><span class='comma token'>,</span> <span class='string val'>'Rack::Cache'</span><span class='comma token'>,</span> <span class='lbrace token'>{</span>
+<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert identifier id'>insert</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='string val'>'Rack::Cache'</span><span class='comma token'>,</span> <span class='lbrace token'>{</span>
   <span class='symbol val'>:verbose</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span>
   <span class='symbol val'>:metastore</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='dstring node'>&quot;file:#{Rails.root}/tmp/dragonfly/cache/meta&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span>
   <span class='symbol val'>:entitystore</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='dstring node'>&quot;file:#{Rails.root}/tmp/dragonfly/cache/body&quot;</span><span class='rparen token'>)</span>
-<span class='rbrace token'>}</span>
+<span class='rbrace token'>}</span> <span class='comment val'># unless Rails.env.production?  ## uncomment this 'unless' in Rails 3.1,</span>
+                                  <span class='comment val'>## because it already inserts Rack::Cache in production</span>
+
+<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert_after identifier id'>insert_after</span> <span class='string val'>'Rack::Cache'</span><span class='comma token'>,</span> <span class='string val'>'Dragonfly::Middleware'</span><span class='comma token'>,</span> <span class='symbol val'>:images</span>
 </pre>
 
 <h2>Gemfile</h2>
 
-<pre class="code"><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span><span class='comma token'>,</span> <span class='string val'>'~&gt;0.9.4'</span>
+<pre class="code"><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span><span class='comma token'>,</span> <span class='string val'>'~&gt;0.9.6'</span>
 <span class='gem identifier id'>gem</span> <span class='string val'>'rack-cache'</span><span class='comma token'>,</span> <span class='symbol val'>:require</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'rack/cache'</span>
 </pre>
 
@@ -143,7 +145,7 @@
     </div>
 
     <div id="footer">
-  Generated on Tue Aug  2 11:06:17 2011 by 
+  Generated on Wed Sep  7 23:53:20 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.9.2).
 </div>
