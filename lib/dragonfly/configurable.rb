@@ -79,6 +79,7 @@ module Dragonfly
       def add_child_configurable(obj)
         child_configurables << obj
         config_methods.push(*obj.config_methods)
+        default_configuration.merge!(obj.default_configuration)
         fallback_configurable.config_methods.push(*obj.config_methods) if fallback_configurable
       end
 

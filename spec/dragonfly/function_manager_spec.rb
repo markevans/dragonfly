@@ -94,6 +94,12 @@ describe Dragonfly::FunctionManager do
     it "should not include configurable methods in the functions" do
       @fm.functions.keys.should == [:height_and_age]
     end
+
+    it "should return the registered class's default configuration if not configured" do
+      @fm.register(@class)
+      @fm.send(:default_value, :height).should == @class.new.send(:default_value, :height)
+      @fm.default_configuration.should == @class.default_configuration
+    end
   end
 
   describe "calling" do
