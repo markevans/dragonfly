@@ -1,3 +1,9 @@
+0.9.8 (2011-09-08)
+==================
+Fixes
+-----
+- Regenerated gemspec again with ruby 1.8.7 - didn't seem to be fixed
+
 0.9.7 (2011-09-08)
 ==================
 Fixes
