@@ -1,3 +1,9 @@
+0.9.7 (2011-09-08)
+==================
+Fixes
+-----
+- Regenerated gemspec to overcome annoying yaml issue (http://blog.rubygems.org/2011/08/31/shaving-the-yaml-yacc.html)
+
 0.9.6 (2011-09-06)
 ==================
 Features
