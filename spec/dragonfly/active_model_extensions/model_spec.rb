@@ -222,6 +222,7 @@ describe Item do
           @app.datastore.should_receive(:destroy).with('some_uid')
           @item.save!
         end
+        
         it "should not try to destroy the old data if saved again" do
           @app.datastore.should_receive(:destroy).with('some_uid')
           @item.save!
@@ -257,6 +258,10 @@ describe Item do
         it "should return the new data" do
           @item.preview_image.data.should == 'ANEWDATASTRING'
         end
+
+        it 'should mark the attribute as changed' do
+          @item.preview_image_uid_changed?.should be_true
+        end
       end
 
       describe "when it is set to nil" do
@@ -278,6 +283,11 @@ describe Item do
           @app.datastore.should_receive(:destroy).with('some_uid')
           @item.destroy
         end
+        
+        it 'should mark the attribute as changed' do
+          @item.preview_image_uid_changed?.should be_true
+        end
+        
       end
 
       describe "when the data can't be found" do
