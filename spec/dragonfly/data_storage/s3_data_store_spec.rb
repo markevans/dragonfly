@@ -224,6 +224,13 @@ describe Dragonfly::DataStorage::S3DataStore do
       end
       @data_store.store(@temp_object, :headers => {'hello' => 'there'})
     end
+    
+    it "should store with the content-type if passed in" do
+      @data_store.storage.should_receive(:put_object) do |_, __, ___, headers|
+        headers['Content-Type'].should == 'text/plain'
+      end
+      @data_store.store(@temp_object, :mime_type => 'text/plain')
+    end
   end
 
   describe "urls for serving directly" do

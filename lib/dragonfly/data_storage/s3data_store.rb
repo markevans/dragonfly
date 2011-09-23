@@ -35,6 +35,8 @@ module Dragonfly
         
         meta = opts[:meta] || {}
         headers = opts[:headers] || {}
+        mime_type = opts[:mime_type] || opts[:content_type]
+        headers['Content-Type'] = mime_type if mime_type
         uid = opts[:path] || generate_uid(meta[:name] || temp_object.original_filename || 'file')
         
         rescuing_socket_errors do
