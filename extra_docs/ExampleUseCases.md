@@ -74,13 +74,16 @@ We can set up a Dragonfly endpoint in routes.rb for generating thumbnails:
       app.fetch(params[:uid]).thumb(params[:geometry])
     }
 
+NOTE: if you use `do`...`end` here instead of curly braces, make sure you put brackets around the arguments to `match`,
+otherwise Ruby will parse it incorrectly
+
 If we have access to the image uid in javascript, we can create the url like so:
 
     var url = '/thumbs/400x300?uid=' + uid
 
 Then we can get the content with ajax, create an img tag, etc.
 
-NB: in the above example we've put the uid in the query string and not the path because the dot in it confuses Rails' pattern recognition.
+NOTE: in the above example we've put the uid in the query string and not the path because the dot in it confuses Rails' pattern recognition.
 You could always put it in the path and escape/unescape it either side of the request.
 
 Also javascript's built-in `encodeURIComponent` function may be useful when Rails has difficulty matching routes due to special characters like '#' and '/'.
