@@ -68,12 +68,12 @@ module Dragonfly
         args.push("-pointsize #{font_size}")
         args.push("-font \"#{opts[:font]}\"") if opts[:font]
         args.push("-family '#{opts[:font_family]}'") if opts[:font_family]
-        args.push("-fill #{opts[:color]}") if opts[:color]
+        args.push("-fill '#{opts[:color]}'") if opts[:color]
         args.push("-stroke #{opts[:stroke_color]}") if opts[:stroke_color]
         args.push("-style #{FONT_STYLES[opts[:font_style]]}") if opts[:font_style]
         args.push("-stretch #{FONT_STRETCHES[opts[:font_stretch]]}") if opts[:font_stretch]
         args.push("-weight #{FONT_WEIGHTS[opts[:font_weight]]}") if opts[:font_weight]
-        args.push("-background #{background}")
+        args.push("-background '#{background}'")
         args.push("label:#{escaped_string}")
 
         # Padding
