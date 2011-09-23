@@ -212,7 +212,8 @@ module Dragonfly
       end
 
       def model_uid_will_change!
-        model.send("#{attribute}_uid_will_change!")
+        meth = "#{attribute}_uid_will_change!"
+        model.send(meth) if model.respond_to?(meth)
       end
       
       attr_reader :model, :uid
