@@ -368,7 +368,7 @@ module Dragonfly
     # Misc
 
     def store(opts={})
-      app.store(result, opts.merge(:meta => meta))
+      app.store(result, opts_for_store.merge(opts))
     end
 
     def inspect
@@ -440,6 +440,10 @@ module Dragonfly
 
     def last_step_of_type(type)
       steps.select{|s| s.is_a?(type) }.last
+    end
+    
+    def opts_for_store
+      {:meta => meta, :mime_type => mime_type}
     end
 
   end

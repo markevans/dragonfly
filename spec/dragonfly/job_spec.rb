@@ -977,13 +977,13 @@ describe Dragonfly::Job do
       @app.generator.add(:test){ ["Toes", {:name => 'doogie.txt'}] }
       @job = @app.generate(:test)
     end
-    it "should store its data along with the meta" do
+    it "should store its data along with the meta and mime_type" do
       @job.meta[:eggs] = 'doolally'
-      @app.datastore.should_receive(:store).with(a_temp_object_with_data("Toes"), :meta => {:name => 'doogie.txt', :eggs => 'doolally'})
+      @app.datastore.should_receive(:store).with(a_temp_object_with_data("Toes"), :mime_type => 'text/plain', :meta => {:name => 'doogie.txt', :eggs => 'doolally'})
       @job.store
     end
     it "should add extra opts" do
-      @app.datastore.should_receive(:store).with(a_temp_object_with_data("Toes"), :meta => {:name => 'doogie.txt'}, :path => 'blah')
+      @app.datastore.should_receive(:store).with(a_temp_object_with_data("Toes"), :mime_type => 'text/plain', :meta => {:name => 'doogie.txt'}, :path => 'blah')
       @job.store(:path => 'blah')
     end
   end
