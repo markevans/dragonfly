@@ -64,5 +64,10 @@ describe Dragonfly::ImageMagick::Analyser do
     image = Dragonfly::TempObject.new(SAMPLES_DIR.join('white pixel.png'))
     @analyser.width(image).should == 1
   end
+  
+  it "should work (width) for images with capital letter extensions" do
+    image = Dragonfly::TempObject.new(SAMPLES_DIR.join('DSC02119.JPG'))
+    @analyser.width(image).should == 1
+  end
 
 end
