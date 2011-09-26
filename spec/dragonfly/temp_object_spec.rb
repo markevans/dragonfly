@@ -156,16 +156,6 @@ describe Dragonfly::TempObject do
         end
         parts.last.bytesize.should <= 8192
       end
-      it "should yield the number of bytes specified in the class configuration" do
-        klass = Class.new(Dragonfly::TempObject)
-        temp_object = new_temp_object(File.read(sample_path('round.gif')), klass)
-        klass.block_size = 3001
-        parts = get_parts(temp_object)
-        parts[0...-1].each do |part|
-          part.length.should == 3001
-        end
-        parts.last.length.should <= 3001
-      end
     end
     
     describe "closing" do

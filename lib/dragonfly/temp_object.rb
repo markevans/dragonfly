@@ -35,14 +35,6 @@ module Dragonfly
     # Exceptions
     class Closed < RuntimeError; end
 
-    # Class configuration
-    class << self
-
-      include Configurable
-      configurable_attr :block_size, 8192
-
-    end
-
     # Instance Methods
 
     def initialize(obj)
@@ -177,7 +169,7 @@ module Dragonfly
     private
 
     def block_size
-      self.class.block_size
+      8192
     end
 
     def copy_to_tempfile(path)
