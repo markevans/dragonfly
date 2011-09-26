@@ -36,8 +36,8 @@ module Dragonfly
         '900'     => 900
       }
 
-      include Utils
       include Configurable
+      include Utils
 
       def plain(width, height, colour, opts={})
         format = opts[:format] || 'png'

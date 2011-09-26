@@ -2,8 +2,8 @@ module Dragonfly
   module ImageMagick
     class Analyser
 
-      include Utils
       include Configurable
+      include Utils
 
       def width(temp_object)
         identify(temp_object)[:width]
