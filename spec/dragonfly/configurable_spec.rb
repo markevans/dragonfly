@@ -461,14 +461,18 @@ describe Dragonfly::Configurable do
         include Dragonfly::Configurable
         include A
         include B
+        configurable_attr :c
+      end
+      class L < K
       end
     end
     
     it "should include configuration from all of its mixins" do
-      k = K.new
-      k.configure do |c|
+      l = L.new
+      l.configure do |c|
         c.a = 'something'
         c.b = 'something'
+        c.c = 'something'
       end
     end
   end
