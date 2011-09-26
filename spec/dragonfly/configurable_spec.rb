@@ -119,18 +119,6 @@ describe Dragonfly::Configurable do
     end
   end
   
-  describe "using in the singleton class" do
-    it "should work" do
-      class OneOff
-        class << self
-          include Dragonfly::Configurable
-          configurable_attr :food, 'bread'
-        end
-      end
-      OneOff.food.should == 'bread'
-    end
-  end
-  
   describe "configuration method" do
     
     before(:each) do
@@ -270,11 +258,11 @@ describe Dragonfly::Configurable do
   
   describe "falling back to another config" do
     before(:each) do
-      @garage = Object.new
-      class << @garage
+      class Garage
         include Dragonfly::Configurable
         configurable_attr :top_speed, 100
       end
+      @garage = Garage.new
       @car.use_as_fallback_config(@garage)
     end
     
@@ -364,15 +352,15 @@ describe Dragonfly::Configurable do
     
     describe "objects with different methods" do
       before(:each) do
-        @dad = Object.new
-        class << @dad
+        class Dad
           include Dragonfly::Configurable
         end
-        @kid = Object.new
-        class << @kid
+        @dad = Dad.new
+        class Kid
           include Dragonfly::Configurable
           configurable_attr :lug, 'default-lug'
         end
+        @kid = Kid.new
         @kid.use_as_fallback_config(@dad)
       end
 
@@ -394,11 +382,11 @@ describe Dragonfly::Configurable do
       end
       
       it "should work when a grandchild config is added later" do
-        grandkid = Object.new
-        class << grandkid
+        class Grandkid
           include Dragonfly::Configurable
           configurable_attr :oogie, 'boogie'
         end
+        grandkid = Grandkid.new
         grandkid.use_as_fallback_config(@kid)
         @dad.configure{|c| c.oogie = 'duggen' }
         grandkid.oogie.should == 'duggen'
@@ -457,5 +445,31 @@ describe Dragonfly::Configurable do
 
     end
     
+  end
+
+  describe "inheriting configurable_attrs from multiple places" do
+    before(:each) do
+      module A
+        include Dragonfly::Configurable
+        configurable_attr :a
+      end
+      module B
+        include Dragonfly::Configurable
+        configurable_attr :b
+      end
+      class K
+        include Dragonfly::Configurable
+        include A
+        include B
+      end
+    end
+    
+    it "should include configuration from all of its mixins" do
+      k = K.new
+      k.configure do |c|
+        c.a = 'something'
+        c.b = 'something'
+      end
+    end
   end
 end

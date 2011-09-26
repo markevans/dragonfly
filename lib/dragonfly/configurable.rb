@@ -9,13 +9,6 @@ module Dragonfly
       klass.class_eval do
         include Configurable::InstanceMethods
         extend Configurable::ClassMethods
-
-        # We should use configured_class rather than self.class
-        # because sometimes this will be the eigenclass of an object
-        # e.g. if we configure a module, etc.
-        define_method :configured_class do
-          klass
-        end
       end
     end
 
@@ -46,21 +39,17 @@ module Dragonfly
       def has_config_method?(method_name)
         config_methods.include?(method_name.to_sym)
       end
-            
-      def config_methods
-        @config_methods ||= configured_class.config_methods.dup
-      end
       
       def configuration
         @configuration ||= {}
       end
+            
+      def config_methods
+        @config_methods ||= self.class.config_methods.dup
+      end
       
       def default_configuration
-        # Merge the default configuration of all ancestor classes/modules which are configurable
-        @default_configuration ||= [self.class, configured_class, *configured_class.ancestors].reverse.inject({}) do |default_config, klass|
-          default_config.merge!(klass.default_configuration) if klass.respond_to? :default_configuration
-          default_config
-        end
+        @default_configuration ||= self.class.default_configuration.dup
       end
 
       def set_config_value(key, value)
@@ -106,7 +95,7 @@ module Dragonfly
       end
 
       def saved_configs
-        configured_class.saved_configs
+        self.class.saved_configs
       end
 
       def saved_config_for(symbol)
@@ -123,11 +112,17 @@ module Dragonfly
     module ClassMethods
 
       def default_configuration
-        @default_configuration ||= {}
+        @default_configuration ||= configurable_ancestors.reverse.inject({}) do |default_config, klass|
+          default_config.merge!(klass.default_configuration)
+          default_config
+        end
       end
 
       def config_methods
-        @config_methods ||= []
+        @config_methods ||= configurable_ancestors.inject([]) do |conf_methods, klass|
+          conf_methods |= klass.config_methods
+          conf_methods
+        end
       end
 
       def nested_configurables
@@ -140,6 +135,10 @@ module Dragonfly
 
       def saved_configs
         @saved_configs ||= {}
+      end
+
+      def configurable_ancestors
+        @configurable_ancestors ||= ancestors.select{|a| a.included_modules.include?(Configurable) } - [self]
       end
 
       private
@@ -198,7 +197,7 @@ module Dragonfly
       attr_reader :owner
 
       def nested_configurable?(method)
-        owner.configured_class.nested_configurables.include?(method.to_sym)
+        owner.class.nested_configurables.include?(method.to_sym)
       end
 
     end

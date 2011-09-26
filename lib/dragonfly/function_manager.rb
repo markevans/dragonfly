@@ -59,9 +59,7 @@ module Dragonfly
 
     def methods_to_add(obj)
       if obj.is_a?(Configurable)
-        obj.public_methods(false) -
-          obj.config_methods.map{|meth| meth.to_method_name} -
-          [:configured_class.to_method_name] # Hacky - there must be a better way...
+        obj.public_methods(false) - obj.config_methods.map{|meth| meth.to_method_name}
       else
         obj.public_methods(false)
       end
