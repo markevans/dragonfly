@@ -13,32 +13,27 @@ module Dragonfly
       configurable_attr :secret_access_key
       configurable_attr :use_filesystem, true
       configurable_attr :region
+      configurable_attr :host
       configurable_attr :storage_headers, {'x-amz-acl' => 'public-read'}
-
-      REGIONS = {
-        'us-east-1'      => 's3.amazonaws.com',  #default
-        'eu-west-1'      => 's3-eu-west-1.amazonaws.com',
-        'ap-southeast-1' => 's3-ap-southeast-1.amazonaws.com',
-        'us-west-1'      => 's3-us-west-1.amazonaws.com'
-      }
 
       def initialize(opts={})
         self.bucket_name = opts[:bucket_name]
         self.access_key_id = opts[:access_key_id]
         self.secret_access_key = opts[:secret_access_key]
         self.region = opts[:region]
+        self.host = opts[:host]
       end
 
       def store(temp_object, opts={})
         ensure_configured
         ensure_bucket_initialized
-        
+
         meta = opts[:meta] || {}
         headers = opts[:headers] || {}
         mime_type = opts[:mime_type] || opts[:content_type]
         headers['Content-Type'] = mime_type if mime_type
         uid = opts[:path] || generate_uid(meta[:name] || temp_object.original_filename || 'file')
-        
+
         rescuing_socket_errors do
           if use_filesystem
             temp_object.file do |f|
@@ -48,7 +43,7 @@ module Dragonfly
             storage.put_object(bucket_name, uid, temp_object.data, full_storage_headers(headers, meta))
           end
         end
-        
+
         uid
       end
 
@@ -82,7 +77,7 @@ module Dragonfly
       end
 
       def domain
-        REGIONS[get_region]
+        storage.instance_variable_get(:@host)
       end
 
       def storage
@@ -90,7 +85,8 @@ module Dragonfly
           :provider => 'AWS',
           :aws_access_key_id => access_key_id,
           :aws_secret_access_key => secret_access_key,
-          :region => region
+          :region => region,
+          :host => host
         )
       end
 
@@ -119,12 +115,6 @@ module Dragonfly
         end
       end
 
-      def get_region
-        reg = region || 'us-east-1'
-        raise "Invalid region #{reg} - should be one of #{valid_regions.join(', ')}" unless valid_regions.include?(reg)
-        reg
-      end
-
       def generate_uid(name)
         "#{Time.now.strftime '%Y/%m/%d/%H/%M/%S'}/#{rand(1000)}/#{name.gsub(/[^\w.]+/, '_')}"
       end
@@ -136,10 +126,6 @@ module Dragonfly
       def parse_s3_metadata(headers)
         encoded_meta = headers['x-amz-meta-extra']
         (marshal_decode(encoded_meta) if encoded_meta) || {}
-      end
-
-      def valid_regions
-        REGIONS.keys
       end
 
       def rescuing_socket_errors(&block)
