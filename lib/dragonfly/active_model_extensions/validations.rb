@@ -15,6 +15,10 @@ module Dragonfly
         validates_each(*args) do |model, attr, attachment|
           if attachment
             property = attachment.send(property_name)
+            if opts[:case_sensitive] == false
+              allowed_values = allowed_values.map{|entry| entry.to_s.downcase}
+              property = property.to_s.downcase
+            end
             unless allowed_values.include?(property)
               message = opts[:message] ||
                 "#{property_name.to_s.humanize.downcase} is incorrect. "+
