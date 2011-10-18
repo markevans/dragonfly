@@ -21,7 +21,7 @@ module Dragonfly
     
     def analyse(temp_object, method, *args)
       if enable_cache
-        key = [temp_object.object_id, method, *args]
+        key = [temp_object, method, *args]
         cache[key] ||= call_last(method, temp_object, *args)
       else
         call_last(method, temp_object, *args)
