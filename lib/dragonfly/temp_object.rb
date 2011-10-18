@@ -118,7 +118,7 @@ module Dragonfly
 
     def to_file(path)
       if @data
-        File.open(path, 'wb'){|f| f.write(@data) }
+        File.open(path, 'wb', 0644){|f| f.write(@data) }
       else
         FileUtils.cp(self.path, path)
         File.chmod(0644, path)
