@@ -70,4 +70,9 @@ describe Dragonfly::ImageMagick::Analyser do
     @analyser.width(image).should == 1
   end
 
+  it "should work (width) for images with numbers in the format" do
+    image = Dragonfly::TempObject.new(SAMPLES_DIR.join('a.jp2'))
+    @analyser.width(image).should == 1
+  end
+
 end
