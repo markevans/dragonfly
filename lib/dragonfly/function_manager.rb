@@ -26,7 +26,7 @@ module Dragonfly
       obj.use_same_log_as(self) if obj.is_a?(Loggable)
       obj.use_as_fallback_config(self) if obj.is_a?(Configurable)
       methods_to_add(obj).each do |meth|
-        add meth.to_sym, obj.method(meth)
+        add meth, obj.method(meth)
       end
       objects << obj
       obj
@@ -58,11 +58,9 @@ module Dragonfly
     private
 
     def methods_to_add(obj)
-      if obj.is_a?(Configurable)
-        obj.public_methods(false) - obj.config_methods.map{|meth| meth.to_method_name}
-      else
-        obj.public_methods(false)
-      end
+      methods = obj.public_methods(false).map{|m| m.to_sym }
+      methods -= obj.config_methods if obj.is_a?(Configurable)
+      methods
     end
 
   end
