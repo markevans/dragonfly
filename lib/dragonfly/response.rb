@@ -22,9 +22,11 @@ module Dragonfly
         env['dragonfly.job'] = job
         [200, success_headers, []]
       elsif request.get?
-        job.apply
-        env['dragonfly.job'] = job
-        [200, success_headers, job]
+        sync_or_async_response do
+          job.apply
+          env['dragonfly.job'] = job
+          [200, success_headers, job]
+        end
       end
     rescue DataStorage::DataNotFound, DataStorage::BadUID => e
       app.log.warn(e.message)
@@ -101,6 +103,17 @@ module Dragonfly
 
     def evaluate(attribute)
       attribute.respond_to?(:call) ? attribute.call(job, request) : attribute
+    end
+    
+    def sync_or_async_response(&block)
+      if app.async
+        Fiber.new do
+          env['async.callback'].call block.call
+        end.resume
+        throw :async
+      else
+        block.call
+      end
     end
 
   end
