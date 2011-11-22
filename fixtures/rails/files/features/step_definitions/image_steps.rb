@@ -23,3 +23,9 @@ Then /^I should see a (.+) image of size (.+)$/ do |format, size|
   output[1].should == format
   output[2].should == size
 end
+
+Then /^the hash shown in the view should be the same as in the spec$/ do
+  @album = Album.last
+  image_url = @album.cover_image.thumb('200x100!').url
+  page.should have_css("img[src='#{image_url}']")
+end
