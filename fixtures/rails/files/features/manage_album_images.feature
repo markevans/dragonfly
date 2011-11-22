@@ -8,6 +8,7 @@ Feature: champion adds cover images to his albums
     And I press "Create"
     Then I should see "successfully created"
     And I should see "Look at this cover image!"
+    And the hash shown in the view should be the same as in the spec
     When I look at the generated image
     Then I should see a PNG image of size 200x100
 
