@@ -356,5 +356,20 @@ describe Dragonfly::TempObject do
       temp_object.original_filename.should == 'round.gif'
     end
   end
+  
+  describe "unique_id" do
+    before(:each) do
+      @temp_object = Dragonfly::TempObject.new('hello')
+    end
+    it "should return a unique id" do
+      @temp_object.unique_id.should =~ /^\d+$/
+    end
+    it "should be unique" do
+      @temp_object.unique_id.should_not == Dragonfly::TempObject.new('hello').unique_id
+    end
+    it "should not change" do
+      @temp_object.unique_id.should == @temp_object.unique_id
+    end
+  end
 
 end
