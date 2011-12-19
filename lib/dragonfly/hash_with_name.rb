@@ -40,6 +40,10 @@ module Dragonfly
       name
     end
     
+    def inspect
+      "HashWithName with name #{name.inspect}, hash #{super}"
+    end
+    
   end
 
 end

@@ -81,4 +81,12 @@ describe Dragonfly::HashWithName do
     end
   end
 
+  describe "inspect" do
+    it "should show that it's a HashWithName" do
+      hash = Dragonfly::HashWithName.new
+      hash[:name] = 'doogs.barley'
+      hash.inspect.should =~ /HashWithName.*name.*doogs\.barley/
+    end
+  end
+
 end
