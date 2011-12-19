@@ -5,6 +5,12 @@ module Dragonfly
   # updating ext/basename also updates the name
   class HashWithName < Hash
     
+    def self.[](hash)
+      new_hash = super
+      new_hash[:name] = hash[:name] if hash[:name] # Make sure the name= method gets called
+      new_hash
+    end
+    
     def [](key)
       [:name, :basename, :ext].include?(key) ? send(key) : super
     end

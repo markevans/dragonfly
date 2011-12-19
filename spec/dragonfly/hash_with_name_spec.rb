@@ -66,4 +66,12 @@ describe Dragonfly::HashWithName do
     end
   end
 
+  describe "initializing with []" do
+    it "should still work" do
+      hash = Dragonfly::HashWithName[:name => 'mark.duggan']
+      hash[:name].should == 'mark.duggan'
+      hash[:ext].should == 'duggan'
+    end
+  end
+
 end
