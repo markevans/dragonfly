@@ -7,18 +7,25 @@ describe Dragonfly::HashWithName do
   end
 
   describe "name" do
-    before(:each) do
-      @hash[:name] = 'long.pigs'
+    it "should default to nil" do
+      @hash[:name].should be_nil
     end
-    it "should allow reading via normal hash access" do
+    it "should allow setting via normal hash access" do
+      @hash[:name] = 'long.pigs'
       @hash[:name].should == 'long.pigs'
     end
     it "should allow reading via an accessor" do
+      @hash[:name] = 'long.pigs'
       @hash.name.should == 'long.pigs'
     end
     it "should allow setting via an accessor" do
       @hash.name = 'john.doe'
       @hash[:name].should == 'john.doe'
+    end
+    it "should allow setting to nil" do
+      @hash[:name] = 'long.pigs'
+      @hash[:name] = nil
+      @hash[:name].should be_nil
     end
   end
   

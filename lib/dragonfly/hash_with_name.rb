@@ -22,6 +22,7 @@ module Dragonfly
     attr_accessor :basename, :ext
     
     def name
+      return nil unless basename || ext
       [basename, ext].compact.join('.')
     end
     
