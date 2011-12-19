@@ -4,44 +4,31 @@ module Dragonfly
   # :name, :ext and :basename specially -
   # updating ext/basename also updates the name
   class HashWithName < Hash
-    
-    def self.[](hash)
-      new_hash = super
-      new_hash[:name] = hash[:name] if hash[:name] # Make sure the name= method gets called
-      new_hash
+
+    def name
+      self[:name]
     end
     
-    def [](key)
-      [:name, :basename, :ext].include?(key) ? send(key) : super
+    def basename
+      self[:basename] || (File.basename(name, '.*') if name)
+    end
+    
+    def ext
+      self[:ext] || (File.extname(name)[/\.(.*)/, 1] if name)
     end
 
-    def []=(key, value)
-      [:name, :basename, :ext].include?(key) ? send("#{key}=", value) : super
+    def basename=(basename)
+      self[:basename] = basename
+      self[:name] = [basename, ext].compact.join('.')
     end
     
-    attr_accessor :basename, :ext
-    
-    def name
-      return nil unless basename || ext
-      [basename, ext].compact.join('.')
+    def ext=(ext)
+      self[:ext] = ext
+      self[:name] = [basename, ext].compact.join('.')
     end
     
     def name=(name)
-      self.basename, self.ext = if name.nil?
-        [nil, nil]
-      else
-        parts = name.split('.')
-        if parts.length == 1
-          [name, nil]
-        else
-          [parts[0...-1].join('.'), parts.last]
-        end
-      end
-      name
-    end
-    
-    def inspect
-      "HashWithName with name #{name.inspect}, hash #{super}"
+      self[:name] = name
     end
     
   end
