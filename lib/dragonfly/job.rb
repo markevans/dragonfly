@@ -20,7 +20,10 @@ module Dragonfly
     extend Forwardable
     def_delegators :result,
                    :data, :file, :tempfile, :path, :to_file, :size, :each
-    def_delegator :app, :server
+    def_delegator :app,
+                  :server
+    def_delegators :meta,
+                   :name, :name=, :basename, :basename=, :ext, :ext=
 
     class Step
 
@@ -81,7 +84,7 @@ module Dragonfly
 
     class Encode < Step
       def init
-        job.meta[:format] = format
+        job.url_attrs[:format] = format
       end
       def format
         args.first
@@ -93,7 +96,7 @@ module Dragonfly
         raise NothingToEncode, "Can't encode because temp object has not been initialized. Need to fetch first?" unless job.temp_object
         content, meta = job.app.encoder.encode(job.temp_object, format, *arguments)
         job.update(content, meta)
-        job.meta[:format] = format
+        job.temp_meta[:format] = format
       end
     end
 
@@ -106,19 +109,23 @@ module Dragonfly
 
     class FetchFile < Step
       def init
-        job.name = File.basename(path)
+        job.url_attrs[:name] = filename
       end
       def path
-        File.expand_path(args.first)
+        @path ||= File.expand_path(args.first)
+      end
+      def filename
+        @filename ||= File.basename(path)
       end
       def apply
         job.temp_object = TempObject.new(Pathname.new(path))
+        job.temp_meta[:name] = filename
       end
     end
 
     class FetchUrl < Step
       def init
-        job.name = File.basename(path) if path[/[^\/]$/]
+        job.url_attrs[:name] = filename
       end
       def url
         @url ||= (args.first[%r<^\w+://>] ? args.first : "http://#{args.first}")
@@ -126,9 +133,13 @@ module Dragonfly
       def path
         @path ||= URI.parse(url).path
       end
+      def filename
+        @filename ||= File.basename(path) if path[/[^\/]$/]
+      end
       def apply
         open(url) do |f|
           job.temp_object = TempObject.new(f.read)
+          job.temp_meta[:name] = filename
         end
       end
     end
@@ -200,7 +211,8 @@ module Dragonfly
       @app = app
       @steps = []
       @next_step_index = 0
-      @meta = {}
+      @temp_meta = HashWithName.new
+      @url_attrs = HashWithName.new
       @previous_temp_objects = []
       update(content, meta)
     end
@@ -259,7 +271,7 @@ module Dragonfly
       apply
       temp_object
     end
-
+    
     def applied_steps
       steps[0...next_step_index]
     end
@@ -375,48 +387,34 @@ module Dragonfly
       to_s.sub(/>$/, " app=#{app}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >")
     end
 
-    # Name and stuff
-        
-    attr_reader :meta
+    # Meta, url_attrs
+
+    attr_accessor :temp_meta
 
     def meta=(hash)
-      raise ArgumentError, "meta must be a hash, you tried setting it as #{hash.inspect}" unless hash.is_a?(Hash)
-      @meta = hash
+      apply
+      self.temp_meta = HashWithName[hash]
     end
 
-    def name
-      meta[:name]
+    def meta
+      apply
+      temp_meta
     end
+    
+    def url_attrs=(hash)
+      @url_attrs = HashWithName[hash]
+    end
+    
+    attr_reader :url_attrs
 
-    def name=(name)
-      meta[:name] = name
-    end
-    
-    def basename
-      meta[:basename] || (File.basename(name, '.*') if name)
-    end
-
-    def ext
-      meta[:ext] || (File.extname(name)[/\.(.*)/, 1] if name)
-    end
-    
-    def attributes_for_url
-      attrs = meta.reject{|k, v| !server.params_in_url.include?(k.to_s) }
-      attrs[:basename] ||= basename if server.params_in_url.include?('basename')
-      attrs[:ext] ||= ext if server.params_in_url.include?('ext')
-      attrs[:format] = (attrs[:format] || format_from_meta).to_s if server.params_in_url.include?('format')
-      attrs.delete_if{|k, v| v.blank? }
-      attrs
-    end
-    
     def update(content, meta)
       if meta
         meta.merge!(meta.delete(:meta)) if meta[:meta] # legacy data etc. may have nested meta hash - deprecate gracefully here
-        self.meta.merge!(meta)
+        self.temp_meta.merge!(meta)
       end
       if content
         self.temp_object = TempObject.new(content)
-        self.name = temp_object.original_filename if name.nil? && temp_object.original_filename
+        self.temp_meta[:name] ||= temp_object.original_filename if temp_object.original_filename
       end
     end
     
@@ -432,6 +430,13 @@ module Dragonfly
 
     private
 
+    def attributes_for_url
+      attrs = url_attrs.slice(*server.params_in_url)
+      attrs[:format] = (attrs[:format] || (url_attrs.ext if app.trust_file_extensions)).to_s if server.params_in_url.include?('format')
+      attrs.delete_if{|k, v| v.blank? }
+      attrs
+    end
+    
     attr_reader :previous_temp_objects
 
     def format_from_meta
