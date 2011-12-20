@@ -66,4 +66,17 @@ describe Dragonfly::HashWithName do
     end
   end
 
+  describe "slice" do
+    it "should return a subset of the params" do
+      hash = Dragonfly::HashWithName[:a => 1, :b => 2, :c => 3]
+      hash.slice(:a, :b).should == {:a => 1, :b => 2}
+    end
+    it "should use the method instead of the param for basename" do
+      Dragonfly::HashWithName[:name => 'hello.ted'].slice(:basename).should == {:basename => 'hello'}
+    end
+    it "should use the method instead of the param for ext" do
+      Dragonfly::HashWithName[:name => 'hello.ted'].slice(:ext).should == {:ext => 'ted'}
+    end
+  end
+
 end

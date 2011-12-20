@@ -5,6 +5,8 @@ module Dragonfly
   # updating ext/basename also updates the name
   class HashWithName < Hash
 
+    SPECIAL_KEYS = [:name, :basename, :ext]
+
     def name
       self[:name]
     end
@@ -29,6 +31,13 @@ module Dragonfly
     
     def name=(name)
       self[:name] = name
+    end
+    
+    def slice(*keys)
+      keys.inject({}) do |hash, key|
+        hash[key] = SPECIAL_KEYS.include?(key) ? send(key) : self[key]
+        hash
+      end
     end
     
   end
