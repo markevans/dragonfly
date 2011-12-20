@@ -77,6 +77,9 @@ describe Dragonfly::HashWithName do
     it "should use the method instead of the param for ext" do
       Dragonfly::HashWithName[:name => 'hello.ted'].slice(:ext).should == {:ext => 'ted'}
     end
+    it "should treat strings like symbols" do
+      Dragonfly::HashWithName[:yog => 'gurt', :john => 'doe'].slice('yog').should == {:yog => 'gurt'}
+    end
   end
 
 end

@@ -35,6 +35,7 @@ module Dragonfly
     
     def slice(*keys)
       keys.inject({}) do |hash, key|
+        key = key.to_sym
         hash[key] = SPECIAL_KEYS.include?(key) ? send(key) : self[key]
         hash
       end
