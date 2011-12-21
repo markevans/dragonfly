@@ -74,6 +74,10 @@ describe Dragonfly::Job do
         @job.data.should == 'HELLO'
         @job.meta.should == {:name => 'test.txt'}
       end
+      
+      it "shouldn't set any url_attrs" do
+        @job.url_attrs.should == {}
+      end
     end
 
     describe "process" do
@@ -119,6 +123,10 @@ describe Dragonfly::Job do
         @job.data.should == 'hi'
         @job.meta.should == {:name => 'plasma.png'}
       end
+      
+      it "shouldn't set any url_attrs" do
+        @job.url_attrs.should == {}
+      end
     end
 
     describe "fetch_file" do
@@ -132,6 +140,10 @@ describe Dragonfly::Job do
         @job.size.should == 62664
       end
       
+      it "should set the url_attrs" do
+        @job.url_attrs.should == {:name => 'egg.png'}
+      end
+      
       it "should set the name" do
         @job.meta[:name].should == 'egg.png'
       end
@@ -139,7 +151,7 @@ describe Dragonfly::Job do
 
     describe "fetch_url" do
       before(:each) do
-        stub_request(:get, 'http://some.place.com').to_return(:body => 'result!')
+        stub_request(:get, %r{http://some\.place\.com/.*}).to_return(:body => 'result!')
         stub_request(:get, 'https://some.place.com').to_return(:body => 'secure result!')
       end
 
@@ -167,11 +179,21 @@ describe Dragonfly::Job do
         @job.fetch_url!('some.place.com/dung.beetle')
         @job.meta[:name].should == 'dung.beetle'
       end
+      
+      it "should set the name url_attr if there is one" do
+        @job.fetch_url!('some.place.com/dung.beetle')
+        @job.url_attrs.should == {:name =>'dung.beetle'}
+      end
 
       ["some.place.com", "some.place.com/", "some.place.com/eggs/"].each do |url|
         it "should not set the name if there isn't one, e.g. #{url}" do
           @job.fetch_url!(url)
           @job.meta[:name].should be_nil
+        end
+
+        it "should not set the name url_attr if there isn't one, e.g. #{url}" do
+          @job.fetch_url!(url)
+          @job.url_attrs[:name].should be_nil
         end
       end
     end
@@ -194,6 +216,7 @@ describe Dragonfly::Job do
 
     describe "process" do
       before(:each) do
+        @job.url_attrs = {:some => 'thing'}
         @job.process!(:resize, '20x30')
       end
 
@@ -206,8 +229,11 @@ describe Dragonfly::Job do
 
       it "should maintain the meta attributes" do
         @app.processor.should_receive(:process).with(@temp_object, :resize, '20x30').and_return('hi')
-        @job.data.should == 'hi'
         @job.meta.should == {:name => 'hello.txt', :a => :b}
+      end
+
+      it "should maintain the url_attrs" do
+        @job.url_attrs.should == {:some => 'thing'}
       end
 
       it "should allow returning an array with extra attributes from the processor" do
@@ -219,6 +245,7 @@ describe Dragonfly::Job do
 
     describe "encode" do
       before(:each) do
+        @job.url_attrs = {:name => 'boid'}
         @job.encode!(:gif, :bitrate => 'mumma')
       end
 
@@ -231,13 +258,12 @@ describe Dragonfly::Job do
 
       it "should maintain the meta and update the format" do
         @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
-        @job.data.should == 'alo'
         @job.meta.should == {:name => 'hello.txt', :a => :b, :format => :gif}
       end
 
-      it "should update the format even when not applied" do
+      it "should update the format on the url_attrs" do
         @app.encoder.should_not_receive(:encode)
-        @job.meta[:format].should == :gif
+        @job.url_attrs[:format].should == :gif
       end
 
       it "should allow returning an array with extra attributes form the encoder" do
@@ -250,6 +276,11 @@ describe Dragonfly::Job do
         @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return(['alo', {:format => :png}])
         @job.apply.meta[:format].should == :gif
       end
+
+      it "should maintain the url_attrs" do
+        @job.url_attrs[:name].should == 'boid'
+      end
+      
     end
   end
 
@@ -522,7 +553,7 @@ describe Dragonfly::Job do
       @job.url.should be_nil
     end
     
-    describe "using meta in the url" do
+    describe "using url_attrs in the url" do
       before(:each) do
         @app.server.url_format = '/media/:job/:zoo'
         @job.generate!(:fish)
@@ -533,33 +564,33 @@ describe Dragonfly::Job do
       it "should add given params" do
         @job.url(:zoo => 'jokes', :on => 'me').should == "/media/#{@job.serialize}/jokes?on=me"
       end
-      it "should use the meta if it exists" do
-        @job.meta[:zoo] = 'hair'
+      it "should use the url_attr if it exists" do
+        @job.url_attrs[:zoo] = 'hair'
         @job.url.should == "/media/#{@job.serialize}/hair"
       end
-      it "should not add an meta that isn't needed" do
-        @job.meta[:gump] = 'flub'
+      it "should not add any url_attrs that aren't needed" do
+        @job.url_attrs[:gump] = 'flub'
         @job.url.should == "/media/#{@job.serialize}"
       end
       it "should override if a param is passed in" do
-        @job.meta[:zoo] = 'hair'
+        @job.url_attrs[:zoo] = 'hair'
         @job.url(:zoo => 'dare').should == "/media/#{@job.serialize}/dare"
       end
       
       describe "basename" do
         before(:each) do
           @app.server.url_format = '/:job/:basename'
-          @job.meta = {:name => 'hello.egg', :basename => 'hi'}
         end
-        it "should use the meta if it exists" do
+        it "should use the url_attr if it exists" do
+          @job.url_attrs = {:basename => 'hi'}
           @job.url.should == "/#{@job.serialize}/hi"
         end
-        it "should use the name if basename meta doesn't exist" do
-          @job.meta.delete(:basename)
+        it "should use the name if basename url_attr doesn't exist" do
+          @job.url_attrs = {:name => 'hello.egg'}
           @job.url.should == "/#{@job.serialize}/hello"
         end
         it "should not set if neither exist" do
-          @job.meta = {}
+          @job.url_attrs = {}
           @job.url.should == "/#{@job.serialize}"
         end
       end
@@ -567,17 +598,18 @@ describe Dragonfly::Job do
       describe "ext" do
         before(:each) do
           @app.server.url_format = '/:job.:ext'
-          @job.meta = {:name => 'hello.egg', :ext => 'hi'}
+          @job.url_attrs = {:name => 'hello.egg', :ext => 'hi'}
         end
-        it "should use the meta if it exists" do
+        it "should use the url_attr if it exists" do
+          @job.url_attrs = {:ext => 'hi'}
           @job.url.should == "/#{@job.serialize}.hi"
         end
-        it "should use the name if ext meta doesn't exist" do
-          @job.meta.delete(:ext)
+        it "should use the name if ext url_attr doesn't exist" do
+          @job.url_attrs = {:name => 'hello.egg'}
           @job.url.should == "/#{@job.serialize}.egg"
         end
         it "should not set if neither exist" do
-          @job.meta = {}
+          @job.url_attrs = {}
           @job.url.should == "/#{@job.serialize}"
         end
       end
@@ -585,21 +617,22 @@ describe Dragonfly::Job do
       describe "format" do
         before(:each) do
           @app.server.url_format = '/:job.:format'
-          @job.stub!(:ext).and_return("hi")
         end
-        it "should use the meta if it exists" do
-          @job.meta = {:format => :txt}
+        it "should use the url_attr if it exists" do
+          @job.url_attrs = {:ext => 'hi', :format => :txt}
           @job.url.should == "/#{@job.serialize}.txt"
         end
-        it "should use the ext if format meta doesn't exist" do
+        it "should use the ext if format url_attr doesn't exist" do
+          @job.url_attrs = {:name => 'hup.hi'}
           @job.url.should == "/#{@job.serialize}.hi"
         end
         it "should not use the ext if format meta doesn't exist and trust_file_extensions is switched off" do
+          @job.url_attrs = {:name => 'hup.hi'}
           @app.trust_file_extensions = false
           @job.url.should == "/#{@job.serialize}"
         end
         it "should not set if neither exist" do
-          @job.should_receive(:ext).and_return nil
+          @job.url_attrs = {}
           @job.url.should == "/#{@job.serialize}"
         end
       end
@@ -623,6 +656,11 @@ describe Dragonfly::Job do
       @job.meta = {:right => 'said fred'}
       new_job = @job.to_fetched_job('some_uid')
       new_job.meta.should == {:right => 'said fred'}
+    end
+    it "should maintain the url_attrs" do
+      @job.url_attrs = {:dang => 'that dawg'}
+      new_job = @job.to_fetched_job('some_uid')
+      new_job.url_attrs.should == {:dang => 'that dawg'}
     end
   end
 
@@ -811,6 +849,7 @@ describe Dragonfly::Job do
   describe "meta" do
     before(:each) do
       @app = test_app
+      @app.generator.add(:gollum){|t| "OK"}
       @job = @app.new_job
     end
     it "should default meta to an empty hash" do
@@ -819,6 +858,19 @@ describe Dragonfly::Job do
     it "should allow setting" do
       @job.meta = {:a => :b}
       @job.meta.should == {:a => :b}
+    end
+    it "should act like a HashWithName" do
+      @job.meta = {:name => 'gday.mate'}
+      @job.meta.basename.should == 'gday'
+      @job.meta.ext.should == 'mate'
+    end
+    it "should apply the job" do
+      @job.should_receive :apply
+      @job.meta
+    end
+    it "should apply the job before setting (for consistency)" do
+      @job.should_receive :apply
+      @job.meta = {}
     end
     it "should not allow setting as anything other than a hash" do
       lambda{
@@ -838,65 +890,46 @@ describe Dragonfly::Job do
   describe "name" do
     before(:each) do
       @app = test_app
+      @job = @app.new_job('asdf')
     end
+
     it "should default to nil" do
-      job = @app.new_job('HELLO')
-      job.name.should be_nil
+      @job.name.should be_nil
     end
     it "should use the meta" do
-      job = @app.new_job('HELLO')
-      job.meta[:name] = 'monkey.egg'
-      job.name.should == 'monkey.egg'
+      @job.meta[:name] = 'monkey.egg'
+      @job.name.should == 'monkey.egg'
     end
     it "should allow setting" do
-      job = @app.new_job('HELLO')
-      job.name = "jonny.briggs"
-      job.meta[:name].should == 'jonny.briggs'
+      @job.name = "jonny.briggs"
+      @job.meta[:name].should == 'jonny.briggs'
     end
-    
+
     describe "ext" do
-      before(:each) do
-        @job = @app.new_job('asdf')
-      end
-      it "should use the correct extension from name" do
-        @job.name = 'hello.there.mate'
-        @job.ext.should == 'mate'
-      end
-      it "should be nil if name has none" do
-        @job.name = 'hello'
+      it "should default to nil" do
         @job.ext.should be_nil
       end
-      it "should be nil if name is nil" do
-        @job.name = nil
-        @job.ext.should be_nil
+      it "should use the meta" do
+        @job.meta[:ext] = 'egg'
+        @job.ext.should == 'egg'
       end
-      it "should use the meta first if set" do
-        @job.meta[:ext] = 'duggs'
-        @job.name = 'hello.there.mate'
-        @job.ext.should == 'duggs'
+      it "should allow setting" do
+        @job.ext = "briggs"
+        @job.meta[:ext].should == 'briggs'
       end
     end
 
     describe "basename" do
-      before(:each) do
-        @job = @app.new_job('asdf')
-      end
-      it "should use the correct basename from name" do
-        @job.name = 'hello.there.mate'
-        @job.basename.should == 'hello.there'
-      end
-      it "should be the name if it has no ext" do
-        @job.name = 'hello'
-        @job.basename.should == 'hello'
-      end
-      it "should be nil if name is nil" do
-        @job.name = nil
+      it "should default to nil" do
         @job.basename.should be_nil
       end
-      it "should use the meta first if set" do
-        @job.meta[:basename] = 'duggs'
-        @job.name = 'hello.there.mate'
-        @job.basename.should == 'duggs'
+      it "should use the meta" do
+        @job.meta[:basename] = 'egg'
+        @job.basename.should == 'egg'
+      end
+      it "should allow setting" do
+        @job.basename = "briggs"
+        @job.meta[:basename].should == 'briggs'
       end
     end
 
@@ -921,13 +954,13 @@ describe Dragonfly::Job do
         job.format.should == :egg
       end
       it "should use the file extension if it has no format" do
-        @job = @app.new_job("HIMATE", :name => 'test.pdf')
-        @job.format.should == :pdf
+        job = @app.new_job("HIMATE", :name => 'test.pdf')
+        job.format.should == :pdf
       end
       it "should not use the file extension if it's been switched off" do
         @app.trust_file_extensions = false
-        @job = @app.new_job("HIMATE", :name => 'test.pdf')
-        @job.format.should be_nil
+        job = @app.new_job("HIMATE", :name => 'test.pdf')
+        job.format.should be_nil
       end
       it "should prefer the set format over the file extension" do
         job = @app.new_job("HELLO", :name => 'test.pdf', :format => :txt)

@@ -22,7 +22,7 @@ module Dragonfly
       def initialize(model)
         @model = model
         self.uid = model_uid
-        update_from_uid if uid
+        set_job_from_uid if uid
         @should_run_callbacks = true
         self.class.ensure_uses_cached_magic_attributes
       end
@@ -50,7 +50,7 @@ module Dragonfly
           else app.new_job(value)
           end
           set_magic_attributes
-          update_meta
+          job.url_attrs = all_extra_attributes
           self.class.run_callbacks(:after_assign, model, self) if should_run_callbacks?
           retain! if should_retain?
         end
@@ -151,7 +151,7 @@ module Dragonfly
             model.send("#{attribute}_#{key}=", value)
           end
           sync_with_model
-          update_from_uid
+          set_job_from_uid
           self.retained = true
         end
       end
@@ -173,6 +173,7 @@ module Dragonfly
       end
 
       def store_job!
+        meta.merge!(all_extra_attributes)
         opts = self.class.evaluate_storage_opts(model, self)
         set_uid_and_model_uid job.store(opts)
         self.job = job.to_fetched_job(uid)
@@ -225,17 +226,6 @@ module Dragonfly
         @uid = uid
       end
 
-      def update_meta
-        magic_attributes.each{|property| meta[property] = model.send("#{attribute}_#{property}") }
-        meta[:model_class] = model.class.name
-        meta[:model_attachment] = attribute
-      end
-
-      def update_from_uid
-        self.job = app.fetch(uid)
-        update_meta
-      end
-
       def magic_attributes
         self.class.magic_attributes
       end
@@ -258,6 +248,29 @@ module Dragonfly
 
       def magic_attribute_for(property)
         model.send("#{attribute}_#{property}")
+      end
+
+      def magic_attributes_hash
+        magic_attributes.inject({}) do |attrs, property|
+          attrs[property] = model.send("#{attribute}_#{property}")
+          attrs
+        end
+      end
+
+      def extra_attributes
+        @extra_attributes ||= {
+          :model_class => model.class.name,
+          :model_attachment => attribute
+        }
+      end
+      
+      def all_extra_attributes
+        magic_attributes_hash.merge(extra_attributes)
+      end
+      
+      def set_job_from_uid
+        self.job = app.fetch(uid)
+        job.url_attrs = all_extra_attributes
       end
 
     end
