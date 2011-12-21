@@ -608,27 +608,6 @@ describe Item do
 
     describe "meta from magic attributes" do
       
-      it "should set the meta for the magic attribute when assigned" do
-        @item.preview_image = '123'
-        @item.preview_image.meta[:some_analyser_method].should == 'abc1'
-      end
-      
-      it "should not set meta for non-magic attributes with the same prefix when assigned" do
-        @item.preview_image = '123'
-        @item.preview_image.meta[:blah_blah].should be_nil
-      end
-
-      it "should update the meta for the magic attribute when something else is assigned" do
-        @item.preview_image = '123'
-        @item.preview_image = '456'
-        @item.preview_image.meta[:some_analyser_method].should == 'abc4'
-      end
-      
-      it "should include the meta for size too" do
-        @item.preview_image = '123'
-        @item.preview_image.meta[:size].should == 3
-      end
-
       it "should store the meta for the original file name if it exists" do
         data = 'jasdlkf sadjl'
         data.stub!(:original_filename).and_return('hello.png')
@@ -636,11 +615,16 @@ describe Item do
         @item.preview_image.meta[:name].should == 'hello.png'
       end
       
-      it "should still have the meta after reload" do
+      it "should include magic attributes in the saved meta" do
         @item.preview_image = '123'
         @item.save!
-        item = Item.find(@item.id)
-        item.preview_image.meta[:some_analyser_method].should == 'abc1'
+        @app.fetch(@item.preview_image_uid).meta[:some_analyser_method].should == 'abc1'
+      end
+
+      it "should include the size in the saved meta" do
+        @item.preview_image = '123'
+        @item.save!
+        @app.fetch(@item.preview_image_uid).meta[:size].should == 3
       end
 
     end
@@ -761,7 +745,7 @@ describe Item do
         it "should save it correctly" do
           @item.save!
           item = Item.find(@item.id)
-          item.preview_image.apply.meta.should include_hash(:slime => 'balls')
+          item.preview_image.meta.should include_hash(:slime => 'balls')
         end
         it "should include meta info about the model" do
           @item.save!
