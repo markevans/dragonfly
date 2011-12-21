@@ -1214,7 +1214,18 @@ describe Item do
     it "should return the saved stuff if assigned and retained" do
       @item.preview_image = 'hello'
       @item.preview_image.name = 'dog.biscuit'
-      @app.datastore.should_receive(:store).with(a_temp_object_with_data('hello'), anything).and_return('new/uid')
+      @app.datastore.should_receive(:store).
+                     with(
+                       a_temp_object_with_data('hello'),
+                       hash_including(:meta => {
+                         :name => "dog.biscuit",
+                         :some_analyser_method => "HELLO",
+                         :size => 5,
+                         :model_class => "Item",
+                         :model_attachment => :preview_image
+                       })
+                     ).
+                     and_return('new/uid')
       @item.preview_image.retain!
       Dragonfly::Serializer.marshal_decode(@item.retained_preview_image).should == {
         :uid => 'new/uid',
@@ -1261,6 +1272,11 @@ describe Item do
       )
       @item = Item.new
     end
+
+    it "should be retained" do
+      @item.dragonfly_attachments[:preview_image].should_receive(:retain!)
+      @item.retained_preview_image = @pending_string
+    end
     
     it "should update the attributes" do
       @item.retained_preview_image = @pending_string
@@ -1270,19 +1286,12 @@ describe Item do
       @item.preview_image_name.should == 'dog.biscuit'
     end
     
-    it "should update the attachment meta" do
-      @item.retained_preview_image = @pending_string
-      @item.preview_image.meta[:some_analyser_method].should == 'HELLO'
-      @item.preview_image.meta[:size].should == 5
-      @item.preview_image.meta[:name].should == 'dog.biscuit'
-    end
-    
     it "should be a normal fetch job" do
       @item.retained_preview_image = @pending_string
       @app.datastore.should_receive(:retrieve).with('new/uid').and_return(Dragonfly::TempObject.new('retrieved yo'))
       @item.preview_image.data.should == 'retrieved yo'
     end
-    
+
     it "should give the correct url" do
       @item.retained_preview_image = @pending_string
       @item.preview_image.url.should =~ %r{^/\w+/dog.biscuit$}
