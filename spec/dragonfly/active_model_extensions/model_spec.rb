@@ -190,15 +190,13 @@ describe Item do
         @item.destroy
       end
 
-      it "should return the url for the data" do
-        @item.preview_image.url.should =~ %r<^/\w+$>
-      end
-
       it "should destroy the old data when the uid is set manually" do
         @app.datastore.should_receive(:destroy).with('some_uid')
         @item.preview_image_uid = 'some_known_uid'
         @item.save!
       end
+
+      # SEE model_urls_spec.rb for urls
 
       describe "when accessed by a new model object" do
         before(:each) do

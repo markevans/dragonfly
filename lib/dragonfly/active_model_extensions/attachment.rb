@@ -22,7 +22,7 @@ module Dragonfly
       def initialize(model)
         @model = model
         self.uid = model_uid
-        self.job = app.fetch(uid) if uid
+        set_job_from_uid if uid
         @should_run_callbacks = true
         self.class.ensure_uses_cached_magic_attributes
       end
@@ -50,6 +50,7 @@ module Dragonfly
           else app.new_job(value)
           end
           set_magic_attributes
+          job.url_attrs = extra_meta_attributes
           self.class.run_callbacks(:after_assign, model, self) if should_run_callbacks?
           retain! if should_retain?
         end
@@ -150,7 +151,7 @@ module Dragonfly
             model.send("#{attribute}_#{key}=", value)
           end
           sync_with_model
-          self.job = app.fetch(uid)
+          set_job_from_uid
           self.retained = true
         end
       end
@@ -257,6 +258,11 @@ module Dragonfly
           :model_class => model.class.name,
           :model_attachment => attribute
         )
+      end
+      
+      def set_job_from_uid
+        self.job = app.fetch(uid)
+        job.url_attrs = extra_meta_attributes
       end
 
     end
