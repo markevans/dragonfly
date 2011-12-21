@@ -657,6 +657,11 @@ describe Dragonfly::Job do
       new_job = @job.to_fetched_job('some_uid')
       new_job.meta.should == {:right => 'said fred'}
     end
+    it "should maintain the url_attrs" do
+      @job.url_attrs = {:dang => 'that dawg'}
+      new_job = @job.to_fetched_job('some_uid')
+      new_job.url_attrs.should == {:dang => 'that dawg'}
+    end
   end
 
   describe "to_unique_s" do

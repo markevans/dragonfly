@@ -207,14 +207,14 @@ module Dragonfly
       
     end
 
-    def initialize(app, content=nil, meta={})
+    def initialize(app, content=nil, meta={}, url_attrs={})
       @app = app
       @steps = []
       @next_step_index = 0
-      @temp_meta = HashWithName.new
-      @url_attrs = HashWithName.new
       @previous_temp_objects = []
+      @temp_meta = HashWithName.new
       update(content, meta)
+      self.url_attrs = url_attrs
     end
 
     # Used by 'dup' and 'clone'
@@ -336,7 +336,7 @@ module Dragonfly
     end
 
     def to_fetched_job(uid)
-      new_job = self.class.new(app, temp_object, meta)
+      new_job = self.class.new(app, temp_object, meta, url_attrs)
       new_job.fetch!(uid)
       new_job.next_step_index = 1
       new_job
