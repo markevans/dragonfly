@@ -22,7 +22,7 @@ module Dragonfly
       def initialize(model)
         @model = model
         self.uid = model_uid
-        update_from_uid if uid
+        self.job = app.fetch(uid) if uid
         @should_run_callbacks = true
         self.class.ensure_uses_cached_magic_attributes
       end
@@ -150,7 +150,7 @@ module Dragonfly
             model.send("#{attribute}_#{key}=", value)
           end
           sync_with_model
-          update_from_uid
+          self.job = app.fetch(uid)
           self.retained = true
         end
       end
@@ -223,10 +223,6 @@ module Dragonfly
       def uid=(uid)
         self.previous_uid = @uid if @uid
         @uid = uid
-      end
-
-      def update_from_uid
-        self.job = app.fetch(uid)
       end
 
       def magic_attributes
