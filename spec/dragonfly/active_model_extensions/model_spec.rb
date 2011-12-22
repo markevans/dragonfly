@@ -671,6 +671,12 @@ describe Item do
           @item.preview_image.size.should == 17
         end
 
+        it "should use the magic attribute for name if there is one, and not the job object" do
+          @item.preview_image.send(:job).should_not_receive(:name)
+          @item.should_receive("preview_image_name").and_return('jeffrey.bungle')
+          @item.preview_image.name.should == 'jeffrey.bungle'
+        end
+
         it "should delegate 'size' to the job object if there is no magic attribute for it" do
           @item.other_image = 'blahdata'
           @item.other_image.send(:job).should_receive(:size).and_return 54
