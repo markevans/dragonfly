@@ -27,6 +27,10 @@ module Dragonfly
         convert(temp_object, "-resize #{geometry}")
       end
       
+      def auto_orient(temp_object)
+        convert(temp_object, "-auto-orient")
+      end
+
       def crop(temp_object, opts={})
         width   = opts[:width]
         height  = opts[:height]

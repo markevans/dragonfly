@@ -237,6 +237,17 @@ describe Dragonfly::ImageMagick::Processor do
     end
   end
 
+  describe "auto-orient" do
+    it "should rotate an image according to exif information" do
+      @image = Dragonfly::TempObject.new(SAMPLES_DIR.join('beach.jpg'))
+      @image.should have_width(355)
+      @image.should have_height(280)
+      image = @processor.auto_orient(@image)
+      image.should have_width(280)
+      image.should have_height(355)
+    end
+  end
+
   describe "flip" do
     it "should flip the image, leaving the same dimensions" do
       image = @processor.flip(@image)
