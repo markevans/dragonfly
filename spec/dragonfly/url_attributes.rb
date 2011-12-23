@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Dragonfly::HashWithName do
+describe Dragonfly::UrlAttributes do
   
   before(:each) do
-    @hash = Dragonfly::HashWithName.new
+    @hash = Dragonfly::UrlAttributes.new
   end
 
   describe "name" do
@@ -30,17 +30,17 @@ describe Dragonfly::HashWithName do
 
   describe "slice" do
     it "should return a subset of the params" do
-      hash = Dragonfly::HashWithName[:a => 1, :b => 2, :c => 3]
+      hash = Dragonfly::UrlAttributes[:a => 1, :b => 2, :c => 3]
       hash.slice(:a, :b).should == {:a => 1, :b => 2}
     end
     it "should use the method instead of the param for basename" do
-      Dragonfly::HashWithName[:name => 'hello.ted'].slice(:basename).should == {:basename => 'hello'}
+      Dragonfly::UrlAttributes[:name => 'hello.ted'].slice(:basename).should == {:basename => 'hello'}
     end
     it "should use the method instead of the param for ext" do
-      Dragonfly::HashWithName[:name => 'hello.ted'].slice(:ext).should == {:ext => 'ted'}
+      Dragonfly::UrlAttributes[:name => 'hello.ted'].slice(:ext).should == {:ext => 'ted'}
     end
     it "should treat strings like symbols" do
-      Dragonfly::HashWithName[:yog => 'gurt', :john => 'doe'].slice('yog').should == {:yog => 'gurt'}
+      Dragonfly::UrlAttributes[:yog => 'gurt', :john => 'doe'].slice('yog').should == {:yog => 'gurt'}
     end
   end
 

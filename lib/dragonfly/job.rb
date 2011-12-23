@@ -309,7 +309,7 @@ module Dragonfly
     end
 
     def url_attrs=(hash)
-      @url_attrs = HashWithName[hash]
+      @url_attrs = UrlAttributes[hash]
     end
     
     attr_reader :url_attrs

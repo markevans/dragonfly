@@ -1,9 +1,9 @@
 module Dragonfly
   
-  # HashWithName is like a normal hash, but treats
+  # UrlAttributes is like a normal hash, but treats
   # :name, :ext and :basename specially -
   # updating ext/basename also updates the name
-  class HashWithName < Hash
+  class UrlAttributes < Hash
 
     SPECIAL_KEYS = [:name, :basename, :ext]
 
