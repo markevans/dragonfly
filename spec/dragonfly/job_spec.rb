@@ -590,11 +590,7 @@ describe Dragonfly::Job do
         before(:each) do
           @app.server.url_format = '/:job/:basename'
         end
-        it "should use the url_attr if it exists" do
-          @job.url_attrs = {:basename => 'hi'}
-          @job.url.should == "/#{@job.serialize}/hi"
-        end
-        it "should use the name if basename url_attr doesn't exist" do
+        it "should use the name" do
           @job.url_attrs = {:name => 'hello.egg'}
           @job.url.should == "/#{@job.serialize}/hello"
         end
@@ -609,11 +605,7 @@ describe Dragonfly::Job do
           @app.server.url_format = '/:job.:ext'
           @job.url_attrs = {:name => 'hello.egg', :ext => 'hi'}
         end
-        it "should use the url_attr if it exists" do
-          @job.url_attrs = {:ext => 'hi'}
-          @job.url.should == "/#{@job.serialize}.hi"
-        end
-        it "should use the name if ext url_attr doesn't exist" do
+        it "should use the name" do
           @job.url_attrs = {:name => 'hello.egg'}
           @job.url.should == "/#{@job.serialize}.egg"
         end

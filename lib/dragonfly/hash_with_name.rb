@@ -7,26 +7,10 @@ module Dragonfly
 
     SPECIAL_KEYS = [:name, :basename, :ext]
 
+    include HasFilename
+
     def name
       self[:name]
-    end
-    
-    def basename
-      self[:basename] || (File.basename(name, '.*') if name)
-    end
-    
-    def ext
-      self[:ext] || (File.extname(name)[/\.(.*)/, 1] if name)
-    end
-
-    def basename=(basename)
-      self[:basename] = basename
-      self[:name] = [basename, ext].compact.join('.')
-    end
-    
-    def ext=(ext)
-      self[:ext] = ext
-      self[:name] = [basename, ext].compact.join('.')
     end
     
     def name=(name)
