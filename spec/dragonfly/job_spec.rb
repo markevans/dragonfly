@@ -973,11 +973,16 @@ describe Dragonfly::Job do
     end
     it "should store its data along with the meta and mime_type" do
       @job.meta[:eggs] = 'doolally'
-      @app.datastore.should_receive(:store).with(a_temp_object_with_data("Toes"), :mime_type => 'text/plain', :meta => {:name => 'doogie.txt', :eggs => 'doolally'})
+      @app.datastore.should_receive(:store).with do |temp_object, opts|
+        temp_object.data.should == "Toes"
+        temp_object.name.should == 'doogie.txt'
+        temp_object.meta[:eggs].should == 'doolally'
+        opts.should == {:mime_type => 'text/plain'}
+      end
       @job.store
     end
     it "should add extra opts" do
-      @app.datastore.should_receive(:store).with(a_temp_object_with_data("Toes"), :mime_type => 'text/plain', :meta => {:name => 'doogie.txt'}, :path => 'blah')
+      @app.datastore.should_receive(:store).with(anything, hash_including(:path => 'blah', :mime_type => 'text/plain'))
       @job.store(:path => 'blah')
     end
   end

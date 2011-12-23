@@ -423,7 +423,7 @@ module Dragonfly
     end
     
     def opts_for_store
-      {:meta => meta, :mime_type => mime_type}
+      {:mime_type => mime_type}
     end
 
   end
