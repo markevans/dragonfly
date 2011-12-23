@@ -73,7 +73,8 @@ module Dragonfly
       @meta = meta
     end
     
-    attr_reader :original_filename, :meta
+    attr_reader :original_filename
+    attr_accessor :meta
     
     def name
       meta[:name] || original_filename

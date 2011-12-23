@@ -364,6 +364,11 @@ describe Dragonfly::TempObject do
     it "should allow setting on initialize" do
       Dragonfly::TempObject.new('sdf', :dub => 'wub').meta.should == {:dub => 'wub'}
     end
+    it "should allow setting" do
+      temp_object = Dragonfly::TempObject.new('boo')
+      temp_object.meta = {:far => 'gone'}
+      temp_object.meta.should == {:far => 'gone'}
+    end
   end
 
   describe "name" do
