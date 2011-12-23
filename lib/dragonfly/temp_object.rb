@@ -72,6 +72,14 @@ module Dragonfly
     end
     
     attr_reader :original_filename, :meta
+    
+    def name
+      meta[:name] || original_filename
+    end
+    
+    def name=(name)
+      meta[:name] = name
+    end
 
     def data
       raise Closed, "can't read data as TempObject has been closed" if closed?

@@ -366,6 +366,30 @@ describe Dragonfly::TempObject do
     end
   end
 
+  describe "name" do
+    it "should default to nil" do
+      Dragonfly::TempObject.new("HELLO").name.should be_nil
+    end
+    it "should allow setting the name via the meta" do
+      Dragonfly::TempObject.new("HELLO", :name => 'gosh.pig').name.should == "gosh.pig"
+    end
+    it "should fallback to the original filename if not set" do
+      temp_object = Dragonfly::TempObject.new("HELLO")
+      temp_object.should_receive(:original_filename).and_return("some.egg")
+      temp_object.name.should == "some.egg"
+    end
+    it "should prefer the specified name to the original filename" do
+      temp_object = Dragonfly::TempObject.new("HELLO", :name => 'some.gug')
+      temp_object.should_not_receive(:original_filename)
+      temp_object.name.should == "some.gug"
+    end
+    it "should allow setting with a setter" do
+      temp_object = Dragonfly::TempObject.new("HELLO")
+      temp_object.name = 'bugs'
+      temp_object.name.should == "bugs"
+    end
+  end
+  
   describe "unique_id" do
     before(:each) do
       @temp_object = Dragonfly::TempObject.new('hello')
