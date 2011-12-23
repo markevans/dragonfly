@@ -163,7 +163,9 @@ Data stores are key-value in nature, and need to implement 3 methods: `store`, `
     class MyDataStore
 
       def store(temp_object, opts={})
-        # ... use temp_object.data, temp_object.file, temp_object.path, etc. ...
+        # ... use temp_object.data, temp_object.file, temp_object.path, etc.
+        # ... also we can use temp_object.meta and store it ...
+        
         # store and return the uid
         'return_some_unique_uid'
       end
@@ -187,7 +189,8 @@ You can now configure the app to use your datastore:
     Dragonfly[:my_app_name].datastore = MyDataStore.new
 
 Notice that `store` takes a second `opts` argument.
-Any options, including `:meta`, get passed here
+Any options, get passed here.
+`:meta` is treated specially and is accessible inside `MyDataStore#store` as `temp_object.meta`
 
     uid = app.store('SOME CONTENT',
       :meta => {:name => 'great_content.txt'},
