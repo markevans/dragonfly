@@ -357,6 +357,15 @@ describe Dragonfly::TempObject do
     end
   end
   
+  describe "meta" do
+    it "should default to an empty hash" do
+      Dragonfly::TempObject.new('sdf').meta.should == {}
+    end
+    it "should allow setting on initialize" do
+      Dragonfly::TempObject.new('sdf', :dub => 'wub').meta.should == {:dub => 'wub'}
+    end
+  end
+
   describe "unique_id" do
     before(:each) do
       @temp_object = Dragonfly::TempObject.new('hello')

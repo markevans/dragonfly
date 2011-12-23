@@ -37,7 +37,7 @@ module Dragonfly
 
     # Instance Methods
 
-    def initialize(obj)
+    def initialize(obj, meta={})
       if obj.is_a? TempObject
         @data = obj.get_data
         @tempfile = obj.get_tempfile
@@ -66,9 +66,12 @@ module Dragonfly
       elsif @pathname
         @pathname.basename.to_s
       end
+      
+      # Meta
+      @meta = meta
     end
     
-    attr_reader :original_filename
+    attr_reader :original_filename, :meta
 
     def data
       raise Closed, "can't read data as TempObject has been closed" if closed?
