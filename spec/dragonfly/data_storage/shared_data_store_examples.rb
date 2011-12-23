@@ -44,8 +44,8 @@ shared_examples_for "data_store" do
 
     describe "when meta is given" do
       before(:each) do
-        temp_object = Dragonfly::TempObject.new('gollum')
-        @uid = @data_store.store(temp_object, :meta => {:bitrate => '35', :name => 'danny.boy'})
+        temp_object = Dragonfly::TempObject.new('gollum', :bitrate => '35', :name => 'danny.boy')
+        @uid = @data_store.store(temp_object)
         @obj, @meta = @data_store.retrieve(@uid)
       end
 
