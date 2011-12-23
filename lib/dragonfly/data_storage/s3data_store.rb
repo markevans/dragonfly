@@ -33,19 +33,18 @@ module Dragonfly
         ensure_configured
         ensure_bucket_initialized
         
-        meta = opts[:meta] || {}
         headers = opts[:headers] || {}
         mime_type = opts[:mime_type] || opts[:content_type]
         headers['Content-Type'] = mime_type if mime_type
-        uid = opts[:path] || generate_uid(meta[:name] || temp_object.original_filename || 'file')
+        uid = opts[:path] || generate_uid(temp_object.name || 'file')
         
         rescuing_socket_errors do
           if use_filesystem
             temp_object.file do |f|
-              storage.put_object(bucket_name, uid, f, full_storage_headers(headers, meta))
+              storage.put_object(bucket_name, uid, f, full_storage_headers(headers, temp_object.meta))
             end
           else
-            storage.put_object(bucket_name, uid, temp_object.data, full_storage_headers(headers, meta))
+            storage.put_object(bucket_name, uid, temp_object.data, full_storage_headers(headers, temp_object.meta))
           end
         end
         

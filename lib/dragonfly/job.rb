@@ -10,20 +10,19 @@ module Dragonfly
     # Exceptions
     class AppDoesNotMatch < StandardError; end
     class JobAlreadyApplied < StandardError; end
+    class NoContent < StandardError; end
     class NothingToProcess < StandardError; end
     class NothingToEncode < StandardError; end
-    class NothingToAnalyse < StandardError; end
     class InvalidArray < StandardError; end
     class NoSHAGiven < StandardError; end
     class IncorrectSHA < StandardError; end
 
     extend Forwardable
     def_delegators :result,
-                   :data, :file, :tempfile, :path, :to_file, :size, :each
+                   :data, :file, :tempfile, :path, :to_file, :size, :each,
+                   :meta, :meta=, :name, :name=, :basename, :basename=, :ext, :ext=
     def_delegator :app,
                   :server
-    def_delegators :meta,
-                   :name, :name=, :basename, :basename=, :ext, :ext=
 
     class Step
 
@@ -95,8 +94,7 @@ module Dragonfly
       def apply
         raise NothingToEncode, "Can't encode because temp object has not been initialized. Need to fetch first?" unless job.temp_object
         content, meta = job.app.encoder.encode(job.temp_object, format, *arguments)
-        job.update(content, meta)
-        job.temp_meta[:format] = format
+        job.update(content, (meta || {}).merge(:format => format))
       end
     end
 
@@ -118,8 +116,7 @@ module Dragonfly
         @filename ||= File.basename(path)
       end
       def apply
-        job.temp_object = TempObject.new(Pathname.new(path))
-        job.temp_meta[:name] = filename
+        job.update(Pathname.new(path), :name => filename)
       end
     end
 
@@ -138,8 +135,7 @@ module Dragonfly
       end
       def apply
         open(url) do |f|
-          job.temp_object = TempObject.new(f.read)
-          job.temp_meta[:name] = filename
+          job.update(f.read, :name => filename)
         end
       end
     end
@@ -212,8 +208,7 @@ module Dragonfly
       @steps = []
       @next_step_index = 0
       @previous_temp_objects = []
-      @temp_meta = HashWithName.new
-      update(content, meta)
+      update(content, meta) if content
       self.url_attrs = url_attrs
     end
 
@@ -249,9 +244,6 @@ module Dragonfly
     end
 
     def analyse(method, *args)
-      unless result
-        raise NothingToAnalyse, "Can't analyse because temp object has not been initialized. Need to fetch first?"
-      end
       analyser.analyse(result, method, *args)
     end
 
@@ -267,11 +259,6 @@ module Dragonfly
       next_step_index == steps.length
     end
 
-    def result
-      apply
-      temp_object
-    end
-    
     def applied_steps
       steps[0...next_step_index]
     end
@@ -320,6 +307,12 @@ module Dragonfly
     def url(opts={})
       app.url_for(self, attributes_for_url.merge(opts)) unless steps.empty?
     end
+
+    def url_attrs=(hash)
+      @url_attrs = UrlAttributes[hash]
+    end
+    
+    attr_reader :url_attrs
 
     def b64_data
       "data:#{mime_type};base64,#{Base64.encode64(data)}"
@@ -380,42 +373,20 @@ module Dragonfly
     # Misc
 
     def store(opts={})
-      app.store(result, opts_for_store.merge(opts))
+      temp_object = result
+      app.store(temp_object, opts_for_store.merge(opts).merge(:meta => temp_object.meta))
     end
 
     def inspect
       to_s.sub(/>$/, " app=#{app}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >")
     end
-
-    # Meta, url_attrs
-
-    attr_accessor :temp_meta
-
-    def meta=(hash)
-      apply
-      self.temp_meta = HashWithName[hash]
-    end
-
-    def meta
-      apply
-      temp_meta
-    end
     
-    def url_attrs=(hash)
-      @url_attrs = HashWithName[hash]
-    end
-    
-    attr_reader :url_attrs
-
-    def update(content, meta)
-      if meta
-        meta.merge!(meta.delete(:meta)) if meta[:meta] # legacy data etc. may have nested meta hash - deprecate gracefully here
-        self.temp_meta.merge!(meta)
+    def update(content, new_meta)
+      if new_meta
+        new_meta.merge!(new_meta.delete(:meta)) if new_meta[:meta] # legacy data etc. may have nested meta hash - deprecate gracefully here
       end
-      if content
-        self.temp_object = TempObject.new(content)
-        self.temp_meta[:name] ||= temp_object.original_filename if temp_object.original_filename
-      end
+      old_meta = temp_object ? temp_object.meta : {}
+      self.temp_object = TempObject.new(content, old_meta.merge(new_meta || {}))
     end
     
     def close
@@ -430,6 +401,11 @@ module Dragonfly
 
     private
 
+    def result
+      apply
+      temp_object || raise(NoContent, "Job has not been initialized with content. Need to fetch first?")
+    end
+    
     def attributes_for_url
       attrs = url_attrs.slice(*server.params_in_url)
       attrs[:format] = (attrs[:format] || (url_attrs.ext if app.trust_file_extensions)).to_s if server.params_in_url.include?('format')
@@ -448,7 +424,7 @@ module Dragonfly
     end
     
     def opts_for_store
-      {:meta => meta, :mime_type => mime_type}
+      {:mime_type => mime_type}
     end
 
   end

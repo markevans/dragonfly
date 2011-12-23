@@ -15,11 +15,10 @@ module Dragonfly
       configurable_attr :store_meta, true
 
       def store(temp_object, opts={})
-        meta = opts[:meta] || {}
         relative_path = if opts[:path]
           opts[:path]
         else
-          filename = meta[:name] || temp_object.original_filename || 'file'
+          filename = temp_object.name || 'file'
           relative_path = relative_path_for(filename)
         end
 
@@ -30,7 +29,7 @@ module Dragonfly
           end
           prepare_path(path)
           temp_object.to_file(path).close
-          store_meta_data(path, meta) if store_meta
+          store_meta_data(path, temp_object.meta) if store_meta
         rescue Errno::EACCES => e
           raise UnableToStore, e.message
         end

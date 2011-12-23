@@ -59,17 +59,17 @@ describe Dragonfly::DataStorage::S3DataStore do
       @data_store.store(temp_object).should_not == @data_store.store(temp_object2)
     end
 
-    it "should use the name in the meta if set" do
-      temp_object = Dragonfly::TempObject.new('eggheads')
-      uid = @data_store.store(temp_object, :meta => {:name =>  'doobie'})
+    it "should use the name from the temp_object if set" do
+      temp_object = Dragonfly::TempObject.new('eggheads', :name => 'doobie')
+      uid = @data_store.store(temp_object)
       uid.should =~ /doobie$/
       data, meta = @data_store.retrieve(uid)
       data.should == 'eggheads'
     end
 
     it "should work ok with files with funny names" do
-      temp_object = Dragonfly::TempObject.new('eggheads')
-      uid = @data_store.store(temp_object, :meta => {:name =>  'A Picture with many spaces in its name (at 20:00 pm).png'})
+      temp_object = Dragonfly::TempObject.new('eggheads', :name => 'A Picture with many spaces in its name (at 20:00 pm).png')
+      uid = @data_store.store(temp_object)
       uid.should =~ /A_Picture_with_many_spaces_in_its_name_at_20_00_pm_\.png$/
       data, meta = @data_store.retrieve(uid)
       data.should == 'eggheads'

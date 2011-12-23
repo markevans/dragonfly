@@ -86,7 +86,7 @@ module Dragonfly
     end
 
     def store(object, opts={})
-      temp_object = object.is_a?(TempObject) ? object : TempObject.new(object)
+      temp_object = object.is_a?(TempObject) ? object : TempObject.new(object, opts[:meta] || {})
       datastore.store(temp_object, opts)
     end
 

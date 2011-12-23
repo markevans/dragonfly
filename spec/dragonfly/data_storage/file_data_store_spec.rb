@@ -42,25 +42,14 @@ describe Dragonfly::DataStorage::FileDataStore do
       @data_store.store(@temp_object)
     end
 
-    it "should use the temp_object original filename if it exists" do
-      @temp_object.should_receive(:original_filename).at_least(:once).and_return('hello.there')
+    it "should use the temp_object name if it exists" do
+      @temp_object.should_receive(:name).at_least(:once).and_return('hello.there')
       it_should_write_to_file("#{@file_pattern_prefix}hello.there", @temp_object)
       @data_store.store(@temp_object)
     end
 
-    it "should use the meta name if it exists" do
-      it_should_write_to_file("#{@file_pattern_prefix}damp.squib", @temp_object)
-      @data_store.store(@temp_object, :meta => {:name => 'damp.squib'})
-    end
-
-    it "should prefer the meta name to the original filename" do
-      @temp_object.stub!(:original_filename).and_return('hello.there')
-      it_should_write_to_file("#{@file_pattern_prefix}damp.squib", @temp_object)
-      @data_store.store(@temp_object, :meta => {:name => 'damp.squib'})
-    end
-
-    it "should get rid of funny characters in the temp_object original filename" do
-      @temp_object.should_receive(:original_filename).at_least(:once).and_return('A Picture with many spaces in its name (at 20:00 pm).png')
+    it "should get rid of funny characters in the temp_object name" do
+      @temp_object.should_receive(:name).at_least(:once).and_return('A Picture with many spaces in its name (at 20:00 pm).png')
       it_should_write_to_file("#{@file_pattern_prefix}A_Picture_with_many_spaces_in_its_name_at_20_00_pm_.png", @temp_object)
       @data_store.store(@temp_object)
     end
@@ -75,7 +64,7 @@ describe Dragonfly::DataStorage::FileDataStore do
       end
     
       it "should use a different filename taking into account the name and ext" do
-        @temp_object.should_receive(:original_filename).at_least(:once).and_return('hello.png')
+        @temp_object.should_receive(:name).at_least(:once).and_return('hello.png')
         touch_file("#{@file_pattern_prefix}hello.png")
         @data_store.should_receive(:disambiguate).with("#{@file_pattern_prefix}hello.png").and_return("#{@file_pattern_prefix}blah.png")
         @data_store.store(@temp_object)
@@ -112,7 +101,7 @@ describe Dragonfly::DataStorage::FileDataStore do
       end
     
       it "should return the filepath without the root of the stored file when a file name is provided" do
-        @temp_object.should_receive(:original_filename).at_least(:once).and_return('hello.you.png')
+        @temp_object.should_receive(:name).at_least(:once).and_return('hello.you.png')
         @data_store.store(@temp_object).should == "#{@file_pattern_prefix_without_root}hello.you.png"
       end
     
@@ -162,10 +151,11 @@ describe Dragonfly::DataStorage::FileDataStore do
     end
     
     it "should work even if meta is stored in old .extra file" do
-      uid = @data_store.store(@temp_object, :meta => {:dog => 'food'})
+      @temp_object.meta = {:dog => 'foog'}
+      uid = @data_store.store(@temp_object)
       FileUtils.mv("#{@data_store.root_path}/#{uid}.meta", "#{@data_store.root_path}/#{uid}.extra")
       pathname, meta = @data_store.retrieve(uid)
-      meta.should == {:dog => 'food'}
+      meta.should == {:dog => 'foog'}
     end
     
     it "should raise a BadUID error if the file path has ../ in it" do
@@ -239,16 +229,17 @@ describe Dragonfly::DataStorage::FileDataStore do
   describe "turning meta off" do
     before(:each) do
       @data_store.store_meta = false
+      @temp_object.meta = {:bitrate => '35', :name => 'danny.boy'}
     end
 
     it "should not write a meta file" do
-      uid = @data_store.store(@temp_object, :meta => {:bitrate => '35', :name => 'danny.boy'})
+      uid = @data_store.store(@temp_object)
       path = File.join(@data_store.root_path, uid) + '.meta'
       File.exist?(path).should be_false
     end
 
     it "should return an empty hash on retrieve" do
-      uid = @data_store.store(@temp_object, :meta => {:bitrate => '35', :name => 'danny.boy'})
+      uid = @data_store.store(@temp_object)
       obj, meta = @data_store.retrieve(uid)
       meta.should == {}
     end
