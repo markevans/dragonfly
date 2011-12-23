@@ -379,13 +379,15 @@ describe Dragonfly::TempObject do
       Dragonfly::TempObject.new("HELLO", :name => 'gosh.pig').name.should == "gosh.pig"
     end
     it "should fallback to the original filename if not set" do
-      temp_object = Dragonfly::TempObject.new("HELLO")
-      temp_object.should_receive(:original_filename).and_return("some.egg")
+      content = "HELLO"
+      content.should_receive(:original_filename).and_return("some.egg")
+      temp_object = Dragonfly::TempObject.new(content)
       temp_object.name.should == "some.egg"
     end
     it "should prefer the specified name to the original filename" do
+      content = "HELLO"
+      content.stub!(:original_filename).and_return("brase.nose")
       temp_object = Dragonfly::TempObject.new("HELLO", :name => 'some.gug')
-      temp_object.should_not_receive(:original_filename)
       temp_object.name.should == "some.gug"
     end
     it "should allow setting with a setter" do

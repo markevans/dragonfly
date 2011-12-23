@@ -71,13 +71,14 @@ module Dragonfly
       
       # Meta
       @meta = meta
+      @meta[:name] ||= @original_filename if @original_filename
     end
     
     attr_reader :original_filename
     attr_accessor :meta
     
     def name
-      meta[:name] || original_filename
+      meta[:name]
     end
     
     def name=(name)
