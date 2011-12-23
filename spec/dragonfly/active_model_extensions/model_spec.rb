@@ -1218,18 +1218,16 @@ describe Item do
     it "should return the saved stuff if assigned and retained" do
       @item.preview_image = 'hello'
       @item.preview_image.name = 'dog.biscuit'
-      @app.datastore.should_receive(:store).
-                     with(
-                       a_temp_object_with_data('hello'),
-                       hash_including(:meta => {
-                         :name => "dog.biscuit",
-                         :some_analyser_method => "HELLO",
-                         :size => 5,
-                         :model_class => "Item",
-                         :model_attachment => :preview_image
-                       })
-                     ).
-                     and_return('new/uid')
+      @app.datastore.should_receive(:store).with do |temp_object, opts|
+        temp_object.data.should == 'hello'
+        temp_object.meta.should == {
+          :name => "dog.biscuit",
+          :some_analyser_method => "HELLO",
+          :size => 5,
+          :model_class => "Item",
+          :model_attachment => :preview_image
+        }
+      end.and_return('new/uid')
       @item.preview_image.retain!
       Dragonfly::Serializer.marshal_decode(@item.retained_preview_image).should == {
         :uid => 'new/uid',

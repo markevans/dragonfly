@@ -373,7 +373,8 @@ module Dragonfly
     # Misc
 
     def store(opts={})
-      app.store(result, opts_for_store.merge(opts))
+      temp_object = result
+      app.store(temp_object, opts_for_store.merge(opts).merge(:meta => temp_object.meta))
     end
 
     def inspect

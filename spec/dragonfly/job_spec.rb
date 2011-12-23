@@ -977,13 +977,20 @@ describe Dragonfly::Job do
         temp_object.data.should == "Toes"
         temp_object.name.should == 'doogie.txt'
         temp_object.meta[:eggs].should == 'doolally'
-        opts.should == {:mime_type => 'text/plain'}
+        opts[:mime_type].should == 'text/plain'
       end
       @job.store
     end
     it "should add extra opts" do
       @app.datastore.should_receive(:store).with(anything, hash_including(:path => 'blah', :mime_type => 'text/plain'))
       @job.store(:path => 'blah')
+    end
+    it "should pass in its meta, for deprecated datastores" do
+      @job.meta[:beans] = 5
+      @app.datastore.should_receive(:store).with do |temp_object, opts|
+        opts[:meta].should == {:beans => 5, :name => 'doogie.txt'}
+      end
+      @job.store
     end
   end
 
