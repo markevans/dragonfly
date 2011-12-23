@@ -32,6 +32,8 @@ module Dragonfly
   #
   class TempObject
 
+    include HasFilename
+
     # Exceptions
     class Closed < RuntimeError; end
 

@@ -390,6 +390,14 @@ describe Dragonfly::TempObject do
     end
   end
   
+  describe "sanity check for using HasFilename" do
+    it "should act like Dragonfly::HasFilename" do
+      temp_object = Dragonfly::TempObject.new('h', :name => 'one.big.park')
+      temp_object.ext = 'smeagol'
+      temp_object.name.should == 'one.big.smeagol'
+    end
+  end
+  
   describe "unique_id" do
     before(:each) do
       @temp_object = Dragonfly::TempObject.new('hello')
