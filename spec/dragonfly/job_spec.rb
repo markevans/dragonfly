@@ -45,16 +45,16 @@ describe Dragonfly::Job do
 
   end
 
+  it "should allow initializing with content" do
+    job = Dragonfly::Job.new(@app, 'eggheads')
+    job.data.should == 'eggheads'
+  end
+
   describe "without content" do
 
     before(:each) do
-      @app = mock_app
+      @app = test_app
       @job = Dragonfly::Job.new(@app)
-    end
-
-    it "should allow initializing with content" do
-      job = Dragonfly::Job.new(@app, 'eggheads')
-      job.data.should == 'eggheads'
     end
 
     describe "fetch" do
@@ -99,10 +99,19 @@ describe Dragonfly::Job do
     end
 
     describe "analyse" do
-      it "should raise an error" do
+      it "should raise a NoContent error" do
+        job = @app.new_job # This will define #analyser on it
         lambda{
-          @job.analyse(:width)
-        }.should raise_error(Dragonfly::Job::NothingToAnalyse)
+          job.analyse(:width)
+        }.should raise_error(Dragonfly::Job::NoContent)
+      end
+    end
+
+    describe "data" do
+      it "should raise a NoContent error" do
+        lambda{
+          @job.data
+        }.should raise_error(Dragonfly::Job::NoContent)
       end
     end
 
@@ -850,7 +859,7 @@ describe Dragonfly::Job do
     before(:each) do
       @app = test_app
       @app.generator.add(:gollum){|t| "OK"}
-      @job = @app.new_job
+      @job = @app.new_job("Goo")
     end
     it "should default meta to an empty hash" do
       @job.meta.should == {}
@@ -859,11 +868,6 @@ describe Dragonfly::Job do
       @job.meta = {:a => :b}
       @job.meta.should == {:a => :b}
     end
-    it "should act like a HashWithName" do
-      @job.meta = {:name => 'gday.mate'}
-      @job.meta.basename.should == 'gday'
-      @job.meta.ext.should == 'mate'
-    end
     it "should apply the job" do
       @job.should_receive :apply
       @job.meta
@@ -871,11 +875,6 @@ describe Dragonfly::Job do
     it "should apply the job before setting (for consistency)" do
       @job.should_receive :apply
       @job.meta = {}
-    end
-    it "should not allow setting as anything other than a hash" do
-      lambda{
-        @job.meta = 3
-      }.should raise_error(ArgumentError)
     end
     it "should allow setting on initialize" do
       job = @app.new_job('asdf', :b => :c)
@@ -887,7 +886,7 @@ describe Dragonfly::Job do
     end
   end
 
-  describe "name" do
+  describe "sanity check for name, basename, ext" do
     before(:each) do
       @app = test_app
       @job = @app.new_job('asdf')
@@ -896,114 +895,84 @@ describe Dragonfly::Job do
     it "should default to nil" do
       @job.name.should be_nil
     end
-    it "should use the meta" do
+
+    it "reflect the meta" do
       @job.meta[:name] = 'monkey.egg'
       @job.name.should == 'monkey.egg'
+      @job.basename.should == 'monkey'
+      @job.ext.should == 'egg'
     end
-    it "should allow setting" do
-      @job.name = "jonny.briggs"
-      @job.meta[:name].should == 'jonny.briggs'
-    end
-
-    describe "ext" do
-      it "should default to nil" do
-        @job.ext.should be_nil
-      end
-      it "should use the meta" do
-        @job.meta[:ext] = 'egg'
-        @job.ext.should == 'egg'
-      end
-      it "should allow setting" do
-        @job.ext = "briggs"
-        @job.meta[:ext].should == 'briggs'
-      end
-    end
-
-    describe "basename" do
-      it "should default to nil" do
-        @job.basename.should be_nil
-      end
-      it "should use the meta" do
-        @job.meta[:basename] = 'egg'
-        @job.basename.should == 'egg'
-      end
-      it "should allow setting" do
-        @job.basename = "briggs"
-        @job.meta[:basename].should == 'briggs'
-      end
-    end
-
-    describe "format" do
-      before(:each) do
-        @app = test_app
-      end
-      it "should default to nil" do
-        job = @app.new_job("HELLO")
-        job.format.should be_nil
-      end
-      it "should use the meta format if it exists" do
-        job = @app.new_job("HELLO")
-        job.meta[:format] = :txt
-        job.format.should == :txt
-      end
-      it "should use the analyser format if it exists" do
-        @app.analyser.add :format do |temp_object|
-          :egg
-        end
-        job = @app.new_job("HELLO")
-        job.format.should == :egg
-      end
-      it "should use the file extension if it has no format" do
-        job = @app.new_job("HIMATE", :name => 'test.pdf')
-        job.format.should == :pdf
-      end
-      it "should not use the file extension if it's been switched off" do
-        @app.trust_file_extensions = false
-        job = @app.new_job("HIMATE", :name => 'test.pdf')
-        job.format.should be_nil
-      end
-      it "should prefer the set format over the file extension" do
-        job = @app.new_job("HELLO", :name => 'test.pdf', :format => :txt)
-        job.format.should == :txt
-      end
-      it "should prefer the file extension over the analysed format" do
-        @app.analyser.add :format do |temp_object|
-          :egg
-        end
-        job = @app.new_job("HELLO", :name => 'test.pdf')
-        job.format.should == :pdf
-      end
-      it "should apply the job" do
-        @app.generator.add(:test){ ["skid marks", {:name => 'terry.burton'}] }
-        job = @app.generate(:test)
-        job.format.should == :burton
-        job.should be_applied
-      end
-    end
-
-    describe "mime_type" do
-      before(:each) do
-        @app = test_app
-      end
-      it "should return the correct mime_type if the format is given" do
-        @job = @app.new_job("HIMATE")
-        @job.should_receive(:format).and_return(:tiff)
-        @job.mime_type.should == 'image/tiff'
-      end
-      it "should fall back to the mime_type analyser if the format is nil" do
-        @app.analyser.add :mime_type do |temp_object|
-          'image/jpeg'
-        end
-        @job = @app.new_job("HIMATE")
-        @job.mime_type.should == 'image/jpeg'
-      end
-      it "should fall back to the fallback mime_type if neither format or analyser exist" do
-        @app.new_job("HIMATE").mime_type.should == 'application/octet-stream'
-      end
-    end
-
   end
-  
+
+  describe "format" do
+    before(:each) do
+      @app = test_app
+    end
+    it "should default to nil" do
+      job = @app.new_job("HELLO")
+      job.format.should be_nil
+    end
+    it "should use the meta format if it exists" do
+      job = @app.new_job("HELLO")
+      job.meta[:format] = :txt
+      job.format.should == :txt
+    end
+    it "should use the analyser format if it exists" do
+      @app.analyser.add :format do |temp_object|
+        :egg
+      end
+      job = @app.new_job("HELLO")
+      job.format.should == :egg
+    end
+    it "should use the file extension if it has no format" do
+      job = @app.new_job("HIMATE", :name => 'test.pdf')
+      job.format.should == :pdf
+    end
+    it "should not use the file extension if it's been switched off" do
+      @app.trust_file_extensions = false
+      job = @app.new_job("HIMATE", :name => 'test.pdf')
+      job.format.should be_nil
+    end
+    it "should prefer the set format over the file extension" do
+      job = @app.new_job("HELLO", :name => 'test.pdf', :format => :txt)
+      job.format.should == :txt
+    end
+    it "should prefer the file extension over the analysed format" do
+      @app.analyser.add :format do |temp_object|
+        :egg
+      end
+      job = @app.new_job("HELLO", :name => 'test.pdf')
+      job.format.should == :pdf
+    end
+    it "should apply the job" do
+      @app.generator.add(:test){ ["skid marks", {:name => 'terry.burton'}] }
+      job = @app.generate(:test)
+      job.format.should == :burton
+      job.should be_applied
+    end
+  end
+
+  describe "mime_type" do
+    before(:each) do
+      @app = test_app
+    end
+    it "should return the correct mime_type if the format is given" do
+      @job = @app.new_job("HIMATE")
+      @job.should_receive(:format).and_return(:tiff)
+      @job.mime_type.should == 'image/tiff'
+    end
+    it "should fall back to the mime_type analyser if the format is nil" do
+      @app.analyser.add :mime_type do |temp_object|
+        'image/jpeg'
+      end
+      @job = @app.new_job("HIMATE")
+      @job.mime_type.should == 'image/jpeg'
+    end
+    it "should fall back to the fallback mime_type if neither format or analyser exist" do
+      @app.new_job("HIMATE").mime_type.should == 'application/octet-stream'
+    end
+  end
+
   describe "store" do
     before(:each) do
       @app = test_app
