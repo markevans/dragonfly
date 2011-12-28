@@ -504,6 +504,24 @@ describe Item do
         @item.should be_valid
       end
 
+      it "should allow case sensitivity to be turned off when :as is specified" do
+        @item.should_receive(:its_friday).and_return(false)
+        Item.class_eval do
+          validates_property :mime_type, :of => :preview_image, :as => 'WronG/TypE', :case_sensitive => false
+        end
+        @item.preview_image = "WRONG TYPE"
+        @item.should be_valid
+      end
+
+      it "should allow case sensitivity to be turned off when :in is specified" do
+        @item.should_receive(:its_friday).and_return(false)
+        Item.class_eval do
+          validates_property :mime_type, :of => :preview_image, :in => ['WronG/TypE'], :case_sensitive => false
+        end
+        @item.preview_image = "WRONG TYPE"
+        @item.should be_valid
+      end
+
       it "should require either :as or :in as an argument" do
         lambda{
           Item.class_eval do
