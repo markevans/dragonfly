@@ -65,6 +65,10 @@ describe Dragonfly::UrlMapper do
     it "should call to_s on non-string values" do
       @url_mapper.url_for('job' => 'asdf', 'size' => 500).should == '/media/asdf-500'
     end
+    
+    it "should url-escape funny characters" do
+      @url_mapper.url_for('job' => 'a#c').should == '/media/a%23c'
+    end
   end
 
   describe "params_for" do
@@ -83,6 +87,10 @@ describe Dragonfly::UrlMapper do
     it "should generally be ok with wierd characters" do
       @url_mapper = Dragonfly::UrlMapper.new('/media/:doobie')
       @url_mapper.params_for('/media/sd sdf jl£@$ sdf:_', 'job=goodun').should == {'job' => 'goodun', 'doobie' => 'sd sdf jl£@$ sdf:_'}
+    end
+    
+    it "should correctly url-unescape funny characters" do
+      @url_mapper.params_for('/media/a%23c').should == {'job' => 'a#c'}
     end
   end
 
@@ -109,7 +117,7 @@ describe Dragonfly::UrlMapper do
       '/media/asdf.egg' =>       {'job' => 'asdf', 'basename' => nil,     'format' => 'egg'},
       '/media/asdf/stuff/egg' => nil,
       '/media/asdf/stuff.dog.egg' => {'job' => 'asdf', 'basename' => 'stuff.dog', 'format' => 'egg'},
-      '/media/asdf/s=2 -.d.e' => {'job' => 'asdf', 'basename' => 's=2 -.d', 'format' => 'e'},
+      '/media/asdf/s=2%20-.d.e' => {'job' => 'asdf', 'basename' => 's=2 -.d', 'format' => 'e'},
       '/media/asdf-40x40/stuff.egg' => nil
     }.each do |path, params|
       
