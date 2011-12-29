@@ -11,9 +11,10 @@ module Dragonfly
       configurable_attr :bucket_name
       configurable_attr :access_key_id
       configurable_attr :secret_access_key
-      configurable_attr :use_filesystem, true
       configurable_attr :region
+      configurable_attr :use_filesystem, true
       configurable_attr :storage_headers, {'x-amz-acl' => 'public-read'}
+      configurable_attr :url_scheme, 'http'
 
       REGIONS = {
         'us-east-1'      => 's3.amazonaws.com',  #default
@@ -76,7 +77,8 @@ module Dragonfly
             storage.get_object_url(bucket_name, uid, opts[:expires])
           end
         else
-          "http://#{bucket_name}.s3.amazonaws.com/#{uid}"
+          scheme = opts[:scheme] || url_scheme
+          "#{scheme}://#{bucket_name}.s3.amazonaws.com/#{uid}"
         end
       end
 

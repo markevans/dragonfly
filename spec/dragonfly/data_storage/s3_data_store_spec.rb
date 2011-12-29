@@ -252,6 +252,15 @@ describe Dragonfly::DataStorage::S3DataStore do
       @data_store.url_for(@uid, :expires => 1301476942).should =~
         %r{^https://#{@data_store.domain}/#{BUCKET_NAME}/some/path/on/s3\?AWSAccessKeyId=#{@data_store.access_key_id}&Signature=[\w%]+&Expires=1301476942$}
     end
+
+    it "should allow for using https" do
+      @data_store.url_for(@uid, :scheme => 'https').should == "https://#{BUCKET_NAME}.s3.amazonaws.com/some/path/on/s3"
+    end
+
+    it "should allow for always using https" do
+      @data_store.url_scheme = 'https'
+      @data_store.url_for(@uid).should == "https://#{BUCKET_NAME}.s3.amazonaws.com/some/path/on/s3"
+    end
     
   end
 
