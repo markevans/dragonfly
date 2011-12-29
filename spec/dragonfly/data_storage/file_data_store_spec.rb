@@ -7,10 +7,15 @@ describe Dragonfly::DataStorage::FileDataStore do
     FileUtils.mkdir_p(File.dirname(filename))
     FileUtils.touch(filename)
   end
+
+  def assert_exists(path)
+    File.exists?(path).should be_true
+  end
   
   before(:each) do
     @data_store = Dragonfly::DataStorage::FileDataStore.new
     @data_store.root_path = 'tmp/file_data_store_test'
+    @temp_object = Dragonfly::TempObject.new('goobydoo')
   end
   
   after(:each) do
@@ -20,15 +25,7 @@ describe Dragonfly::DataStorage::FileDataStore do
   
   it_should_behave_like 'data_store'
   
-  before(:each) do
-    @temp_object = Dragonfly::TempObject.new('goobydoo')
-  end
-  
   describe "store" do
-    
-    def it_should_write_to_file(storage_path, temp_object)
-      temp_object.should_receive(:to_file).with(storage_path).and_return(mock('file', :close => nil))
-    end
     
     before(:each) do
       # Set 'now' to a date in the past
@@ -38,20 +35,20 @@ describe Dragonfly::DataStorage::FileDataStore do
     end
     
     it "should store the file in a folder based on date, with default filename" do
-      it_should_write_to_file("#{@file_pattern_prefix}file", @temp_object)
       @data_store.store(@temp_object)
+      assert_exists "#{@file_pattern_prefix}file"
     end
 
     it "should use the temp_object name if it exists" do
       @temp_object.should_receive(:name).at_least(:once).and_return('hello.there')
-      it_should_write_to_file("#{@file_pattern_prefix}hello.there", @temp_object)
       @data_store.store(@temp_object)
+      assert_exists "#{@file_pattern_prefix}hello.there"
     end
 
     it "should get rid of funny characters in the temp_object name" do
       @temp_object.should_receive(:name).at_least(:once).and_return('A Picture with many spaces in its name (at 20:00 pm).png')
-      it_should_write_to_file("#{@file_pattern_prefix}A_Picture_with_many_spaces_in_its_name_at_20_00_pm_.png", @temp_object)
       @data_store.store(@temp_object)
+      assert_exists "#{@file_pattern_prefix}A_Picture_with_many_spaces_in_its_name_at_20_00_pm_.png"
     end
 
     describe "when the filename already exists" do
@@ -59,8 +56,8 @@ describe Dragonfly::DataStorage::FileDataStore do
       it "should use a different filename" do
         touch_file("#{@file_pattern_prefix}file")
         @data_store.should_receive(:disambiguate).with("#{@file_pattern_prefix}file").and_return("#{@file_pattern_prefix}file_2")
-        it_should_write_to_file("#{@file_pattern_prefix}file_2", @temp_object)
         @data_store.store(@temp_object)
+        assert_exists "#{@file_pattern_prefix}file_2"
       end
     
       it "should use a different filename taking into account the name and ext" do
@@ -75,20 +72,20 @@ describe Dragonfly::DataStorage::FileDataStore do
         touch_file("#{@file_pattern_prefix}file_2")
         @data_store.should_receive(:disambiguate).with("#{@file_pattern_prefix}file").and_return("#{@file_pattern_prefix}file_2")
         @data_store.should_receive(:disambiguate).with("#{@file_pattern_prefix}file_2").and_return("#{@file_pattern_prefix}file_3")
-        it_should_write_to_file("#{@file_pattern_prefix}file_3", @temp_object)
         @data_store.store(@temp_object)
+        assert_exists "#{@file_pattern_prefix}file_3"
       end
 
       describe "specifying the uid" do
         it "should allow for specifying the path to use" do
-          it_should_write_to_file("#{@data_store.root_path}/hello/there/mate.png", @temp_object)
           @data_store.store(@temp_object, :path => 'hello/there/mate.png')
+          assert_exists "#{@data_store.root_path}/hello/there/mate.png"
         end
         it "should correctly disambiguate if the file exists" do
           touch_file("#{@data_store.root_path}/hello/there/mate.png")
           @data_store.should_receive(:disambiguate).with("#{@data_store.root_path}/hello/there/mate.png").and_return("#{@data_store.root_path}/hello/there/mate_2.png")
-          it_should_write_to_file("#{@data_store.root_path}/hello/there/mate_2.png", @temp_object)
           @data_store.store(@temp_object, :path => 'hello/there/mate.png')
+          assert_exists "#{@data_store.root_path}/hello/there/mate_2.png"
         end
       end
 

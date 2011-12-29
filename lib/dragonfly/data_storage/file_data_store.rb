@@ -27,7 +27,6 @@ module Dragonfly
           until !File.exist?(path)
             path = disambiguate(path)
           end
-          prepare_path(path)
           temp_object.to_file(path).close
           store_meta_data(path, temp_object.meta) if store_meta
         rescue Errno::EACCES => e
@@ -121,11 +120,6 @@ module Dragonfly
           deprecated_path = deprecated_meta_data_path(data_path)
           File.exist?(deprecated_path) ? File.open(deprecated_path,'rb'){|f| Marshal.load(f.read) } : {}
         end
-      end
-
-      def prepare_path(path)
-        dir = File.dirname(path)
-        FileUtils.mkdir_p(dir) unless File.exist?(dir)
       end
 
       def purge_empty_directories(path)
