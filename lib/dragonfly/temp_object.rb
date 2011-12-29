@@ -131,12 +131,14 @@ module Dragonfly
       end
     end
 
-    def to_file(path)
+    def to_file(path, opts={})
+      mode = opts[:mode] || 0644
+      prepare_path(path) unless opts[:mkdirs] == false
       if @data
-        File.open(path, 'wb', 0644){|f| f.write(@data) }
+        File.open(path, 'wb', mode){|f| f.write(@data) }
       else
         FileUtils.cp(self.path, path)
-        File.chmod(0644, path)
+        File.chmod(mode, path)
       end
       File.new(path, 'rb')
     end
@@ -203,6 +205,11 @@ module Dragonfly
       tempfile.write(content) if content
       tempfile.close
       tempfile
+    end
+
+    def prepare_path(path)
+      dir = File.dirname(path)
+      FileUtils.mkdir_p(dir) unless File.exist?(dir)
     end
 
   end

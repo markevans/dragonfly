@@ -143,6 +143,20 @@ describe Dragonfly::TempObject do
           @temp_object.to_file(@filename)
           File::Stat.new(@filename).mode.to_s(8).should =~ /644$/
         end
+        it "should allow setting different permissions" do
+          @temp_object.to_file(@filename, :mode => 0755)
+          File::Stat.new(@filename).mode.to_s(8).should =~ /755$/
+        end
+        it "should create intermediate subdirs" do
+          filename = 'tmp/gog/mcgee'
+          @temp_object.to_file(filename)
+          File.exists?(filename).should be_true
+          FileUtils.rm_rf('tmp/gog')
+        end
+        it "should allow not creating intermediate subdirs" do
+          filename = 'tmp/gog/mcgee'
+          expect{ @temp_object.to_file(filename, :mkdirs => false) }.to raise_error()
+        end
       end
 
     end
