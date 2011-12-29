@@ -87,11 +87,16 @@ Downloaded filename
 To specify the filename the browser uses for 'Save As' dialogues:
 
     app.content_filename = proc{|job, request|
-      "#{job.basename}_#{job.process_steps.first.name}.#{job.format}"
+      if job.process_steps.any?
+        "#{job.basename}_#{job.process_steps.first.name}.#{job.format}"
+      else
+        "#{job.basename}.#{job.format}"
+      end
     }
 
 This will for example give the following filenames for the following jobs:
 
+    app.fetch('some/tree.png')                          # -> 'tree.png'
     app.fetch('some/tree.png').process(:greyscale)      # -> 'tree_greyscale.png'
     app.fetch('some/tree.png').process(:greyscale).gif  # -> 'tree_greyscale.gif'
 
