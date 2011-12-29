@@ -201,6 +201,11 @@ describe Dragonfly::TempObject do
       temp_object.should_not_receive(:tempfile)
       temp_object.each{}
     end
+    
+    it "should use set the file extension in path from the name" do
+      temp_object = Dragonfly::TempObject.new("hi", :name => 'dark.cloud')
+      temp_object.path.should =~ /\.cloud$/
+    end
   end
 
   describe "initializing from a tempfile" do

@@ -198,7 +198,7 @@ module Dragonfly
     end
 
     def new_tempfile(content=nil)
-      tempfile = Tempfile.new('dragonfly')
+      tempfile = ext ? Tempfile.new(['dragonfly', ".#{ext}"]) : Tempfile.new('dragonfly')
       tempfile.binmode
       tempfile.write(content) if content
       tempfile.close
