@@ -23,7 +23,7 @@ group :development, :test, :cucumber do
     gem "jruby-openssl"
   else
     gem 'bluecloth'
-    gem 'bson_ext'
+    gem 'bson_ext', '~>1.3.1'
     gem 'sqlite3-ruby'
   end
 end
