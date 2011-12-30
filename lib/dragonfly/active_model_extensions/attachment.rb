@@ -14,8 +14,10 @@ module Dragonfly
         :data, :to_file, :file, :tempfile, :path,
         :process, :encode, :analyse,
         :meta, :meta=,
-        :name, :basename, :ext, :size,
+        :name, :size,
         :url
+
+      include HasFilename
 
       alias_method :length, :size
       
@@ -80,9 +82,8 @@ module Dragonfly
       end
 
       def name=(name)
-        job.name = name
         set_magic_attribute(:name, name) if has_magic_attribute_for?(:name)
-        name
+        job.name = name
       end
 
       def process!(*args)

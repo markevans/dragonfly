@@ -95,7 +95,7 @@ module Dragonfly
 
         # Magic attributes
         def allowed_magic_attributes
-          app.analyser.analysis_method_names + [:size, :basename, :name, :ext, :meta]
+          app.analyser.analysis_method_names + [:size, :name, :meta]
         end
 
         def magic_attributes
