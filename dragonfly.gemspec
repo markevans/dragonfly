@@ -4,15 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{dragonfly}
-  s.version = "0.9.8"
+  s.name = "dragonfly"
+  s.version = "0.9.9"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = [%q{Mark Evans}]
-  s.date = %q{2011-09-08}
-  s.description = %q{Dragonfly is a framework that enables on-the-fly processing for any content type.
-  It is especially suited to image handling. Its uses range from image thumbnails to standard attachments to on-demand text generation.}
-  s.email = %q{mark@new-bamboo.co.uk}
+  s.authors = ["Mark Evans"]
+  s.date = "2011-12-30"
+  s.description = "Dragonfly is a framework that enables on-the-fly processing for any content type.\n  It is especially suited to image handling. Its uses range from image thumbnails to standard attachments to on-demand text generation."
+  s.email = "mark@new-bamboo.co.uk"
   s.extra_rdoc_files = [
     "LICENSE",
     "README.md"
@@ -89,8 +88,6 @@ Gem::Specification.new do |s|
     "lib/dragonfly/core_ext/array.rb",
     "lib/dragonfly/core_ext/hash.rb",
     "lib/dragonfly/core_ext/object.rb",
-    "lib/dragonfly/core_ext/string.rb",
-    "lib/dragonfly/core_ext/symbol.rb",
     "lib/dragonfly/data_storage.rb",
     "lib/dragonfly/data_storage/couch_data_store.rb",
     "lib/dragonfly/data_storage/file_data_store.rb",
@@ -101,6 +98,7 @@ Gem::Specification.new do |s|
     "lib/dragonfly/function_manager.rb",
     "lib/dragonfly/generation/image_magick_generator.rb",
     "lib/dragonfly/generator.rb",
+    "lib/dragonfly/has_filename.rb",
     "lib/dragonfly/hash_with_css_style_keys.rb",
     "lib/dragonfly/image_magick/analyser.rb",
     "lib/dragonfly/image_magick/config.rb",
@@ -126,7 +124,11 @@ Gem::Specification.new do |s|
     "lib/dragonfly/shell.rb",
     "lib/dragonfly/simple_cache.rb",
     "lib/dragonfly/temp_object.rb",
+    "lib/dragonfly/url_attributes.rb",
     "lib/dragonfly/url_mapper.rb",
+    "samples/DSC02119.JPG",
+    "samples/a.jp2",
+    "samples/beach.jpg",
     "samples/beach.png",
     "samples/egg.png",
     "samples/round.gif",
@@ -142,14 +144,13 @@ Gem::Specification.new do |s|
     "spec/dragonfly/cookie_monster_spec.rb",
     "spec/dragonfly/core_ext/array_spec.rb",
     "spec/dragonfly/core_ext/hash_spec.rb",
-    "spec/dragonfly/core_ext/string_spec.rb",
-    "spec/dragonfly/core_ext/symbol_spec.rb",
     "spec/dragonfly/data_storage/couch_data_store_spec.rb",
     "spec/dragonfly/data_storage/file_data_store_spec.rb",
     "spec/dragonfly/data_storage/mongo_data_store_spec.rb",
     "spec/dragonfly/data_storage/s3_data_store_spec.rb",
     "spec/dragonfly/data_storage/shared_data_store_examples.rb",
     "spec/dragonfly/function_manager_spec.rb",
+    "spec/dragonfly/has_filename_spec.rb",
     "spec/dragonfly/hash_with_css_style_keys_spec.rb",
     "spec/dragonfly/image_magick/analyser_spec.rb",
     "spec/dragonfly/image_magick/encoder_spec.rb",
@@ -167,6 +168,7 @@ Gem::Specification.new do |s|
     "spec/dragonfly/shell_spec.rb",
     "spec/dragonfly/simple_cache_spec.rb",
     "spec/dragonfly/temp_object_spec.rb",
+    "spec/dragonfly/url_attributes.rb",
     "spec/dragonfly/url_mapper_spec.rb",
     "spec/functional/deprecations_spec.rb",
     "spec/functional/image_magick_app_spec.rb",
@@ -187,11 +189,11 @@ Gem::Specification.new do |s|
     "yard/templates/default/module/html/configuration_summary.erb",
     "yard/templates/default/module/setup.rb"
   ]
-  s.homepage = %q{http://github.com/markevans/dragonfly}
-  s.licenses = [%q{MIT}]
-  s.require_paths = [%q{lib}]
-  s.rubygems_version = %q{1.8.6}
-  s.summary = %q{Ideal gem for handling attachments in Rails, Sinatra and Rack applications.}
+  s.homepage = "http://github.com/markevans/dragonfly"
+  s.licenses = ["MIT"]
+  s.require_paths = ["lib"]
+  s.rubygems_version = "1.8.10"
+  s.summary = "Ideal gem for handling attachments in Rails, Sinatra and Rack applications."
   s.test_files = [
     "spec/dragonfly/active_model_extensions/model_spec.rb",
     "spec/dragonfly/active_model_extensions/spec_helper.rb",
@@ -202,14 +204,13 @@ Gem::Specification.new do |s|
     "spec/dragonfly/cookie_monster_spec.rb",
     "spec/dragonfly/core_ext/array_spec.rb",
     "spec/dragonfly/core_ext/hash_spec.rb",
-    "spec/dragonfly/core_ext/string_spec.rb",
-    "spec/dragonfly/core_ext/symbol_spec.rb",
     "spec/dragonfly/data_storage/couch_data_store_spec.rb",
     "spec/dragonfly/data_storage/file_data_store_spec.rb",
     "spec/dragonfly/data_storage/mongo_data_store_spec.rb",
     "spec/dragonfly/data_storage/s3_data_store_spec.rb",
     "spec/dragonfly/data_storage/shared_data_store_examples.rb",
     "spec/dragonfly/function_manager_spec.rb",
+    "spec/dragonfly/has_filename_spec.rb",
     "spec/dragonfly/hash_with_css_style_keys_spec.rb",
     "spec/dragonfly/image_magick/analyser_spec.rb",
     "spec/dragonfly/image_magick/encoder_spec.rb",
@@ -227,6 +228,7 @@ Gem::Specification.new do |s|
     "spec/dragonfly/shell_spec.rb",
     "spec/dragonfly/simple_cache_spec.rb",
     "spec/dragonfly/temp_object_spec.rb",
+    "spec/dragonfly/url_attributes.rb",
     "spec/dragonfly/url_mapper_spec.rb",
     "spec/functional/deprecations_spec.rb",
     "spec/functional/image_magick_app_spec.rb",
@@ -259,7 +261,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<webmock>, [">= 0"])
       s.add_development_dependency(%q<yard>, [">= 0"])
       s.add_development_dependency(%q<bluecloth>, [">= 0"])
-      s.add_development_dependency(%q<bson_ext>, [">= 0"])
+      s.add_development_dependency(%q<bson_ext>, ["~> 1.3.1"])
       s.add_development_dependency(%q<sqlite3-ruby>, [">= 0"])
     else
       s.add_dependency(%q<rack>, [">= 0"])
@@ -277,7 +279,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<webmock>, [">= 0"])
       s.add_dependency(%q<yard>, [">= 0"])
       s.add_dependency(%q<bluecloth>, [">= 0"])
-      s.add_dependency(%q<bson_ext>, [">= 0"])
+      s.add_dependency(%q<bson_ext>, ["~> 1.3.1"])
       s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
     end
   else
@@ -296,7 +298,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<webmock>, [">= 0"])
     s.add_dependency(%q<yard>, [">= 0"])
     s.add_dependency(%q<bluecloth>, [">= 0"])
-    s.add_dependency(%q<bson_ext>, [">= 0"])
+    s.add_dependency(%q<bson_ext>, ["~> 1.3.1"])
     s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
   end
 end
