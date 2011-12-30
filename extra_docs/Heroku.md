@@ -40,7 +40,7 @@ The datastore remains as the {Dragonfly::DataStorage::FileDataStore FileDataStor
 
 application.rb if using with Rails:
 
-    config.middleware.insert 0, 'Dragonfly::Middleware', :images
+    config.middleware.insert 1, 'Dragonfly::Middleware', :images
 
 We don't store the S3 access key and secret in the repository, rather we use Heroku's
 {http://docs.heroku.com/config-vars config variables} using the command line (we only have to do this once).
