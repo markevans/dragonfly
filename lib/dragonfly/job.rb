@@ -190,7 +190,7 @@ module Dragonfly
       
       def format
         apply
-        format_from_meta || analyse(:format)
+        meta[:format] || (ext.to_sym if ext && app.trust_file_extensions) || analyse(:format)
       end
       
       def mime_type
@@ -414,10 +414,6 @@ module Dragonfly
     end
     
     attr_reader :previous_temp_objects
-
-    def format_from_meta
-      meta[:format] || (ext.to_sym if ext && app.trust_file_extensions)
-    end
 
     def last_step_of_type(type)
       steps.select{|s| s.is_a?(type) }.last
