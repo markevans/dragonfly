@@ -198,7 +198,7 @@ Validations
 
       validates_property :format, :of => :cover_image, :in => [:jpeg, :png, :gif]
       # ..or..
-      validates_property :mime_type, :of => :cover_image, :in => %w(image/jpeg image/png image/gif)
+      validates_property :mime_type, :of => :cover_image, :as => 'image/jpeg', :case_sensitive => false
 
       validates_property :width, :of => :cover_image, :in => (0..400), :message => "é demais cara!"
 
