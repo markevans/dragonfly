@@ -89,6 +89,10 @@ We can play around with the data
 
     @album.cover_image.data                           # => "\377???JFIF\000\..."
     @album.cover_image.to_file('out.png')             # writes to file 'out.png' and returns a readable file object
+    @album.cover_image.to_file('out.png',
+      :mode => 0600,
+      :mkdirs => false
+    )
     @album.cover_image.tempfile                       # => #<File:/var/folders/st/strHv74sH044JPabSiODz... a closed Tempfile object
     @album.cover_image.file                           # => #<File:/var/folders/st/strHv74sH044JPabSiODz... a readable (open) File object
     @album.cover_image.file do |f|                    # Yields an open file object, returns the return value of
