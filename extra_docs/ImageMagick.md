@@ -122,7 +122,7 @@ Note that the text generation options are meant to resemble css as much as possi
 
 You can use `padding-top`, `padding-left`, etc., as well as the standard css shortcuts for `padding` (it assumes unit is px).
 
-An alternative for `:font_family` is `:font` (see {http://www.imagemagick.org/script/command-line-options.php#font}), which could be a complete filename.
+An alternative for `:font_family` is `:font` (see {http://www.imagemagick.org/script/command-line-options.php#font the imagemagick docs}), which could be a complete filename.
 Available fonts are those available on your system.
 
 Configuration
