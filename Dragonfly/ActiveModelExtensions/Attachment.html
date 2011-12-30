@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::ActiveModelExtensions::Attachment
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.8)</div>
+      <div id="logo">DRAGONFLY (v 0.9.9)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -109,11 +109,15 @@
     
   
     
+      <dt class="r1">Includes:</dt>
+      <dd class="r1"><span class='object_link'><a href="../HasFilename.html" title="Dragonfly::HasFilename (module)">HasFilename</a></span></dd>
+      
+    
   
   
   
-    <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/dragonfly/active_model_extensions/attachment.rb<span class="defines">,<br />
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/dragonfly/active_model_extensions/attachment.rb<span class="defines">,<br />
   lib/dragonfly/active_model_extensions/attachment_class_methods.rb</span>
 </dd>
   
@@ -132,6 +136,10 @@
 </p>
 
 
+  
+  
+  
+  
   
   <h2>Class Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
   <ul class="summary">
@@ -307,6 +315,9 @@ Sets the attribute should_run_callbacks.
 
 
 
+  
+  
+  
   
 
 
@@ -958,7 +969,17 @@ Retaining for avoiding uploading more than once.
   
 
 
-  <div id="constructor_details" class="method_details_list">
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../HasFilename.html" title="Dragonfly::HasFilename (module)">HasFilename</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../HasFilename.html#basename-instance_method" title="Dragonfly::HasFilename#basename (method)">#basename</a></span>, <span class='object_link'><a href="../HasFilename.html#basename%3D-instance_method" title="Dragonfly::HasFilename#basename= (method)">#basename=</a></span>, <span class='object_link'><a href="../HasFilename.html#ext-instance_method" title="Dragonfly::HasFilename#ext (method)">#ext</a></span>, <span class='object_link'><a href="../HasFilename.html#ext%3D-instance_method" title="Dragonfly::HasFilename#ext= (method)">#ext=</a></span></p>
+<div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
@@ -979,30 +1000,31 @@ A new instance of Attachment
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-22
-23
 24
 25
 26
 27
-28</pre>
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 24</span>
 
-<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='model identifier id'>model</span><span class='rparen token'>)</span>
-  <span class='@model ivar id'>@model</span> <span class='assign token'>=</span> <span class='model identifier id'>model</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='model_uid identifier id'>model_uid</span>
-  <span class='update_from_uid identifier id'>update_from_uid</span> <span class='if if_mod kw'>if</span> <span class='uid identifier id'>uid</span>
-  <span class='@should_run_callbacks ivar id'>@should_run_callbacks</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='ensure_uses_cached_magic_attributes identifier id'>ensure_uses_cached_magic_attributes</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_model identifier id'>model</span><span class='rparen token'>)</span>
+  <span class='rubyid_@model ivar id'>@model</span> <span class='assign token'>=</span> <span class='rubyid_model identifier id'>model</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='rubyid_model_uid identifier id'>model_uid</span>
+  <span class='rubyid_set_job_from_uid identifier id'>set_job_from_uid</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_uid identifier id'>uid</span>
+  <span class='rubyid_@should_run_callbacks ivar id'>@should_run_callbacks</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_ensure_uses_cached_magic_attributes identifier id'>ensure_uses_cached_magic_attributes</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1035,6 +1057,7 @@ Returns the value of attribute app
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -1048,9 +1071,9 @@ Returns the value of attribute app
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 78</span>
 
-<span class='def def kw'>def</span> <span class='app identifier id'>app</span>
-  <span class='@app ivar id'>@app</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_app identifier id'>app</span>
+  <span class='rubyid_@app ivar id'>@app</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1078,6 +1101,7 @@ Returns the value of attribute attribute
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -1091,9 +1115,9 @@ Returns the value of attribute attribute
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 78</span>
 
-<span class='def def kw'>def</span> <span class='attribute identifier id'>attribute</span>
-  <span class='@attribute ivar id'>@attribute</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_attribute identifier id'>attribute</span>
+  <span class='rubyid_@attribute ivar id'>@attribute</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1121,6 +1145,7 @@ Returns the value of attribute config_block
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -1134,9 +1159,9 @@ Returns the value of attribute config_block
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 78</span>
 
-<span class='def def kw'>def</span> <span class='config_block identifier id'>config_block</span>
-  <span class='@config_block ivar id'>@config_block</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_config_block identifier id'>config_block</span>
+  <span class='rubyid_@config_block ivar id'>@config_block</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1164,6 +1189,7 @@ Returns the value of attribute model_class
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -1177,9 +1203,9 @@ Returns the value of attribute model_class
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 78</span>
 
-<span class='def def kw'>def</span> <span class='model_class identifier id'>model_class</span>
-  <span class='@model_class ivar id'>@model_class</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_model_class identifier id'>model_class</span>
+  <span class='rubyid_@model_class ivar id'>@model_class</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1233,22 +1259,23 @@ the value to set the attribute should_retain to.
   
 </ul>
 
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-121
-122
-123</pre>
+123
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 121</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 123</span>
 
-<span class='def def kw'>def</span> <span class='should_retain= identifier id'>should_retain=</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
-  <span class='@should_retain ivar id'>@should_retain</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_should_retain= identifier id'>should_retain=</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='rubyid_@should_retain ivar id'>@should_retain</span> <span class='assign token'>=</span> <span class='rubyid_value identifier id'>value</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1297,22 +1324,23 @@ the value to set the attribute should_run_callbacks to.
   
 </ul>
 
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-106
-107
-108</pre>
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 108</span>
 
-<span class='def def kw'>def</span> <span class='should_run_callbacks= identifier id'>should_run_callbacks=</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
-  <span class='@should_run_callbacks ivar id'>@should_run_callbacks</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_should_run_callbacks= identifier id'>should_run_callbacks=</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='rubyid_@should_run_callbacks ivar id'>@should_run_callbacks</span> <span class='assign token'>=</span> <span class='rubyid_value identifier id'>value</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1344,6 +1372,7 @@ Magic attributes
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -1357,9 +1386,9 @@ Magic attributes
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 97</span>
 
-<span class='def def kw'>def</span> <span class='allowed_magic_attributes identifier id'>allowed_magic_attributes</span>
-  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='analysis_method_names identifier id'>analysis_method_names</span> <span class='plus op'>+</span> <span class='lbrack token'>[</span><span class='symbol val'>:size</span><span class='comma token'>,</span> <span class='symbol val'>:basename</span><span class='comma token'>,</span> <span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='symbol val'>:ext</span><span class='comma token'>,</span> <span class='symbol val'>:meta</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_allowed_magic_attributes identifier id'>allowed_magic_attributes</span>
+  <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='rubyid_analysis_method_names identifier id'>analysis_method_names</span> <span class='plus op'>+</span> <span class='lbrack token'>[</span><span class='symbol val'>:size</span><span class='comma token'>,</span> <span class='symbol val'>:name</span><span class='rbrack token'>]</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1384,6 +1413,7 @@ Callbacks
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -1397,9 +1427,9 @@ Callbacks
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 81</span>
 
-<span class='def def kw'>def</span> <span class='callbacks identifier id'>callbacks</span>
-  <span class='@callbacks ivar id'>@callbacks</span> <span class='opasgn op'>||=</span> <span class='Hash constant id'>Hash</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='h identifier id'>h</span><span class='comma token'>,</span><span class='k identifier id'>k</span><span class='bitor op'>|</span> <span class='h identifier id'>h</span><span class='lbrack token'>[</span><span class='k identifier id'>k</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span> <span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_callbacks identifier id'>callbacks</span>
+  <span class='rubyid_@callbacks ivar id'>@callbacks</span> <span class='opasgn op'>||=</span> <span class='rubyid_Hash constant id'>Hash</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_h identifier id'>h</span><span class='comma token'>,</span><span class='rubyid_k identifier id'>k</span><span class='bitor op'>|</span> <span class='rubyid_h identifier id'>h</span><span class='lbrack token'>[</span><span class='rubyid_k identifier id'>k</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span> <span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1432,15 +1462,15 @@ Callbacks
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 114</span>
 
-<span class='def def kw'>def</span> <span class='ensure_uses_cached_magic_attributes identifier id'>ensure_uses_cached_magic_attributes</span>
-  <span class='return return kw'>return</span> <span class='if if_mod kw'>if</span> <span class='@uses_cached_magic_attributes ivar id'>@uses_cached_magic_attributes</span>
-  <span class='magic_attributes identifier id'>magic_attributes</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='attr identifier id'>attr</span><span class='bitor op'>|</span>
-    <span class='define_method identifier id'>define_method</span> <span class='attr identifier id'>attr</span> <span class='do do kw'>do</span>
-      <span class='magic_attribute_for identifier id'>magic_attribute_for</span><span class='lparen token'>(</span><span class='attr identifier id'>attr</span><span class='rparen token'>)</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
-  <span class='@uses_cached_magic_attributes ivar id'>@uses_cached_magic_attributes</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_ensure_uses_cached_magic_attributes identifier id'>ensure_uses_cached_magic_attributes</span>
+  <span class='rubyid_return return kw'>return</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@uses_cached_magic_attributes ivar id'>@uses_cached_magic_attributes</span>
+  <span class='rubyid_magic_attributes identifier id'>magic_attributes</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_attr identifier id'>attr</span><span class='bitor op'>|</span>
+    <span class='rubyid_define_method identifier id'>define_method</span> <span class='rubyid_attr identifier id'>attr</span> <span class='rubyid_do do kw'>do</span>
+      <span class='rubyid_magic_attribute_for identifier id'>magic_attribute_for</span><span class='lparen token'>(</span><span class='rubyid_attr identifier id'>attr</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_@uses_cached_magic_attributes ivar id'>@uses_cached_magic_attributes</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1475,17 +1505,17 @@ Callbacks
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 129</span>
 
-<span class='def def kw'>def</span> <span class='evaluate_storage_opts identifier id'>evaluate_storage_opts</span><span class='lparen token'>(</span><span class='model identifier id'>model</span><span class='comma token'>,</span> <span class='attachment identifier id'>attachment</span><span class='rparen token'>)</span>
-  <span class='storage_opts_specs identifier id'>storage_opts_specs</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='opts identifier id'>opts</span><span class='comma token'>,</span> <span class='spec identifier id'>spec</span><span class='bitor op'>|</span>
-    <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='spec identifier id'>spec</span>
-    <span class='when when kw'>when</span> <span class='Proc constant id'>Proc</span> <span class='then then kw'>then</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='instance_exec identifier id'>instance_exec</span><span class='lparen token'>(</span><span class='attachment identifier id'>attachment</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='spec identifier id'>spec</span><span class='rparen token'>)</span>
-    <span class='when when kw'>when</span> <span class='Symbol constant id'>Symbol</span> <span class='then then kw'>then</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='spec identifier id'>spec</span><span class='rparen token'>)</span>
-    <span class='else else kw'>else</span> <span class='spec identifier id'>spec</span>
-    <span class='end end kw'>end</span>
-    <span class='opts identifier id'>opts</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
-    <span class='opts identifier id'>opts</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_evaluate_storage_opts identifier id'>evaluate_storage_opts</span><span class='lparen token'>(</span><span class='rubyid_model identifier id'>model</span><span class='comma token'>,</span> <span class='rubyid_attachment identifier id'>attachment</span><span class='rparen token'>)</span>
+  <span class='rubyid_storage_opts_specs identifier id'>storage_opts_specs</span><span class='dot token'>.</span><span class='rubyid_inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_opts identifier id'>opts</span><span class='comma token'>,</span> <span class='rubyid_spec identifier id'>spec</span><span class='bitor op'>|</span>
+    <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='rubyid_case case kw'>case</span> <span class='rubyid_spec identifier id'>spec</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_Proc constant id'>Proc</span> <span class='rubyid_then then kw'>then</span> <span class='rubyid_model identifier id'>model</span><span class='dot token'>.</span><span class='rubyid_instance_exec identifier id'>instance_exec</span><span class='lparen token'>(</span><span class='rubyid_attachment identifier id'>attachment</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_spec identifier id'>spec</span><span class='rparen token'>)</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_Symbol constant id'>Symbol</span> <span class='rubyid_then then kw'>then</span> <span class='rubyid_model identifier id'>model</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='rubyid_spec identifier id'>spec</span><span class='rparen token'>)</span>
+    <span class='rubyid_else else kw'>else</span> <span class='rubyid_spec identifier id'>spec</span>
+    <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_opts identifier id'>opts</span><span class='dot token'>.</span><span class='rubyid_merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
+    <span class='rubyid_opts identifier id'>opts</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1522,19 +1552,19 @@ Callbacks
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 64</span>
 
-<span class='def def kw'>def</span> <span class='init identifier id'>init</span><span class='lparen token'>(</span><span class='model_class identifier id'>model_class</span><span class='comma token'>,</span> <span class='attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='comma token'>,</span> <span class='config_block identifier id'>config_block</span><span class='rparen token'>)</span>
-  <span class='@model_class ivar id'>@model_class</span><span class='comma token'>,</span> <span class='@attribute ivar id'>@attribute</span><span class='comma token'>,</span> <span class='@app ivar id'>@app</span><span class='comma token'>,</span> <span class='@config_block ivar id'>@config_block</span> <span class='assign token'>=</span> <span class='model_class identifier id'>model_class</span><span class='comma token'>,</span> <span class='attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='comma token'>,</span> <span class='config_block identifier id'>config_block</span>
-  <span class='include identifier id'>include</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='analysis_methods identifier id'>analysis_methods</span>
-  <span class='include identifier id'>include</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='job_definitions identifier id'>job_definitions</span>
-  <span class='define_method identifier id'>define_method</span> <span class='symbol val'>:format</span> <span class='do do kw'>do</span>
-    <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='format identifier id'>format</span>
-  <span class='end end kw'>end</span>
-  <span class='define_method identifier id'>define_method</span> <span class='symbol val'>:mime_type</span> <span class='do do kw'>do</span>
-    <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='mime_type identifier id'>mime_type</span>
-  <span class='end end kw'>end</span>
-  <span class='ConfigProxy constant id'>ConfigProxy</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='config_block identifier id'>config_block</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='config_block identifier id'>config_block</span>
-  <span class='self self kw'>self</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_init identifier id'>init</span><span class='lparen token'>(</span><span class='rubyid_model_class identifier id'>model_class</span><span class='comma token'>,</span> <span class='rubyid_attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='rubyid_app identifier id'>app</span><span class='comma token'>,</span> <span class='rubyid_config_block identifier id'>config_block</span><span class='rparen token'>)</span>
+  <span class='rubyid_@model_class ivar id'>@model_class</span><span class='comma token'>,</span> <span class='rubyid_@attribute ivar id'>@attribute</span><span class='comma token'>,</span> <span class='rubyid_@app ivar id'>@app</span><span class='comma token'>,</span> <span class='rubyid_@config_block ivar id'>@config_block</span> <span class='assign token'>=</span> <span class='rubyid_model_class identifier id'>model_class</span><span class='comma token'>,</span> <span class='rubyid_attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='rubyid_app identifier id'>app</span><span class='comma token'>,</span> <span class='rubyid_config_block identifier id'>config_block</span>
+  <span class='rubyid_include identifier id'>include</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='rubyid_analysis_methods identifier id'>analysis_methods</span>
+  <span class='rubyid_include identifier id'>include</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_job_definitions identifier id'>job_definitions</span>
+  <span class='rubyid_define_method identifier id'>define_method</span> <span class='symbol val'>:format</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_format identifier id'>format</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_define_method identifier id'>define_method</span> <span class='symbol val'>:mime_type</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_mime_type identifier id'>mime_type</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_ConfigProxy constant id'>ConfigProxy</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='comma token'>,</span> <span class='rubyid_config_block identifier id'>config_block</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_config_block identifier id'>config_block</span>
+  <span class='rubyid_self self kw'>self</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1570,18 +1600,18 @@ Callbacks
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 101</span>
 
-<span class='def def kw'>def</span> <span class='magic_attributes identifier id'>magic_attributes</span>
-  <span class='@magic_attributes ivar id'>@magic_attributes</span> <span class='opasgn op'>||=</span> <span class='begin begin kw'>begin</span>
-    <span class='prefix identifier id'>prefix</span> <span class='assign token'>=</span> <span class='attribute identifier id'>attribute</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='plus op'>+</span> <span class='string val'>'_'</span>
-    <span class='model_class identifier id'>model_class</span><span class='dot token'>.</span><span class='public_instance_methods identifier id'>public_instance_methods</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='attrs identifier id'>attrs</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='bitor op'>|</span>
-      <span class='_ identifier id'>_</span><span class='comma token'>,</span> <span class='__ identifier id'>__</span><span class='comma token'>,</span> <span class='suffix identifier id'>suffix</span>  <span class='assign token'>=</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='partition identifier id'>partition</span><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span><span class='rparen token'>)</span>
-      <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='suffix identifier id'>suffix</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='andop op'>&amp;&amp;</span> <span class='allowed_magic_attributes identifier id'>allowed_magic_attributes</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='suffix identifier id'>suffix</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
-        <span class='attrs identifier id'>attrs</span> <span class='lshft op'>&lt;&lt;</span> <span class='suffix identifier id'>suffix</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
-      <span class='end end kw'>end</span>
-      <span class='attrs identifier id'>attrs</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_magic_attributes identifier id'>magic_attributes</span>
+  <span class='rubyid_@magic_attributes ivar id'>@magic_attributes</span> <span class='opasgn op'>||=</span> <span class='rubyid_begin begin kw'>begin</span>
+    <span class='rubyid_prefix identifier id'>prefix</span> <span class='assign token'>=</span> <span class='rubyid_attribute identifier id'>attribute</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span> <span class='plus op'>+</span> <span class='string val'>'_'</span>
+    <span class='rubyid_model_class identifier id'>model_class</span><span class='dot token'>.</span><span class='rubyid_public_instance_methods identifier id'>public_instance_methods</span><span class='dot token'>.</span><span class='rubyid_inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_attrs identifier id'>attrs</span><span class='comma token'>,</span> <span class='rubyid_name identifier id'>name</span><span class='bitor op'>|</span>
+      <span class='rubyid__ identifier id'>_</span><span class='comma token'>,</span> <span class='rubyid___ identifier id'>__</span><span class='comma token'>,</span> <span class='rubyid_suffix identifier id'>suffix</span>  <span class='assign token'>=</span> <span class='rubyid_name identifier id'>name</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_partition identifier id'>partition</span><span class='lparen token'>(</span><span class='rubyid_prefix identifier id'>prefix</span><span class='rparen token'>)</span>
+      <span class='rubyid_if if kw'>if</span> <span class='notop op'>!</span><span class='rubyid_suffix identifier id'>suffix</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_allowed_magic_attributes identifier id'>allowed_magic_attributes</span><span class='dot token'>.</span><span class='rubyid_include? fid id'>include?</span><span class='lparen token'>(</span><span class='rubyid_suffix identifier id'>suffix</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
+        <span class='rubyid_attrs identifier id'>attrs</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_suffix identifier id'>suffix</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
+      <span class='rubyid_end end kw'>end</span>
+      <span class='rubyid_attrs identifier id'>attrs</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1615,16 +1645,16 @@ Callbacks
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 85</span>
 
-<span class='def def kw'>def</span> <span class='run_callbacks identifier id'>run_callbacks</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='comma token'>,</span> <span class='attachment identifier id'>attachment</span><span class='rparen token'>)</span>
-  <span class='attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='should_run_callbacks identifier id'>should_run_callbacks</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
-  <span class='callbacks identifier id'>callbacks</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='callback identifier id'>callback</span><span class='bitor op'>|</span>
-    <span class='case case kw'>case</span> <span class='callback identifier id'>callback</span>
-    <span class='when when kw'>when</span> <span class='Symbol constant id'>Symbol</span> <span class='then then kw'>then</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='callback identifier id'>callback</span><span class='rparen token'>)</span>
-    <span class='when when kw'>when</span> <span class='Proc constant id'>Proc</span> <span class='then then kw'>then</span> <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='instance_exec identifier id'>instance_exec</span><span class='lparen token'>(</span><span class='attachment identifier id'>attachment</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='callback identifier id'>callback</span><span class='rparen token'>)</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
-  <span class='attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='should_run_callbacks identifier id'>should_run_callbacks</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_run_callbacks identifier id'>run_callbacks</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='rubyid_model identifier id'>model</span><span class='comma token'>,</span> <span class='rubyid_attachment identifier id'>attachment</span><span class='rparen token'>)</span>
+  <span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_should_run_callbacks identifier id'>should_run_callbacks</span> <span class='assign token'>=</span> <span class='rubyid_false false kw'>false</span>
+  <span class='rubyid_callbacks identifier id'>callbacks</span><span class='lbrack token'>[</span><span class='rubyid_name identifier id'>name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_callback identifier id'>callback</span><span class='bitor op'>|</span>
+    <span class='rubyid_case case kw'>case</span> <span class='rubyid_callback identifier id'>callback</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_Symbol constant id'>Symbol</span> <span class='rubyid_then then kw'>then</span> <span class='rubyid_model identifier id'>model</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='rubyid_callback identifier id'>callback</span><span class='rparen token'>)</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_Proc constant id'>Proc</span> <span class='rubyid_then then kw'>then</span> <span class='rubyid_model identifier id'>model</span><span class='dot token'>.</span><span class='rubyid_instance_exec identifier id'>instance_exec</span><span class='lparen token'>(</span><span class='rubyid_attachment identifier id'>attachment</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_callback identifier id'>callback</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_should_run_callbacks identifier id'>should_run_callbacks</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1649,6 +1679,7 @@ Storage options
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -1662,9 +1693,9 @@ Storage options
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment_class_methods.rb', line 125</span>
 
-<span class='def def kw'>def</span> <span class='storage_opts_specs identifier id'>storage_opts_specs</span>
-  <span class='@storage_opts_specs ivar id'>@storage_opts_specs</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_storage_opts_specs identifier id'>storage_opts_specs</span>
+  <span class='rubyid_@storage_opts_specs ivar id'>@storage_opts_specs</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1690,16 +1721,16 @@ Storage options
       <pre class="lines">
 
 
-30
-31
-32</pre>
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 32</span>
 
-<span class='def def kw'>def</span> <span class='app identifier id'>app</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='app identifier id'>app</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_app identifier id'>app</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_app identifier id'>app</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1719,18 +1750,18 @@ Storage options
       <pre class="lines">
 
 
-101
-102
 103
-104</pre>
+104
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 103</span>
 
-<span class='def def kw'>def</span> <span class='apply identifier id'>apply</span>
-  <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='apply identifier id'>apply</span>
-  <span class='self self kw'>self</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_apply identifier id'>apply</span>
+  <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_apply identifier id'>apply</span>
+  <span class='rubyid_self self kw'>self</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1750,8 +1781,6 @@ Storage options
       <pre class="lines">
 
 
-38
-39
 40
 41
 42
@@ -1770,32 +1799,36 @@ Storage options
 55
 56
 57
-58</pre>
+58
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 40</span>
 
-<span class='def def kw'>def</span> <span class='assign identifier id'>assign</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='changed identifier id'>changed</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
-  <span class='destroy_retained! fid id'>destroy_retained!</span> <span class='if if_mod kw'>if</span> <span class='retained? fid id'>retained?</span>
-  <span class='set_uid_and_model_uid identifier id'>set_uid_and_model_uid</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
-    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
-    <span class='reset_magic_attributes identifier id'>reset_magic_attributes</span>
-    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='run_callbacks identifier id'>run_callbacks</span><span class='lparen token'>(</span><span class='symbol val'>:after_unassign</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='should_run_callbacks? fid id'>should_run_callbacks?</span>
-  <span class='else else kw'>else</span>
-    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='value identifier id'>value</span>
-    <span class='when when kw'>when</span> <span class='Job constant id'>Job</span> <span class='then then kw'>then</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
-    <span class='when when kw'>when</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span> <span class='then then kw'>then</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='job identifier id'>job</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
-    <span class='else else kw'>else</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='new_job identifier id'>new_job</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
-    <span class='end end kw'>end</span>
-    <span class='set_magic_attributes identifier id'>set_magic_attributes</span>
-    <span class='update_meta identifier id'>update_meta</span>
-    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='run_callbacks identifier id'>run_callbacks</span><span class='lparen token'>(</span><span class='symbol val'>:after_assign</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='should_run_callbacks? fid id'>should_run_callbacks?</span>
-    <span class='retain! fid id'>retain!</span> <span class='if if_mod kw'>if</span> <span class='should_retain? fid id'>should_retain?</span>
-  <span class='end end kw'>end</span>
-  <span class='value identifier id'>value</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_assign identifier id'>assign</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_changed identifier id'>changed</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>
+  <span class='rubyid_destroy_retained! fid id'>destroy_retained!</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_retained? fid id'>retained?</span>
+  <span class='rubyid_set_uid_and_model_uid identifier id'>set_uid_and_model_uid</span><span class='lparen token'>(</span><span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
+    <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_job identifier id'>job</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>
+    <span class='rubyid_reset_magic_attributes identifier id'>reset_magic_attributes</span>
+    <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_run_callbacks identifier id'>run_callbacks</span><span class='lparen token'>(</span><span class='symbol val'>:after_unassign</span><span class='comma token'>,</span> <span class='rubyid_model identifier id'>model</span><span class='comma token'>,</span> <span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_should_run_callbacks? fid id'>should_run_callbacks?</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_job identifier id'>job</span> <span class='assign token'>=</span> <span class='rubyid_case case kw'>case</span> <span class='rubyid_value identifier id'>value</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_Job constant id'>Job</span> <span class='rubyid_then then kw'>then</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_dup identifier id'>dup</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span> <span class='rubyid_then then kw'>then</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_dup identifier id'>dup</span>
+    <span class='rubyid_else else kw'>else</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_new_job identifier id'>new_job</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_set_magic_attributes identifier id'>set_magic_attributes</span>
+    <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_url_attrs identifier id'>url_attrs</span> <span class='assign token'>=</span> <span class='rubyid_all_extra_attributes identifier id'>all_extra_attributes</span>
+    <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_run_callbacks identifier id'>run_callbacks</span><span class='lparen token'>(</span><span class='symbol val'>:after_assign</span><span class='comma token'>,</span> <span class='rubyid_model identifier id'>model</span><span class='comma token'>,</span> <span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_should_run_callbacks? fid id'>should_run_callbacks?</span>
+    <span class='rubyid_retain! fid id'>retain!</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_should_retain? fid id'>should_retain?</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_model_uid_will_change! fid id'>model_uid_will_change!</span>
+  <span class='rubyid_value identifier id'>value</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1815,16 +1848,16 @@ Storage options
       <pre class="lines">
 
 
-34
-35
-36</pre>
+36
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 36</span>
 
-<span class='def def kw'>def</span> <span class='attribute identifier id'>attribute</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='attribute identifier id'>attribute</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_attribute identifier id'>attribute</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_attribute identifier id'>attribute</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1845,7 +1878,8 @@ Storage options
   </div>
 </div>
 <div class="tags">
-  <h3>Returns:</h3>
+  
+<h3>Returns:</h3>
 <ul class="return">
   
     <li>
@@ -1865,16 +1899,16 @@ Storage options
       <pre class="lines">
 
 
-60
-61
-62</pre>
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 63</span>
 
-<span class='def def kw'>def</span> <span class='changed? fid id'>changed?</span>
-  <span class='notop op'>!</span><span class='notop op'>!</span><span class='@changed ivar id'>@changed</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_changed? fid id'>changed?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='rubyid_@changed ivar id'>@changed</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1894,18 +1928,18 @@ Storage options
       <pre class="lines">
 
 
-64
-65
-66
-67</pre>
+67
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 67</span>
 
-<span class='def def kw'>def</span> <span class='destroy! fid id'>destroy!</span>
-  <span class='destroy_previous! fid id'>destroy_previous!</span>
-  <span class='destroy_content identifier id'>destroy_content</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='uid identifier id'>uid</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_destroy! fid id'>destroy!</span>
+  <span class='rubyid_destroy_previous! fid id'>destroy_previous!</span>
+  <span class='rubyid_destroy_content identifier id'>destroy_content</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_uid identifier id'>uid</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1925,16 +1959,16 @@ Storage options
       <pre class="lines">
 
 
-131
-132
-133</pre>
+133
+134
+135</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 133</span>
 
-<span class='def def kw'>def</span> <span class='destroy_retained! fid id'>destroy_retained!</span>
-  <span class='destroy_content identifier id'>destroy_content</span><span class='lparen token'>(</span><span class='retained_attrs identifier id'>retained_attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:uid</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_destroy_retained! fid id'>destroy_retained!</span>
+  <span class='rubyid_destroy_content identifier id'>destroy_content</span><span class='lparen token'>(</span><span class='rubyid_retained_attrs identifier id'>retained_attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:uid</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1954,18 +1988,18 @@ Storage options
       <pre class="lines">
 
 
-92
-93
 94
-95</pre>
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 94</span>
 
-<span class='def def kw'>def</span> <span class='encode! fid id'>encode!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='assign identifier id'>assign</span><span class='lparen token'>(</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='self self kw'>self</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_encode! fid id'>encode!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='rubyid_assign identifier id'>assign</span><span class='lparen token'>(</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rubyid_self self kw'>self</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1985,16 +2019,16 @@ Storage options
       <pre class="lines">
 
 
-158
-159
-160</pre>
+160
+161
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 158</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 160</span>
 
-<span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_inspect identifier id'>inspect</span>
   <span class='dstring node'>&quot;&lt;Dragonfly Attachment uid=#{uid.inspect}, app=#{app.inspect}&gt;&quot;</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2014,20 +2048,18 @@ Storage options
       <pre class="lines">
 
 
-81
-82
-83
 84
-85</pre>
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 84</span>
 
-<span class='def def kw'>def</span> <span class='name= identifier id'>name=</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
-  <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span>
-  <span class='set_magic_attribute identifier id'>set_magic_attribute</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='has_magic_attribute_for? fid id'>has_magic_attribute_for?</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='rparen token'>)</span>
-  <span class='name identifier id'>name</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_name= identifier id'>name=</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='rubyid_set_magic_attribute identifier id'>set_magic_attribute</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='rubyid_name identifier id'>name</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_has_magic_attribute_for? fid id'>has_magic_attribute_for?</span><span class='lparen token'>(</span><span class='symbol val'>:name</span><span class='rparen token'>)</span>
+  <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span> <span class='assign token'>=</span> <span class='rubyid_name identifier id'>name</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2047,18 +2079,18 @@ Storage options
       <pre class="lines">
 
 
-87
-88
 89
-90</pre>
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 89</span>
 
-<span class='def def kw'>def</span> <span class='process! fid id'>process!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='assign identifier id'>assign</span><span class='lparen token'>(</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='self self kw'>self</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_process! fid id'>process!</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='rubyid_assign identifier id'>assign</span><span class='lparen token'>(</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rubyid_self self kw'>self</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2078,16 +2110,16 @@ Storage options
       <pre class="lines">
 
 
-97
-98
-99</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 99</span>
 
-<span class='def def kw'>def</span> <span class='remote_url identifier id'>remote_url</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='remote_url_for identifier id'>remote_url_for</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='uid identifier id'>uid</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_remote_url identifier id'>remote_url</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_remote_url_for identifier id'>remote_url_for</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_uid identifier id'>uid</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2112,28 +2144,29 @@ Retaining for avoiding uploading more than once
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-114
-115
 116
 117
 118
-119</pre>
+119
+120
+121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 116</span>
 
-<span class='def def kw'>def</span> <span class='retain! fid id'>retain!</span>
-  <span class='if if kw'>if</span> <span class='changed? fid id'>changed?</span> <span class='andop op'>&amp;&amp;</span> <span class='job identifier id'>job</span>
-    <span class='store_job! fid id'>store_job!</span>
-    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='retained identifier id'>retained</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_retain! fid id'>retain!</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_changed? fid id'>changed?</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_job identifier id'>job</span>
+    <span class='rubyid_store_job! fid id'>store_job!</span>
+    <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_retained identifier id'>retained</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2154,7 +2187,8 @@ Retaining for avoiding uploading more than once
   </div>
 </div>
 <div class="tags">
-  <h3>Returns:</h3>
+  
+<h3>Returns:</h3>
 <ul class="return">
   
     <li>
@@ -2174,16 +2208,16 @@ Retaining for avoiding uploading more than once
       <pre class="lines">
 
 
-127
-128
-129</pre>
+129
+130
+131</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 129</span>
 
-<span class='def def kw'>def</span> <span class='retained? fid id'>retained?</span>
-  <span class='notop op'>!</span><span class='notop op'>!</span><span class='@retained ivar id'>@retained</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_retained? fid id'>retained?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='rubyid_@retained ivar id'>@retained</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2203,22 +2237,22 @@ Retaining for avoiding uploading more than once
       <pre class="lines">
 
 
-135
-136
 137
 138
 139
-140</pre>
+140
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 137</span>
 
-<span class='def def kw'>def</span> <span class='retained_attrs identifier id'>retained_attrs</span>
-  <span class='attribute_keys identifier id'>attribute_keys</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='hash identifier id'>hash</span><span class='comma token'>,</span> <span class='key identifier id'>key</span><span class='bitor op'>|</span>
-    <span class='hash identifier id'>hash</span><span class='lbrack token'>[</span><span class='key identifier id'>key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
-    <span class='hash identifier id'>hash</span>
-  <span class='end end kw'>end</span> <span class='if if_mod kw'>if</span> <span class='retained? fid id'>retained?</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_retained_attrs identifier id'>retained_attrs</span>
+  <span class='rubyid_attribute_keys identifier id'>attribute_keys</span><span class='dot token'>.</span><span class='rubyid_inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_hash identifier id'>hash</span><span class='comma token'>,</span> <span class='rubyid_key identifier id'>key</span><span class='bitor op'>|</span>
+    <span class='rubyid_hash identifier id'>hash</span><span class='lbrack token'>[</span><span class='rubyid_key identifier id'>key</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='rubyid_key identifier id'>key</span><span class='rparen token'>)</span>
+    <span class='rubyid_hash identifier id'>hash</span>
+  <span class='rubyid_end end kw'>end</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_retained? fid id'>retained?</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2238,8 +2272,6 @@ Retaining for avoiding uploading more than once
       <pre class="lines">
 
 
-142
-143
 144
 145
 146
@@ -2252,26 +2284,28 @@ Retaining for avoiding uploading more than once
 153
 154
 155
-156</pre>
+156
+157
+158</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 144</span>
 
-<span class='def def kw'>def</span> <span class='retained_attrs= identifier id'>retained_attrs=</span><span class='lparen token'>(</span><span class='attrs identifier id'>attrs</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='changed? fid id'>changed?</span> <span class='comment val'># if already set, ignore and destroy this retained content</span>
-    <span class='destroy_content identifier id'>destroy_content</span><span class='lparen token'>(</span><span class='attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:uid</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='attrs identifier id'>attrs</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='bitor op'>|</span>
-      <span class='unless unless kw'>unless</span> <span class='attribute_keys identifier id'>attribute_keys</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
-        <span class='raise identifier id'>raise</span> <span class='BadAssignmentKey constant id'>BadAssignmentKey</span><span class='comma token'>,</span> <span class='dstring node'>&quot;trying to call #{attribute}_#{key} = #{value.inspect} via retained_#{attribute} but this is not allowed!&quot;</span>
-      <span class='end end kw'>end</span>
-      <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{attribute}_#{key}=&quot;</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
-    <span class='end end kw'>end</span>
-    <span class='sync_with_model identifier id'>sync_with_model</span>
-    <span class='update_from_uid identifier id'>update_from_uid</span>
-    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='retained identifier id'>retained</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_retained_attrs= identifier id'>retained_attrs=</span><span class='lparen token'>(</span><span class='rubyid_attrs identifier id'>attrs</span><span class='rparen token'>)</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_changed? fid id'>changed?</span> <span class='comment val'># if already set, ignore and destroy this retained content</span>
+    <span class='rubyid_destroy_content identifier id'>destroy_content</span><span class='lparen token'>(</span><span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:uid</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_attrs identifier id'>attrs</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_key identifier id'>key</span><span class='comma token'>,</span> <span class='rubyid_value identifier id'>value</span><span class='bitor op'>|</span>
+      <span class='rubyid_unless unless kw'>unless</span> <span class='rubyid_attribute_keys identifier id'>attribute_keys</span><span class='dot token'>.</span><span class='rubyid_include? fid id'>include?</span><span class='lparen token'>(</span><span class='rubyid_key identifier id'>key</span><span class='rparen token'>)</span>
+        <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_BadAssignmentKey constant id'>BadAssignmentKey</span><span class='comma token'>,</span> <span class='dstring node'>&quot;trying to call #{attribute}_#{key} = #{value.inspect} via retained_#{attribute} but this is not allowed!&quot;</span>
+      <span class='rubyid_end end kw'>end</span>
+      <span class='rubyid_model identifier id'>model</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{attribute}_#{key}=&quot;</span><span class='comma token'>,</span> <span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_sync_with_model identifier id'>sync_with_model</span>
+    <span class='rubyid_set_job_from_uid identifier id'>set_job_from_uid</span>
+    <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_retained identifier id'>retained</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2291,24 +2325,24 @@ Retaining for avoiding uploading more than once
       <pre class="lines">
 
 
-69
-70
-71
 72
 73
 74
-75</pre>
+75
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 72</span>
 
-<span class='def def kw'>def</span> <span class='save! fid id'>save!</span>
-  <span class='sync_with_model identifier id'>sync_with_model</span>
-  <span class='store_job! fid id'>store_job!</span> <span class='if if_mod kw'>if</span> <span class='job identifier id'>job</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='uid identifier id'>uid</span>
-  <span class='destroy_previous! fid id'>destroy_previous!</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='changed identifier id'>changed</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='retained identifier id'>retained</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_save! fid id'>save!</span>
+  <span class='rubyid_sync_with_model identifier id'>sync_with_model</span>
+  <span class='rubyid_store_job! fid id'>store_job!</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_job identifier id'>job</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='rubyid_uid identifier id'>uid</span>
+  <span class='rubyid_destroy_previous! fid id'>destroy_previous!</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_changed identifier id'>changed</span> <span class='assign token'>=</span> <span class='rubyid_false false kw'>false</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_retained identifier id'>retained</span> <span class='assign token'>=</span> <span class='rubyid_false false kw'>false</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2329,7 +2363,8 @@ Retaining for avoiding uploading more than once
   </div>
 </div>
 <div class="tags">
-  <h3>Returns:</h3>
+  
+<h3>Returns:</h3>
 <ul class="return">
   
     <li>
@@ -2349,16 +2384,16 @@ Retaining for avoiding uploading more than once
       <pre class="lines">
 
 
-123
-124
-125</pre>
+125
+126
+127</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 125</span>
 
-<span class='def def kw'>def</span> <span class='should_retain? fid id'>should_retain?</span>
-  <span class='notop op'>!</span><span class='notop op'>!</span><span class='@should_retain ivar id'>@should_retain</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_should_retain? fid id'>should_retain?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='rubyid_@should_retain ivar id'>@should_retain</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2379,7 +2414,8 @@ Retaining for avoiding uploading more than once
   </div>
 </div>
 <div class="tags">
-  <h3>Returns:</h3>
+  
+<h3>Returns:</h3>
 <ul class="return">
   
     <li>
@@ -2399,16 +2435,16 @@ Retaining for avoiding uploading more than once
       <pre class="lines">
 
 
-108
-109
-110</pre>
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 110</span>
 
-<span class='def def kw'>def</span> <span class='should_run_callbacks? fid id'>should_run_callbacks?</span>
-  <span class='notop op'>!</span><span class='notop op'>!</span><span class='@should_run_callbacks ivar id'>@should_run_callbacks</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_should_run_callbacks? fid id'>should_run_callbacks?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='rubyid_@should_run_callbacks ivar id'>@should_run_callbacks</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2428,16 +2464,16 @@ Retaining for avoiding uploading more than once
       <pre class="lines">
 
 
-77
-78
-79</pre>
+80
+81
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 80</span>
 
-<span class='def def kw'>def</span> <span class='to_value identifier id'>to_value</span>
-  <span class='self self kw'>self</span> <span class='if if_mod kw'>if</span> <span class='job identifier id'>job</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_to_value identifier id'>to_value</span>
+  <span class='rubyid_self self kw'>self</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_job identifier id'>job</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2456,9 +2492,9 @@ Retaining for avoiding uploading more than once
     </div>
 
     <div id="footer">
-  Generated on Thu Sep  8 10:30:57 2011 by 
+  Generated on Fri Dec 30 16:25:53 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.2).
 </div>
 
   </body>

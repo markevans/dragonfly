@@ -7,3 +7,4 @@ fixtures
 .bundle
 .s3_spec.yml
 Gemfile.lock
+.DS_Store

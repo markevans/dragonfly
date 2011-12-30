@@ -6,7 +6,7 @@
 <title>
   File: History
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.8)</div>
+      <div id="logo">DRAGONFLY (v 0.9.9)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -78,7 +78,45 @@
 
     <div id="content" class="clearfix">
       <div class="col1">
-        <div id='filecontents'><h1>0.9.8 (2011-09-08)</h1>
+        <div id='filecontents'><h1>0.9.9 (2011-12-30)</h1>
+
+<h2>Features</h2>
+
+<ul>
+<li>Created tempfiles use the original file extension if known</li>
+<li>Added <code>:case_sensitive</code> option to <code>validates_property</code> for dealing with upper-case extensions and mime-types.</li>
+<li>Github Markup syntax on readme for code highlighting</li>
+<li>S3DataStore can use https for remote urls (either configurable or per-url)</li>
+<li><code>to_file</code> can take <code>:mode</code> option for setting custom permissions</li>
+<li><code>to_file</code> creates intermediate subdirs by default, can be turned off with <code>:mkdirs =&gt; false</code> option</li>
+<li>Added some more S3 regions</li>
+</ul>
+
+<h2>Changes</h2>
+
+<ul>
+<li>Datastores now use <code>temp_object.meta</code>, not the second arg passed in to <code>store</code></li>
+<li><code>meta</code>, <code>name</code>, etc. now lazily load the job on an attachment - previously you'd have to call <code>apply</code> to get the meta from the datastore</li>
+<li>When assigning an image via the activemodel extensions, mark that uid attribute will change</li>
+<li><code>validates_property</code> uses Rails 3 validators</li>
+<li>Deprecated saved 'heroku' config, in favour of configuring S3 explicitly</li>
+</ul>
+
+<h2>Fixes</h2>
+
+<ul>
+<li>Model attachment urls are consistent now - the name is appended to the url (with format &quot;/:job/:name&quot;) ONLY if it has the &quot;name&quot; magic attribute</li>
+<li><code>identify</code> wasn't working properly for files with capital letter extensions</li>
+<li>S3 datastore sets content mime_type by default</li>
+<li>File extensions with numbers like JP2 weren't being processed/analysed properly</li>
+<li>Protect against object_ids being recycled and messing with analyser cache</li>
+<li>All url segments are correctly url-escaped now</li>
+<li>Fixed TempObject File.open mode</li>
+<li>S3DataStore was breaking on bucket_exists? when using AWS IAM</li>
+<li>Put CookieMonster before ActionDispatch::Cookies in rack middleware stack - that way Rack::Cache won't come between them and mess things up</li>
+</ul>
+
+<h1>0.9.8 (2011-09-08)</h1>
 
 <h2>Fixes</h2>
 
@@ -86,15 +124,13 @@
 <li>Regenerated gemspec again with ruby 1.8.7 - didn't seem to be fixed</li>
 </ul>
 
-
 <h1>0.9.7 (2011-09-08)</h1>
 
 <h2>Fixes</h2>
 
 <ul>
-<li>Regenerated gemspec to overcome annoying yaml issue (http://blog.rubygems.org/2011/08/31/shaving-the-yaml-yacc.html)</li>
+<li>Regenerated gemspec to overcome annoying yaml issue (<a href="http://blog.rubygems.org/2011/08/31/shaving-the-yaml-yacc.html">http://blog.rubygems.org/2011/08/31/shaving-the-yaml-yacc.html</a>)</li>
 </ul>
-
 
 <h1>0.9.6 (2011-09-06)</h1>
 
@@ -104,13 +140,11 @@
 <li>Allow setting <code>content_type</code> when storing in Mongo GridFS</li>
 </ul>
 
-
 <h2>Changes</h2>
 
 <ul>
 <li>Tests use Rails 3.1</li>
 </ul>
-
 
 <h2>Fixes</h2>
 
@@ -121,7 +155,6 @@
 <li>Better shell quoting</li>
 </ul>
 
-
 <h1>0.9.5 (2011-07-27)</h1>
 
 <h2>Features</h2>
@@ -130,14 +163,12 @@
 <li>Added reflection method <code>app.analyser_methods</code></li>
 </ul>
 
-
 <h2>Fixes</h2>
 
 <ul>
 <li>Fixed <code>convert</code> and <code>identify</code> for files with spaces</li>
 <li>Fixed size validations for Rails 3.0.7</li>
 </ul>
-
 
 <h1>0.9.4 (2011-06-10)</h1>
 
@@ -147,7 +178,6 @@
 <li>Made use of Rack calling <code>close</code> on the response body to clean up tempfiles.
 The response body is now the job, which delegates <code>each</code> to the temp_object.</li>
 </ul>
-
 
 <h1>0.9.3 (2011-06-03)</h1>
 
@@ -159,7 +189,6 @@ The response body is now the job, which delegates <code>each</code> to the temp_
 <li>replaced '/' characters with '~' in base64 encoded urls (they were confusing url recognition)</li>
 </ul>
 
-
 <h1>0.9.2 (2011-05-19)</h1>
 
 <h2>Features</h2>
@@ -169,13 +198,11 @@ The response body is now the job, which delegates <code>each</code> to the temp_
 <li>Added CookieMonster middleware for removing 'Set-Cookie' headers</li>
 </ul>
 
-
 <h2>Fixes</h2>
 
 <ul>
 <li>Remove 'Set-Cookie' header from any requests coming from a rails route</li>
 </ul>
-
 
 <h1>0.9.1 (2011-05-11)</h1>
 
@@ -185,16 +212,14 @@ The response body is now the job, which delegates <code>each</code> to the temp_
 <li>Added reflection methods <code>app.processor_methods</code>, <code>app.generator_methods</code> and <code>app.job_methods</code></li>
 </ul>
 
-
 <h2>Fixes</h2>
 
 <ul>
 <li>Improved performance of <code>resize_and_crop</code> method, using imagemagick built-in '^' operator</li>
 <li>Improved server security validations</li>
 <li>Deal with Excon::Errors::SocketError: EOFError errors which get thrown sometimes from S3 connection</li>
-<li>Allow files with '..' (but not '../') in the middle of their name in file data store</li>
+<li>Allow files with '..' (but not '../') in the middle of their name in file data store </li>
 </ul>
-
 
 <h1>0.9.0 (2011-04-27)</h1>
 
@@ -208,8 +233,7 @@ The response body is now the job, which delegates <code>each</code> to the temp_
 <li>added <code>after_unassign</code> callback</li>
 <li>added <code>copy_to</code> for e.g. up-front thumbnailing</li>
 <li>added <code>storage_opts</code> and <code>storage_xxx</code></li>
-</ul>
-</li>
+</ul></li>
 <li>Added model <code>remove_xxxxx</code> for using with checkboxes</li>
 <li>Added model <code>xxxx_url</code> for assigning content from a url</li>
 <li>Added job step <code>fetch_url</code></li>
@@ -230,8 +254,7 @@ The response body is now the job, which delegates <code>each</code> to the temp_
 
 <ul>
 <li>Added for File, Couch and S3 datastores</li>
-</ul>
-</li>
+</ul></li>
 <li>Models automatically copy magic attributes into meta</li>
 <li>S3DataStore configurable headers</li>
 <li>'dragonfly/rails/images' slightly smarter and added <code>file_accessor</code> for more semantic use of non-image attachments</li>
@@ -240,7 +263,6 @@ The response body is now the job, which delegates <code>each</code> to the temp_
 <li>FileDataStore can be configured not to store meta (save on extra file)</li>
 </ul>
 
-
 <h2>Changes</h2>
 
 <ul>
@@ -248,25 +270,22 @@ The response body is now the job, which delegates <code>each</code> to the temp_
 
 <ul>
 <li>Middleware doesn't need mount point argument now</li>
-</ul>
-</li>
+</ul></li>
 <li>Removed support for rails 2.3</li>
 <li>Removed RMagick support (and extracted into a plugin)</li>
 <li>ImageMagick processors etc. moved into the ImageMagick namespace</li>
-<li>moved from aws/s3 -> fog for S3 support</li>
-<li>Renamed SimpleEndpoint -> Server</li>
+<li>moved from aws/s3 -&gt; fog for S3 support</li>
+<li>Renamed SimpleEndpoint -&gt; Server</li>
 <li>moved name and meta into Job, simplified, and now they don't cause the job to be applied</li>
 <li>FileDataStore stores metadata in xxx.meta now, not xxx.extra</li>
 <li>removed Job methods <code>uid_basename</code>, <code>uid_extname</code>, <code>encoded_format</code> and <code>encoded_extname</code> as they are now unnecessary</li>
 </ul>
-
 
 <h2>Fixes</h2>
 
 <ul>
 <li>Performance tweaks regarding temp_objects model accessors and job objects</li>
 </ul>
-
 
 <h1>0.8.5 (2011-05-11)</h1>
 
@@ -277,7 +296,6 @@ The response body is now the job, which delegates <code>each</code> to the temp_
 <li>Better security for server</li>
 </ul>
 
-
 <h1>0.8.4 (2011-04-27)</h1>
 
 <h2>Fixes</h2>
@@ -285,7 +303,6 @@ The response body is now the job, which delegates <code>each</code> to the temp_
 <ul>
 <li>Security fix for file data store</li>
 </ul>
-
 
 <h1>0.8.2 (2011-01-11)</h1>
 
@@ -297,7 +314,6 @@ The response body is now the job, which delegates <code>each</code> to the temp_
 <li>Got it working with jRuby and Rubinius</li>
 <li>Made DOS protection SHA (and ETag) consistent</li>
 </ul>
-
 
 <h1>0.8.1 (2010-11-22)</h1>
 
@@ -314,13 +330,11 @@ The response body is now the job, which delegates <code>each</code> to the temp_
 (thanks to Henry Phan for work on this)</li>
 </ul>
 
-
 <h2>Fixes</h2>
 
 <ul>
 <li>Works with Rails 3.0.2 uploaded files (which has a changed API)</li>
 </ul>
-
 
 <h1>0.7.7 (2010-10-31)</h1>
 
@@ -330,14 +344,12 @@ The response body is now the job, which delegates <code>each</code> to the temp_
 <li>Added username/password authentication to mongo data store</li>
 </ul>
 
-
 <h2>Fixes</h2>
 
 <ul>
 <li>Fixes for Windows, inc. tempfile binmode and closing files</li>
-<li>"IOError: closed stream" fix (hopefully!)</li>
+<li>&quot;IOError: closed stream&quot; fix (hopefully!)</li>
 </ul>
-
 
 <h1>0.7.6 (2010-09-12)</h1>
 
@@ -347,28 +359,25 @@ The response body is now the job, which delegates <code>each</code> to the temp_
 <li>Added methods for querying job steps, and Job#uid, Job#uid_basename, etc.</li>
 <li>Added Job#b64_data</li>
 <li>Added configurable url_suffix</li>
-<li>Added configurable content<em>disposition and content</em>filename</li>
+<li>Added configurable content_disposition and content_filename</li>
 <li>Can pass extra GET params to url_for</li>
 <li>Can manually set uid on FileDataStore and S3DataStore
-  (not yet documented because attachments have no way to pass it on yet)</li>
+(not yet documented because attachments have no way to pass it on yet)</li>
 <li>Model attachments store meta info about themselves</li>
 </ul>
-
 
 <h2>Changes</h2>
 
 <ul>
 <li>Configurable module doesn't implicitly call 'call' if attribute set as proc</li>
-<li>Refactored Endpoint module -> Response object</li>
+<li>Refactored Endpoint module -&gt; Response object</li>
 </ul>
-
 
 <h2>Fixes</h2>
 
 <ul>
 <li>Ruby 1.9.2-p0 was raising encoding errors due to Tempfiles not being in binmode</li>
 </ul>
-
 
 <h1>0.7.5 (2010-09-01)</h1>
 
@@ -377,9 +386,8 @@ The response body is now the job, which delegates <code>each</code> to the temp_
 <ul>
 <li>RMagick processor, encoder, analyser and generator all use the filesystem now
 They can be configured to use in-memory strings with the use_filesystem config option.</li>
-<li>Upgraded support from Rails 3.0.0.rc -> Rails.3.0.0</li>
+<li>Upgraded support from Rails 3.0.0.rc -&gt; Rails.3.0.0</li>
 </ul>
-
 
 <h1>0.7.4 (2010-08-28)</h1>
 
@@ -389,7 +397,6 @@ They can be configured to use in-memory strings with the use_filesystem config o
 <li>Gave model accessors bang methods process! and encode!</li>
 </ul>
 
-
 <h1>0.7.3 (2010-08-27)</h1>
 
 <h2>Fixes</h2>
@@ -398,7 +405,6 @@ They can be configured to use in-memory strings with the use_filesystem config o
 <li>Seems as though inserting after Rails' Rack::Lock was worth it after all</li>
 </ul>
 
-
 <h1>0.7.2 (2010-08-27)</h1>
 
 <h2>Fixes</h2>
@@ -406,7 +412,6 @@ They can be configured to use in-memory strings with the use_filesystem config o
 <ul>
 <li>S3DataStore was breaking if previous data hadn't stored meta</li>
 </ul>
-
 
 <h1>0.7.1 (2010-08-26)</h1>
 
@@ -417,20 +422,17 @@ They can be configured to use in-memory strings with the use_filesystem config o
 <li>to_response accepts env, so can use if-not-modified, etc.</li>
 </ul>
 
-
 <h2>Features</h2>
 
 <ul>
 <li>Doc tweaks: Added mongo page, notes about Capistrano</li>
 </ul>
 
-
 <h2>Changes</h2>
 
 <ul>
 <li>ETags generated by hash of job.serialize - was getting a bit long</li>
 </ul>
-
 
 <h1>0.7.0 (2010-08-25)</h1>
 
@@ -458,7 +460,6 @@ They can be configured to use in-memory strings with the use_filesystem config o
 <li>more intelligent working out of Content-Type to send back</li>
 </ul>
 
-
 <h2>Fixes</h2>
 
 <ul>
@@ -469,11 +470,10 @@ They can be configured to use in-memory strings with the use_filesystem config o
 <li>Better RMagick memory management using image.destroy!</li>
 </ul>
 
-
 <h2>Changes</h2>
 
 <ul>
-<li>Dragonfly::App[:images] -> Dragonfly[:images]</li>
+<li>Dragonfly::App[:images] -&gt; Dragonfly[:images]</li>
 <li>Moved text/plasma generation into Generator</li>
 <li>Use of lazy 'Job' objects</li>
 <li>simplified shortcuts interface</li>
@@ -488,7 +488,6 @@ They can be configured to use in-memory strings with the use_filesystem config o
 <li>got rid of unnecessary configurable sha_length</li>
 </ul>
 
-
 <h1>0.6.2 (2010-06-24)</h1>
 
 <h2>Features</h2>
@@ -497,7 +496,6 @@ They can be configured to use in-memory strings with the use_filesystem config o
 <li>Added ability for custom error messages in validations</li>
 </ul>
 
-
 <h1>0.6.1 (2010-05-16)</h1>
 
 <h2>Fixes</h2>
@@ -505,7 +503,6 @@ They can be configured to use in-memory strings with the use_filesystem config o
 <ul>
 <li>STI was breaking when the model had a mixin too</li>
 </ul>
-
 
 <h1>0.6.0 (2010-05-11)</h1>
 
@@ -520,7 +517,6 @@ They can be configured to use in-memory strings with the use_filesystem config o
 <li>S3DataStore is configurable as to whether it uses the filesystem or not (to save a tempfile)</li>
 </ul>
 
-
 <h2>Fixes</h2>
 
 <ul>
@@ -530,17 +526,15 @@ They can be configured to use in-memory strings with the use_filesystem config o
 <li>Added check to see if bucket already exists in S3DataStore - apparently this was problematic in EU</li>
 </ul>
 
-
 <h2>Changes</h2>
 
 <ul>
-<li>temp<em>object.tempfile now returns a closed tempfile, which temp</em>object.file returns an open file.
+<li>temp_object.tempfile now returns a closed tempfile, which temp_object.file returns an open file.
 Can also pass a block to temp_object.file which closes the file automatically</li>
 <li>Processors/Analysers/Encoders know about app now so can log to app's log</li>
-<li>Imagemagick errors in RMagick processor/analyser/encoder now throw unable<em>to</em>handle and log a warning</li>
+<li>Imagemagick errors in RMagick processor/analyser/encoder now throw unable_to_handle and log a warning</li>
 <li>Removed Rails generators - better being more explicit with saved configurations which are more concise now</li>
 </ul>
-
 
 <h1>0.5.7 (2010-04-18)</h1>
 
@@ -550,7 +544,6 @@ Can also pass a block to temp_object.file which closes the file automatically</l
 <li>Strip file command mime_type value because some versions of file command were appending a line-break</li>
 </ul>
 
-
 <h1>0.5.6 (2010-04-13)</h1>
 
 <h2>Fixes</h2>
@@ -559,15 +552,13 @@ Can also pass a block to temp_object.file which closes the file automatically</l
 <li>Wasn't working properly with Single-Table Inheritance</li>
 </ul>
 
-
 <h1>0.5.5 (2010-04-13)</h1>
 
 <h2>Fixes</h2>
 
 <ul>
-<li>Rails 3 has changed 'metaclass' -> 'singleton_class' so adapt accordingly</li>
+<li>Rails 3 has changed 'metaclass' -&gt; 'singleton_class' so adapt accordingly</li>
 </ul>
-
 
 <h1>0.5.4 (2010-04-12)</h1>
 
@@ -577,13 +568,11 @@ Can also pass a block to temp_object.file which closes the file automatically</l
 <li>Allow setting the uid manually</li>
 </ul>
 
-
 <h2>Fixes</h2>
 
 <ul>
 <li>Assigning an accessor to nil wasn't working properly</li>
 </ul>
-
 
 <h1>0.5.3 (2010-03-27)</h1>
 
@@ -592,7 +581,6 @@ Can also pass a block to temp_object.file which closes the file automatically</l
 <ul>
 <li>Assigning an accessor to nil wasn't working properly</li>
 </ul>
-
 
 <h1>0.5.2 (2010-03-04)</h1>
 
@@ -603,13 +591,11 @@ Can also pass a block to temp_object.file which closes the file automatically</l
 <li>Enhanced docs</li>
 </ul>
 
-
 <h2>Fixes</h2>
 
 <ul>
 <li>RMagickEncoder only encodes if not already in that format</li>
 </ul>
-
 
 <h1>0.5.1 (2010-02-20)</h1>
 
@@ -619,7 +605,6 @@ Can also pass a block to temp_object.file which closes the file automatically</l
 <li>Fixed 'broken pipe' errors in FileCommandAnalyser due to outputting loads of stuff to the command line stdin</li>
 </ul>
 
-
 <h1>0.5.0 (2010-02-20)</h1>
 
 <h2>Added support</h2>
@@ -628,7 +613,6 @@ Can also pass a block to temp_object.file which closes the file automatically</l
 <li>support for Rails 3</li>
 </ul>
 
-
 <h1>0.4.4 (2010-02-16)</h1>
 
 <p>Better late than never to start logging change history...</p>
@@ -636,9 +620,8 @@ Can also pass a block to temp_object.file which closes the file automatically</l
 <h2>New features</h2>
 
 <ul>
-<li>added aspect<em>ratio to rmagick</em>analyser</li>
+<li>added aspect_ratio to rmagick_analyser</li>
 </ul>
-
 
 <h2>Added support</h2>
 
@@ -656,9 +639,9 @@ Can also pass a block to temp_object.file which closes the file automatically</l
     </div>
 
     <div id="footer">
-  Generated on Thu Sep  8 10:30:52 2011 by 
+  Generated on Fri Dec 30 16:25:48 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.2).
 </div>
 
   </body>

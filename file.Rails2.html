@@ -6,7 +6,7 @@
 <title>
   File: Rails2
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.8)</div>
+      <div id="logo">DRAGONFLY (v 0.9.9)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -86,7 +86,7 @@
 
 <p>config/initializers/dragonfly.rb:</p>
 
-<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'dragonfly/rails/images'</span>
+<pre class="code"><span class='rubyid_require identifier id'>require</span> <span class='string val'>'dragonfly/rails/images'</span>
 </pre>
 
 <h2>Setting up the more explicit way</h2>
@@ -95,22 +95,22 @@
 
 <p>config/initializers/dragonfly.rb:</p>
 
-<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
+<pre class="code"><span class='rubyid_require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
 
-<span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span>
+<span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span>
 
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='rubyid_ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
 </pre>
 
 <p>environment.rb:</p>
 
-<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert identifier id'>insert</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='string val'>'Dragonfly::Middleware'</span><span class='comma token'>,</span> <span class='symbol val'>:images</span><span class='comma token'>,</span> <span class='string val'>'/media'</span>
-<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert_before identifier id'>insert_before</span> <span class='string val'>'Dragonfly::Middleware'</span><span class='comma token'>,</span> <span class='string val'>'Rack::Cache'</span><span class='comma token'>,</span> <span class='lbrace token'>{</span>
-  <span class='symbol val'>:verbose</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='comma token'>,</span>
-  <span class='symbol val'>:metastore</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='dstring node'>&quot;file:#{Rails.root}/tmp/dragonfly/cache/meta&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span>
-  <span class='symbol val'>:entitystore</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='dstring node'>&quot;file:#{Rails.root}/tmp/dragonfly/cache/body&quot;</span><span class='rparen token'>)</span>
+<pre class="code"><span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='rubyid_insert identifier id'>insert</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='string val'>'Dragonfly::Middleware'</span><span class='comma token'>,</span> <span class='symbol val'>:images</span><span class='comma token'>,</span> <span class='string val'>'/media'</span>
+<span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='rubyid_insert_before identifier id'>insert_before</span> <span class='string val'>'Dragonfly::Middleware'</span><span class='comma token'>,</span> <span class='string val'>'Rack::Cache'</span><span class='comma token'>,</span> <span class='lbrace token'>{</span>
+  <span class='symbol val'>:verbose</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='comma token'>,</span>
+  <span class='symbol val'>:metastore</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_URI constant id'>URI</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='dstring node'>&quot;file:#{Rails.root}/tmp/dragonfly/cache/meta&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+  <span class='symbol val'>:entitystore</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_URI constant id'>URI</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='dstring node'>&quot;file:#{Rails.root}/tmp/dragonfly/cache/body&quot;</span><span class='rparen token'>)</span>
 <span class='rbrace token'>}</span>
 </pre>
 
@@ -118,26 +118,27 @@
 
 <p>environment.rb</p>
 
-<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span><span class='comma token'>,</span> <span class='string val'>'0.8.5'</span>
-<span class='config identifier id'>config</span><span class='dot token'>.</span><span class='gem identifier id'>gem</span> <span class='string val'>'rack-cache'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'rack/cache'</span>
+<pre class="code"><span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span><span class='comma token'>,</span> <span class='string val'>'0.8.5'</span>
+<span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_gem identifier id'>gem</span> <span class='string val'>'rack-cache'</span><span class='comma token'>,</span> <span class='symbol val'>:lib</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'rack/cache'</span>
 </pre>
 
 <h2>Capistrano</h2>
 
 <p>If using Capistrano with the above, you probably will want to keep the cache between deploys, so in deploy.rb:</p>
 
-<pre class="code"><span class='namespace identifier id'>namespace</span> <span class='symbol val'>:dragonfly</span> <span class='do do kw'>do</span>
-  <span class='desc identifier id'>desc</span> <span class='string val'>&quot;Symlink the Rack::Cache files&quot;</span>
-  <span class='task identifier id'>task</span> <span class='symbol val'>:symlink</span><span class='comma token'>,</span> <span class='symbol val'>:roles</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:app</span><span class='rbrack token'>]</span> <span class='do do kw'>do</span>
-    <span class='run identifier id'>run</span> <span class='dstring node'>&quot;mkdir -p #{shared_path}/tmp/dragonfly &amp;&amp; ln -nfs #{shared_path}/tmp/dragonfly #{release_path}/tmp/dragonfly&quot;</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-<span class='after identifier id'>after</span> <span class='string val'>'deploy:update_code'</span><span class='comma token'>,</span> <span class='string val'>'dragonfly:symlink'</span>
+<pre class="code"><span class='rubyid_namespace identifier id'>namespace</span> <span class='symbol val'>:dragonfly</span> <span class='rubyid_do do kw'>do</span>
+  <span class='rubyid_desc identifier id'>desc</span> <span class='string val'>&quot;Symlink the Rack::Cache files&quot;</span>
+  <span class='rubyid_task identifier id'>task</span> <span class='symbol val'>:symlink</span><span class='comma token'>,</span> <span class='symbol val'>:roles</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:app</span><span class='rbrack token'>]</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_run identifier id'>run</span> <span class='dstring node'>&quot;mkdir -p #{shared_path}/tmp/dragonfly &amp;&amp; ln -nfs #{shared_path}/tmp/dragonfly #{release_path}/tmp/dragonfly&quot;</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+<span class='rubyid_after identifier id'>after</span> <span class='string val'>'deploy:update_code'</span><span class='comma token'>,</span> <span class='string val'>'dragonfly:symlink'</span>
 </pre>
 
 <h2>Use it!</h2>
 
-<p>To see what you can do with the model accessors, see <a href="file.Models.html" title="Models">Models</a>.</p></div>
+<p>To see what you can do with the model accessors, see <a href="file.Models.html" title="Models">Models</a>.</p>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -147,9 +148,9 @@
     </div>
 
     <div id="footer">
-  Generated on Thu Sep  8 10:30:51 2011 by 
+  Generated on Fri Dec 30 16:25:47 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.2).
 </div>
 
   </body>

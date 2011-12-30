@@ -6,7 +6,7 @@
 <title>
   File: Couch
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.8)</div>
+      <div id="logo">DRAGONFLY (v 0.9.9)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -93,42 +93,43 @@ which allows storing files as attachments directly on documents.</p>
 
 <p>In config/initializers/dragonfly.rb:</p>
 
-<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
+<pre class="code"><span class='rubyid_require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
 
-<span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+<span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
 
 <span class='comment val'># Get database config from config/couchdb.yml</span>
-<span class='couch_settings identifier id'>couch_settings</span> <span class='assign token'>=</span> <span class='YAML constant id'>YAML</span><span class='dot token'>.</span><span class='load_file identifier id'>load_file</span><span class='lparen token'>(</span><span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='root identifier id'>root</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'config/couchdb.yml'</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='env identifier id'>env</span><span class='rbrack token'>]</span>
+<span class='rubyid_couch_settings identifier id'>couch_settings</span> <span class='assign token'>=</span> <span class='rubyid_YAML constant id'>YAML</span><span class='dot token'>.</span><span class='rubyid_load_file identifier id'>load_file</span><span class='lparen token'>(</span><span class='rubyid_Rails constant id'>Rails</span><span class='dot token'>.</span><span class='rubyid_root identifier id'>root</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'config/couchdb.yml'</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='rubyid_Rails constant id'>Rails</span><span class='dot token'>.</span><span class='rubyid_env identifier id'>env</span><span class='rbrack token'>]</span>
 
 <span class='comment val'># Configure to use ImageMagick, Rails defaults, and the Couch data store</span>
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='CouchDataStore constant id'>CouchDataStore</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
-    <span class='symbol val'>:host</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='couch_settings identifier id'>couch_settings</span><span class='lbrack token'>[</span><span class='string val'>'host'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
-    <span class='symbol val'>:port</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='couch_settings identifier id'>couch_settings</span><span class='lbrack token'>[</span><span class='string val'>'port'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
-    <span class='symbol val'>:username</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='couch_settings identifier id'>couch_settings</span><span class='lbrack token'>[</span><span class='string val'>'username'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
-    <span class='symbol val'>:password</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='couch_settings identifier id'>couch_settings</span><span class='lbrack token'>[</span><span class='string val'>'password'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
-    <span class='symbol val'>:database</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='couch_settings identifier id'>couch_settings</span><span class='lbrack token'>[</span><span class='string val'>'database'</span><span class='rbrack token'>]</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='rubyid_CouchDataStore constant id'>CouchDataStore</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span>
+    <span class='symbol val'>:host</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_couch_settings identifier id'>couch_settings</span><span class='lbrack token'>[</span><span class='string val'>'host'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+    <span class='symbol val'>:port</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_couch_settings identifier id'>couch_settings</span><span class='lbrack token'>[</span><span class='string val'>'port'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+    <span class='symbol val'>:username</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_couch_settings identifier id'>couch_settings</span><span class='lbrack token'>[</span><span class='string val'>'username'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+    <span class='symbol val'>:password</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_couch_settings identifier id'>couch_settings</span><span class='lbrack token'>[</span><span class='string val'>'password'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+    <span class='symbol val'>:database</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_couch_settings identifier id'>couch_settings</span><span class='lbrack token'>[</span><span class='string val'>'database'</span><span class='rbrack token'>]</span>
   <span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 
 <span class='comment val'># Allow all CouchRest::Model models to use the macro 'image_accessor'</span>
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='CouchRest constant id'>CouchRest</span><span class='colon2 op'>::</span><span class='Model constant id'>Model</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='rubyid_CouchRest constant id'>CouchRest</span><span class='colon2 op'>::</span><span class='rubyid_Model constant id'>Model</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
 
 <span class='comment val'># ... any other setup, see Rails docs</span>
 </pre>
 
 <p>Then in models:</p>
 
-<pre class="code"><span class='class class kw'>class</span> <span class='Album constant id'>Album</span> <span class='lt op'>&lt;</span> <span class='CouchRest constant id'>CouchRest</span><span class='colon2 op'>::</span><span class='Model constant id'>Model</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span>
-  <span class='property identifier id'>property</span> <span class='symbol val'>:cover_image_uid</span>
-  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:cover_image</span>
+<pre class="code"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Album constant id'>Album</span> <span class='lt op'>&lt;</span> <span class='rubyid_CouchRest constant id'>CouchRest</span><span class='colon2 op'>::</span><span class='rubyid_Model constant id'>Model</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span>
+  <span class='rubyid_property identifier id'>property</span> <span class='symbol val'>:cover_image_uid</span>
+  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:cover_image</span>
 
   <span class='comment val'># ...</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
 
-<p>See <a href="file.Models.html" title="Models">Models</a> for more info.</p></div>
+<p>See <a href="file.Models.html" title="Models">Models</a> for more info.</p>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -138,9 +139,9 @@ which allows storing files as attachments directly on documents.</p>
     </div>
 
     <div id="footer">
-  Generated on Thu Sep  8 10:30:51 2011 by 
+  Generated on Fri Dec 30 16:25:48 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.2).
 </div>
 
   </body>

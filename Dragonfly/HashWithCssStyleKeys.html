@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::HashWithCssStyleKeys
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.8)</div>
+      <div id="logo">DRAGONFLY (v 0.9.9)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -133,13 +133,14 @@ version
     <h3>Examples:</h3>
     
       <h4><div class='inline'></div></h4>
-      <pre class="example code"><span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='string val'>'font-size'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'23px'</span><span class='comma token'>,</span> <span class='symbol val'>:color</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'white'</span><span class='rbrace token'>}</span>
-<span class='opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='HashWithCssStyleKeys constant id'>HashWithCssStyleKeys</span><span class='lbrack token'>[</span><span class='opts identifier id'>opts</span><span class='rbrack token'>]</span>
-<span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_size</span><span class='rbrack token'>]</span>   <span class='comment val'># ===&gt; '23px'</span>
-<span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:color</span><span class='rbrack token'>]</span>       <span class='comment val'># ===&gt; 'white'</span>
+      <pre class="example code"><span class='rubyid_opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='string val'>'font-size'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'23px'</span><span class='comma token'>,</span> <span class='symbol val'>:color</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'white'</span><span class='rbrace token'>}</span>
+<span class='rubyid_opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='rubyid_HashWithCssStyleKeys constant id'>HashWithCssStyleKeys</span><span class='lbrack token'>[</span><span class='rubyid_opts identifier id'>opts</span><span class='rbrack token'>]</span>
+<span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:font_size</span><span class='rbrack token'>]</span>   <span class='comment val'># ===&gt; '23px'</span>
+<span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:color</span><span class='rbrack token'>]</span>       <span class='comment val'># ===&gt; 'white'</span>
 </pre>
     
   </div>
+
 
 </div>
 
@@ -227,13 +228,13 @@ version
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/hash_with_css_style_keys.rb', line 12</span>
 
-<span class='def def kw'>def</span> <span class='aref op'>[]</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
-  <span class='super super kw'>super</span> <span class='orop op'>||</span> <span class='lparen token'>(</span>
-    <span class='str_key identifier id'>str_key</span> <span class='assign token'>=</span> <span class='key identifier id'>key</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
-    <span class='css_key identifier id'>css_key</span> <span class='assign token'>=</span> <span class='str_key identifier id'>str_key</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>'_'</span><span class='comma token'>,</span><span class='string val'>'-'</span><span class='rparen token'>)</span>
-    <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='str_key identifier id'>str_key</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='css_key identifier id'>css_key</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='css_key identifier id'>css_key</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
+<span class='rubyid_def def kw'>def</span> <span class='aref op'>[]</span><span class='lparen token'>(</span><span class='rubyid_key identifier id'>key</span><span class='rparen token'>)</span>
+  <span class='rubyid_super super kw'>super</span> <span class='orop op'>||</span> <span class='lparen token'>(</span>
+    <span class='rubyid_str_key identifier id'>str_key</span> <span class='assign token'>=</span> <span class='rubyid_key identifier id'>key</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
+    <span class='rubyid_css_key identifier id'>css_key</span> <span class='assign token'>=</span> <span class='rubyid_str_key identifier id'>str_key</span><span class='dot token'>.</span><span class='rubyid_gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>'_'</span><span class='comma token'>,</span><span class='string val'>'-'</span><span class='rparen token'>)</span>
+    <span class='rubyid_super super kw'>super</span><span class='lparen token'>(</span><span class='rubyid_str_key identifier id'>str_key</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='rubyid_super super kw'>super</span><span class='lparen token'>(</span><span class='rubyid_css_key identifier id'>css_key</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='rubyid_super super kw'>super</span><span class='lparen token'>(</span><span class='rubyid_css_key identifier id'>css_key</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
   <span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -252,9 +253,9 @@ version
     </div>
 
     <div id="footer">
-  Generated on Thu Sep  8 10:30:56 2011 by 
+  Generated on Fri Dec 30 16:25:52 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.2).
 </div>
 
   </body>

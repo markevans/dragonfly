@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::Job::Step
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.8)</div>
+      <div id="logo">DRAGONFLY (v 0.9.9)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -368,24 +368,25 @@ A new instance of Step
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-42
-43
 44
-45</pre>
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 44</span>
 
-<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='@job ivar id'>@job</span><span class='comma token'>,</span> <span class='@args ivar id'>@args</span> <span class='assign token'>=</span> <span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='args identifier id'>args</span>
-  <span class='init identifier id'>init</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='rubyid_@job ivar id'>@job</span><span class='comma token'>,</span> <span class='rubyid_@args ivar id'>@args</span> <span class='assign token'>=</span> <span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_args identifier id'>args</span>
+  <span class='rubyid_init identifier id'>init</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -418,22 +419,23 @@ Returns the value of attribute args
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-50
-51
-52</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 52</span>
 
-<span class='def def kw'>def</span> <span class='args identifier id'>args</span>
-  <span class='@args ivar id'>@args</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_args identifier id'>args</span>
+  <span class='rubyid_@args ivar id'>@args</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -461,22 +463,23 @@ Returns the value of attribute job
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-50
-51
-52</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 52</span>
 
-<span class='def def kw'>def</span> <span class='job identifier id'>job</span>
-  <span class='@job ivar id'>@job</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_job identifier id'>job</span>
+  <span class='rubyid_@job ivar id'>@job</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -508,22 +511,23 @@ Dragonfly::Job::Fetch -> :f
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-37
-38
-39</pre>
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 39</span>
 
-<span class='def def kw'>def</span> <span class='abbreviation identifier id'>abbreviation</span>
-  <span class='@abbreviation ivar id'>@abbreviation</span> <span class='opasgn op'>||=</span> <span class='basename identifier id'>basename</span><span class='dot token'>.</span><span class='scan identifier id'>scan</span><span class='lparen token'>(</span><span class='regexp val'>/[A-Z]/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_abbreviation identifier id'>abbreviation</span>
+  <span class='rubyid_@abbreviation ivar id'>@abbreviation</span> <span class='opasgn op'>||=</span> <span class='rubyid_basename identifier id'>basename</span><span class='dot token'>.</span><span class='rubyid_scan identifier id'>scan</span><span class='lparen token'>(</span><span class='regexp val'>/[A-Z]/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='dot token'>.</span><span class='rubyid_downcase identifier id'>downcase</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -548,22 +552,23 @@ Dragonfly::Job::Fetch -> &#8216;Fetch&#8217;
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-29
-30
-31</pre>
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 31</span>
 
-<span class='def def kw'>def</span> <span class='basename identifier id'>basename</span>
-  <span class='@basename ivar id'>@basename</span> <span class='opasgn op'>||=</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>'::'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='last identifier id'>last</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_basename identifier id'>basename</span>
+  <span class='rubyid_@basename ivar id'>@basename</span> <span class='opasgn op'>||=</span> <span class='rubyid_name identifier id'>name</span><span class='dot token'>.</span><span class='rubyid_split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>'::'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_last identifier id'>last</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -588,22 +593,23 @@ Dragonfly::Job::Fetch -> :fetch
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-33
-34
-35</pre>
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 35</span>
 
-<span class='def def kw'>def</span> <span class='step_name identifier id'>step_name</span>
-  <span class='@step_name ivar id'>@step_name</span> <span class='opasgn op'>||=</span> <span class='basename identifier id'>basename</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/[A-Z]/</span><span class='rparen token'>)</span><span class='lbrace token'>{</span> <span class='dstring node'>&quot;_#{$&amp;.downcase}&quot;</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='string val'>'_'</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_step_name identifier id'>step_name</span>
+  <span class='rubyid_@step_name ivar id'>@step_name</span> <span class='opasgn op'>||=</span> <span class='rubyid_basename identifier id'>basename</span><span class='dot token'>.</span><span class='rubyid_gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/[A-Z]/</span><span class='rparen token'>)</span><span class='lbrace token'>{</span> <span class='dstring node'>&quot;_#{$&amp;.downcase}&quot;</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_sub identifier id'>sub</span><span class='lparen token'>(</span><span class='string val'>'_'</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -634,20 +640,21 @@ To be overridden
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-47
-48</pre>
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 49</span>
 
-<span class='def def kw'>def</span> <span class='init identifier id'>init</span> 
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_init identifier id'>init</span> 
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -667,16 +674,16 @@ To be overridden
       <pre class="lines">
 
 
-52
-53
-54</pre>
+54
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 54</span>
 
-<span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_inspect identifier id'>inspect</span>
   <span class='dstring node'>&quot;#{self.class.step_name}(#{args.map{|a| a.inspect }.join(', ')})&quot;</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -695,9 +702,9 @@ To be overridden
     </div>
 
     <div id="footer">
-  Generated on Thu Sep  8 10:30:53 2011 by 
+  Generated on Fri Dec 30 16:25:49 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.2).
 </div>
 
   </body>

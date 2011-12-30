@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::FunctionManager
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.8)</div>
+      <div id="logo">DRAGONFLY (v 0.9.9)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -400,6 +400,7 @@ A new instance of FunctionManager
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -414,10 +415,10 @@ A new instance of FunctionManager
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/function_manager.rb', line 11</span>
 
-<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
-  <span class='@functions ivar id'>@functions</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-  <span class='@objects ivar id'>@objects</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span>
+  <span class='rubyid_@functions ivar id'>@functions</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='rubyid_@objects ivar id'>@objects</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -450,6 +451,7 @@ Returns the value of attribute functions
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -463,9 +465,9 @@ Returns the value of attribute functions
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/function_manager.rb', line 21</span>
 
-<span class='def def kw'>def</span> <span class='functions identifier id'>functions</span>
-  <span class='@functions ivar id'>@functions</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_functions identifier id'>functions</span>
+  <span class='rubyid_@functions ivar id'>@functions</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -493,6 +495,7 @@ Returns the value of attribute objects
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -506,9 +509,9 @@ Returns the value of attribute objects
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/function_manager.rb', line 21</span>
 
-<span class='def def kw'>def</span> <span class='objects identifier id'>objects</span>
-  <span class='@objects ivar id'>@objects</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_objects identifier id'>objects</span>
+  <span class='rubyid_@objects ivar id'>@objects</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -543,10 +546,10 @@ Returns the value of attribute objects
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/function_manager.rb', line 16</span>
 
-<span class='def def kw'>def</span> <span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='callable_obj identifier id'>callable_obj</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='functions identifier id'>functions</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
-  <span class='functions identifier id'>functions</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='lshft op'>&lt;&lt;</span> <span class='lparen token'>(</span><span class='callable_obj identifier id'>callable_obj</span> <span class='orop op'>||</span> <span class='block identifier id'>block</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_add identifier id'>add</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='rubyid_callable_obj identifier id'>callable_obj</span><span class='assign token'>=</span><span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_functions identifier id'>functions</span><span class='lbrack token'>[</span><span class='rubyid_name identifier id'>name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='rubyid_functions identifier id'>functions</span><span class='lbrack token'>[</span><span class='rubyid_name identifier id'>name</span><span class='rbrack token'>]</span> <span class='lshft op'>&lt;&lt;</span> <span class='lparen token'>(</span><span class='rubyid_callable_obj identifier id'>callable_obj</span> <span class='orop op'>||</span> <span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -584,20 +587,20 @@ Returns the value of attribute objects
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/function_manager.rb', line 35</span>
 
-<span class='def def kw'>def</span> <span class='call_last identifier id'>call_last</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='functions identifier id'>functions</span><span class='lbrack token'>[</span><span class='meth identifier id'>meth</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span>
-    <span class='functions identifier id'>functions</span><span class='lbrack token'>[</span><span class='meth identifier id'>meth</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='reverse identifier id'>reverse</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='function identifier id'>function</span><span class='bitor op'>|</span>
-      <span class='catch identifier id'>catch</span> <span class='symbol val'>:unable_to_handle</span> <span class='do do kw'>do</span>
-        <span class='return return kw'>return</span> <span class='function identifier id'>function</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-      <span class='end end kw'>end</span>
-    <span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_call_last identifier id'>call_last</span><span class='lparen token'>(</span><span class='rubyid_meth identifier id'>meth</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_functions identifier id'>functions</span><span class='lbrack token'>[</span><span class='rubyid_meth identifier id'>meth</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span>
+    <span class='rubyid_functions identifier id'>functions</span><span class='lbrack token'>[</span><span class='rubyid_meth identifier id'>meth</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_reverse identifier id'>reverse</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_function identifier id'>function</span><span class='bitor op'>|</span>
+      <span class='rubyid_catch identifier id'>catch</span> <span class='symbol val'>:unable_to_handle</span> <span class='rubyid_do do kw'>do</span>
+        <span class='rubyid_return return kw'>return</span> <span class='rubyid_function identifier id'>function</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
+      <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_end end kw'>end</span>
     <span class='comment val'># If the code gets here, then none of the registered functions were able to handle the method call</span>
-    <span class='raise identifier id'>raise</span> <span class='UnableToHandle constant id'>UnableToHandle</span><span class='comma token'>,</span> <span class='dstring node'>&quot;None of the functions registered with #{self} were able to deal with the method call &quot;</span> <span class='plus op'>+</span>
+    <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_UnableToHandle constant id'>UnableToHandle</span><span class='comma token'>,</span> <span class='dstring node'>&quot;None of the functions registered with #{self} were able to deal with the method call &quot;</span> <span class='plus op'>+</span>
       <span class='dstring node'>&quot;#{meth}(#{args.map{|a| a.inspect[0..100]}.join(',')}). You may need to register one that can.&quot;</span>
-  <span class='else else kw'>else</span>
-    <span class='raise identifier id'>raise</span> <span class='NotDefined constant id'>NotDefined</span><span class='comma token'>,</span> <span class='dstring node'>&quot;function #{meth} not registered with #{self}&quot;</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_NotDefined constant id'>NotDefined</span><span class='comma token'>,</span> <span class='dstring node'>&quot;function #{meth} not registered with #{self}&quot;</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -624,9 +627,9 @@ Returns the value of attribute objects
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/function_manager.rb', line 50</span>
 
-<span class='def def kw'>def</span> <span class='get_registered identifier id'>get_registered</span><span class='lparen token'>(</span><span class='klass identifier id'>klass</span><span class='rparen token'>)</span>
-  <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='reverse identifier id'>reverse</span><span class='dot token'>.</span><span class='detect identifier id'>detect</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='o identifier id'>o</span><span class='bitor op'>|</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='instance_of? fid id'>instance_of?</span><span class='lparen token'>(</span><span class='klass identifier id'>klass</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_get_registered identifier id'>get_registered</span><span class='lparen token'>(</span><span class='rubyid_klass identifier id'>klass</span><span class='rparen token'>)</span>
+  <span class='rubyid_objects identifier id'>objects</span><span class='dot token'>.</span><span class='rubyid_reverse identifier id'>reverse</span><span class='dot token'>.</span><span class='rubyid_detect identifier id'>detect</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_o identifier id'>o</span><span class='bitor op'>|</span> <span class='rubyid_o identifier id'>o</span><span class='dot token'>.</span><span class='rubyid_instance_of? fid id'>instance_of?</span><span class='lparen token'>(</span><span class='rubyid_klass identifier id'>klass</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -653,9 +656,9 @@ Returns the value of attribute objects
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/function_manager.rb', line 54</span>
 
-<span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
-  <span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/&gt;$/</span><span class='comma token'>,</span> <span class='dstring node'>&quot; with functions: #{functions.keys.map{|k| k.to_s }.sort.join(', ')} &gt;&quot;</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_inspect identifier id'>inspect</span>
+  <span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/&gt;$/</span><span class='comma token'>,</span> <span class='dstring node'>&quot; with functions: #{functions.keys.map{|k| k.to_s }.sort.join(', ')} &gt;&quot;</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -690,17 +693,17 @@ Returns the value of attribute objects
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/function_manager.rb', line 23</span>
 
-<span class='def def kw'>def</span> <span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='klass identifier id'>klass</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='obj identifier id'>obj</span> <span class='assign token'>=</span> <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='block identifier id'>block</span>
-  <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='use_same_log_as identifier id'>use_same_log_as</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Loggable constant id'>Loggable</span><span class='rparen token'>)</span>
-  <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='use_as_fallback_config identifier id'>use_as_fallback_config</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Configurable constant id'>Configurable</span><span class='rparen token'>)</span>
-  <span class='methods_to_add identifier id'>methods_to_add</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='meth identifier id'>meth</span><span class='bitor op'>|</span>
-    <span class='add identifier id'>add</span> <span class='meth identifier id'>meth</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='comma token'>,</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='method identifier id'>method</span><span class='lparen token'>(</span><span class='meth identifier id'>meth</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-  <span class='objects identifier id'>objects</span> <span class='lshft op'>&lt;&lt;</span> <span class='obj identifier id'>obj</span>
-  <span class='obj identifier id'>obj</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_register identifier id'>register</span><span class='lparen token'>(</span><span class='rubyid_klass identifier id'>klass</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_obj identifier id'>obj</span> <span class='assign token'>=</span> <span class='rubyid_klass identifier id'>klass</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_block identifier id'>block</span>
+  <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_use_same_log_as identifier id'>use_same_log_as</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Loggable constant id'>Loggable</span><span class='rparen token'>)</span>
+  <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_use_as_fallback_config identifier id'>use_as_fallback_config</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Configurable constant id'>Configurable</span><span class='rparen token'>)</span>
+  <span class='rubyid_methods_to_add identifier id'>methods_to_add</span><span class='lparen token'>(</span><span class='rubyid_obj identifier id'>obj</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_meth identifier id'>meth</span><span class='bitor op'>|</span>
+    <span class='rubyid_add identifier id'>add</span> <span class='rubyid_meth identifier id'>meth</span><span class='comma token'>,</span> <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_method identifier id'>method</span><span class='lparen token'>(</span><span class='rubyid_meth identifier id'>meth</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_objects identifier id'>objects</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_obj identifier id'>obj</span>
+  <span class='rubyid_obj identifier id'>obj</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -719,9 +722,9 @@ Returns the value of attribute objects
     </div>
 
     <div id="footer">
-  Generated on Thu Sep  8 10:30:55 2011 by 
+  Generated on Fri Dec 30 16:25:51 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.2).
 </div>
 
   </body>

@@ -6,7 +6,7 @@
 <title>
   File: GeneralUsage
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.8)</div>
+      <div id="logo">DRAGONFLY (v 0.9.9)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -83,26 +83,26 @@
 <p>You can have multiple dragonfly apps, each with their own configuration.
 Each app has a name, and is referred to by that name.</p>
 
-<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>    <span class='comment val'># ===&gt; Creates an app called 'images'</span>
-<span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>    <span class='comment val'># ===&gt; Refers to the already created app 'images'</span>
+<pre class="code"><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>    <span class='comment val'># ===&gt; Creates an app called 'images'</span>
+<span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>    <span class='comment val'># ===&gt; Refers to the already created app 'images'</span>
 
-<span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+<span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
 </pre>
 
 <h2>Getting/generating content</h2>
 
 <p>A number of methods can be used to get content:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span>                   <span class='comment val'># Fetch from datastore (default filesystem)</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span>                   <span class='comment val'># Fetch from datastore (default filesystem)</span>
 
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch_file identifier id'>fetch_file</span><span class='lparen token'>(</span><span class='string val'>'~/path/to/file.png'</span><span class='rparen token'>)</span>    <span class='comment val'># Fetch from a local file</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch_file identifier id'>fetch_file</span><span class='lparen token'>(</span><span class='string val'>'~/path/to/file.png'</span><span class='rparen token'>)</span>    <span class='comment val'># Fetch from a local file</span>
 
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch_url identifier id'>fetch_url</span><span class='lparen token'>(</span><span class='string val'>'somewhere.com/img.png'</span><span class='rparen token'>)</span>  <span class='comment val'># Fetch from a url (will work with http, https)</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch_url identifier id'>fetch_url</span><span class='lparen token'>(</span><span class='string val'>'somewhere.com/img.png'</span><span class='rparen token'>)</span>  <span class='comment val'># Fetch from a url (will work with http, https)</span>
 
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:plasma</span><span class='comma token'>,</span> <span class='integer val'>400</span><span class='comma token'>,</span> <span class='integer val'>300</span><span class='rparen token'>)</span>         <span class='comment val'># Generates using a method from the configured</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:plasma</span><span class='comma token'>,</span> <span class='integer val'>400</span><span class='comma token'>,</span> <span class='integer val'>300</span><span class='rparen token'>)</span>         <span class='comment val'># Generates using a method from the configured</span>
                                         <span class='comment val'># generator (in this case a plasma image)</span>
 
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='create identifier id'>create</span><span class='lparen token'>(</span><span class='string val'>&quot;CONTENT&quot;</span><span class='rparen token'>)</span>                   <span class='comment val'># Can pass in a String, Pathname, File or Tempfile</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_create identifier id'>create</span><span class='lparen token'>(</span><span class='string val'>&quot;CONTENT&quot;</span><span class='rparen token'>)</span>                   <span class='comment val'># Can pass in a String, Pathname, File or Tempfile</span>
 </pre>
 
 <p>These all return <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> objects. These objects are lazy - they don't do any fetching/generating until
@@ -112,41 +112,41 @@ some other method is called on them.</p>
 
 <p>Once we have a <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object:</p>
 
-<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span>
+<pre class="code"><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span>
 </pre>
 
 <p>We can get the data a number of ways...</p>
 
-<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='data identifier id'>data</span>                           <span class='comment val'># =&gt; &quot;\377???JFIF\000\...&quot;</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='to_file identifier id'>to_file</span><span class='lparen token'>(</span><span class='string val'>'out.png'</span><span class='rparen token'>)</span>             <span class='comment val'># writes to file 'out.png' and returns a readable file object</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='tempfile identifier id'>tempfile</span>                       <span class='comment val'># =&gt; #&lt;File:/var/folders/st/strHv74sH044JPabSiODz... a closed Tempfile object</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='file identifier id'>file</span>                           <span class='comment val'># =&gt; #&lt;File:/var/folders/st/strHv74sH044JPabSiODz... a readable (open) File object</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='file identifier id'>file</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span>                    <span class='comment val'># Yields an open file object, returns the return value of</span>
-  <span class='data identifier id'>data</span> <span class='assign token'>=</span> <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='integer val'>256</span><span class='rparen token'>)</span>                 <span class='comment val'>#  the block, and closes the file object</span>
-<span class='end end kw'>end</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='path identifier id'>path</span>                           <span class='comment val'># =&gt; '/var/folders/st/strHv74sH044JPabSiODz...' i.e. the path of the tempfile</span>
-<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='size identifier id'>size</span>                           <span class='comment val'># =&gt; 134507 (size in bytes)</span>
+<pre class="code"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_data identifier id'>data</span>                           <span class='comment val'># =&gt; &quot;\377???JFIF\000\...&quot;</span>
+<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_to_file identifier id'>to_file</span><span class='lparen token'>(</span><span class='string val'>'out.png'</span><span class='rparen token'>)</span>             <span class='comment val'># writes to file 'out.png' and returns a readable file object</span>
+<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_tempfile identifier id'>tempfile</span>                       <span class='comment val'># =&gt; #&lt;File:/var/folders/st/strHv74sH044JPabSiODz... a closed Tempfile object</span>
+<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_file identifier id'>file</span>                           <span class='comment val'># =&gt; #&lt;File:/var/folders/st/strHv74sH044JPabSiODz... a readable (open) File object</span>
+<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_file identifier id'>file</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span>                    <span class='comment val'># Yields an open file object, returns the return value of</span>
+  <span class='rubyid_data identifier id'>data</span> <span class='assign token'>=</span> <span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='lparen token'>(</span><span class='integer val'>256</span><span class='rparen token'>)</span>                 <span class='comment val'>#  the block, and closes the file object</span>
+<span class='rubyid_end end kw'>end</span>
+<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_path identifier id'>path</span>                           <span class='comment val'># =&gt; '/var/folders/st/strHv74sH044JPabSiODz...' i.e. the path of the tempfile</span>
+<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_size identifier id'>size</span>                           <span class='comment val'># =&gt; 134507 (size in bytes)</span>
 </pre>
 
 <p>We can get its url...</p>
 
-<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                            <span class='comment val'># =&gt; &quot;/media/BAhbBlsHOgZmIg9hc...&quot;</span>
+<pre class="code"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>                            <span class='comment val'># =&gt; &quot;/media/BAhbBlsHOgZmIg9hc...&quot;</span>
                                      <span class='comment val'># this won't work if we've used create to get the content</span>
 </pre>
 
 <p>We can analyse it (see <a href="file.Analysers.html" title="Analysers">Analysers</a> for more info) ...</p>
 
-<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='width identifier id'>width</span>                          <span class='comment val'># =&gt; 280</span>
+<pre class="code"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_width identifier id'>width</span>                          <span class='comment val'># =&gt; 280</span>
 </pre>
 
 <p>We can process it (see <a href="file.Processing.html" title="Processing">Processing</a> for more info) ...</p>
 
-<pre class="code"><span class='new_image identifier id'>new_image</span> <span class='assign token'>=</span> <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>'40x30'</span><span class='rparen token'>)</span>    <span class='comment val'># returns another 'Job' object</span>
+<pre class="code"><span class='rubyid_new_image identifier id'>new_image</span> <span class='assign token'>=</span> <span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>'40x30'</span><span class='rparen token'>)</span>    <span class='comment val'># returns another 'Job' object</span>
 </pre>
 
 <p>We can encode it (see <a href="file.Encoding.html" title="Encoding">Encoding</a> for more info) ...</p>
 
-<pre class="code"><span class='new_image identifier id'>new_image</span> <span class='assign token'>=</span> <span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>                <span class='comment val'># returns another 'Job' object</span>
+<pre class="code"><span class='rubyid_new_image identifier id'>new_image</span> <span class='assign token'>=</span> <span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>                <span class='comment val'># returns another 'Job' object</span>
 </pre>
 
 <h2>Chaining</h2>
@@ -154,19 +154,19 @@ some other method is called on them.</p>
 <p>Because the methods <code>fetch</code>, <code>fetch_file</code>, <code>fetch_url</code>, <code>generate</code>, <code>create</code>, <code>process</code> and <code>encode</code>
 all return <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> objects, we can chain them as much as we want...</p>
 
-<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>'40x20#'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>
+<pre class="code"><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>'40x20#'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>
 </pre>
 
 <p>... and because they're lazy, we don't actually do any processing/encoding until either <code>apply</code> is called</p>
 
-<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='apply identifier id'>apply</span>              <span class='comment val'># actually 'does' the processing and returns self</span>
+<pre class="code"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_apply identifier id'>apply</span>              <span class='comment val'># actually 'does' the processing and returns self</span>
 </pre>
 
 <p>... or a method is called like <code>data</code>, <code>to_file</code>, etc.</p>
 
 <p>This means we can cheaply generate urls for processed data without doing any fetching or processing:</p>
 
-<pre class="code"><span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>'40x20#'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span>
+<pre class="code"><span class='rubyid_url identifier id'>url</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>'40x20#'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>
 </pre>
 
 <p>and then visit that url in a browser to get the actual processed image.</p>
@@ -175,27 +175,28 @@ all return <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonf
 
 <p>Commonly used processing/encoding steps can be shortened, so instead of</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>'40x20#'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:jpg</span><span class='rparen token'>)</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>'40x20#'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:jpg</span><span class='rparen token'>)</span>
 </pre>
 
 <p>we could use something like</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='grey identifier id'>grey</span><span class='lparen token'>(</span><span class='string val'>'40x20#'</span><span class='rparen token'>)</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_grey identifier id'>grey</span><span class='lparen token'>(</span><span class='string val'>'40x20#'</span><span class='rparen token'>)</span>
 </pre>
 
 <p>This does exactly the same, returning a <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object.</p>
 
 <p>To define this shortcut:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='symbol val'>:grey</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='size identifier id'>size</span><span class='bitor op'>|</span>
-    <span class='process identifier id'>process</span> <span class='symbol val'>:greyscale</span>
-    <span class='process identifier id'>process</span> <span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='size identifier id'>size</span>
-    <span class='encode identifier id'>encode</span> <span class='symbol val'>:jpg</span>
-  <span class='end end kw'>end</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_job identifier id'>job</span> <span class='symbol val'>:grey</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_size identifier id'>size</span><span class='bitor op'>|</span>
+    <span class='rubyid_process identifier id'>process</span> <span class='symbol val'>:greyscale</span>
+    <span class='rubyid_process identifier id'>process</span> <span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='rubyid_size identifier id'>size</span>
+    <span class='rubyid_encode identifier id'>encode</span> <span class='symbol val'>:jpg</span>
+  <span class='rubyid_end end kw'>end</span>
   <span class='comment val'># ...</span>
-<span class='end end kw'>end</span>
-</pre></div>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -205,9 +206,9 @@ all return <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonf
     </div>
 
     <div id="footer">
-  Generated on Thu Sep  8 10:30:51 2011 by 
+  Generated on Fri Dec 30 16:25:47 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.2).
 </div>
 
   </body>
