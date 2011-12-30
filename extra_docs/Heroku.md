@@ -4,7 +4,9 @@ Heroku
 The default configuration won't work out of the box for Heroku, because
 
 - Heroku doesn't allow saving files to the filesystem (although it does use tempfiles)
-- We won't need {http://tomayko.com/src/rack-cache/ Rack::Cache} on Heroku because it already uses the caching proxy {http://varnish.projects.linpro.no/ Varnish}, which we can make use of
+- If on Heroku {http://devcenter.heroku.com/articles/stack Aspen/Bamboo stacks}, we won't need {http://tomayko.com/src/rack-cache/ Rack::Cache},
+because it already uses the caching proxy {http://varnish.projects.linpro.no/ Varnish}, which we can make use of.
+We will still need it on {http://devcenter.heroku.com/articles/cedar Heroku Cedar}, however, as it doesn't include Varnish.
 
 Instead of the normal {file:DataStorage#File\_datastore FileDataStore}, we can use the {file:DataStorage#S3\_datastore S3DataStore}.
 
@@ -22,7 +24,15 @@ Initializer (e.g. config/initializers/dragonfly.rb in Rails):
 
     app.configure_with(:imagemagick)
     app.configure_with(:rails)
-    app.configure_with(:heroku, 'my_bucket_name') if Rails.env.production?
+    if Rails.env.production?
+      app.configure do |c|
+        c.datastore = Dragonfly::DataStorage::S3DataStore.new(
+          :bucket_name => 'my-bucket-name',
+          :access_key_id => ENV['S3_KEY'],
+          :secret_access_key => ENV['S3_SECRET']
+        )
+      end
+    end
 
     app.define_macro(ActiveRecord::Base, :image_accessor)
 
@@ -41,9 +51,7 @@ From your app's directory:
 
 Replace 'XXXXXXXXX' with your access key and secret.
 
-Now you can benefit from super-fast images served straight from Heroku's cache!
+**NOTE**: HEROKU'S VARNISH CACHE IS CLEARED EVERY TIME YOU DEPLOY!!! (DOESN'T APPLY TO CEDAR STACK)
 
-**NOTE**: HEROKU'S CACHE IS CLEARED EVERY TIME YOU DEPLOY!!!
-
-If this is an issue, you may want to look into storing thumbnails on S3 (see {file:ServingRemotely}), or maybe an after-deploy hook for hitting specific Dragonfly urls you want to cache, etc.
+If this is an issue, you may want to look into storing thumbnails on S3 (see {file:ServingRemotely}), or maybe generating thumbnails _on upload_ (see {file:Models#Up-front_thumbnailing}), or maybe an after-deploy hook for hitting specific Dragonfly urls you want to cache, etc.
 It won't be a problem for most sites though.

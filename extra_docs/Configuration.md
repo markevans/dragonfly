@@ -112,14 +112,6 @@ registers the {Dragonfly::Analysis::FileCommandAnalyser FileCommandAnalyser} for
 
 The file 'dragonfly/rails/images' does this for you.
 
-Heroku
-------
-
-    app.configure_with(:heroku, 's3_bucket_name')
-
-The {Dragonfly::Config::Heroku Heroku configuration} configures it to use the {Dragonfly::DataStorage::S3DataStore}, using Heroku's config attributes.
-See {file:Heroku} for more info.
-
 Custom Saved Configuration
 --------------------------
 You can create your own saved configuration with any object that responds to 'apply_configuration':

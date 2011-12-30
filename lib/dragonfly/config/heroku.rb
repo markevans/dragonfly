@@ -4,6 +4,13 @@ module Dragonfly
     module Heroku
 
       def self.apply_configuration(app, bucket_name)
+        app.log.warn("""HEROKU CONFIGURATION IS NOW DEPRECATED - you should configure with the S3 Datastore directly, e.g.
+  c.datastore = Dragonfly::DataStorage::S3DataStore.new(
+    :bucket_name => '#{bucket_name}',
+    :access_key_id => 'XXX',
+    :secret_access_key => 'XXX'
+  )
+""")
         app.configure do |c|
           c.datastore = DataStorage::S3DataStore.new
           c.datastore.configure do |d|
