@@ -174,6 +174,12 @@ describe Dragonfly::DataStorage::FileDataStore do
       @data_store.destroy(uid)
       @data_store.root_path.should be_an_empty_directory
     end
+    
+    it "should not prune root_path directory when destroying file without directory prefix in path" do
+      uid = @data_store.store(@temp_object, :path => 'mate.png')
+      @data_store.destroy(uid)
+      @data_store.root_path.should be_an_empty_directory
+    end
 
     it "should raise an error if the data doesn't exist on destroy" do
       uid = @data_store.store(@temp_object)

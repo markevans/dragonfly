@@ -81,7 +81,7 @@ module Dragonfly
       private
 
       def absolute(relative_path)
-        File.join(root_path, relative_path)
+        relative_path.to_s == '.' ? root_path : File.join(root_path, relative_path)
       end
 
       def relative(absolute_path)
@@ -90,6 +90,10 @@ module Dragonfly
 
       def directory_empty?(path)
         Dir.entries(path) == ['.','..']
+      end
+      
+      def root_path?(dir)
+        root_path == dir
       end
 
       def meta_data_path(data_path)
@@ -126,7 +130,7 @@ module Dragonfly
         containing_directory = Pathname.new(path).dirname
         containing_directory.ascend do |relative_dir|
           dir = absolute(relative_dir)
-          FileUtils.rmdir dir if directory_empty?(dir)
+          FileUtils.rmdir dir if directory_empty?(dir) && !root_path?(dir)
         end
       end
 
