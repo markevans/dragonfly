@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::DataStorage::CouchDataStore
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -266,10 +266,7 @@ or
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-A new instance of CouchDataStore.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>A new instance of CouchDataStore.</div></span>
   
 </li>
 
@@ -372,16 +369,12 @@ A new instance of CouchDataStore.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-A new instance of CouchDataStore
-</p>
-
+    A new instance of CouchDataStore
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -399,13 +392,13 @@ A new instance of CouchDataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/couch_data_store.rb', line 16</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_host identifier id'>host</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:host</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:host</span><span class='rbrack token'>]</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_port identifier id'>port</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_database identifier id'>database</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:database</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:database</span><span class='rbrack token'>]</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_username identifier id'>username</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:username</span><span class='rbrack token'>]</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_password identifier id'>password</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:password</span><span class='rbrack token'>]</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='host identifier id'>host</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:host</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:host</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='port identifier id'>port</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='database identifier id'>database</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:database</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:database</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='username identifier id'>username</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:username</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='password identifier id'>password</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:password</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -442,12 +435,12 @@ A new instance of CouchDataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/couch_data_store.rb', line 54</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_db identifier id'>db</span>
-  <span class='rubyid_@db ivar id'>@db</span> <span class='opasgn op'>||=</span> <span class='rubyid_begin begin kw'>begin</span>
-    <span class='rubyid_url identifier id'>url</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;http://#{auth}#{host}:#{port}&quot;</span>
-    <span class='rubyid_CouchRest constant id'>CouchRest</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_url identifier id'>url</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_database! fid id'>database!</span><span class='lparen token'>(</span><span class='rubyid_database identifier id'>database</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='db identifier id'>db</span>
+  <span class='@db ivar id'>@db</span> <span class='opasgn op'>||=</span> <span class='begin begin kw'>begin</span>
+    <span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;http://#{auth}#{host}:#{port}&quot;</span>
+    <span class='CouchRest constant id'>CouchRest</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='url identifier id'>url</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='database! fid id'>database!</span><span class='lparen token'>(</span><span class='database identifier id'>database</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -468,8 +461,7 @@ A new instance of CouchDataStore
   </div>
 </div>
 <div class="tags">
-  
-<h3>Raises:</h3>
+  <h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -500,13 +492,13 @@ A new instance of CouchDataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/couch_data_store.rb', line 46</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
-  <span class='rubyid_doc_id identifier id'>doc_id</span><span class='comma token'>,</span> <span class='rubyid_attachment identifier id'>attachment</span> <span class='assign token'>=</span> <span class='rubyid_parse_uid identifier id'>parse_uid</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
-  <span class='rubyid_doc identifier id'>doc</span> <span class='assign token'>=</span> <span class='rubyid_db identifier id'>db</span><span class='dot token'>.</span><span class='rubyid_get identifier id'>get</span><span class='lparen token'>(</span><span class='rubyid_doc_id identifier id'>doc_id</span><span class='rparen token'>)</span>
-  <span class='rubyid_db identifier id'>db</span><span class='dot token'>.</span><span class='rubyid_delete_doc identifier id'>delete_doc</span><span class='lparen token'>(</span><span class='rubyid_doc identifier id'>doc</span><span class='rparen token'>)</span>
-<span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_RestClient constant id'>RestClient</span><span class='colon2 op'>::</span><span class='rubyid_ResourceNotFound constant id'>ResourceNotFound</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
-  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='doc_id identifier id'>doc_id</span><span class='comma token'>,</span> <span class='attachment identifier id'>attachment</span> <span class='assign token'>=</span> <span class='parse_uid identifier id'>parse_uid</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='doc identifier id'>doc</span> <span class='assign token'>=</span> <span class='db identifier id'>db</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='doc_id identifier id'>doc_id</span><span class='rparen token'>)</span>
+  <span class='db identifier id'>db</span><span class='dot token'>.</span><span class='delete_doc identifier id'>delete_doc</span><span class='lparen token'>(</span><span class='doc identifier id'>doc</span><span class='rparen token'>)</span>
+<span class='rescue rescue kw'>rescue</span> <span class='RestClient constant id'>RestClient</span><span class='colon2 op'>::</span><span class='ResourceNotFound constant id'>ResourceNotFound</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -527,8 +519,7 @@ A new instance of CouchDataStore
   </div>
 </div>
 <div class="tags">
-  
-<h3>Raises:</h3>
+  <h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -559,13 +550,13 @@ A new instance of CouchDataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/couch_data_store.rb', line 38</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
-  <span class='rubyid_doc_id identifier id'>doc_id</span><span class='comma token'>,</span> <span class='rubyid_attachment identifier id'>attachment</span> <span class='assign token'>=</span> <span class='rubyid_parse_uid identifier id'>parse_uid</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
-  <span class='rubyid_doc identifier id'>doc</span> <span class='assign token'>=</span> <span class='rubyid_db identifier id'>db</span><span class='dot token'>.</span><span class='rubyid_get identifier id'>get</span><span class='lparen token'>(</span><span class='rubyid_doc_id identifier id'>doc_id</span><span class='rparen token'>)</span>
-  <span class='lbrack token'>[</span><span class='rubyid_doc identifier id'>doc</span><span class='dot token'>.</span><span class='rubyid_fetch_attachment identifier id'>fetch_attachment</span><span class='lparen token'>(</span><span class='rubyid_attachment identifier id'>attachment</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_marshal_decode identifier id'>marshal_decode</span><span class='lparen token'>(</span><span class='rubyid_doc identifier id'>doc</span><span class='lbrack token'>[</span><span class='string val'>'meta'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
-<span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_RestClient constant id'>RestClient</span><span class='colon2 op'>::</span><span class='rubyid_ResourceNotFound constant id'>ResourceNotFound</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
-  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='doc_id identifier id'>doc_id</span><span class='comma token'>,</span> <span class='attachment identifier id'>attachment</span> <span class='assign token'>=</span> <span class='parse_uid identifier id'>parse_uid</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='doc identifier id'>doc</span> <span class='assign token'>=</span> <span class='db identifier id'>db</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='doc_id identifier id'>doc_id</span><span class='rparen token'>)</span>
+  <span class='lbrack token'>[</span><span class='doc identifier id'>doc</span><span class='dot token'>.</span><span class='fetch_attachment identifier id'>fetch_attachment</span><span class='lparen token'>(</span><span class='attachment identifier id'>attachment</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='marshal_decode identifier id'>marshal_decode</span><span class='lparen token'>(</span><span class='doc identifier id'>doc</span><span class='lbrack token'>[</span><span class='string val'>'meta'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+<span class='rescue rescue kw'>rescue</span> <span class='RestClient constant id'>RestClient</span><span class='colon2 op'>::</span><span class='ResourceNotFound constant id'>ResourceNotFound</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -586,8 +577,7 @@ A new instance of CouchDataStore
   </div>
 </div>
 <div class="tags">
-  
-<h3>Raises:</h3>
+  <h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -624,19 +614,19 @@ A new instance of CouchDataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/couch_data_store.rb', line 24</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='rubyid_name identifier id'>name</span> <span class='assign token'>=</span> <span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span> <span class='orop op'>||</span> <span class='string val'>'file'</span>
-  <span class='rubyid_content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:mime_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'application/octet-stream'</span>
+<span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='orop op'>||</span> <span class='string val'>'file'</span>
+  <span class='content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:mime_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'application/octet-stream'</span>
   
-  <span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_file identifier id'>file</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span>
-    <span class='rubyid_doc identifier id'>doc</span> <span class='assign token'>=</span> <span class='rubyid_CouchRest constant id'>CouchRest</span><span class='colon2 op'>::</span><span class='rubyid_Document constant id'>Document</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:meta</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_marshal_encode identifier id'>marshal_encode</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_meta identifier id'>meta</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-    <span class='rubyid_response identifier id'>response</span> <span class='assign token'>=</span> <span class='rubyid_db identifier id'>db</span><span class='dot token'>.</span><span class='rubyid_save_doc identifier id'>save_doc</span><span class='lparen token'>(</span><span class='rubyid_doc identifier id'>doc</span><span class='rparen token'>)</span>
-    <span class='rubyid_doc identifier id'>doc</span><span class='dot token'>.</span><span class='rubyid_put_attachment identifier id'>put_attachment</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_dup identifier id'>dup</span><span class='comma token'>,</span> <span class='symbol val'>:content_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_content_type identifier id'>content_type</span><span class='rparen token'>)</span>
-    <span class='rubyid_form_uid identifier id'>form_uid</span><span class='lparen token'>(</span><span class='rubyid_response identifier id'>response</span><span class='lbrack token'>[</span><span class='string val'>'id'</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='rubyid_name identifier id'>name</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_RuntimeError constant id'>RuntimeError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
-  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_UnableToStore constant id'>UnableToStore</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{temp_object.inspect}&quot;</span>
-<span class='rubyid_end end kw'>end</span>
+  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span>
+    <span class='doc identifier id'>doc</span> <span class='assign token'>=</span> <span class='CouchRest constant id'>CouchRest</span><span class='colon2 op'>::</span><span class='Document constant id'>Document</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:meta</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='marshal_encode identifier id'>marshal_encode</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='meta identifier id'>meta</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='db identifier id'>db</span><span class='dot token'>.</span><span class='save_doc identifier id'>save_doc</span><span class='lparen token'>(</span><span class='doc identifier id'>doc</span><span class='rparen token'>)</span>
+    <span class='doc identifier id'>doc</span><span class='dot token'>.</span><span class='put_attachment identifier id'>put_attachment</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span><span class='comma token'>,</span> <span class='symbol val'>:content_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='content_type identifier id'>content_type</span><span class='rparen token'>)</span>
+    <span class='form_uid identifier id'>form_uid</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='lbrack token'>[</span><span class='string val'>'id'</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='rescue rescue kw'>rescue</span> <span class='RuntimeError constant id'>RuntimeError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='raise identifier id'>raise</span> <span class='UnableToStore constant id'>UnableToStore</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{temp_object.inspect}&quot;</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -664,10 +654,10 @@ A new instance of CouchDataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/couch_data_store.rb', line 61</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='rubyid_doc_id identifier id'>doc_id</span><span class='comma token'>,</span> <span class='rubyid_attachment identifier id'>attachment</span> <span class='assign token'>=</span> <span class='rubyid_parse_uid identifier id'>parse_uid</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
+<span class='def def kw'>def</span> <span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='doc_id identifier id'>doc_id</span><span class='comma token'>,</span> <span class='attachment identifier id'>attachment</span> <span class='assign token'>=</span> <span class='parse_uid identifier id'>parse_uid</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
   <span class='dstring node'>&quot;http://#{host}:#{port}/#{database}/#{doc_id}/#{attachment}&quot;</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -686,9 +676,9 @@ A new instance of CouchDataStore
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:59 2012 by 
+  Generated on Wed Jan 11 12:30:53 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

@@ -6,7 +6,7 @@
 <title>
   File: ExampleUseCases
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -87,36 +87,36 @@
 <p>When using <code>'dragonfly/rails'images'</code> or similar configuration, if you're not calling <code>thumb</code>, <code>width</code>
 or other image-related methods on your content, then non-image attachments should <em>just work</em>.</p>
 
-<pre class="code"><span class='rubyid_class class kw'>class</span> <span class='rubyid_User constant id'>User</span>
-  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span>
-<span class='rubyid_end end kw'>end</span>
+<pre class="code"><span class='class class kw'>class</span> <span class='User constant id'>User</span>
+  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span>
+<span class='end end kw'>end</span>
 
-<span class='rubyid_user identifier id'>user</span><span class='dot token'>.</span><span class='rubyid_mugshot identifier id'>mugshot</span> <span class='assign token'>=</span> <span class='rubyid_Rails constant id'>Rails</span><span class='dot token'>.</span><span class='rubyid_root identifier id'>root</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'some/text_file.txt'</span><span class='rparen token'>)</span>
-<span class='rubyid_user identifier id'>user</span><span class='dot token'>.</span><span class='rubyid_save! fid id'>save!</span>
-<span class='rubyid_user identifier id'>user</span><span class='dot token'>.</span><span class='rubyid_mugshot identifier id'>mugshot</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>   <span class='comment val'># /media/BAsfsdfajkl....</span>
+<span class='user identifier id'>user</span><span class='dot token'>.</span><span class='mugshot identifier id'>mugshot</span> <span class='assign token'>=</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='root identifier id'>root</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'some/text_file.txt'</span><span class='rparen token'>)</span>
+<span class='user identifier id'>user</span><span class='dot token'>.</span><span class='save! fid id'>save!</span>
+<span class='user identifier id'>user</span><span class='dot token'>.</span><span class='mugshot identifier id'>mugshot</span><span class='dot token'>.</span><span class='url identifier id'>url</span>   <span class='comment val'># /media/BAsfsdfajkl....</span>
 </pre>
 
 <p>Furthermore, the imagemagick configuration gives you an <code>image?</code> analyser method which always returns a boolean
 so you can still make a thumbnail if it is an image</p>
 
-<pre class="code"><span class='rubyid_user identifier id'>user</span><span class='dot token'>.</span><span class='rubyid_mugshot identifier id'>mugshot</span><span class='dot token'>.</span><span class='rubyid_thumb! fid id'>thumb!</span><span class='lparen token'>(</span><span class='string val'>'400x300#'</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_user identifier id'>user</span><span class='dot token'>.</span><span class='rubyid_mugshot identifier id'>mugshot</span><span class='dot token'>.</span><span class='rubyid_image? fid id'>image?</span>
+<pre class="code"><span class='user identifier id'>user</span><span class='dot token'>.</span><span class='mugshot identifier id'>mugshot</span><span class='dot token'>.</span><span class='thumb! fid id'>thumb!</span><span class='lparen token'>(</span><span class='string val'>'400x300#'</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='user identifier id'>user</span><span class='dot token'>.</span><span class='mugshot identifier id'>mugshot</span><span class='dot token'>.</span><span class='image? fid id'>image?</span>
 </pre>
 
 <p><code>'dragonfly/rails/images'</code> also gives you a <code>file_accessor</code> macro which is actually just the same as <code>image_accessor</code>,
 but a bit more meaningful when not dealing with images</p>
 
-<pre class="code"><span class='rubyid_class class kw'>class</span> <span class='rubyid_User constant id'>User</span>
-  <span class='rubyid_file_accessor identifier id'>file_accessor</span> <span class='symbol val'>:mugshot</span>
-<span class='rubyid_end end kw'>end</span>
+<pre class="code"><span class='class class kw'>class</span> <span class='User constant id'>User</span>
+  <span class='file_accessor identifier id'>file_accessor</span> <span class='symbol val'>:mugshot</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <p>You can always define your own macro for dealing with non-image attachments:</p>
 
-<pre class="code"><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='rubyid_ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:attachment_accessor</span><span class='rparen token'>)</span>
+<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:attachment_accessor</span><span class='rparen token'>)</span>
 
-<span class='rubyid_class class kw'>class</span> <span class='rubyid_User constant id'>User</span>
-  <span class='rubyid_attachment_accessor identifier id'>attachment_accessor</span> <span class='symbol val'>:mugshot</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='class class kw'>class</span> <span class='User constant id'>User</span>
+  <span class='attachment_accessor identifier id'>attachment_accessor</span> <span class='symbol val'>:mugshot</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <p>see <a href="file.Models.html" title="Models">Models</a> for how to define macros with non-ActiveRecord libraries.</p>
@@ -130,12 +130,12 @@ but a bit more meaningful when not dealing with images</p>
 
 <p>If we use this a lot, we can define a shortcut for it - in config/initializers/dragonfly.rb:</p>
 
-<pre class="code"><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_job identifier id'>job</span> <span class='symbol val'>:blurred_square</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_size identifier id'>size</span><span class='bitor op'>|</span>
-    <span class='rubyid_process identifier id'>process</span> <span class='symbol val'>:resize_and_crop</span><span class='comma token'>,</span> <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_size identifier id'>size</span><span class='comma token'>,</span> <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_size identifier id'>size</span>
-    <span class='rubyid_process identifier id'>process</span> <span class='symbol val'>:convert</span><span class='comma token'>,</span> <span class='string val'>'-blur 4x2'</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
+<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='symbol val'>:blurred_square</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='size identifier id'>size</span><span class='bitor op'>|</span>
+    <span class='process identifier id'>process</span> <span class='symbol val'>:resize_and_crop</span><span class='comma token'>,</span> <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='size identifier id'>size</span><span class='comma token'>,</span> <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='size identifier id'>size</span>
+    <span class='process identifier id'>process</span> <span class='symbol val'>:convert</span><span class='comma token'>,</span> <span class='string val'>'-blur 4x2'</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <p>then in the view:</p>
@@ -149,18 +149,18 @@ but a bit more meaningful when not dealing with images</p>
 
 <p>Supposing we have a <code>Pancake</code> model with an image attachment</p>
 
-<pre class="code"><span class='rubyid_pancake identifier id'>pancake</span> <span class='assign token'>=</span> <span class='rubyid_Pancake constant id'>Pancake</span><span class='dot token'>.</span><span class='rubyid_create! fid id'>create!</span> <span class='symbol val'>:image</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/pancake.png'</span><span class='rparen token'>)</span>
+<pre class="code"><span class='pancake identifier id'>pancake</span> <span class='assign token'>=</span> <span class='Pancake constant id'>Pancake</span><span class='dot token'>.</span><span class='create! fid id'>create!</span> <span class='symbol val'>:image</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'path/to/pancake.png'</span><span class='rparen token'>)</span>
 </pre>
 
 <p>Setting the attachment sets the uid field (this example uses the <a href="file.DataStorage.html#File_datastore" title="FileDataStore">FileDataStore</a>)</p>
 
-<pre class="code"><span class='rubyid_pancake identifier id'>pancake</span><span class='dot token'>.</span><span class='rubyid_image_uid identifier id'>image_uid</span>    <span class='comment val'># '2011/04/27/17_04_32_705_pancake.png'</span>
+<pre class="code"><span class='pancake identifier id'>pancake</span><span class='dot token'>.</span><span class='image_uid identifier id'>image_uid</span>    <span class='comment val'># '2011/04/27/17_04_32_705_pancake.png'</span>
 </pre>
 
 <p>We can set up a Dragonfly endpoint in routes.rb for generating thumbnails:</p>
 
-<pre class="code"><span class='rubyid_match identifier id'>match</span> <span class='string val'>'/thumbs/:geometry'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_endpoint identifier id'>endpoint</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_params identifier id'>params</span><span class='comma token'>,</span> <span class='rubyid_app identifier id'>app</span><span class='bitor op'>|</span>
-  <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='rubyid_params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:uid</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='rubyid_params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:geometry</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<pre class="code"><span class='match identifier id'>match</span> <span class='string val'>'/thumbs/:geometry'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='endpoint identifier id'>endpoint</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='bitor op'>|</span>
+  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:uid</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:geometry</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
 <span class='rbrace token'>}</span>
 </pre>
 
@@ -169,7 +169,7 @@ otherwise Ruby will parse it incorrectly</p>
 
 <p>If we have access to the image uid in javascript, we can create the url like so:</p>
 
-<pre class="code"><span class='rubyid_var identifier id'>var</span> <span class='rubyid_url identifier id'>url</span> <span class='assign token'>=</span> <span class='string val'>'/thumbs/400x300?uid='</span> <span class='plus op'>+</span> <span class='rubyid_uid identifier id'>uid</span>
+<pre class="code"><span class='var identifier id'>var</span> <span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='string val'>'/thumbs/400x300?uid='</span> <span class='plus op'>+</span> <span class='uid identifier id'>uid</span>
 </pre>
 
 <p>Then we can get the content with ajax, create an img tag, etc.</p>
@@ -183,18 +183,18 @@ You could always put it in the path and escape/unescape it either side of the re
 
 <p>We can easily generate on-the-fly text with Sinatra and the <span class='object_link'><a href="Dragonfly/ImageMagick/Generator.html" title="Dragonfly::ImageMagick::Generator (class)">ImageMagick Generator</a></span>:</p>
 
-<pre class="code"><span class='rubyid_require identifier id'>require</span> <span class='string val'>'rubygems'</span>
-<span class='rubyid_require identifier id'>require</span> <span class='string val'>'sinatra'</span>
-<span class='rubyid_require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
+<span class='require identifier id'>require</span> <span class='string val'>'sinatra'</span>
+<span class='require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
 
-<span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
+<span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
 
-<span class='rubyid_get identifier id'>get</span> <span class='string val'>'/:text'</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_text identifier id'>text</span><span class='bitor op'>|</span>
-  <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='rubyid_text identifier id'>text</span><span class='comma token'>,</span> <span class='symbol val'>:font_size</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>30</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_response identifier id'>to_response</span><span class='lparen token'>(</span><span class='rubyid_env identifier id'>env</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='get identifier id'>get</span> <span class='string val'>'/:text'</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='text identifier id'>text</span><span class='bitor op'>|</span>
+  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='text identifier id'>text</span><span class='comma token'>,</span> <span class='symbol val'>:font_size</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>30</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_response identifier id'>to_response</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
 </pre>
 
-<p>When we visit '/hello!' we get a generated image of the text &quot;hello!&quot;.</p>
+<p>When we visit '/hello!' we get a generated image of the text "hello!".</p>
 
 <p>See <a href="file.ImageMagick.html#Generator" title="ImageMagick">ImageMagick</a> for more details.</p>
 
@@ -205,8 +205,7 @@ You could always put it in the path and escape/unescape it either side of the re
 then tie them all together with a <a href="file.Configuration.html#Custom_Saved_Configuration" title="saved configuration">saved configuration</a>.</p>
 
 <p>See <a href="http://github.com/markevans/dragonfly-rmagick">Dragonfly-RMagick</a> for an example.
-NOTE: you will probably want to create classes and modules in your own namespace, rather than the <code>Dragonfly</code> namespace (even though Dragonfly-RMagick uses it).</p>
-</div>
+NOTE: you will probably want to create classes and modules in your own namespace, rather than the <code>Dragonfly</code> namespace (even though Dragonfly-RMagick uses it).</p></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -216,9 +215,9 @@ NOTE: you will probably want to create classes and modules in your own namespace
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:54 2012 by 
+  Generated on Wed Jan 11 12:30:49 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

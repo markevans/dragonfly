@@ -6,7 +6,7 @@
 <title>
   Module: Dragonfly
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -121,7 +121,7 @@
         <dt id="ImageMagickUtils-constant" class="">ImageMagickUtils =
           
         </dt>
-        <dd><pre class="code"><span class='rubyid_ImageMagick constant id'>ImageMagick</span><span class='colon2 op'>::</span><span class='rubyid_Utils constant id'>Utils</span>
+        <dd><pre class="code"><span class='ImageMagick constant id'>ImageMagick</span><span class='colon2 op'>::</span><span class='Utils constant id'>Utils</span>
 </pre></dd>
       
     </dl>
@@ -212,9 +212,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly.rb', line 43</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='aref op'>[]</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='rubyid_App constant id'>App</span><span class='lbrack token'>[</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rbrack token'>]</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='aref op'>[]</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='App constant id'>App</span><span class='lbrack token'>[</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -235,8 +235,7 @@
   </div>
 </div>
 <div class="tags">
-  
-<h3>Returns:</h3>
+  <h3>Returns:</h3>
 <ul class="return">
   
     <li>
@@ -263,9 +262,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly.rb', line 54</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_running_on_windows? fid id'>running_on_windows?</span>
-  <span class='rubyid_ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'OS'</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'OS'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_downcase identifier id'>downcase</span> <span class='eq op'>==</span> <span class='string val'>'windows_nt'</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='running_on_windows? fid id'>running_on_windows?</span>
+  <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'OS'</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'OS'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span> <span class='eq op'>==</span> <span class='string val'>'windows_nt'</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -284,9 +283,9 @@
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:55 2012 by 
+  Generated on Wed Jan 11 12:30:49 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

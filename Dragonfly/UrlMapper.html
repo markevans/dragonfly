@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::UrlMapper
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -148,10 +148,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute segments.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>Returns the value of attribute segments.</div></span>
   
 </li>
 
@@ -175,10 +172,7 @@ Returns the value of attribute segments.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute url_format.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>Returns the value of attribute url_format.</div></span>
   
 </li>
 
@@ -202,10 +196,7 @@ Returns the value of attribute url_format.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute url_regexp.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>Returns the value of attribute url_regexp.</div></span>
   
 </li>
 
@@ -243,10 +234,7 @@ Returns the value of attribute url_regexp.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-A new instance of UrlMapper.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>A new instance of UrlMapper.</div></span>
   
 </li>
 
@@ -329,16 +317,12 @@ A new instance of UrlMapper.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-A new instance of UrlMapper
-</p>
-
+    A new instance of UrlMapper
 
   </div>
 </div>
 <div class="tags">
-  
-<h3>Raises:</h3>
+  <h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -368,12 +352,12 @@ A new instance of UrlMapper
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/url_mapper.rb', line 19</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_url_format identifier id'>url_format</span><span class='comma token'>,</span> <span class='rubyid_patterns identifier id'>patterns</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='rubyid_@url_format ivar id'>@url_format</span> <span class='assign token'>=</span> <span class='rubyid_url_format identifier id'>url_format</span>
-  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_BadUrlFormat constant id'>BadUrlFormat</span><span class='comma token'>,</span> <span class='dstring node'>&quot;bad url format #{url_format}&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_url_format identifier id'>url_format</span><span class='lbrack token'>[</span><span class='regexp val'>/[\w_]:[\w_]/</span><span class='rbrack token'>]</span>
-  <span class='rubyid_init_segments identifier id'>init_segments</span><span class='lparen token'>(</span><span class='rubyid_patterns identifier id'>patterns</span><span class='rparen token'>)</span>
-  <span class='rubyid_init_url_regexp identifier id'>init_url_regexp</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='url_format identifier id'>url_format</span><span class='comma token'>,</span> <span class='patterns identifier id'>patterns</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='@url_format ivar id'>@url_format</span> <span class='assign token'>=</span> <span class='url_format identifier id'>url_format</span>
+  <span class='raise identifier id'>raise</span> <span class='BadUrlFormat constant id'>BadUrlFormat</span><span class='comma token'>,</span> <span class='dstring node'>&quot;bad url format #{url_format}&quot;</span> <span class='if if_mod kw'>if</span> <span class='url_format identifier id'>url_format</span><span class='lbrack token'>[</span><span class='regexp val'>/[\w_]:[\w_]/</span><span class='rbrack token'>]</span>
+  <span class='init_segments identifier id'>init_segments</span><span class='lparen token'>(</span><span class='patterns identifier id'>patterns</span><span class='rparen token'>)</span>
+  <span class='init_url_regexp identifier id'>init_url_regexp</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -397,16 +381,12 @@ A new instance of UrlMapper
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Returns the value of attribute segments
-</p>
-
+    Returns the value of attribute segments
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -420,9 +400,9 @@ Returns the value of attribute segments
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/url_mapper.rb', line 26</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_segments identifier id'>segments</span>
-  <span class='rubyid_@segments ivar id'>@segments</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='segments identifier id'>segments</span>
+  <span class='@segments ivar id'>@segments</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -441,16 +421,12 @@ Returns the value of attribute segments
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Returns the value of attribute url_format
-</p>
-
+    Returns the value of attribute url_format
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -464,9 +440,9 @@ Returns the value of attribute url_format
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/url_mapper.rb', line 26</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_url_format identifier id'>url_format</span>
-  <span class='rubyid_@url_format ivar id'>@url_format</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='url_format identifier id'>url_format</span>
+  <span class='@url_format ivar id'>@url_format</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -485,16 +461,12 @@ Returns the value of attribute url_format
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Returns the value of attribute url_regexp
-</p>
-
+    Returns the value of attribute url_regexp
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -508,9 +480,9 @@ Returns the value of attribute url_regexp
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/url_mapper.rb', line 26</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_url_regexp identifier id'>url_regexp</span>
-  <span class='rubyid_@url_regexp ivar id'>@url_regexp</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='url_regexp identifier id'>url_regexp</span>
+  <span class='@url_regexp ivar id'>@url_regexp</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -551,16 +523,16 @@ Returns the value of attribute url_regexp
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/url_mapper.rb', line 28</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_params_for identifier id'>params_for</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='comma token'>,</span> <span class='rubyid_query identifier id'>query</span><span class='assign token'>=</span><span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span>
-  <span class='rubyid_if if kw'>if</span> <span class='rubyid_path identifier id'>path</span> <span class='rubyid_and and kw'>and</span> <span class='rubyid_md identifier id'>md</span> <span class='assign token'>=</span> <span class='rubyid_path identifier id'>path</span><span class='dot token'>.</span><span class='rubyid_match identifier id'>match</span><span class='lparen token'>(</span><span class='rubyid_url_regexp identifier id'>url_regexp</span><span class='rparen token'>)</span>
-    <span class='rubyid_params identifier id'>params</span> <span class='assign token'>=</span> <span class='rubyid_Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='rubyid_Utils constant id'>Utils</span><span class='dot token'>.</span><span class='rubyid_parse_query identifier id'>parse_query</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='rparen token'>)</span>
-    <span class='rubyid_params_in_url identifier id'>params_in_url</span><span class='dot token'>.</span><span class='rubyid_each_with_index identifier id'>each_with_index</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_var identifier id'>var</span><span class='comma token'>,</span> <span class='rubyid_i identifier id'>i</span><span class='bitor op'>|</span>
-      <span class='rubyid_value identifier id'>value</span> <span class='assign token'>=</span> <span class='rubyid_md identifier id'>md</span><span class='lbrack token'>[</span><span class='rubyid_i identifier id'>i</span><span class='plus op'>+</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_md identifier id'>md</span><span class='lbrack token'>[</span><span class='rubyid_i identifier id'>i</span><span class='plus op'>+</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
-      <span class='rubyid_params identifier id'>params</span><span class='lbrack token'>[</span><span class='rubyid_var identifier id'>var</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_value identifier id'>value</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_URI constant id'>URI</span><span class='dot token'>.</span><span class='rubyid_unescape identifier id'>unescape</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
-    <span class='rubyid_end end kw'>end</span>
-    <span class='rubyid_params identifier id'>params</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='params_for identifier id'>params_for</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='query identifier id'>query</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='path identifier id'>path</span> <span class='and and kw'>and</span> <span class='md identifier id'>md</span> <span class='assign token'>=</span> <span class='path identifier id'>path</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='url_regexp identifier id'>url_regexp</span><span class='rparen token'>)</span>
+    <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Utils constant id'>Utils</span><span class='dot token'>.</span><span class='parse_query identifier id'>parse_query</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span>
+    <span class='params_in_url identifier id'>params_in_url</span><span class='dot token'>.</span><span class='each_with_index identifier id'>each_with_index</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='var identifier id'>var</span><span class='comma token'>,</span> <span class='i identifier id'>i</span><span class='bitor op'>|</span>
+      <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='md identifier id'>md</span><span class='lbrack token'>[</span><span class='i identifier id'>i</span><span class='plus op'>+</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='md identifier id'>md</span><span class='lbrack token'>[</span><span class='i identifier id'>i</span><span class='plus op'>+</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
+      <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='var identifier id'>var</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span> <span class='andop op'>&amp;&amp;</span> <span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='unescape identifier id'>unescape</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='params identifier id'>params</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -587,9 +559,9 @@ Returns the value of attribute url_regexp
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/url_mapper.rb', line 39</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_params_in_url identifier id'>params_in_url</span>
-  <span class='rubyid_@params_in_url ivar id'>@params_in_url</span> <span class='opasgn op'>||=</span> <span class='rubyid_url_format identifier id'>url_format</span><span class='dot token'>.</span><span class='rubyid_scan identifier id'>scan</span><span class='lparen token'>(</span><span class='regexp val'>/\:[\w_]+/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span> <span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_tr identifier id'>tr</span><span class='lparen token'>(</span><span class='string val'>':'</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='params_in_url identifier id'>params_in_url</span>
+  <span class='@params_in_url ivar id'>@params_in_url</span> <span class='opasgn op'>||=</span> <span class='url_format identifier id'>url_format</span><span class='dot token'>.</span><span class='scan identifier id'>scan</span><span class='lparen token'>(</span><span class='regexp val'>/\:[\w_]+/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span> <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='tr identifier id'>tr</span><span class='lparen token'>(</span><span class='string val'>':'</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -624,17 +596,17 @@ Returns the value of attribute url_regexp
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/url_mapper.rb', line 43</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='rubyid_params identifier id'>params</span><span class='rparen token'>)</span>
-  <span class='rubyid_params identifier id'>params</span> <span class='assign token'>=</span> <span class='rubyid_params identifier id'>params</span><span class='dot token'>.</span><span class='rubyid_dup identifier id'>dup</span>
-  <span class='rubyid_url identifier id'>url</span> <span class='assign token'>=</span> <span class='rubyid_url_format identifier id'>url_format</span><span class='dot token'>.</span><span class='rubyid_dup identifier id'>dup</span>
-  <span class='rubyid_segments identifier id'>segments</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_seg identifier id'>seg</span><span class='bitor op'>|</span>
-    <span class='rubyid_value identifier id'>value</span> <span class='assign token'>=</span> <span class='rubyid_params identifier id'>params</span><span class='lbrack token'>[</span><span class='rubyid_seg identifier id'>seg</span><span class='dot token'>.</span><span class='rubyid_param identifier id'>param</span><span class='rbrack token'>]</span>
-    <span class='rubyid_value identifier id'>value</span> <span class='integer val'>? </span><span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_sub! fid id'>sub!</span><span class='lparen token'>(</span><span class='regexp val'>/:[\w_]+/</span><span class='comma token'>,</span> <span class='rubyid_URI constant id'>URI</span><span class='dot token'>.</span><span class='rubyid_escape identifier id'>escape</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_sub! fid id'>sub!</span><span class='lparen token'>(</span><span class='regexp val'>/.:[\w_]+/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span>
-    <span class='rubyid_params identifier id'>params</span><span class='dot token'>.</span><span class='rubyid_delete identifier id'>delete</span><span class='lparen token'>(</span><span class='rubyid_seg identifier id'>seg</span><span class='dot token'>.</span><span class='rubyid_param identifier id'>param</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_url identifier id'>url</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;?#{Rack::Utils.build_query(params)}&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_params identifier id'>params</span><span class='dot token'>.</span><span class='rubyid_any? fid id'>any?</span>
-  <span class='rubyid_url identifier id'>url</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+  <span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='url_format identifier id'>url_format</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+  <span class='segments identifier id'>segments</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='seg identifier id'>seg</span><span class='bitor op'>|</span>
+    <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='seg identifier id'>seg</span><span class='dot token'>.</span><span class='param identifier id'>param</span><span class='rbrack token'>]</span>
+    <span class='value identifier id'>value</span> <span class='integer val'>? </span><span class='url identifier id'>url</span><span class='dot token'>.</span><span class='sub! fid id'>sub!</span><span class='lparen token'>(</span><span class='regexp val'>/:[\w_]+/</span><span class='comma token'>,</span> <span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='escape identifier id'>escape</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='url identifier id'>url</span><span class='dot token'>.</span><span class='sub! fid id'>sub!</span><span class='lparen token'>(</span><span class='regexp val'>/.:[\w_]+/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span>
+    <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='seg identifier id'>seg</span><span class='dot token'>.</span><span class='param identifier id'>param</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='url identifier id'>url</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot;?#{Rack::Utils.build_query(params)}&quot;</span> <span class='if if_mod kw'>if</span> <span class='params identifier id'>params</span><span class='dot token'>.</span><span class='any? fid id'>any?</span>
+  <span class='url identifier id'>url</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -653,9 +625,9 @@ Returns the value of attribute url_regexp
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:57 2012 by 
+  Generated on Wed Jan 11 12:30:51 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

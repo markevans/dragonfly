@@ -6,7 +6,7 @@
 <title>
   File: ImageMagick
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -86,24 +86,24 @@ gives us an ImageMagick <span class='object_link'><a href="Dragonfly/ImageMagick
 
 <p>Given a <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object</p>
 
-<pre class="code"><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some/uid'</span><span class='rparen token'>)</span>
+<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some/uid'</span><span class='rparen token'>)</span>
 </pre>
 
 <p>...OR a Dragonfly model accessor...</p>
 
-<pre class="code"><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span>
+<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='@album ivar id'>@album</span><span class='dot token'>.</span><span class='cover_image identifier id'>cover_image</span>
 </pre>
 
 <p>we have the following:</p>
 
 <h2>Shortcuts</h2>
 
-<pre class="code"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'40x30'</span><span class='rparen token'>)</span>              <span class='comment val'># same as image.process(:thumb, '40x30')</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_jpg identifier id'>jpg</span>                         <span class='comment val'># same as image.encode(:jpg)</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_png identifier id'>png</span>                         <span class='comment val'># same as image.encode(:png)</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_gif identifier id'>gif</span>                         <span class='comment val'># same as image.encode(:gif)</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_strip identifier id'>strip</span>                       <span class='comment val'># same as image.process(:strip)</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_convert identifier id'>convert</span><span class='lparen token'>(</span><span class='string val'>'-scale 30x30'</span><span class='rparen token'>)</span>     <span class='comment val'># same as image.process(:convert, '-scale 30x30')</span>
+<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'40x30'</span><span class='rparen token'>)</span>              <span class='comment val'># same as image.process(:thumb, '40x30')</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='jpg identifier id'>jpg</span>                         <span class='comment val'># same as image.encode(:jpg)</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='png identifier id'>png</span>                         <span class='comment val'># same as image.encode(:png)</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='gif identifier id'>gif</span>                         <span class='comment val'># same as image.encode(:gif)</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='strip identifier id'>strip</span>                       <span class='comment val'># same as image.process(:strip)</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='convert identifier id'>convert</span><span class='lparen token'>(</span><span class='string val'>'-scale 30x30'</span><span class='rparen token'>)</span>     <span class='comment val'># same as image.process(:convert, '-scale 30x30')</span>
 </pre>
 
 <p><code>thumb</code> and <code>convert</code> can optionally take a format (e.g. :gif) as the second argument.
@@ -128,72 +128,72 @@ Bang methods like <code>image.thumb!('40x30')</code>, <code>image.png!</code> et
 
 <h2>Processor</h2>
 
-<pre class="code"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:crop</span><span class='comma token'>,</span> <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>40</span><span class='comma token'>,</span> <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:x</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>20</span><span class='comma token'>,</span> <span class='symbol val'>:y</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>30</span><span class='rparen token'>)</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:crop</span><span class='comma token'>,</span> <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>40</span><span class='comma token'>,</span> <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:gravity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ne'</span><span class='rparen token'>)</span>
+<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:crop</span><span class='comma token'>,</span> <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>40</span><span class='comma token'>,</span> <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:x</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>20</span><span class='comma token'>,</span> <span class='symbol val'>:y</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>30</span><span class='rparen token'>)</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:crop</span><span class='comma token'>,</span> <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>40</span><span class='comma token'>,</span> <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:gravity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ne'</span><span class='rparen token'>)</span>
 
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:flip</span><span class='rparen token'>)</span>                         <span class='comment val'># flips it vertically</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:flop</span><span class='rparen token'>)</span>                         <span class='comment val'># flips it horizontally</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:flip</span><span class='rparen token'>)</span>                         <span class='comment val'># flips it vertically</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:flop</span><span class='rparen token'>)</span>                         <span class='comment val'># flips it horizontally</span>
 
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='comma token'>,</span> <span class='symbol val'>:depth</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>128</span><span class='rparen token'>)</span>     <span class='comment val'># default depth 256</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='comma token'>,</span> <span class='symbol val'>:depth</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>128</span><span class='rparen token'>)</span>     <span class='comment val'># default depth 256</span>
 
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:resize</span><span class='comma token'>,</span> <span class='string val'>'40x40'</span><span class='rparen token'>)</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:resize_and_crop</span><span class='comma token'>,</span> <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>40</span><span class='comma token'>,</span> <span class='symbol val'>:height=</span><span class='gt op'>&gt;</span> <span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:gravity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ne'</span><span class='rparen token'>)</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:resize</span><span class='comma token'>,</span> <span class='string val'>'40x40'</span><span class='rparen token'>)</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:resize_and_crop</span><span class='comma token'>,</span> <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>40</span><span class='comma token'>,</span> <span class='symbol val'>:height=</span><span class='gt op'>&gt;</span> <span class='integer val'>50</span><span class='comma token'>,</span> <span class='symbol val'>:gravity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ne'</span><span class='rparen token'>)</span>
 
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:rotate</span><span class='comma token'>,</span> <span class='integer val'>45</span><span class='comma token'>,</span> <span class='symbol val'>:background_colour</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'transparent'</span><span class='rparen token'>)</span>   <span class='comment val'># default bg black</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:rotate</span><span class='comma token'>,</span> <span class='integer val'>45</span><span class='comma token'>,</span> <span class='symbol val'>:background_colour</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'transparent'</span><span class='rparen token'>)</span>   <span class='comment val'># default bg black</span>
 </pre>
 
 <p>The method <code>thumb</code> takes a geometry string and calls <code>resize</code>, <code>resize_and_crop</code> or <code>crop</code> accordingly.</p>
 
-<pre class="code"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>'400x300'</span><span class='rparen token'>)</span>             <span class='comment val'># calls resize</span>
+<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>'400x300'</span><span class='rparen token'>)</span>             <span class='comment val'># calls resize</span>
 </pre>
 
 <h2>Encoder</h2>
 
 <p>The <span class='object_link'><a href="Dragonfly/ImageMagick/Encoder.html" title="Dragonfly::ImageMagick::Encoder (class)">ImageMagick Encoder</a></span> gives us:</p>
 
-<pre class="code"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:jpg</span><span class='rparen token'>)</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:png</span><span class='rparen token'>)</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:tiff</span><span class='rparen token'>)</span>
+<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:jpg</span><span class='rparen token'>)</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:png</span><span class='rparen token'>)</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:tiff</span><span class='rparen token'>)</span>
 </pre>
 
 <p>and various other formats (see <span class='object_link'><a href="Dragonfly/ImageMagick/Encoder.html" title="Dragonfly::ImageMagick::Encoder (class)">ImageMagick Encoder</a></span>).</p>
 
 <p>You can also pass additional options to the imagemagick command line:</p>
 
-<pre class="code"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:jpg</span><span class='comma token'>,</span> <span class='string val'>'-quality 10'</span><span class='rparen token'>)</span>
+<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:jpg</span><span class='comma token'>,</span> <span class='string val'>'-quality 10'</span><span class='rparen token'>)</span>
 </pre>
 
 <h2>Analyser</h2>
 
 <p>The <span class='object_link'><a href="Dragonfly/ImageMagick/Analyser.html" title="Dragonfly::ImageMagick::Analyser (class)">ImageMagick Analyser</a></span> gives us these methods:</p>
 
-<pre class="code"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_width identifier id'>width</span>               <span class='comment val'># =&gt; 280</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_height identifier id'>height</span>              <span class='comment val'># =&gt; 355</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_aspect_ratio identifier id'>aspect_ratio</span>        <span class='comment val'># =&gt; 0.788732394366197</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_portrait? fid id'>portrait?</span>           <span class='comment val'># =&gt; true</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_landscape? fid id'>landscape?</span>          <span class='comment val'># =&gt; false</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_depth identifier id'>depth</span>               <span class='comment val'># =&gt; 8</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_number_of_colours identifier id'>number_of_colours</span>   <span class='comment val'># =&gt; 34703</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_format identifier id'>format</span>              <span class='comment val'># =&gt; :png</span>
-<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_image? fid id'>image?</span>              <span class='comment val'># =&gt; true - will return true or false for any content</span>
+<pre class="code"><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='width identifier id'>width</span>               <span class='comment val'># =&gt; 280</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='height identifier id'>height</span>              <span class='comment val'># =&gt; 355</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='aspect_ratio identifier id'>aspect_ratio</span>        <span class='comment val'># =&gt; 0.788732394366197</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='portrait? fid id'>portrait?</span>           <span class='comment val'># =&gt; true</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='landscape? fid id'>landscape?</span>          <span class='comment val'># =&gt; false</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='depth identifier id'>depth</span>               <span class='comment val'># =&gt; 8</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='number_of_colours identifier id'>number_of_colours</span>   <span class='comment val'># =&gt; 34703</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='format identifier id'>format</span>              <span class='comment val'># =&gt; :png</span>
+<span class='image identifier id'>image</span><span class='dot token'>.</span><span class='image? fid id'>image?</span>              <span class='comment val'># =&gt; true - will return true or false for any content</span>
 </pre>
 
 <h2>Generator</h2>
 
 <p>The <span class='object_link'><a href="Dragonfly/ImageMagick/Generator.html" title="Dragonfly::ImageMagick::Generator (class)">ImageMagick Generator</a></span> gives us these methods:</p>
 
-<pre class="code"><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:plain</span><span class='comma token'>,</span> <span class='integer val'>600</span><span class='comma token'>,</span> <span class='integer val'>400</span><span class='comma token'>,</span> <span class='string val'>'rgba(40,200,30,0.5)'</span><span class='rparen token'>)</span>
-<span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:plain</span><span class='comma token'>,</span> <span class='integer val'>600</span><span class='comma token'>,</span> <span class='integer val'>400</span><span class='comma token'>,</span> <span class='string val'>'#ccc'</span><span class='comma token'>,</span> <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:gif</span><span class='rparen token'>)</span>
+<pre class="code"><span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:plain</span><span class='comma token'>,</span> <span class='integer val'>600</span><span class='comma token'>,</span> <span class='integer val'>400</span><span class='comma token'>,</span> <span class='string val'>'rgba(40,200,30,0.5)'</span><span class='rparen token'>)</span>
+<span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:plain</span><span class='comma token'>,</span> <span class='integer val'>600</span><span class='comma token'>,</span> <span class='integer val'>400</span><span class='comma token'>,</span> <span class='string val'>'#ccc'</span><span class='comma token'>,</span> <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:gif</span><span class='rparen token'>)</span>
                                                     <span class='comment val'># generate a 600x400 plain image</span>
                                                     <span class='comment val'># any css-style colour should work</span>
 
-<span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:plasma</span><span class='comma token'>,</span> <span class='integer val'>600</span><span class='comma token'>,</span> <span class='integer val'>400</span><span class='comma token'>,</span> <span class='symbol val'>:gif</span><span class='rparen token'>)</span>       <span class='comment val'># generate a 600x400 plasma image</span>
+<span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:plasma</span><span class='comma token'>,</span> <span class='integer val'>600</span><span class='comma token'>,</span> <span class='integer val'>400</span><span class='comma token'>,</span> <span class='symbol val'>:gif</span><span class='rparen token'>)</span>       <span class='comment val'># generate a 600x400 plasma image</span>
                                                     <span class='comment val'># last arg defaults to :png</span>
 
-<span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='string val'>&quot;Hello there&quot;</span><span class='rparen token'>)</span>          <span class='comment val'># an image of the text &quot;Hello there&quot;</span>
+<span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='string val'>&quot;Hello there&quot;</span><span class='rparen token'>)</span>          <span class='comment val'># an image of the text &quot;Hello there&quot;</span>
 
-<span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='string val'>&quot;Hello there&quot;</span><span class='comma token'>,</span>
+<span class='image identifier id'>image</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='string val'>&quot;Hello there&quot;</span><span class='comma token'>,</span>
   <span class='symbol val'>:font_size</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>30</span><span class='comma token'>,</span>                                 <span class='comment val'># defaults to 12</span>
   <span class='symbol val'>:font_family</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Monaco'</span><span class='comma token'>,</span>
   <span class='symbol val'>:stroke_color</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'#ddd'</span><span class='comma token'>,</span>
@@ -218,13 +218,12 @@ Available fonts are those available on your system.</p>
 
 <p>There are some options that can be set, e.g. if the imagemagick convert command can't be found:</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_convert_command identifier id'>convert_command</span> <span class='assign token'>=</span> <span class='string val'>&quot;/opt/local/bin/convert&quot;</span>          <span class='comment val'># defaults to &quot;convert&quot;</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_identify_command identifier id'>identify_command</span> <span class='assign token'>=</span> <span class='string val'>&quot;/opt/local/bin/convert&quot;</span>         <span class='comment val'># defaults to &quot;convert&quot;</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_log_commands identifier id'>log_commands</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>                                 <span class='comment val'># defaults to false</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-</div>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='convert_command identifier id'>convert_command</span> <span class='assign token'>=</span> <span class='string val'>&quot;/opt/local/bin/convert&quot;</span>          <span class='comment val'># defaults to &quot;convert&quot;</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='identify_command identifier id'>identify_command</span> <span class='assign token'>=</span> <span class='string val'>&quot;/opt/local/bin/convert&quot;</span>         <span class='comment val'># defaults to &quot;convert&quot;</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='log_commands identifier id'>log_commands</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>                                 <span class='comment val'># defaults to false</span>
+<span class='end end kw'>end</span>
+</pre></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -234,9 +233,9 @@ Available fonts are those available on your system.</p>
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:54 2012 by 
+  Generated on Wed Jan 11 12:30:48 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

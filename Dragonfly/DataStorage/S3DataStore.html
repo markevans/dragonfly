@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::DataStorage::S3DataStore
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -325,10 +325,7 @@ or
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-A new instance of S3DataStore.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>A new instance of S3DataStore.</div></span>
   
 </li>
 
@@ -452,16 +449,12 @@ A new instance of S3DataStore.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-A new instance of S3DataStore
-</p>
-
+    A new instance of S3DataStore
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -478,12 +471,12 @@ A new instance of S3DataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 30</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_bucket_name identifier id'>bucket_name</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:bucket_name</span><span class='rbrack token'>]</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_access_key_id identifier id'>access_key_id</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:access_key_id</span><span class='rbrack token'>]</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_secret_access_key identifier id'>secret_access_key</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:secret_access_key</span><span class='rbrack token'>]</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_region identifier id'>region</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:region</span><span class='rbrack token'>]</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='bucket_name identifier id'>bucket_name</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:bucket_name</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='access_key_id identifier id'>access_key_id</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:access_key_id</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='secret_access_key identifier id'>secret_access_key</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:secret_access_key</span><span class='rbrack token'>]</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='region identifier id'>region</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:region</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -511,8 +504,7 @@ A new instance of S3DataStore
   </div>
 </div>
 <div class="tags">
-  
-<h3>Returns:</h3>
+  <h3>Returns:</h3>
 <ul class="return">
   
     <li>
@@ -542,12 +534,12 @@ A new instance of S3DataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 102</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_bucket_exists? fid id'>bucket_exists?</span>
-  <span class='rubyid_rescuing_socket_errors identifier id'>rescuing_socket_errors</span><span class='lbrace token'>{</span> <span class='rubyid_storage identifier id'>storage</span><span class='dot token'>.</span><span class='rubyid_get_bucket identifier id'>get_bucket</span><span class='lparen token'>(</span><span class='rubyid_bucket_name identifier id'>bucket_name</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
-  <span class='rubyid_true true kw'>true</span>
-<span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Excon constant id'>Excon</span><span class='colon2 op'>::</span><span class='rubyid_Errors constant id'>Errors</span><span class='colon2 op'>::</span><span class='rubyid_NotFound constant id'>NotFound</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
-  <span class='rubyid_false false kw'>false</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='bucket_exists? fid id'>bucket_exists?</span>
+  <span class='rescuing_socket_errors identifier id'>rescuing_socket_errors</span><span class='lbrace token'>{</span> <span class='storage identifier id'>storage</span><span class='dot token'>.</span><span class='get_bucket identifier id'>get_bucket</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='true true kw'>true</span>
+<span class='rescue rescue kw'>rescue</span> <span class='Excon constant id'>Excon</span><span class='colon2 op'>::</span><span class='Errors constant id'>Errors</span><span class='colon2 op'>::</span><span class='NotFound constant id'>NotFound</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -568,8 +560,7 @@ A new instance of S3DataStore
   </div>
 </div>
 <div class="tags">
-  
-<h3>Raises:</h3>
+  <h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -598,11 +589,11 @@ A new instance of S3DataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 70</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
-  <span class='rubyid_rescuing_socket_errors identifier id'>rescuing_socket_errors</span><span class='lbrace token'>{</span> <span class='rubyid_storage identifier id'>storage</span><span class='dot token'>.</span><span class='rubyid_delete_object identifier id'>delete_object</span><span class='lparen token'>(</span><span class='rubyid_bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
-<span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Excon constant id'>Excon</span><span class='colon2 op'>::</span><span class='rubyid_Errors constant id'>Errors</span><span class='colon2 op'>::</span><span class='rubyid_NotFound constant id'>NotFound</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
-  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='rescuing_socket_errors identifier id'>rescuing_socket_errors</span><span class='lbrace token'>{</span> <span class='storage identifier id'>storage</span><span class='dot token'>.</span><span class='delete_object identifier id'>delete_object</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='uid identifier id'>uid</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='rescue rescue kw'>rescue</span> <span class='Excon constant id'>Excon</span><span class='colon2 op'>::</span><span class='Errors constant id'>Errors</span><span class='colon2 op'>::</span><span class='NotFound constant id'>NotFound</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -629,9 +620,9 @@ A new instance of S3DataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 89</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_domain identifier id'>domain</span>
-  <span class='rubyid_REGIONS constant id'>REGIONS</span><span class='lbrack token'>[</span><span class='rubyid_get_region identifier id'>get_region</span><span class='rbrack token'>]</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='domain identifier id'>domain</span>
+  <span class='REGIONS constant id'>REGIONS</span><span class='lbrack token'>[</span><span class='get_region identifier id'>get_region</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -652,8 +643,7 @@ A new instance of S3DataStore
   </div>
 </div>
 <div class="tags">
-  
-<h3>Raises:</h3>
+  <h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -687,16 +677,16 @@ A new instance of S3DataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 59</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
-  <span class='rubyid_ensure_configured identifier id'>ensure_configured</span>
-  <span class='rubyid_response identifier id'>response</span> <span class='assign token'>=</span> <span class='rubyid_rescuing_socket_errors identifier id'>rescuing_socket_errors</span><span class='lbrace token'>{</span> <span class='rubyid_storage identifier id'>storage</span><span class='dot token'>.</span><span class='rubyid_get_object identifier id'>get_object</span><span class='lparen token'>(</span><span class='rubyid_bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='ensure_configured identifier id'>ensure_configured</span>
+  <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='rescuing_socket_errors identifier id'>rescuing_socket_errors</span><span class='lbrace token'>{</span> <span class='storage identifier id'>storage</span><span class='dot token'>.</span><span class='get_object identifier id'>get_object</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='uid identifier id'>uid</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
   <span class='lbrack token'>[</span>
-    <span class='rubyid_response identifier id'>response</span><span class='dot token'>.</span><span class='rubyid_body identifier id'>body</span><span class='comma token'>,</span>
-    <span class='rubyid_parse_s3_metadata identifier id'>parse_s3_metadata</span><span class='lparen token'>(</span><span class='rubyid_response identifier id'>response</span><span class='dot token'>.</span><span class='rubyid_headers identifier id'>headers</span><span class='rparen token'>)</span>
+    <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='body identifier id'>body</span><span class='comma token'>,</span>
+    <span class='parse_s3_metadata identifier id'>parse_s3_metadata</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='dot token'>.</span><span class='headers identifier id'>headers</span><span class='rparen token'>)</span>
   <span class='rbrack token'>]</span>
-<span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Excon constant id'>Excon</span><span class='colon2 op'>::</span><span class='rubyid_Errors constant id'>Errors</span><span class='colon2 op'>::</span><span class='rubyid_NotFound constant id'>NotFound</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
-  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='rescue rescue kw'>rescue</span> <span class='Excon constant id'>Excon</span><span class='colon2 op'>::</span><span class='Errors constant id'>Errors</span><span class='colon2 op'>::</span><span class='NotFound constant id'>NotFound</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -728,14 +718,14 @@ A new instance of S3DataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 93</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_storage identifier id'>storage</span>
-  <span class='rubyid_@storage ivar id'>@storage</span> <span class='opasgn op'>||=</span> <span class='rubyid_Fog constant id'>Fog</span><span class='colon2 op'>::</span><span class='rubyid_Storage constant id'>Storage</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span>
+<span class='def def kw'>def</span> <span class='storage identifier id'>storage</span>
+  <span class='@storage ivar id'>@storage</span> <span class='opasgn op'>||=</span> <span class='Fog constant id'>Fog</span><span class='colon2 op'>::</span><span class='Storage constant id'>Storage</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
     <span class='symbol val'>:provider</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'AWS'</span><span class='comma token'>,</span>
-    <span class='symbol val'>:aws_access_key_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_access_key_id identifier id'>access_key_id</span><span class='comma token'>,</span>
-    <span class='symbol val'>:aws_secret_access_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_secret_access_key identifier id'>secret_access_key</span><span class='comma token'>,</span>
-    <span class='symbol val'>:region</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_region identifier id'>region</span>
+    <span class='symbol val'>:aws_access_key_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='access_key_id identifier id'>access_key_id</span><span class='comma token'>,</span>
+    <span class='symbol val'>:aws_secret_access_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='secret_access_key identifier id'>secret_access_key</span><span class='comma token'>,</span>
+    <span class='symbol val'>:region</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='region identifier id'>region</span>
   <span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -780,27 +770,27 @@ A new instance of S3DataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 37</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='rubyid_ensure_configured identifier id'>ensure_configured</span>
-  <span class='rubyid_ensure_bucket_initialized identifier id'>ensure_bucket_initialized</span>
+<span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='ensure_configured identifier id'>ensure_configured</span>
+  <span class='ensure_bucket_initialized identifier id'>ensure_bucket_initialized</span>
   
-  <span class='rubyid_headers identifier id'>headers</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:headers</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-  <span class='rubyid_mime_type identifier id'>mime_type</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:mime_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span>
-  <span class='rubyid_headers identifier id'>headers</span><span class='lbrack token'>[</span><span class='string val'>'Content-Type'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_mime_type identifier id'>mime_type</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_mime_type identifier id'>mime_type</span>
-  <span class='rubyid_uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='rubyid_generate_uid identifier id'>generate_uid</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span> <span class='orop op'>||</span> <span class='string val'>'file'</span><span class='rparen token'>)</span>
+  <span class='headers identifier id'>headers</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:headers</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='mime_type identifier id'>mime_type</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:mime_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span>
+  <span class='headers identifier id'>headers</span><span class='lbrack token'>[</span><span class='string val'>'Content-Type'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='mime_type identifier id'>mime_type</span> <span class='if if_mod kw'>if</span> <span class='mime_type identifier id'>mime_type</span>
+  <span class='uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='generate_uid identifier id'>generate_uid</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='orop op'>||</span> <span class='string val'>'file'</span><span class='rparen token'>)</span>
   
-  <span class='rubyid_rescuing_socket_errors identifier id'>rescuing_socket_errors</span> <span class='rubyid_do do kw'>do</span>
-    <span class='rubyid_if if kw'>if</span> <span class='rubyid_use_filesystem identifier id'>use_filesystem</span>
-      <span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_file identifier id'>file</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span>
-        <span class='rubyid_storage identifier id'>storage</span><span class='dot token'>.</span><span class='rubyid_put_object identifier id'>put_object</span><span class='lparen token'>(</span><span class='rubyid_bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span> <span class='rubyid_f identifier id'>f</span><span class='comma token'>,</span> <span class='rubyid_full_storage_headers identifier id'>full_storage_headers</span><span class='lparen token'>(</span><span class='rubyid_headers identifier id'>headers</span><span class='comma token'>,</span> <span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_meta identifier id'>meta</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-      <span class='rubyid_end end kw'>end</span>
-    <span class='rubyid_else else kw'>else</span>
-      <span class='rubyid_storage identifier id'>storage</span><span class='dot token'>.</span><span class='rubyid_put_object identifier id'>put_object</span><span class='lparen token'>(</span><span class='rubyid_bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span> <span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_data identifier id'>data</span><span class='comma token'>,</span> <span class='rubyid_full_storage_headers identifier id'>full_storage_headers</span><span class='lparen token'>(</span><span class='rubyid_headers identifier id'>headers</span><span class='comma token'>,</span> <span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_meta identifier id'>meta</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-    <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_end end kw'>end</span>
+  <span class='rescuing_socket_errors identifier id'>rescuing_socket_errors</span> <span class='do do kw'>do</span>
+    <span class='if if kw'>if</span> <span class='use_filesystem identifier id'>use_filesystem</span>
+      <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span>
+        <span class='storage identifier id'>storage</span><span class='dot token'>.</span><span class='put_object identifier id'>put_object</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='f identifier id'>f</span><span class='comma token'>,</span> <span class='full_storage_headers identifier id'>full_storage_headers</span><span class='lparen token'>(</span><span class='headers identifier id'>headers</span><span class='comma token'>,</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='meta identifier id'>meta</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='else else kw'>else</span>
+      <span class='storage identifier id'>storage</span><span class='dot token'>.</span><span class='put_object identifier id'>put_object</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span><span class='comma token'>,</span> <span class='full_storage_headers identifier id'>full_storage_headers</span><span class='lparen token'>(</span><span class='headers identifier id'>headers</span><span class='comma token'>,</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='meta identifier id'>meta</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
   
-  <span class='rubyid_uid identifier id'>uid</span>
-<span class='rubyid_end end kw'>end</span>
+  <span class='uid identifier id'>uid</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -836,18 +826,18 @@ A new instance of S3DataStore
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/s3data_store.rb', line 76</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='rubyid_if if kw'>if</span> <span class='rubyid_opts identifier id'>opts</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:expires</span><span class='rbrack token'>]</span>
-    <span class='rubyid_if if kw'>if</span> <span class='rubyid_storage identifier id'>storage</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:get_object_https_url</span><span class='rparen token'>)</span> <span class='comment val'># fog's get_object_url is deprecated (aug 2011)</span>
-      <span class='rubyid_storage identifier id'>storage</span><span class='dot token'>.</span><span class='rubyid_get_object_https_url identifier id'>get_object_https_url</span><span class='lparen token'>(</span><span class='rubyid_bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:expires</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-    <span class='rubyid_else else kw'>else</span>
-      <span class='rubyid_storage identifier id'>storage</span><span class='dot token'>.</span><span class='rubyid_get_object_url identifier id'>get_object_url</span><span class='lparen token'>(</span><span class='rubyid_bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:expires</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-    <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_else else kw'>else</span>
-    <span class='rubyid_scheme identifier id'>scheme</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:scheme</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='rubyid_url_scheme identifier id'>url_scheme</span>
+<span class='def def kw'>def</span> <span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='opts identifier id'>opts</span> <span class='andop op'>&amp;&amp;</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:expires</span><span class='rbrack token'>]</span>
+    <span class='if if kw'>if</span> <span class='storage identifier id'>storage</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:get_object_https_url</span><span class='rparen token'>)</span> <span class='comment val'># fog's get_object_url is deprecated (aug 2011)</span>
+      <span class='storage identifier id'>storage</span><span class='dot token'>.</span><span class='get_object_https_url identifier id'>get_object_https_url</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:expires</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='else else kw'>else</span>
+      <span class='storage identifier id'>storage</span><span class='dot token'>.</span><span class='get_object_url identifier id'>get_object_url</span><span class='lparen token'>(</span><span class='bucket_name identifier id'>bucket_name</span><span class='comma token'>,</span> <span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:expires</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='else else kw'>else</span>
+    <span class='scheme identifier id'>scheme</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:scheme</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='url_scheme identifier id'>url_scheme</span>
     <span class='dstring node'>&quot;#{scheme}://#{bucket_name}.s3.amazonaws.com/#{uid}&quot;</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -866,9 +856,9 @@ A new instance of S3DataStore
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:59 2012 by 
+  Generated on Wed Jan 11 12:30:53 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

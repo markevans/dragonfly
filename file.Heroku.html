@@ -6,7 +6,7 @@
 <title>
   File: Heroku
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -89,41 +89,42 @@ because it already uses the caching proxy <a href="http://varnish.projects.linpr
 We will still need it on <a href="http://devcenter.heroku.com/articles/cedar" target="_parent" title="Heroku Cedar">Heroku Cedar</a>, however, as it doesn't include Varnish.</li>
 </ul>
 
+
 <p>Instead of the normal <a href="file.DataStorage.html#File_datastore" title="FileDataStore">FileDataStore</a>, we can use the <a href="file.DataStorage.html#S3_datastore" title="S3DataStore">S3DataStore</a>.</p>
 
 <p>Assuming you have an S3 account set up...</p>
 
 <p>Gem dependencies:</p>
 
-<pre class="code"><span class='minus op'>-</span> <span class='rubyid_fog identifier id'>fog</span>
-<span class='minus op'>-</span> <span class='rubyid_dragonfly identifier id'>dragonfly</span>
+<pre class="code"><span class='minus op'>-</span> <span class='fog identifier id'>fog</span>
+<span class='minus op'>-</span> <span class='dragonfly identifier id'>dragonfly</span>
 </pre>
 
 <p>Initializer (e.g. config/initializers/dragonfly.rb in Rails):</p>
 
-<pre class="code"><span class='rubyid_require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
-<span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
+<span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
 
-<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
-<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span>
-<span class='rubyid_if if kw'>if</span> <span class='rubyid_Rails constant id'>Rails</span><span class='dot token'>.</span><span class='rubyid_env identifier id'>env</span><span class='dot token'>.</span><span class='rubyid_production? fid id'>production?</span>
-  <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
-    <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='rubyid_S3DataStore constant id'>S3DataStore</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span>
+<span class='if if kw'>if</span> <span class='Rails constant id'>Rails</span><span class='dot token'>.</span><span class='env identifier id'>env</span><span class='dot token'>.</span><span class='production? fid id'>production?</span>
+  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+    <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='S3DataStore constant id'>S3DataStore</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
       <span class='symbol val'>:bucket_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'my-bucket-name'</span><span class='comma token'>,</span>
-      <span class='symbol val'>:access_key_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'S3_KEY'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
-      <span class='symbol val'>:secret_access_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'S3_SECRET'</span><span class='rbrack token'>]</span>
+      <span class='symbol val'>:access_key_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'S3_KEY'</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+      <span class='symbol val'>:secret_access_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'S3_SECRET'</span><span class='rbrack token'>]</span>
     <span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 
-<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='rubyid_ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
+<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
 </pre>
 
 <p>The datastore remains as the <span class='object_link'><a href="Dragonfly/DataStorage/FileDataStore.html" title="Dragonfly::DataStorage::FileDataStore (class)">FileDataStore</a></span> for non-production environments.</p>
 
 <p>application.rb if using with Rails:</p>
 
-<pre class="code"><span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='rubyid_insert identifier id'>insert</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='string val'>'Dragonfly::Middleware'</span><span class='comma token'>,</span> <span class='symbol val'>:images</span>
+<pre class="code"><span class='config identifier id'>config</span><span class='dot token'>.</span><span class='middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='insert identifier id'>insert</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='string val'>'Dragonfly::Middleware'</span><span class='comma token'>,</span> <span class='symbol val'>:images</span>
 </pre>
 
 <p>We don't store the S3 access key and secret in the repository, rather we use Heroku's
@@ -131,7 +132,7 @@ We will still need it on <a href="http://devcenter.heroku.com/articles/cedar" ta
 
 <p>From your app's directory:</p>
 
-<pre class="code"><span class='rubyid_heroku identifier id'>heroku</span> <span class='rubyid_config identifier id'>config</span><span class='symbol val'>:add</span> <span class='rubyid_S3_KEY constant id'>S3_KEY</span><span class='assign token'>=</span><span class='rubyid_XXXXXXXXX constant id'>XXXXXXXXX</span> <span class='rubyid_S3_SECRET constant id'>S3_SECRET</span><span class='assign token'>=</span><span class='rubyid_XXXXXXXXXX constant id'>XXXXXXXXXX</span>
+<pre class="code"><span class='heroku identifier id'>heroku</span> <span class='config identifier id'>config</span><span class='symbol val'>:add</span> <span class='S3_KEY constant id'>S3_KEY</span><span class='assign token'>=</span><span class='XXXXXXXXX constant id'>XXXXXXXXX</span> <span class='S3_SECRET constant id'>S3_SECRET</span><span class='assign token'>=</span><span class='XXXXXXXXXX constant id'>XXXXXXXXXX</span>
 </pre>
 
 <p>Replace 'XXXXXXXXX' with your access key and secret.</p>
@@ -139,8 +140,7 @@ We will still need it on <a href="http://devcenter.heroku.com/articles/cedar" ta
 <p><strong>NOTE</strong>: HEROKU'S VARNISH CACHE IS CLEARED EVERY TIME YOU DEPLOY!!! (DOESN'T APPLY TO CEDAR STACK)</p>
 
 <p>If this is an issue, you may want to look into storing thumbnails on S3 (see <a href="file.ServingRemotely.html" title="ServingRemotely">ServingRemotely</a>), or maybe generating thumbnails <em>on upload</em> (see <a href="file.Models.html#Up-front_thumbnailing" title="Models">Models</a>), or maybe an after-deploy hook for hitting specific Dragonfly urls you want to cache, etc.
-It won't be a problem for most sites though.</p>
-</div>
+It won't be a problem for most sites though.</p></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -150,9 +150,9 @@ It won't be a problem for most sites though.</p>
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:54 2012 by 
+  Generated on Wed Jan 11 12:30:48 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

@@ -6,7 +6,7 @@
 <title>
   Module: Dragonfly::ActiveModelExtensions::InstanceMethods
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -167,12 +167,12 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/instance_methods.rb', line 5</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_dragonfly_attachments identifier id'>dragonfly_attachments</span>
-  <span class='rubyid_@dragonfly_attachments ivar id'>@dragonfly_attachments</span> <span class='opasgn op'>||=</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_dragonfly_attachment_classes identifier id'>dragonfly_attachment_classes</span><span class='dot token'>.</span><span class='rubyid_inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_hash identifier id'>hash</span><span class='comma token'>,</span> <span class='rubyid_klass identifier id'>klass</span><span class='bitor op'>|</span>
-    <span class='rubyid_hash identifier id'>hash</span><span class='lbrack token'>[</span><span class='rubyid_klass identifier id'>klass</span><span class='dot token'>.</span><span class='rubyid_attribute identifier id'>attribute</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_klass identifier id'>klass</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span>
-    <span class='rubyid_hash identifier id'>hash</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='dragonfly_attachments identifier id'>dragonfly_attachments</span>
+  <span class='@dragonfly_attachments ivar id'>@dragonfly_attachments</span> <span class='opasgn op'>||=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='dragonfly_attachment_classes identifier id'>dragonfly_attachment_classes</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='hash identifier id'>hash</span><span class='comma token'>,</span> <span class='klass identifier id'>klass</span><span class='bitor op'>|</span>
+    <span class='hash identifier id'>hash</span><span class='lbrack token'>[</span><span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='attribute identifier id'>attribute</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+    <span class='hash identifier id'>hash</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -191,9 +191,9 @@
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:20:00 2012 by 
+  Generated on Wed Jan 11 12:30:54 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

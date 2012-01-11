@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::JobDefinitions
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -193,10 +193,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-A new instance of JobDefinitions.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>A new instance of JobDefinitions.</div></span>
   
 </li>
 
@@ -217,16 +214,12 @@ A new instance of JobDefinitions.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-A new instance of JobDefinitions
-</p>
-
+    A new instance of JobDefinitions
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -240,9 +233,9 @@ A new instance of JobDefinitions
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job_definitions.rb', line 4</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span>
-  <span class='rubyid_@job_definitions ivar id'>@job_definitions</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
+  <span class='@job_definitions ivar id'>@job_definitions</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -285,18 +278,18 @@ A new instance of JobDefinitions
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job_definitions.rb', line 8</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_add identifier id'>add</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_definition_proc identifier id'>definition_proc</span><span class='rparen token'>)</span>
-  <span class='rubyid_job_definitions identifier id'>job_definitions</span><span class='lbrack token'>[</span><span class='rubyid_name identifier id'>name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_JobBuilder constant id'>JobBuilder</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_definition_proc identifier id'>definition_proc</span><span class='rparen token'>)</span>
-  <span class='rubyid_jd identifier id'>jd</span> <span class='assign token'>=</span> <span class='rubyid_job_definitions identifier id'>job_definitions</span> <span class='comment val'># Needed because we're about to change 'self'</span>
+<span class='def def kw'>def</span> <span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='definition_proc identifier id'>definition_proc</span><span class='rparen token'>)</span>
+  <span class='job_definitions identifier id'>job_definitions</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='JobBuilder constant id'>JobBuilder</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='definition_proc identifier id'>definition_proc</span><span class='rparen token'>)</span>
+  <span class='jd identifier id'>jd</span> <span class='assign token'>=</span> <span class='job_definitions identifier id'>job_definitions</span> <span class='comment val'># Needed because we're about to change 'self'</span>
   
-  <span class='rubyid_define_method identifier id'>define_method</span> <span class='rubyid_name identifier id'>name</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='bitor op'>|</span>
-    <span class='rubyid_jd identifier id'>jd</span><span class='lbrack token'>[</span><span class='rubyid_name identifier id'>name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_build identifier id'>build</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
+  <span class='define_method identifier id'>define_method</span> <span class='name identifier id'>name</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='bitor op'>|</span>
+    <span class='jd identifier id'>jd</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='build identifier id'>build</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
   
-  <span class='rubyid_define_method identifier id'>define_method</span> <span class='dstring node'>&quot;#{name}!&quot;</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='bitor op'>|</span>
-    <span class='rubyid_jd identifier id'>jd</span><span class='lbrack token'>[</span><span class='rubyid_name identifier id'>name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_build! fid id'>build!</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
+  <span class='define_method identifier id'>define_method</span> <span class='dstring node'>&quot;#{name}!&quot;</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='bitor op'>|</span>
+    <span class='jd identifier id'>jd</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='build! fid id'>build!</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -323,9 +316,9 @@ A new instance of JobDefinitions
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job_definitions.rb', line 21</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_definition_names identifier id'>definition_names</span>
-  <span class='rubyid_job_definitions identifier id'>job_definitions</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='definition_names identifier id'>definition_names</span>
+  <span class='job_definitions identifier id'>job_definitions</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -344,9 +337,9 @@ A new instance of JobDefinitions
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:58 2012 by 
+  Generated on Wed Jan 11 12:30:52 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

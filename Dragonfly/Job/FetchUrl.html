@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::Job::FetchUrl
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -295,11 +295,11 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 136</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_apply identifier id'>apply</span>
-  <span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='rubyid_url identifier id'>url</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span>
-    <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_update identifier id'>update</span><span class='lparen token'>(</span><span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='comma token'>,</span> <span class='symbol val'>:name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_filename identifier id'>filename</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='apply identifier id'>apply</span>
+  <span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='url identifier id'>url</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span>
+    <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='update identifier id'>update</span><span class='lparen token'>(</span><span class='f identifier id'>f</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='comma token'>,</span> <span class='symbol val'>:name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='filename identifier id'>filename</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -326,9 +326,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 133</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_filename identifier id'>filename</span>
-  <span class='rubyid_@filename ivar id'>@filename</span> <span class='opasgn op'>||=</span> <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_basename identifier id'>basename</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_path identifier id'>path</span><span class='lbrack token'>[</span><span class='regexp val'>/[^\/]$/</span><span class='rbrack token'>]</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='filename identifier id'>filename</span>
+  <span class='@filename ivar id'>@filename</span> <span class='opasgn op'>||=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='path identifier id'>path</span><span class='lbrack token'>[</span><span class='regexp val'>/[^\/]$/</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -355,9 +355,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 124</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_init identifier id'>init</span>
-  <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_url_attrs identifier id'>url_attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_filename identifier id'>filename</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='init identifier id'>init</span>
+  <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='url_attrs identifier id'>url_attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='filename identifier id'>filename</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -384,9 +384,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 130</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_path identifier id'>path</span>
-  <span class='rubyid_@path ivar id'>@path</span> <span class='opasgn op'>||=</span> <span class='rubyid_URI constant id'>URI</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='rubyid_url identifier id'>url</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_path identifier id'>path</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='path identifier id'>path</span>
+  <span class='@path ivar id'>@path</span> <span class='opasgn op'>||=</span> <span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='url identifier id'>url</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='path identifier id'>path</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -413,9 +413,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 127</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_url identifier id'>url</span>
-  <span class='rubyid_@url ivar id'>@url</span> <span class='opasgn op'>||=</span> <span class='lparen token'>(</span><span class='rubyid_args identifier id'>args</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span><span class='lbrack token'>[</span><span class='regexp val'>%r&lt;^\w+://&gt;</span><span class='rbrack token'>]</span> <span class='question op'>?</span> <span class='rubyid_args identifier id'>args</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span> <span class='colon op'>:</span> <span class='dstring node'>&quot;http://#{args.first}&quot;</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='url identifier id'>url</span>
+  <span class='@url ivar id'>@url</span> <span class='opasgn op'>||=</span> <span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='lbrack token'>[</span><span class='regexp val'>%r&lt;^\w+://&gt;</span><span class='rbrack token'>]</span> <span class='question op'>?</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span> <span class='colon op'>:</span> <span class='dstring node'>&quot;http://#{args.first}&quot;</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -434,9 +434,9 @@
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:56 2012 by 
+  Generated on Wed Jan 11 12:30:50 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

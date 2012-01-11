@@ -6,7 +6,7 @@
 <title>
   Module: Dragonfly::Configurable::ClassMethods
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -272,12 +272,12 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 121</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_config_methods identifier id'>config_methods</span>
-  <span class='rubyid_@config_methods ivar id'>@config_methods</span> <span class='opasgn op'>||=</span> <span class='rubyid_configurable_ancestors identifier id'>configurable_ancestors</span><span class='dot token'>.</span><span class='rubyid_inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_conf_methods identifier id'>conf_methods</span><span class='comma token'>,</span> <span class='rubyid_klass identifier id'>klass</span><span class='bitor op'>|</span>
-    <span class='rubyid_conf_methods identifier id'>conf_methods</span> <span class='opasgn op'>|=</span> <span class='rubyid_klass identifier id'>klass</span><span class='dot token'>.</span><span class='rubyid_config_methods identifier id'>config_methods</span>
-    <span class='rubyid_conf_methods identifier id'>conf_methods</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='config_methods identifier id'>config_methods</span>
+  <span class='@config_methods ivar id'>@config_methods</span> <span class='opasgn op'>||=</span> <span class='configurable_ancestors identifier id'>configurable_ancestors</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='conf_methods identifier id'>conf_methods</span><span class='comma token'>,</span> <span class='klass identifier id'>klass</span><span class='bitor op'>|</span>
+    <span class='conf_methods identifier id'>conf_methods</span> <span class='opasgn op'>|=</span> <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='config_methods identifier id'>config_methods</span>
+    <span class='conf_methods identifier id'>conf_methods</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -304,9 +304,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 140</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_configurable_ancestors identifier id'>configurable_ancestors</span>
-  <span class='rubyid_@configurable_ancestors ivar id'>@configurable_ancestors</span> <span class='opasgn op'>||=</span> <span class='rubyid_ancestors identifier id'>ancestors</span><span class='dot token'>.</span><span class='rubyid_select identifier id'>select</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_a identifier id'>a</span><span class='bitor op'>|</span> <span class='rubyid_a identifier id'>a</span><span class='dot token'>.</span><span class='rubyid_included_modules identifier id'>included_modules</span><span class='dot token'>.</span><span class='rubyid_include? fid id'>include?</span><span class='lparen token'>(</span><span class='rubyid_Configurable constant id'>Configurable</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span> <span class='minus op'>-</span> <span class='lbrack token'>[</span><span class='rubyid_self self kw'>self</span><span class='rbrack token'>]</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='configurable_ancestors identifier id'>configurable_ancestors</span>
+  <span class='@configurable_ancestors ivar id'>@configurable_ancestors</span> <span class='opasgn op'>||=</span> <span class='ancestors identifier id'>ancestors</span><span class='dot token'>.</span><span class='select identifier id'>select</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span> <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='included_modules identifier id'>included_modules</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='Configurable constant id'>Configurable</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span> <span class='minus op'>-</span> <span class='lbrack token'>[</span><span class='self self kw'>self</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -336,12 +336,12 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 114</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_default_configuration identifier id'>default_configuration</span>
-  <span class='rubyid_@default_configuration ivar id'>@default_configuration</span> <span class='opasgn op'>||=</span> <span class='rubyid_configurable_ancestors identifier id'>configurable_ancestors</span><span class='dot token'>.</span><span class='rubyid_reverse identifier id'>reverse</span><span class='dot token'>.</span><span class='rubyid_inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_default_config identifier id'>default_config</span><span class='comma token'>,</span> <span class='rubyid_klass identifier id'>klass</span><span class='bitor op'>|</span>
-    <span class='rubyid_default_config identifier id'>default_config</span><span class='dot token'>.</span><span class='rubyid_merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='rubyid_klass identifier id'>klass</span><span class='dot token'>.</span><span class='rubyid_default_configuration identifier id'>default_configuration</span><span class='rparen token'>)</span>
-    <span class='rubyid_default_config identifier id'>default_config</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='default_configuration identifier id'>default_configuration</span>
+  <span class='@default_configuration ivar id'>@default_configuration</span> <span class='opasgn op'>||=</span> <span class='configurable_ancestors identifier id'>configurable_ancestors</span><span class='dot token'>.</span><span class='reverse identifier id'>reverse</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='default_config identifier id'>default_config</span><span class='comma token'>,</span> <span class='klass identifier id'>klass</span><span class='bitor op'>|</span>
+    <span class='default_config identifier id'>default_config</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='default_configuration identifier id'>default_configuration</span><span class='rparen token'>)</span>
+    <span class='default_config identifier id'>default_config</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -368,9 +368,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 128</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_nested_configurables identifier id'>nested_configurables</span>
-  <span class='rubyid_@nested_configurables ivar id'>@nested_configurables</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='nested_configurables identifier id'>nested_configurables</span>
+  <span class='@nested_configurables ivar id'>@nested_configurables</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -397,9 +397,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 132</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_register_configuration identifier id'>register_configuration</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='rubyid_config identifier id'>config</span><span class='assign token'>=</span><span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_config_in_block identifier id'>config_in_block</span><span class='rparen token'>)</span> 
-  <span class='rubyid_saved_configs identifier id'>saved_configs</span><span class='lbrack token'>[</span><span class='rubyid_name identifier id'>name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_config_in_block identifier id'>config_in_block</span> <span class='orop op'>||</span> <span class='rubyid_config identifier id'>config</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='register_configuration identifier id'>register_configuration</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='config identifier id'>config</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='config_in_block identifier id'>config_in_block</span><span class='rparen token'>)</span> 
+  <span class='saved_configs identifier id'>saved_configs</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='config_in_block identifier id'>config_in_block</span> <span class='orop op'>||</span> <span class='config identifier id'>config</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -426,9 +426,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 136</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_saved_configs identifier id'>saved_configs</span>
-  <span class='rubyid_@saved_configs ivar id'>@saved_configs</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='saved_configs identifier id'>saved_configs</span>
+  <span class='@saved_configs ivar id'>@saved_configs</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -447,9 +447,9 @@
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:57 2012 by 
+  Generated on Wed Jan 11 12:30:51 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

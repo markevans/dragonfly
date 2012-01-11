@@ -6,7 +6,7 @@
 <title>
   Module: Dragonfly::Shell
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -291,11 +291,11 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/shell.rb', line 32</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_escape_args identifier id'>escape_args</span><span class='lparen token'>(</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='rubyid_args identifier id'>args</span><span class='dot token'>.</span><span class='rubyid_shellsplit identifier id'>shellsplit</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_arg identifier id'>arg</span><span class='bitor op'>|</span>
-    <span class='rubyid_quote identifier id'>quote</span> <span class='rubyid_arg identifier id'>arg</span><span class='dot token'>.</span><span class='rubyid_gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/\\?'/</span><span class='comma token'>,</span> <span class='string val'>%q('\\\\'')</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>' '</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='escape_args identifier id'>escape_args</span><span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='shellsplit identifier id'>shellsplit</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='arg identifier id'>arg</span><span class='bitor op'>|</span>
+    <span class='quote identifier id'>quote</span> <span class='arg identifier id'>arg</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='regexp val'>/\\?'/</span><span class='comma token'>,</span> <span class='string val'>%q('\\\\'')</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>' '</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -323,10 +323,10 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/shell.rb', line 38</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_quote identifier id'>quote</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span>
-  <span class='rubyid_q identifier id'>q</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='dot token'>.</span><span class='rubyid_running_on_windows? fid id'>running_on_windows?</span> <span class='integer val'>? </span><span class='string val'>'&quot;'</span> <span class='colon op'>:</span> <span class='string val'>&quot;'&quot;</span>
-  <span class='rubyid_q identifier id'>q</span> <span class='plus op'>+</span> <span class='rubyid_string identifier id'>string</span> <span class='plus op'>+</span> <span class='rubyid_q identifier id'>q</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='quote identifier id'>quote</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='q identifier id'>q</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='dot token'>.</span><span class='running_on_windows? fid id'>running_on_windows?</span> <span class='integer val'>? </span><span class='string val'>'&quot;'</span> <span class='colon op'>:</span> <span class='string val'>&quot;'&quot;</span>
+  <span class='q identifier id'>q</span> <span class='plus op'>+</span> <span class='string identifier id'>string</span> <span class='plus op'>+</span> <span class='q identifier id'>q</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -347,8 +347,7 @@ or
   </div>
 </div>
 <div class="tags">
-  
-<h3>Raises:</h3>
+  <h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -375,9 +374,9 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/shell.rb', line 28</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_raise_shell_command_failed identifier id'>raise_shell_command_failed</span><span class='lparen token'>(</span><span class='rubyid_command identifier id'>command</span><span class='rparen token'>)</span>
-  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_CommandFailed constant id'>CommandFailed</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Command failed (#{command}) with exit status #{$?.exitstatus}&quot;</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='raise_shell_command_failed identifier id'>raise_shell_command_failed</span><span class='lparen token'>(</span><span class='command identifier id'>command</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='CommandFailed constant id'>CommandFailed</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Command failed (#{command}) with exit status #{$?.exitstatus}&quot;</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -416,21 +415,21 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/shell.rb', line 12</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_run identifier id'>run</span><span class='lparen token'>(</span><span class='rubyid_command identifier id'>command</span><span class='comma token'>,</span> <span class='rubyid_args identifier id'>args</span><span class='assign token'>=</span><span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span>
-  <span class='rubyid_full_command identifier id'>full_command</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{command} #{escape_args(args)}&quot;</span>
-  <span class='rubyid_log identifier id'>log</span><span class='dot token'>.</span><span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;Running command: #{full_command}&quot;</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_log_commands identifier id'>log_commands</span>
-  <span class='rubyid_begin begin kw'>begin</span>
-    <span class='rubyid_result identifier id'>result</span> <span class='assign token'>=</span> <span class='dxstring node'>`#{full_command}`</span>
-  <span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Errno constant id'>Errno</span><span class='colon2 op'>::</span><span class='rubyid_ENOENT constant id'>ENOENT</span>
-    <span class='rubyid_raise_shell_command_failed identifier id'>raise_shell_command_failed</span><span class='lparen token'>(</span><span class='rubyid_full_command identifier id'>full_command</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_if if kw'>if</span> <span class='rubyid_$? gvar id'>$?</span><span class='dot token'>.</span><span class='rubyid_exitstatus identifier id'>exitstatus</span> <span class='eq op'>==</span> <span class='integer val'>1</span>
-    <span class='rubyid_throw identifier id'>throw</span> <span class='symbol val'>:unable_to_handle</span>
-  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='notop op'>!</span><span class='rubyid_$? gvar id'>$?</span><span class='dot token'>.</span><span class='rubyid_success? fid id'>success?</span>
-    <span class='rubyid_raise_shell_command_failed identifier id'>raise_shell_command_failed</span><span class='lparen token'>(</span><span class='rubyid_full_command identifier id'>full_command</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_result identifier id'>result</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='run identifier id'>run</span><span class='lparen token'>(</span><span class='command identifier id'>command</span><span class='comma token'>,</span> <span class='args identifier id'>args</span><span class='assign token'>=</span><span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span>
+  <span class='full_command identifier id'>full_command</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{command} #{escape_args(args)}&quot;</span>
+  <span class='log identifier id'>log</span><span class='dot token'>.</span><span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;Running command: #{full_command}&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='log_commands identifier id'>log_commands</span>
+  <span class='begin begin kw'>begin</span>
+    <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='dxstring node'>`#{full_command}`</span>
+  <span class='rescue rescue kw'>rescue</span> <span class='Errno constant id'>Errno</span><span class='colon2 op'>::</span><span class='ENOENT constant id'>ENOENT</span>
+    <span class='raise_shell_command_failed identifier id'>raise_shell_command_failed</span><span class='lparen token'>(</span><span class='full_command identifier id'>full_command</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='if if kw'>if</span> <span class='$? gvar id'>$?</span><span class='dot token'>.</span><span class='exitstatus identifier id'>exitstatus</span> <span class='eq op'>==</span> <span class='integer val'>1</span>
+    <span class='throw identifier id'>throw</span> <span class='symbol val'>:unable_to_handle</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='notop op'>!</span><span class='$? gvar id'>$?</span><span class='dot token'>.</span><span class='success? fid id'>success?</span>
+    <span class='raise_shell_command_failed identifier id'>raise_shell_command_failed</span><span class='lparen token'>(</span><span class='full_command identifier id'>full_command</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='result identifier id'>result</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -449,9 +448,9 @@ or
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:56 2012 by 
+  Generated on Wed Jan 11 12:30:50 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

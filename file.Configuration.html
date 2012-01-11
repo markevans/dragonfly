@@ -6,7 +6,7 @@
 <title>
   File: Configuration
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -82,81 +82,81 @@
 
 <p>Given a Dragonfly app</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:app_name</span><span class='rbrack token'>]</span>
+<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:app_name</span><span class='rbrack token'>]</span>
 </pre>
 
 <p>Configuration can either be done using a block...</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/media/:job'</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/media/:job'</span>
   <span class='comment val'># ...</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <p>...or directly...</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/media/:job'</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/media/:job'</span>
 </pre>
 
 <p>The defaults should be fairly sensible, but you can tweak a number of things if you wish.
 Here is an example of an app with all attributes configured:</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='rubyid_SomeCustomDataStore constant id'>SomeCustomDataStore</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span> <span class='symbol val'>:egg</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'head'</span>  <span class='comment val'># defaults to FileDataStore</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='SomeCustomDataStore constant id'>SomeCustomDataStore</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='symbol val'>:egg</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'head'</span>  <span class='comment val'># defaults to FileDataStore</span>
 
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_cache_duration identifier id'>cache_duration</span> <span class='assign token'>=</span> <span class='integer val'>3600</span><span class='mult op'>*</span><span class='integer val'>24</span><span class='mult op'>*</span><span class='integer val'>365</span><span class='mult op'>*</span><span class='integer val'>2</span>                      <span class='comment val'># defaults to 1 year # (1 year)</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_fallback_mime_type identifier id'>fallback_mime_type</span> <span class='assign token'>=</span> <span class='string val'>'something/mental'</span>             <span class='comment val'># defaults to application/octet-stream</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_log identifier id'>log</span> <span class='assign token'>=</span> <span class='rubyid_Logger constant id'>Logger</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_$stdout gvar id'>$stdout</span><span class='rparen token'>)</span>                           <span class='comment val'># defaults to Logger.new('/var/tmp/dragonfly.log')</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_trust_file_extensions identifier id'>trust_file_extensions</span> <span class='assign token'>=</span> <span class='rubyid_false false kw'>false</span>                       <span class='comment val'># defaults to true</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='cache_duration identifier id'>cache_duration</span> <span class='assign token'>=</span> <span class='integer val'>3600</span><span class='mult op'>*</span><span class='integer val'>24</span><span class='mult op'>*</span><span class='integer val'>365</span><span class='mult op'>*</span><span class='integer val'>2</span>                      <span class='comment val'># defaults to 1 year # (1 year)</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='fallback_mime_type identifier id'>fallback_mime_type</span> <span class='assign token'>=</span> <span class='string val'>'something/mental'</span>             <span class='comment val'># defaults to application/octet-stream</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='log identifier id'>log</span> <span class='assign token'>=</span> <span class='Logger constant id'>Logger</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='$stdout gvar id'>$stdout</span><span class='rparen token'>)</span>                           <span class='comment val'># defaults to Logger.new('/var/tmp/dragonfly.log')</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='trust_file_extensions identifier id'>trust_file_extensions</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>                       <span class='comment val'># defaults to true</span>
 
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/images/:job/:basename.:format'</span>       <span class='comment val'># defaults to '/:job/:basename.:format'</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_url_host identifier id'>url_host</span> <span class='assign token'>=</span> <span class='string val'>'http://some.domain.com:4000'</span>            <span class='comment val'># defaults to nil</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/images/:job/:basename.:format'</span>       <span class='comment val'># defaults to '/:job/:basename.:format'</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_host identifier id'>url_host</span> <span class='assign token'>=</span> <span class='string val'>'http://some.domain.com:4000'</span>            <span class='comment val'># defaults to nil</span>
 
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_content_filename identifier id'>content_filename</span> <span class='assign token'>=</span> <span class='rubyid_proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_request identifier id'>request</span><span class='bitor op'>|</span>              <span class='comment val'># defaults to the original name, with modified ext if encoded</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='content_filename identifier id'>content_filename</span> <span class='assign token'>=</span> <span class='proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='request identifier id'>request</span><span class='bitor op'>|</span>              <span class='comment val'># defaults to the original name, with modified ext if encoded</span>
     <span class='dstring node'>&quot;file.#{job.ext}&quot;</span>
   <span class='rbrace token'>}</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_content_disposition identifier id'>content_disposition</span> <span class='assign token'>=</span> <span class='symbol val'>:attachment</span>                   <span class='comment val'># defaults to nil (use the browser default)</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='content_disposition identifier id'>content_disposition</span> <span class='assign token'>=</span> <span class='symbol val'>:attachment</span>                   <span class='comment val'># defaults to nil (use the browser default)</span>
 
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_protect_from_dos_attacks identifier id'>protect_from_dos_attacks</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>                     <span class='comment val'># defaults to false - adds a SHA parameter on the end of urls</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_secret identifier id'>secret</span> <span class='assign token'>=</span> <span class='string val'>'This is my secret yeh!!'</span>                  <span class='comment val'># should set this if concerned about DOS attacks</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='protect_from_dos_attacks identifier id'>protect_from_dos_attacks</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>                     <span class='comment val'># defaults to false - adds a SHA parameter on the end of urls</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='secret identifier id'>secret</span> <span class='assign token'>=</span> <span class='string val'>'This is my secret yeh!!'</span>                  <span class='comment val'># should set this if concerned about DOS attacks</span>
 
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='rubyid_register identifier id'>register</span><span class='lparen token'>(</span><span class='rubyid_MyAnalyser constant id'>MyAnalyser</span><span class='rparen token'>)</span>                       <span class='comment val'># See 'Analysers' for more details</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_processor identifier id'>processor</span><span class='dot token'>.</span><span class='rubyid_register identifier id'>register</span><span class='lparen token'>(</span><span class='rubyid_MyProcessor constant id'>MyProcessor</span><span class='comma token'>,</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:fig</span><span class='rparen token'>)</span>      <span class='comment val'># See 'Processing' for more details</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='rubyid_register identifier id'>register</span><span class='lparen token'>(</span><span class='rubyid_MyEncoder constant id'>MyEncoder</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_e identifier id'>e</span><span class='bitor op'>|</span>                  <span class='comment val'># See 'Encoding' for more details</span>
-    <span class='rubyid_e identifier id'>e</span><span class='dot token'>.</span><span class='rubyid_some_value identifier id'>some_value</span> <span class='assign token'>=</span> <span class='string val'>'geg'</span>
-  <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_generator identifier id'>generator</span><span class='dot token'>.</span><span class='rubyid_register identifier id'>register</span><span class='lparen token'>(</span><span class='rubyid_MyGenerator constant id'>MyGenerator</span><span class='rparen token'>)</span>                     <span class='comment val'># See 'Generators' for more details</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='MyAnalyser constant id'>MyAnalyser</span><span class='rparen token'>)</span>                       <span class='comment val'># See 'Analysers' for more details</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='MyProcessor constant id'>MyProcessor</span><span class='comma token'>,</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:fig</span><span class='rparen token'>)</span>      <span class='comment val'># See 'Processing' for more details</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='MyEncoder constant id'>MyEncoder</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span>                  <span class='comment val'># See 'Encoding' for more details</span>
+    <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='some_value identifier id'>some_value</span> <span class='assign token'>=</span> <span class='string val'>'geg'</span>
+  <span class='end end kw'>end</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='generator identifier id'>generator</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='MyGenerator constant id'>MyGenerator</span><span class='rparen token'>)</span>                     <span class='comment val'># See 'Generators' for more details</span>
 
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_register_mime_type identifier id'>register_mime_type</span><span class='lparen token'>(</span><span class='symbol val'>:egg</span><span class='comma token'>,</span> <span class='string val'>'fried/egg'</span><span class='rparen token'>)</span>               <span class='comment val'># See 'MimeTypes' for more details</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='register_mime_type identifier id'>register_mime_type</span><span class='lparen token'>(</span><span class='symbol val'>:egg</span><span class='comma token'>,</span> <span class='string val'>'fried/egg'</span><span class='rparen token'>)</span>               <span class='comment val'># See 'MimeTypes' for more details</span>
 
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_job identifier id'>job</span> <span class='symbol val'>:black_and_white</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_size identifier id'>size</span><span class='bitor op'>|</span>                      <span class='comment val'># Job shortcut - lets you do image.black_and_white('30x30')</span>
-    <span class='rubyid_process identifier id'>process</span> <span class='symbol val'>:greyscale</span>
-    <span class='rubyid_process identifier id'>process</span> <span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='rubyid_size identifier id'>size</span>
-    <span class='rubyid_encode identifier id'>encode</span>  <span class='symbol val'>:gif</span>
-  <span class='rubyid_end end kw'>end</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='job identifier id'>job</span> <span class='symbol val'>:black_and_white</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='size identifier id'>size</span><span class='bitor op'>|</span>                      <span class='comment val'># Job shortcut - lets you do image.black_and_white('30x30')</span>
+    <span class='process identifier id'>process</span> <span class='symbol val'>:greyscale</span>
+    <span class='process identifier id'>process</span> <span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='size identifier id'>size</span>
+    <span class='encode identifier id'>encode</span>  <span class='symbol val'>:gif</span>
+  <span class='end end kw'>end</span>
 
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_define_url identifier id'>define_url</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_app identifier id'>app</span><span class='comma token'>,</span> <span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='bitor op'>|</span>                      <span class='comment val'># allows overriding urls - defaults to</span>
-    <span class='rubyid_if if kw'>if</span> <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_step_types identifier id'>step_types</span> <span class='eq op'>==</span> <span class='lbrack token'>[</span><span class='symbol val'>:fetch</span><span class='rbrack token'>]</span>                       <span class='comment val'>#   app.server.url_for(job, opts)</span>
-      <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='rubyid_url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
-    <span class='rubyid_else else kw'>else</span>
-      <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_server identifier id'>server</span><span class='dot token'>.</span><span class='rubyid_url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='rparen token'>)</span>
-    <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_end end kw'>end</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='define_url identifier id'>define_url</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='app identifier id'>app</span><span class='comma token'>,</span> <span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='bitor op'>|</span>                      <span class='comment val'># allows overriding urls - defaults to</span>
+    <span class='if if kw'>if</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='step_types identifier id'>step_types</span> <span class='eq op'>==</span> <span class='lbrack token'>[</span><span class='symbol val'>:fetch</span><span class='rbrack token'>]</span>                       <span class='comment val'>#   app.server.url_for(job, opts)</span>
+      <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='dot token'>.</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+    <span class='else else kw'>else</span>
+      <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
 
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_server identifier id'>server</span><span class='dot token'>.</span><span class='rubyid_before_serve identifier id'>before_serve</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_env identifier id'>env</span><span class='bitor op'>|</span>                   <span class='comment val'># allows you to do something before content is served</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='before_serve identifier id'>before_serve</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='env identifier id'>env</span><span class='bitor op'>|</span>                   <span class='comment val'># allows you to do something before content is served</span>
     <span class='comment val'># do something</span>
-  <span class='rubyid_end end kw'>end</span>
+  <span class='end end kw'>end</span>
 
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_response_headers identifier id'>response_headers</span><span class='lbrack token'>[</span><span class='string val'>'X-Something'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'Custom header'</span>   <span class='comment val'># You can set custom response headers</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_response_headers identifier id'>response_headers</span><span class='lbrack token'>[</span><span class='string val'>'summink'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_request identifier id'>request</span><span class='bitor op'>|</span>   <span class='comment val'># either directly or via a callback</span>
-    <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_image? fid id'>image?</span> <span class='integer val'>? </span><span class='string val'>'image yo'</span> <span class='colon op'>:</span> <span class='string val'>'not an image'</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='response_headers identifier id'>response_headers</span><span class='lbrack token'>[</span><span class='string val'>'X-Something'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'Custom header'</span>   <span class='comment val'># You can set custom response headers</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='response_headers identifier id'>response_headers</span><span class='lbrack token'>[</span><span class='string val'>'summink'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='request identifier id'>request</span><span class='bitor op'>|</span>   <span class='comment val'># either directly or via a callback</span>
+    <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='image? fid id'>image?</span> <span class='integer val'>? </span><span class='string val'>'image yo'</span> <span class='colon op'>:</span> <span class='string val'>'not an image'</span>
   <span class='rbrace token'>}</span>
 
   <span class='comment val'># When using ImageMagick only...</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_convert_command identifier id'>convert_command</span> <span class='assign token'>=</span> <span class='string val'>&quot;/opt/local/bin/convert&quot;</span>          <span class='comment val'># defaults to &quot;convert&quot;</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_identify_command identifier id'>identify_command</span> <span class='assign token'>=</span> <span class='string val'>&quot;/opt/local/bin/convert&quot;</span>         <span class='comment val'># defaults to &quot;convert&quot;</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_log_commands identifier id'>log_commands</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>                                 <span class='comment val'># defaults to false</span>
-<span class='rubyid_end end kw'>end</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='convert_command identifier id'>convert_command</span> <span class='assign token'>=</span> <span class='string val'>&quot;/opt/local/bin/convert&quot;</span>          <span class='comment val'># defaults to &quot;convert&quot;</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='identify_command identifier id'>identify_command</span> <span class='assign token'>=</span> <span class='string val'>&quot;/opt/local/bin/convert&quot;</span>         <span class='comment val'># defaults to &quot;convert&quot;</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='log_commands identifier id'>log_commands</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>                                 <span class='comment val'># defaults to false</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <h2>Where is configuration done?</h2>
@@ -175,7 +175,7 @@ There are a number that are provided with Dragonfly:</p>
 
 <h2>ImageMagick</h2>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
 </pre>
 
 <p>The <span class='object_link'><a href="Dragonfly/ImageMagick/Config.html" title="Dragonfly::ImageMagick::Config (module)">ImageMagick configuration</a></span> registers the app with the <span class='object_link'><a href="Dragonfly/ImageMagick/Analyser.html" title="Dragonfly::ImageMagick::Analyser (class)">ImageMagick Analyser</a></span>, <span class='object_link'><a href="Dragonfly/ImageMagick/Processor.html" title="Dragonfly::ImageMagick::Processor (class)">ImageMagick Processor</a></span>,
@@ -187,7 +187,7 @@ There are a number that are provided with Dragonfly:</p>
 
 <h2>Rails</h2>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span>
 </pre>
 
 <p>The <span class='object_link'><a href="Dragonfly/Config/Rails.html" title="Dragonfly::Config::Rails (module)">Rails configuration</a></span> points the log to the Rails logger, configures the file data store root path, sets the url path prefix to '/media', and
@@ -199,43 +199,42 @@ registers the <span class='object_link'><a href="Dragonfly/Analysis/FileCommandA
 
 <p>You can create your own saved configuration with any object that responds to 'apply_configuration':</p>
 
-<pre class="code"><span class='rubyid_module module kw'>module</span> <span class='rubyid_MyConfiguration constant id'>MyConfiguration</span>
+<pre class="code"><span class='module module kw'>module</span> <span class='MyConfiguration constant id'>MyConfiguration</span>
 
-  <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_apply_configuration identifier id'>apply_configuration</span><span class='lparen token'>(</span><span class='rubyid_app identifier id'>app</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
-    <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
-      <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_url_path_prefix identifier id'>url_path_prefix</span> <span class='assign token'>=</span> <span class='string val'>'/hello/beans'</span>
-      <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_processor identifier id'>processor</span><span class='dot token'>.</span><span class='rubyid_register identifier id'>register</span><span class='lparen token'>(</span><span class='rubyid_MyProcessor constant id'>MyProcessor</span><span class='rparen token'>)</span>
+  <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='apply_configuration identifier id'>apply_configuration</span><span class='lparen token'>(</span><span class='app identifier id'>app</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+    <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+      <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_path_prefix identifier id'>url_path_prefix</span> <span class='assign token'>=</span> <span class='string val'>'/hello/beans'</span>
+      <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='register identifier id'>register</span><span class='lparen token'>(</span><span class='MyProcessor constant id'>MyProcessor</span><span class='rparen token'>)</span>
       <span class='comment val'># ...</span>
-    <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
 
-<span class='rubyid_end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <p>Then to configure:</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='rubyid_MyConfiguration constant id'>MyConfiguration</span><span class='comma token'>,</span> <span class='symbol val'>:any_other</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>     <span class='comment val'># other args get passed through to apply_configuration</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='MyConfiguration constant id'>MyConfiguration</span><span class='comma token'>,</span> <span class='symbol val'>:any_other</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>     <span class='comment val'># other args get passed through to apply_configuration</span>
 </pre>
 
 <p>You can also carry on configuring by passing a block</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='rubyid_MyConfiguration constant id'>MyConfiguration</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_any_extra identifier id'>any_extra</span> <span class='assign token'>=</span> <span class='symbol val'>:config_here</span>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='MyConfiguration constant id'>MyConfiguration</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='any_extra identifier id'>any_extra</span> <span class='assign token'>=</span> <span class='symbol val'>:config_here</span>
   <span class='comment val'># ...</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <p>If you wish to be able to use a symbol to represent your configuration (e.g. for a plugin, etc.) you can register it
 globally as a one-off:</p>
 
-<pre class="code"><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_App constant id'>App</span><span class='dot token'>.</span><span class='rubyid_register_configuration identifier id'>register_configuration</span><span class='lparen token'>(</span><span class='symbol val'>:myconfig</span><span class='rparen token'>)</span><span class='lbrace token'>{</span> <span class='rubyid_My constant id'>My</span><span class='colon2 op'>::</span><span class='rubyid_Saved constant id'>Saved</span><span class='colon2 op'>::</span><span class='rubyid_Configuration constant id'>Configuration</span> <span class='rbrace token'>}</span>
+<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='App constant id'>App</span><span class='dot token'>.</span><span class='register_configuration identifier id'>register_configuration</span><span class='lparen token'>(</span><span class='symbol val'>:myconfig</span><span class='rparen token'>)</span><span class='lbrace token'>{</span> <span class='My constant id'>My</span><span class='colon2 op'>::</span><span class='Saved constant id'>Saved</span><span class='colon2 op'>::</span><span class='Configuration constant id'>Configuration</span> <span class='rbrace token'>}</span>
 </pre>
 
 <p>Then from then on you can configure Dragonfly apps using</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:myconfig</span><span class='comma token'>,</span> <span class='symbol val'>:any_other</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>
-</pre>
-</div>
+<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:myconfig</span><span class='comma token'>,</span> <span class='symbol val'>:any_other</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>
+</pre></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -245,9 +244,9 @@ globally as a one-off:</p>
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:54 2012 by 
+  Generated on Wed Jan 11 12:30:49 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

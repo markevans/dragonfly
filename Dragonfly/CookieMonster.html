@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::CookieMonster
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -168,10 +168,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-A new instance of CookieMonster.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>A new instance of CookieMonster.</div></span>
   
 </li>
 
@@ -191,16 +188,12 @@ A new instance of CookieMonster.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-A new instance of CookieMonster
-</p>
-
+    A new instance of CookieMonster
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -214,9 +207,9 @@ A new instance of CookieMonster
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/cookie_monster.rb', line 4</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_app identifier id'>app</span><span class='rparen token'>)</span>
-  <span class='rubyid_@app ivar id'>@app</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='app identifier id'>app</span><span class='rparen token'>)</span>
+  <span class='@app ivar id'>@app</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -252,11 +245,11 @@ A new instance of CookieMonster
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/cookie_monster.rb', line 8</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_env identifier id'>env</span><span class='rparen token'>)</span>
-  <span class='rubyid_status identifier id'>status</span><span class='comma token'>,</span> <span class='rubyid_headers identifier id'>headers</span><span class='comma token'>,</span> <span class='rubyid_body identifier id'>body</span> <span class='assign token'>=</span> <span class='rubyid_@app ivar id'>@app</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_env identifier id'>env</span><span class='rparen token'>)</span>
-  <span class='rubyid_headers identifier id'>headers</span><span class='dot token'>.</span><span class='rubyid_delete identifier id'>delete</span><span class='lparen token'>(</span><span class='string val'>'Set-Cookie'</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_env identifier id'>env</span><span class='lbrack token'>[</span><span class='string val'>'dragonfly.job'</span><span class='rbrack token'>]</span>
-  <span class='lbrack token'>[</span><span class='rubyid_status identifier id'>status</span><span class='comma token'>,</span> <span class='rubyid_headers identifier id'>headers</span><span class='comma token'>,</span> <span class='rubyid_body identifier id'>body</span><span class='rbrack token'>]</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
+  <span class='status identifier id'>status</span><span class='comma token'>,</span> <span class='headers identifier id'>headers</span><span class='comma token'>,</span> <span class='body identifier id'>body</span> <span class='assign token'>=</span> <span class='@app ivar id'>@app</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
+  <span class='headers identifier id'>headers</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='string val'>'Set-Cookie'</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='env identifier id'>env</span><span class='lbrack token'>[</span><span class='string val'>'dragonfly.job'</span><span class='rbrack token'>]</span>
+  <span class='lbrack token'>[</span><span class='status identifier id'>status</span><span class='comma token'>,</span> <span class='headers identifier id'>headers</span><span class='comma token'>,</span> <span class='body identifier id'>body</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -275,9 +268,9 @@ A new instance of CookieMonster
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:58 2012 by 
+  Generated on Wed Jan 11 12:30:52 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

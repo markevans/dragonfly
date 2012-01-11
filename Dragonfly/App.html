@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::App
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -151,10 +151,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute analyser.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>Returns the value of attribute analyser.</div></span>
   
 </li>
 
@@ -178,10 +175,7 @@ Returns the value of attribute analyser.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute encoder.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>Returns the value of attribute encoder.</div></span>
   
 </li>
 
@@ -205,10 +199,7 @@ Returns the value of attribute encoder.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute generator.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>Returns the value of attribute generator.</div></span>
   
 </li>
 
@@ -232,10 +223,7 @@ Returns the value of attribute generator.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute job_definitions.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>Returns the value of attribute job_definitions.</div></span>
   
 </li>
 
@@ -259,10 +247,7 @@ Returns the value of attribute job_definitions.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute processor.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>Returns the value of attribute processor.</div></span>
   
 </li>
 
@@ -286,10 +271,7 @@ Returns the value of attribute processor.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute server.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>Returns the value of attribute server.</div></span>
   
 </li>
 
@@ -585,10 +567,7 @@ or
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-A new instance of App.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>A new instance of App.</div></span>
   
 </li>
 
@@ -716,10 +695,7 @@ A new instance of App.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Reflection.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>Reflection.</div></span>
   
 </li>
 
@@ -866,10 +842,7 @@ Reflection.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Deprecated methods.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>Deprecated methods.</div></span>
   
 </li>
 
@@ -921,16 +894,12 @@ Deprecated methods.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-A new instance of App
-</p>
-
+    A new instance of App
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -950,15 +919,15 @@ A new instance of App
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 26</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span>
-  <span class='rubyid_@analyser ivar id'>@analyser</span><span class='comma token'>,</span> <span class='rubyid_@processor ivar id'>@processor</span><span class='comma token'>,</span> <span class='rubyid_@encoder ivar id'>@encoder</span><span class='comma token'>,</span> <span class='rubyid_@generator ivar id'>@generator</span> <span class='assign token'>=</span> <span class='rubyid_Analyser constant id'>Analyser</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='comma token'>,</span> <span class='rubyid_Processor constant id'>Processor</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='comma token'>,</span> <span class='rubyid_Encoder constant id'>Encoder</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='comma token'>,</span> <span class='rubyid_Generator constant id'>Generator</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
-  <span class='lbrack token'>[</span><span class='rubyid_@analyser ivar id'>@analyser</span><span class='comma token'>,</span> <span class='rubyid_@processor ivar id'>@processor</span><span class='comma token'>,</span> <span class='rubyid_@encoder ivar id'>@encoder</span><span class='comma token'>,</span> <span class='rubyid_@generator ivar id'>@generator</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_obj identifier id'>obj</span><span class='bitor op'>|</span>
-    <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_use_same_log_as identifier id'>use_same_log_as</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span>
-    <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_use_as_fallback_config identifier id'>use_as_fallback_config</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_@server ivar id'>@server</span> <span class='assign token'>=</span> <span class='rubyid_Server constant id'>Server</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span>
-  <span class='rubyid_@job_definitions ivar id'>@job_definitions</span> <span class='assign token'>=</span> <span class='rubyid_JobDefinitions constant id'>JobDefinitions</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
+  <span class='@analyser ivar id'>@analyser</span><span class='comma token'>,</span> <span class='@processor ivar id'>@processor</span><span class='comma token'>,</span> <span class='@encoder ivar id'>@encoder</span><span class='comma token'>,</span> <span class='@generator ivar id'>@generator</span> <span class='assign token'>=</span> <span class='Analyser constant id'>Analyser</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='comma token'>,</span> <span class='Processor constant id'>Processor</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='comma token'>,</span> <span class='Encoder constant id'>Encoder</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='comma token'>,</span> <span class='Generator constant id'>Generator</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+  <span class='lbrack token'>[</span><span class='@analyser ivar id'>@analyser</span><span class='comma token'>,</span> <span class='@processor ivar id'>@processor</span><span class='comma token'>,</span> <span class='@encoder ivar id'>@encoder</span><span class='comma token'>,</span> <span class='@generator ivar id'>@generator</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='obj identifier id'>obj</span><span class='bitor op'>|</span>
+    <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='use_same_log_as identifier id'>use_same_log_as</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+    <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='use_as_fallback_config identifier id'>use_as_fallback_config</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='@server ivar id'>@server</span> <span class='assign token'>=</span> <span class='Server constant id'>Server</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+  <span class='@job_definitions ivar id'>@job_definitions</span> <span class='assign token'>=</span> <span class='JobDefinitions constant id'>JobDefinitions</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -982,16 +951,12 @@ A new instance of App
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Returns the value of attribute analyser
-</p>
-
+    Returns the value of attribute analyser
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -1005,9 +970,9 @@ Returns the value of attribute analyser
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 52</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_analyser identifier id'>analyser</span>
-  <span class='rubyid_@analyser ivar id'>@analyser</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='analyser identifier id'>analyser</span>
+  <span class='@analyser ivar id'>@analyser</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1026,16 +991,12 @@ Returns the value of attribute analyser
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Returns the value of attribute encoder
-</p>
-
+    Returns the value of attribute encoder
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -1049,9 +1010,9 @@ Returns the value of attribute encoder
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 54</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_encoder identifier id'>encoder</span>
-  <span class='rubyid_@encoder ivar id'>@encoder</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='encoder identifier id'>encoder</span>
+  <span class='@encoder ivar id'>@encoder</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1070,16 +1031,12 @@ Returns the value of attribute encoder
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Returns the value of attribute generator
-</p>
-
+    Returns the value of attribute generator
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -1093,9 +1050,9 @@ Returns the value of attribute generator
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 55</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_generator identifier id'>generator</span>
-  <span class='rubyid_@generator ivar id'>@generator</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='generator identifier id'>generator</span>
+  <span class='@generator ivar id'>@generator</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1114,16 +1071,12 @@ Returns the value of attribute generator
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Returns the value of attribute job_definitions
-</p>
-
+    Returns the value of attribute job_definitions
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -1137,9 +1090,9 @@ Returns the value of attribute job_definitions
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 60</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_job_definitions identifier id'>job_definitions</span>
-  <span class='rubyid_@job_definitions ivar id'>@job_definitions</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='job_definitions identifier id'>job_definitions</span>
+  <span class='@job_definitions ivar id'>@job_definitions</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1158,16 +1111,12 @@ Returns the value of attribute job_definitions
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Returns the value of attribute processor
-</p>
-
+    Returns the value of attribute processor
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -1181,9 +1130,9 @@ Returns the value of attribute processor
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 53</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_processor identifier id'>processor</span>
-  <span class='rubyid_@processor ivar id'>@processor</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='processor identifier id'>processor</span>
+  <span class='@processor ivar id'>@processor</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1202,16 +1151,12 @@ Returns the value of attribute processor
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Returns the value of attribute server
-</p>
-
+    Returns the value of attribute server
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -1225,9 +1170,9 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 56</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_server identifier id'>server</span>
-  <span class='rubyid_@server ivar id'>@server</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='server identifier id'>server</span>
+  <span class='@server ivar id'>@server</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1265,9 +1210,9 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 12</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_instance identifier id'>instance</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='rparen token'>)</span>
-  <span class='rubyid_apps identifier id'>apps</span><span class='lbrack token'>[</span><span class='rubyid_name identifier id'>name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='rubyid_new identifier id'>new</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='instance identifier id'>instance</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='apps identifier id'>apps</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='new identifier id'>new</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1300,9 +1245,9 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 157</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_analyser_methods identifier id'>analyser_methods</span>
-  <span class='rubyid_analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='rubyid_analysis_method_names identifier id'>analysis_method_names</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='analyser_methods identifier id'>analyser_methods</span>
+  <span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='analysis_method_names identifier id'>analysis_method_names</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1331,11 +1276,11 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 130</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='rubyid_mod identifier id'>mod</span><span class='comma token'>,</span> <span class='rubyid_macro_name identifier id'>macro_name</span><span class='rparen token'>)</span>
-  <span class='rubyid_already_extended identifier id'>already_extended</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='rubyid_class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_mod identifier id'>mod</span><span class='semicolon token'>;</span> <span class='rubyid_self self kw'>self</span><span class='semicolon token'>;</span> <span class='rubyid_end end kw'>end</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_included_modules identifier id'>included_modules</span><span class='dot token'>.</span><span class='rubyid_include? fid id'>include?</span><span class='lparen token'>(</span><span class='rubyid_ActiveModelExtensions constant id'>ActiveModelExtensions</span><span class='rparen token'>)</span>
-  <span class='rubyid_mod identifier id'>mod</span><span class='dot token'>.</span><span class='rubyid_extend identifier id'>extend</span><span class='lparen token'>(</span><span class='rubyid_ActiveModelExtensions constant id'>ActiveModelExtensions</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_already_extended identifier id'>already_extended</span>
-  <span class='rubyid_mod identifier id'>mod</span><span class='dot token'>.</span><span class='rubyid_register_dragonfly_app identifier id'>register_dragonfly_app</span><span class='lparen token'>(</span><span class='rubyid_macro_name identifier id'>macro_name</span><span class='comma token'>,</span> <span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='mod identifier id'>mod</span><span class='comma token'>,</span> <span class='macro_name identifier id'>macro_name</span><span class='rparen token'>)</span>
+  <span class='already_extended identifier id'>already_extended</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='mod identifier id'>mod</span><span class='semicolon token'>;</span> <span class='self self kw'>self</span><span class='semicolon token'>;</span> <span class='end end kw'>end</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='included_modules identifier id'>included_modules</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='ActiveModelExtensions constant id'>ActiveModelExtensions</span><span class='rparen token'>)</span>
+  <span class='mod identifier id'>mod</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span><span class='lparen token'>(</span><span class='ActiveModelExtensions constant id'>ActiveModelExtensions</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='already_extended identifier id'>already_extended</span>
+  <span class='mod identifier id'>mod</span><span class='dot token'>.</span><span class='register_dragonfly_app identifier id'>register_dragonfly_app</span><span class='lparen token'>(</span><span class='macro_name identifier id'>macro_name</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1370,17 +1315,17 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 136</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_define_macro_on_include identifier id'>define_macro_on_include</span><span class='lparen token'>(</span><span class='rubyid_mod identifier id'>mod</span><span class='comma token'>,</span> <span class='rubyid_macro_name identifier id'>macro_name</span><span class='rparen token'>)</span>
-  <span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_self self kw'>self</span>
-  <span class='lparen token'>(</span><span class='rubyid_class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_mod identifier id'>mod</span><span class='semicolon token'>;</span> <span class='rubyid_self self kw'>self</span><span class='semicolon token'>;</span> <span class='rubyid_end end kw'>end</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_class_eval identifier id'>class_eval</span> <span class='rubyid_do do kw'>do</span>
-    <span class='rubyid_alias alias kw'>alias</span> <span class='rubyid_included_without_dragonfly identifier id'>included_without_dragonfly</span> <span class='rubyid_included identifier id'>included</span>
-    <span class='rubyid_define_method identifier id'>define_method</span> <span class='symbol val'>:included_with_dragonfly</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_mod identifier id'>mod</span><span class='bitor op'>|</span>
-      <span class='rubyid_included_without_dragonfly identifier id'>included_without_dragonfly</span><span class='lparen token'>(</span><span class='rubyid_mod identifier id'>mod</span><span class='rparen token'>)</span>
-      <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='rubyid_mod identifier id'>mod</span><span class='comma token'>,</span> <span class='rubyid_macro_name identifier id'>macro_name</span><span class='rparen token'>)</span>
-    <span class='rubyid_end end kw'>end</span>
-    <span class='rubyid_alias alias kw'>alias</span> <span class='rubyid_included identifier id'>included</span> <span class='rubyid_included_with_dragonfly identifier id'>included_with_dragonfly</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='define_macro_on_include identifier id'>define_macro_on_include</span><span class='lparen token'>(</span><span class='mod identifier id'>mod</span><span class='comma token'>,</span> <span class='macro_name identifier id'>macro_name</span><span class='rparen token'>)</span>
+  <span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='self self kw'>self</span>
+  <span class='lparen token'>(</span><span class='class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='mod identifier id'>mod</span><span class='semicolon token'>;</span> <span class='self self kw'>self</span><span class='semicolon token'>;</span> <span class='end end kw'>end</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
+    <span class='alias alias kw'>alias</span> <span class='included_without_dragonfly identifier id'>included_without_dragonfly</span> <span class='included identifier id'>included</span>
+    <span class='define_method identifier id'>define_method</span> <span class='symbol val'>:included_with_dragonfly</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='mod identifier id'>mod</span><span class='bitor op'>|</span>
+      <span class='included_without_dragonfly identifier id'>included_without_dragonfly</span><span class='lparen token'>(</span><span class='mod identifier id'>mod</span><span class='rparen token'>)</span>
+      <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='mod identifier id'>mod</span><span class='comma token'>,</span> <span class='macro_name identifier id'>macro_name</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    <span class='alias alias kw'>alias</span> <span class='included identifier id'>included</span> <span class='included_with_dragonfly identifier id'>included_with_dragonfly</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1407,9 +1352,9 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 111</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_define_url identifier id'>define_url</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='rubyid_@url_proc ivar id'>@url_proc</span> <span class='assign token'>=</span> <span class='rubyid_block identifier id'>block</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='define_url identifier id'>define_url</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='@url_proc ivar id'>@url_proc</span> <span class='assign token'>=</span> <span class='block identifier id'>block</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1436,9 +1381,9 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 67</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_endpoint identifier id'>endpoint</span><span class='lparen token'>(</span><span class='rubyid_job identifier id'>job</span><span class='assign token'>=</span><span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='rubyid_block identifier id'>block</span> <span class='integer val'>? </span><span class='rubyid_RoutedEndpoint constant id'>RoutedEndpoint</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='rubyid_JobEndpoint constant id'>JobEndpoint</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_job identifier id'>job</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='endpoint identifier id'>endpoint</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='block identifier id'>block</span> <span class='integer val'>? </span><span class='RoutedEndpoint constant id'>RoutedEndpoint</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='JobEndpoint constant id'>JobEndpoint</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1465,9 +1410,9 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 153</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_generator_methods identifier id'>generator_methods</span>
-  <span class='rubyid_generator identifier id'>generator</span><span class='dot token'>.</span><span class='rubyid_functions identifier id'>functions</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='generator_methods identifier id'>generator_methods</span>
+  <span class='generator identifier id'>generator</span><span class='dot token'>.</span><span class='functions identifier id'>functions</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1488,8 +1433,7 @@ Returns the value of attribute server
   </div>
 </div>
 <div class="tags">
-  
-<h3>Raises:</h3>
+  <h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -1516,9 +1460,9 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 176</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_infer_mime_type_from_file_ext= identifier id'>infer_mime_type_from_file_ext=</span><span class='lparen token'>(</span><span class='rubyid_bool identifier id'>bool</span><span class='rparen token'>)</span>
-  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_NoMethodError constant id'>NoMethodError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;infer_mime_type_from_file_ext is deprecated - please use trust_file_extensions = #{bool.inspect} instead&quot;</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='infer_mime_type_from_file_ext= identifier id'>infer_mime_type_from_file_ext=</span><span class='lparen token'>(</span><span class='bool identifier id'>bool</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='NoMethodError constant id'>NoMethodError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;infer_mime_type_from_file_ext is deprecated - please use trust_file_extensions = #{bool.inspect} instead&quot;</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1545,9 +1489,9 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 71</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_job identifier id'>job</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='rubyid_job_definitions identifier id'>job_definitions</span><span class='dot token'>.</span><span class='rubyid_add identifier id'>add</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='job identifier id'>job</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='job_definitions identifier id'>job_definitions</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1582,17 +1526,17 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 76</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_job_class identifier id'>job_class</span>
-  <span class='rubyid_@job_class ivar id'>@job_class</span> <span class='opasgn op'>||=</span> <span class='rubyid_begin begin kw'>begin</span>
-    <span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_self self kw'>self</span>
-    <span class='rubyid_Class constant id'>Class</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_Job constant id'>Job</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_class_eval identifier id'>class_eval</span> <span class='rubyid_do do kw'>do</span>
-      <span class='rubyid_include identifier id'>include</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='rubyid_analysis_methods identifier id'>analysis_methods</span>
-      <span class='rubyid_include identifier id'>include</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_job_definitions identifier id'>job_definitions</span>
-      <span class='rubyid_include identifier id'>include</span> <span class='rubyid_Job constant id'>Job</span><span class='colon2 op'>::</span><span class='rubyid_OverrideInstanceMethods constant id'>OverrideInstanceMethods</span>
-      <span class='rubyid_self self kw'>self</span>
-    <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='job_class identifier id'>job_class</span>
+  <span class='@job_class ivar id'>@job_class</span> <span class='opasgn op'>||=</span> <span class='begin begin kw'>begin</span>
+    <span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='self self kw'>self</span>
+    <span class='Class constant id'>Class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='Job constant id'>Job</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='class_eval identifier id'>class_eval</span> <span class='do do kw'>do</span>
+      <span class='include identifier id'>include</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='analysis_methods identifier id'>analysis_methods</span>
+      <span class='include identifier id'>include</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='job_definitions identifier id'>job_definitions</span>
+      <span class='include identifier id'>include</span> <span class='Job constant id'>Job</span><span class='colon2 op'>::</span><span class='OverrideInstanceMethods constant id'>OverrideInstanceMethods</span>
+      <span class='self self kw'>self</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1619,9 +1563,9 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 161</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_job_methods identifier id'>job_methods</span>
-  <span class='rubyid_job_definitions identifier id'>job_definitions</span><span class='dot token'>.</span><span class='rubyid_definition_names identifier id'>definition_names</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='job_methods identifier id'>job_methods</span>
+  <span class='job_definitions identifier id'>job_definitions</span><span class='dot token'>.</span><span class='definition_names identifier id'>definition_names</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1648,9 +1592,9 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 102</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_mime_type_for identifier id'>mime_type_for</span><span class='lparen token'>(</span><span class='rubyid_format identifier id'>format</span><span class='rparen token'>)</span>
-  <span class='rubyid_registered_mime_types identifier id'>registered_mime_types</span><span class='lbrack token'>[</span><span class='rubyid_file_ext_string identifier id'>file_ext_string</span><span class='lparen token'>(</span><span class='rubyid_format identifier id'>format</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='mime_type_for identifier id'>mime_type_for</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='rparen token'>)</span>
+  <span class='registered_mime_types identifier id'>registered_mime_types</span><span class='lbrack token'>[</span><span class='file_ext_string identifier id'>file_ext_string</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1681,9 +1625,9 @@ Returns the value of attribute server
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 62</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_new_job identifier id'>new_job</span><span class='lparen token'>(</span><span class='rubyid_content identifier id'>content</span><span class='assign token'>=</span><span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_meta identifier id'>meta</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='rubyid_job_class identifier id'>job_class</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='comma token'>,</span> <span class='rubyid_content identifier id'>content</span><span class='comma token'>,</span> <span class='rubyid_meta identifier id'>meta</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='new_job identifier id'>new_job</span><span class='lparen token'>(</span><span class='content identifier id'>content</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='meta identifier id'>meta</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='job_class identifier id'>job_class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='content identifier id'>content</span><span class='comma token'>,</span> <span class='meta identifier id'>meta</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1699,16 +1643,12 @@ Returns the value of attribute server
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Reflection
-</p>
-
+    Reflection
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -1722,9 +1662,9 @@ Reflection
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 149</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_processor_methods identifier id'>processor_methods</span>
-  <span class='rubyid_processor identifier id'>processor</span><span class='dot token'>.</span><span class='rubyid_functions identifier id'>functions</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='processor_methods identifier id'>processor_methods</span>
+  <span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='functions identifier id'>functions</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1751,9 +1691,9 @@ Reflection
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 93</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_register_mime_type identifier id'>register_mime_type</span><span class='lparen token'>(</span><span class='rubyid_format identifier id'>format</span><span class='comma token'>,</span> <span class='rubyid_mime_type identifier id'>mime_type</span><span class='rparen token'>)</span>
-  <span class='rubyid_registered_mime_types identifier id'>registered_mime_types</span><span class='lbrack token'>[</span><span class='rubyid_file_ext_string identifier id'>file_ext_string</span><span class='lparen token'>(</span><span class='rubyid_format identifier id'>format</span><span class='rparen token'>)</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_mime_type identifier id'>mime_type</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='register_mime_type identifier id'>register_mime_type</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='comma token'>,</span> <span class='mime_type identifier id'>mime_type</span><span class='rparen token'>)</span>
+  <span class='registered_mime_types identifier id'>registered_mime_types</span><span class='lbrack token'>[</span><span class='file_ext_string identifier id'>file_ext_string</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='rparen token'>)</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='mime_type identifier id'>mime_type</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1780,9 +1720,9 @@ Reflection
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 98</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_registered_mime_types identifier id'>registered_mime_types</span>
-  <span class='rubyid_@registered_mime_types ivar id'>@registered_mime_types</span> <span class='opasgn op'>||=</span> <span class='rubyid_Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='rubyid_Mime constant id'>Mime</span><span class='colon2 op'>::</span><span class='rubyid_MIME_TYPES constant id'>MIME_TYPES</span><span class='dot token'>.</span><span class='rubyid_dup identifier id'>dup</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='registered_mime_types identifier id'>registered_mime_types</span>
+  <span class='@registered_mime_types ivar id'>@registered_mime_types</span> <span class='opasgn op'>||=</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Mime constant id'>Mime</span><span class='colon2 op'>::</span><span class='MIME_TYPES constant id'>MIME_TYPES</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1803,8 +1743,7 @@ Reflection
   </div>
 </div>
 <div class="tags">
-  
-<h3>Raises:</h3>
+  <h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -1833,11 +1772,11 @@ Reflection
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 124</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_remote_url_for identifier id'>remote_url_for</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='rubyid_datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='rubyid_url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='rparen token'>)</span>
-<span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_NoMethodError constant id'>NoMethodError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
-  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_NotImplementedError constant id'>NotImplementedError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;The datastore doesn't support serving content directly - #{datastore.inspect}&quot;</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='remote_url_for identifier id'>remote_url_for</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+<span class='rescue rescue kw'>rescue</span> <span class='NoMethodError constant id'>NoMethodError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='raise identifier id'>raise</span> <span class='NotImplementedError constant id'>NotImplementedError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;The datastore doesn't support serving content directly - #{datastore.inspect}&quot;</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1864,9 +1803,9 @@ Reflection
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 106</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_response_headers identifier id'>response_headers</span>
-  <span class='rubyid_@response_headers ivar id'>@response_headers</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='response_headers identifier id'>response_headers</span>
+  <span class='@response_headers ivar id'>@response_headers</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1894,10 +1833,10 @@ Reflection
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 88</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='rubyid_object identifier id'>object</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='rubyid_temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='rubyid_object identifier id'>object</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_TempObject constant id'>TempObject</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='rubyid_object identifier id'>object</span> <span class='colon op'>:</span> <span class='rubyid_TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_object identifier id'>object</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:meta</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='rubyid_datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='TempObject constant id'>TempObject</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='object identifier id'>object</span> <span class='colon op'>:</span> <span class='TempObject constant id'>TempObject</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:meta</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1928,13 +1867,13 @@ Reflection
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 116</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='rubyid_if if kw'>if</span> <span class='rubyid_@url_proc ivar id'>@url_proc</span>
-    <span class='rubyid_@url_proc ivar id'>@url_proc</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='comma token'>,</span> <span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='rparen token'>)</span>
-  <span class='rubyid_else else kw'>else</span>
-    <span class='rubyid_server identifier id'>server</span><span class='dot token'>.</span><span class='rubyid_url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='@url_proc ivar id'>@url_proc</span>
+    <span class='@url_proc ivar id'>@url_proc</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='server identifier id'>server</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1950,16 +1889,12 @@ Reflection
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Deprecated methods
-</p>
-
+    Deprecated methods
 
   </div>
 </div>
 <div class="tags">
-  
-<h3>Raises:</h3>
+  <h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -1986,9 +1921,9 @@ Deprecated methods
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 166</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_url_path_prefix= identifier id'>url_path_prefix=</span><span class='lparen token'>(</span><span class='rubyid_thing identifier id'>thing</span><span class='rparen token'>)</span>
-  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_NoMethodError constant id'>NoMethodError</span><span class='comma token'>,</span> <span class='string val'>&quot;url_path_prefix is deprecated - please use url_format, e.g. url_format = '/media/:job/:basename.:format' - see docs for more details&quot;</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='url_path_prefix= identifier id'>url_path_prefix=</span><span class='lparen token'>(</span><span class='thing identifier id'>thing</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='NoMethodError constant id'>NoMethodError</span><span class='comma token'>,</span> <span class='string val'>&quot;url_path_prefix is deprecated - please use url_format, e.g. url_format = '/media/:job/:basename.:format' - see docs for more details&quot;</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2009,8 +1944,7 @@ Deprecated methods
   </div>
 </div>
 <div class="tags">
-  
-<h3>Raises:</h3>
+  <h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -2037,9 +1971,9 @@ Deprecated methods
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/app.rb', line 171</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_url_suffix= identifier id'>url_suffix=</span><span class='lparen token'>(</span><span class='rubyid_thing identifier id'>thing</span><span class='rparen token'>)</span>
-  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_NoMethodError constant id'>NoMethodError</span><span class='comma token'>,</span> <span class='string val'>&quot;url_suffix is deprecated - please use url_format, e.g. url_format = '/media/:job/:basename.:format' - see docs for more details&quot;</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='url_suffix= identifier id'>url_suffix=</span><span class='lparen token'>(</span><span class='thing identifier id'>thing</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='NoMethodError constant id'>NoMethodError</span><span class='comma token'>,</span> <span class='string val'>&quot;url_suffix is deprecated - please use url_format, e.g. url_format = '/media/:job/:basename.:format' - see docs for more details&quot;</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2058,9 +1992,9 @@ Deprecated methods
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:56 2012 by 
+  Generated on Wed Jan 11 12:30:50 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

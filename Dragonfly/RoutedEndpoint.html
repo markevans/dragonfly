@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::RoutedEndpoint
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -178,10 +178,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-A new instance of RoutedEndpoint.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>A new instance of RoutedEndpoint.</div></span>
   
 </li>
 
@@ -201,16 +198,12 @@ A new instance of RoutedEndpoint.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-A new instance of RoutedEndpoint
-</p>
-
+    A new instance of RoutedEndpoint
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -225,10 +218,10 @@ A new instance of RoutedEndpoint
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/routed_endpoint.rb', line 6</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_app identifier id'>app</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='rubyid_@app ivar id'>@app</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span>
-  <span class='rubyid_@block ivar id'>@block</span> <span class='assign token'>=</span> <span class='rubyid_block identifier id'>block</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='app identifier id'>app</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='@app ivar id'>@app</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span>
+  <span class='@block ivar id'>@block</span> <span class='assign token'>=</span> <span class='block identifier id'>block</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -268,15 +261,15 @@ A new instance of RoutedEndpoint
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/routed_endpoint.rb', line 11</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_env identifier id'>env</span><span class='rparen token'>)</span>
-  <span class='rubyid_params identifier id'>params</span> <span class='assign token'>=</span> <span class='rubyid_symbolize_keys_of identifier id'>symbolize_keys_of</span> <span class='rubyid_Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='rubyid_Request constant id'>Request</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_env identifier id'>env</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_params identifier id'>params</span>
-  <span class='rubyid_job identifier id'>job</span> <span class='assign token'>=</span> <span class='rubyid_@block ivar id'>@block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_params identifier id'>params</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='rubyid_routing_params identifier id'>routing_params</span><span class='lparen token'>(</span><span class='rubyid_env identifier id'>env</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_@app ivar id'>@app</span><span class='rparen token'>)</span>
-  <span class='rubyid_Response constant id'>Response</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_env identifier id'>env</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_response identifier id'>to_response</span>
-<span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Job constant id'>Job</span><span class='colon2 op'>::</span><span class='rubyid_NoSHAGiven constant id'>NoSHAGiven</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
+<span class='def def kw'>def</span> <span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span>
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='symbolize_keys_of identifier id'>symbolize_keys_of</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Request constant id'>Request</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='params identifier id'>params</span>
+  <span class='job identifier id'>job</span> <span class='assign token'>=</span> <span class='@block ivar id'>@block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='routing_params identifier id'>routing_params</span><span class='lparen token'>(</span><span class='env identifier id'>env</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='@app ivar id'>@app</span><span class='rparen token'>)</span>
+  <span class='Response constant id'>Response</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='env identifier id'>env</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_response identifier id'>to_response</span>
+<span class='rescue rescue kw'>rescue</span> <span class='Job constant id'>Job</span><span class='colon2 op'>::</span><span class='NoSHAGiven constant id'>NoSHAGiven</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
   <span class='lbrack token'>[</span><span class='integer val'>400</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='string val'>&quot;Content-Type&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'text/plain'</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='string val'>&quot;You need to give a SHA parameter&quot;</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
-<span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Job constant id'>Job</span><span class='colon2 op'>::</span><span class='rubyid_IncorrectSHA constant id'>IncorrectSHA</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
+<span class='rescue rescue kw'>rescue</span> <span class='Job constant id'>Job</span><span class='colon2 op'>::</span><span class='IncorrectSHA constant id'>IncorrectSHA</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
   <span class='lbrack token'>[</span><span class='integer val'>400</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='string val'>&quot;Content-Type&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'text/plain'</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='dstring node'>&quot;The SHA parameter you gave (#{e}) is incorrect&quot;</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -295,9 +288,9 @@ A new instance of RoutedEndpoint
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:58 2012 by 
+  Generated on Wed Jan 11 12:30:52 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

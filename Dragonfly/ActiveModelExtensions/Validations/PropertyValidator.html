@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::ActiveModelExtensions::Validations::PropertyValidator
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -187,12 +187,12 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/validations.rb', line 7</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_validate_each identifier id'>validate_each</span><span class='lparen token'>(</span><span class='rubyid_model identifier id'>model</span><span class='comma token'>,</span> <span class='rubyid_attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='rubyid_attachment identifier id'>attachment</span><span class='rparen token'>)</span>
-  <span class='rubyid_if if kw'>if</span> <span class='rubyid_attachment identifier id'>attachment</span>
-    <span class='rubyid_property identifier id'>property</span> <span class='assign token'>=</span> <span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='rubyid_property_name identifier id'>property_name</span><span class='rparen token'>)</span>
-    <span class='rubyid_model identifier id'>model</span><span class='dot token'>.</span><span class='rubyid_errors identifier id'>errors</span><span class='dot token'>.</span><span class='rubyid_add identifier id'>add</span><span class='lparen token'>(</span><span class='rubyid_attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='rubyid_message identifier id'>message</span><span class='lparen token'>(</span><span class='rubyid_property identifier id'>property</span><span class='comma token'>,</span> <span class='rubyid_model identifier id'>model</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_matches? fid id'>matches?</span><span class='lparen token'>(</span><span class='rubyid_property identifier id'>property</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='validate_each identifier id'>validate_each</span><span class='lparen token'>(</span><span class='model identifier id'>model</span><span class='comma token'>,</span> <span class='attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='attachment identifier id'>attachment</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='attachment identifier id'>attachment</span>
+    <span class='property identifier id'>property</span> <span class='assign token'>=</span> <span class='attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='property_name identifier id'>property_name</span><span class='rparen token'>)</span>
+    <span class='model identifier id'>model</span><span class='dot token'>.</span><span class='errors identifier id'>errors</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='message identifier id'>message</span><span class='lparen token'>(</span><span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='model identifier id'>model</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='matches? fid id'>matches?</span><span class='lparen token'>(</span><span class='property identifier id'>property</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -211,9 +211,9 @@
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:20:00 2012 by 
+  Generated on Wed Jan 11 12:30:54 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::SimpleCache
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -144,10 +144,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute max_size.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>Returns the value of attribute max_size.</div></span>
   
 </li>
 
@@ -209,10 +206,7 @@ Returns the value of attribute max_size.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-A new instance of SimpleCache.
-</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'>A new instance of SimpleCache.</div></span>
   
 </li>
 
@@ -242,16 +236,12 @@ A new instance of SimpleCache.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-A new instance of SimpleCache
-</p>
-
+    A new instance of SimpleCache
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -266,10 +256,10 @@ A new instance of SimpleCache
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_cache.rb', line 4</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_max_size identifier id'>max_size</span><span class='rparen token'>)</span>
-  <span class='rubyid_@max_size ivar id'>@max_size</span> <span class='assign token'>=</span> <span class='rubyid_max_size identifier id'>max_size</span>
-  <span class='rubyid_@keys ivar id'>@keys</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='max_size identifier id'>max_size</span><span class='rparen token'>)</span>
+  <span class='@max_size ivar id'>@max_size</span> <span class='assign token'>=</span> <span class='max_size identifier id'>max_size</span>
+  <span class='@keys ivar id'>@keys</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -293,16 +283,12 @@ A new instance of SimpleCache
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Returns the value of attribute max_size
-</p>
-
+    Returns the value of attribute max_size
 
   </div>
 </div>
 <div class="tags">
   
-
 </div><table class="source_code">
   <tr>
     <td>
@@ -316,9 +302,9 @@ Returns the value of attribute max_size
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_cache.rb', line 9</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_max_size identifier id'>max_size</span>
-  <span class='rubyid_@max_size ivar id'>@max_size</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='max_size identifier id'>max_size</span>
+  <span class='@max_size ivar id'>@max_size</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -359,16 +345,16 @@ Returns the value of attribute max_size
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/simple_cache.rb', line 11</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='aset op'>[]=</span><span class='lparen token'>(</span><span class='rubyid_key identifier id'>key</span><span class='comma token'>,</span> <span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
-  <span class='rubyid_if if kw'>if</span> <span class='notop op'>!</span><span class='rubyid_has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='rubyid_key identifier id'>key</span><span class='rparen token'>)</span>
-    <span class='rubyid_@keys ivar id'>@keys</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_key identifier id'>key</span>
-    <span class='rubyid_if if kw'>if</span> <span class='rubyid_size identifier id'>size</span> <span class='eq op'>==</span> <span class='rubyid_max_size identifier id'>max_size</span>
-      <span class='rubyid_key_to_purge identifier id'>key_to_purge</span> <span class='assign token'>=</span> <span class='rubyid_@keys ivar id'>@keys</span><span class='dot token'>.</span><span class='rubyid_shift identifier id'>shift</span>
-      <span class='rubyid_delete identifier id'>delete</span><span class='lparen token'>(</span><span class='rubyid_key_to_purge identifier id'>key_to_purge</span><span class='rparen token'>)</span>
-    <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_super super kw'>super</span>
-<span class='rubyid_end end kw'>end</span>
+<span class='def def kw'>def</span> <span class='aset op'>[]=</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+    <span class='@keys ivar id'>@keys</span> <span class='lshft op'>&lt;&lt;</span> <span class='key identifier id'>key</span>
+    <span class='if if kw'>if</span> <span class='size identifier id'>size</span> <span class='eq op'>==</span> <span class='max_size identifier id'>max_size</span>
+      <span class='key_to_purge identifier id'>key_to_purge</span> <span class='assign token'>=</span> <span class='@keys ivar id'>@keys</span><span class='dot token'>.</span><span class='shift identifier id'>shift</span>
+      <span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='key_to_purge identifier id'>key_to_purge</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='super super kw'>super</span>
+<span class='end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -387,9 +373,9 @@ Returns the value of attribute max_size
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:58 2012 by 
+  Generated on Wed Jan 11 12:30:52 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

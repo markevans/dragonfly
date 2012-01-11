@@ -6,7 +6,7 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.2
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.9)</div>
+      <div id="logo">DRAGONFLY (v 0.9.10)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -90,84 +90,104 @@
 
 <p><strong>Gemfile</strong>:</p>
 
-<pre class="code ruby"><span class='rubyid_gem identifier id'>gem</span> <span class='string val'>'rack-cache'</span><span class='comma token'>,</span> <span class='symbol val'>:require</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'rack/cache'</span>
-<span class='rubyid_gem identifier id'>gem</span> <span class='string val'>'dragonfly'</span><span class='comma token'>,</span> <span class='string val'>'~&gt;0.9.9'</span>
-</pre>
+<p><code>ruby
+gem 'rack-cache', :require =&gt; 'rack/cache'
+gem 'dragonfly', '~&gt;0.9.10'
+</code></p>
 
 <p><strong>Initializer</strong> (e.g. config/initializers/dragonfly.rb):</p>
 
-<pre class="code ruby"><span class='rubyid_require identifier id'>require</span> <span class='string val'>'dragonfly/rails/images'</span>
-</pre>
+<p><code>ruby
+require 'dragonfly/rails/images'
+</code></p>
 
 <p><strong>Migration</strong>:</p>
 
-<pre class="code ruby"><span class='rubyid_add_column identifier id'>add_column</span> <span class='symbol val'>:albums</span><span class='comma token'>,</span> <span class='symbol val'>:cover_image_uid</span><span class='comma token'>,</span>  <span class='symbol val'>:string</span>
-<span class='rubyid_add_column identifier id'>add_column</span> <span class='symbol val'>:albums</span><span class='comma token'>,</span> <span class='symbol val'>:cover_image_name</span><span class='comma token'>,</span> <span class='symbol val'>:string</span>  <span class='comment val'># Optional - only if you want urls</span>
-                                                <span class='comment val'># to end with the original filename</span>
+<p>```ruby
+add<em>column :albums, :cover</em>image<em>uid,  :string
+add</em>column :albums, :cover<em>image</em>name, :string  # Optional - only if you want urls</p>
+
+<pre class="code">                                            <span class='comment val'># to end with the original filename</span>
 </pre>
+
+<p>```</p>
 
 <p><strong>Model</strong>:</p>
 
-<pre class="code ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Album constant id'>Album</span> <span class='lt op'>&lt;</span> <span class='rubyid_ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span>
-  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:cover_image</span>            <span class='comment val'># 'image_accessor' is provided by Dragonfly</span>
-                                         <span class='comment val'># this defines a reader/writer for cover_image</span>
-  <span class='comment val'># ...</span>
-<span class='rubyid_end end kw'>end</span>
+<p>```ruby
+class Album &lt; ActiveRecord::Base
+  image<em>accessor :cover</em>image            # 'image_accessor' is provided by Dragonfly</p>
+
+<pre class="code">                                     <span class='comment val'># this defines a reader/writer for cover_image</span>
 </pre>
+
+<p>  # ...
+end
+```</p>
 
 <p><strong>View</strong> (for uploading via a file field):</p>
 
-<pre class="code erb">&lt;% form_for @album, :html =&gt; {:multipart =&gt; true} do |f| %&gt;
+<p><code>erb
+&lt;% form_for @album, :html =&gt; {:multipart =&gt; true} do |f| %&gt;
   ...
   &lt;%= f.file_field :cover_image %&gt;
   ...
 &lt;% end %&gt;
-</pre>
+</code></p>
 
 <p>NB: REMEMBER THE MULTIPART BIT!!!</p>
 
 <p>You can avoid having to re-upload when validations fail with</p>
 
-<pre class="code erb">  &lt;%= f.hidden_field :retained_cover_image %&gt;
-</pre>
+<p><code>erb
+  &lt;%= f.hidden_field :retained_cover_image %&gt;
+</code></p>
 
 <p>remove the attachment with</p>
 
-<pre class="code erb">  &lt;%= f.check_box :remove_cover_image %&gt;
-</pre>
+<p><code>erb
+  &lt;%= f.check_box :remove_cover_image %&gt;
+</code></p>
 
 <p>assign from some other url with</p>
 
-<pre class="code erb">  &lt;%= f.text_field :cover_image_url %&gt;
-</pre>
+<p><code>erb
+  &lt;%= f.text_field :cover_image_url %&gt;
+</code></p>
 
 <p>and display a thumbnail (on the upload form) with</p>
 
-<pre class="code erb">  &lt;%= image_tag @album.cover_image.thumb('100x100').url if @album.cover_image_uid %&gt;
-</pre>
+<p><code>erb
+  &lt;%= image_tag @album.cover_image.thumb('100x100').url if @album.cover_image_uid %&gt;
+</code></p>
 
 <p><strong>View</strong> (to display):</p>
 
-<pre class="code erb">&lt;%= image_tag @album.cover_image.url %&gt;
+<p><code>erb
+&lt;%= image_tag @album.cover_image.url %&gt;
 &lt;%= image_tag @album.cover_image.thumb('400x200#').url %&gt;
 &lt;%= image_tag @album.cover_image.jpg.url %&gt;
 &lt;%= image_tag @album.cover_image.process(:greyscale).encode(:tiff).url %&gt;
 ...etc.
-</pre>
+</code></p>
 
 <p>The above relies on imagemagick being installed. Dragonfly doesn't depend on it per se, but the default configuration <code>'dragonfly/rails/images'</code>
 uses it. For alternative configurations, see below.</p>
 
 <p>If using Capistrano with the above, you probably will want to keep the cache between deploys, so in deploy.rb:</p>
 
-<pre class="code ruby"><span class='rubyid_namespace identifier id'>namespace</span> <span class='symbol val'>:dragonfly</span> <span class='rubyid_do do kw'>do</span>
-  <span class='rubyid_desc identifier id'>desc</span> <span class='string val'>&quot;Symlink the Rack::Cache files&quot;</span>
-  <span class='rubyid_task identifier id'>task</span> <span class='symbol val'>:symlink</span><span class='comma token'>,</span> <span class='symbol val'>:roles</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:app</span><span class='rbrack token'>]</span> <span class='rubyid_do do kw'>do</span>
-    <span class='rubyid_run identifier id'>run</span> <span class='dstring node'>&quot;mkdir -p #{shared_path}/tmp/dragonfly &amp;&amp; ln -nfs #{shared_path}/tmp/dragonfly #{release_path}/tmp/dragonfly&quot;</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
-<span class='rubyid_after identifier id'>after</span> <span class='string val'>'deploy:update_code'</span><span class='comma token'>,</span> <span class='string val'>'dragonfly:symlink'</span>
+<p>```ruby
+namespace :dragonfly do
+  desc "Symlink the Rack::Cache files"
+  task :symlink, :roles => [:app] do</p>
+
+<pre class="code"><span class='run identifier id'>run</span> <span class='dstring node'>&quot;mkdir -p #{shared_path}/tmp/dragonfly &amp;&amp; ln -nfs #{shared_path}/tmp/dragonfly #{release_path}/tmp/dragonfly&quot;</span>
 </pre>
+
+<p>  end
+end
+after 'deploy:update_code', 'dragonfly:symlink'
+```</p>
 
 <h2>Sinatra, CouchDB, Mongo, Rack, S3, custom storage, processing, and more...</h2>
 
@@ -195,10 +215,10 @@ uses it. For alternative configurations, see below.</p>
 <li><a href="http://github.com/markevans">Mark Evans</a> (author)</li>
 </ul>
 
+
 <h1>Copyright</h1>
 
-<p>Copyright (c) 2009-2010 Mark Evans. See LICENSE for details.</p>
-</div>
+<p>Copyright (c) 2009-2010 Mark Evans. See LICENSE for details.</p></div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -208,9 +228,9 @@ uses it. For alternative configurations, see below.</p>
     </div>
 
     <div id="footer">
-  Generated on Thu Jan  5 16:19:53 2012 by 
+  Generated on Wed Jan 11 12:30:48 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.2).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>
