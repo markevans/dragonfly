@@ -1,3 +1,9 @@
+0.9.10 (2012-01-11)
+===================
+Fixes
+-----
+- FileDataStore was causing errors when the storage path was flat (not in a directory structure)
+
 0.9.9 (2011-12-30)
 ==================
 Features
