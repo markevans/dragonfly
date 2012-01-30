@@ -63,14 +63,14 @@ module Dragonfly
           response.body,
           parse_s3_metadata(response.headers)
         ]
-      rescue Excon::Errors::NotFound => e
-        raise DataNotFound, "#{e} - #{uid}"
+      rescue Excon::Errors::NotFound, Excon::Errors::Conflict
+        raise DataNotFound, "#{$!} - #{uid}"
       end
 
       def destroy(uid)
         rescuing_socket_errors{ storage.delete_object(bucket_name, uid) }
-      rescue Excon::Errors::NotFound => e
-        raise DataNotFound, "#{e} - #{uid}"
+      rescue Excon::Errors::NotFound, Excon::Errors::Conflict
+        raise DataNotFound, "#{$!} - #{uid}"
       end
 
       def url_for(uid, opts={})
