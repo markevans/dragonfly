@@ -1,5 +1,7 @@
 --main extra_docs/Index.md
 -e ./yard/setup.rb
+--markup-provider=redcarpet
+--markup=markdown
 -
 README.md
 extra_docs/GeneralUsage.md
