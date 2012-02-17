@@ -6,7 +6,7 @@
 <title>
   Module: Dragonfly::Job::OverrideInstanceMethods
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -101,16 +101,18 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    This is needed because we need a way of overriding
+    <p>This is needed because we need a way of overriding
 the methods added to Job objects by the analyser and by
 the job shortcuts like 'thumb', etc.
 If we had traits/classboxes in ruby maybe this wouldn't be needed
-Think of it as like a normal instance method but with a css-like !important after it
+Think of it as like a normal instance method but with a css-like !important after it</p>
+
 
   </div>
 </div>
 <div class="tags">
   
+
 </div>
 
 
@@ -219,10 +221,10 @@ Think of it as like a normal instance method but with a css-like !important afte
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 191</span>
 
-<span class='def def kw'>def</span> <span class='format identifier id'>format</span>
-  <span class='apply identifier id'>apply</span>
-  <span class='meta identifier id'>meta</span><span class='lbrack token'>[</span><span class='symbol val'>:format</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lparen token'>(</span><span class='ext identifier id'>ext</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span> <span class='if if_mod kw'>if</span> <span class='ext identifier id'>ext</span> <span class='andop op'>&amp;&amp;</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='trust_file_extensions identifier id'>trust_file_extensions</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='analyse identifier id'>analyse</span><span class='lparen token'>(</span><span class='symbol val'>:format</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_format identifier id'>format</span>
+  <span class='rubyid_apply identifier id'>apply</span>
+  <span class='rubyid_meta identifier id'>meta</span><span class='lbrack token'>[</span><span class='symbol val'>:format</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lparen token'>(</span><span class='rubyid_ext identifier id'>ext</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_ext identifier id'>ext</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_trust_file_extensions identifier id'>trust_file_extensions</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='rubyid_analyse identifier id'>analyse</span><span class='lparen token'>(</span><span class='symbol val'>:format</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -249,9 +251,9 @@ Think of it as like a normal instance method but with a css-like !important afte
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 196</span>
 
-<span class='def def kw'>def</span> <span class='mime_type identifier id'>mime_type</span>
-  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='mime_type_for identifier id'>mime_type_for</span><span class='lparen token'>(</span><span class='format identifier id'>format</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='analyse identifier id'>analyse</span><span class='lparen token'>(</span><span class='symbol val'>:mime_type</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fallback_mime_type identifier id'>fallback_mime_type</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_mime_type identifier id'>mime_type</span>
+  <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_mime_type_for identifier id'>mime_type_for</span><span class='lparen token'>(</span><span class='rubyid_format identifier id'>format</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='rubyid_analyse identifier id'>analyse</span><span class='lparen token'>(</span><span class='symbol val'>:mime_type</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fallback_mime_type identifier id'>fallback_mime_type</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -278,9 +280,9 @@ Think of it as like a normal instance method but with a css-like !important afte
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 200</span>
 
-<span class='def def kw'>def</span> <span class='to_s identifier id'>to_s</span>
-  <span class='super super kw'>super</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/#&lt;Class:\w+&gt;/</span><span class='comma token'>,</span> <span class='string val'>'Extended Dragonfly::Job'</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_to_s identifier id'>to_s</span>
+  <span class='rubyid_super super kw'>super</span><span class='dot token'>.</span><span class='rubyid_sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/#&lt;Class:\w+&gt;/</span><span class='comma token'>,</span> <span class='string val'>'Extended Dragonfly::Job'</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -299,9 +301,9 @@ Think of it as like a normal instance method but with a css-like !important afte
     </div>
 
     <div id="footer">
-  Generated on Wed Jan 11 12:30:50 2012 by 
+  Generated on Fri Feb 17 10:34:47 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.3).
 </div>
 
   </body>

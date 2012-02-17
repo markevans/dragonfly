@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::DataStorage::MongoDataStore
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -126,21 +126,23 @@
         <dt id="OBJECT_ID-constant" class="">OBJECT_ID =
           <div class="docstring">
   <div class="discussion">
-    Mongo gem deprecated ObjectID in favour of ObjectId
+    <p>Mongo gem deprecated ObjectID in favour of ObjectId</p>
+
 
   </div>
 </div>
 <div class="tags">
   
+
 </div>
         </dt>
-        <dd><pre class="code"><span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='ObjectId constant id'>ObjectId</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='ObjectId constant id'>ObjectId</span> <span class='colon op'>:</span> <span class='BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='ObjectID constant id'>ObjectID</span>
+        <dd><pre class="code"><span class='rubyid_defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='rubyid_BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='rubyid_ObjectId constant id'>ObjectId</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='rubyid_BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='rubyid_ObjectId constant id'>ObjectId</span> <span class='colon op'>:</span> <span class='rubyid_BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='rubyid_ObjectID constant id'>ObjectID</span>
 </pre></dd>
       
         <dt id="INVALID_OBJECT_ID-constant" class="">INVALID_OBJECT_ID =
           
         </dt>
-        <dd><pre class="code"><span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='InvalidObjectId constant id'>InvalidObjectId</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='InvalidObjectId constant id'>InvalidObjectId</span> <span class='colon op'>:</span> <span class='BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='InvalidObjectID constant id'>InvalidObjectID</span>
+        <dd><pre class="code"><span class='rubyid_defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='rubyid_BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='rubyid_InvalidObjectId constant id'>InvalidObjectId</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='rubyid_BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='rubyid_InvalidObjectId constant id'>InvalidObjectId</span> <span class='colon op'>:</span> <span class='rubyid_BSON constant id'>BSON</span><span class='colon2 op'>::</span><span class='rubyid_InvalidObjectID constant id'>InvalidObjectID</span>
 </pre></dd>
       
     </dl>
@@ -351,7 +353,8 @@ or
   
 
   
-    <span class="summary_desc"><div class='inline'>A new instance of MongoDataStore.</div></span>
+    <span class="summary_desc"><div class='inline'><p>A new instance of MongoDataStore.</p>
+</div></span>
   
 </li>
 
@@ -433,12 +436,14 @@ or
   
 </p><div class="docstring">
   <div class="discussion">
-    A new instance of MongoDataStore
+    <p>A new instance of MongoDataStore</p>
+
 
   </div>
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -458,15 +463,15 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 22</span>
 
-<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='host identifier id'>host</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:host</span><span class='rbrack token'>]</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='port identifier id'>port</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='database identifier id'>database</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:database</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:database</span><span class='rbrack token'>]</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='username identifier id'>username</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:username</span><span class='rbrack token'>]</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='password identifier id'>password</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:password</span><span class='rbrack token'>]</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='connection identifier id'>connection</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:connection</span><span class='rbrack token'>]</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='db identifier id'>db</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:db</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_host identifier id'>host</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:host</span><span class='rbrack token'>]</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_port identifier id'>port</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_database identifier id'>database</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:database</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:database</span><span class='rbrack token'>]</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_username identifier id'>username</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:username</span><span class='rbrack token'>]</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_password identifier id'>password</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:password</span><span class='rbrack token'>]</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_connection identifier id'>connection</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:connection</span><span class='rbrack token'>]</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_db identifier id'>db</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:db</span><span class='rbrack token'>]</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -500,9 +505,9 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 62</span>
 
-<span class='def def kw'>def</span> <span class='connection identifier id'>connection</span>
-  <span class='@connection ivar id'>@connection</span> <span class='opasgn op'>||=</span> <span class='Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='Connection constant id'>Connection</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='host identifier id'>host</span><span class='comma token'>,</span> <span class='port identifier id'>port</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_connection identifier id'>connection</span>
+  <span class='rubyid_@connection ivar id'>@connection</span> <span class='opasgn op'>||=</span> <span class='rubyid_Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='rubyid_Connection constant id'>Connection</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_host identifier id'>host</span><span class='comma token'>,</span> <span class='rubyid_port identifier id'>port</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -529,9 +534,9 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 66</span>
 
-<span class='def def kw'>def</span> <span class='db identifier id'>db</span>
-  <span class='@db ivar id'>@db</span> <span class='opasgn op'>||=</span> <span class='connection identifier id'>connection</span><span class='dot token'>.</span><span class='db identifier id'>db</span><span class='lparen token'>(</span><span class='database identifier id'>database</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_db identifier id'>db</span>
+  <span class='rubyid_@db ivar id'>@db</span> <span class='opasgn op'>||=</span> <span class='rubyid_connection identifier id'>connection</span><span class='dot token'>.</span><span class='rubyid_db identifier id'>db</span><span class='lparen token'>(</span><span class='rubyid_database identifier id'>database</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -552,7 +557,8 @@ or
   </div>
 </div>
 <div class="tags">
-  <h3>Raises:</h3>
+  
+<h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -582,12 +588,12 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 55</span>
 
-<span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
-  <span class='ensure_authenticated! fid id'>ensure_authenticated!</span>
-  <span class='grid identifier id'>grid</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='bson_id identifier id'>bson_id</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-<span class='rescue rescue kw'>rescue</span> <span class='Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='GridFileNotFound constant id'>GridFileNotFound</span><span class='comma token'>,</span> <span class='INVALID_OBJECT_ID constant id'>INVALID_OBJECT_ID</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
-  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='rubyid_ensure_authenticated! fid id'>ensure_authenticated!</span>
+  <span class='rubyid_grid identifier id'>grid</span><span class='dot token'>.</span><span class='rubyid_delete identifier id'>delete</span><span class='lparen token'>(</span><span class='rubyid_bson_id identifier id'>bson_id</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='rubyid_GridFileNotFound constant id'>GridFileNotFound</span><span class='comma token'>,</span> <span class='rubyid_INVALID_OBJECT_ID constant id'>INVALID_OBJECT_ID</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
+  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -614,9 +620,9 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 70</span>
 
-<span class='def def kw'>def</span> <span class='grid identifier id'>grid</span>
-  <span class='@grid ivar id'>@grid</span> <span class='opasgn op'>||=</span> <span class='Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='Grid constant id'>Grid</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='db identifier id'>db</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_grid identifier id'>grid</span>
+  <span class='rubyid_@grid ivar id'>@grid</span> <span class='opasgn op'>||=</span> <span class='rubyid_Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='rubyid_Grid constant id'>Grid</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_db identifier id'>db</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -637,7 +643,8 @@ or
   </div>
 </div>
 <div class="tags">
-  <h3>Raises:</h3>
+  
+<h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -673,18 +680,18 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 42</span>
 
-<span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
-  <span class='ensure_authenticated! fid id'>ensure_authenticated!</span>
-  <span class='grid_io identifier id'>grid_io</span> <span class='assign token'>=</span> <span class='grid identifier id'>grid</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='bson_id identifier id'>bson_id</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='meta identifier id'>meta</span> <span class='assign token'>=</span> <span class='marshal_decode identifier id'>marshal_decode</span><span class='lparen token'>(</span><span class='grid_io identifier id'>grid_io</span><span class='dot token'>.</span><span class='metadata identifier id'>metadata</span><span class='rparen token'>)</span>
-  <span class='meta identifier id'>meta</span><span class='dot token'>.</span><span class='merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='symbol val'>:stored_at</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='grid_io identifier id'>grid_io</span><span class='dot token'>.</span><span class='upload_date identifier id'>upload_date</span><span class='rparen token'>)</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
+  <span class='rubyid_ensure_authenticated! fid id'>ensure_authenticated!</span>
+  <span class='rubyid_grid_io identifier id'>grid_io</span> <span class='assign token'>=</span> <span class='rubyid_grid identifier id'>grid</span><span class='dot token'>.</span><span class='rubyid_get identifier id'>get</span><span class='lparen token'>(</span><span class='rubyid_bson_id identifier id'>bson_id</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rubyid_meta identifier id'>meta</span> <span class='assign token'>=</span> <span class='rubyid_marshal_decode identifier id'>marshal_decode</span><span class='lparen token'>(</span><span class='rubyid_grid_io identifier id'>grid_io</span><span class='dot token'>.</span><span class='rubyid_metadata identifier id'>metadata</span><span class='rparen token'>)</span>
+  <span class='rubyid_meta identifier id'>meta</span><span class='dot token'>.</span><span class='rubyid_merge! fid id'>merge!</span><span class='lparen token'>(</span><span class='symbol val'>:stored_at</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_grid_io identifier id'>grid_io</span><span class='dot token'>.</span><span class='rubyid_upload_date identifier id'>upload_date</span><span class='rparen token'>)</span>
   <span class='lbrack token'>[</span>
-    <span class='grid_io identifier id'>grid_io</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='comma token'>,</span>
-    <span class='meta identifier id'>meta</span>
+    <span class='rubyid_grid_io identifier id'>grid_io</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='comma token'>,</span>
+    <span class='rubyid_meta identifier id'>meta</span>
   <span class='rbrack token'>]</span>
-<span class='rescue rescue kw'>rescue</span> <span class='Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='GridFileNotFound constant id'>GridFileNotFound</span><span class='comma token'>,</span> <span class='INVALID_OBJECT_ID constant id'>INVALID_OBJECT_ID</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
-  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='rubyid_GridFileNotFound constant id'>GridFileNotFound</span><span class='comma token'>,</span> <span class='rubyid_INVALID_OBJECT_ID constant id'>INVALID_OBJECT_ID</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
+  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{e} - #{uid}&quot;</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -717,15 +724,15 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 32</span>
 
-<span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='ensure_authenticated! fid id'>ensure_authenticated!</span>
-  <span class='content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:mime_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'application/octet-stream'</span>
-  <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='file identifier id'>file</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span>
-    <span class='mongo_id identifier id'>mongo_id</span> <span class='assign token'>=</span> <span class='grid identifier id'>grid</span><span class='dot token'>.</span><span class='put identifier id'>put</span><span class='lparen token'>(</span><span class='f identifier id'>f</span><span class='comma token'>,</span> <span class='symbol val'>:content_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='content_type identifier id'>content_type</span><span class='comma token'>,</span>
-                           <span class='symbol val'>:metadata</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='marshal_encode identifier id'>marshal_encode</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='meta identifier id'>meta</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-    <span class='mongo_id identifier id'>mongo_id</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_ensure_authenticated! fid id'>ensure_authenticated!</span>
+  <span class='rubyid_content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:mime_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'application/octet-stream'</span>
+  <span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_file identifier id'>file</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span>
+    <span class='rubyid_mongo_id identifier id'>mongo_id</span> <span class='assign token'>=</span> <span class='rubyid_grid identifier id'>grid</span><span class='dot token'>.</span><span class='rubyid_put identifier id'>put</span><span class='lparen token'>(</span><span class='rubyid_f identifier id'>f</span><span class='comma token'>,</span> <span class='symbol val'>:content_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_content_type identifier id'>content_type</span><span class='comma token'>,</span>
+                           <span class='symbol val'>:metadata</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_marshal_encode identifier id'>marshal_encode</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_meta identifier id'>meta</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='rubyid_mongo_id identifier id'>mongo_id</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -744,9 +751,9 @@ or
     </div>
 
     <div id="footer">
-  Generated on Wed Jan 11 12:30:53 2012 by 
+  Generated on Fri Feb 17 10:34:50 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.3).
 </div>
 
   </body>

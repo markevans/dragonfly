@@ -6,7 +6,7 @@
 <title>
   File: URLs
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -82,93 +82,93 @@
 
 <p>We can get urls for any kind of job:</p>
 
-<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
 
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:flip</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                    <span class='comment val'># &quot;/BAhbBlsH...&quot;</span>
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='string val'>'hello'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'500x302'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='gif identifier id'>gif</span><span class='dot token'>.</span><span class='url identifier id'>url</span>     <span class='comment val'># &quot;/BAhbCFsHOgZ...&quot;</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:flip</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>                    <span class='comment val'># &quot;/BAhbBlsH...&quot;</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='string val'>'hello'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'500x302'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_gif identifier id'>gif</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>     <span class='comment val'># &quot;/BAhbCFsHOgZ...&quot;</span>
 </pre>
 
 <h2>Path format</h2>
 
 <p>The format of the standard urls can be configured using <code>url_format</code>:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/:job'</span>
-<span class='end end kw'>end</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/:job'</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
 
 <p>(or call <code>app.server.url_format=</code> directly).</p>
 
 <p><code>url_format = '/:job/:basename.:format'</code>:</p>
 
-<pre class="code"><span class='media identifier id'>media</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span>
-<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                        <span class='comment val'># &quot;/BAhbBlsHOgZmSSIJbWlsawY6BkVU&quot;</span>
-<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='string val'>'milk.txt'</span>
-<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                        <span class='comment val'># &quot;/BAhbBlsHOgZmSSIJbWlsawY6BkVU/milk.txt&quot;</span>
-<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:pdf</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span>           <span class='comment val'># &quot;/BAhbB1sHOgZ...RbBzoGZToIcGRm/milk.pdf&quot;</span>
-<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='url identifier id'>url</span><span class='lparen token'>(</span><span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'bang'</span><span class='rparen token'>)</span>     <span class='comment val'># &quot;/BAhbBlsHOgZmSSIJbWlsawY6BkVU/milk.bang&quot;</span>
-<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='url identifier id'>url</span><span class='lparen token'>(</span><span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'thing'</span><span class='rparen token'>)</span>      <span class='comment val'># &quot;/BAhbBlsHOgZmSSIJbWlsawY6BkVU/milk.txt?some=thing&quot;</span>
+<pre class="code"><span class='rubyid_media identifier id'>media</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span>
+<span class='rubyid_media identifier id'>media</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>                        <span class='comment val'># &quot;/BAhbBlsHOgZmSSIJbWlsawY6BkVU&quot;</span>
+<span class='rubyid_media identifier id'>media</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span> <span class='assign token'>=</span> <span class='string val'>'milk.txt'</span>
+<span class='rubyid_media identifier id'>media</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>                        <span class='comment val'># &quot;/BAhbBlsHOgZmSSIJbWlsawY6BkVU/milk.txt&quot;</span>
+<span class='rubyid_media identifier id'>media</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:pdf</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>           <span class='comment val'># &quot;/BAhbB1sHOgZ...RbBzoGZToIcGRm/milk.pdf&quot;</span>
+<span class='rubyid_media identifier id'>media</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span><span class='lparen token'>(</span><span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'bang'</span><span class='rparen token'>)</span>     <span class='comment val'># &quot;/BAhbBlsHOgZmSSIJbWlsawY6BkVU/milk.bang&quot;</span>
+<span class='rubyid_media identifier id'>media</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span><span class='lparen token'>(</span><span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'thing'</span><span class='rparen token'>)</span>      <span class='comment val'># &quot;/BAhbBlsHOgZmSSIJbWlsawY6BkVU/milk.txt?some=thing&quot;</span>
 </pre>
 
 <p><code>url_format = '/some-prefix/:job'</code>:</p>
 
-<pre class="code"><span class='media identifier id'>media</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span>
-<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                        <span class='comment val'># &quot;/some-prefix/BAhbBlsHOgZmSSIJbWlsawY6BkVU&quot;</span>
+<pre class="code"><span class='rubyid_media identifier id'>media</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span>
+<span class='rubyid_media identifier id'>media</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>                        <span class='comment val'># &quot;/some-prefix/BAhbBlsHOgZmSSIJbWlsawY6BkVU&quot;</span>
 </pre>
 
 <p><code>url_format = '/blah'</code>:</p>
 
-<pre class="code"><span class='media identifier id'>media</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span>
-<span class='media identifier id'>media</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                        <span class='comment val'># &quot;/blah?job=BAhbBlsHOgZmSSIJbWlsawY6BkVU&quot;</span>
+<pre class="code"><span class='rubyid_media identifier id'>media</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span>
+<span class='rubyid_media identifier id'>media</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>                        <span class='comment val'># &quot;/blah?job=BAhbBlsHOgZmSSIJbWlsawY6BkVU&quot;</span>
 </pre>
 
 <p>When using <a href="file.Models.html" title="Models">Models</a>, any <a href="file.Models.html#_Magic__Attributes" title="magic attributes">magic attributes</a> will be used in url generation, e.g.</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/frogs/:job/:basename-:width.:format'</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_server identifier id'>server</span><span class='dot token'>.</span><span class='rubyid_url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/frogs/:job/:basename-:width.:format'</span>
 </pre>
 
 <p>with</p>
 
-<pre class="code"><span class='class class kw'>class</span> <span class='Frog constant id'>Frog</span>
-  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:face</span>  <span class='comment val'># columns face_uid, face_name and face_width</span>
-<span class='end end kw'>end</span>
+<pre class="code"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Frog constant id'>Frog</span>
+  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:face</span>  <span class='comment val'># columns face_uid, face_name and face_width</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
 
 <p>gives</p>
 
-<pre class="code"><span class='frog identifier id'>frog</span> <span class='assign token'>=</span> <span class='Frog constant id'>Frog</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='symbol val'>:face</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'froggie.jpg'</span><span class='rparen token'>)</span>  <span class='comment val'># image with width 400</span>
+<pre class="code"><span class='rubyid_frog identifier id'>frog</span> <span class='assign token'>=</span> <span class='rubyid_Frog constant id'>Frog</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span> <span class='symbol val'>:face</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'froggie.jpg'</span><span class='rparen token'>)</span>  <span class='comment val'># image with width 400</span>
 
-<span class='frog identifier id'>frog</span><span class='dot token'>.</span><span class='face identifier id'>face</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                   <span class='comment val'># &quot;/frogs/BAhbBlsHOgZmSSIIc2RmBjoGRVQ/froggie-400.jpg&quot;</span>
+<span class='rubyid_frog identifier id'>frog</span><span class='dot token'>.</span><span class='rubyid_face identifier id'>face</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>                   <span class='comment val'># &quot;/frogs/BAhbBlsHOgZmSSIIc2RmBjoGRVQ/froggie-400.jpg&quot;</span>
 </pre>
 
 <h2>Host</h2>
 
 <p>You can also set a host for the urls</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span> <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='url_host identifier id'>url_host</span> <span class='assign token'>=</span> <span class='string val'>'http://some.host'</span> <span class='rbrace token'>}</span>      <span class='comment val'># or directly on app.server</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span> <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_url_host identifier id'>url_host</span> <span class='assign token'>=</span> <span class='string val'>'http://some.host'</span> <span class='rbrace token'>}</span>      <span class='comment val'># or directly on app.server</span>
 
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span>                                  <span class='comment val'># &quot;http://some.host/BAhb...&quot;</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>                                  <span class='comment val'># &quot;http://some.host/BAhb...&quot;</span>
 
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span><span class='lparen token'>(</span><span class='symbol val'>:host</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://localhost:80'</span><span class='rparen token'>)</span>  <span class='comment val'># &quot;http://localhost:80/BAh...&quot;</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span><span class='lparen token'>(</span><span class='symbol val'>:host</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://localhost:80'</span><span class='rparen token'>)</span>  <span class='comment val'># &quot;http://localhost:80/BAh...&quot;</span>
 </pre>
 
 <h2>Content-Disposition</h2>
 
 <p>You can manually set the content-disposition of the response:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='content_disposition identifier id'>content_disposition</span> <span class='assign token'>=</span> <span class='symbol val'>:attachment</span>    <span class='comment val'># should be :inline or :attachment (or :hidden)</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_content_disposition identifier id'>content_disposition</span> <span class='assign token'>=</span> <span class='symbol val'>:attachment</span>    <span class='comment val'># should be :inline or :attachment (or :hidden)</span>
 </pre>
 
 <p><code>:attachment</code> tells the browser to download it, <code>:inline</code> tells it to display in-browser if possible.</p>
 
 <p>You can also use a block:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='content_disposition identifier id'>content_disposition</span> <span class='assign token'>=</span> <span class='proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='request identifier id'>request</span><span class='bitor op'>|</span>
-  <span class='if if kw'>if</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='format identifier id'>format</span> <span class='eq op'>==</span> <span class='symbol val'>:jpg</span> <span class='orop op'>||</span> <span class='request identifier id'>request</span><span class='lbrack token'>[</span><span class='string val'>'d'</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>'inline'</span> <span class='comment val'># request is a Rack::Request object</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_content_disposition identifier id'>content_disposition</span> <span class='assign token'>=</span> <span class='rubyid_proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_request identifier id'>request</span><span class='bitor op'>|</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_format identifier id'>format</span> <span class='eq op'>==</span> <span class='symbol val'>:jpg</span> <span class='orop op'>||</span> <span class='rubyid_request identifier id'>request</span><span class='lbrack token'>[</span><span class='string val'>'d'</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>'inline'</span> <span class='comment val'># request is a Rack::Request object</span>
     <span class='symbol val'>:inline</span>
-  <span class='else else kw'>else</span>
+  <span class='rubyid_else else kw'>else</span>
     <span class='symbol val'>:attachment</span>
-  <span class='end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
 <span class='rbrace token'>}</span>
 </pre>
 
@@ -176,20 +176,20 @@
 
 <p>To specify the filename the browser uses for 'Save As' dialogues:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='content_filename identifier id'>content_filename</span> <span class='assign token'>=</span> <span class='proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='request identifier id'>request</span><span class='bitor op'>|</span>
-  <span class='if if kw'>if</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='process_steps identifier id'>process_steps</span><span class='dot token'>.</span><span class='any? fid id'>any?</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_content_filename identifier id'>content_filename</span> <span class='assign token'>=</span> <span class='rubyid_proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_request identifier id'>request</span><span class='bitor op'>|</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_process_steps identifier id'>process_steps</span><span class='dot token'>.</span><span class='rubyid_any? fid id'>any?</span>
     <span class='dstring node'>&quot;#{job.basename}_#{job.process_steps.first.name}.#{job.format}&quot;</span>
-  <span class='else else kw'>else</span>
+  <span class='rubyid_else else kw'>else</span>
     <span class='dstring node'>&quot;#{job.basename}.#{job.format}&quot;</span>
-  <span class='end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
 <span class='rbrace token'>}</span>
 </pre>
 
 <p>This will for example give the following filenames for the following jobs:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some/tree.png'</span><span class='rparen token'>)</span>                          <span class='comment val'># -&gt; 'tree.png'</span>
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some/tree.png'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span>      <span class='comment val'># -&gt; 'tree_greyscale.png'</span>
-<span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some/tree.png'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='gif identifier id'>gif</span>  <span class='comment val'># -&gt; 'tree_greyscale.gif'</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some/tree.png'</span><span class='rparen token'>)</span>                          <span class='comment val'># -&gt; 'tree.png'</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some/tree.png'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span>      <span class='comment val'># -&gt; 'tree_greyscale.png'</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some/tree.png'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_gif identifier id'>gif</span>  <span class='comment val'># -&gt; 'tree_greyscale.gif'</span>
 </pre>
 
 <p>By default the original filename is used, with a modified extension if it's been encoded.</p>
@@ -200,44 +200,44 @@
 
 <p>If we have an app set up for using ImageMagick:</p>
 
-<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
 </pre>
 
-<p>Then to get the url '/text/hello' to display the text "hello"...</p>
+<p>Then to get the url '/text/hello' to display the text &quot;hello&quot;...</p>
 
 <p>Rails 3 (routes.rb):</p>
 
-<pre class="code"><span class='match identifier id'>match</span> <span class='string val'>'/text/:text'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='endpoint identifier id'>endpoint</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='bitor op'>|</span>
-  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<pre class="code"><span class='rubyid_match identifier id'>match</span> <span class='string val'>'/text/:text'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_endpoint identifier id'>endpoint</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_params identifier id'>params</span><span class='comma token'>,</span> <span class='rubyid_app identifier id'>app</span><span class='bitor op'>|</span>
+  <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='rubyid_params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
 <span class='rbrace token'>}</span>
 </pre>
 
 <p><a href="http://github.com/josh/rack-mount" target="_parent" title="Rack-Mount">Rack-Mount</a>:</p>
 
-<pre class="code"><span class='Routes constant id'>Routes</span> <span class='assign token'>=</span> <span class='Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='Mount constant id'>Mount</span><span class='colon2 op'>::</span><span class='RouteSet constant id'>RouteSet</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='set identifier id'>set</span><span class='bitor op'>|</span>
+<pre class="code"><span class='rubyid_Routes constant id'>Routes</span> <span class='assign token'>=</span> <span class='rubyid_Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='rubyid_Mount constant id'>Mount</span><span class='colon2 op'>::</span><span class='rubyid_RouteSet constant id'>RouteSet</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_set identifier id'>set</span><span class='bitor op'>|</span>
 
-  <span class='set identifier id'>set</span><span class='dot token'>.</span><span class='add_route identifier id'>add_route</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='endpoint identifier id'>endpoint</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='a identifier id'>a</span><span class='bitor op'>|</span> <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='comma token'>,</span>
+  <span class='rubyid_set identifier id'>set</span><span class='dot token'>.</span><span class='rubyid_add_route identifier id'>add_route</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_endpoint identifier id'>endpoint</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_params identifier id'>params</span><span class='comma token'>,</span> <span class='rubyid_a identifier id'>a</span><span class='bitor op'>|</span> <span class='rubyid_a identifier id'>a</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='rubyid_params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='comma token'>,</span>
                   <span class='symbol val'>:path_info</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='regexp val'>%r{/text/(?:&lt;text&gt;.+)}</span>
 
   <span class='comment val'># ...</span>
 
-<span class='end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
 
 <p><a href="http://github.com/joshbuddy/usher" target="_parent" title="Usher">Usher</a>:</p>
 
-<pre class="code"><span class='routes identifier id'>routes</span> <span class='assign token'>=</span> <span class='Usher constant id'>Usher</span><span class='colon2 op'>::</span><span class='Interface constant id'>Interface</span><span class='dot token'>.</span><span class='for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:rack</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
-  <span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='string val'>'/text/:text'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='endpoint identifier id'>endpoint</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='bitor op'>|</span>
-    <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<pre class="code"><span class='rubyid_routes identifier id'>routes</span> <span class='assign token'>=</span> <span class='rubyid_Usher constant id'>Usher</span><span class='colon2 op'>::</span><span class='rubyid_Interface constant id'>Interface</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:rack</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span>
+  <span class='rubyid_add identifier id'>add</span><span class='lparen token'>(</span><span class='string val'>'/text/:text'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to identifier id'>to</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_endpoint identifier id'>endpoint</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_params identifier id'>params</span><span class='comma token'>,</span> <span class='rubyid_app identifier id'>app</span><span class='bitor op'>|</span>
+    <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='rubyid_params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
   <span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
 
 <p><a href="http://github.com/joshbuddy/http_router" target="_parent" title="HTTP Router">HTTP Router</a>:</p>
 
-<pre class="code"><span class='r identifier id'>r</span> <span class='assign token'>=</span> <span class='HttpRouter constant id'>HttpRouter</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
-<span class='r identifier id'>r</span><span class='dot token'>.</span><span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='string val'>'/text/:text'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to identifier id'>to</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='endpoint identifier id'>endpoint</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='bitor op'>|</span>
-  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<pre class="code"><span class='rubyid_r identifier id'>r</span> <span class='assign token'>=</span> <span class='rubyid_HttpRouter constant id'>HttpRouter</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+<span class='rubyid_r identifier id'>r</span><span class='dot token'>.</span><span class='rubyid_add identifier id'>add</span><span class='lparen token'>(</span><span class='string val'>'/text/:text'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to identifier id'>to</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_endpoint identifier id'>endpoint</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_params identifier id'>params</span><span class='comma token'>,</span> <span class='rubyid_app identifier id'>app</span><span class='bitor op'>|</span>
+  <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='rubyid_params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
 <span class='rbrace token'>}</span>
 </pre>
 
@@ -249,7 +249,7 @@
 
 <p><span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> objects can also be turned straight into Rack endpoints using <code>to_app</code>, e.g. in Rails 3:</p>
 
-<pre class="code"><span class='match identifier id'>match</span> <span class='string val'>'/beach'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch_file identifier id'>fetch_file</span><span class='lparen token'>(</span><span class='string val'>'~/some/image.png'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'100x100#'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='jpg identifier id'>jpg</span><span class='dot token'>.</span><span class='to_app identifier id'>to_app</span>
+<pre class="code"><span class='rubyid_match identifier id'>match</span> <span class='string val'>'/beach'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch_file identifier id'>fetch_file</span><span class='lparen token'>(</span><span class='string val'>'~/some/image.png'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'100x100#'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_jpg identifier id'>jpg</span><span class='dot token'>.</span><span class='rubyid_to_app identifier id'>to_app</span>
 </pre>
 
 <h2>Denial-of-service attacks</h2>
@@ -257,53 +257,54 @@
 <p>Although the standard urls are fairly cryptic, a malicious person who knows the Dragonfly source code could potentially
 work out how to generate urls to spam your server with heavy requests, e.g. resize to 100000 by 100000 pixels.</p>
 
-<p>Therefore the app can be protected by requiring the presence of a "DOS-protection" SHA in the urls:</p>
+<p>Therefore the app can be protected by requiring the presence of a &quot;DOS-protection&quot; SHA in the urls:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='protect_from_dos_attacks identifier id'>protect_from_dos_attacks</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='secret identifier id'>secret</span> <span class='assign token'>=</span> <span class='string val'>'You should supply some random secret here'</span>
-<span class='end end kw'>end</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_protect_from_dos_attacks identifier id'>protect_from_dos_attacks</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>
+  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_secret identifier id'>secret</span> <span class='assign token'>=</span> <span class='string val'>'You should supply some random secret here'</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
 
 <p>Then the standard generated urls will have a SHA query parameter attached:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span>          <span class='comment val'># &quot;/BAhbBlsHOgZmIghzZGY?s=df76ba27&quot;</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'my_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>          <span class='comment val'># &quot;/BAhbBlsHOgZmIghzZGY?s=df76ba27&quot;</span>
 </pre>
 
 <p>Any requests without the correct SHA parameter result in a 400 (bad parameters) error response.</p>
 
 <p>You can also validate for a correct SHA using routed endpoints:</p>
 
-<pre class="code"><span class='match identifier id'>match</span> <span class='string val'>'/text/:text'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='endpoint identifier id'>endpoint</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='params identifier id'>params</span><span class='comma token'>,</span> <span class='app identifier id'>app</span><span class='bitor op'>|</span>
-  <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='validate_sha! fid id'>validate_sha!</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:sha</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<pre class="code"><span class='rubyid_match identifier id'>match</span> <span class='string val'>'/text/:text'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_endpoint identifier id'>endpoint</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_params identifier id'>params</span><span class='comma token'>,</span> <span class='rubyid_app identifier id'>app</span><span class='bitor op'>|</span>
+  <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='rubyid_params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:text</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_validate_sha! fid id'>validate_sha!</span><span class='lparen token'>(</span><span class='rubyid_params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:sha</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
 <span class='rbrace token'>}</span>
 </pre>
 
 <p>... where obviously you need to pass in a 'sha' parameter to the url, which can be found using</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='string val'>'some text'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='sha identifier id'>sha</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:text</span><span class='comma token'>,</span> <span class='string val'>'some text'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_sha identifier id'>sha</span>
 </pre>
 
 <h2>Overriding responses</h2>
 
 <p>You can override/add headers using <code>response_headers</code>:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='response_headers identifier id'>response_headers</span><span class='lbrack token'>[</span><span class='string val'>'X-Something'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'Custom header'</span>   <span class='comment val'># set directly..</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='response_headers identifier id'>response_headers</span><span class='lbrack token'>[</span><span class='string val'>'summink'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='request identifier id'>request</span><span class='bitor op'>|</span>   <span class='comment val'># ...or via a callback</span>
-    <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='image? fid id'>image?</span> <span class='integer val'>? </span><span class='string val'>'image yo'</span> <span class='colon op'>:</span> <span class='string val'>'not an image'</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_response_headers identifier id'>response_headers</span><span class='lbrack token'>[</span><span class='string val'>'X-Something'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'Custom header'</span>   <span class='comment val'># set directly..</span>
+  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_response_headers identifier id'>response_headers</span><span class='lbrack token'>[</span><span class='string val'>'summink'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_request identifier id'>request</span><span class='bitor op'>|</span>   <span class='comment val'># ...or via a callback</span>
+    <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_image? fid id'>image?</span> <span class='integer val'>? </span><span class='string val'>'image yo'</span> <span class='colon op'>:</span> <span class='string val'>'not an image'</span>
   <span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
 
 <p>You can intercept the response from the dragonfly server by throwing <code>:halt</code> with a Rack response array from inside the <code>before_serve</code> callback:</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='before_serve identifier id'>before_serve</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='env identifier id'>env</span><span class='bitor op'>|</span>
-    <span class='throw identifier id'>throw</span> <span class='symbol val'>:halt</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='integer val'>200</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='string val'>'Content-type'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'text/plain'</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='string val'>'hello'</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre></div>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_server identifier id'>server</span><span class='dot token'>.</span><span class='rubyid_before_serve identifier id'>before_serve</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_env identifier id'>env</span><span class='bitor op'>|</span>
+    <span class='rubyid_throw identifier id'>throw</span> <span class='symbol val'>:halt</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='integer val'>200</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='string val'>'Content-type'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'text/plain'</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='string val'>'hello'</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -313,9 +314,9 @@ work out how to generate urls to spam your server with heavy requests, e.g. resi
     </div>
 
     <div id="footer">
-  Generated on Wed Jan 11 12:30:49 2012 by 
+  Generated on Fri Feb 17 10:34:46 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.3).
 </div>
 
   </body>

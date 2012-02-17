@@ -6,7 +6,7 @@
 <title>
   File: MimeTypes
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -92,7 +92,6 @@
 <li>Use the fallback mime-type (default 'application/octet-stream')</li>
 </ol>
 
-
 <p>Note that 'format' means 'jpg', 'png', etc. whereas mime-type would be 'image/jpeg', image/png', etc.
 Formats are mapped to mime-types using the app's registered list of mime-types.</p>
 
@@ -102,7 +101,7 @@ Formats are mapped to mime-types using the app's registered list of mime-types.<
 
 <p>To register a mime-type for the format 'egg':</p>
 
-<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='register_mime_type identifier id'>register_mime_type</span><span class='lparen token'>(</span><span class='symbol val'>:egg</span><span class='comma token'>,</span> <span class='string val'>'fried/egg'</span><span class='rparen token'>)</span>
+<pre class="code"><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_register_mime_type identifier id'>register_mime_type</span><span class='lparen token'>(</span><span class='symbol val'>:egg</span><span class='comma token'>,</span> <span class='string val'>'fried/egg'</span><span class='rparen token'>)</span>
 </pre>
 
 <p>You can also do this inside a configuration block.</p>
@@ -118,10 +117,11 @@ Formats are mapped to mime-types using the app's registered list of mime-types.<
 
 <p>By default this is 'application/octet-stream', but it can be changed using</p>
 
-<pre class="code"><span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='fallback_mime_type identifier id'>fallback_mime_type</span> <span class='assign token'>=</span> <span class='string val'>'meaty/beef'</span>
+<pre class="code"><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_fallback_mime_type identifier id'>fallback_mime_type</span> <span class='assign token'>=</span> <span class='string val'>'meaty/beef'</span>
 </pre>
 
-<p>This can also be done inside a configuration block.</p></div>
+<p>This can also be done inside a configuration block.</p>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -131,9 +131,9 @@ Formats are mapped to mime-types using the app's registered list of mime-types.<
     </div>
 
     <div id="footer">
-  Generated on Wed Jan 11 12:30:49 2012 by 
+  Generated on Fri Feb 17 10:34:46 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.3).
 </div>
 
   </body>

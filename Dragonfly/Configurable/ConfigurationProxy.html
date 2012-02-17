@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::Configurable::ConfigurationProxy
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -147,7 +147,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>A new instance of ConfigurationProxy.</div></span>
+    <span class="summary_desc"><div class='inline'><p>A new instance of ConfigurationProxy.</p>
+</div></span>
   
 </li>
 
@@ -188,12 +189,14 @@
   
 </p><div class="docstring">
   <div class="discussion">
-    A new instance of ConfigurationProxy
+    <p>A new instance of ConfigurationProxy</p>
+
 
   </div>
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -207,9 +210,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 176</span>
 
-<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='owner identifier id'>owner</span><span class='rparen token'>)</span>
-  <span class='@owner ivar id'>@owner</span> <span class='assign token'>=</span> <span class='owner identifier id'>owner</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_owner identifier id'>owner</span><span class='rparen token'>)</span>
+  <span class='rubyid_@owner ivar id'>@owner</span> <span class='assign token'>=</span> <span class='rubyid_owner identifier id'>owner</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -255,20 +258,20 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/configurable.rb', line 180</span>
 
-<span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='method_name identifier id'>method_name</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='owner identifier id'>owner</span><span class='dot token'>.</span><span class='has_config_method? fid id'>has_config_method?</span><span class='lparen token'>(</span><span class='method_name identifier id'>method_name</span><span class='rparen token'>)</span>
-    <span class='attribute identifier id'>attribute</span> <span class='assign token'>=</span> <span class='method_name identifier id'>method_name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='tr identifier id'>tr</span><span class='lparen token'>(</span><span class='string val'>'='</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
-    <span class='if if kw'>if</span> <span class='method_name identifier id'>method_name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='match op'>=~</span> <span class='regexp val'>/=$/</span> <span class='andop op'>&amp;&amp;</span> <span class='owner identifier id'>owner</span><span class='dot token'>.</span><span class='has_config_method? fid id'>has_config_method?</span><span class='lparen token'>(</span><span class='attribute identifier id'>attribute</span><span class='rparen token'>)</span> <span class='comment val'># a bit hacky - if it has both getter and setter, assume it's a configurable_attr</span>
-      <span class='owner identifier id'>owner</span><span class='dot token'>.</span><span class='set_config_value identifier id'>set_config_value</span><span class='lparen token'>(</span><span class='attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='rparen token'>)</span>
-    <span class='else else kw'>else</span>
-      <span class='owner identifier id'>owner</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='method_name identifier id'>method_name</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-    <span class='end end kw'>end</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='nested_configurable? fid id'>nested_configurable?</span><span class='lparen token'>(</span><span class='method_name identifier id'>method_name</span><span class='rparen token'>)</span>
-    <span class='owner identifier id'>owner</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='method_name identifier id'>method_name</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='raise identifier id'>raise</span> <span class='BadConfigAttribute constant id'>BadConfigAttribute</span><span class='comma token'>,</span> <span class='dstring node'>&quot;You tried to configure using '#{method_name.inspect}',  but the valid config attributes are #{owner.config_methods.map{|a| %('#{a.inspect}') }.sort.join(', ')}&quot;</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='rubyid_method_name identifier id'>method_name</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_owner identifier id'>owner</span><span class='dot token'>.</span><span class='rubyid_has_config_method? fid id'>has_config_method?</span><span class='lparen token'>(</span><span class='rubyid_method_name identifier id'>method_name</span><span class='rparen token'>)</span>
+    <span class='rubyid_attribute identifier id'>attribute</span> <span class='assign token'>=</span> <span class='rubyid_method_name identifier id'>method_name</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_tr identifier id'>tr</span><span class='lparen token'>(</span><span class='string val'>'='</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
+    <span class='rubyid_if if kw'>if</span> <span class='rubyid_method_name identifier id'>method_name</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span> <span class='match op'>=~</span> <span class='regexp val'>/=$/</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_owner identifier id'>owner</span><span class='dot token'>.</span><span class='rubyid_has_config_method? fid id'>has_config_method?</span><span class='lparen token'>(</span><span class='rubyid_attribute identifier id'>attribute</span><span class='rparen token'>)</span> <span class='comment val'># a bit hacky - if it has both getter and setter, assume it's a configurable_attr</span>
+      <span class='rubyid_owner identifier id'>owner</span><span class='dot token'>.</span><span class='rubyid_set_config_value identifier id'>set_config_value</span><span class='lparen token'>(</span><span class='rubyid_attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='rubyid_args identifier id'>args</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span><span class='rparen token'>)</span>
+    <span class='rubyid_else else kw'>else</span>
+      <span class='rubyid_owner identifier id'>owner</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='rubyid_method_name identifier id'>method_name</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_nested_configurable? fid id'>nested_configurable?</span><span class='lparen token'>(</span><span class='rubyid_method_name identifier id'>method_name</span><span class='rparen token'>)</span>
+    <span class='rubyid_owner identifier id'>owner</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='rubyid_method_name identifier id'>method_name</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_BadConfigAttribute constant id'>BadConfigAttribute</span><span class='comma token'>,</span> <span class='dstring node'>&quot;You tried to configure using '#{method_name.inspect}',  but the valid config attributes are #{owner.config_methods.map{|a| %('#{a.inspect}') }.sort.join(', ')}&quot;</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -288,9 +291,9 @@
     </div>
 
     <div id="footer">
-  Generated on Wed Jan 11 12:30:51 2012 by 
+  Generated on Fri Feb 17 10:34:49 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.3).
 </div>
 
   </body>

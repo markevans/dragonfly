@@ -6,7 +6,7 @@
 <title>
   Module: Dragonfly::HasFilename
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -105,14 +105,16 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    Convenience methods for setting basename and extension
+    <p>Convenience methods for setting basename and extension
 Including class needs to define a 'name' accessor
-which is assumed to hold a filename-style string
+which is assumed to hold a filename-style string</p>
+
 
   </div>
 </div>
 <div class="tags">
   
+
 </div>
 
 
@@ -241,9 +243,9 @@ which is assumed to hold a filename-style string
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/has_filename.rb', line 7</span>
 
-<span class='def def kw'>def</span> <span class='basename identifier id'>basename</span>
-  <span class='File constant id'>File</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='string val'>'.*'</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='name identifier id'>name</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_basename identifier id'>basename</span>
+  <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_basename identifier id'>basename</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='string val'>'.*'</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_name identifier id'>name</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -270,9 +272,9 @@ which is assumed to hold a filename-style string
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/has_filename.rb', line 11</span>
 
-<span class='def def kw'>def</span> <span class='basename= identifier id'>basename=</span><span class='lparen token'>(</span><span class='basename identifier id'>basename</span><span class='rparen token'>)</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='basename identifier id'>basename</span><span class='comma token'>,</span> <span class='ext identifier id'>ext</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='compact identifier id'>compact</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_basename= identifier id'>basename=</span><span class='lparen token'>(</span><span class='rubyid_basename identifier id'>basename</span><span class='rparen token'>)</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rubyid_basename identifier id'>basename</span><span class='comma token'>,</span> <span class='rubyid_ext identifier id'>ext</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_compact identifier id'>compact</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -299,9 +301,9 @@ which is assumed to hold a filename-style string
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/has_filename.rb', line 15</span>
 
-<span class='def def kw'>def</span> <span class='ext identifier id'>ext</span>
-  <span class='File constant id'>File</span><span class='dot token'>.</span><span class='extname identifier id'>extname</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='regexp val'>/\.(.*)/</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='name identifier id'>name</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_ext identifier id'>ext</span>
+  <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_extname identifier id'>extname</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='regexp val'>/\.(.*)/</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_name identifier id'>name</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -328,9 +330,9 @@ which is assumed to hold a filename-style string
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/has_filename.rb', line 19</span>
 
-<span class='def def kw'>def</span> <span class='ext= identifier id'>ext=</span><span class='lparen token'>(</span><span class='ext identifier id'>ext</span><span class='rparen token'>)</span>
-  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='lparen token'>(</span><span class='basename identifier id'>basename</span> <span class='orop op'>||</span> <span class='string val'>'file'</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='ext identifier id'>ext</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_ext= identifier id'>ext=</span><span class='lparen token'>(</span><span class='rubyid_ext identifier id'>ext</span><span class='rparen token'>)</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='lparen token'>(</span><span class='rubyid_basename identifier id'>basename</span> <span class='orop op'>||</span> <span class='string val'>'file'</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_ext identifier id'>ext</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -349,9 +351,9 @@ which is assumed to hold a filename-style string
     </div>
 
     <div id="footer">
-  Generated on Wed Jan 11 12:30:52 2012 by 
+  Generated on Fri Feb 17 10:34:49 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.3).
 </div>
 
   </body>

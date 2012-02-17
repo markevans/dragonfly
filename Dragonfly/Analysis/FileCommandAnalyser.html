@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::Analysis::FileCommandAnalyser
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -273,22 +273,22 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/analysis/file_command_analyser.rb', line 13</span>
 
-<span class='def def kw'>def</span> <span class='mime_type identifier id'>mime_type</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
-  <span class='content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='use_filesystem identifier id'>use_filesystem</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_mime_type identifier id'>mime_type</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
+  <span class='rubyid_content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='rubyid_if if kw'>if</span> <span class='rubyid_use_filesystem identifier id'>use_filesystem</span>
     <span class='dxstring node'>`#{file_command} -b --mime #{quote temp_object.path}`</span>
-  <span class='else else kw'>else</span>
-    <span class='IO constant id'>IO</span><span class='dot token'>.</span><span class='popen identifier id'>popen</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{file_command} -b --mime -&quot;</span><span class='comma token'>,</span> <span class='string val'>'r+'</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='io identifier id'>io</span><span class='bitor op'>|</span>
-      <span class='if if kw'>if</span> <span class='num_bytes_to_check identifier id'>num_bytes_to_check</span>
-        <span class='io identifier id'>io</span><span class='dot token'>.</span><span class='write identifier id'>write</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='num_bytes_to_check identifier id'>num_bytes_to_check</span><span class='rbrack token'>]</span>
-      <span class='else else kw'>else</span>
-        <span class='io identifier id'>io</span><span class='dot token'>.</span><span class='write identifier id'>write</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='data identifier id'>data</span> 
-      <span class='end end kw'>end</span>
-      <span class='io identifier id'>io</span><span class='dot token'>.</span><span class='close_write identifier id'>close_write</span>
-      <span class='io identifier id'>io</span><span class='dot token'>.</span><span class='read identifier id'>read</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>';'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
-  <span class='content_type identifier id'>content_type</span><span class='dot token'>.</span><span class='strip identifier id'>strip</span> <span class='if if_mod kw'>if</span> <span class='content_type identifier id'>content_type</span>
-<span class='end end kw'>end</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_IO constant id'>IO</span><span class='dot token'>.</span><span class='rubyid_popen identifier id'>popen</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{file_command} -b --mime -&quot;</span><span class='comma token'>,</span> <span class='string val'>'r+'</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_io identifier id'>io</span><span class='bitor op'>|</span>
+      <span class='rubyid_if if kw'>if</span> <span class='rubyid_num_bytes_to_check identifier id'>num_bytes_to_check</span>
+        <span class='rubyid_io identifier id'>io</span><span class='dot token'>.</span><span class='rubyid_write identifier id'>write</span> <span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_data identifier id'>data</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='rubyid_num_bytes_to_check identifier id'>num_bytes_to_check</span><span class='rbrack token'>]</span>
+      <span class='rubyid_else else kw'>else</span>
+        <span class='rubyid_io identifier id'>io</span><span class='dot token'>.</span><span class='rubyid_write identifier id'>write</span> <span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_data identifier id'>data</span> 
+      <span class='rubyid_end end kw'>end</span>
+      <span class='rubyid_io identifier id'>io</span><span class='dot token'>.</span><span class='rubyid_close_write identifier id'>close_write</span>
+      <span class='rubyid_io identifier id'>io</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span><span class='dot token'>.</span><span class='rubyid_split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>';'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span>
+  <span class='rubyid_content_type identifier id'>content_type</span><span class='dot token'>.</span><span class='rubyid_strip identifier id'>strip</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_content_type identifier id'>content_type</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -307,9 +307,9 @@ or
     </div>
 
     <div id="footer">
-  Generated on Wed Jan 11 12:30:53 2012 by 
+  Generated on Fri Feb 17 10:34:51 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.3).
 </div>
 
   </body>

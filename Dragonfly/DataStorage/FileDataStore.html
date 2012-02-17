@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::DataStorage::FileDataStore
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -331,7 +331,8 @@ or
   </div>
 </div>
 <div class="tags">
-  <h3>Raises:</h3>
+  
+<h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -365,16 +366,16 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 50</span>
 
-<span class='def def kw'>def</span> <span class='destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
-  <span class='validate_uid! fid id'>validate_uid!</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
-  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='absolute identifier id'>absolute</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
-  <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rm identifier id'>rm</span> <span class='path identifier id'>path</span>
-  <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rm_f identifier id'>rm_f</span> <span class='meta_data_path identifier id'>meta_data_path</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
-  <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rm_f identifier id'>rm_f</span> <span class='deprecated_meta_data_path identifier id'>deprecated_meta_data_path</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
-  <span class='purge_empty_directories identifier id'>purge_empty_directories</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
-<span class='rescue rescue kw'>rescue</span> <span class='Errno constant id'>Errno</span><span class='colon2 op'>::</span><span class='ENOENT constant id'>ENOENT</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
-  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='message identifier id'>message</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='rubyid_relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+  <span class='rubyid_validate_uid! fid id'>validate_uid!</span><span class='lparen token'>(</span><span class='rubyid_relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+  <span class='rubyid_path identifier id'>path</span> <span class='assign token'>=</span> <span class='rubyid_absolute identifier id'>absolute</span><span class='lparen token'>(</span><span class='rubyid_relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+  <span class='rubyid_FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rubyid_rm identifier id'>rm</span> <span class='rubyid_path identifier id'>path</span>
+  <span class='rubyid_FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rubyid_rm_f identifier id'>rm_f</span> <span class='rubyid_meta_data_path identifier id'>meta_data_path</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='rubyid_FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rubyid_rm_f identifier id'>rm_f</span> <span class='rubyid_deprecated_meta_data_path identifier id'>deprecated_meta_data_path</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='rubyid_purge_empty_directories identifier id'>purge_empty_directories</span><span class='lparen token'>(</span><span class='rubyid_relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+<span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Errno constant id'>Errno</span><span class='colon2 op'>::</span><span class='rubyid_ENOENT constant id'>ENOENT</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
+  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='rubyid_e identifier id'>e</span><span class='dot token'>.</span><span class='rubyid_message identifier id'>message</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -404,12 +405,12 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 74</span>
 
-<span class='def def kw'>def</span> <span class='disambiguate identifier id'>disambiguate</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
-  <span class='dirname identifier id'>dirname</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='dirname identifier id'>dirname</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
-  <span class='basename identifier id'>basename</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='string val'>'.*'</span><span class='rparen token'>)</span>
-  <span class='extname identifier id'>extname</span> <span class='assign token'>=</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='extname identifier id'>extname</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_disambiguate identifier id'>disambiguate</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='rubyid_dirname identifier id'>dirname</span> <span class='assign token'>=</span> <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_dirname identifier id'>dirname</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='rubyid_basename identifier id'>basename</span> <span class='assign token'>=</span> <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_basename identifier id'>basename</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='comma token'>,</span> <span class='string val'>'.*'</span><span class='rparen token'>)</span>
+  <span class='rubyid_extname identifier id'>extname</span> <span class='assign token'>=</span> <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_extname identifier id'>extname</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span>
   <span class='dstring node'>&quot;#{dirname}/#{basename}_#{(Time.now.usec*10 + rand(100)).to_s(32)}#{extname}&quot;</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -430,7 +431,8 @@ or
   </div>
 </div>
 <div class="tags">
-  <h3>Raises:</h3>
+  
+<h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -464,16 +466,16 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 39</span>
 
-<span class='def def kw'>def</span> <span class='retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
-  <span class='validate_uid! fid id'>validate_uid!</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
-  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='absolute identifier id'>absolute</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
-  <span class='pathname identifier id'>pathname</span> <span class='assign token'>=</span> <span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
-  <span class='raise identifier id'>raise</span> <span class='DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;couldn't find file #{path}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='pathname identifier id'>pathname</span><span class='dot token'>.</span><span class='exist? fid id'>exist?</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='rubyid_relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+  <span class='rubyid_validate_uid! fid id'>validate_uid!</span><span class='lparen token'>(</span><span class='rubyid_relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+  <span class='rubyid_path identifier id'>path</span> <span class='assign token'>=</span> <span class='rubyid_absolute identifier id'>absolute</span><span class='lparen token'>(</span><span class='rubyid_relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+  <span class='rubyid_pathname identifier id'>pathname</span> <span class='assign token'>=</span> <span class='rubyid_Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_DataNotFound constant id'>DataNotFound</span><span class='comma token'>,</span> <span class='dstring node'>&quot;couldn't find file #{path}&quot;</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_pathname identifier id'>pathname</span><span class='dot token'>.</span><span class='rubyid_exist? fid id'>exist?</span>
   <span class='lbrack token'>[</span>
-    <span class='pathname identifier id'>pathname</span><span class='comma token'>,</span>
-    <span class='lparen token'>(</span><span class='store_meta identifier id'>store_meta</span> <span class='integer val'>? </span><span class='retrieve_meta_data identifier id'>retrieve_meta_data</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+    <span class='rubyid_pathname identifier id'>pathname</span><span class='comma token'>,</span>
+    <span class='lparen token'>(</span><span class='rubyid_store_meta identifier id'>store_meta</span> <span class='integer val'>? </span><span class='rubyid_retrieve_meta_data identifier id'>retrieve_meta_data</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -518,27 +520,27 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 17</span>
 
-<span class='def def kw'>def</span> <span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='relative_path identifier id'>relative_path</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span>
-    <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span>
-  <span class='else else kw'>else</span>
-    <span class='filename identifier id'>filename</span> <span class='assign token'>=</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='orop op'>||</span> <span class='string val'>'file'</span>
-    <span class='relative_path identifier id'>relative_path</span> <span class='assign token'>=</span> <span class='relative_path_for identifier id'>relative_path_for</span><span class='lparen token'>(</span><span class='filename identifier id'>filename</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_relative_path identifier id'>relative_path</span> <span class='assign token'>=</span> <span class='rubyid_if if kw'>if</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span>
+    <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:path</span><span class='rbrack token'>]</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_filename identifier id'>filename</span> <span class='assign token'>=</span> <span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span> <span class='orop op'>||</span> <span class='string val'>'file'</span>
+    <span class='rubyid_relative_path identifier id'>relative_path</span> <span class='assign token'>=</span> <span class='rubyid_relative_path_for identifier id'>relative_path_for</span><span class='lparen token'>(</span><span class='rubyid_filename identifier id'>filename</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
 
-  <span class='begin begin kw'>begin</span>
-    <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='absolute identifier id'>absolute</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
-    <span class='until until kw'>until</span> <span class='notop op'>!</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='exist? fid id'>exist?</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
-      <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='disambiguate identifier id'>disambiguate</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
-    <span class='end end kw'>end</span>
-    <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='to_file identifier id'>to_file</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='close identifier id'>close</span>
-    <span class='store_meta_data identifier id'>store_meta_data</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='meta identifier id'>meta</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='store_meta identifier id'>store_meta</span>
-  <span class='rescue rescue kw'>rescue</span> <span class='Errno constant id'>Errno</span><span class='colon2 op'>::</span><span class='EACCES constant id'>EACCES</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
-    <span class='raise identifier id'>raise</span> <span class='UnableToStore constant id'>UnableToStore</span><span class='comma token'>,</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='message identifier id'>message</span>
-  <span class='end end kw'>end</span>
+  <span class='rubyid_begin begin kw'>begin</span>
+    <span class='rubyid_path identifier id'>path</span> <span class='assign token'>=</span> <span class='rubyid_absolute identifier id'>absolute</span><span class='lparen token'>(</span><span class='rubyid_relative_path identifier id'>relative_path</span><span class='rparen token'>)</span>
+    <span class='rubyid_until until kw'>until</span> <span class='notop op'>!</span><span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_exist? fid id'>exist?</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span>
+      <span class='rubyid_path identifier id'>path</span> <span class='assign token'>=</span> <span class='rubyid_disambiguate identifier id'>disambiguate</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_to_file identifier id'>to_file</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span>
+    <span class='rubyid_store_meta_data identifier id'>store_meta_data</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='comma token'>,</span> <span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_meta identifier id'>meta</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_store_meta identifier id'>store_meta</span>
+  <span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Errno constant id'>Errno</span><span class='colon2 op'>::</span><span class='rubyid_EACCES constant id'>EACCES</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
+    <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_UnableToStore constant id'>UnableToStore</span><span class='comma token'>,</span> <span class='rubyid_e identifier id'>e</span><span class='dot token'>.</span><span class='rubyid_message identifier id'>message</span>
+  <span class='rubyid_end end kw'>end</span>
 
-  <span class='relative identifier id'>relative</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+  <span class='rubyid_relative identifier id'>relative</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -574,18 +576,18 @@ or
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/file_data_store.rb', line 61</span>
 
-<span class='def def kw'>def</span> <span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='server_root identifier id'>server_root</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
-    <span class='raise identifier id'>raise</span> <span class='NotConfigured constant id'>NotConfigured</span><span class='comma token'>,</span> <span class='dstring node'>&quot;you need to configure server_root for #{self.class.name} in order to form urls&quot;</span>
-  <span class='else else kw'>else</span>
-    <span class='_ identifier id'>_</span><span class='comma token'>,</span> <span class='__ identifier id'>__</span><span class='comma token'>,</span> <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='absolute identifier id'>absolute</span><span class='lparen token'>(</span><span class='relative_path identifier id'>relative_path</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='partition identifier id'>partition</span><span class='lparen token'>(</span><span class='server_root identifier id'>server_root</span><span class='rparen token'>)</span>
-    <span class='if if kw'>if</span> <span class='path identifier id'>path</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
-      <span class='raise identifier id'>raise</span> <span class='UnableToFormUrl constant id'>UnableToFormUrl</span><span class='comma token'>,</span> <span class='dstring node'>&quot;couldn't form url for uid #{relative_path.inspect} with root_path #{root_path.inspect} and server_root #{server_root.inspect}&quot;</span>
-    <span class='else else kw'>else</span>
-      <span class='path identifier id'>path</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='rubyid_relative_path identifier id'>relative_path</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_server_root identifier id'>server_root</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
+    <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_NotConfigured constant id'>NotConfigured</span><span class='comma token'>,</span> <span class='dstring node'>&quot;you need to configure server_root for #{self.class.name} in order to form urls&quot;</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid__ identifier id'>_</span><span class='comma token'>,</span> <span class='rubyid___ identifier id'>__</span><span class='comma token'>,</span> <span class='rubyid_path identifier id'>path</span> <span class='assign token'>=</span> <span class='rubyid_absolute identifier id'>absolute</span><span class='lparen token'>(</span><span class='rubyid_relative_path identifier id'>relative_path</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_partition identifier id'>partition</span><span class='lparen token'>(</span><span class='rubyid_server_root identifier id'>server_root</span><span class='rparen token'>)</span>
+    <span class='rubyid_if if kw'>if</span> <span class='rubyid_path identifier id'>path</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
+      <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_UnableToFormUrl constant id'>UnableToFormUrl</span><span class='comma token'>,</span> <span class='dstring node'>&quot;couldn't form url for uid #{relative_path.inspect} with root_path #{root_path.inspect} and server_root #{server_root.inspect}&quot;</span>
+    <span class='rubyid_else else kw'>else</span>
+      <span class='rubyid_path identifier id'>path</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -604,9 +606,9 @@ or
     </div>
 
     <div id="footer">
-  Generated on Wed Jan 11 12:30:53 2012 by 
+  Generated on Fri Feb 17 10:34:50 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.3).
 </div>
 
   </body>

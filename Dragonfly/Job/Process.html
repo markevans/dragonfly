@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::Job::Process
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -245,7 +245,8 @@
   </div>
 </div>
 <div class="tags">
-  <h3>Raises:</h3>
+  
+<h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -274,11 +275,11 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 77</span>
 
-<span class='def def kw'>def</span> <span class='apply identifier id'>apply</span>
-  <span class='raise identifier id'>raise</span> <span class='NothingToProcess constant id'>NothingToProcess</span><span class='comma token'>,</span> <span class='string val'>&quot;Can't process because temp object has not been initialized. Need to fetch first?&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='temp_object identifier id'>temp_object</span>
-  <span class='content identifier id'>content</span><span class='comma token'>,</span> <span class='meta identifier id'>meta</span> <span class='assign token'>=</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='processor identifier id'>processor</span><span class='dot token'>.</span><span class='process identifier id'>process</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='dot token'>.</span><span class='temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='arguments identifier id'>arguments</span><span class='rparen token'>)</span>
-  <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='update identifier id'>update</span><span class='lparen token'>(</span><span class='content identifier id'>content</span><span class='comma token'>,</span> <span class='meta identifier id'>meta</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_apply identifier id'>apply</span>
+  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_NothingToProcess constant id'>NothingToProcess</span><span class='comma token'>,</span> <span class='string val'>&quot;Can't process because temp object has not been initialized. Need to fetch first?&quot;</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_temp_object identifier id'>temp_object</span>
+  <span class='rubyid_content identifier id'>content</span><span class='comma token'>,</span> <span class='rubyid_meta identifier id'>meta</span> <span class='assign token'>=</span> <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_processor identifier id'>processor</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_arguments identifier id'>arguments</span><span class='rparen token'>)</span>
+  <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_update identifier id'>update</span><span class='lparen token'>(</span><span class='rubyid_content identifier id'>content</span><span class='comma token'>,</span> <span class='rubyid_meta identifier id'>meta</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -305,9 +306,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 74</span>
 
-<span class='def def kw'>def</span> <span class='arguments identifier id'>arguments</span>
-  <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_arguments identifier id'>arguments</span>
+  <span class='rubyid_args identifier id'>args</span><span class='lbrack token'>[</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rbrack token'>]</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -334,9 +335,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 71</span>
 
-<span class='def def kw'>def</span> <span class='name identifier id'>name</span>
-  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_name identifier id'>name</span>
+  <span class='rubyid_args identifier id'>args</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -355,9 +356,9 @@
     </div>
 
     <div id="footer">
-  Generated on Wed Jan 11 12:30:50 2012 by 
+  Generated on Fri Feb 17 10:34:47 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.3).
 </div>
 
   </body>

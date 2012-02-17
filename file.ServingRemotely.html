@@ -6,7 +6,7 @@
 <title>
   File: ServingRemotely
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -94,22 +94,22 @@ provides a number of ways of doing this.</p>
 <p>The <a href="file.DataStorage.html#File_datastore" title="FileDataStore">FileDataStore</a>, <a href="file.DataStorage.html#S3_datastore" title="S3DataStore">S3DataStore</a> and
 <a href="file.DataStorage.html#Couch_datastore" title="CouchDataStore">CouchDataStore</a> allow for serving data directly, so given a Dragonfly app</p>
 
-<pre class="code"><span class='app identifier id'>app</span> <span class='assign token'>=</span> <span class='Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span>
 </pre>
 
 <p>and the uid for some stored content</p>
 
-<pre class="code"><span class='uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='store identifier id'>store</span><span class='lparen token'>(</span><span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'some/file.jpg'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<pre class="code"><span class='rubyid_uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='rubyid_Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'some/file.jpg'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 </pre>
 
 <p>we can get the remote url using</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='remote_url_for identifier id'>remote_url_for</span><span class='lparen token'>(</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>            <span class='comment val'># e.g. http://my-bucket.s3.amazonaws.com/2011/04/01/03/03/05/243/file.jpg</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_remote_url_for identifier id'>remote_url_for</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>            <span class='comment val'># e.g. http://my-bucket.s3.amazonaws.com/2011/04/01/03/03/05/243/file.jpg</span>
 </pre>
 
 <p>or from a model attachment:</p>
 
-<pre class="code"><span class='my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='remote_url identifier id'>remote_url</span>     <span class='comment val'># http://my-bucket.s3.amazonaws.com/2011...</span>
+<pre class="code"><span class='rubyid_my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span>     <span class='comment val'># http://my-bucket.s3.amazonaws.com/2011...</span>
 </pre>
 
 <h2>Processed Content</h2>
@@ -118,18 +118,18 @@ provides a number of ways of doing this.</p>
 like most other attachment ruby gems (see <a href="file.Models.html#Up-front_thumbnailing" title="Models">Models</a>),
 e.g. for my avatar model,</p>
 
-<pre class="code"><span class='class class kw'>class</span> <span class='Avatar constant id'>Avatar</span>
-  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:image</span> <span class='do do kw'>do</span>
-    <span class='copy_to identifier id'>copy_to</span><span class='lparen token'>(</span><span class='symbol val'>:small_image</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='bitor op'>|</span> <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'200x200#'</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
-  <span class='end end kw'>end</span>
-  <span class='image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:small_image</span>
-<span class='end end kw'>end</span>
+<pre class="code"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Avatar constant id'>Avatar</span>
+  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:image</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_copy_to identifier id'>copy_to</span><span class='lparen token'>(</span><span class='symbol val'>:small_image</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_a identifier id'>a</span><span class='bitor op'>|</span> <span class='rubyid_a identifier id'>a</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'200x200#'</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:small_image</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
 
 <p>Then we can use <code>remote_url</code> for for each accessor.</p>
 
-<pre class="code"><span class='avatar identifier id'>avatar</span><span class='dot token'>.</span><span class='image identifier id'>image</span><span class='dot token'>.</span><span class='remote_url identifier id'>remote_url</span>            <span class='comment val'># http://my-bucket.s3.amazonaws.com/some/path.jpg</span>
-<span class='avatar identifier id'>avatar</span><span class='dot token'>.</span><span class='small_image identifier id'>small_image</span><span class='dot token'>.</span><span class='remote_url identifier id'>remote_url</span>      <span class='comment val'># http://my-bucket.s3.amazonaws.com/some/other/path.jpg</span>
+<pre class="code"><span class='rubyid_avatar identifier id'>avatar</span><span class='dot token'>.</span><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span>            <span class='comment val'># http://my-bucket.s3.amazonaws.com/some/path.jpg</span>
+<span class='rubyid_avatar identifier id'>avatar</span><span class='dot token'>.</span><span class='rubyid_small_image identifier id'>small_image</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span>      <span class='comment val'># http://my-bucket.s3.amazonaws.com/some/other/path.jpg</span>
 </pre>
 
 <p>However, this has all the limitations that come with up-front processing, such as having to regenerate the thumbnail when the size requirement changes.</p>
@@ -147,49 +147,50 @@ to the datastore in the on-the-fly manner.</p>
 Below is an example using an ActiveRecord 'Thumb' table to keep track of already created thumbnail uids.
 It has two string columns; 'job' and 'uid'.</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='configure identifier id'>configure</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='c identifier id'>c</span><span class='bitor op'>|</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
 
   <span class='comment val'># Override the .url method...</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='define_url identifier id'>define_url</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='app identifier id'>app</span><span class='comma token'>,</span> <span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='bitor op'>|</span>
-    <span class='thumb identifier id'>thumb</span> <span class='assign token'>=</span> <span class='Thumb constant id'>Thumb</span><span class='dot token'>.</span><span class='find_by_job identifier id'>find_by_job</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='dot token'>.</span><span class='serialize identifier id'>serialize</span><span class='rparen token'>)</span>
+  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_define_url identifier id'>define_url</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_app identifier id'>app</span><span class='comma token'>,</span> <span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='bitor op'>|</span>
+    <span class='rubyid_thumb identifier id'>thumb</span> <span class='assign token'>=</span> <span class='rubyid_Thumb constant id'>Thumb</span><span class='dot token'>.</span><span class='rubyid_find_by_job identifier id'>find_by_job</span><span class='lparen token'>(</span><span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_serialize identifier id'>serialize</span><span class='rparen token'>)</span>
     <span class='comment val'># If (fetch 'some_uid' then resize to '40x40') has been stored already, give the datastore's remote url ...</span>
-    <span class='if if kw'>if</span> <span class='thumb identifier id'>thumb</span>
-      <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='thumb identifier id'>thumb</span><span class='dot token'>.</span><span class='uid identifier id'>uid</span><span class='rparen token'>)</span>
+    <span class='rubyid_if if kw'>if</span> <span class='rubyid_thumb identifier id'>thumb</span>
+      <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='rubyid_url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='rubyid_thumb identifier id'>thumb</span><span class='dot token'>.</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
     <span class='comment val'># ...otherwise give the local Dragonfly server url</span>
-    <span class='else else kw'>else</span>
-      <span class='app identifier id'>app</span><span class='dot token'>.</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='job identifier id'>job</span><span class='rparen token'>)</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
+    <span class='rubyid_else else kw'>else</span>
+      <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_server identifier id'>server</span><span class='dot token'>.</span><span class='rubyid_url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='rubyid_job identifier id'>job</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
 
   <span class='comment val'># Before serving from the local Dragonfly server...</span>
-  <span class='c identifier id'>c</span><span class='dot token'>.</span><span class='server identifier id'>server</span><span class='dot token'>.</span><span class='before_serve identifier id'>before_serve</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='job identifier id'>job</span><span class='comma token'>,</span> <span class='env identifier id'>env</span><span class='bitor op'>|</span>
+  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_server identifier id'>server</span><span class='dot token'>.</span><span class='rubyid_before_serve identifier id'>before_serve</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_env identifier id'>env</span><span class='bitor op'>|</span>
     <span class='comment val'># ...store the thumbnail in the datastore...</span>
-    <span class='uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='store identifier id'>store</span>
+    <span class='rubyid_uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_store identifier id'>store</span>
 
     <span class='comment val'># ...keep track of its uid so next time we can serve directly from the datastore</span>
-    <span class='Thumb constant id'>Thumb</span><span class='dot token'>.</span><span class='create! fid id'>create!</span><span class='lparen token'>(</span>
-      <span class='symbol val'>:uid</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='uid identifier id'>uid</span><span class='comma token'>,</span>
-      <span class='symbol val'>:job</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='job identifier id'>job</span><span class='dot token'>.</span><span class='serialize identifier id'>serialize</span>     <span class='comment val'># 'BAhbBls...' - holds all the job info</span>
+    <span class='rubyid_Thumb constant id'>Thumb</span><span class='dot token'>.</span><span class='rubyid_create! fid id'>create!</span><span class='lparen token'>(</span>
+      <span class='symbol val'>:uid</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span>
+      <span class='symbol val'>:job</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_serialize identifier id'>serialize</span>     <span class='comment val'># 'BAhbBls...' - holds all the job info</span>
     <span class='rparen token'>)</span>                           <span class='comment val'># e.g. fetch 'some_uid' then resize to '40x40'</span>
-  <span class='end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
 
-<span class='end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
 
 <p>This would give</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'40x40'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span>    <span class='comment val'># normal Dragonfly url e.g. /media/BAhbBls...</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'40x40'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>    <span class='comment val'># normal Dragonfly url e.g. /media/BAhbBls...</span>
 </pre>
 
 <p>then from the second time onwards</p>
 
-<pre class="code"><span class='app identifier id'>app</span><span class='dot token'>.</span><span class='fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'40x40'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url identifier id'>url</span>    <span class='comment val'># http://my-bucket.s3.amazonaws.com/2011...</span>
+<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'40x40'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>    <span class='comment val'># http://my-bucket.s3.amazonaws.com/2011...</span>
 </pre>
 
 <p>The above is just an example - there are a number of things you could do with <code>before_serve</code> and <code>define_url</code> -
 you could use e.g. Redis or some key-value store to keep track of thumbnails.
 You'd also probably want a way of expiring the thumbnails or destroying them when the original is destroyed, but this
-is left up to you as it's outside of the scope of Dragonfly.</p></div>
+is left up to you as it's outside of the scope of Dragonfly.</p>
+</div>
       </div>
       <div class="col2">
         <ul class="main_files clearfix">
@@ -199,9 +200,9 @@ is left up to you as it's outside of the scope of Dragonfly.</p></div>
     </div>
 
     <div id="footer">
-  Generated on Wed Jan 11 12:30:49 2012 by 
+  Generated on Fri Feb 17 10:34:46 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.3).
 </div>
 
   </body>

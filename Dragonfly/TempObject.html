@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::TempObject
   
-    &mdash; Documentation by YARD 0.7.2
+    &mdash; Documentation by YARD 0.7.4
   
 </title>
 
@@ -120,22 +120,38 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    A TempObject is used for HOLDING DATA.
+    <p>A TempObject is used for HOLDING DATA.
 It's the thing that is passed between the datastore, the processor and the encoder, and is useful
-for separating how the data was created and how it is later accessed.<br/>You can initialize it various ways:<br/>  temp_object = Dragonfly::TempObject.new('this is the content')           # with a String
+for separating how the data was created and how it is later accessed.</p>
+
+<p>You can initialize it various ways:</p>
+
+<p>temp_object = Dragonfly::TempObject.new('this is the content')           # with a String
   temp_object = Dragonfly::TempObject.new(Pathname.new('path/to/content')) # with a Pathname
   temp_object = Dragonfly::TempObject.new(File.new('path/to/content'))     # with a File
   temp_object = Dragonfly::TempObject.new(some_tempfile)                   # with a Tempfile
-  temp_object = Dragonfly::TempObject.new(some_other_temp_object)          # with another TempObject<br/>However, no matter how it was initialized, you can always access the data a number of ways:<br/>  temp_object.data      # returns a data string
+  temp_object = Dragonfly::TempObject.new(some_other_temp_object)          # with another TempObject</p>
+
+<p>However, no matter how it was initialized, you can always access the data a number of ways:</p>
+
+<p>temp_object.data      # returns a data string
   temp_object.file      # returns a file object holding the data
-  temp_object.path      # returns a path for the file<br/>The data/file are created lazily, something which you may wish to take advantage of.<br/>For example, if a TempObject is initialized with a file, and temp_object.data is never called, then
-the data string will never be loaded into memory.<br/>Conversely, if the TempObject is initialized with a data string, and neither temp_object.file nor temp_object.path
-are ever called, then the filesystem will never be hit.
+  temp_object.path      # returns a path for the file</p>
+
+<p>The data/file are created lazily, something which you may wish to take advantage of.</p>
+
+<p>For example, if a TempObject is initialized with a file, and temp_object.data is never called, then
+the data string will never be loaded into memory.</p>
+
+<p>Conversely, if the TempObject is initialized with a data string, and neither temp_object.file nor temp_object.path
+are ever called, then the filesystem will never be hit.</p>
+
 
   </div>
 </div>
 <div class="tags">
   
+
 </div><h2>Defined Under Namespace</h2>
 <p class="children">
    
@@ -174,7 +190,8 @@ are ever called, then the filesystem will never be hit.
   
 
   
-    <span class="summary_desc"><div class='inline'>Returns the value of attribute meta.</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute meta.</p>
+</div></span>
   
 </li>
 
@@ -198,7 +215,8 @@ are ever called, then the filesystem will never be hit.
   
 
   
-    <span class="summary_desc"><div class='inline'>Returns the value of attribute original_filename.</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute original_filename.</p>
+</div></span>
   
 </li>
 
@@ -344,7 +362,8 @@ are ever called, then the filesystem will never be hit.
   
 
   
-    <span class="summary_desc"><div class='inline'>Instance Methods.</div></span>
+    <span class="summary_desc"><div class='inline'><p>Instance Methods.</p>
+</div></span>
   
 </li>
 
@@ -563,12 +582,14 @@ are ever called, then the filesystem will never be hit.
   
 </p><div class="docstring">
   <div class="discussion">
-    Instance Methods
+    <p>Instance Methods</p>
+
 
   </div>
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -613,40 +634,40 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 42</span>
 
-<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='comma token'>,</span> <span class='meta identifier id'>meta</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='TempObject constant id'>TempObject</span>
-    <span class='@data ivar id'>@data</span> <span class='assign token'>=</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='get_data identifier id'>get_data</span>
-    <span class='@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='get_tempfile identifier id'>get_tempfile</span>
-    <span class='@pathname ivar id'>@pathname</span> <span class='assign token'>=</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='get_pathname identifier id'>get_pathname</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='String constant id'>String</span>
-    <span class='@data ivar id'>@data</span> <span class='assign token'>=</span> <span class='obj identifier id'>obj</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='Tempfile constant id'>Tempfile</span>
-    <span class='@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='obj identifier id'>obj</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='File constant id'>File</span>
-    <span class='@pathname ivar id'>@pathname</span> <span class='assign token'>=</span> <span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='Pathname constant id'>Pathname</span>
-    <span class='@pathname ivar id'>@pathname</span> <span class='assign token'>=</span> <span class='obj identifier id'>obj</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:tempfile</span><span class='rparen token'>)</span>
-    <span class='@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='tempfile identifier id'>tempfile</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:path</span><span class='rparen token'>)</span> <span class='comment val'># e.g. Rack::Test::UploadedFile</span>
-    <span class='@pathname ivar id'>@pathname</span> <span class='assign token'>=</span> <span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{self.class.name} must be initialized with a String, a Pathname, a File, a Tempfile, another TempObject, something that responds to .tempfile, or something that responds to .path&quot;</span>
-  <span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_obj identifier id'>obj</span><span class='comma token'>,</span> <span class='rubyid_meta identifier id'>meta</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span> <span class='rubyid_TempObject constant id'>TempObject</span>
+    <span class='rubyid_@data ivar id'>@data</span> <span class='assign token'>=</span> <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_get_data identifier id'>get_data</span>
+    <span class='rubyid_@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_get_tempfile identifier id'>get_tempfile</span>
+    <span class='rubyid_@pathname ivar id'>@pathname</span> <span class='assign token'>=</span> <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_get_pathname identifier id'>get_pathname</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span> <span class='rubyid_String constant id'>String</span>
+    <span class='rubyid_@data ivar id'>@data</span> <span class='assign token'>=</span> <span class='rubyid_obj identifier id'>obj</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span> <span class='rubyid_Tempfile constant id'>Tempfile</span>
+    <span class='rubyid_@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='rubyid_obj identifier id'>obj</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span> <span class='rubyid_File constant id'>File</span>
+    <span class='rubyid_@pathname ivar id'>@pathname</span> <span class='assign token'>=</span> <span class='rubyid_Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span> <span class='rubyid_Pathname constant id'>Pathname</span>
+    <span class='rubyid_@pathname ivar id'>@pathname</span> <span class='assign token'>=</span> <span class='rubyid_obj identifier id'>obj</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:tempfile</span><span class='rparen token'>)</span>
+    <span class='rubyid_@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_tempfile identifier id'>tempfile</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:path</span><span class='rparen token'>)</span> <span class='comment val'># e.g. Rack::Test::UploadedFile</span>
+    <span class='rubyid_@pathname ivar id'>@pathname</span> <span class='assign token'>=</span> <span class='rubyid_Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{self.class.name} must be initialized with a String, a Pathname, a File, a Tempfile, another TempObject, something that responds to .tempfile, or something that responds to .path&quot;</span>
+  <span class='rubyid_end end kw'>end</span>
   
-  <span class='@tempfile ivar id'>@tempfile</span><span class='dot token'>.</span><span class='close identifier id'>close</span> <span class='if if_mod kw'>if</span> <span class='@tempfile ivar id'>@tempfile</span>
+  <span class='rubyid_@tempfile ivar id'>@tempfile</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@tempfile ivar id'>@tempfile</span>
 
   <span class='comment val'># Original filename</span>
-  <span class='@original_filename ivar id'>@original_filename</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:original_filename</span><span class='rparen token'>)</span>
-    <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='original_filename identifier id'>original_filename</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='@pathname ivar id'>@pathname</span>
-    <span class='@pathname ivar id'>@pathname</span><span class='dot token'>.</span><span class='basename identifier id'>basename</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
-  <span class='end end kw'>end</span>
+  <span class='rubyid_@original_filename ivar id'>@original_filename</span> <span class='assign token'>=</span> <span class='rubyid_if if kw'>if</span> <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:original_filename</span><span class='rparen token'>)</span>
+    <span class='rubyid_obj identifier id'>obj</span><span class='dot token'>.</span><span class='rubyid_original_filename identifier id'>original_filename</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_@pathname ivar id'>@pathname</span>
+    <span class='rubyid_@pathname ivar id'>@pathname</span><span class='dot token'>.</span><span class='rubyid_basename identifier id'>basename</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
+  <span class='rubyid_end end kw'>end</span>
   
   <span class='comment val'># Meta</span>
-  <span class='@meta ivar id'>@meta</span> <span class='assign token'>=</span> <span class='meta identifier id'>meta</span>
-  <span class='@meta ivar id'>@meta</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='@original_filename ivar id'>@original_filename</span> <span class='if if_mod kw'>if</span> <span class='@original_filename ivar id'>@original_filename</span>
-<span class='end end kw'>end</span>
+  <span class='rubyid_@meta ivar id'>@meta</span> <span class='assign token'>=</span> <span class='rubyid_meta identifier id'>meta</span>
+  <span class='rubyid_@meta ivar id'>@meta</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='rubyid_@original_filename ivar id'>@original_filename</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@original_filename ivar id'>@original_filename</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -670,12 +691,14 @@ are ever called, then the filesystem will never be hit.
   
 </p><div class="docstring">
   <div class="discussion">
-    Returns the value of attribute meta
+    <p>Returns the value of attribute meta</p>
+
 
   </div>
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -689,9 +712,9 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 78</span>
 
-<span class='def def kw'>def</span> <span class='meta identifier id'>meta</span>
-  <span class='@meta ivar id'>@meta</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_meta identifier id'>meta</span>
+  <span class='rubyid_@meta ivar id'>@meta</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -710,12 +733,14 @@ are ever called, then the filesystem will never be hit.
   
 </p><div class="docstring">
   <div class="discussion">
-    Returns the value of attribute original_filename
+    <p>Returns the value of attribute original_filename</p>
+
 
   </div>
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -729,9 +754,9 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 77</span>
 
-<span class='def def kw'>def</span> <span class='original_filename identifier id'>original_filename</span>
-  <span class='@original_filename ivar id'>@original_filename</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_original_filename identifier id'>original_filename</span>
+  <span class='rubyid_@original_filename ivar id'>@original_filename</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -767,11 +792,11 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 150</span>
 
-<span class='def def kw'>def</span> <span class='close identifier id'>close</span>
-  <span class='@tempfile ivar id'>@tempfile</span><span class='dot token'>.</span><span class='close! fid id'>close!</span> <span class='if if_mod kw'>if</span> <span class='@tempfile ivar id'>@tempfile</span>
-  <span class='@data ivar id'>@data</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
-  <span class='@closed ivar id'>@closed</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_close identifier id'>close</span>
+  <span class='rubyid_@tempfile ivar id'>@tempfile</span><span class='dot token'>.</span><span class='rubyid_close! fid id'>close!</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@tempfile ivar id'>@tempfile</span>
+  <span class='rubyid_@data ivar id'>@data</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>
+  <span class='rubyid_@closed ivar id'>@closed</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -792,7 +817,8 @@ are ever called, then the filesystem will never be hit.
   </div>
 </div>
 <div class="tags">
-  <h3>Returns:</h3>
+  
+<h3>Returns:</h3>
 <ul class="return">
   
     <li>
@@ -819,9 +845,9 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 156</span>
 
-<span class='def def kw'>def</span> <span class='closed? fid id'>closed?</span>
-  <span class='notop op'>!</span><span class='notop op'>!</span><span class='@closed ivar id'>@closed</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_closed? fid id'>closed?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='rubyid_@closed ivar id'>@closed</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -842,7 +868,8 @@ are ever called, then the filesystem will never be hit.
   </div>
 </div>
 <div class="tags">
-  <h3>Raises:</h3>
+  
+<h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -870,10 +897,10 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 88</span>
 
-<span class='def def kw'>def</span> <span class='data identifier id'>data</span>
-  <span class='raise identifier id'>raise</span> <span class='Closed constant id'>Closed</span><span class='comma token'>,</span> <span class='string val'>&quot;can't read data as TempObject has been closed&quot;</span> <span class='if if_mod kw'>if</span> <span class='closed? fid id'>closed?</span>
-  <span class='@data ivar id'>@data</span> <span class='opasgn op'>||=</span> <span class='file identifier id'>file</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span> <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='read identifier id'>read</span> <span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_data identifier id'>data</span>
+  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_Closed constant id'>Closed</span><span class='comma token'>,</span> <span class='string val'>&quot;can't read data as TempObject has been closed&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_closed? fid id'>closed?</span>
+  <span class='rubyid_@data ivar id'>@data</span> <span class='opasgn op'>||=</span> <span class='rubyid_file identifier id'>file</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span> <span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span> <span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -904,13 +931,13 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 126</span>
 
-<span class='def def kw'>def</span> <span class='each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='to_io identifier id'>to_io</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='io identifier id'>io</span><span class='bitor op'>|</span>
-    <span class='while while kw'>while</span> <span class='part identifier id'>part</span> <span class='assign token'>=</span> <span class='io identifier id'>io</span><span class='dot token'>.</span><span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='block_size identifier id'>block_size</span><span class='rparen token'>)</span>
-      <span class='yield yield kw'>yield</span> <span class='part identifier id'>part</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_to_io identifier id'>to_io</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_io identifier id'>io</span><span class='bitor op'>|</span>
+    <span class='rubyid_while while kw'>while</span> <span class='rubyid_part identifier id'>part</span> <span class='assign token'>=</span> <span class='rubyid_io identifier id'>io</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='lparen token'>(</span><span class='rubyid_block_size identifier id'>block_size</span><span class='rparen token'>)</span>
+      <span class='rubyid_yield yield kw'>yield</span> <span class='rubyid_part identifier id'>part</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -945,17 +972,17 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 106</span>
 
-<span class='def def kw'>def</span> <span class='file identifier id'>file</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='f identifier id'>f</span> <span class='assign token'>=</span> <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='open identifier id'>open</span>
-  <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='binmode identifier id'>binmode</span>
-  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
-    <span class='ret identifier id'>ret</span> <span class='assign token'>=</span> <span class='yield yield kw'>yield</span> <span class='f identifier id'>f</span>
-    <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='close identifier id'>close</span> <span class='unless unless_mod kw'>unless</span> <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='closed? fid id'>closed?</span>
-  <span class='else else kw'>else</span>
-    <span class='ret identifier id'>ret</span> <span class='assign token'>=</span> <span class='f identifier id'>f</span>
-  <span class='end end kw'>end</span>
-  <span class='ret identifier id'>ret</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_file identifier id'>file</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_f identifier id'>f</span> <span class='assign token'>=</span> <span class='rubyid_tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span>
+  <span class='rubyid_tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='rubyid_binmode identifier id'>binmode</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_block_given? fid id'>block_given?</span>
+    <span class='rubyid_ret identifier id'>ret</span> <span class='assign token'>=</span> <span class='rubyid_yield yield kw'>yield</span> <span class='rubyid_f identifier id'>f</span>
+    <span class='rubyid_tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='rubyid_closed? fid id'>closed?</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_ret identifier id'>ret</span> <span class='assign token'>=</span> <span class='rubyid_f identifier id'>f</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_ret identifier id'>ret</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -989,16 +1016,16 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 160</span>
 
-<span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
-  <span class='content_string identifier id'>content_string</span> <span class='assign token'>=</span> <span class='case case kw'>case</span>
-  <span class='when when kw'>when</span> <span class='@data ivar id'>@data</span>
-    <span class='data_string identifier id'>data_string</span> <span class='assign token'>=</span> <span class='size identifier id'>size</span> <span class='gt op'>&gt;</span> <span class='integer val'>20</span> <span class='question op'>?</span> <span class='dstring node'>&quot;#{@data[0..20]}...&quot;</span> <span class='colon op'>:</span> <span class='@data ivar id'>@data</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_inspect identifier id'>inspect</span>
+  <span class='rubyid_content_string identifier id'>content_string</span> <span class='assign token'>=</span> <span class='rubyid_case case kw'>case</span>
+  <span class='rubyid_when when kw'>when</span> <span class='rubyid_@data ivar id'>@data</span>
+    <span class='rubyid_data_string identifier id'>data_string</span> <span class='assign token'>=</span> <span class='rubyid_size identifier id'>size</span> <span class='gt op'>&gt;</span> <span class='integer val'>20</span> <span class='question op'>?</span> <span class='dstring node'>&quot;#{@data[0..20]}...&quot;</span> <span class='colon op'>:</span> <span class='rubyid_@data ivar id'>@data</span>
     <span class='dstring node'>&quot;data=#{data_string.inspect}&quot;</span>
-  <span class='when when kw'>when</span> <span class='@pathname ivar id'>@pathname</span> <span class='then then kw'>then</span> <span class='dstring node'>&quot;pathname=#{@pathname.inspect}&quot;</span>
-  <span class='when when kw'>when</span> <span class='@tempfile ivar id'>@tempfile</span> <span class='then then kw'>then</span> <span class='dstring node'>&quot;tempfile=#{@tempfile.inspect}&quot;</span>
-  <span class='end end kw'>end</span>
-  <span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/&gt;$/</span><span class='comma token'>,</span> <span class='dstring node'>&quot; #{content_string} &gt;&quot;</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+  <span class='rubyid_when when kw'>when</span> <span class='rubyid_@pathname ivar id'>@pathname</span> <span class='rubyid_then then kw'>then</span> <span class='dstring node'>&quot;pathname=#{@pathname.inspect}&quot;</span>
+  <span class='rubyid_when when kw'>when</span> <span class='rubyid_@tempfile ivar id'>@tempfile</span> <span class='rubyid_then then kw'>then</span> <span class='dstring node'>&quot;tempfile=#{@tempfile.inspect}&quot;</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/&gt;$/</span><span class='comma token'>,</span> <span class='dstring node'>&quot; #{content_string} &gt;&quot;</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1025,9 +1052,9 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 80</span>
 
-<span class='def def kw'>def</span> <span class='name identifier id'>name</span>
-  <span class='meta identifier id'>meta</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_name identifier id'>name</span>
+  <span class='rubyid_meta identifier id'>meta</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1054,9 +1081,9 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 84</span>
 
-<span class='def def kw'>def</span> <span class='name= identifier id'>name=</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='rparen token'>)</span>
-  <span class='meta identifier id'>meta</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_name= identifier id'>name=</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='rparen token'>)</span>
+  <span class='rubyid_meta identifier id'>meta</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_name identifier id'>name</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1083,9 +1110,9 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 118</span>
 
-<span class='def def kw'>def</span> <span class='path identifier id'>path</span>
-  <span class='@pathname ivar id'>@pathname</span> <span class='question op'>?</span> <span class='@pathname ivar id'>@pathname</span><span class='dot token'>.</span><span class='expand_path identifier id'>expand_path</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='colon op'>:</span> <span class='tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='path identifier id'>path</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_path identifier id'>path</span>
+  <span class='rubyid_@pathname ivar id'>@pathname</span> <span class='question op'>?</span> <span class='rubyid_@pathname ivar id'>@pathname</span><span class='dot token'>.</span><span class='rubyid_expand_path identifier id'>expand_path</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span> <span class='colon op'>:</span> <span class='rubyid_tempfile identifier id'>tempfile</span><span class='dot token'>.</span><span class='rubyid_path identifier id'>path</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1112,9 +1139,9 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 122</span>
 
-<span class='def def kw'>def</span> <span class='size identifier id'>size</span>
-  <span class='@data ivar id'>@data</span> <span class='question op'>?</span> <span class='@data ivar id'>@data</span><span class='dot token'>.</span><span class='bytesize identifier id'>bytesize</span> <span class='colon op'>:</span> <span class='File constant id'>File</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_size identifier id'>size</span>
+  <span class='rubyid_@data ivar id'>@data</span> <span class='question op'>?</span> <span class='rubyid_@data ivar id'>@data</span><span class='dot token'>.</span><span class='rubyid_bytesize identifier id'>bytesize</span> <span class='colon op'>:</span> <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_size identifier id'>size</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1135,7 +1162,8 @@ are ever called, then the filesystem will never be hit.
   </div>
 </div>
 <div class="tags">
-  <h3>Raises:</h3>
+  
+<h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -1171,18 +1199,18 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 93</span>
 
-<span class='def def kw'>def</span> <span class='tempfile identifier id'>tempfile</span>
-  <span class='raise identifier id'>raise</span> <span class='Closed constant id'>Closed</span><span class='comma token'>,</span> <span class='string val'>&quot;can't read from tempfile as TempObject has been closed&quot;</span> <span class='if if_mod kw'>if</span> <span class='closed? fid id'>closed?</span>
-  <span class='@tempfile ivar id'>@tempfile</span> <span class='opasgn op'>||=</span> <span class='begin begin kw'>begin</span>
-    <span class='case case kw'>case</span>
-    <span class='when when kw'>when</span> <span class='@data ivar id'>@data</span>
-      <span class='@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='new_tempfile identifier id'>new_tempfile</span><span class='lparen token'>(</span><span class='@data ivar id'>@data</span><span class='rparen token'>)</span>
-    <span class='when when kw'>when</span> <span class='@pathname ivar id'>@pathname</span>
-      <span class='@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='copy_to_tempfile identifier id'>copy_to_tempfile</span><span class='lparen token'>(</span><span class='@pathname ivar id'>@pathname</span><span class='dot token'>.</span><span class='expand_path identifier id'>expand_path</span><span class='rparen token'>)</span>
-    <span class='end end kw'>end</span>
-    <span class='@tempfile ivar id'>@tempfile</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_tempfile identifier id'>tempfile</span>
+  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_Closed constant id'>Closed</span><span class='comma token'>,</span> <span class='string val'>&quot;can't read from tempfile as TempObject has been closed&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_closed? fid id'>closed?</span>
+  <span class='rubyid_@tempfile ivar id'>@tempfile</span> <span class='opasgn op'>||=</span> <span class='rubyid_begin begin kw'>begin</span>
+    <span class='rubyid_case case kw'>case</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_@data ivar id'>@data</span>
+      <span class='rubyid_@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='rubyid_new_tempfile identifier id'>new_tempfile</span><span class='lparen token'>(</span><span class='rubyid_@data ivar id'>@data</span><span class='rparen token'>)</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_@pathname ivar id'>@pathname</span>
+      <span class='rubyid_@tempfile ivar id'>@tempfile</span> <span class='assign token'>=</span> <span class='rubyid_copy_to_tempfile identifier id'>copy_to_tempfile</span><span class='lparen token'>(</span><span class='rubyid_@pathname ivar id'>@pathname</span><span class='dot token'>.</span><span class='rubyid_expand_path identifier id'>expand_path</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_@tempfile ivar id'>@tempfile</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1217,17 +1245,17 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 134</span>
 
-<span class='def def kw'>def</span> <span class='to_file identifier id'>to_file</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='mode identifier id'>mode</span> <span class='assign token'>=</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:mode</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='integer val'>0644</span>
-  <span class='prepare_path identifier id'>prepare_path</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:mkdirs</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='false false kw'>false</span>
-  <span class='if if kw'>if</span> <span class='@data ivar id'>@data</span>
-    <span class='File constant id'>File</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='string val'>'wb'</span><span class='comma token'>,</span> <span class='mode identifier id'>mode</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span> <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='write identifier id'>write</span><span class='lparen token'>(</span><span class='@data ivar id'>@data</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
-  <span class='else else kw'>else</span>
-    <span class='FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='cp identifier id'>cp</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='path identifier id'>path</span><span class='rparen token'>)</span>
-    <span class='File constant id'>File</span><span class='dot token'>.</span><span class='chmod identifier id'>chmod</span><span class='lparen token'>(</span><span class='mode identifier id'>mode</span><span class='comma token'>,</span> <span class='path identifier id'>path</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-  <span class='File constant id'>File</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='string val'>'rb'</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_to_file identifier id'>to_file</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_mode identifier id'>mode</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:mode</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='integer val'>0644</span>
+  <span class='rubyid_prepare_path identifier id'>prepare_path</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:mkdirs</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='rubyid_false false kw'>false</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_@data ivar id'>@data</span>
+    <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='comma token'>,</span> <span class='string val'>'wb'</span><span class='comma token'>,</span> <span class='rubyid_mode identifier id'>mode</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span> <span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_write identifier id'>write</span><span class='lparen token'>(</span><span class='rubyid_@data ivar id'>@data</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rubyid_cp identifier id'>cp</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_path identifier id'>path</span><span class='comma token'>,</span> <span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span>
+    <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_chmod identifier id'>chmod</span><span class='lparen token'>(</span><span class='rubyid_mode identifier id'>mode</span><span class='comma token'>,</span> <span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='comma token'>,</span> <span class='string val'>'rb'</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1254,9 +1282,9 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 146</span>
 
-<span class='def def kw'>def</span> <span class='to_io identifier id'>to_io</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='@data ivar id'>@data</span> <span class='question op'>?</span> <span class='StringIO constant id'>StringIO</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='@data ivar id'>@data</span><span class='comma token'>,</span> <span class='string val'>'rb'</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='file identifier id'>file</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_to_io identifier id'>to_io</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_@data ivar id'>@data</span> <span class='question op'>?</span> <span class='rubyid_StringIO constant id'>StringIO</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='rubyid_@data ivar id'>@data</span><span class='comma token'>,</span> <span class='string val'>'rb'</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='rubyid_file identifier id'>file</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1283,9 +1311,9 @@ are ever called, then the filesystem will never be hit.
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/temp_object.rb', line 171</span>
 
-<span class='def def kw'>def</span> <span class='unique_id identifier id'>unique_id</span>
-  <span class='@unique_id ivar id'>@unique_id</span> <span class='opasgn op'>||=</span> <span class='dstring node'>&quot;#{object_id}#{rand(1000000)}&quot;</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_unique_id identifier id'>unique_id</span>
+  <span class='rubyid_@unique_id ivar id'>@unique_id</span> <span class='opasgn op'>||=</span> <span class='dstring node'>&quot;#{object_id}#{rand(1000000)}&quot;</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1304,9 +1332,9 @@ are ever called, then the filesystem will never be hit.
     </div>
 
     <div id="footer">
-  Generated on Wed Jan 11 12:30:51 2012 by 
+  Generated on Fri Feb 17 10:34:48 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.4 (ruby-1.9.3).
 </div>
 
   </body>
