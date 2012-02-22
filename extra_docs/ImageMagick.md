@@ -131,6 +131,6 @@ There are some options that can be set, e.g. if the imagemagick convert command 
 
     app.configure do |c|
       c.convert_command = "/opt/local/bin/convert"          # defaults to "convert"
-      c.identify_command = "/opt/local/bin/convert"         # defaults to "convert"
+      c.identify_command = "/opt/local/bin/identify"        # defaults to "identify"
       c.log_commands = true                                 # defaults to false
     end
