@@ -72,7 +72,7 @@ Here is an example of an app with all attributes configured:
       
       # When using ImageMagick only...
       c.convert_command = "/opt/local/bin/convert"          # defaults to "convert"
-      c.identify_command = "/opt/local/bin/convert"         # defaults to "convert"
+      c.identify_command = "/opt/local/bin/identify"        # defaults to "identify"
       c.log_commands = true                                 # defaults to false
     end
 
