@@ -15,7 +15,7 @@ module Dragonfly
       configurable_attr :use_filesystem, true
       configurable_attr :storage_headers, {'x-amz-acl' => 'public-read'}
       configurable_attr :url_scheme, 'http'
-      configurable_attr :url_base
+      configurable_attr :url_host
 
       REGIONS = {
         'us-east-1' => 's3.amazonaws.com',  #default
@@ -85,8 +85,8 @@ module Dragonfly
           end
         else
           scheme = opts[:scheme] || url_scheme
-          if url_base
-            "#{scheme}://#{url_base}/#{uid}"
+          if url_host
+            "#{scheme}://#{url_host}/#{uid}"
           else
             "#{scheme}://#{bucket_name}.s3.amazonaws.com/#{uid}"
           end

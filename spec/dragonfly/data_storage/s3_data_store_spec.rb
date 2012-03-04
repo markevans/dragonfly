@@ -262,10 +262,10 @@ describe Dragonfly::DataStorage::S3DataStore do
       @data_store.url_for(@uid).should == "https://#{BUCKET_NAME}.s3.amazonaws.com/some/path/on/s3"
     end
 
-    it "should allow the url_base to be customised" do
-      url_base = 'customised.domain.com/and/path'
-      @data_store.url_base = url_base
-      @data_store.url_for(@uid).should == "http://#{url_base}/some/path/on/s3"
+    it "should allow the url_host to be customised" do
+      url_host = 'customised.domain.com/and/path'
+      @data_store.url_host = url_host
+      @data_store.url_for(@uid).should == "http://#{url_host}/some/path/on/s3"
     end
     
   end
