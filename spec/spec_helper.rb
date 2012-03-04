@@ -37,7 +37,8 @@ def mock_app(extra_stubs={})
 end
 
 def test_app
-  app = Dragonfly::App.send(:new)
+  time = Time.now
+  app = Dragonfly::App.send(:new, "test_#{time.sec}_#{time.usec}")
   app.log = Logger.new(LOG_FILE)
   app.datastore.root_path = 'tmp/file_data_store_test'
   app

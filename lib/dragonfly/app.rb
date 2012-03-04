@@ -10,7 +10,7 @@ module Dragonfly
       private :new # Hide 'new' - need to use 'instance'
 
       def instance(name)
-        apps[name] ||= new
+        apps[name] ||= new(name)
       end
 
       alias [] instance
@@ -23,7 +23,8 @@ module Dragonfly
 
     end
 
-    def initialize
+    def initialize(name)
+      @name = name
       @analyser, @processor, @encoder, @generator = Analyser.new, Processor.new, Encoder.new, Generator.new
       [@analyser, @processor, @encoder, @generator].each do |obj|
         obj.use_same_log_as(self)
@@ -32,6 +33,8 @@ module Dragonfly
       @server = Server.new(self)
       @job_definitions = JobDefinitions.new
     end
+
+    attr_reader :name
 
     include Configurable
 
