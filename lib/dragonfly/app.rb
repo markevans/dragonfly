@@ -138,13 +138,14 @@ module Dragonfly
 
     def define_macro_on_include(mod, macro_name)
       app = self
+      name = self.name
       (class << mod; self; end).class_eval do
-        alias included_without_dragonfly included
-        define_method :included_with_dragonfly do |mod|
-          included_without_dragonfly(mod)
+        alias_method "included_without_dragonfly_#{name}", :included
+        define_method "included_with_dragonfly_#{name}" do |mod|
+          send "included_without_dragonfly_#{name}", mod
           app.define_macro(mod, macro_name)
         end
-        alias included included_with_dragonfly
+        alias_method :included, "included_with_dragonfly_#{name}"
       end
     end
     
