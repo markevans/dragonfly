@@ -90,6 +90,7 @@ To configure with the {Dragonfly::DataStorage::S3DataStore S3DataStore}:
       c.region = 'eu-west-1'                        # defaults to 'us-east-1'
       c.storage_headers = {'some' => 'thing'}       # defaults to {'x-amz-acl' => 'public-read'}
       c.url_scheme = 'https'                        # defaults to 'http'
+      c.url_host = 'some.custom.host'               # defaults to "<bucket_name>.s3.amazonaws.com"
     end
 
 You can also pass these options to `S3DataStore.new` as an options hash.
@@ -105,6 +106,10 @@ or with an expiring url:
 or with an https url:
 
     my_model.attachment.remote_url(:scheme => 'https')   # also configurable for all urls with 'url_scheme'
+
+or with a custom host:
+
+    my_model.attachment.remote_url(:host => 'custom.domain')   # also configurable for all urls with 'url_host'
 
 Extra options you can use on store are `:path` and `:headers`
 
