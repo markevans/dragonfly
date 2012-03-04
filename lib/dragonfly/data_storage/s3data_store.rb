@@ -85,11 +85,8 @@ module Dragonfly
           end
         else
           scheme = opts[:scheme] || url_scheme
-          if url_host
-            "#{scheme}://#{url_host}/#{uid}"
-          else
-            "#{scheme}://#{bucket_name}.s3.amazonaws.com/#{uid}"
-          end
+          host   = opts[:host]   || url_host || "#{bucket_name}.s3.amazonaws.com"
+          "#{scheme}://#{host}/#{uid}"
         end
       end
 
