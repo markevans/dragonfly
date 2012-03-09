@@ -10,6 +10,7 @@ module Dragonfly
       private :new # Hide 'new' - need to use 'instance'
 
       def instance(name)
+        name = name.to_sym
         apps[name] ||= new(name)
       end
 

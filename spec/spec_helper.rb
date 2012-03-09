@@ -38,7 +38,7 @@ end
 
 def test_app
   time = Time.now
-  app = Dragonfly::App.send(:new, "test_#{time.sec}_#{time.usec}")
+  app = Dragonfly::App.send(:new, "test_#{time.sec}_#{time.usec}".to_sym)
   app.log = Logger.new(LOG_FILE)
   app.datastore.root_path = 'tmp/file_data_store_test'
   app
