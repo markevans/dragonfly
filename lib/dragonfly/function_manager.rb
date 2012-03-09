@@ -52,7 +52,7 @@ module Dragonfly
     end
 
     def inspect
-      to_s.sub(/>$/, " with functions: #{functions.keys.map{|k| k.to_s }.sort.join(', ')} >")
+      "<#{self.class.name} with functions: #{functions.keys.map{|k| k.to_s }.sort.join(', ')} >"
     end
 
     private
