@@ -95,12 +95,16 @@ module Dragonfly
       end
 
       def storage
-        @storage ||= Fog::Storage.new(
-          :provider => 'AWS',
-          :aws_access_key_id => access_key_id,
-          :aws_secret_access_key => secret_access_key,
-          :region => region
-        )
+        @storage ||= begin
+          storage = Fog::Storage.new(
+            :provider => 'AWS',
+            :aws_access_key_id => access_key_id,
+            :aws_secret_access_key => secret_access_key,
+            :region => region
+          )
+          storage.sync_clock
+          storage
+        end
       end
 
       def bucket_exists?
