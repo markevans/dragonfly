@@ -165,7 +165,7 @@ module Dragonfly
       when @pathname then "pathname=#{@pathname.inspect}"
       when @tempfile then "tempfile=#{@tempfile.inspect}"
       end
-      to_s.sub(/>$/, " #{content_string} >")
+      "<#{self.class.name} #{content_string} >"
     end
 
     def unique_id
