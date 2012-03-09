@@ -44,5 +44,9 @@ describe Dragonfly::RoutedEndpoint do
     response = response_for @endpoint.call(env)
     response.body.should == 'wassup'
   end
+  
+   it "should have nice inspect output" do
+     @endpoint.inspect.should =~ /<Dragonfly::RoutedEndpoint for app :test_[_\w]* >/
+   end
 
 end

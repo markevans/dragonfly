@@ -18,6 +18,10 @@ module Dragonfly
       [400, {"Content-Type" => 'text/plain'}, ["The SHA parameter you gave (#{e}) is incorrect"]]
     end
 
+    def inspect
+      "<#{self.class.name} for app #{@app.name.inspect} >"
+    end
+
     private
 
     def routing_params(env)
