@@ -226,4 +226,10 @@ describe Dragonfly::JobEndpoint do
     end
   end
 
+  describe "inspect" do
+    it "should be pretty yo" do
+      @job.to_app.inspect.should == %(<Dragonfly::JobEndpoint steps=[fetch("egg")] >)
+    end
+  end
+
 end

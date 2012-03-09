@@ -11,5 +11,9 @@ module Dragonfly
 
     attr_reader :job
 
+    def inspect
+      "<#{self.class.name} steps=#{job.steps} >"
+    end
+
   end
 end
