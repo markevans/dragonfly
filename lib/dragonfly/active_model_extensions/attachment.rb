@@ -158,7 +158,7 @@ module Dragonfly
       end
       
       def inspect
-        "<Dragonfly Attachment uid=#{uid.inspect}, app=#{app.inspect}>"
+        "<Dragonfly Attachment uid=#{uid.inspect}, app=#{app.name.inspect}>"
       end
 
       protected

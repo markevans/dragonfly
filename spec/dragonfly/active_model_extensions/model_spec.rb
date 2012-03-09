@@ -1471,7 +1471,7 @@ describe Item do
       @item.save!
     end
     it "should be awesome" do
-      @item.preview_image.inspect.should =~ %r{^<Dragonfly Attachment uid="[^"]+".*>$}
+      @item.preview_image.inspect.should =~ %r{^<Dragonfly Attachment uid="[^"]+", app=:test[_\w]*>$}
     end
   end
   
