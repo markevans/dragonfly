@@ -164,4 +164,10 @@ describe Dragonfly::App do
     end
   end
 
+  describe "inspect" do
+    it "should give a neat output" do
+      Dragonfly[:hello].inspect.should == "<Dragonfly::App name=:hello >"
+    end
+  end
+
 end

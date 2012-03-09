@@ -167,6 +167,10 @@ module Dragonfly
       job_definitions.definition_names
     end
     
+    def inspect
+      "<#{self.class.name} name=#{name.inspect} >"
+    end
+    
     # Deprecated methods
     def url_path_prefix=(thing)
       raise NoMethodError, "url_path_prefix is deprecated - please use url_format, e.g. url_format = '/media/:job/:basename.:format' - see docs for more details"
