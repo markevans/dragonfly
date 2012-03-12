@@ -76,6 +76,7 @@ module Dragonfly
       @url_mapper ||= UrlMapper.new(url_format,
         :job => '[\w+~]',
         :basename => '[^\/]',
+        :name => '[^\/]',
         :format => '[^\.]'
       )
     end
