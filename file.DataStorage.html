@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.10)</div>
+      <div id="logo">DRAGONFLY (v 0.9.11)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -181,6 +181,7 @@ is changed, otherwise you could have caching problems, as the generated urls wil
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_region identifier id'>region</span> <span class='assign token'>=</span> <span class='string val'>'eu-west-1'</span>                        <span class='comment val'># defaults to 'us-east-1'</span>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_storage_headers identifier id'>storage_headers</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='string val'>'some'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'thing'</span><span class='rbrace token'>}</span>       <span class='comment val'># defaults to {'x-amz-acl' =&gt; 'public-read'}</span>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_url_scheme identifier id'>url_scheme</span> <span class='assign token'>=</span> <span class='string val'>'https'</span>                        <span class='comment val'># defaults to 'http'</span>
+  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_url_host identifier id'>url_host</span> <span class='assign token'>=</span> <span class='string val'>'some.custom.host'</span>               <span class='comment val'># defaults to &quot;&lt;bucket_name&gt;.s3.amazonaws.com&quot;</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
 
@@ -199,6 +200,11 @@ is changed, otherwise you could have caching problems, as the generated urls wil
 <p>or with an https url:</p>
 
 <pre class="code"><span class='rubyid_my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span><span class='lparen token'>(</span><span class='symbol val'>:scheme</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'https'</span><span class='rparen token'>)</span>   <span class='comment val'># also configurable for all urls with 'url_scheme'</span>
+</pre>
+
+<p>or with a custom host:</p>
+
+<pre class="code"><span class='rubyid_my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span><span class='lparen token'>(</span><span class='symbol val'>:host</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'custom.domain'</span><span class='rparen token'>)</span>   <span class='comment val'># also configurable for all urls with 'url_host'</span>
 </pre>
 
 <p>Extra options you can use on store are <code>:path</code> and <code>:headers</code></p>
@@ -329,7 +335,7 @@ Any options, get passed here.
     </div>
 
     <div id="footer">
-  Generated on Fri Feb 17 10:34:45 2012 by 
+  Generated on Mon Mar 12 14:46:21 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.4 (ruby-1.9.3).
 </div>

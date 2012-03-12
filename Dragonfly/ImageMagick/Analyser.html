@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.10)</div>
+      <div id="logo">DRAGONFLY (v 0.9.11)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -278,6 +278,8 @@
     
 
     
+      (also: #landscape)
+    
   </span>
   
   
@@ -321,6 +323,8 @@
       <a href="#portrait%3F-instance_method" title="#portrait? (instance method)">- (Boolean) <strong>portrait?</strong>(temp_object) </a>
     
 
+    
+      (also: #portrait)
     
   </span>
   
@@ -445,12 +449,12 @@
       <pre class="lines">
 
 
-31
-32
-33</pre>
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/analyser.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/analyser.rb', line 33</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_depth identifier id'>depth</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
   <span class='rubyid_identify identifier id'>identify</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='symbol val'>:depth</span><span class='rbrack token'>]</span>
@@ -474,12 +478,12 @@
       <pre class="lines">
 
 
-41
-42
-43</pre>
+43
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/analyser.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/analyser.rb', line 43</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_format identifier id'>format</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
   <span class='rubyid_identify identifier id'>identify</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='symbol val'>:format</span><span class='rbrack token'>]</span>
@@ -554,12 +558,12 @@
       <pre class="lines">
 
 
-45
-46
-47</pre>
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/analyser.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/analyser.rb', line 47</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_image? fid id'>image?</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
   <span class='notop op'>!</span><span class='notop op'>!</span><span class='rubyid_catch identifier id'>catch</span><span class='lparen token'>(</span><span class='symbol val'>:unable_to_handle</span><span class='rparen token'>)</span><span class='lbrace token'>{</span> <span class='rubyid_identify identifier id'>identify</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
@@ -576,6 +580,10 @@
     - (<tt>Boolean</tt>) <strong>landscape?</strong>(temp_object) 
   
 
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='landscape-instance_method'>landscape</span></span>
+    </span>
   
 </p><div class="docstring">
   <div class="discussion">
@@ -605,13 +613,13 @@
       <pre class="lines">
 
 
-26
 27
 28
-29</pre>
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/analyser.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/analyser.rb', line 27</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_landscape? fid id'>landscape?</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
   <span class='rubyid_attrs identifier id'>attrs</span> <span class='assign token'>=</span> <span class='rubyid_identify identifier id'>identify</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
@@ -640,13 +648,13 @@
       <pre class="lines">
 
 
-35
-36
 37
-38</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/analyser.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/analyser.rb', line 37</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_number_of_colours identifier id'>number_of_colours</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
   <span class='rubyid_details identifier id'>details</span> <span class='assign token'>=</span> <span class='rubyid_raw_identify identifier id'>raw_identify</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='string val'>'-verbose -unique'</span><span class='rparen token'>)</span>
@@ -664,6 +672,10 @@
     - (<tt>Boolean</tt>) <strong>portrait?</strong>(temp_object) 
   
 
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='portrait-instance_method'>portrait</span></span>
+    </span>
   
 </p><div class="docstring">
   <div class="discussion">
@@ -752,7 +764,7 @@
     </div>
 
     <div id="footer">
-  Generated on Fri Feb 17 10:34:49 2012 by 
+  Generated on Mon Mar 12 14:46:28 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.4 (ruby-1.9.3).
 </div>
