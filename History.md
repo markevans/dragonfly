@@ -1,3 +1,22 @@
+0.9.11 (2012-03-12)
+===================
+Features
+-------
+- Allow the S3 base URL to be customised with `url_host` (or per-request)
+- Added App#name (name as per `Dragonfly[:app_name]`)
+
+Changes
+-------
+- Better inspect for App, Processor, Analyser, Encoder, Generator, Job, TempObject, RoutedEndpoint, JobEndpoint
+
+Fixes
+-----
+- Rescue from Excon::Errors::Conflict which apparently gets raised sometimes (don't know why - see https://github.com/markevans/dragonfly/issues/167)
+- Alias portrait and landscape without question marks, so magic_attributes can be used with them
+- Fixed stack error when using `define_macro_on_include` twice
+- Use fog's `sync_clock` to overcome potential S3 time skew problems
+- Using :name in urls was causing problems when filenames had dashes in them
+
 0.9.10 (2012-01-11)
 ===================
 Fixes
