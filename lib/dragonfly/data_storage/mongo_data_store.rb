@@ -8,6 +8,8 @@ module Dragonfly
       include Serializer
 
       configurable_attr :host
+      configurable_attr :hosts
+      configurable_attr :mongo_connection_options
       configurable_attr :port
       configurable_attr :database, 'dragonfly'
       configurable_attr :username
@@ -21,6 +23,8 @@ module Dragonfly
 
       def initialize(opts={})
         self.host = opts[:host]
+        self.hosts = opts[:hosts]
+        self.mongo_connection_options = opts[:mongo_connection_options] || {}
         self.port = opts[:port]
         self.database = opts[:database] if opts[:database]
         self.username = opts[:username]
@@ -60,7 +64,11 @@ module Dragonfly
       end
 
       def connection
-        @connection ||= Mongo::Connection.new(host, port)
+        if hosts
+          @connection ||= Mongo::ReplSetConnection.new(hosts, mongo_connection_options)
+        else
+          @connection ||= Mongo::Connection.new(host, port, mongo_connection_options)
+        end
       end
 
       def db
