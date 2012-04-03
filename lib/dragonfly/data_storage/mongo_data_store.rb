@@ -9,7 +9,7 @@ module Dragonfly
 
       configurable_attr :host
       configurable_attr :hosts
-      configurable_attr :mongo_connection_options
+      configurable_attr :connection_opts, {}
       configurable_attr :port
       configurable_attr :database, 'dragonfly'
       configurable_attr :username
@@ -24,7 +24,7 @@ module Dragonfly
       def initialize(opts={})
         self.host = opts[:host]
         self.hosts = opts[:hosts]
-        self.mongo_connection_options = opts[:mongo_connection_options] || {}
+        self.connection_opts = opts[:connection_opts] if opts[:connection_opts]
         self.port = opts[:port]
         self.database = opts[:database] if opts[:database]
         self.username = opts[:username]
@@ -64,10 +64,10 @@ module Dragonfly
       end
 
       def connection
-        if hosts
-          @connection ||= Mongo::ReplSetConnection.new(hosts, mongo_connection_options)
+        @connection ||= if hosts
+          Mongo::ReplSetConnection.new(hosts, connection_opts)
         else
-          @connection ||= Mongo::Connection.new(host, port, mongo_connection_options)
+          Mongo::Connection.new(host, port, connection_opts)
         end
       end
 
