@@ -1,3 +1,13 @@
+0.9.12 (2012-04-08)
+===================
+Features
+-------
+- Allow using a mongo replica set with mongo datastore
+
+Fixes
+-----
+- `define_macro_on_include` was giving a stack error with multiple accessors on same app
+
 0.9.11 (2012-03-12)
 ===================
 Features
