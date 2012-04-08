@@ -1,7 +1,0 @@
-<%= form_for @album, :html => {:multipart => true} do |f| %>
-  <%= @album.errors.full_messages %>
-  <%= f.text_field :name %>
-  <%= f.file_field :cover_image %>
-  <%= f.hidden_field :retained_cover_image %>
-  <%= f.submit :value => 'Create' %>
-<% end %>
