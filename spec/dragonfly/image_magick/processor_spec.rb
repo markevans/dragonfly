@@ -146,11 +146,10 @@ describe Dragonfly::ImageMagick::Processor do
       image.should have_height(355)
     end
 
-    it "should do nothing if called without width and height" do
+    it "should leave the size nothing if called without width and height" do
       image = @processor.resize_and_crop(@image)
       image.should have_width(280)
       image.should have_height(355)
-      image.should eq @image
     end
 
     it "should crop to the correct dimensions" do
