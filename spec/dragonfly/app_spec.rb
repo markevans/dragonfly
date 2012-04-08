@@ -108,12 +108,6 @@ describe Dragonfly::App do
       end
       @app.store("HELLO", :meta => {:egg => :head}, :option => :blarney)
     end
-    it "should still pass in meta in the opts arg, for deprecated use of meta" do
-      @app.datastore.should_receive(:store).with do |temp_object, opts|
-        opts[:meta].should == {:egg => :head}
-      end
-      @app.store("HELLO", :meta => {:egg => :head}, :option => :blarney)
-    end
   end
 
   describe "url_for" do

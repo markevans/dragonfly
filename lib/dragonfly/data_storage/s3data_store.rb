@@ -78,11 +78,7 @@ module Dragonfly
 
       def url_for(uid, opts={})
         if opts && opts[:expires]
-          if storage.respond_to?(:get_object_https_url) # fog's get_object_url is deprecated (aug 2011)
-            storage.get_object_https_url(bucket_name, uid, opts[:expires])
-          else
-            storage.get_object_url(bucket_name, uid, opts[:expires])
-          end
+          storage.get_object_https_url(bucket_name, uid, opts[:expires])
         else
           scheme = opts[:scheme] || url_scheme
           host   = opts[:host]   || url_host || "#{bucket_name}.s3.amazonaws.com"

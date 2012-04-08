@@ -52,7 +52,6 @@ module Dragonfly
         path = absolute(relative_path)
         FileUtils.rm path
         FileUtils.rm_f meta_data_path(path)
-        FileUtils.rm_f deprecated_meta_data_path(path)
         purge_empty_directories(relative_path)
       rescue Errno::ENOENT => e
         raise DataNotFound, e.message
@@ -100,10 +99,6 @@ module Dragonfly
         "#{data_path}.meta"
       end
 
-      def deprecated_meta_data_path(data_path)
-        "#{data_path}.extra"
-      end
-
       def relative_path_for(filename)
         time = Time.now
         msec = time.usec / 1000
@@ -118,12 +113,7 @@ module Dragonfly
 
       def retrieve_meta_data(data_path)
         path = meta_data_path(data_path)
-        if File.exist?(path)
-          File.open(path,'rb'){|f| Marshal.load(f.read) }
-        else
-          deprecated_path = deprecated_meta_data_path(data_path)
-          File.exist?(deprecated_path) ? File.open(deprecated_path,'rb'){|f| Marshal.load(f.read) } : {}
-        end
+        File.exist?(path) ? File.open(path,'rb'){|f| Marshal.load(f.read) } : {}
       end
 
       def purge_empty_directories(path)
