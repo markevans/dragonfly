@@ -129,11 +129,15 @@ To configure with the {Dragonfly::DataStorage::MongoDataStore MongoDataStore}:
 It won't normally need configuring, but if you wish to:
 
     app.datastore.configure do |d|
-      c.host = 'http://egg.heads:5000'                # defaults to localhost
-      c.port = '27018'                                # defaults to mongo default (27017)
-      c.database = 'my_database'                      # defaults to 'dragonfly'
-      c.username = 'some_user'                        # only needed if mongo is running in auth mode
-      c.password = 'some_password'                    # only needed if mongo is running in auth mode
+      c.host = 'http://egg.heads:5000'                  # defaults to localhost
+      c.port = '27018'                                  # defaults to mongo default (27017)
+      c.database = 'my_database'                        # defaults to 'dragonfly'
+      c.username = 'some_user'                          # only needed if mongo is running in auth mode
+      c.password = 'some_password'                      # only needed if mongo is running in auth mode
+      c.connection_opts = {:name => 'prod'}             # arg gets passed to Mongo::Connection
+                                                        #  or Mongo::ReplSetConnection initializer - see http://api.mongodb.org/ruby/current
+      
+      c.hosts = ['localhost:30000', 'localhost:30001']  # will use Mongo::ReplSetConnection instead of Mongo::Connection
     end
 
 If you already have a mongo database or connection available, you can skip setting these and set `db` or `connection` instead.
