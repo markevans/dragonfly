@@ -50,6 +50,7 @@ module Dragonfly
     App.register_configuration(:image_magick){ ImageMagick::Config }
     App.register_configuration(:rails){ Config::Rails }
     App.register_configuration(:heroku){ Config::Heroku }
+    App.register_configuration(:rackspace){ Config::Rackspace }
 
     def running_on_windows?
       ENV['OS'] && ENV['OS'].downcase == 'windows_nt'
