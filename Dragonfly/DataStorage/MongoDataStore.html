@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.11)</div>
+      <div id="logo">DRAGONFLY (v 0.9.12)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -188,6 +188,22 @@ or
     <code>host</code>
     
      - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>hosts</code>
+    
+     - default <code><span class="nil kw">nil</span></code>
+    
+    
+  </li>
+  
+  <li>
+    <code>connection_opts</code>
+    
+     - default <code>{}</code>
     
     
   </li>
@@ -450,21 +466,25 @@ or
       <pre class="lines">
 
 
-22
-23
 24
 25
 26
 27
 28
 29
-30</pre>
+30
+31
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 24</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_host identifier id'>host</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:host</span><span class='rbrack token'>]</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_hosts identifier id'>hosts</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:hosts</span><span class='rbrack token'>]</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_connection_opts identifier id'>connection_opts</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:connection_opts</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:connection_opts</span><span class='rbrack token'>]</span>
   <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_port identifier id'>port</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:port</span><span class='rbrack token'>]</span>
   <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_database identifier id'>database</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:database</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:database</span><span class='rbrack token'>]</span>
   <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_username identifier id'>username</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:username</span><span class='rbrack token'>]</span>
@@ -498,15 +518,23 @@ or
       <pre class="lines">
 
 
-62
-63
-64</pre>
+66
+67
+68
+69
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 66</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_connection identifier id'>connection</span>
-  <span class='rubyid_@connection ivar id'>@connection</span> <span class='opasgn op'>||=</span> <span class='rubyid_Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='rubyid_Connection constant id'>Connection</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_host identifier id'>host</span><span class='comma token'>,</span> <span class='rubyid_port identifier id'>port</span><span class='rparen token'>)</span>
+  <span class='rubyid_@connection ivar id'>@connection</span> <span class='opasgn op'>||=</span> <span class='rubyid_if if kw'>if</span> <span class='rubyid_hosts identifier id'>hosts</span>
+    <span class='rubyid_Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='rubyid_ReplSetConnection constant id'>ReplSetConnection</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_hosts identifier id'>hosts</span><span class='comma token'>,</span> <span class='rubyid_connection_opts identifier id'>connection_opts</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='rubyid_Connection constant id'>Connection</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_host identifier id'>host</span><span class='comma token'>,</span> <span class='rubyid_port identifier id'>port</span><span class='comma token'>,</span> <span class='rubyid_connection_opts identifier id'>connection_opts</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -527,12 +555,12 @@ or
       <pre class="lines">
 
 
-66
-67
-68</pre>
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 74</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_db identifier id'>db</span>
   <span class='rubyid_@db ivar id'>@db</span> <span class='opasgn op'>||=</span> <span class='rubyid_connection identifier id'>connection</span><span class='dot token'>.</span><span class='rubyid_db identifier id'>db</span><span class='lparen token'>(</span><span class='rubyid_database identifier id'>database</span><span class='rparen token'>)</span>
@@ -578,15 +606,15 @@ or
       <pre class="lines">
 
 
-55
-56
-57
-58
 59
-60</pre>
+60
+61
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 59</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
   <span class='rubyid_ensure_authenticated! fid id'>ensure_authenticated!</span>
@@ -613,12 +641,12 @@ or
       <pre class="lines">
 
 
-70
-71
-72</pre>
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 78</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_grid identifier id'>grid</span>
   <span class='rubyid_@grid ivar id'>@grid</span> <span class='opasgn op'>||=</span> <span class='rubyid_Mongo constant id'>Mongo</span><span class='colon2 op'>::</span><span class='rubyid_Grid constant id'>Grid</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_db identifier id'>db</span><span class='rparen token'>)</span>
@@ -664,10 +692,6 @@ or
       <pre class="lines">
 
 
-42
-43
-44
-45
 46
 47
 48
@@ -675,10 +699,14 @@ or
 50
 51
 52
-53</pre>
+53
+54
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 46</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_retrieve identifier id'>retrieve</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
   <span class='rubyid_ensure_authenticated! fid id'>ensure_authenticated!</span>
@@ -711,18 +739,18 @@ or
       <pre class="lines">
 
 
-32
-33
-34
-35
 36
 37
 38
 39
-40</pre>
+40
+41
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/data_storage/mongo_data_store.rb', line 36</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_ensure_authenticated! fid id'>ensure_authenticated!</span>
@@ -751,7 +779,7 @@ or
     </div>
 
     <div id="footer">
-  Generated on Mon Mar 12 14:46:29 2012 by 
+  Generated on Sun Apr  8 21:02:08 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.4 (ruby-1.9.3).
 </div>

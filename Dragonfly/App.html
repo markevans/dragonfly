@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.11)</div>
+      <div id="logo">DRAGONFLY (v 0.9.12)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -1435,12 +1435,12 @@ or
   <span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_self self kw'>self</span>
   <span class='rubyid_name identifier id'>name</span> <span class='assign token'>=</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span>
   <span class='lparen token'>(</span><span class='rubyid_class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_mod identifier id'>mod</span><span class='semicolon token'>;</span> <span class='rubyid_self self kw'>self</span><span class='semicolon token'>;</span> <span class='rubyid_end end kw'>end</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_class_eval identifier id'>class_eval</span> <span class='rubyid_do do kw'>do</span>
-    <span class='rubyid_alias_method identifier id'>alias_method</span> <span class='dstring node'>&quot;included_without_dragonfly_#{name}&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:included</span>
-    <span class='rubyid_define_method identifier id'>define_method</span> <span class='dstring node'>&quot;included_with_dragonfly_#{name}&quot;</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_mod identifier id'>mod</span><span class='bitor op'>|</span>
-      <span class='rubyid_send identifier id'>send</span> <span class='dstring node'>&quot;included_without_dragonfly_#{name}&quot;</span><span class='comma token'>,</span> <span class='rubyid_mod identifier id'>mod</span>
+    <span class='rubyid_alias_method identifier id'>alias_method</span> <span class='dstring node'>&quot;included_without_dragonfly_#{name}_#{macro_name}&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:included</span>
+    <span class='rubyid_define_method identifier id'>define_method</span> <span class='dstring node'>&quot;included_with_dragonfly_#{name}_#{macro_name}&quot;</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_mod identifier id'>mod</span><span class='bitor op'>|</span>
+      <span class='rubyid_send identifier id'>send</span> <span class='dstring node'>&quot;included_without_dragonfly_#{name}_#{macro_name}&quot;</span><span class='comma token'>,</span> <span class='rubyid_mod identifier id'>mod</span>
       <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='rubyid_mod identifier id'>mod</span><span class='comma token'>,</span> <span class='rubyid_macro_name identifier id'>macro_name</span><span class='rparen token'>)</span>
     <span class='rubyid_end end kw'>end</span>
-    <span class='rubyid_alias_method identifier id'>alias_method</span> <span class='symbol val'>:included</span><span class='comma token'>,</span> <span class='dstring node'>&quot;included_with_dragonfly_#{name}&quot;</span>
+    <span class='rubyid_alias_method identifier id'>alias_method</span> <span class='symbol val'>:included</span><span class='comma token'>,</span> <span class='dstring node'>&quot;included_with_dragonfly_#{name}_#{macro_name}&quot;</span>
   <span class='rubyid_end end kw'>end</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
@@ -2145,7 +2145,7 @@ or
     </div>
 
     <div id="footer">
-  Generated on Mon Mar 12 14:46:24 2012 by 
+  Generated on Sun Apr  8 21:02:05 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.4 (ruby-1.9.3).
 </div>
