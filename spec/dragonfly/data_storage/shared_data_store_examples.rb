@@ -22,6 +22,23 @@ shared_examples_for "data_store" do
     it "should allow for passing in options as a second argument" do
       @data_store.store(@temp_object, :some => :option)
     end
+
+    context "ruby 1.9", :ruby_version => "1.9" do
+      it "should return uid with appropriate character encoding because this affects the url of a job" do
+        stored_encoding = ::Encoding.default_internal
+        begin
+          ["UTF-8", "US-ASCII", "ISO-8859-1", "Shift_JIS", "EUC-JP", "Windows-31J", "EUC-JP"].each do |name|
+            encoding = ::Encoding.find(name)
+            ::Encoding.default_internal = encoding
+            uid = @data_store.store(Dragonfly::TempObject.new('asdf'))
+            uid.encoding.should == encoding
+          end
+        ensure
+          ::Encoding.default_internal = stored_encoding
+        end
+      end
+    end
+
   end
 
   describe "retrieve" do

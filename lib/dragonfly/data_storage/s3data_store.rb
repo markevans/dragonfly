@@ -54,7 +54,7 @@ module Dragonfly
           end
         end
         
-        uid
+        uid.encode!
       end
 
       def retrieve(uid)
