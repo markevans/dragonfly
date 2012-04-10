@@ -29,7 +29,7 @@ module Dragonfly
           doc = CouchRest::Document.new(:meta => marshal_encode(temp_object.meta))
           response = db.save_doc(doc)
           doc.put_attachment(name, f.dup, :content_type => content_type)
-          form_uid(response['id'], name)
+          form_uid(response['id'], name).encode!
         end
       rescue RuntimeError => e
         raise UnableToStore, "#{e} - #{temp_object.inspect}"

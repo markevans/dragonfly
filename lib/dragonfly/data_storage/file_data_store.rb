@@ -33,7 +33,7 @@ module Dragonfly
           raise UnableToStore, e.message
         end
 
-        relative(path)
+        relative(path).encode!
       end
 
       def retrieve(relative_path)

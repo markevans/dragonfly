@@ -39,7 +39,7 @@ module Dragonfly
         temp_object.file do |f|
           mongo_id = grid.put(f, :content_type => content_type,
                                  :metadata => marshal_encode(temp_object.meta))
-          mongo_id.to_s
+          mongo_id.to_s.encode!
         end
       end
 
