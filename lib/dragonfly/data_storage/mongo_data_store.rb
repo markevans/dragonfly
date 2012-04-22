@@ -88,7 +88,7 @@ module Dragonfly
       end
 
       def bson_id(uid)
-        OBJECT_ID.from_string(uid)
+        uid.is_a?(String) ? OBJECT_ID.from_string(uid) : uid
       end
 
     end
