@@ -34,7 +34,7 @@ module Dragonfly
       elsif (params = url_mapper.params_for(env["PATH_INFO"], env["QUERY_STRING"])) && params['job']
         job = Job.deserialize(params['job'], app)
         validate_job!(job)
-        job.validate_sha!(params['sha']) if protect_from_dos_attacks
+        job.validate_sha! if protect_from_dos_attacks
         response = Response.new(job, env)
         catch(:halt) do
           if before_serve_callback && response.will_be_served?
@@ -61,8 +61,7 @@ module Dragonfly
       opts = opts.dup
       host = opts.delete(:host) || url_host
       params = stringify_keys(opts)
-      params['job'] = job.serialize
-      params['sha'] = job.sha if protect_from_dos_attacks
+      params['job'] = job.serialize(protect_from_dos_attacks)
       url = url_mapper.url_for(params)
       "#{host}#{url}"
     end
