@@ -17,7 +17,8 @@ describe Dragonfly::Job do
       Dragonfly::Job::Encode => :encode,
       Dragonfly::Job::Generate => :generate,
       Dragonfly::Job::FetchFile => :fetch_file,
-      Dragonfly::Job::FetchUrl => :fetch_url
+      Dragonfly::Job::FetchUrl => :fetch_url,
+      Dragonfly::Job::Sig => :sig
     }.each do |klass, step_name|
       it "should return the correct step name for #{klass}" do
         klass.step_name.should == step_name
@@ -30,7 +31,8 @@ describe Dragonfly::Job do
       Dragonfly::Job::Encode => :e,
       Dragonfly::Job::Generate => :g,
       Dragonfly::Job::FetchFile => :ff,
-      Dragonfly::Job::FetchUrl => :fu
+      Dragonfly::Job::FetchUrl => :fu,
+      Dragonfly::Job::Sig => :s
     }.each do |klass, abbreviation|
       it "should return the correct abbreviation for #{klass}" do
         klass.abbreviation.should == abbreviation
@@ -39,7 +41,7 @@ describe Dragonfly::Job do
 
     describe "step_names" do
       it "should return the available step names" do
-        Dragonfly::Job.step_names.should == [:fetch, :process, :encode, :generate, :fetch_file, :fetch_url]
+        Dragonfly::Job.step_names.should == [:fetch, :process, :encode, :generate, :fetch_file, :fetch_url, :sig]
       end
     end
 
@@ -74,7 +76,7 @@ describe Dragonfly::Job do
         @job.data.should == 'HELLO'
         @job.meta.should == {:name => 'test.txt'}
       end
-      
+
       it "shouldn't set any url_attrs" do
         @job.url_attrs.should == {}
       end
@@ -132,7 +134,7 @@ describe Dragonfly::Job do
         @job.data.should == 'hi'
         @job.meta.should == {:name => 'plasma.png'}
       end
-      
+
       it "shouldn't set any url_attrs" do
         @job.url_attrs.should == {}
       end
@@ -148,11 +150,11 @@ describe Dragonfly::Job do
       it "should fetch the specified file when applied" do
         @job.size.should == 62664
       end
-      
+
       it "should set the url_attrs" do
         @job.url_attrs.should == {:name => 'egg.png'}
       end
-      
+
       it "should set the name" do
         @job.meta[:name].should == 'egg.png'
       end
@@ -188,7 +190,7 @@ describe Dragonfly::Job do
         @job.fetch_url!('some.place.com/dung.beetle')
         @job.meta[:name].should == 'dung.beetle'
       end
-      
+
       it "should set the name url_attr if there is one" do
         @job.fetch_url!('some.place.com/dung.beetle')
         @job.url_attrs.should == {:name =>'dung.beetle'}
@@ -289,7 +291,7 @@ describe Dragonfly::Job do
       it "should maintain the url_attrs" do
         @job.url_attrs[:name].should == 'boid'
       end
-      
+
     end
   end
 
@@ -561,7 +563,7 @@ describe Dragonfly::Job do
     it "should return nil if there are no steps" do
       @job.url.should be_nil
     end
-    
+
     describe "using url_attrs in the url" do
       before(:each) do
         @app.server.url_format = '/media/:job/:zoo'
@@ -585,7 +587,7 @@ describe Dragonfly::Job do
         @job.url_attrs[:zoo] = 'hair'
         @job.url(:zoo => 'dare').should == "/media/#{@job.serialize}/dare"
       end
-      
+
       describe "basename" do
         before(:each) do
           @app.server.url_format = '/:job/:basename'
@@ -677,15 +679,15 @@ describe Dragonfly::Job do
       @app = test_app
       @job = @app.fetch('eggs')
     end
-    
+
     it "should be of the correct format" do
       @job.sha.should =~ /^\w{8}$/
     end
-    
+
     it "should be the same for the same job steps" do
       @app.fetch('eggs').sha.should == @job.sha
     end
-    
+
     it "should be different for different jobs" do
       @app.fetch('figs').sha.should_not == @job.sha
     end
@@ -696,18 +698,30 @@ describe Dragonfly::Job do
       @app = test_app
       @job = @app.fetch('eggs')
     end
-    it "should raise an error if nothing is given" do
-      lambda{
-        @job.validate_sha!(nil)
-      }.should raise_error(Dragonfly::Job::NoSHAGiven)
+    context "when nothing is given" do
+      it "should raise NoSHAGiven" do
+        lambda{
+          @job.validate_sha!
+        }.should raise_error(Dragonfly::Job::NoSHAGiven)
+      end
     end
-    it "should raise an error if the wrong SHA is given" do
-      lambda{
-        @job.validate_sha!('asdf')
-      }.should raise_error(Dragonfly::Job::IncorrectSHA)
+    context "when an incorrect SHA is given" do
+      before do
+        @job.steps << Dragonfly::Job::Sig.new(:sig, "badsig")
+      end
+      it "should raise an IncorrectSHA" do
+        lambda{
+          @job.validate_sha!
+        }.should raise_error(Dragonfly::Job::IncorrectSHA)
+      end
     end
-    it "should return self if ok" do
-      @job.validate_sha!(@job.sha).should == @job
+    context "when a correct SHA is given" do
+      before do
+        @job.steps << Dragonfly::Job::Sig.new(:sig, @job.sha)
+      end
+      it "should return self if ok" do
+        @job.validate_sha!.should == @job
+      end
     end
   end
 
@@ -751,7 +765,7 @@ describe Dragonfly::Job do
     before(:each) do
       @app = test_app
     end
-    
+
     describe "fetch_step" do
       it "should return nil if it doesn't exist" do
         @app.generate(:ponies).process(:jam).fetch_step.should be_nil
@@ -817,7 +831,7 @@ describe Dragonfly::Job do
         step.args.should == [:ponies]
       end
     end
-    
+
     describe "process_steps" do
       it "should return the processing steps" do
         job = @app.fetch('many/ponies').process(:jam).process(:eggs).encode(:gif)
@@ -838,7 +852,7 @@ describe Dragonfly::Job do
         step.format.should == :cheese
       end
     end
-    
+
     describe "step_types" do
       it "should return the step types" do
         job = @app.fetch('eggs').process(:beat, 'strongly').encode(:meringue)

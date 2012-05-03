@@ -92,14 +92,6 @@ describe "model urls" do
     item.preview_image.encode(:bum).url.should =~ %r{^/media/\w+\.bum$}
   end
   
-  it "should work as normal with dos protection" do
-    @app.server.protect_from_dos_attacks = true
-    @item.preview_image = new_tempfile
-    @item.save!
-    item = Item.find(@item.id)
-    item.preview_image.url.should =~ %r{^/media/\w+/hello\.txt\?sha=\w+$}
-  end
-  
   it "should allow configuring the url" do
     @app.configure do |c|
       c.url_format = '/img/:job'

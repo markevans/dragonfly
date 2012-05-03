@@ -140,13 +140,18 @@ module Dragonfly
       end
     end
 
+    class Sig < Step
+      def apply; end
+    end
+
     STEPS = [
       Fetch,
       Process,
       Encode,
       Generate,
       FetchFile,
-      FetchUrl
+      FetchUrl,
+      Sig
     ]
 
     # Class methods
@@ -187,20 +192,20 @@ module Dragonfly
     # If we had traits/classboxes in ruby maybe this wouldn't be needed
     # Think of it as like a normal instance method but with a css-like !important after it
     module OverrideInstanceMethods
-      
+
       def format
         apply
         meta[:format] || (ext.to_sym if ext && app.trust_file_extensions) || analyse(:format)
       end
-      
+
       def mime_type
         app.mime_type_for(format) || analyse(:mime_type) || app.fallback_mime_type
       end
-      
+
       def to_s
         super.sub(/#<Class:\w+>/, 'Extended Dragonfly::Job')
       end
-      
+
     end
 
     def initialize(app, content=nil, meta={}, url_attrs={})
@@ -268,7 +273,7 @@ module Dragonfly
     end
 
     def to_a
-      steps.map{|step|
+      steps.reject {|step| step.is_a? Sig }.map{|step|
         [step.class.abbreviation, *step.args]
       }
     end
@@ -279,8 +284,8 @@ module Dragonfly
       to_a.to_dragonfly_unique_s
     end
 
-    def serialize
-      Serializer.marshal_encode(to_a)
+    def serialize(protect_from_dos_attacks = false)
+      Serializer.marshal_encode(to_a << [Sig.abbreviation, protect_from_dos_attacks ? sha : nil])
     end
 
     def unique_signature
@@ -291,14 +296,15 @@ module Dragonfly
       Digest::SHA1.hexdigest("#{to_unique_s}#{app.secret}")[0...8]
     end
 
-    def validate_sha!(sha)
-      case sha
-      when nil
-        raise NoSHAGiven
-      when self.sha
-        self
+    def validate_sha!
+      if step = steps.detect {|s| s.is_a? Sig }
+        if self.sha == step.args.first
+          self
+        else
+          raise IncorrectSHA, "#{self.sha}, #{step.args.first}"
+        end
       else
-        raise IncorrectSHA, sha
+        raise NoSHAGiven
       end
     end
 
@@ -311,7 +317,7 @@ module Dragonfly
     def url_attrs=(hash)
       @url_attrs = UrlAttributes[hash]
     end
-    
+
     attr_reader :url_attrs
 
     def b64_data
@@ -380,7 +386,7 @@ module Dragonfly
     def inspect
       "<Dragonfly::Job app=#{app.name.inspect}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >"
     end
-    
+
     def update(content, new_meta)
       if new_meta
         new_meta.merge!(new_meta.delete(:meta)) if new_meta[:meta] # legacy data etc. may have nested meta hash - deprecate gracefully here
@@ -388,12 +394,12 @@ module Dragonfly
       old_meta = temp_object ? temp_object.meta : {}
       self.temp_object = TempObject.new(content, old_meta.merge(new_meta || {}))
     end
-    
+
     def close
       previous_temp_objects.each{|temp_object| temp_object.close }
       temp_object.close if temp_object
     end
-    
+
     protected
 
     attr_writer :steps
@@ -405,20 +411,20 @@ module Dragonfly
       apply
       temp_object || raise(NoContent, "Job has not been initialized with content. Need to fetch first?")
     end
-    
+
     def attributes_for_url
       attrs = url_attrs.slice(*server.params_in_url)
       attrs[:format] = (attrs[:format] || (url_attrs.ext if app.trust_file_extensions)).to_s if server.params_in_url.include?('format')
       attrs.delete_if{|k, v| v.blank? }
       attrs
     end
-    
+
     attr_reader :previous_temp_objects
 
     def last_step_of_type(type)
       steps.select{|s| s.is_a?(type) }.last
     end
-    
+
     def opts_for_store
       {:mime_type => mime_type}
     end
