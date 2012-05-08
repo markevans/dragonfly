@@ -35,6 +35,10 @@ describe Dragonfly::Serializer do
       str = b64_decode(b64_encode(@string))
       str.should == @string
     end
+    it "should correctly decode to the same string for browsers translating '~' into '%7E'" do
+      str = b64_decode(b64_encode(@string).gsub('~', '%7E'))
+      str.should == @string
+    end
   end
   
   [

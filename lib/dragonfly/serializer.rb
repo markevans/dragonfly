@@ -15,7 +15,7 @@ module Dragonfly
     
     def b64_decode(string)
       padding_length = string.length % 4
-      Base64.decode64(string.tr('~','/') + '=' * padding_length)
+      Base64.decode64(string.tr('~','/').gsub('%7E','/') + '=' * padding_length)
     end
     
     def marshal_encode(object)
