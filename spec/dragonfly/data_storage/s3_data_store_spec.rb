@@ -24,13 +24,12 @@ describe Dragonfly::DataStorage::S3DataStore do
 
     before(:each) do
       WebMock.allow_net_connect!
-      @data_store = Dragonfly::DataStorage::S3DataStore.new
-      @data_store.configure do |d|
-        d.bucket_name = BUCKET_NAME
-        d.access_key_id = KEY
-        d.secret_access_key = SECRET
-        d.region = 'eu-west-1'
-      end
+      @data_store = Dragonfly::DataStorage::S3DataStore.new(
+        :bucket_name => BUCKET_NAME,
+        :access_key_id => KEY,
+        :secret_access_key => SECRET,
+        :region => 'eu-west-1'
+      )
     end
     
   else
@@ -39,13 +38,12 @@ describe Dragonfly::DataStorage::S3DataStore do
 
     before(:each) do
       Fog.mock!
-      @data_store = Dragonfly::DataStorage::S3DataStore.new
-      @data_store.configure do |d|
-        d.bucket_name = BUCKET_NAME
-        d.access_key_id = 'XXXXXXXXX'
-        d.secret_access_key = 'XXXXXXXXX'
-        d.region = 'eu-west-1'
-      end
+      @data_store = Dragonfly::DataStorage::S3DataStore.new(
+        :bucket_name => BUCKET_NAME,
+        :access_key_id => 'XXXXXXXXX',
+        :secret_access_key => 'XXXXXXXXX',
+        :region => 'eu-west-1'
+      )
     end
     
   end
@@ -149,32 +147,32 @@ describe Dragonfly::DataStorage::S3DataStore do
     
     it "should require a bucket name on store" do
       @data_store.bucket_name = nil
-      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::Configurable::NotConfigured)
+      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
     
     it "should require an access_key_id on store" do
       @data_store.access_key_id = nil
-      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::Configurable::NotConfigured)
+      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
     
     it "should require a secret access key on store" do
       @data_store.secret_access_key = nil
-      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::Configurable::NotConfigured)
+      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
     
     it "should require a bucket name on retrieve" do
       @data_store.bucket_name = nil
-      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::Configurable::NotConfigured)
+      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
     
     it "should require an access_key_id on retrieve" do
       @data_store.access_key_id = nil
-      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::Configurable::NotConfigured)
+      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
     
     it "should require a secret access key on retrieve" do
       @data_store.secret_access_key = nil
-      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::Configurable::NotConfigured)
+      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
   end
 

@@ -4,30 +4,21 @@ module Dragonfly
   module DataStorage
     class MongoDataStore
 
-      include Configurable
       include Serializer
 
-      configurable_attr :host
-      configurable_attr :hosts
-      configurable_attr :connection_opts, {}
-      configurable_attr :port
-      configurable_attr :database, 'dragonfly'
-      configurable_attr :username
-      configurable_attr :password
-      configurable_attr :connection
-      configurable_attr :db
-
       def initialize(opts={})
-        self.host = opts[:host]
-        self.hosts = opts[:hosts]
-        self.connection_opts = opts[:connection_opts] if opts[:connection_opts]
-        self.port = opts[:port]
-        self.database = opts[:database] if opts[:database]
-        self.username = opts[:username]
-        self.password = opts[:password]
-        self.connection = opts[:connection]
-        self.db = opts[:db]
+        @host            = opts[:host]
+        @hosts           = opts[:hosts]
+        @connection_opts = opts[:connection_opts] || {}
+        @port            = opts[:port]
+        @database        = opts[:database] || 'dragonfly'
+        @username        = opts[:username]
+        @password        = opts[:password]
+        @connection      = opts[:connection]
+        @db              = opts[:db]
       end
+
+      attr_accessor :host, :hosts, :connection_opts, :port, :database, :username, :password
 
       def store(temp_object, opts={})
         ensure_authenticated!

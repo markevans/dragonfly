@@ -8,11 +8,18 @@ module Dragonfly
       # Exceptions
       class UnableToFormUrl < RuntimeError; end
 
-      include Configurable
+      def initialize(opts={})
+        @root_path = opts[:root_path] || '/var/tmp/dragonfly'
+        @server_root = opts[:server_root]
+        @store_meta = opts[:store_meta]
+      end
 
-      configurable_attr :root_path, '/var/tmp/dragonfly'
-      configurable_attr :server_root
-      configurable_attr :store_meta, true
+      attr_accessor :root_path, :server_root
+      attr_writer :store_meta
+      
+      def store_meta?
+        @store_meta != false # Default to true if not set
+      end
 
       def store(temp_object, opts={})
         relative_path = if opts[:path]
@@ -28,7 +35,7 @@ module Dragonfly
             path = disambiguate(path)
           end
           temp_object.to_file(path).close
-          store_meta_data(path, temp_object.meta) if store_meta
+          store_meta_data(path, temp_object.meta) if store_meta?
         rescue Errno::EACCES => e
           raise UnableToStore, e.message
         end
@@ -43,7 +50,7 @@ module Dragonfly
         raise DataNotFound, "couldn't find file #{path}" unless pathname.exist?
         [
           pathname,
-          (store_meta ? retrieve_meta_data(path) : {})
+          (store_meta? ? retrieve_meta_data(path) : {})
         ]
       end
 
@@ -59,7 +66,7 @@ module Dragonfly
 
       def url_for(relative_path, opts={})
         if server_root.nil?
-          raise NotConfigured, "you need to configure server_root for #{self.class.name} in order to form urls"
+          raise UnableToFormUrl, "you need to configure server_root for #{self.class.name} in order to form urls"
         else
           _, __, path = absolute(relative_path).partition(server_root)
           if path.empty?

@@ -51,15 +51,15 @@ describe Dragonfly::DataStorage::MongoDataStore do
     end
 
     it "should allow sharing the connection" do
-      @data_store.connection = @connection
-      @connection.should_receive(:db).with('dragonfly_test').and_return(db=mock)
-      @data_store.db.should == db
+      data_store = Dragonfly::DataStorage::MongoDataStore.new :connection => @connection
+      @connection.should_receive(:db).and_return(db=mock)
+      data_store.db.should == db
     end
 
     it "should allow sharing the db" do
       db = @connection.db('dragonfly_test_yo')
-      @data_store.db = db
-      @data_store.grid.instance_eval{@db}.should == db # so wrong
+      data_store = Dragonfly::DataStorage::MongoDataStore.new :db => db
+      data_store.grid.instance_eval{@db}.should == db # so wrong
     end
   end
 

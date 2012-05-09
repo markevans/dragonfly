@@ -255,7 +255,7 @@ describe Dragonfly::DataStorage::FileDataStore do
     it "should raise an error if called without configuring" do
       expect{
         @data_store.url_for(@uid)
-      }.to raise_error(Dragonfly::Configurable::NotConfigured)
+      }.to raise_error(Dragonfly::DataStorage::FileDataStore::UnableToFormUrl)
     end
     
     it "should work as expected when the the server root is above the root path" do

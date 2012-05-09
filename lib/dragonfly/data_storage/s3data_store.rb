@@ -5,17 +5,10 @@ module Dragonfly
 
     class S3DataStore
 
-      include Configurable
-      include Serializer
+      # Exceptions
+      class NotConfigured < RuntimeError; end
 
-      configurable_attr :bucket_name
-      configurable_attr :access_key_id
-      configurable_attr :secret_access_key
-      configurable_attr :region
-      configurable_attr :use_filesystem, true
-      configurable_attr :storage_headers, {'x-amz-acl' => 'public-read'}
-      configurable_attr :url_scheme, 'http'
-      configurable_attr :url_host
+      include Serializer
 
       REGIONS = {
         'us-east-1' => 's3.amazonaws.com',  #default
@@ -29,10 +22,21 @@ module Dragonfly
       }
 
       def initialize(opts={})
-        self.bucket_name = opts[:bucket_name]
-        self.access_key_id = opts[:access_key_id]
-        self.secret_access_key = opts[:secret_access_key]
-        self.region = opts[:region]
+        @bucket_name       = opts[:bucket_name]
+        @access_key_id     = opts[:access_key_id]
+        @secret_access_key = opts[:secret_access_key]
+        @region            = opts[:region]
+        @use_filesystem    = opts[:use_filesystem]
+        @storage_headers   = opts[:storage_headers] || {'x-amz-acl' => 'public-read'}
+        @url_scheme        = opts[:url_scheme] || 'http'
+        @url_host
+      end
+
+      attr_accessor :bucket_name, :access_key_id, :secret_access_key, :region, :storage_headers, :url_scheme, :url_host
+      attr_writer :use_filesystem
+      
+      def use_filesystem?
+        @use_filesystem != false
       end
 
       def store(temp_object, opts={})
@@ -45,7 +49,7 @@ module Dragonfly
         uid = opts[:path] || generate_uid(temp_object.name || 'file')
         
         rescuing_socket_errors do
-          if use_filesystem
+          if use_filesystem?
             temp_object.file do |f|
               storage.put_object(bucket_name, uid, f, full_storage_headers(headers, temp_object.meta))
             end

@@ -4,22 +4,17 @@ module Dragonfly
   module DataStorage
     class CouchDataStore
 
-      include Configurable
       include Serializer
 
-      configurable_attr :host, 'localhost'
-      configurable_attr :port, '5984'
-      configurable_attr :database, 'dragonfly'
-      configurable_attr :username
-      configurable_attr :password
-
       def initialize(opts={})
-        self.host = opts[:host] if opts[:host]
-        self.port = opts[:port] if opts[:port]
-        self.database = opts[:database] if opts[:database]
-        self.username = opts[:username]
-        self.password = opts[:password]
+        @host = opts[:host] || 'localhost'
+        @port = opts[:port] || '5984'
+        @database = opts[:database] || 'dragonfly'
+        @username = opts[:username]
+        @password = opts[:password]
       end
+
+      attr_reader :host, :port, :database, :username, :password
 
       def store(temp_object, opts={})
         name = temp_object.name || 'file'
