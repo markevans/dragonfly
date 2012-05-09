@@ -1,5 +1,3 @@
-require 'tempfile'
-
 module Dragonfly
   module ImageMagick
     module Utils
@@ -13,7 +11,7 @@ module Dragonfly
       private
 
       def convert(temp_object=nil, args='', format=nil)
-        tempfile = new_tempfile(format)
+        tempfile = Dragonfly::Utils.new_tempfile(format)
         run convert_command, %(#{quote(temp_object.path) if temp_object} #{args} #{quote(tempfile.path)})
         tempfile
       end
@@ -32,13 +30,6 @@ module Dragonfly
     
       def raw_identify(temp_object, args='')
         run identify_command, "#{args} #{quote(temp_object.path)}"
-      end
-    
-      def new_tempfile(ext=nil)
-        tempfile = ext ? Tempfile.new(['dragonfly', ".#{ext}"]) : Tempfile.new('dragonfly')
-        tempfile.binmode
-        tempfile.close
-        tempfile
       end
 
     end

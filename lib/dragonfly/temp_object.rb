@@ -1,5 +1,4 @@
 require 'stringio'
-require 'tempfile'
 require 'pathname'
 
 module Dragonfly
@@ -95,7 +94,7 @@ module Dragonfly
       @tempfile ||= begin
         case
         when @data
-          @tempfile = new_tempfile(@data)
+          @tempfile = Utils.new_tempfile(ext, @data)
         when @pathname
           @tempfile = copy_to_tempfile(@pathname.expand_path)
         end
@@ -194,16 +193,8 @@ module Dragonfly
     end
 
     def copy_to_tempfile(path)
-      tempfile = new_tempfile
+      tempfile = Utils.new_tempfile(ext)
       FileUtils.cp path, tempfile.path
-      tempfile
-    end
-
-    def new_tempfile(content=nil)
-      tempfile = ext ? Tempfile.new(['dragonfly', ".#{ext}"]) : Tempfile.new('dragonfly')
-      tempfile.binmode
-      tempfile.write(content) if content
-      tempfile.close
       tempfile
     end
 
