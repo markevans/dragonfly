@@ -84,7 +84,7 @@
 the image is processed, and there might be a short delay and getting the response.</p>
 
 <p>However, dragonfly apps send <code>Cache-Control</code> and <code>ETag</code> headers in the response, so we can easily put a caching
-proxy like <a href="http://varnish.projects.linpro.no" target="_parent" title="Varnish">Varnish</a>, <a href="http://www.squid-cache.org" target="_parent" title="Squid">Squid</a>,
+proxy like <a href="https://www.varnish-cache.org/" target="_parent" title="Varnish">Varnish</a>, <a href="http://www.squid-cache.org" target="_parent" title="Squid">Squid</a>,
 <a href="http://tomayko.com/src/rack-cache/" target="_parent" title="Rack::Cache">Rack::Cache</a>, etc. in front of the app, so that subsequent requests are served
 super-quickly straight out of the cache.</p>
 
