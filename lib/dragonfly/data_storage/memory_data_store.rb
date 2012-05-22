@@ -1,6 +1,6 @@
 module Dragonfly
   module DataStorage
-    class TestDataStore
+    class MemoryDataStore
 
       def initialize
         @content_store = Hash.new{ raise DataNotFound }
