@@ -111,7 +111,7 @@ module Dragonfly
       end
 
       def bucket_exists?
-        rescuing_socket_errors{ storage.get_bucket(bucket_name) }
+        rescuing_socket_errors{ storage.get_bucket_location(bucket_name) }
         true
       rescue Excon::Errors::NotFound => e
         false
