@@ -37,7 +37,7 @@ describe Dragonfly::Configurable do
       end
     end
     
-    it "provides an attr shortcut" do
+    it "provides a 'writer' shortcut" do
       configurer = Dragonfly::Configurable::Configurer.new do
         writer :colour, :size
       end
@@ -46,6 +46,18 @@ describe Dragonfly::Configurable do
       configurer.configure(obj) do
         colour 'blue'
         size 'big'
+      end
+    end
+    
+    it "provides a 'meth' shortcut" do
+      configurer = Dragonfly::Configurable::Configurer.new do
+        meth :jobby, :nobby
+      end
+      obj.should_receive(:jobby).with('beans', :make => 5)
+      obj.should_receive(:nobby).with(['nuts'])
+      configurer.configure(obj) do
+        jobby 'beans', :make => 5
+        nobby ['nuts']
       end
     end
 

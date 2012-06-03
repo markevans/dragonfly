@@ -11,6 +11,14 @@ module Dragonfly
             end
           end
         end
+        
+        def meth(*names)
+          names.each do |name|
+            define_method name do |*args, &block|
+              obj.send(name, *args, &block)
+            end
+          end
+        end
       end
 
       def initialize(&block)
