@@ -4,11 +4,14 @@ module Dragonfly
     class FileCommandAnalyser
       
       include Shell
-      include Configurable
       
-      configurable_attr :file_command, "file"
-      configurable_attr :use_filesystem, true
-      configurable_attr :num_bytes_to_check, 255
+      def initialize(opts={})
+        @file_command       = opts[:file_command] || "file"
+        @use_filesystem     = opts.has_key?(:use_filesystem) ? opts[:use_filesystem] : true
+        @num_bytes_to_check = opts[:num_bytes_to_check] || 255
+      end
+      
+      attr_accessor :file_command, :use_filesystem, :num_bytes_to_check
       
       def mime_type(temp_object)
         content_type = if use_filesystem
