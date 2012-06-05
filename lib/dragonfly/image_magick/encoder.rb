@@ -2,7 +2,11 @@ module Dragonfly
   module ImageMagick
     class Encoder
 
-      include Utils
+      def initialize(command_line=nil)
+        @command_line = command_line || CommandLine.new
+      end
+
+      attr_reader :command_line
 
       def supported_formats
         @supported_formats ||= [
@@ -44,12 +48,12 @@ module Dragonfly
       def encode(temp_object, format, args='')
         format = format.to_s.downcase
         throw :unable_to_handle unless supported_formats.include?(format.to_sym)
-        details = identify(temp_object)
+        details = command_line.identify(temp_object)
 
         if details[:format] == format.to_sym && args.empty?
           temp_object
         else
-          convert(temp_object, args, format)
+          command_line.convert(temp_object, args, format)
         end
       end
 
