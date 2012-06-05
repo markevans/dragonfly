@@ -48,7 +48,6 @@ module Dragonfly
     # Dragonfly[:my_app].configure_with(:image_magick)
     App.register_configuration(:imagemagick){ ImageMagick::Config }
     App.register_configuration(:image_magick){ ImageMagick::Config }
-    App.register_configuration(:rails){ Config::Rails }
 
     def running_on_windows?
       ENV['OS'] && ENV['OS'].downcase == 'windows_nt'
