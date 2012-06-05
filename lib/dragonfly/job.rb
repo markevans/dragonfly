@@ -190,7 +190,7 @@ module Dragonfly
       
       def format
         apply
-        meta[:format] || (ext.to_sym if ext && app.trust_file_extensions) || analyse(:format)
+        meta[:format] || (ext.to_sym if ext && app.trust_file_extensions?) || analyse(:format)
       end
       
       def mime_type
@@ -405,7 +405,7 @@ module Dragonfly
     
     def attributes_for_url
       attrs = url_attrs.slice(*server.params_in_url)
-      attrs[:format] = (attrs[:format] || (url_attrs.ext if app.trust_file_extensions)).to_s if server.params_in_url.include?('format')
+      attrs[:format] = (attrs[:format] || (url_attrs.ext if app.trust_file_extensions?)).to_s if server.params_in_url.include?('format')
       attrs.delete_if{|k, v| v.blank? }
       attrs
     end
