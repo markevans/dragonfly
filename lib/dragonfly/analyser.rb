@@ -1,9 +1,6 @@
 module Dragonfly
   class Analyser < FunctionManager
     
-    configurable_attr :enable_cache, true
-    configurable_attr :cache_size, 100
-    
     def initialize
       super
       analyser = self
@@ -17,10 +14,20 @@ module Dragonfly
       @analysis_method_names = []
     end
     
+    def enable_cache?
+      @enable_cache != false
+    end
+    attr_writer :enable_cache
+
+    def cache_size
+      @cache_size ||= 100
+    end
+    attr_writer :cache_size
+    
     attr_reader :analysis_methods, :analysis_method_names
     
     def analyse(temp_object, method, *args)
-      if enable_cache
+      if enable_cache?
         key = [temp_object.unique_id, method, *args]
         cache[key] ||= call_last(method, temp_object, *args)
       else
