@@ -1,6 +1,11 @@
 module Dragonfly
   class Analyser < FunctionManager
     
+    extend Configurable
+    setup_config do
+      writer :enable_cache, :cache_size
+    end
+    
     def initialize
       super
       analyser = self
