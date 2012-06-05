@@ -177,14 +177,17 @@ module Dragonfly
     def cache_duration
       @cache_duration ||= 3600*24*365 # (1 year)
     end
+    attr_writer :cache_duration
     
     def secret
       @secret ||= 'secret yo'
     end
+    attr_writer :secret
     
     def log
       @log ||= Logger.new('/var/tmp/dragonfly.log')
     end
+    attr_writer :log
     
     def trust_file_extensions
       true
@@ -195,6 +198,7 @@ module Dragonfly
     def content_filename
       @content_filename ||= Dragonfly::Response::DEFAULT_FILENAME
     end
+    attr_writer :content_filename
     
     private
 
