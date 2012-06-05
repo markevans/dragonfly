@@ -3,9 +3,8 @@ module Dragonfly
     
     class FileCommandAnalyser
       
-      include Shell
-      
       def initialize(opts={})
+        @shell = Shell.new
         @file_command       = opts[:file_command] || "file"
         @use_filesystem     = opts.has_key?(:use_filesystem) ? opts[:use_filesystem] : true
         @num_bytes_to_check = opts[:num_bytes_to_check] || 255
@@ -15,7 +14,7 @@ module Dragonfly
       
       def mime_type(temp_object)
         content_type = if use_filesystem
-          `#{file_command} -b --mime #{quote temp_object.path}`
+          `#{file_command} -b --mime #{shell.quote temp_object.path}`
         else
           IO.popen("#{file_command} -b --mime -", 'r+') do |io|
             if num_bytes_to_check
