@@ -63,6 +63,7 @@ module Dragonfly
     def datastore
       @datastore ||= DataStorage::FileDataStore.new
     end
+    attr_writer :datastore
 
     attr_accessor :job_definitions
 
