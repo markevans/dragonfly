@@ -1,18 +1,26 @@
 module Dragonfly
   module ImageMagick
-    module Utils
+    class CommandLine
 
-      include Shell
-      include Loggable
-      include Configurable
-      configurable_attr :convert_command, "convert"
-      configurable_attr :identify_command, "identify"
-    
-      private
+      def initialize
+        @shell = Shell.new
+      end
+
+      attr_reader :shell
+
+      def convert_command
+        @convert_command ||= 'convert'
+      end
+      attr_writer :convert_command
+
+      def identify_command
+        @identify_command ||= 'identify'
+      end
+      attr_writer :identify_command
 
       def convert(temp_object=nil, args='', format=nil)
         tempfile = Dragonfly::Utils.new_tempfile(format)
-        run convert_command, %(#{quote(temp_object.path) if temp_object} #{args} #{quote(tempfile.path)})
+        shell.run convert_command, %(#{shell.quote(temp_object.path) if temp_object} #{args} #{shell.quote(tempfile.path)})
         tempfile
       end
 
@@ -27,9 +35,9 @@ module Dragonfly
           :depth => depth.to_i
         }
       end
-    
+
       def raw_identify(temp_object, args='')
-        run identify_command, "#{args} #{quote(temp_object.path)}"
+        shell.run identify_command, "#{args} #{shell.quote(temp_object.path)}"
       end
 
     end
