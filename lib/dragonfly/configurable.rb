@@ -3,6 +3,8 @@ module Dragonfly
 
     class Configurer
 
+      class UnregisteredPlugin < RuntimeError; end
+
       class << self
         def writer(*names)
           names.each do |name|
@@ -31,13 +33,25 @@ module Dragonfly
         @obj = nil
       end
       
+      def register_plugin(name, &block)
+        registered_plugins[name] = block
+      end
+      
       def use(plugin, *args)
+        if plugin.is_a?(Symbol)
+          raise(UnregisteredPlugin, "plugin #{plugin.inspect} is not registered") unless registered_plugins[plugin]
+          plugin = registered_plugins[plugin].call
+        end
         plugin.call(obj, *args)
       end
       
       private
       
       attr_reader :obj
+      
+      def registered_plugins
+        @registered_plugins ||= {}
+      end
     end
     
     #######

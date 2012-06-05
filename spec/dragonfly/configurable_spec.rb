@@ -69,6 +69,23 @@ describe Dragonfly::Configurable do
       end
     end
 
+    it "allows using 'use' with symbols" do
+      plugin = mock('plugin')
+      plugin.should_receive(:call).with(obj, :a, 'few' => ['args'])
+      configurer.register_plugin(:pluggy){ plugin }
+      configurer.configure(obj) do
+        use :pluggy, :a, 'few' => ['args']
+      end
+    end
+
+    it "raises an error when the wrong symbols is used" do
+      expect{
+        configurer.configure(obj) do
+          use :pluggy, :a, 'few' => ['args']
+        end
+      }.to raise_error(Dragonfly::Configurable::Configurer::UnregisteredPlugin)
+    end
+
   end
 
   describe "extending with Configurable" do
