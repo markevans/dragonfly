@@ -20,7 +20,11 @@ module Dragonfly
       CROP_GEOMETRY           = /^(\d+)x(\d+)([+-]\d+)?([+-]\d+)?(\w{1,2})?$/ # e.g. '30x30+10+10'
       THUMB_GEOMETRY = Regexp.union RESIZE_GEOMETRY, CROPPED_RESIZE_GEOMETRY, CROP_GEOMETRY
       
-      include Utils
+      def initialize(command_line=nil)
+        @command_line = command_line || CommandLine.new
+      end
+      
+      attr_reader :command_line
       
       def resize(temp_object, geometry)
         convert(temp_object, "-resize #{geometry}")
@@ -61,7 +65,7 @@ module Dragonfly
         if !opts[:width] && !opts[:height]
           return temp_object
         elsif !opts[:width] || !opts[:height]
-          attrs          = identify(temp_object)
+          attrs          = command_line.identify(temp_object)
           opts[:width]   ||= attrs[:width]
           opts[:height]  ||= attrs[:height]
         end
@@ -99,7 +103,8 @@ module Dragonfly
       end
       
       def convert(temp_object, args='', format=nil)
-        format ? [super, {:format => format.to_sym}] : super
+        result = command_line.convert(temp_object, args, format)
+        format ? [result, {:format => format.to_sym}] : result
       end
       
     end
