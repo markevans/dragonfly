@@ -29,7 +29,6 @@ module Dragonfly
       @analyser, @processor, @encoder, @generator = Analyser.new, Processor.new, Encoder.new, Generator.new
       [@analyser, @processor, @encoder, @generator].each do |obj|
         obj.use_same_log_as(self)
-        obj.use_as_fallback_config(self)
       end
       @server = Server.new(self)
       @job_definitions = JobDefinitions.new

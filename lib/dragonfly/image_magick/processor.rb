@@ -20,7 +20,6 @@ module Dragonfly
       CROP_GEOMETRY           = /^(\d+)x(\d+)([+-]\d+)?([+-]\d+)?(\w{1,2})?$/ # e.g. '30x30+10+10'
       THUMB_GEOMETRY = Regexp.union RESIZE_GEOMETRY, CROPPED_RESIZE_GEOMETRY, CROP_GEOMETRY
       
-      include Configurable
       include Utils
       
       def resize(temp_object, geometry)

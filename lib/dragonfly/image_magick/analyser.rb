@@ -2,7 +2,6 @@ module Dragonfly
   module ImageMagick
     class Analyser
 
-      include Configurable
       include Utils
 
       def width(temp_object)

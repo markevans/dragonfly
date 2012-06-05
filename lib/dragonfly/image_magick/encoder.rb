@@ -2,7 +2,6 @@ module Dragonfly
   module ImageMagick
     class Encoder
 
-      include Configurable
       include Utils
 
       def supported_formats

@@ -20,7 +20,6 @@ module Dragonfly
     def initialize(app)
       @app = app
       use_same_log_as(app)
-      use_as_fallback_config(app)
     end
     
     def before_serve(&block)

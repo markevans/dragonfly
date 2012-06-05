@@ -6,7 +6,6 @@ module Dragonfly
     class UnableToHandle < NotImplementedError; end
 
     include Loggable
-    include Configurable
 
     def initialize
       @functions = {}
@@ -24,7 +23,6 @@ module Dragonfly
       obj = klass.new(*args)
       obj.configure(&block) if block
       obj.use_same_log_as(self) if obj.is_a?(Loggable)
-      obj.use_as_fallback_config(self) if obj.is_a?(Configurable)
       methods_to_add(obj).each do |meth|
         add meth, obj.method(meth)
       end
@@ -58,9 +56,7 @@ module Dragonfly
     private
 
     def methods_to_add(obj)
-      methods = obj.public_methods(false).map{|m| m.to_sym }
-      methods -= obj.config_methods if obj.is_a?(Configurable)
-      methods
+      obj.public_methods(false).map{|m| m.to_sym }
     end
 
   end
