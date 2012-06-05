@@ -199,12 +199,6 @@ module Dragonfly
     
     private
 
-    attr_accessor :get_remote_url
-
-    def saved_configs
-      self.class.saved_configs
-    end
-
     def file_ext_string(format)
       '.' + format.to_s.downcase.sub(/^.*\./,'')
     end
