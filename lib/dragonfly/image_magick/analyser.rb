@@ -2,7 +2,11 @@ module Dragonfly
   module ImageMagick
     class Analyser
 
-      include Utils
+      def initialize(command_line=nil)
+        @command_line = command_line || CommandLine.new
+      end
+
+      attr_reader :command_line
 
       def width(temp_object)
         identify(temp_object)[:width]
@@ -34,7 +38,7 @@ module Dragonfly
       end
 
       def number_of_colours(temp_object)
-        details = raw_identify(temp_object, '-verbose -unique')
+        details = command_line.raw_identify(temp_object, '-verbose -unique')
         details[/Colors: (\d+)/, 1].to_i
       end
       alias number_of_colors number_of_colours
@@ -45,6 +49,12 @@ module Dragonfly
       
       def image?(temp_object)
         !!catch(:unable_to_handle){ identify(temp_object) }
+      end
+      
+      private
+      
+      def identify(temp_object)
+        command_line.identify(temp_object)
       end
 
     end
