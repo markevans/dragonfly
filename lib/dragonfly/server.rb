@@ -5,7 +5,7 @@ module Dragonfly
     class JobNotAllowed < RuntimeError; end
 
     include Loggable
-    
+
     extend Configurable
     setup_config do
       writer :allow_fetch_file, :allow_fetch_url, :dragonfly_url, :protect_from_dos_attacks, :url_format, :url_host
@@ -14,28 +14,20 @@ module Dragonfly
 
     extend Forwardable
     def_delegator :url_mapper, :params_in_url
-    
+
     def initialize(app)
       @app = app
       use_same_log_as(app)
+      @dragonfly_url = '/dragonfly'
+      @url_format = '/:job/:basename.:format'
     end
-    
-    attr_accessor :allow_fetch_file, :allow_fetch_url, :protect_from_dos_attacks, :url_host
-    
-    def dragonfly_url
-      @dragonfly_url ||= '/dragonfly'
-    end
-    attr_writer :dragonfly_url
-    
-    def url_format
-      @url_format ||= '/:job/:basename.:format'
-    end
-    attr_writer :url_format
-    
+
+    attr_accessor :allow_fetch_file, :allow_fetch_url, :protect_from_dos_attacks, :url_host, :dragonfly_url, :url_format
+
     def before_serve(&block)
       self.before_serve_callback = block
     end
-    
+
     def call(env)
       if dragonfly_url == env["PATH_INFO"]
         dragonfly_response
@@ -76,7 +68,7 @@ module Dragonfly
     end
 
     private
-    
+
     attr_reader :app
     attr_accessor :before_serve_callback
 
