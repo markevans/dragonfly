@@ -37,21 +37,23 @@ module Dragonfly
 
     attr_reader :name
 
-    include Configurable
-
     extend Forwardable
     def_delegator :datastore, :destroy
     def_delegators :new_job, :fetch, :generate, :fetch_file, :fetch_url
     def_delegators :server, :call
 
-    configurable_attr :datastore do DataStorage::FileDataStore.new end
-    configurable_attr :cache_duration, 3600*24*365 # (1 year)
-    configurable_attr :fallback_mime_type, 'application/octet-stream'
-    configurable_attr :secret, 'secret yo'
-    configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
-    configurable_attr :trust_file_extensions, true
-    configurable_attr :content_disposition
-    configurable_attr :content_filename, Dragonfly::Response::DEFAULT_FILENAME
+    extend Configurable
+    setup_config do
+      writer :datastore, :cache_duration, :secret, :log, :content_disposition, :content_filename
+      meth :register_mime_type, :response_headers, :define_url, :job
+      
+      # TODO: change this!
+      [:server, :analyser, :processor, :encoder, :generator].each do |method|
+        define_method method do
+          obj.send(method)
+        end
+      end
+    end
 
     attr_reader :analyser
     attr_reader :processor
@@ -59,7 +61,9 @@ module Dragonfly
     attr_reader :generator
     attr_reader :server
 
-    nested_configurable :server, :analyser, :processor, :encoder, :generator
+    def datastore
+      @datastore ||= DataStorage::FileDataStore.new
+    end
 
     attr_accessor :job_definitions
 
@@ -75,7 +79,6 @@ module Dragonfly
     def job(name, &block)
       job_definitions.add(name, &block)
     end
-    configuration_method :job
 
     def job_class
       @job_class ||= begin
@@ -97,7 +100,6 @@ module Dragonfly
     def register_mime_type(format, mime_type)
       registered_mime_types[file_ext_string(format)] = mime_type
     end
-    configuration_method :register_mime_type
 
     def registered_mime_types
       @registered_mime_types ||= Rack::Mime::MIME_TYPES.dup
@@ -110,12 +112,10 @@ module Dragonfly
     def response_headers
       @response_headers ||= {}
     end
-    configuration_method :response_headers
 
     def define_url(&block)
       @url_proc = block
     end
-    configuration_method :define_url
 
     def url_for(job, opts={})
       if @url_proc
@@ -169,6 +169,32 @@ module Dragonfly
     
     def inspect
       "<#{self.class.name} name=#{name.inspect} >"
+    end
+    
+    def fallback_mime_type
+      'application/octet-stream'
+    end
+    
+    def cache_duration
+      @cache_duration ||= 3600*24*365 # (1 year)
+    end
+    
+    def secret
+      @secret ||= 'secret yo'
+    end
+    
+    def log
+      @log ||= Logger.new('/var/tmp/dragonfly.log')
+    end
+    
+    def trust_file_extensions
+      true
+    end
+    
+    attr_accessor :content_disposition
+
+    def content_filename
+      @content_filename ||= Dragonfly::Response::DEFAULT_FILENAME
     end
     
     private
