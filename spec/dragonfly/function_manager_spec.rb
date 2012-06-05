@@ -65,37 +65,6 @@ describe Dragonfly::FunctionManager do
     
   end
 
-  describe "configuring on registration" do
-    
-    before(:each) do
-      @class = Class.new do
-        include Dragonfly::Configurable
-        configurable_attr :height, 183
-        def initialize(age=6)
-          @age = age
-        end
-        def height_and_age
-          [height, @age]
-        end
-      end
-      @fm.register(@class)
-    end
-
-    it "should pass the args on register to the object initializer" do
-      @fm.register(@class, 43)
-      @fm.call_last(:height_and_age).should == [183, 43]
-    end
-    
-    it "should run configure if a block given" do
-      @fm.register(@class){|c| c.height = 180 }
-      @fm.call_last(:height_and_age).should == [180, 6]
-    end
-    
-    it "should not include configurable methods in the functions" do
-      @fm.functions.keys.should == [:height_and_age]
-    end
-  end
-
   describe "calling" do
 
     describe "errors" do
