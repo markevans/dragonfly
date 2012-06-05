@@ -61,6 +61,14 @@ describe Dragonfly::Configurable do
       end
     end
 
+    it "provides 'use' for using plugins" do
+      plugin = mock('plugin')
+      plugin.should_receive(:call).with(obj, :a, 'few' => ['args'])
+      configurer.configure(obj) do
+        use plugin, :a, 'few' => ['args']
+      end
+    end
+
   end
 
   describe "extending with Configurable" do

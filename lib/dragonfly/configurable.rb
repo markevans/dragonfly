@@ -31,6 +31,12 @@ module Dragonfly
         @obj = nil
       end
       
+      def use(plugin, *args)
+        plugin.call(obj, *args)
+      end
+      
+      private
+      
       attr_reader :obj
     end
     
