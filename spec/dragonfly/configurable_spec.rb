@@ -83,7 +83,7 @@ describe Dragonfly::Configurable do
         configurer.configure(obj) do
           use :pluggy, :a, 'few' => ['args']
         end
-      }.to raise_error(Dragonfly::Configurable::Configurer::UnregisteredPlugin)
+      }.to raise_error(Dragonfly::Configurable::UnregisteredPlugin)
     end
 
   end
@@ -118,6 +118,25 @@ describe Dragonfly::Configurable do
         car.configure{}
       }.to raise_error(NoMethodError)
     end
+    
+    it "allows extending the config" do
+      car_class.setup_config{}
+      car_class.extend_config do
+        writer :doogie
+      end
+      car = car_class.new
+      car.should_receive(:doogie=).with('clogs')
+      car.configure do
+        doogie 'clogs'
+      end
+    end
+    
+    it "doesn't allow extending the config if not already set up" do
+      expect{
+        car_class.extend_config{}
+      }.to raise_error(Dragonfly::Configurable::ConfigNotSetUp)
+    end
+
   end
 
 end

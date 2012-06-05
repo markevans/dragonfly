@@ -1,9 +1,11 @@
 module Dragonfly
   module Configurable
 
-    class Configurer
+    # Exceptions
+    class UnregisteredPlugin < RuntimeError; end
+    class ConfigNotSetUp < RuntimeError; end
 
-      class UnregisteredPlugin < RuntimeError; end
+    class Configurer
 
       class << self
         def writer(*names)
@@ -24,6 +26,10 @@ module Dragonfly
       end
 
       def initialize(&block)
+        evaluate(&block)
+      end
+
+      def evaluate(&block)
         (class << self; self; end).class_eval(&block)
       end
 
@@ -64,6 +70,10 @@ module Dragonfly
           self
         end
       end
+    end
+    
+    def extend_config(&block)
+      configurer ? configurer.evaluate(&block) : raise(ConfigNotSetUp, "you need to call setup_config before extend_config")
     end
     
     attr_accessor :configurer
