@@ -5,40 +5,42 @@ module Dragonfly
       include Configurable
       include Utils
 
-      configurable_attr :supported_formats, [
-        :ai,
-        :bmp,
-        :eps,
-        :gif,
-        :gif87,
-        :ico,
-        :j2c,
-        :jp2,
-        :jpeg,
-        :jpg,
-        :pbm,
-        :pcd,
-        :pct,
-        :pcx,
-        :pdf,
-        :pict,
-        :pjpeg,
-        :png,
-        :png24,
-        :png32,
-        :png8,
-        :pnm,
-        :ppm,
-        :ps,
-        :psd,
-        :ras,
-        :tga,
-        :tiff,
-        :wbmp,
-        :xbm,
-        :xpm,
-        :xwd
-      ]
+      def supported_formats
+        @supported_formats ||= [
+          :ai,
+          :bmp,
+          :eps,
+          :gif,
+          :gif87,
+          :ico,
+          :j2c,
+          :jp2,
+          :jpeg,
+          :jpg,
+          :pbm,
+          :pcd,
+          :pct,
+          :pcx,
+          :pdf,
+          :pict,
+          :pjpeg,
+          :png,
+          :png24,
+          :png32,
+          :png8,
+          :pnm,
+          :ppm,
+          :ps,
+          :psd,
+          :ras,
+          :tga,
+          :tiff,
+          :wbmp,
+          :xbm,
+          :xpm,
+          :xwd
+        ]
+      end
 
       def encode(temp_object, format, args='')
         format = format.to_s.downcase
