@@ -36,19 +36,23 @@ module Dragonfly
         '900'     => 900
       }
 
-      include Utils
+      def initialize(command_line=nil)
+        @command_line = command_line || CommandLine.new
+      end
+
+      attr_reader :command_line
 
       def plain(width, height, colour, opts={})
         format = opts[:format] || 'png'
         [
-          convert(nil, "-size #{width}x#{height} xc:#{colour}", format),
+          convert("-size #{width}x#{height} xc:#{colour}", format),
           {:format => format.to_sym, :name => "plain.#{format}"}
         ]
       end
 
       def plasma(width, height, format='png')
         [
-          convert(nil, "-size #{width}x#{height} plasma:fractal", format),
+          convert("-size #{width}x#{height} plasma:fractal", format),
           {:format => format.to_sym, :name => "plasma.#{format}"}
         ]
       end
@@ -82,10 +86,10 @@ module Dragonfly
         padding_bottom = (opts[:padding_bottom] || pb || 0)
         padding_left   = (opts[:padding_left]   || pl || 0)
 
-        tempfile = convert(nil, args.join(' '), format)
+        tempfile = convert(args.join(' '), format)
 
         if (padding_top || padding_right || padding_bottom || padding_left)
-          attrs  = identify(tempfile)
+          attrs  = command_line.identify(tempfile)
           text_width  = attrs[:width].to_i
           text_height = attrs[:height].to_i
           width  = padding_left + text_width  + padding_right
@@ -95,7 +99,7 @@ module Dragonfly
           args.push("-size #{width}x#{height}")
           args.push("xc:#{background}")
           args.push("-annotate 0x0+#{padding_left}+#{padding_top} #{escaped_string}")
-          run convert_command,  "#{args.join(' ')} #{quote tempfile.path}"
+          convert(args.join(' '), nil, tempfile)
         end
 
         [
@@ -105,6 +109,10 @@ module Dragonfly
       end
 
       private
+      
+      def convert(args, format, tempfile=nil)
+        command_line.convert(nil, args, format, tempfile)
+      end
 
       # Use css-style padding declaration, i.e.
       # 10        (all sides)

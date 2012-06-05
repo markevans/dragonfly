@@ -18,8 +18,8 @@ module Dragonfly
       end
       attr_writer :identify_command
 
-      def convert(temp_object=nil, args='', format=nil)
-        tempfile = Dragonfly::Utils.new_tempfile(format)
+      def convert(temp_object=nil, args='', format=nil, tempfile=nil)
+        tempfile ||= Dragonfly::Utils.new_tempfile(format)
         shell.run convert_command, %(#{shell.quote(temp_object.path) if temp_object} #{args} #{shell.quote(tempfile.path)})
         tempfile
       end
