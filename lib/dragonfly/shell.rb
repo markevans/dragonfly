@@ -1,10 +1,9 @@
 require 'shellwords'
 
 module Dragonfly
-  module Shell
+  class Shell
     
-    include Configurable
-    configurable_attr :log_commands, false
+    attr_accessor :log_commands
 
     # Exceptions
     class CommandFailed < RuntimeError; end

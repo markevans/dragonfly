@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe Dragonfly::Shell do
 
-  include Dragonfly::Shell
+  let(:shell){ Dragonfly::Shell.new }
 
   it "should raise an error if the identify command isn't found" do
     suppressing_stderr do
       lambda{
-        run "non-existent-command"
+        shell.run "non-existent-command"
       }.should raise_error(Dragonfly::Shell::CommandFailed)
     end
   end
@@ -26,7 +26,7 @@ describe Dragonfly::Shell do
     }.each do |args, escaped_args|
       it "should escape #{args.inspect} -> #{escaped_args.inspect}" do
         pending "not applicable to windows" if Dragonfly.running_on_windows?
-        escape_args(args).should == escaped_args
+        shell.escape_args(args).should == escaped_args
       end
     end
   end
