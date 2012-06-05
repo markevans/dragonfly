@@ -32,6 +32,7 @@ module Dragonfly
       end
       @server = Server.new(self)
       @job_definitions = JobDefinitions.new
+      @content_filename = Dragonfly::Response::DEFAULT_FILENAME
     end
 
     attr_reader :name
@@ -195,12 +196,7 @@ module Dragonfly
     end
     attr_writer :trust_file_extensions
     
-    attr_accessor :content_disposition
-
-    def content_filename
-      @content_filename ||= Dragonfly::Response::DEFAULT_FILENAME
-    end
-    attr_writer :content_filename
+    attr_accessor :content_disposition, :content_filename
     
     private
 
