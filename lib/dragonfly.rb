@@ -46,8 +46,8 @@ module Dragonfly
 
     # Register saved configurations so we can do e.g.
     # Dragonfly[:my_app].configure_with(:image_magick)
-    App.configurer.register_plugin(:imagemagick){ ImageMagick::Config }
-    App.configurer.register_plugin(:image_magick){ ImageMagick::Config }
+    App.configurer.register_plugin(:imagemagick){ ImageMagick::Plugin.new }
+    App.configurer.register_plugin(:image_magick){ ImageMagick::Plugin.new }
 
     def running_on_windows?
       ENV['OS'] && ENV['OS'].downcase == 'windows_nt'
