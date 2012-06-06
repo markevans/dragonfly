@@ -61,6 +61,13 @@ describe Dragonfly::Configurable do
       end
     end
 
+  end
+
+  describe "plugins" do
+
+    let (:configurer) { Dragonfly::Configurable::Configurer.new{} }
+    let (:obj) { Object.new }
+
     it "provides 'use' for using plugins" do
       plugin = mock('plugin')
       plugin.should_receive(:call).with(obj, :a, 'few' => ['args'])
@@ -78,12 +85,23 @@ describe Dragonfly::Configurable do
       end
     end
 
-    it "raises an error when the wrong symbols is used" do
+    it "raises an error when a wrong symbol is used" do
       expect{
         configurer.configure(obj) do
           use :pluggy, :a, 'few' => ['args']
         end
       }.to raise_error(Dragonfly::Configurable::UnregisteredPlugin)
+    end
+    
+    it "calls extra methods on the plugin if a block is given" do
+      plugin = mock('plugin')
+      plugin.should_receive(:call).with(obj, :arg)
+      plugin.should_receive(:dingle).with('dumperton')
+      configurer.configure(obj) do
+        use plugin, :arg do
+          dingle 'dumperton'
+        end
+      end      
     end
 
   end
@@ -117,24 +135,6 @@ describe Dragonfly::Configurable do
       expect{
         car.configure{}
       }.to raise_error(NoMethodError)
-    end
-    
-    it "allows extending the config" do
-      car_class.setup_config{}
-      car_class.extend_config do
-        writer :doogie
-      end
-      car = car_class.new
-      car.should_receive(:doogie=).with('clogs')
-      car.configure do
-        doogie 'clogs'
-      end
-    end
-    
-    it "doesn't allow extending the config if not already set up" do
-      expect{
-        car_class.extend_config{}
-      }.to raise_error(Dragonfly::Configurable::ConfigNotSetUp)
     end
 
   end

@@ -3,7 +3,6 @@ module Dragonfly
 
     # Exceptions
     class UnregisteredPlugin < RuntimeError; end
-    class ConfigNotSetUp < RuntimeError; end
 
     class Configurer
 
@@ -26,10 +25,6 @@ module Dragonfly
       end
 
       def initialize(&block)
-        evaluate(&block)
-      end
-
-      def evaluate(&block)
         (class << self; self; end).class_eval(&block)
       end
 
@@ -43,12 +38,14 @@ module Dragonfly
         registered_plugins[name] = block
       end
       
-      def use(plugin, *args)
+      def use(plugin, *args, &block)
         if plugin.is_a?(Symbol)
           raise(UnregisteredPlugin, "plugin #{plugin.inspect} is not registered") unless registered_plugins[plugin]
           plugin = registered_plugins[plugin].call
         end
         plugin.call(obj, *args)
+        plugin.instance_eval(&block) if block
+        plugin
       end
       
       private
@@ -70,10 +67,6 @@ module Dragonfly
           self
         end
       end
-    end
-    
-    def extend_config(&block)
-      configurer ? configurer.evaluate(&block) : raise(ConfigNotSetUp, "you need to call setup_config before extend_config")
     end
     
     attr_accessor :configurer
