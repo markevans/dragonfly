@@ -49,6 +49,18 @@ describe Dragonfly::Configurable do
       end
     end
     
+    it "allows using the writer on another object" do
+      configurer = Dragonfly::Configurable::Configurer.new do
+        writer :colour, :for => :egg
+      end
+      egg = mock('egg')
+      obj.should_receive(:egg).and_return(egg)
+      egg.should_receive(:colour=).with('pink')
+      configurer.configure(obj) do
+        colour 'pink'
+      end
+    end
+    
     it "provides a 'meth' shortcut" do
       configurer = Dragonfly::Configurable::Configurer.new do
         meth :jobby, :nobby

@@ -7,10 +7,16 @@ module Dragonfly
     class Configurer
 
       class << self
-        def writer(*names)
+        def writer(*args)
+          opts = args.last.is_a?(Hash) ? args.pop : {}
+          names = args
           names.each do |name|
             define_method name do |value|
-              obj.send("#{name}=", value)
+              if opts[:for]
+                obj.send(opts[:for]).send("#{name}=", value)
+              else
+                obj.send("#{name}=", value)
+              end
             end
           end
         end
