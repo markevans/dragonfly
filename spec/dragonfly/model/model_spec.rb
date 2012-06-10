@@ -1,4 +1,4 @@
-require 'dragonfly/active_model_extensions/spec_helper'
+require 'dragonfly/model/spec_helper'
 
 describe Item do
 
@@ -29,8 +29,8 @@ describe Item do
       end
       
       it "should return the attachment classes" do
-        @class1.superclass.should == Dragonfly::ActiveModelExtensions::Attachment
-        @class2.superclass.should == Dragonfly::ActiveModelExtensions::Attachment
+        @class1.superclass.should == Dragonfly::Model::Attachment
+        @class2.superclass.should == Dragonfly::Model::Attachment
       end
 
       it "should associate the correct app with each class" do
@@ -147,7 +147,7 @@ describe Item do
         @item.preview_image = "DATASTRING"
       end
       it "the reader should return an attachment" do
-        @item.preview_image.should be_a(Dragonfly::ActiveModelExtensions::Attachment)
+        @item.preview_image.should be_a(Dragonfly::Model::Attachment)
       end
       it "the uid should be nil" do
         @item.preview_image_uid.should be_nil
@@ -1353,7 +1353,7 @@ describe Item do
       item = @item
       lambda{
         item.retained_preview_image = pending_string
-      }.should raise_error(Dragonfly::ActiveModelExtensions::Attachment::BadAssignmentKey)
+      }.should raise_error(Dragonfly::Model::Attachment::BadAssignmentKey)
     end
     
     [nil, "", "asdfsad"].each do |value|

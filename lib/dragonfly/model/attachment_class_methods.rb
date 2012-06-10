@@ -1,5 +1,5 @@
 module Dragonfly
-  module ActiveModelExtensions
+  module Model
     class Attachment
       class << self
     

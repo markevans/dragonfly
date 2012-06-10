@@ -1,5 +1,5 @@
 module Dragonfly
-  module ActiveModelExtensions
+  module Model
     module InstanceMethods
       
       def dragonfly_attachments

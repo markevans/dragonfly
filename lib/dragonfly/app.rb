@@ -141,8 +141,8 @@ module Dragonfly
     end
 
     def define_macro(mod, macro_name)
-      already_extended = (class << mod; self; end).included_modules.include?(ActiveModelExtensions)
-      mod.extend(ActiveModelExtensions) unless already_extended
+      already_extended = (class << mod; self; end).included_modules.include?(Model)
+      mod.extend(Model) unless already_extended
       mod.register_dragonfly_app(macro_name, self)
     end
 

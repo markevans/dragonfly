@@ -1,4 +1,4 @@
-require 'dragonfly/active_model_extensions/spec_helper'
+require 'dragonfly/model/spec_helper'
 require 'tempfile'
 
 describe "model urls" do

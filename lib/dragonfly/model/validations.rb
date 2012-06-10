@@ -1,5 +1,5 @@
 module Dragonfly
-  module ActiveModelExtensions
+  module Model
     module Validations
 
       class PropertyValidator < ActiveModel::EachValidator

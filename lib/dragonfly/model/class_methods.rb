@@ -1,5 +1,5 @@
 module Dragonfly
-  module ActiveModelExtensions
+  module Model
     module ClassMethods
 
       include Validations

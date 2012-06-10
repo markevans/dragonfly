@@ -1,9 +1,8 @@
 require 'forwardable'
-require 'dragonfly/active_model_extensions/attachment_class_methods'
+require 'dragonfly/model/attachment_class_methods'
 
 module Dragonfly
-  module ActiveModelExtensions
-
+  module Model
     class Attachment
 
       # Exceptions
