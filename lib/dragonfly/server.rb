@@ -6,12 +6,6 @@ module Dragonfly
 
     include Loggable
 
-    extend Configurable
-    setup_config do
-      writer :allow_fetch_file, :allow_fetch_url, :dragonfly_url, :protect_from_dos_attacks, :url_format, :url_host
-      meth :before_serve
-    end
-
     extend Forwardable
     def_delegator :url_mapper, :params_in_url
 
