@@ -5,15 +5,15 @@ describe "remote on-the-fly urls" do
   THUMBS = {}
   
   before(:each) do
-    @app = test_app.configure do |c|
-      c.generator.add :test do
+    @app = test_app.configure do
+      generator.add :test do
         "TEST"
       end
-      c.server.before_serve do |job, env|
+      before_serve do |job, env|
         uid = job.store(:path => 'yay.txt')
         THUMBS[job.serialize] = uid
       end
-      c.define_url do |app, job, opts|
+      define_url do |app, job, opts|
         uid = THUMBS[job.serialize]
         if uid
           app.datastore.url_for(uid)
@@ -21,9 +21,10 @@ describe "remote on-the-fly urls" do
           app.server.url_for(job)
         end
       end
-      c.datastore = Dragonfly::DataStorage::FileDataStore.new
-      c.datastore.root_path = 'tmp/dragonfly_test_urls'
-      c.datastore.server_root = 'tmp'
+      datastore Dragonfly::DataStorage::FileDataStore.new(
+        :root_path => 'tmp/dragonfly_test_urls',
+        :server_root => 'tmp'
+      )
     end
     @job = @app.generate(:test)
   end

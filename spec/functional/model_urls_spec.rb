@@ -12,12 +12,12 @@ describe "model urls" do
   end
   
   before(:each) do
-    @app = test_app.configure do |c|
-      c.url_format = '/media/:job/:basename.:format'
-      c.analyser.add :some_analyser_method do |t|
+    @app = test_app.configure do
+      url_format '/media/:job/:basename.:format'
+      analyser.add :some_analyser_method do |t|
         53
       end
-      c.processor.add :upcase do |t|
+      processor.add :upcase do |t|
         t.data.upcase
       end
     end
@@ -102,7 +102,7 @@ describe "model urls" do
   
   it "should allow configuring the url" do
     @app.configure do |c|
-      c.url_format = '/img/:job'
+      url_format '/img/:job'
     end
     @item.preview_image = new_tempfile
     @item.save!
