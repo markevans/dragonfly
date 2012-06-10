@@ -49,13 +49,10 @@ module Dragonfly
         @obj = obj
         instance_eval(&block)
         @obj = nil
+        obj
       end
       
-      def register_plugin(name, &block)
-        registered_plugins[name] = block
-      end
-      
-      def use(plugin, *args, &block)
+      def configure_with_plugin(obj, plugin, *args, &block)
         if plugin.is_a?(Symbol)
           raise(UnregisteredPlugin, "plugin #{plugin.inspect} is not registered") unless registered_plugins[plugin]
           plugin = registered_plugins[plugin].call
@@ -63,6 +60,14 @@ module Dragonfly
         plugin.call(obj, *args)
         plugin.instance_eval(&block) if block
         plugin
+      end
+      
+      def register_plugin(name, &block)
+        registered_plugins[name] = block
+      end
+      
+      def use(plugin, *args, &block)
+        configure_with_plugin(obj, plugin, *args, &block)
       end
       
       private
@@ -81,7 +86,10 @@ module Dragonfly
       class_eval do
         def configure(&block)
           self.class.configurer.configure(self, &block)
-          self
+        end
+        
+        def configure_with(plugin, *args, &block)
+          self.class.configurer.configure_with_plugin(self, plugin, *args, &block)
         end
       end
     end
