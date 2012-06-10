@@ -73,6 +73,17 @@ describe Dragonfly::Configurable do
       end
     end
 
+    it "allows using 'meth' on another object" do
+      configurer = Dragonfly::Configurable::Configurer.new do
+        meth :jobby, :for => :egg
+      end
+      egg = mock('egg')
+      obj.should_receive(:egg).and_return(egg)
+      egg.should_receive(:jobby).with('beans', :make => 5)
+      configurer.configure(obj) do
+        jobby 'beans', :make => 5
+      end
+    end
   end
 
   describe "plugins" do

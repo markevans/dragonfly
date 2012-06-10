@@ -7,9 +7,10 @@ module Dragonfly
     class Configurer
 
       class << self
+        private
+        
         def writer(*args)
-          opts = args.last.is_a?(Hash) ? args.pop : {}
-          names = args
+          names, opts = extract_options(args)
           names.each do |name|
             define_method name do |value|
               if opts[:for]
@@ -21,12 +22,22 @@ module Dragonfly
           end
         end
         
-        def meth(*names)
+        def meth(*args)
+          names, opts = extract_options(args)
           names.each do |name|
             define_method name do |*args, &block|
-              obj.send(name, *args, &block)
+              if opts[:for]
+                obj.send(opts[:for]).send(name, *args, &block)
+              else
+                obj.send(name, *args, &block)
+              end
             end
           end
+        end
+        
+        def extract_options(args)
+          opts = args.last.is_a?(Hash) ? args.pop : {}
+          [args, opts]
         end
       end
 
