@@ -96,7 +96,7 @@ describe Dragonfly::Analyser do
       end
 
       it "should not use the cache if it has been turned off" do
-        @analyser.enable_cache = false
+        @analyser.cache_size = 0
         it_should_analyse_using(:blah, @temp_object, :arg1)
       end
       

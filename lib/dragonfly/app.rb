@@ -57,6 +57,10 @@ module Dragonfly
       writer :allow_fetch_file, :allow_fetch_url, :dragonfly_url, :protect_from_dos_attacks, :url_format, :url_host,
              :for => :server
       meth :before_serve, :for => :server
+      
+      def analyser_cache_size(value)
+        obj.analyser.cache_size = value
+      end
     end
 
     attr_reader :analyser
