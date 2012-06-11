@@ -44,6 +44,10 @@ module Dragonfly
       App[*args]
     end
 
+    def default_app
+      App.default_app
+    end
+
     # Register saved configurations so we can do e.g.
     # Dragonfly[:my_app].configure_with(:image_magick)
     App.configurer.register_plugin(:imagemagick){ ImageMagick::Plugin.new }

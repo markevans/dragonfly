@@ -16,10 +16,16 @@ module Dragonfly
 
       alias [] instance
 
-      private
-
       def apps
         @apps ||= {}
+      end
+
+      def default_app
+        instance(:default)
+      end
+
+      def destroy_apps
+        apps.clear
       end
 
     end

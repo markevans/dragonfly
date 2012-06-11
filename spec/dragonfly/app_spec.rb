@@ -32,6 +32,22 @@ describe Dragonfly::App do
       }.should raise_error(NoMethodError)
     end
   end
+  
+  describe "default_app" do
+    it "returns the default app" do
+      Dragonfly::App.default_app.should == Dragonfly::App[:default]
+    end
+  end
+
+  describe "destroy_apps" do
+    it "destroys the dragonfly apps" do
+      Dragonfly::App[:gug]
+      Dragonfly::App[:blug]
+      Dragonfly::App.apps.length.should == 2
+      Dragonfly::App.destroy_apps
+      Dragonfly::App.apps.length.should == 0
+    end
+  end
 
   describe "mime types" do
     describe "#mime_type_for" do
