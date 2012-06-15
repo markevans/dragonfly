@@ -21,12 +21,16 @@ describe "model urls" do
         t.data.upcase
       end
     end
-    @app.define_macro(MyModel, :image_accessor)
-    Item.class_eval do
-      image_accessor :preview_image # has name, some_analyser_method, etc.
-      image_accessor :other_image # doesn't have magic stuff
+    @item_class = new_model_class('Item',
+      :preview_image_uid,
+      :preview_image_name,
+      :preview_image_some_analyser_method,
+      :other_image_uid
+      ) do
+      dragonfly_accessor :preview_image # has name, some_analyser_method, etc.
+      dragonfly_accessor :other_image # doesn't have magic stuff
     end
-    @item = Item.new
+    @item = @item_class.new
   end
   
   it "should include the name in the url if it has the magic attribute" do
@@ -38,7 +42,7 @@ describe "model urls" do
   it "should still include the name in the url if it has the magic attribute on reload" do
     @item.preview_image = new_tempfile
     @item.save!
-    item = Item.find(@item.id)
+    item = @item_class.find(@item.id)
     item.preview_image.url.should =~ %r{^/media/\w+/hello\.txt$}
   end
 
@@ -47,13 +51,13 @@ describe "model urls" do
     @item.preview_image = new_tempfile
     @item.save!
     @item.preview_image.url.should =~ %r{^/\w+/53$}
-    Item.find(@item.id).preview_image.url.should =~ %r{^/\w+/53$}
+    @item_class.find(@item.id).preview_image.url.should =~ %r{^/\w+/53$}
   end
   
   it "should work without the name if the name magic attr doesn't exist" do
     @item.other_image = new_tempfile
     @item.save!
-    item = Item.find(@item.id)
+    item = @item_class.find(@item.id)
     item.other_image.url.should =~ %r{^/media/\w+$}
   end
   
@@ -67,28 +71,28 @@ describe "model urls" do
   it "should include the name in the url even if it has no ext" do
     @item.preview_image = new_tempfile("hello", 'hello')
     @item.save!
-    item = Item.find(@item.id)
+    item = @item_class.find(@item.id)
     item.preview_image.url.should =~ %r{^/media/\w+/hello$}
   end
   
   it "should change the ext when there's an encoding step" do
     @item.preview_image = new_tempfile
     @item.save!
-    item = Item.find(@item.id)
+    item = @item_class.find(@item.id)
     item.preview_image.encode(:bum).url.should =~ %r{^/media/\w+/hello\.bum$}
   end
   
   it "should not include the name if it has none" do
     @item.preview_image = "HELLO"
     @item.save!
-    item = Item.find(@item.id)
+    item = @item_class.find(@item.id)
     item.preview_image.url.should =~ %r{^/media/\w+$}
   end
   
   it "should have an ext when there's an encoding step but no name" do
     @item.preview_image = "HELLO"
     @item.save!
-    item = Item.find(@item.id)
+    item = @item_class.find(@item.id)
     item.preview_image.encode(:bum).url.should =~ %r{^/media/\w+\.bum$}
   end
   
@@ -96,7 +100,7 @@ describe "model urls" do
     @app.server.protect_from_dos_attacks = true
     @item.preview_image = new_tempfile
     @item.save!
-    item = Item.find(@item.id)
+    item = @item_class.find(@item.id)
     item.preview_image.url.should =~ %r{^/media/\w+/hello\.txt\?sha=\w+$}
   end
   
@@ -106,14 +110,14 @@ describe "model urls" do
     end
     @item.preview_image = new_tempfile
     @item.save!
-    item = Item.find(@item.id)
+    item = @item_class.find(@item.id)
     item.preview_image.url.should =~ %r{^/img/\w+$}
   end
 
   it "should still get params from magic attributes even when chained" do
     @item.preview_image = new_tempfile
     @item.save!
-    item = Item.find(@item.id)
+    item = @item_class.find(@item.id)
     item.preview_image.process(:upcase).url.should =~ %r{^/media/\w+/hello\.txt$}
   end
   
