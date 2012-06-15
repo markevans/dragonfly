@@ -27,6 +27,13 @@ end
 require 'logger'
 LOG_FILE = 'tmp/test.log' unless defined?(LOG_FILE)
 FileUtils.rm_rf(LOG_FILE)
+
+RSpec.configure do |c|
+  c.after(:each) do
+    Dragonfly::App.destroy_apps
+  end
+end
+
 def mock_app(extra_stubs={})
   mock('app', {
     :datastore => mock('datastore', :store => 'some_uid', :retrieve => ["SOME_DATA", {}], :destroy => nil),
@@ -41,9 +48,10 @@ def mock_app(extra_stubs={})
   )
 end
 
-def test_app
+def test_app(name=nil)
   time = Time.now
-  app = Dragonfly::App.send(:new, "test_#{time.sec}_#{time.usec}".to_sym)
+  name ||= :default
+  app = Dragonfly::App[name]
   app.log = Logger.new(LOG_FILE)
   app.datastore.root_path = 'tmp/file_data_store_test'
   app
