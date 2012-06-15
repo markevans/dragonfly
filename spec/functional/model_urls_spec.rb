@@ -1,4 +1,4 @@
-require 'dragonfly/model/spec_helper'
+require 'spec_helper'
 require 'tempfile'
 
 describe "model urls" do

@@ -16,6 +16,10 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 SAMPLES_DIR = Pathname.new(File.expand_path(File.dirname(__FILE__) + '/../samples')) unless defined?(SAMPLES_DIR)
 
+RSpec.configure do |c|
+  c.include ModelHelpers
+end
+
 def todo
   raise "TODO"
 end

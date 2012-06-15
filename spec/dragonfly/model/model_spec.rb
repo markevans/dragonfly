@@ -1,6 +1,6 @@
-require 'dragonfly/model/spec_helper'
+require 'spec_helper'
 
-describe Item do
+describe "models" do
 
   def set_up_item_class(app=test_app)
     app.define_macro(MyModel, :image_accessor)
