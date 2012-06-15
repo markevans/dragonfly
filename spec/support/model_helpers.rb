@@ -7,7 +7,6 @@ class MyModel
   extend ActiveModel::Callbacks
   define_model_callbacks :save, :destroy
 
-  include ActiveModel::Validations
   include ActiveModel::Dirty
 
   class << self
@@ -15,7 +14,9 @@ class MyModel
     def attribute_names
       @attribute_names ||= (superclass.attribute_names if superclass.respond_to?(:attribute_names))
     end
-    
+
+    attr_accessor :name
+
     def create!(attrs={})
       new(attrs).save!
     end
@@ -61,36 +62,15 @@ class MyModel
 end
 
 module ModelHelpers
-  def model_class(*attribute_names)
-    Class.new(MyModel) do
+  def new_model_class(name="TestModel", *attribute_names, &block)
+    klass = Class.new(MyModel) do
+      self.name = name
+      include ActiveModel::Validations # Doing this here because it needs 'name' to be set
       self.attribute_names = attribute_names
       define_attribute_methods attribute_names
       attr_accessor *attribute_names
     end
+    klass.class_eval(&block) if block
+    klass
   end
-  
-  module_function :model_class
 end
-
-Item = ModelHelpers.model_class(
-  :title,
-  :preview_image_uid,
-  :preview_image_some_analyser_method,
-  :preview_image_size,
-  :preview_image_name,
-  :preview_image_blah_blah,
-  :other_image_uid,
-  :yet_another_image_uid,
-  :otra_imagen_uid,
-  :trailer_video_uid,
-  :created_at,
-  :updated_at
-)
-
-Car = ModelHelpers.model_class(
-  :image_uid,
-  :reliant_image_uid,
-  :type
-)
-
-Photo = ModelHelpers.model_class(:image_uid)

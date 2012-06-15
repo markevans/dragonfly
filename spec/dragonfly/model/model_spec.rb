@@ -1,98 +1,64 @@
 require 'spec_helper'
 
+# This spec is more of a functional spec for all of the model bits put together
 describe "models" do
-
-  def set_up_item_class(app=test_app)
-    app.define_macro(MyModel, :image_accessor)
-    Item.class_eval do
-      image_accessor :preview_image
-    end
-  end
-
-  # See extra setup in models / initializer files
 
   describe "defining accessors" do
 
-    let(:app1){ Dragonfly[:img] }
-    let(:app2){ Dragonfly[:vid] }
-
-    describe "attachment classes" do
-      before(:each) do
-        app1.define_macro(MyModel, :image_accessor)
-        app2.define_macro(MyModel, :video_accessor)
-        Item.class_eval do
-          image_accessor :preview_image
-          video_accessor :trailer_video
-        end
-        @classes = Item.dragonfly_attachment_classes
-        @class1, @class2 = @classes
+    before(:each) do
+      @app1, @app2 = Dragonfly[:img], Dragonfly[:vid]
+      app1, app2 = @app1, @app2
+      @model_class = new_model_class do
+        dragonfly_accessor :preview_image, :app => app1
+        dragonfly_accessor :trailer_video, :app => app2
       end
-      
-      it "should return the attachment classes" do
-        @class1.superclass.should == Dragonfly::Model::Attachment
-        @class2.superclass.should == Dragonfly::Model::Attachment
-      end
-
-      it "should associate the correct app with each class" do
-        @class1.app.should == app1
-        @class2.app.should == app2
-      end
-
-      it "should associate the correct attribute with each class" do
-        @class1.attribute.should == :preview_image
-        @class2.attribute.should == :trailer_video
-      end
-
-      it "should associate the correct model class with each class" do
-        @class1.model_class.should == Item
-        @class2.model_class.should == Item
-      end
+      @classes = @model_class.dragonfly_attachment_classes
+      @class1, @class2 = @classes
+    end
+    
+    it "should return the attachment classes" do
+      @class1.superclass.should == Dragonfly::Model::Attachment
+      @class2.superclass.should == Dragonfly::Model::Attachment
     end
 
-    describe "included modules (e.g. Mongoid::Document)" do
-      
-      it "should work" do
-        mongoid_document = Module.new
-        app1.define_macro_on_include(mongoid_document, :dog_accessor)
-        model_class = Class.new do
-          def self.before_save(*args); end
-          def self.before_destroy(*args); end
-          include mongoid_document
-          dog_accessor :doogie
-        end
-        klass = model_class.dragonfly_attachment_classes.first
-        klass.app.should == app1
-        klass.attribute.should == :doogie
-      end
-
-      it "should work with two apps" do
-        mongoid_document = Module.new
-        app1.define_macro_on_include(mongoid_document, :image_accessor)
-        app2.define_macro_on_include(mongoid_document, :video_accessor)
-        model_class = Class.new do
-          def self.before_save(*args); end
-          def self.before_destroy(*args); end
-          include mongoid_document
-          image_accessor :doogie
-          video_accessor :boogie
-        end
-        model_class.dragonfly_attachment_classes[0].app.should == app1
-        model_class.dragonfly_attachment_classes[1].app.should == app2
-      end
-
+    it "should associate the correct app with each class" do
+      @class1.app.should == @app1
+      @class2.app.should == @app2
     end
-
+    
+    it "should associate the correct attribute with each class" do
+      @class1.attribute.should == :preview_image
+      @class2.attribute.should == :trailer_video
+    end
+    
+    it "should associate the correct model class with each class" do
+      @class1.model_class.should == @model_class
+      @class2.model_class.should == @model_class
+    end
+    
+    it "should allow passing the app name as the :app value" do
+      klass = new_model_class do
+        dragonfly_accessor :egg_nog, :app => :vid
+      end
+      klass.dragonfly_attachment_classes.first.app.should == @app2
+    end
+    
+    it "should default the app to the default app" do
+      klass = new_model_class do
+        dragonfly_accessor :egg_nog
+      end
+      klass.dragonfly_attachment_classes.first.app.should == Dragonfly.default_app
+    end
   end
 
   describe "correctly defined" do
 
     before(:each) do
       @app = test_app
-      @app.define_macro(MyModel, :image_accessor)
-      Item.class_eval do
-        image_accessor :preview_image
+      @item_class = new_model_class('Item', :preview_image_uid, :preview_image_size) do
+        dragonfly_accessor :preview_image
       end
-      @item = Item.new
+      @item = @item_class.new
     end
 
     it "should provide a reader" do
@@ -219,7 +185,7 @@ describe "models" do
 
       describe "when accessed by a new model object" do
         before(:each) do
-          @item = Item.find(@item.id)
+          @item = @item_class.find(@item.id)
         end
         it "should destroy the data on destroy" do
           @app.datastore.should_receive(:destroy).with(@item.preview_image_uid)
@@ -351,8 +317,9 @@ describe "models" do
 
       describe "assigning with another attachment" do
         before(:each) do
-          Item.class_eval do
-            image_accessor :other_image
+          @item_class.class_eval do
+            attr_accessor :other_image_uid
+            dragonfly_accessor :other_image
           end
         end
         it "should work like assigning the job" do
@@ -407,184 +374,6 @@ describe "models" do
 
   end
 
-  describe "validations" do
-
-    before(:all) do
-      @app = test_app
-      @app.define_macro(MyModel, :image_accessor)
-    end
-
-    describe "validates_presence_of" do
-
-      before(:all) do
-        Item.class_eval do
-          image_accessor :preview_image
-          validates_presence_of :preview_image
-        end
-      end
-
-      it "should be valid if set" do
-        Item.new(:preview_image => "1234567890").should be_valid
-      end
-
-      it "should be invalid if not set" do
-        Item.new.should_not be_valid
-      end
-
-    end
-
-    describe "validates_size_of" do
-
-      before(:all) do
-        Item.class_eval do
-          image_accessor :preview_image
-          validates_size_of :preview_image, :within => (6..10)
-        end
-      end
-
-      it "should be valid if ok" do
-        Item.new(:preview_image => "1234567890").should be_valid
-      end
-
-      it "should be invalid if too small" do
-        Item.new(:preview_image => "12345").should_not be_valid
-      end
-
-    end
-
-    describe "validates_property" do
-
-      before(:each) do
-        @item = Item.new(:preview_image => "1234567890")
-      end
-
-      before(:all) do
-        custom_analyser = Class.new do
-          def mime_type(temp_object)
-            case temp_object.data
-            when "WRONG TYPE" then 'wrong/type'
-            when "OTHER TYPE" then nil
-            else 'how/special'
-            end
-          end
-
-          def number_of_Gs(temp_object)
-            temp_object.data.count('G')
-          end
-        end
-        @app.analyser.register(custom_analyser)
-
-        Item.class_eval do
-          validates_property :mime_type, :of => :preview_image, :in => ['how/special', 'how/crazy'], :if => :its_friday
-          validates_property :mime_type, :of => [:other_image, :yet_another_image], :as => 'how/special'
-          validates_property :number_of_Gs, :of => :preview_image, :in => (0..2)
-          validates_property :mime_type, :of => :otra_imagen, :in => ['que/pasa', 'illo/tio'], :message => "tipo de contenido incorrecto. Que chungo tio"
-
-          image_accessor :preview_image
-          image_accessor :other_image
-          image_accessor :yet_another_image
-          image_accessor :otra_imagen
-
-          def its_friday
-            true
-          end
-
-        end
-      end
-
-      it "should be valid if nil, if not validated on presence (even with validates_property)" do
-        @item.other_image = nil
-        @item.should be_valid
-      end
-
-      it "should be invalid if the property is nil" do
-        @item.preview_image = "OTHER TYPE"
-        @item.should_not be_valid
-        @item.errors[:preview_image].should == ["mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was 'application/octet-stream'"]
-      end
-
-      it "should be invalid if the property is wrong" do
-        @item.preview_image = "WRONG TYPE"
-        @item.should_not be_valid
-        @item.errors[:preview_image].should == ["mime type is incorrect. It needs to be one of 'how/special', 'how/crazy', but was 'wrong/type'"]
-      end
-
-      it "should work for a range" do
-        @item.preview_image = "GOOGLE GUM"
-        @item.should_not be_valid
-        @item.errors[:preview_image].should == ["number of gs is incorrect. It needs to be between 0 and 2, but was '3'"]
-      end
-
-      it "should validate individually" do
-        @item.other_image = "1234567"
-        @item.yet_another_image = "WRONG TYPE"
-        @item.should_not be_valid
-        @item.errors[:other_image].should == []
-        @item.errors[:yet_another_image].should == ["mime type is incorrect. It needs to be 'how/special', but was 'wrong/type'"]
-      end
-
-      it "should include standard extra options like 'if' on mime type validation" do
-        @item.should_receive(:its_friday).and_return(false)
-        @item.preview_image = "WRONG TYPE"
-        @item.should be_valid
-      end
-
-      it "should allow case sensitivity to be turned off when :as is specified" do
-        @item.should_receive(:its_friday).and_return(false)
-        Item.class_eval do
-          validates_property :mime_type, :of => :preview_image, :as => 'WronG/TypE', :case_sensitive => false
-        end
-        @item.preview_image = "WRONG TYPE"
-        @item.should be_valid
-      end
-
-      it "should allow case sensitivity to be turned off when :in is specified" do
-        @item.should_receive(:its_friday).and_return(false)
-        Item.class_eval do
-          validates_property :mime_type, :of => :preview_image, :in => ['WronG/TypE'], :case_sensitive => false
-        end
-        @item.preview_image = "WRONG TYPE"
-        @item.should be_valid
-      end
-
-      it "should require either :as or :in as an argument" do
-        lambda{
-          Item.class_eval do
-            validates_property :mime_type, :of => :preview_image
-          end
-        }.should raise_error(ArgumentError)
-      end
-
-      it "should require :of as an argument" do
-        lambda{
-          Item.class_eval do
-            validates_property :mime_type, :as => 'hi/there'
-          end
-        }.should raise_error(ArgumentError)
-      end
-
-      it "should allow for custom messages" do
-        @item.otra_imagen = "WRONG TYPE"
-        @item.should_not be_valid
-        @item.errors[:otra_imagen].should  == ["tipo de contenido incorrecto. Que chungo tio"]
-      end
-      
-      it "should allow for custom messages including access to the property name and expected/allowed values" do
-        @item.should_receive(:its_friday).and_return(false) # hack to get rid of other validation
-        Item.class_eval do
-          validates_property :mime_type, :of => :preview_image, :as => 'one/thing',
-            :message => proc{|actual, model| "Unlucky #{model.title}! Was #{actual}" }
-        end
-        @item.title = 'scubby'
-        @item.preview_image = "WRONG TYPE"
-        @item.should_not be_valid
-        @item.errors[:preview_image].should  == ["Unlucky scubby! Was wrong/type"]
-      end
-
-    end
-
-  end
-
   describe "extra properties" do
 
     before(:each) do
@@ -596,11 +385,19 @@ describe "models" do
         def number_of_As(temp_object); temp_object.data.count('A'); end
       end
       @app.analyser.register(custom_analyser)
-      @app.define_macro(MyModel, :image_accessor)
-      Item.class_eval do
-        image_accessor :preview_image
+      
+      @item_class = new_model_class('Item', 
+        :preview_image_uid,
+        :preview_image_some_analyser_method,
+        :preview_image_blah_blah,
+        :preview_image_size,
+        :preview_image_name,
+        :other_image_uid
+        ) do
+        dragonfly_accessor :preview_image
+        dragonfly_accessor :other_image
       end
-      @item = Item.new
+      @item = @item_class.new
     end
 
     describe "magic attributes" do
@@ -695,8 +492,8 @@ describe "models" do
       describe "from a new model object" do
         before(:each) do
           @app.datastore.stub!(:store).and_return('my_uid')
-          item = Item.create!(:preview_image => 'DATASTRING')
-          @item = Item.find(item.id)
+          item = @item_class.create!(:preview_image => 'DATASTRING')
+          @item = @item_class.find(item.id)
         end
         it "should load the content then delegate the method" do
           @app.datastore.should_receive(:retrieve).with('my_uid').and_return(['DATASTRING', {}])
@@ -741,7 +538,7 @@ describe "models" do
         @app.job :bacon do
           process :breakfast
         end
-        @item = Item.new :preview_image => 'gurg'
+        @item = @item_class.new :preview_image => 'gurg'
       end
       it "should add job shortcuts for that app" do
         job = @item.preview_image.bacon
@@ -752,7 +549,7 @@ describe "models" do
     describe "setting things on the attachment" do
 
       before(:each) do
-        @item = Item.new
+        @item = @item_class.new
       end
 
       describe "name" do
@@ -791,12 +588,12 @@ describe "models" do
         end
         it "should save it correctly" do
           @item.save!
-          item = Item.find(@item.id)
+          item = @item_class.find(@item.id)
           item.preview_image.meta.should include_hash(:slime => 'balls')
         end
         it "should include meta info about the model" do
           @item.save!
-          item = Item.find(@item.id)
+          item = @item_class.find(@item.id)
           item.preview_image.meta.should include_hash(:model_class => 'Item', :model_attachment => :preview_image)  
         end
       end
@@ -809,25 +606,23 @@ describe "models" do
 
     before(:all) do
       @app = test_app
-      @app2 = test_app
-      @app.define_macro(MyModel, :image_accessor)
-      @app2.define_macro(MyModel, :egg_accessor)
-      Car.class_eval do
-        image_accessor :image
+      @app2 = test_app(:two)
+      @car_class = new_model_class('Car', :image_uid, :reliant_image_uid) do
+        dragonfly_accessor :image
       end
-      Photo.class_eval do
-        egg_accessor :image
+      @photo_class = new_model_class('Photo', :image_uid) do
+        dragonfly_accessor :image, :app => :two
       end
 
-      @base_class = Car
-      class ReliantRobin < Car; image_accessor :reliant_image; end
+      @base_class = @car_class
+      class ReliantRobin < @car_class; dragonfly_accessor :reliant_image; end
       @subclass = ReliantRobin
-      class ReliantRobinWithModule < Car
+      class ReliantRobinWithModule < @car_class
         include Module.new
-        image_accessor :reliant_image
+        dragonfly_accessor :reliant_image
       end
       @subclass_with_module = ReliantRobinWithModule
-      @unrelated_class = Photo
+      @unrelated_class = @photo_class
     end
 
     it "should allow assigning base class accessors" do
@@ -849,7 +644,7 @@ describe "models" do
       @subclass_with_module.create! :reliant_image => 'blah'
     end
     it "should return the correct attachment classes for the base class" do
-      @base_class.dragonfly_attachment_classes.should match_attachment_classes([[Car, :image, @app]])
+      @base_class.dragonfly_attachment_classes.should match_attachment_classes([[@car_class, :image, @app]])
     end
     it "should return the correct attachment classes for the subclass" do
       @subclass.dragonfly_attachment_classes.should match_attachment_classes([[ReliantRobin, :image, @app], [ReliantRobin, :reliant_image, @app]])
@@ -858,14 +653,16 @@ describe "models" do
       @subclass_with_module.dragonfly_attachment_classes.should match_attachment_classes([[ReliantRobinWithModule, :image, @app], [ReliantRobinWithModule, :reliant_image, @app]])
     end
     it "should return the correct attachment classes for a class from a different hierarchy" do
-      @unrelated_class.dragonfly_attachment_classes.should match_attachment_classes([[Photo, :image, @app2]])
+      @unrelated_class.dragonfly_attachment_classes.should match_attachment_classes([[@photo_class, :image, @app2]])
     end
   end
 
   describe "setting the url" do
     before(:each) do
-      set_up_item_class
-      @item = Item.new
+      @item_class = new_model_class('Item', :preview_image_uid, :preview_image_name) do
+        dragonfly_accessor :preview_image
+      end
+      @item = @item_class.new
       stub_request(:get, "http://some.url/yo.png").to_return(:body => "aaaaayo")
     end
 
@@ -892,8 +689,10 @@ describe "models" do
 
   describe "removing the accessor with e.g. a form" do
     before(:each) do
-      set_up_item_class
-      @item = Item.new
+      @item_class = new_model_class('Item', :preview_image_uid) do
+        dragonfly_accessor :preview_image
+      end
+      @item = @item_class.new
       @item.preview_image = "something"
     end
     
@@ -946,14 +745,14 @@ describe "models" do
       
       before(:each) do
         @app = test_app
-        @app.define_macro(MyModel, :image_accessor)
+        @item_class = new_model_class('Item', :preview_image_uid, :title)
       end
 
       describe "as a block" do
         
         def set_after_assign(*args, &block)
-          Item.class_eval do
-            image_accessor :preview_image do
+          @item_class.class_eval do
+            dragonfly_accessor :preview_image do
               after_assign(*args, &block)
             end
           end
@@ -962,28 +761,28 @@ describe "models" do
         it "should call it after assign" do
           x = nil
           set_after_assign{ x = 3 }
-          Item.new.preview_image = "hello"
+          @item_class.new.preview_image = "hello"
           x.should == 3
         end
 
         it "should not call it after unassign" do
           x = nil
           set_after_assign{ x = 3 }
-          Item.new.preview_image = nil
+          @item_class.new.preview_image = nil
           x.should be_nil
         end
         
         it "should yield the attachment" do
           x = nil
           set_after_assign{|a| x = a.data }
-          Item.new.preview_image = "discussion"
+          @item_class.new.preview_image = "discussion"
           x.should == "discussion"
         end
         
         it "should evaluate in the model context" do
           x = nil
           set_after_assign{ x = title.upcase }
-          item = Item.new
+          item = @item_class.new
           item.title = "big"
           item.preview_image = "jobs"
           x.should == "BIG"
@@ -991,7 +790,7 @@ describe "models" do
         
         it "should allow passing a symbol for calling a model method" do
           set_after_assign :set_title
-          item = Item.new
+          item = @item_class.new
           def item.set_title; self.title = 'duggen'; end
           item.preview_image = "jobs"
           item.title.should == "duggen"
@@ -999,7 +798,7 @@ describe "models" do
 
         it "should allow passing multiple symbols" do
           set_after_assign :set_title, :upcase_title
-          item = Item.new
+          item = @item_class.new
           def item.set_title; self.title = 'doobie'; end
           def item.upcase_title; self.title.upcase!; end
           item.preview_image = "jobs"
@@ -1008,7 +807,7 @@ describe "models" do
         
         it "should not re-trigger callbacks (causing an infinite loop)" do
           set_after_assign{|a| self.preview_image = 'dogman' }
-          item = Item.new
+          item = @item_class.new
           item.preview_image = "hello"
         end
 
@@ -1019,13 +818,12 @@ describe "models" do
     describe "after_unassign" do
       before(:each) do
         @app = test_app
-        @app.define_macro(MyModel, :image_accessor)
-        Item.class_eval do
-          image_accessor :preview_image do
+        @item_class = new_model_class('Item', :preview_image_uid, :title) do
+          dragonfly_accessor :preview_image do
             after_unassign{ self.title = 'unassigned' }
           end
         end
-        @item = Item.new :title => 'yo'
+        @item = @item_class.new :title => 'yo'
       end
       
       it "should not call it after assign" do
@@ -1042,19 +840,18 @@ describe "models" do
     describe "copy_to" do
       before(:each) do
         @app = test_app
-        @app.define_macro(MyModel, :image_accessor)
         @app.processor.add(:append) do |temp_object, string|
           temp_object.data + string
         end
-        Item.class_eval do
-          image_accessor :preview_image do
+        @item_class = new_model_class('Item', :preview_image_uid, :other_image_uid, :yet_another_image_uid, :title) do
+          dragonfly_accessor :preview_image do
             copy_to(:other_image){|a| a.process(:append, title) }
             copy_to(:yet_another_image)
           end
-          image_accessor :other_image
-          image_accessor :yet_another_image
+          dragonfly_accessor :other_image
+          dragonfly_accessor :yet_another_image
         end
-        @item = Item.new :title => 'yo'
+        @item = @item_class.new :title => 'yo'
       end
       
       it "should copy to the other image when assigned" do
@@ -1080,8 +877,8 @@ describe "models" do
   describe "storage_opts" do
     
     def set_storage_opts(*args, &block)
-      Item.class_eval do
-        image_accessor :preview_image do
+      @item_class.class_eval do
+        dragonfly_accessor :preview_image do
           storage_opts(*args, &block)
         end
       end
@@ -1089,46 +886,46 @@ describe "models" do
     
     before(:each) do
       @app = test_app
-      @app.define_macro(MyModel, :image_accessor)
+      @item_class = new_model_class('Item', :preview_image_uid, :title)
     end
     
     it "should send the specified options to the datastore on store" do
       set_storage_opts :egg => 'head'
-      item = Item.new :preview_image => 'hello'
+      item = @item_class.new :preview_image => 'hello'
       @app.datastore.should_receive(:store).with(anything, hash_including(:egg => 'head'))
       item.save!
     end
     
     it "should allow putting in a proc" do
       set_storage_opts{ {:egg => 'numb'} }
-      item = Item.new :preview_image => 'hello'
+      item = @item_class.new :preview_image => 'hello'
       @app.datastore.should_receive(:store).with(anything, hash_including(:egg => 'numb'))
       item.save!
     end
 
     it "should yield the attachment and exec in model context" do
       set_storage_opts{|a| {:egg => (a.data + title)} }
-      item = Item.new :title => 'lump', :preview_image => 'hello'
+      item = @item_class.new :title => 'lump', :preview_image => 'hello'
       @app.datastore.should_receive(:store).with(anything, hash_including(:egg => 'hellolump'))
       item.save!
     end
 
     it "should allow giving it a method symbol" do
       set_storage_opts :special_ops
-      item = Item.new :preview_image => 'hello'
+      item = @item_class.new :preview_image => 'hello'
       def item.special_ops; {:a => 1}; end
       @app.datastore.should_receive(:store).with(anything, hash_including(:a => 1))
       item.save!
     end
     
     it "should allow setting more than once" do
-      Item.class_eval do
-        image_accessor :preview_image do
+      @item_class.class_eval do
+        dragonfly_accessor :preview_image do
           storage_opts{{ :a => title, :b => 'dumple' }}
           storage_opts{{ :b => title.upcase, :c => 'digby' }}
         end
       end
-      item = Item.new :title => 'lump', :preview_image => 'hello'
+      item = @item_class.new :title => 'lump', :preview_image => 'hello'
       @app.datastore.should_receive(:store).with(anything, hash_including(
         :a => 'lump', :b => 'LUMP', :c => 'digby'
       ))
@@ -1139,8 +936,8 @@ describe "models" do
   describe "storage_path, etc." do
    
     def set_storage_path(path=nil, &block)
-      Item.class_eval do
-        image_accessor :preview_image do
+      @item_class.class_eval do
+        dragonfly_accessor :preview_image do
           storage_path(path, &block)
         end
         def monkey
@@ -1151,12 +948,12 @@ describe "models" do
 
     before(:each) do
       @app = test_app
-      @app.define_macro(MyModel, :image_accessor)
+      @item_class = new_model_class('Item', :preview_image_uid, :title)
     end
 
     it "should allow setting as a string" do
       set_storage_path 'always/the/same'
-      item = Item.new :preview_image => 'bilbo'
+      item = @item_class.new :preview_image => 'bilbo'
       @app.datastore.should_receive(:store).with(anything, hash_including(
         :path => 'always/the/same'
       ))
@@ -1165,7 +962,7 @@ describe "models" do
 
     it "should allow setting as a symbol" do
       set_storage_path :monkey
-      item = Item.new :title => 'billy'
+      item = @item_class.new :title => 'billy'
       item.preview_image = 'bilbo'
       @app.datastore.should_receive(:store).with(anything, hash_including(
         :path => 'mr/billy/monkey'
@@ -1175,7 +972,7 @@ describe "models" do
   
     it "should allow setting as a block" do
       set_storage_path{|a| "#{a.data}/megs/#{title}" }
-      item = Item.new :title => 'billy'
+      item = @item_class.new :title => 'billy'
       item.preview_image = 'bilbo'
       @app.datastore.should_receive(:store).with(anything, hash_including(
         :path => 'bilbo/megs/billy'
@@ -1184,12 +981,12 @@ describe "models" do
     end
 
     it "should work for other storage_xxx declarations" do
-      Item.class_eval do
-        image_accessor :preview_image do
+      @item_class.class_eval do
+        dragonfly_accessor :preview_image do
           storage_eggs 23
         end
       end
-      item = Item.new :preview_image => 'bilbo'
+      item = @item_class.new :preview_image => 'bilbo'
       @app.datastore.should_receive(:store).with(anything, hash_including(
         :eggs => 23
       ))
@@ -1199,9 +996,10 @@ describe "models" do
   
   describe "unknown config method" do
     it "should raise an error" do
+      item_class = new_model_class('Item', :preview_image_uid)
       lambda{
-        Item.class_eval do
-          image_accessor :preview_image do
+        item_class.class_eval do
+          dragonfly_accessor :preview_image do
             what :now?
           end
         end
@@ -1211,8 +1009,10 @@ describe "models" do
   
   describe "changed?" do
     before(:each) do
-      set_up_item_class
-      @item = Item.new
+      @item_class = new_model_class('Item', :preview_image_uid) do
+        dragonfly_accessor :preview_image
+      end
+      @item = @item_class.new
     end
     
     it "should be changed when assigned" do
@@ -1229,18 +1029,26 @@ describe "models" do
     it "should not be changed when reloaded" do
       @item.preview_image = 'ggg'
       @item.save!
-      item = Item.find(@item.id)
+      item = @item_class.find(@item.id)
       item.preview_image.should_not be_changed
     end
   end
   
   describe "retain and pending" do
     before(:each) do
-      set_up_item_class(@app=test_app)
+      @app=test_app
       @app.analyser.add :some_analyser_method do |temp_object|
         temp_object.data.upcase
       end
-      @item = Item.new
+      @item_class = new_model_class('Item',
+        :preview_image_uid,
+        :preview_image_some_analyser_method,
+        :preview_image_size,
+        :preview_image_name
+        ) do
+        dragonfly_accessor :preview_image
+      end
+      @item = @item_class.new
     end
 
     it "should return nil if there are no changes" do
@@ -1297,7 +1105,7 @@ describe "models" do
     it "should return nil if no changes have been made" do
       @item.preview_image = 'hello'
       @item.save!
-      item = Item.find(@item.id)
+      item = @item_class.find(@item.id)
       item.preview_image.retain!
       item.retained_preview_image.should be_nil
     end
@@ -1305,7 +1113,7 @@ describe "models" do
   
   describe "assigning from a pending state" do
     before(:each) do
-      set_up_item_class(@app=test_app)
+      @app=test_app
       @app.analyser.add :some_analyser_method do |temp_object|
         temp_object.data.upcase
       end
@@ -1315,7 +1123,15 @@ describe "models" do
         :size => 5,
         :name => 'dog.biscuit'
       )
-      @item = Item.new
+      @item_class = new_model_class('Item',
+        :preview_image_uid,
+        :preview_image_size,
+        :preview_image_some_analyser_method,
+        :preview_image_name
+        ) do
+        dragonfly_accessor :preview_image
+      end
+      @item = @item_class.new
     end
 
     it "should be retained" do
@@ -1373,7 +1189,7 @@ describe "models" do
       @item.preview_image = 'oldone'
       @app.datastore.should_receive(:store).with(a_temp_object_with_data('oldone'), anything).and_return('old/uid')
       @item.save!
-      item = Item.find(@item.id)
+      item = @item_class.find(@item.id)
       item.retained_preview_image = @pending_string
       @app.datastore.should_receive(:destroy).with('old/uid')
       item.save!
@@ -1439,8 +1255,10 @@ describe "models" do
       @app.analyser.add :mime_type do |temp_object|
         'some/type'
       end
-      set_up_item_class(@app)
-      @item = Item.new
+      @item_class = new_model_class('Item', :preview_image_uid) do
+        dragonfly_accessor :preview_image
+      end
+      @item = @item_class.new
       @content = "doggo"
       @content.stub!(:original_filename).and_return('egg.png')
     end
@@ -1466,12 +1284,14 @@ describe "models" do
   
   describe "inspect" do
     before(:each) do
-      set_up_item_class
-      @item = Item.new :preview_image => 'blug'
+      @item_class = new_model_class('Item', :preview_image_uid) do
+        dragonfly_accessor :preview_image
+      end
+      @item = @item_class.new :preview_image => 'blug'
       @item.save!
     end
     it "should be awesome" do
-      @item.preview_image.inspect.should =~ %r{^<Dragonfly Attachment uid="[^"]+", app=:test[_\w]*>$}
+      @item.preview_image.inspect.should =~ %r{^<Dragonfly Attachment uid="[^"]+", app=:default>$}
     end
   end
   
