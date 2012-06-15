@@ -46,7 +46,7 @@ describe Dragonfly::RoutedEndpoint do
   end
   
    it "should have nice inspect output" do
-     @endpoint.inspect.should =~ /<Dragonfly::RoutedEndpoint for app :test_[_\w]* >/
+     @endpoint.inspect.should =~ /<Dragonfly::RoutedEndpoint for app :default >/
    end
 
 end
