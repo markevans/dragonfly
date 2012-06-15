@@ -146,25 +146,6 @@ module Dragonfly
       raise NotImplementedError, "The datastore doesn't support serving content directly - #{datastore.inspect}"
     end
 
-    def define_macro(mod, macro_name)
-      already_extended = (class << mod; self; end).included_modules.include?(Model)
-      mod.extend(Model) unless already_extended
-      mod.register_dragonfly_app(macro_name, self)
-    end
-
-    def define_macro_on_include(mod, macro_name)
-      app = self
-      name = self.name
-      (class << mod; self; end).class_eval do
-        alias_method "included_without_dragonfly_#{name}_#{macro_name}", :included
-        define_method "included_with_dragonfly_#{name}_#{macro_name}" do |mod|
-          send "included_without_dragonfly_#{name}_#{macro_name}", mod
-          app.define_macro(mod, macro_name)
-        end
-        alias_method :included, "included_with_dragonfly_#{name}_#{macro_name}"
-      end
-    end
-    
     # Reflection
     def processor_methods
       processor.functions.keys
