@@ -176,6 +176,16 @@ describe Dragonfly::DataStorage::S3DataStore do
       @data_store.secret_access_key = nil
       proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::Configurable::NotConfigured)
     end
+    
+    if !enabled #this will fail since the specs are not running on an ec2 instance with an iam role defined
+      it 'should allow missing secret key and access key on store if iam profiles are allowed' do
+        @data_store.use_iam_profile = true
+        @data_store.secret_access_key = nil
+        @data_store.access_key_id = nil
+        proc{ @data_store.store(@temp_object) }.should_not raise_error(Dragonfly::Configurable::NotConfigured)
+      end
+    end
+      
   end
 
   describe "autocreating the bucket" do
