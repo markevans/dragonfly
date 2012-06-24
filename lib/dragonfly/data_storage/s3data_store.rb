@@ -12,6 +12,7 @@ module Dragonfly
       configurable_attr :access_key_id
       configurable_attr :secret_access_key
       configurable_attr :region
+      configurable_attr :use_iam_profile
       configurable_attr :use_filesystem, true
       configurable_attr :storage_headers, {'x-amz-acl' => 'public-read'}
       configurable_attr :url_scheme, 'http'
@@ -33,6 +34,7 @@ module Dragonfly
         self.access_key_id = opts[:access_key_id]
         self.secret_access_key = opts[:secret_access_key]
         self.region = opts[:region]
+        self.use_iam_profile = opts[:use_iam_profile]
       end
 
       def store(temp_object, opts={})
@@ -96,12 +98,13 @@ module Dragonfly
 
       def storage
         @storage ||= begin
-          storage = Fog::Storage.new(
+          storage = Fog::Storage.new({
             :provider => 'AWS',
             :aws_access_key_id => access_key_id,
             :aws_secret_access_key => secret_access_key,
-            :region => region
-          )
+            :region => region,
+            :use_iam_profile => use_iam_profile
+          }.reject {|name, option| option.nil?})
           storage.sync_clock
           storage
         end
@@ -118,8 +121,12 @@ module Dragonfly
 
       def ensure_configured
         unless @configured
-          [:bucket_name, :access_key_id, :secret_access_key].each do |attr|
-            raise NotConfigured, "You need to configure #{self.class.name} with #{attr}" if send(attr).nil?
+          if use_iam_profile
+            raise NotConfigured, "You need to configure #{self.class.name} with #{attr}" if bucket_name.nil?
+          else
+            [:bucket_name, :access_key_id, :secret_access_key].each do |attr|
+              raise NotConfigured, "You need to configure #{self.class.name} with #{attr}" if send(attr).nil?
+            end
           end
           @configured = true
         end
