@@ -17,7 +17,7 @@ module Dragonfly
 
       private
 
-      def define_dragonfly_instance_methods(attribute, opts={}, &config_block)
+      def dragonfly_accessor(attribute, opts={}, &config_block)
         app = case opts[:app]
         when Symbol then Dragonfly::App[opts[:app]]
         when nil then Dragonfly::App.default_app

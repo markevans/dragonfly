@@ -3,6 +3,15 @@ require 'spec_helper'
 # This spec is more of a functional spec for all of the model bits put together
 describe "models" do
 
+  describe "using the module" do
+    it "adds 'dragonfly_accessor'" do
+      klass = Class.new do
+        extend Dragonfly::Model
+        dragonfly_accessor :hello
+      end
+    end
+  end
+
   describe "defining accessors" do
 
     before(:each) do

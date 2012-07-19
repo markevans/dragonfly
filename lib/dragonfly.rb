@@ -34,7 +34,6 @@ autoload_files_in_dir["#{File.dirname(__FILE__)}/dragonfly", 'Dragonfly']
 require 'dragonfly/core_ext/object'
 require 'dragonfly/core_ext/array'
 require 'dragonfly/core_ext/hash'
-require 'dragonfly/core_ext/class'
 
 Dragonfly::Railtie if defined?(::Rails) # Coz it will autoload
 

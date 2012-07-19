@@ -3,6 +3,8 @@ require 'active_model'
 # Generic activemodel model
 class MyModel
 
+  extend Dragonfly::Model
+
   # Callbacks
   extend ActiveModel::Callbacks
   define_model_callbacks :save, :destroy
