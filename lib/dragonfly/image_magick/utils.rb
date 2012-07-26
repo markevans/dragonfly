@@ -10,7 +10,8 @@ module Dragonfly
       configurable_attr :convert_command, "convert"
       configurable_attr :identify_command, "identify"
       configurable_attr :smart_dimensions, false
-    
+      
+      private
 
       def convert(temp_object=nil, args='', format=nil)
         tempfile = new_tempfile(format)
