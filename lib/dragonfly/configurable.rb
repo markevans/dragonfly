@@ -46,9 +46,10 @@ module Dragonfly
       end
 
       def configure(obj, &block)
+        previous_obj = @obj
         @obj = obj
         instance_eval(&block)
-        @obj = nil
+        @obj = previous_obj
       end
       
       def configure_with_plugin(obj, plugin, *args, &block)

@@ -162,4 +162,34 @@ describe Dragonfly::Configurable do
 
   end
 
+  describe "nested configures" do
+    
+    before(:each) do
+      @car_class = Class.new do
+        extend Dragonfly::Configurable
+        def initialize
+          @numbers = []
+        end
+        attr_accessor :numbers
+      end
+      @car_class.setup_config do
+        def add(number)
+          obj.numbers << number
+        end
+      end
+    end
+    
+    it "should still work (as some plugins will configure inside a configure)" do
+      car = @car_class.new
+      car.configure do
+        add 1
+        car.configure do
+          add 2
+        end
+        add 3
+      end
+      car.numbers.should == [1,2,3]
+    end
+  end
+
 end
