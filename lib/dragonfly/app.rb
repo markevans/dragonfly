@@ -50,8 +50,23 @@ module Dragonfly
 
     extend Configurable
     setup_config do
-      writer :datastore, :cache_duration, :secret, :log, :content_disposition, :content_filename
+      # Exceptions (these come under App namespace)
+      class UnregisteredDataStore < RuntimeError; end
+      
+      writer :cache_duration, :secret, :log, :content_disposition, :content_filename
       meth :register_mime_type, :response_headers, :define_url, :job
+      
+      def datastore(store, *args)
+        obj.datastore = if store.is_a?(Symbol)
+          get_klass = _datastores[store]
+          raise UnregisteredDataStore, "the datastore '#{store}' is not registered" unless get_klass
+          klass = get_klass.call
+          klass.new(*args)
+        else
+          raise ArgumentError, "datastore only takes 1 argument unless you use a symbol" if args.any?
+          store
+        end
+      end
       
       # TODO: change this!
       [:analyser, :processor, :encoder, :generator].each do |method|
@@ -66,6 +81,15 @@ module Dragonfly
       
       def analyser_cache_size(value)
         obj.analyser.cache_size = value
+      end
+      
+      def register_datastore(symbol, &block) # For use publicly, not in a config block
+        _datastores[symbol] = block
+      end
+
+      # "private"
+      def _datastores
+        @_datastores ||= {}
       end
     end
 

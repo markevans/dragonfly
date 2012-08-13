@@ -179,5 +179,50 @@ describe Dragonfly::App do
       Dragonfly[:hello].inspect.should == "<Dragonfly::App name=:hello >"
     end
   end
+  
+  describe "configuration" do
+    
+    let(:app){ test_app }
+    
+    describe "datastore" do
+      it "sets the datastore" do
+        store = mock('datastore')
+        app.configure{ datastore store }
+        app.datastore.should == store
+      end
+
+      {
+        :file => Dragonfly::DataStorage::FileDataStore,
+        :s3 => Dragonfly::DataStorage::S3DataStore,
+        :couch => Dragonfly::DataStorage::CouchDataStore,
+        :mongo => Dragonfly::DataStorage::MongoDataStore,
+        :memory => Dragonfly::DataStorage::MemoryDataStore
+      }.each do |symbol, klass|
+        it "recognises the :s3 shortcut for S3DataStore" do
+          app.configure{ datastore symbol }
+          app.datastore.should be_a(klass)
+        end
+      end
+    end
+
+    it "raises an error if it doesn't know the symbol" do
+      expect{
+        app.configure{ datastore :hello }
+      }.to raise_error(Dragonfly::App::UnregisteredDataStore)
+    end
+
+    it "passes args through to the initializer if a symbol is given" do
+      app.configure{ datastore :file, :root_path => '/some/path' }
+      app.datastore.root_path.should == '/some/path'
+    end
+
+    it "complains if extra args are given but first is not a symbol" do
+      store = mock('datastore')
+      expect{
+        app.configure{ datastore store, :some => 'args' }
+      }.to raise_error(ArgumentError)
+    end
+
+  end
 
 end
