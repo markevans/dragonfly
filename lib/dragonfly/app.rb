@@ -50,7 +50,7 @@ module Dragonfly
 
     extend Configurable
     setup_config do
-      writer :datastore, :cache_duration, :secret, :log, :content_disposition, :content_filename, :trust_file_extensions
+      writer :datastore, :cache_duration, :secret, :log, :content_disposition, :content_filename
       meth :register_mime_type, :response_headers, :define_url, :job
       
       # TODO: change this!
@@ -185,11 +185,6 @@ module Dragonfly
       @log ||= Logger.new('/var/tmp/dragonfly.log')
     end
     attr_writer :log
-    
-    def trust_file_extensions?
-      @trust_file_extensions != false
-    end
-    attr_writer :trust_file_extensions
     
     attr_accessor :content_disposition, :content_filename
     

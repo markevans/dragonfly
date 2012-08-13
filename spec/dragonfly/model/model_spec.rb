@@ -1271,23 +1271,13 @@ describe "models" do
       @content = "doggo"
       @content.stub!(:original_filename).and_return('egg.png')
     end
-    it "should trust the file extension with format if configured to" do
+    it "should use the file extension for format" do
       @item.preview_image = @content
       @item.preview_image.format.should == :png
     end
-    it "should trust the file extension with mime_type if configured to" do
+    it "should use the file extension for mime_type" do
       @item.preview_image = @content
       @item.preview_image.mime_type.should == 'image/png'
-    end
-    it "should not trust the file extension with format if configured not to" do
-      @app.trust_file_extensions = false
-      @item.preview_image = @content
-      @item.preview_image.format.should == nil
-    end
-    it "should not trust the file extension with mime_type if configured not to" do
-      @app.trust_file_extensions = false
-      @item.preview_image = @content
-      @item.preview_image.mime_type.should == 'some/type'
     end
   end
   

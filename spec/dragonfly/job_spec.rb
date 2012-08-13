@@ -627,11 +627,6 @@ describe Dragonfly::Job do
           @job.url_attrs = {:name => 'hup.hi'}
           @job.url.should == "/#{@job.serialize}.hi"
         end
-        it "should not use the ext if format meta doesn't exist and trust_file_extensions is switched off" do
-          @job.url_attrs = {:name => 'hup.hi'}
-          @app.trust_file_extensions = false
-          @job.url.should == "/#{@job.serialize}"
-        end
         it "should not set if neither exist" do
           @job.url_attrs = {}
           @job.url.should == "/#{@job.serialize}"
@@ -919,11 +914,6 @@ describe Dragonfly::Job do
     it "should use the file extension if it has no format" do
       job = @app.new_job("HIMATE", :name => 'test.pdf')
       job.format.should == :pdf
-    end
-    it "should not use the file extension if it's been switched off" do
-      @app.trust_file_extensions = false
-      job = @app.new_job("HIMATE", :name => 'test.pdf')
-      job.format.should be_nil
     end
     it "should prefer the set format over the file extension" do
       job = @app.new_job("HELLO", :name => 'test.pdf', :format => :txt)

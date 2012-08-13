@@ -25,7 +25,6 @@ Here is an example of an app with all attributes configured:
       c.cache_duration = 3600*24*365*2                      # defaults to 1 year # (1 year)
       c.fallback_mime_type = 'something/mental'             # defaults to application/octet-stream
       c.log = Logger.new($stdout)                           # defaults to Logger.new('/var/tmp/dragonfly.log')
-      c.trust_file_extensions = false                       # defaults to true
 
       c.url_format = '/images/:job/:basename.:format'       # defaults to '/:job/:basename.:format'
       c.url_host = 'http://some.domain.com:4000'            # defaults to nil
