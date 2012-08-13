@@ -59,6 +59,15 @@ describe Dragonfly::Model::Validations do
       @item = @item_class.new(:preview_image => "1234567890")
     end
 
+    it "should be valid if the property is correct" do
+      @item_class.class_eval do
+        validates_property :gungle, :of => :preview_image, :as => 'bungo'
+      end
+      @item.preview_image = "something"
+      @item.preview_image.should_receive(:gungle).and_return('bungo')
+      @item.should be_valid
+    end
+
     it "should be valid if nil, if not validated on presence (even with validates_property)" do
       @item_class.class_eval do
         validates_property :size, :of => :preview_image, :as => 234
@@ -169,6 +178,18 @@ describe Dragonfly::Model::Validations do
       @item.preview_image = "too long"
       @item.should_not be_valid
       @item.errors[:preview_image].should  == ["Unlucky scubby! Was 8"]
+    end
+
+    [:analyse, :analyze].each do |analyse|
+      it "should use 'analyse' instead of 'send' if :#{analyse} => true is passed in" do
+        @item_class.class_eval do
+          validates_property :gungle, :of => :preview_image, :as => 'bungo', analyse => true
+        end
+        @item.preview_image = "something"
+        @item.preview_image.should_not_receive(:gungle)
+        @item.preview_image.should_receive(:analyse).with(:gungle).and_return('bungo')
+        @item.should be_valid
+      end
     end
 
   end

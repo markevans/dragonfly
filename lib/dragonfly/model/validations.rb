@@ -6,7 +6,11 @@ module Dragonfly
         
         def validate_each(model, attribute, attachment)
           if attachment
-            property = attachment.send(property_name)
+            property = if analyse?
+              attachment.analyse(property_name)
+            else
+              attachment.send(property_name)
+            end
             model.errors.add(attribute, message(property, model)) unless matches?(property)
           end
         end
@@ -32,6 +36,10 @@ module Dragonfly
         
         def check_validity!
           raise ArgumentError, "you must provide either :in => [<value1>, <value2>..] or :as => <value>" unless options[:in] || options[:as]
+        end
+        
+        def analyse?
+          !!(options[:analyse] || options[:analyze])
         end
         
         def property_name
