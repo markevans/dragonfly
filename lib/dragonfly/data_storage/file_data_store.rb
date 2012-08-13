@@ -9,13 +9,21 @@ module Dragonfly
       class UnableToFormUrl < RuntimeError; end
 
       def initialize(opts={})
-        @root_path = opts[:root_path] || '/var/tmp/dragonfly'
-        @server_root = opts[:server_root]
-        @store_meta = opts[:store_meta]
+        self.root_path = opts[:root_path] || '/var/tmp/dragonfly'
+        self.server_root = opts[:server_root]
+        self.store_meta = opts[:store_meta]
       end
 
-      attr_accessor :root_path, :server_root
       attr_writer :store_meta
+      attr_reader :root_path, :server_root
+
+      def root_path=(path)
+        @root_path = path ? path.to_s : nil
+      end
+      
+      def server_root=(path)
+        @server_root = path ? path.to_s : nil
+      end
       
       def store_meta?
         @store_meta != false # Default to true if not set

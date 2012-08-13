@@ -188,6 +188,13 @@ describe Dragonfly::DataStorage::FileDataStore do
     end
   end
 
+  describe "setting the root_path" do
+    it "should allow setting as a pathname" do
+      @data_store.root_path = Pathname.new('/some/thing')
+      @data_store.root_path.should == '/some/thing'
+    end
+  end
+
   describe "relative paths" do
     let(:store) { Dragonfly::DataStorage::FileDataStore.new }
     let(:relative_path) { "2011/02/11/picture.jpg" }
@@ -270,6 +277,11 @@ describe Dragonfly::DataStorage::FileDataStore do
 
     it "should work as expected when the the server root is below the root path" do
       @data_store.server_root = '/var/tmp/eggs/some/path'
+      @data_store.url_for(@uid).should == '/to/file.png'
+    end
+
+    it "should allow setting the server_root as a pathname" do
+      @data_store.server_root = Pathname.new('/var/tmp/eggs/some/path')
       @data_store.url_for(@uid).should == '/to/file.png'
     end
 
