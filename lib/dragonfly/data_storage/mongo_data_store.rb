@@ -37,8 +37,7 @@ module Dragonfly
         ensure_authenticated!
         content_type = opts[:content_type] || opts[:mime_type] || 'application/octet-stream'
         temp_object.file do |f|
-          mongo_id = grid.put(f, :content_type => content_type,
-                                 :metadata => marshal_encode(temp_object.meta))
+          mongo_id = grid.put(f, :content_type => content_type, :metadata => temp_object.meta)
           mongo_id.to_s
         end
       end
@@ -46,12 +45,8 @@ module Dragonfly
       def retrieve(uid)
         ensure_authenticated!
         grid_io = grid.get(bson_id(uid))
-        meta = marshal_decode(grid_io.metadata)
-        meta.merge!(:stored_at => grid_io.upload_date)
-        [
-          grid_io.read,
-          meta
-        ]
+        meta = extract_meta(grid_io)
+        [grid_io.read, meta]
       rescue Mongo::GridFileNotFound, INVALID_OBJECT_ID => e
         raise DataNotFound, "#{e} - #{uid}"
       end
@@ -89,6 +84,21 @@ module Dragonfly
 
       def bson_id(uid)
         OBJECT_ID.from_string(uid)
+      end
+
+      def extract_meta(grid_io)
+        meta = grid_io.metadata
+        meta = marshal_decode(meta) if meta.is_a?(String) # Deprecated encoded meta
+        meta = symbolize_keys(meta)
+        meta.merge!(:stored_at => grid_io.upload_date)
+        meta
+      end
+
+      def symbolize_keys(hash)
+        hash.inject({}) do |new_hash, (key, value)|
+          new_hash[key.to_sym] = value
+          new_hash
+        end
       end
 
     end
