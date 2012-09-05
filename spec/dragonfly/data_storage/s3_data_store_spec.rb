@@ -51,12 +51,6 @@ describe Dragonfly::DataStorage::S3DataStore do
   it_should_behave_like 'data_store'
 
   describe "store" do
-    it "should return a unique identifier for each storage" do
-      temp_object = Dragonfly::TempObject.new('gollum')
-      temp_object2 = Dragonfly::TempObject.new('gollum')
-      @data_store.store(temp_object).should_not == @data_store.store(temp_object2)
-    end
-
     it "should use the name from the temp_object if set" do
       temp_object = Dragonfly::TempObject.new('eggheads', :name => 'doobie')
       uid = @data_store.store(temp_object)
