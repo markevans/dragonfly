@@ -66,7 +66,7 @@ module Dragonfly
         response = rescuing_socket_errors{ storage.get_object(bucket_name, uid) }
         [
           response.body,
-          parse_s3_metadata(response.headers)
+          headers_to_meta(response.headers)
         ]
       rescue Excon::Errors::NotFound => e
         raise DataNotFound, "#{e} - #{uid}"
@@ -143,12 +143,29 @@ module Dragonfly
       end
 
       def full_storage_headers(headers, meta)
-        {'x-amz-meta-extra' => marshal_encode(meta)}.merge(storage_headers).merge(headers)
+        storage_headers.merge(meta_to_headers(meta)).merge(headers)
       end
 
-      def parse_s3_metadata(headers)
-        encoded_meta = headers['x-amz-meta-extra']
-        (marshal_decode(encoded_meta) if encoded_meta) || {}
+      def headers_to_meta(headers)
+        headers.inject({}) do |meta, (header_key, value)|
+          key = header_key[/^x-amz-meta-(.+)$/, 1]
+          if key
+            if key == 'extra'
+              # Deprecated "extra" header
+              meta.merge!(marshal_decode(value))
+            else
+              meta[key.to_sym] = value
+            end
+          end
+          meta
+        end
+      end
+
+      def meta_to_headers(meta)
+        meta.inject({}) do |headers, (key, value)|
+          headers["x-amz-meta-#{key}"] = value
+          headers
+        end
       end
 
       def valid_regions
