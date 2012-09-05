@@ -78,4 +78,19 @@ describe Dragonfly::DataStorage::MongoDataStore do
     end
   end
 
+  describe "already stored stuff" do
+    it "still works" do
+      uid = @data_store.grid.put("DOOBS", :metadata => {:some => 'meta'}).to_s
+      content, meta = @data_store.retrieve(uid)
+      content.should == "DOOBS"
+      meta[:some].should == 'meta'
+    end
+
+    it "still works when meta was stored as a marshal dumped hash" do
+      uid = @data_store.grid.put("DOOBS", :metadata => Dragonfly::Serializer.marshal_encode(:some => 'stuff')).to_s
+      content, meta = @data_store.retrieve(uid)
+      meta[:some].should == 'stuff'
+    end
+  end
+
 end
