@@ -13,5 +13,12 @@ module Dragonfly
       tempfile
     end
 
+    def symbolize_keys(hash)
+      hash.inject({}) do |new_hash, (key, value)|
+        new_hash[key.to_sym] = value
+        new_hash
+      end
+    end
+
   end
 end
