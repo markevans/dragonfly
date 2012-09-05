@@ -218,13 +218,6 @@ describe Dragonfly::DataStorage::S3DataStore do
       @data_store.store(@temp_object, :headers => {'x-amz-foo' => 'override!'})
     end
 
-    it "should not mess with the meta" do
-      @data_store.storage.should_receive(:put_object) do |_, __, ___, headers|
-        headers['x-amz-meta-extra'].should =~ /^\w+$/
-      end
-      @data_store.store(@temp_object, :headers => {'hello' => 'there'})
-    end
-
     it "should store with the content-type if passed in" do
       @data_store.storage.should_receive(:put_object) do |_, __, ___, headers|
         headers['Content-Type'].should == 'text/plain'
@@ -272,6 +265,23 @@ describe Dragonfly::DataStorage::S3DataStore do
       @data_store.url_for(@uid).should == "http://#{url_host}/some/path/on/s3"
     end
 
+  end
+
+  describe "meta" do
+    let(:temp_object) { Dragonfly::TempObject.new("hello") }
+    
+    it "adds any x-amz-meta- headers to the meta" do
+      uid = @data_store.store(temp_object, :headers => {'x-amz-meta-potato' => 'zanzibar'})
+      content, meta = @data_store.retrieve(uid)
+      meta[:potato].should == 'zanzibar'
+    end
+    
+    it "works with the deprecated x-amz-meta-extra header" do
+      uid = @data_store.store(temp_object, :headers => {'x-amz-meta-extra' => Dragonfly::Serializer.marshal_encode(:some => 'meta', :wo => 4)})
+      content, meta = @data_store.retrieve(uid)
+      meta[:some].should == 'meta'
+      meta[:wo].should == 4
+    end
   end
 
 end
