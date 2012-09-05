@@ -89,16 +89,9 @@ module Dragonfly
       def extract_meta(grid_io)
         meta = grid_io.metadata
         meta = marshal_decode(meta) if meta.is_a?(String) # Deprecated encoded meta
-        meta = symbolize_keys(meta)
+        meta = Utils.symbolize_keys(meta)
         meta.merge!(:stored_at => grid_io.upload_date)
         meta
-      end
-
-      def symbolize_keys(hash)
-        hash.inject({}) do |new_hash, (key, value)|
-          new_hash[key.to_sym] = value
-          new_hash
-        end
       end
 
     end
