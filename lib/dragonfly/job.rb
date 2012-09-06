@@ -121,6 +121,14 @@ module Dragonfly
     end
 
     class FetchUrl < Step
+
+      class ErrorResponse < RuntimeError
+        def initialize(status, body)
+          @status, @body = status, body
+        end
+        attr_reader :status, :body
+      end
+      
       def init
         job.url_attrs[:name] = filename
       end
@@ -134,8 +142,13 @@ module Dragonfly
         @filename ||= File.basename(path) if path[/[^\/]$/]
       end
       def apply
-        open(url) do |f|
-          job.update(f.read, :name => filename)
+        begin
+          open(url) do |f|
+            job.update(f.read, :name => filename)
+          end
+        rescue OpenURI::HTTPError => e
+          status, message = e.io.status
+          raise ErrorResponse.new(status.to_i, e.io.read)
         end
       end
     end

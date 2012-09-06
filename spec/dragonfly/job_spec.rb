@@ -161,7 +161,6 @@ describe Dragonfly::Job do
     describe "fetch_url" do
       before(:each) do
         stub_request(:get, %r{http://some\.place\.com/.*}).to_return(:body => 'result!')
-        stub_request(:get, 'https://some.place.com').to_return(:body => 'secure result!')
       end
 
       it {
@@ -180,6 +179,7 @@ describe Dragonfly::Job do
       end
 
       it "should also work with https" do
+        stub_request(:get, 'https://some.place.com').to_return(:body => 'secure result!')
         @job.fetch_url!('https://some.place.com')
         @job.data.should == "secure result!"
       end
@@ -192,6 +192,16 @@ describe Dragonfly::Job do
       it "should set the name url_attr if there is one" do
         @job.fetch_url!('some.place.com/dung.beetle')
         @job.url_attrs.should == {:name =>'dung.beetle'}
+      end
+
+      it "should raise an error if not found" do
+        stub_request(:get, "notfound.com").to_return(:status => 404, :body => "BLAH")
+        expect{
+          @job.fetch_url!('notfound.com').apply
+        }.to raise_error(Dragonfly::Job::FetchUrl::ErrorResponse){|error|
+          error.status.should == 404
+          error.body.should == "BLAH"
+        }
       end
 
       ["some.place.com", "some.place.com/", "some.place.com/eggs/"].each do |url|
