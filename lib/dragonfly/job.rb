@@ -202,7 +202,6 @@ module Dragonfly
     module OverrideInstanceMethods
       
       def format
-        apply
         meta[:format] || (ext.to_sym if ext) || analyse(:format)
       end
       
