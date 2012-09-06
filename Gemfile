@@ -5,11 +5,12 @@ gem "rack"
 # These gems are needed for development and testing
 group :development, :test do
   gem 'activemodel'
-  gem 'jeweler'
+  gem 'couchrest', '~> 1.0'
   gem 'fog'
   gem 'github-markup'
+  gem 'jeweler'
   gem 'mongo'
-  gem 'couchrest', '~> 1.0'
+  gem 'pry'
   gem 'rack-cache'
   gem 'redcarpet', '~>1.0'
   gem 'rspec', '~> 2.5'
