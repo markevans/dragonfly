@@ -204,6 +204,22 @@ describe Dragonfly::Job do
         }
       end
 
+      it "should raise an error if server error" do
+        stub_request(:get, "error.com").to_return(:status => 500, :body => "BLAH")
+        expect{
+          @job.fetch_url!('error.com').apply
+        }.to raise_error(Dragonfly::Job::FetchUrl::ErrorResponse){|error|
+          error.status.should == 500
+          error.body.should == "BLAH"
+        }
+      end
+
+      it "should follow redirects" do
+        stub_request(:get, "redirectme.com").to_return(:status => 302, :headers => {'Location' => 'http://ok.com'})
+        stub_request(:get, "ok.com").to_return(:body => "OK!")
+        @job.fetch_url('redirectme.com').data.should == 'OK!'
+      end
+
       ["some.place.com", "some.place.com/", "some.place.com/eggs/"].each do |url|
         it "should not set the name if there isn't one, e.g. #{url}" do
           @job.fetch_url!(url)
