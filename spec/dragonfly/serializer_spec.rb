@@ -50,7 +50,6 @@ describe Dragonfly::Serializer do
   ].each do |object|
     it "should correctly marshal encode #{object.inspect} properly with no padding/line break" do
       encoded = marshal_encode(object)
-      # raise encoded.index("\n").inspect
       encoded.should be_a(String)
       encoded.should_not =~ /\n|=/
     end
@@ -71,5 +70,33 @@ describe Dragonfly::Serializer do
       }.should raise_error(Dragonfly::Serializer::BadString)
     end
   end
+
+  [
+    [3,4,5],
+    {'wo' => 'there'},
+    [{'this' => 'should', 'work' => [3, 5.3, nil, {'egg' => false}]}, [], true]
+  ].each do |object|
+    it "should correctly json encode #{object.inspect} properly with no padding/line break" do
+      encoded = json_encode(object)
+      encoded.should be_a(String)
+      encoded.should_not =~ /\n|=/
+    end
+    it "should correctly marshal encode and decode #{object.inspect} to the same object" do
+      json_decode(json_encode(object)).should == object
+    end
+  end
   
+  describe "marshal_decode" do
+    it "should raise an error if the string passed in is empty" do
+      lambda{
+        json_decode('')
+      }.should raise_error(Dragonfly::Serializer::BadString)
+    end
+    it "should raise an error if the string passed in is gobbledeegook" do
+      lambda{
+        json_decode('ahasdkjfhasdkfjh')
+      }.should raise_error(Dragonfly::Serializer::BadString)
+    end
+  end
+
 end
