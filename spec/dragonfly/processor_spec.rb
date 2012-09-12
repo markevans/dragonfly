@@ -52,4 +52,25 @@ describe Dragonfly::Processor do
     end
   end
 
+  describe "url_attributes" do
+    it "should return an empty hash if not defined on the added processor" do
+      processor.add(:egg){|num| num + 1 }
+      processor.url_attributes(:egg, 4).should == {}
+    end
+
+    it "should call it on the added processor" do
+      spoon = mock
+      spoon.should_receive(:url_attributes).with(3, 4).and_return(:name => 'spoon.txt')
+      processor.add(:encode, spoon)
+      processor.url_attributes(:encode, 3, 4).should == {:name => 'spoon.txt'}
+    end
+
+    it "should raise an for if the processor doesn't exist" do
+      expect{
+        processor.url_attributes(:i_dont_exist, "")
+      }.to raise_error(Dragonfly::Processor::NotDefined)
+    end
+
+  end
+
 end

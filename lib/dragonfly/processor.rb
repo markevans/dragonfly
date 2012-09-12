@@ -21,17 +21,19 @@ module Dragonfly
 
     attr_reader :processors
 
-    def process(method, temp_object, *args)
-      processor = processors[method.to_sym]
-      if processor
-        begin
-          processor.call(temp_object, *args)
-        rescue RuntimeError => e
-          raise ProcessingError.new("Couldn't process #{temp_object.inspect} - got: #{e}", e)
-        end
-      else
-        raise NotDefined, "processor #{method} not registered with #{self}"
-      end
+    def url_attributes(name, *args)
+      processor = processor(name)
+      processor.respond_to?(:url_attributes) ? processor.url_attributes(*args) : {}
+    end
+
+    def process(name, temp_object, *args)
+      processor(name).call(temp_object, *args)
+    rescue RuntimeError => e
+      raise ProcessingError.new("Couldn't process #{temp_object.inspect} - got: #{e}", e)
+    end
+
+    def processor(name)
+      processors[name.to_sym] || raise(NotDefined, "processor #{name} not registered with #{self}")
     end
 
     def inspect
