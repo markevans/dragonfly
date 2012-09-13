@@ -7,7 +7,7 @@ module Dragonfly
       end
 
       def store(temp_object, opts={})
-        uid = generate_uid
+        uid = opts[:uid] || generate_uid
         content_store[uid] = {:content => temp_object.data, :meta => temp_object.meta}
         uid
       end
