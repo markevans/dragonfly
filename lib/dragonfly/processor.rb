@@ -15,15 +15,15 @@ module Dragonfly
       @processors = {}
     end
 
-    def add(name, callable_obj=nil, &block)
-      processors[name] = (callable_obj || block)
+    def add(name, processor=nil, &block)
+      processors[name] = (processor || block)
     end
 
     attr_reader :processors
 
-    def url_attributes(name, *args)
+    def update_url(name, url_attributes, *args)
       processor = processor(name)
-      processor.respond_to?(:url_attributes) ? processor.url_attributes(*args) : {}
+      processor.update_url(url_attributes, *args) if processor.respond_to?(:update_url)
     end
 
     def process(name, temp_object, *args)
