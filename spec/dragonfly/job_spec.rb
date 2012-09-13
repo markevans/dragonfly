@@ -82,6 +82,7 @@ describe Dragonfly::Job do
 
     describe "process" do
       it "should raise an error when applying" do
+        @app.processors.add :resize
         @job.process!(:resize, '20x30')
         lambda{
           @job.apply
@@ -238,7 +239,7 @@ describe Dragonfly::Job do
   describe "with content already there" do
 
     before(:each) do
-      @app = mock_app
+      @app = test_app
       @job = Dragonfly::Job.new(@app, 'HELLO', :name => 'hello.txt', :a => :b)
       @temp_object = @job.temp_object
     end
@@ -251,30 +252,55 @@ describe Dragonfly::Job do
 
     describe "process" do
       before(:each) do
-        @job.url_attrs = {:some => 'thing'}
-        @job.process!(:resize, '20x30')
+        @app.processors.add :resize do |temp_object, size| size[0] end
       end
 
-      it { @job.steps.should match_steps([Dragonfly::Job::Process]) }
+      it "should be a Process job" do
+        @job.process!(:resize, '20x30')
+        @job.steps.should match_steps([Dragonfly::Job::Process])
+      end
 
       it "should use the processor when applied" do
-        @app.processor.should_receive(:process).with(@temp_object, :resize, '20x30').and_return('hi')
-        @job.data.should == 'hi'
+        @job.process(:resize, '20x30').data.should == '2'
+      end
+      
+      it "should raise an error if the processor doesn't exist on apply" do
+        expect{
+          @job.process(:goofy, '20x30').apply
+        }.to raise_error(Dragonfly::Job::Process::NoProcessorError)
+      end
+
+      it "should raise an error if there's a processing error" do
+        class TestError < RuntimeError; end
+        @app.processors.add :goofy do |temp_object, size| raise TestError end
+        expect{
+          @job.process(:goofy, '20x30').apply
+        }.to raise_error(Dragonfly::Job::Process::ProcessingError) do |error|
+          error.original_error.should be_a(NoMethodError)
+        end
       end
 
       it "should maintain the meta attributes" do
-        @app.processor.should_receive(:process).with(@temp_object, :resize, '20x30').and_return('hi')
+        @job.process!(:resize, '20x30')
         @job.meta.should == {:name => 'hello.txt', :a => :b}
       end
 
-      it "should maintain the url_attrs" do
-        @job.url_attrs.should == {:some => 'thing'}
+      it "should call update_url immediately with the url_attrs" do
+        @job.url_attrs = {:some => 'thing'}
+        processor = @app.processors[:resize]
+        def processor.update_url(url_attrs, size)
+          url_attrs[:sizio] = size
+        end
+        @job.process!(:resize, '20x30')
+        @job.url_attrs.should == {:some => 'thing', :sizio => '20x30'}
       end
 
       it "should allow returning an array with extra attributes from the processor" do
-        @app.processor.should_receive(:process).with(@temp_object, :resize, '20x30').and_return(['hi', {:name => 'hello_20x30.txt', :eggs => 'asdf'}])
-        @job.data.should == 'hi'
-        @job.meta.should == {:name => 'hello_20x30.txt', :a => :b, :eggs => 'asdf'}
+        @app.processors.add :resize do |temp_object, size|
+          ['hi', {:eggs => 'asdf'}]
+        end
+        @job.process!(:resize, '20x30')
+        @job.meta.should == {:name => "hello.txt", :a => :b, :eggs => "asdf"}
       end
     end
 
@@ -340,14 +366,16 @@ describe Dragonfly::Job do
       }.should raise_error(NoMethodError)
     end
     it "should work correctly with chained jobs, applying before analysing" do
-      @app.processor.add(:double){|temp_object| temp_object.data * 2 }
+      @app.processors.add(:double){|temp_object| temp_object.data * 2 }
       @job.process(:double).num_letters('L').should == 4
     end
   end
 
   describe "defining extra steps after applying" do
     before(:each) do
-      @app = mock_app
+      @app = test_app
+      @app.processors.add(:resize){|temp_object, *args| temp_object}
+      @app.encoder.add(:encode){|temp_object, *args| temp_object}
       @job = Dragonfly::Job.new(@app)
       @job.temp_object = Dragonfly::TempObject.new("hello")
       @job.process! :resize
@@ -389,8 +417,10 @@ describe Dragonfly::Job do
   describe "chaining" do
 
     before(:each) do
-      @app = mock_app
+      @app = test_app
       @job = Dragonfly::Job.new(@app)
+      @app.processors.add(:resize){ "SOME_PROCESSED_DATA"}
+      @app.store("SOME_DATA", :uid => 'some_uid')
     end
 
     it "should return itself if bang is used" do
@@ -471,7 +501,7 @@ describe Dragonfly::Job do
 
   describe "to_a" do
     before(:each) do
-      @app = mock_app
+      @app = test_app
     end
     it "should represent all the steps in array form" do
       job = Dragonfly::Job.new(@app)
@@ -1034,7 +1064,7 @@ describe Dragonfly::Job do
     before(:each) do
       @app = test_app
       @app.generator.add(:toast){ "toast" }
-      @app.processor.add(:upcase){|t| t.data.upcase }
+      @app.processors.add(:upcase){|t| t.data.upcase }
       @job = @app.generate(:toast)
       @path1 = @job.tempfile.path
       @job.process!(:upcase)

@@ -68,15 +68,39 @@ module Dragonfly
     end
 
     class Process < Step
+
+      # Exceptions
+      class NoProcessorError < RuntimeError; end
+      class ProcessingError < RuntimeError
+        def initialize(message, original_error)
+          super(message)
+          @original_error = original_error
+        end
+        attr_reader :original_error
+      end
+
+      def init
+        if processor && processor.respond_to?(:update_url)
+          processor.update_url(job.url_attrs, *arguments)
+        end
+      end
       def name
         args.first
+      end
+      def processor
+        job.app.processors[name]
       end
       def arguments
         args[1..-1]
       end
       def apply
         raise NothingToProcess, "Can't process because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        content, meta = job.app.processor.process(job.temp_object, name, *arguments)
+        raise NoProcessorError, "No such processor #{name.inspect}" unless processor
+        begin
+          content, meta = processor.call(job.temp_object, *arguments)
+        rescue RuntimeError => e
+          raise ProcessingError.new("Couldn't process #{job.temp_object.inspect} with arguments #{arguments.inspect} - got: #{e}", e)
+        end
         job.update(content, meta)
       end
     end
