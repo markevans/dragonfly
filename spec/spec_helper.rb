@@ -52,8 +52,8 @@ def test_app(name=nil)
   time = Time.now
   name ||= :default
   app = Dragonfly::App[name]
+  app.datastore = Dragonfly::DataStorage::MemoryDataStore.new
   app.log = Logger.new(LOG_FILE)
-  app.datastore.root_path = 'tmp/file_data_store_test'
   app
 end
 
