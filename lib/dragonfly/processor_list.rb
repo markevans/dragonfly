@@ -11,6 +11,12 @@ module Dragonfly
       processors[name] = processor || block
     end
 
+    def delegate_to(object, method_names)
+      method_names.each do |method_name|
+        add(method_name, object.method(method_name))
+      end
+    end
+
     def [](name)
       processors[name]
     end
