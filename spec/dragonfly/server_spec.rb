@@ -53,7 +53,7 @@ describe Dragonfly::Server do
 
       
       it "should work ok with + symbols" do
-        @app.processor.add(:thumb){|t, geometry| "eggs" }
+        @app.processors.add(:thumb){|t, geometry| "eggs" }
         @app.datastore.should_receive(:retrieve).with('2011/04/20/20_55_04_114_female_1.jpg').and_return "EGGS"
         response = request(@server, '/media/BAhbB1sHOgZmSSIpMjAxMS8wNC8yMC8yMF81NV8wNF8xMTRfZmVtYWxlXzEuanBnBjoGRVRbCDoGcDoKdGh1bWJJIgwxMDB4NzU+BjsGVA')
         response.status.should == 200

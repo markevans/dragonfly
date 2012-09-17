@@ -10,7 +10,7 @@ describe "a configured imagemagick app" do
       app.configure do
         use :imagemagick
       end
-      processor = app.processor.get_registered(Dragonfly::ImageMagick::Processor)
+      processor = app.processors[:resize]
       processor.command_line.convert_command.should == 'convert'
     end
     
@@ -20,7 +20,7 @@ describe "a configured imagemagick app" do
           convert_command '/usr/eggs'
         end
       end
-      processor = app.processor.get_registered(Dragonfly::ImageMagick::Processor)
+      processor = app.processors[:resize]
       processor.command_line.convert_command.should == '/usr/eggs'
     end
     

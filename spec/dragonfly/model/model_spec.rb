@@ -303,7 +303,7 @@ describe "models" do
         @app.generator.add :egg do
           "Gungedin"
         end
-        @app.processor.add :doogie do |temp_object|
+        @app.processors.add :doogie do |temp_object|
           temp_object.data.upcase
         end
       end
@@ -341,7 +341,7 @@ describe "models" do
 
       describe "assigning by means of a bang method" do
         before(:each) do
-          @app.processor.add :double do |temp_object|
+          @app.processors.add :double do |temp_object|
             temp_object.data * 2
           end
           @app.encoder.add do |temp_object, format|
@@ -849,7 +849,7 @@ describe "models" do
     describe "copy_to" do
       before(:each) do
         @app = test_app
-        @app.processor.add(:append) do |temp_object, string|
+        @app.processors.add(:append) do |temp_object, string|
           temp_object.data + string
         end
         @item_class = new_model_class('Item', :preview_image_uid, :other_image_uid, :yet_another_image_uid, :title) do

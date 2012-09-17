@@ -17,7 +17,7 @@ describe "model urls" do
       analyser.add :some_analyser_method do |t|
         53
       end
-      processor.add :upcase do |t|
+      processors.add :upcase do |t|
         t.data.upcase
       end
     end

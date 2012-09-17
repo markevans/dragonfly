@@ -153,7 +153,7 @@ describe Dragonfly::App do
   describe "reflection methods" do
     before(:each) do
       @app = test_app.configure do |c|
-        c.processor.add(:milk){}
+        c.processors.add(:milk){}
         c.generator.add(:butter){}
         c.analyser.add(:cheese){}
         c.job(:bacon){}
