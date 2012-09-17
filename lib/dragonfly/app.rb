@@ -172,7 +172,7 @@ module Dragonfly
 
     # Reflection
     def processor_methods
-      processors.functions.keys
+      processors.processor_names
     end
     
     def generator_methods

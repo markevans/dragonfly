@@ -15,6 +15,10 @@ module Dragonfly
       processors[name]
     end
 
+    def processor_names
+      processors.keys
+    end
+
     def inspect
       "<#{self.class.name} with processors: #{processors.keys.map{|k| k.to_s }.sort.join(', ')} >"
     end
