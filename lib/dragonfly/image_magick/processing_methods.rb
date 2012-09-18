@@ -104,6 +104,17 @@ module Dragonfly
         format ? [result, {:format => format.to_sym}] : result
       end
 
+      def encode(temp_object, format, args='')
+        format = format.to_s.downcase
+        details = command_line.identify(temp_object)
+
+        if details[:format] == format.to_sym && args.empty?
+          temp_object
+        else
+          command_line.convert(temp_object, args, format)
+        end
+      end
+
     end
   end
 end

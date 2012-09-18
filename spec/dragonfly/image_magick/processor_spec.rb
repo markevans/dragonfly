@@ -289,5 +289,28 @@ describe Dragonfly::ImageMagick::Processor do
       @processor.convert(image, "-resize 2x2!").should have_width(2)
     end
   end
-  
+
+  describe "encode" do
+    it "should encode the image to the correct format" do
+      image = @processor.encode(@image, :gif)
+      image.should have_format('gif')
+    end
+
+    it "should do nothing if the image is already in the correct format" do
+      image = @processor.encode(@image, :png)
+      image.should == @image
+    end
+
+    it "should allow for extra args" do
+      image = @processor.encode(@image, :jpg, '-quality 1')
+      image.should have_format('jpeg')
+      image.should have_size('1.45KB')
+    end
+
+    it "should still work even if the image is already in the correct format and args are given" do
+      image = @processor.encode(@image, :png, '-quality 1')
+      image.should_not == @image
+    end
+  end
+
 end
