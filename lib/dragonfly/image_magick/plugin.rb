@@ -25,9 +25,23 @@ module Dragonfly
         end
       end
 
+      class Encode
+        include ProcessingMethods
+        def initialize(command_line)
+          @command_line = command_line
+        end
+        
+        def call(temp_object, format, args=nil)
+          encode(temp_object, format, args)
+        end
+
+        def update_url(attrs, format, *)
+          attrs[:format] = format
+        end
+      end
+
       def call(app)
         app.analyser.register(ImageMagick::Analyser, command_line)
-        app.encoder.register(ImageMagick::Encoder, command_line)
         app.generator.register(ImageMagick::Generator, command_line)
 
         app.processors.delegate_to(processor, [
@@ -44,6 +58,7 @@ module Dragonfly
           :thumb
         ])
         app.processors.add :convert, Convert.new(command_line)
+        app.processors.add :encode, Encode.new(command_line)
 
         app.configure do
           job :thumb do |geometry, format|
@@ -61,6 +76,9 @@ module Dragonfly
           end
           job :convert do |args, format|
             process :convert, args, format
+          end
+          job :encode do |format, args|
+            process :encode, format, args
           end
         end
       end

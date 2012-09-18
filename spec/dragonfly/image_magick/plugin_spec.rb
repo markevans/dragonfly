@@ -24,25 +24,37 @@ describe "a configured imagemagick app" do
 
   end
 
-  describe "convert" do
+  describe "processors that change the url" do
     let(:app){ test_app.configure_with(:imagemagick) }
     let(:image){ app.fetch_file(SAMPLES_DIR.join('beach.png')) }
-    
-    it "sanity check with format" do
-      thumb = image.convert('-resize 1x1!', :jpg)
-      thumb.url.should =~ /beach\.jpg/
-      thumb.width.should == 1
-      thumb.analyse(:format).should == :jpeg
-      thumb.meta[:format].should == :jpg
+
+    describe "convert" do
+      it "sanity check with format" do
+        thumb = image.convert('-resize 1x1!', :jpg)
+        thumb.url.should =~ /beach\.jpg/
+        thumb.width.should == 1
+        thumb.analyse(:format).should == :jpeg
+        thumb.meta[:format].should == :jpg
+      end
+
+      it "sanity check without format" do
+        thumb = image.convert('-resize 1x1!')
+        thumb.url.should =~ /beach\.png/
+        thumb.width.should == 1
+        thumb.analyse(:format).should == :png
+        thumb.meta[:format].should be_nil
+      end
     end
 
-    it "sanity check without format" do
-      thumb = image.convert('-resize 1x1!')
-      thumb.url.should =~ /beach\.png/
-      thumb.width.should == 1
-      thumb.analyse(:format).should == :png
-      thumb.meta[:format].should be_nil
+    describe "encode" do
+      it "sanity check" do
+        thumb = image.encode(:jpg)
+        thumb.url.should =~ /beach\.jpg/
+        thumb.analyse(:format).should == :jpeg
+        thumb.meta[:format].should == :jpg
+      end
     end
+
   end
 
 end

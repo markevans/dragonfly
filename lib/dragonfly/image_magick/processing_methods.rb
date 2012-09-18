@@ -111,7 +111,7 @@ module Dragonfly
         if details[:format] == format.to_sym && args.empty?
           temp_object
         else
-          command_line.convert(temp_object, args, format)
+          convert(temp_object, args, format)
         end
       end
 
