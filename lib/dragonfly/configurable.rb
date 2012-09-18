@@ -54,8 +54,10 @@ module Dragonfly
       
       def configure_with_plugin(obj, plugin, *args, &block)
         if plugin.is_a?(Symbol)
-          raise(UnregisteredPlugin, "plugin #{plugin.inspect} is not registered") unless registered_plugins[plugin]
-          plugin = registered_plugins[plugin].call
+          symbol = plugin
+          raise(UnregisteredPlugin, "plugin #{symbol.inspect} is not registered") unless registered_plugins[symbol]
+          plugin = registered_plugins[symbol].call
+          obj.plugins[symbol] = plugin if obj.respond_to?(:plugins)
         end
         plugin.call(obj, *args)
         plugin.instance_eval(&block) if block
@@ -92,6 +94,10 @@ module Dragonfly
         def configure_with(plugin, *args, &block)
           self.class.configurer.configure_with_plugin(self, plugin, *args, &block)
           self
+        end
+
+        def plugins
+          @plugins ||= {}
         end
       end
     end

@@ -108,6 +108,16 @@ describe Dragonfly::Configurable do
       end
     end
 
+    it "adds the plugin to the object's 'plugins' if it responds to it when using symbols" do
+      def obj.plugins; @plugins ||= {}; end
+      plugin = proc{}
+      configurer.register_plugin(:pluggy){ plugin }
+      configurer.configure(obj) do
+        use :pluggy
+      end
+      obj.plugins[:pluggy].should == plugin
+    end
+
     it "raises an error when a wrong symbol is used" do
       expect{
         configurer.configure(obj) do
@@ -124,7 +134,7 @@ describe Dragonfly::Configurable do
         use plugin, :arg do
           dingle 'dumperton'
         end
-      end      
+      end
     end
 
   end
@@ -152,7 +162,15 @@ describe Dragonfly::Configurable do
         colour 'mauve'
       end
     end
-    
+
+    it "adds the plugins method to the instance" do
+      car_class.setup_config do
+        writer :colour
+      end
+      car = car_class.new
+      car.plugins.should == {}
+    end
+
     it "doesn't allow configuring if the class hasn't been set up" do
       car = car_class.new
       expect{
