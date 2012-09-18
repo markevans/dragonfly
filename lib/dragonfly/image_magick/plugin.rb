@@ -4,7 +4,6 @@ module Dragonfly
     # The ImageMagick Plugin does the following:
     # - registers an imagemagick analyser
     # - registers an imagemagick processor
-    # - registers an imagemagick encoder
     # - registers an imagemagick generator
     # - adds thumb shortcuts like '280x140!', etc.
     # Look at the source code for #call to see exactly how it configures the app.

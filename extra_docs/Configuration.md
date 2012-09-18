@@ -39,9 +39,6 @@ Here is an example of an app with all attributes configured:
 
       c.analyser.register(MyAnalyser)                       # See 'Analysers' for more details
       c.processor.register(MyProcessor, :type => :fig)      # See 'Processing' for more details
-      c.encoder.register(MyEncoder) do |e|                  # See 'Encoding' for more details
-        e.some_value = 'geg'
-      end
       c.generator.register(MyGenerator)                     # See 'Generators' for more details
 
       c.register_mime_type(:egg, 'fried/egg')               # See 'MimeTypes' for more details
@@ -49,7 +46,6 @@ Here is an example of an app with all attributes configured:
       c.job :black_and_white do |size|                      # Job shortcut - lets you do image.black_and_white('30x30')
         process :greyscale
         process :thumb, size
-        encode  :gif
       end
       
       c.define_url do |app, job, opts|                      # allows overriding urls - defaults to
@@ -94,12 +90,12 @@ ImageMagick
 
     app.configure_with(:imagemagick)
 
-The {Dragonfly::ImageMagick::Config ImageMagick configuration} registers the app with the {Dragonfly::ImageMagick::Analyser ImageMagick Analyser}, {Dragonfly::ImageMagick::Processor ImageMagick Processor},
-{Dragonfly::ImageMagick::Encoder ImageMagick Encoder} and {Dragonfly::ImageMagick::Generator ImageMagick Generator}, and a number of job shortcuts.
+The {Dragonfly::ImageMagick::Config ImageMagick configuration} registers the app with the {Dragonfly::ImageMagick::Analyser ImageMagick Analyser}, {Dragonfly::ImageMagick::Processor ImageMagick Processor}
+and {Dragonfly::ImageMagick::Generator ImageMagick Generator}, and a number of job shortcuts.
 
 The file 'dragonfly/rails/images' does this for you.
 
-The processor, analyser, encoder and generator pass data around using tempfiles.
+The processor, analyser and generator pass data around using tempfiles.
 
 Rails
 -----

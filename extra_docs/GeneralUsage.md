@@ -58,18 +58,14 @@ We can process it (see {file:Processing} for more info) ...
 
     new_image = image.process(:thumb, '40x30')    # returns another 'Job' object
 
-We can encode it (see {file:Encoding} for more info) ...
-
-    new_image = image.encode(:gif)                # returns another 'Job' object
-
 Chaining
 --------
-Because the methods `fetch`, `fetch_file`, `fetch_url`, `generate`, `create`, `process` and `encode`
+Because the methods `fetch`, `fetch_file`, `fetch_url`, `generate`, `create` and `process`
 all return {Dragonfly::Job Job} objects, we can chain them as much as we want...
 
-    image = app.fetch('some_uid').process(:greyscale).process(:thumb, '40x20#').encode(:gif)
+    image = app.fetch('some_uid').process(:greyscale).process(:thumb, '40x20#')
 
-... and because they're lazy, we don't actually do any processing/encoding until either `apply` is called
+... and because they're lazy, we don't actually do any processing until either `apply` is called
 
     image.apply              # actually 'does' the processing and returns self
 
@@ -77,15 +73,15 @@ all return {Dragonfly::Job Job} objects, we can chain them as much as we want...
 
 This means we can cheaply generate urls for processed data without doing any fetching or processing:
 
-    url = app.fetch('some_uid').process(:thumb, '40x20#').encode(:gif).url
+    url = app.fetch('some_uid').process(:thumb, '40x20#').url
 
 and then visit that url in a browser to get the actual processed image.
 
 Shortcuts
 ---------
-Commonly used processing/encoding steps can be shortened, so instead of
+Commonly used processing steps can be shortened, so instead of
 
-    app.fetch('some_uid').process(:greyscale).process(:thumb, '40x20#').encode(:jpg)
+    app.fetch('some_uid').process(:greyscale).process(:thumb, '40x20#')
 
 we could use something like
 
@@ -99,7 +95,6 @@ To define this shortcut:
       c.job :grey do |size|
         process :greyscale
         process :thumb, size
-        encode :jpg
       end
       # ...
     end

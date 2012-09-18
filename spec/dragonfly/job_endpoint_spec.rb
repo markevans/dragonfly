@@ -121,17 +121,14 @@ describe Dragonfly::JobEndpoint do
   end
 
   describe "Content Disposition" do
-    before(:each) do
-      @app.encoder.add{|temp_object, format| temp_object }
-    end
-
     describe "filename" do
       it "should return the original name" do
         response = make_request(@job)
         response['Content-Disposition'].should == 'filename="gung.txt"'
       end
-      it "should return a filename with a different extension if it's been encoded" do
-        response = make_request(@job.encode(:doogs))
+      it "should return a filename with a different extension if the meta is set" do
+        @job.meta[:format] = :doogs
+        response = make_request(@job)
         response['Content-Disposition'].should == 'filename="gung.doogs"'
       end
       it "should not have the filename if name doesn't exist" do

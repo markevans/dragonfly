@@ -1,7 +1,7 @@
 ImageMagick
 ===========
 Either `require 'dragonfly/rails/images'` or `Dragonfly[:images].configure_with(:imagemagick)`
-gives us an ImageMagick {Dragonfly::ImageMagick::Processor Processor}, {Dragonfly::ImageMagick::Encoder Encoder},
+gives us an ImageMagick {Dragonfly::ImageMagick::Processor Processor},
 {Dragonfly::ImageMagick::Analyser Analyser} and {Dragonfly::ImageMagick::Generator Generator}.
 
 Given a {Dragonfly::Job Job} object
@@ -17,10 +17,10 @@ we have the following:
 Shortcuts
 ---------
     image.thumb('40x30')              # same as image.process(:thumb, '40x30')
-    image.jpg                         # same as image.encode(:jpg)
-    image.png                         # same as image.encode(:png)
-    image.gif                         # same as image.encode(:gif)
-    image.strip                       # same as image.process(:strip)
+    image.encode(:tiff)               # same as image.process(:encode, :tiff)
+    image.jpg                         # same as image.process(:encode, :jpg)
+    image.png                         # same as image.process(:encode, :png)
+    image.gif                         # same as image.process(:encode, :gif)
     image.convert('-scale 30x30')     # same as image.process(:convert, '-scale 30x30')
 
 `thumb` and `convert` can optionally take a format (e.g. :gif) as the second argument.
@@ -58,24 +58,12 @@ Processor
 
     image.process(:rotate, 45, :background_colour => 'transparent')   # default bg black
 
+    image.process(:jpg)                           # makes it a jpg
+    image.process(:jpg, '-quality 10')            # args get passed to imagemagick command line
+
 The method `thumb` takes a geometry string and calls `resize`, `resize_and_crop` or `crop` accordingly.
 
     image.process(:thumb, '400x300')             # calls resize
-
-Encoder
--------
-The {Dragonfly::ImageMagick::Encoder ImageMagick Encoder} gives us:
-
-    image.encode(:jpg)
-    image.encode(:gif)
-    image.encode(:png)
-    image.encode(:tiff)
-
-and various other formats (see {Dragonfly::ImageMagick::Encoder ImageMagick Encoder}).
-
-You can also pass additional options to the imagemagick command line:
-
-    image.encode(:jpg, '-quality 10')
 
 Analyser
 --------

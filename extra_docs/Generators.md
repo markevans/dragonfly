@@ -1,7 +1,7 @@
 Generators
 ==========
 
-Unlike processors and encoders, generators create content out of nothing, rather than modifying already existing content, for example text image generation.
+Unlike processors, generators create content out of nothing, rather than modifying already existing content, for example text image generation.
 
 You can register as many generators as you like.
 

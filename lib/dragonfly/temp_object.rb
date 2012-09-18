@@ -5,7 +5,7 @@ require 'pathname'
 module Dragonfly
 
   # A TempObject is used for HOLDING DATA.
-  # It's the thing that is passed between the datastore, the processor and the encoder, and is useful
+  # It's the thing that is passed between the datastore and the processor, and is useful
   # for separating how the data was created and how it is later accessed.
   #
   # You can initialize it various ways:

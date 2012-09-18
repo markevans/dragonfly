@@ -14,7 +14,6 @@ describe Dragonfly::Job do
     {
       Dragonfly::Job::Fetch => :fetch,
       Dragonfly::Job::Process => :process,
-      Dragonfly::Job::Encode => :encode,
       Dragonfly::Job::Generate => :generate,
       Dragonfly::Job::FetchFile => :fetch_file,
       Dragonfly::Job::FetchUrl => :fetch_url
@@ -27,7 +26,6 @@ describe Dragonfly::Job do
     {
       Dragonfly::Job::Fetch => :f,
       Dragonfly::Job::Process => :p,
-      Dragonfly::Job::Encode => :e,
       Dragonfly::Job::Generate => :g,
       Dragonfly::Job::FetchFile => :ff,
       Dragonfly::Job::FetchUrl => :fu
@@ -39,7 +37,7 @@ describe Dragonfly::Job do
 
     describe "step_names" do
       it "should return the available step names" do
-        Dragonfly::Job.step_names.should == [:fetch, :process, :encode, :generate, :fetch_file, :fetch_url]
+        Dragonfly::Job.step_names.should == [:fetch, :process, :generate, :fetch_file, :fetch_url]
       end
     end
 
@@ -87,15 +85,6 @@ describe Dragonfly::Job do
         lambda{
           @job.apply
         }.should raise_error(Dragonfly::Job::NothingToProcess)
-      end
-    end
-
-    describe "encode" do
-      it "should raise an error when applying" do
-        @job.encode!(:gif)
-        lambda{
-          @job.apply
-        }.should raise_error(Dragonfly::Job::NothingToEncode)
       end
     end
 
@@ -304,45 +293,6 @@ describe Dragonfly::Job do
       end
     end
 
-    describe "encode" do
-      before(:each) do
-        @job.url_attrs = {:name => 'boid'}
-        @job.encode!(:gif, :bitrate => 'mumma')
-      end
-
-      it { @job.steps.should match_steps([Dragonfly::Job::Encode]) }
-
-      it "should use the encoder when applied" do
-        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
-        @job.data.should == 'alo'
-      end
-
-      it "should maintain the meta and update the format" do
-        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
-        @job.meta.should == {:name => 'hello.txt', :a => :b, :format => :gif}
-      end
-
-      it "should update the format on the url_attrs" do
-        @app.encoder.should_not_receive(:encode)
-        @job.url_attrs[:format].should == :gif
-      end
-
-      it "should allow returning an array with extra attributes form the encoder" do
-        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return(['alo', {:name => 'doobie', :eggs => 'fish'}])
-        @job.data.should == 'alo'
-        @job.meta.should == {:name => 'doobie', :a => :b, :eggs => 'fish', :format => :gif}
-      end
-
-      it "not allow overriding the format" do
-        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return(['alo', {:format => :png}])
-        @job.apply.meta[:format].should == :gif
-      end
-
-      it "should maintain the url_attrs" do
-        @job.url_attrs[:name].should == 'boid'
-      end
-      
-    end
   end
 
   describe "analysis" do
@@ -375,12 +325,12 @@ describe Dragonfly::Job do
     before(:each) do
       @app = test_app
       @app.processors.add(:resize){|temp_object, *args| temp_object}
-      @app.encoder.add(:encode){|temp_object, *args| temp_object}
+      @app.processors.add(:encode){|temp_object, *args| temp_object}
       @job = Dragonfly::Job.new(@app)
       @job.temp_object = Dragonfly::TempObject.new("hello")
       @job.process! :resize
       @job.apply
-      @job.encode! :micky
+      @job.process! :encode
     end
     it "should not call apply on already applied steps" do
       @job.steps[0].should_not_receive(:apply)
@@ -391,20 +341,13 @@ describe Dragonfly::Job do
       @job.apply
     end
     it "should return all steps" do
-      @job.steps.should match_steps([
-        Dragonfly::Job::Process,
-        Dragonfly::Job::Encode
-      ])
+      @job.steps.map{|step| step.name }.should == [:resize, :encode]
     end
     it "should return applied steps" do
-      @job.applied_steps.should match_steps([
-        Dragonfly::Job::Process
-      ])
+      @job.applied_steps.map{|step| step.name }.should == [:resize]
     end
     it "should return the pending steps" do
-      @job.pending_steps.should match_steps([
-        Dragonfly::Job::Encode
-      ])
+      @job.pending_steps.map{|step| step.name }.should == [:encode]
     end
     it "should not call apply on any steps when already applied" do
       @job.apply
@@ -508,12 +451,10 @@ describe Dragonfly::Job do
       job.fetch! 'some_uid'
       job.generate! :plasma # you wouldn't really call this after fetch but still works
       job.process! :resize, '30x40'
-      job.encode! :gif, :bitrate => 20
       job.to_a.should == [
         [:f, 'some_uid'],
         [:g, :plasma],
-        [:p, :resize, '30x40'],
-        [:e, :gif, {:bitrate => 20}]
+        [:p, :resize, '30x40']
       ]
     end
   end
@@ -530,7 +471,6 @@ describe Dragonfly::Job do
           [:f, 'some_uid'],
           [:g, :plasma],
           [:p, :resize, '30x40'],
-          [:e, :gif, {:bitrate => 20}]
         ], @app)
       end
       it "should have the correct step types" do
@@ -538,14 +478,12 @@ describe Dragonfly::Job do
           Dragonfly::Job::Fetch,
           Dragonfly::Job::Generate,
           Dragonfly::Job::Process,
-          Dragonfly::Job::Encode
         ])
       end
       it "should have the correct args" do
         @job.steps[0].args.should == ['some_uid']
         @job.steps[1].args.should == [:plasma]
         @job.steps[2].args.should == [:resize, '30x40']
-        @job.steps[3].args.should == [:gif, {:bitrate => 20}]
       end
       it "should have no applied steps" do
         @job.applied_steps.should be_empty
@@ -871,7 +809,7 @@ describe Dragonfly::Job do
     
     describe "process_steps" do
       it "should return the processing steps" do
-        job = @app.fetch('many/ponies').process(:jam).process(:eggs).encode(:gif)
+        job = @app.fetch('many/ponies').process(:jam).process(:eggs)
         job.process_steps.should match_steps([
           Dragonfly::Job::Process,
           Dragonfly::Job::Process
@@ -879,21 +817,10 @@ describe Dragonfly::Job do
       end
     end
 
-    describe "encode_step" do
-      it "should return nil if it doesn't exist" do
-        @app.generate(:ponies).encode_step.should be_nil
-      end
-      it "should return the last encode step otherwise" do
-        step = @app.fetch('hello').encode(:smells).encode(:cheese).encode_step
-        step.should be_a(Dragonfly::Job::Encode)
-        step.format.should == :cheese
-      end
-    end
-    
     describe "step_types" do
       it "should return the step types" do
-        job = @app.fetch('eggs').process(:beat, 'strongly').encode(:meringue)
-        job.step_types.should == [:fetch, :process, :encode]
+        job = @app.fetch('eggs').process(:beat, 'strongly')
+        job.step_types.should == [:fetch, :process]
       end
     end
   end

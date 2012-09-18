@@ -11,7 +11,7 @@ module Dragonfly
       extend Forwardable
       def_delegators :job,
         :data, :to_file, :file, :tempfile, :path,
-        :process, :encode, :analyse,
+        :process, :analyse,
         :meta, :meta=,
         :name, :size,
         :url
@@ -90,11 +90,6 @@ module Dragonfly
         self
       end
 
-      def encode!(*args)
-        assign(encode(*args))
-        self
-      end
-      
       def remote_url(opts={})
         app.remote_url_for(uid, opts) if uid
       end

@@ -104,20 +104,16 @@ We can play around with the data
 We can process the data
 
     image = @album.cover_image.process(:thumb, '20x20')   # returns a 'Job' object, with similar properties
-    image.width                                          # => 20
+    image.width                                           # => 20
     @album.cover_image.width                              # => 280 (no change)
 
-The available processing methods available (i.e. 'thumb', etc.) come from the {Dragonfly} app's registered processors - see {file:Processing.md Processing}
-
-We can encode the data
-
-    image = @album.cover_image.encode(:gif)   # returns a 'Job' object, with similar properties
+    image = @album.cover_image.gif            # returns a 'Job' object
     image.format                              # => :gif
     @album.cover_image.format                 # => :png (no change)
 
-The encoding is implemented by the {Dragonfly} app's registered encoders (which will usually just be one) - see {file:Encoding.md Encoding}
+The available processing methods available (i.e. 'thumb', etc.) come from the {Dragonfly} app's registered processors - see {file:Processing.md Processing}
 
-We can use configured shortcuts for processing/encoding, and chain them:
+We can use configured shortcuts for processing, and chain them:
 
     @album.cover_image.thumb('300x200#ne')     # => returns a 'Job' object, with similar properties
 
@@ -125,7 +121,7 @@ We can chain all these things much like ActiveRecord scopes:
 
     @album.cover_image.png.thumb('300x200#ne').process(:greyscale).encode(:tiff)
 
-Because the processing/encoding methods are lazy, no actual processing or encoding is done until a method like `data`, `file`, `to_file`, `width`, etc. is called.
+Because the processing methods are lazy, no actual processing is done until a method like `data`, `file`, `to_file`, `width`, etc. is called.
 You can force the processing to be done if you must by then calling `apply`.
 
     @album.cover_image.process(:greyscale).apply
@@ -183,13 +179,13 @@ The uid column is then filled in.
 
 URLs
 ----
-Once the model is saved, we can get a url for the image (which is served by the Dragonfly {Dragonfly::App App} itself), and for its processed/encoded versions:
+Once the model is saved, we can get a url for the image (which is served by the Dragonfly {Dragonfly::App App} itself), and for its processed versions:
 
     @album.cover_image.url                           # => '/media/BAhbBlsHOgZmIhgy...'
     @album.cover_image.thumb('300x200#nw').url       # => '/media/BAhbB1sYusgZhgyM...'
     @album.cover_image.process(:greyscale).jpg.url   # => '/media/BnA6CnRodW1iIg8z...'
 
-Because the processing/encoding methods (including shortcuts like `thumb` and `jpg`) are lazy, no processing or encoding is actually done.
+Because the processing methods (including shortcuts like `thumb` and `jpg`) are lazy, no processing is actually done.
 
 Validations
 -----------

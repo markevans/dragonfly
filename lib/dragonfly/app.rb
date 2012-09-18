@@ -32,8 +32,8 @@ module Dragonfly
 
     def initialize(name)
       @name = name
-      @analyser, @processors, @encoder, @generator = Analyser.new, ProcessorList.new, Encoder.new, Generator.new
-      [@analyser, @encoder, @generator].each do |obj|
+      @analyser, @processors, @generator = Analyser.new, ProcessorList.new, Generator.new
+      [@analyser, @generator].each do |obj|
         obj.use_same_log_as(self)
       end
       @server = Server.new(self)
@@ -69,7 +69,7 @@ module Dragonfly
       end
       
       # TODO: change this!
-      [:analyser, :processors, :encoder, :generator].each do |method|
+      [:analyser, :processors, :generator].each do |method|
         define_method method do
           obj.send(method)
         end
@@ -95,7 +95,6 @@ module Dragonfly
 
     attr_reader :analyser
     attr_reader :processors
-    attr_reader :encoder
     attr_reader :generator
     attr_reader :server
 

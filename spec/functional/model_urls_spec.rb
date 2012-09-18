@@ -13,12 +13,10 @@ describe "model urls" do
   
   before(:each) do
     @app = test_app.configure do
+      use :imagemagick
       url_format '/media/:job/:basename.:format'
       analyser.add :some_analyser_method do |t|
         53
-      end
-      processors.add :upcase do |t|
-        t.data.upcase
       end
     end
     @item_class = new_model_class('Item',
@@ -118,7 +116,7 @@ describe "model urls" do
     @item.preview_image = new_tempfile
     @item.save!
     item = @item_class.find(@item.id)
-    item.preview_image.process(:upcase).url.should =~ %r{^/media/\w+/hello\.txt$}
+    item.preview_image.thumb('30x30').url.should =~ %r{^/media/\w+/hello\.txt$}
   end
   
 end

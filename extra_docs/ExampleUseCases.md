@@ -109,7 +109,7 @@ See {file:ImageMagick#Generator} for more details.
 Creating a Dragonfly plugin
 ---------------------------
 You can create custom {file:DataStorage#Custom\_datastore data stores}, {file:Processing#Custom\_Processors processors},
-{file:Encoding#Custom\_Encoders encoders}, {file:Analysers#Custom\_Analysers analysers} and {file:Generators#Custom\_Generators generators}, and
+{file:Analysers#Custom\_Analysers analysers} and {file:Generators#Custom\_Generators generators}, and
 then tie them all together with a {file:Configuration#Custom\_Saved\_Configuration saved configuration}.
 
 See [Dragonfly-RMagick](http://github.com/markevans/dragonfly-rmagick) for an example.

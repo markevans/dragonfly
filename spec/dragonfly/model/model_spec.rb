@@ -344,9 +344,6 @@ describe "models" do
           @app.processors.add :double do |temp_object|
             temp_object.data * 2
           end
-          @app.encoder.add do |temp_object, format|
-            temp_object.data.downcase + format.to_s
-          end
           @item.preview_image = "HELLO"
         end
         it "should modify as if being assigned again" do
@@ -357,14 +354,10 @@ describe "models" do
           @item.preview_image.process!(:double)
           @item.preview_image_size.should == 10
         end
-        it "should work for encode" do
-          @item.preview_image.encode!(:egg)
-          @item.preview_image.data.should == 'helloegg'
-        end
         it "should work repeatedly" do
-          @item.preview_image.process!(:double).encode!(:egg)
-          @item.preview_image.data.should == 'hellohelloegg'
-          @item.preview_image_size.should == 13
+          @item.preview_image.process!(:double).process!(:double)
+          @item.preview_image.data.should == 'HELLOHELLOHELLOHELLO'
+          @item.preview_image_size.should == 20
         end
       end
     end

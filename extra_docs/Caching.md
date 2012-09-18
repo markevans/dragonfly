@@ -1,7 +1,7 @@
 Caching
 =======
 
-Processing and encoding can be an expensive operation. The first time we visit the url,
+Processing can be an expensive operation. The first time we visit the url,
 the image is processed, and there might be a short delay and getting the response.
 
 However, dragonfly apps send `Cache-Control` and `ETag` headers in the response, so we can easily put a caching

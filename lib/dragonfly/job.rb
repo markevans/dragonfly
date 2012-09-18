@@ -12,7 +12,6 @@ module Dragonfly
     class JobAlreadyApplied < StandardError; end
     class NoContent < StandardError; end
     class NothingToProcess < StandardError; end
-    class NothingToEncode < StandardError; end
     class InvalidArray < StandardError; end
     class NoSHAGiven < StandardError; end
     class IncorrectSHA < StandardError; end
@@ -105,23 +104,6 @@ module Dragonfly
       end
     end
 
-    class Encode < Step
-      def init
-        job.url_attrs[:format] = format
-      end
-      def format
-        args.first
-      end
-      def arguments
-        args[1..-1]
-      end
-      def apply
-        raise NothingToEncode, "Can't encode because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        content, meta = job.app.encoder.encode(job.temp_object, format, *arguments)
-        job.update(content, (meta || {}).merge(:format => format))
-      end
-    end
-
     class Generate < Step
       def apply
         content, meta = job.app.generator.generate(*args)
@@ -180,7 +162,6 @@ module Dragonfly
     STEPS = [
       Fetch,
       Process,
-      Encode,
       Generate,
       FetchFile,
       FetchUrl
@@ -396,10 +377,6 @@ module Dragonfly
 
     def process_steps
       steps.select{|s| s.is_a?(Process) }
-    end
-
-    def encode_step
-      last_step_of_type(Encode)
     end
 
     def step_types
