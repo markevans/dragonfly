@@ -10,6 +10,20 @@ module Dragonfly
     # Look at the source code for #call to see exactly how it configures the app.
     class Plugin
 
+      class Convert
+        include ProcessingMethods
+        def initialize(command_line)
+          @command_line = command_line
+        end
+        
+        def call(temp_object, args='', format=nil)
+          convert(temp_object, args, format)
+        end
+
+        def update_url(attrs, args='', format=nil)
+          attrs[:format] = format if format
+        end
+      end
 
       def call(app)
         app.analyser.register(ImageMagick::Analyser, command_line)
@@ -27,9 +41,9 @@ module Dragonfly
           :resize_and_crop,
           :rotate,
           :strip,
-          :thumb,
-          :convert
+          :thumb
         ])
+        app.processors.add :convert, Convert.new(command_line)
 
         app.configure do
           job :thumb do |geometry, format|
