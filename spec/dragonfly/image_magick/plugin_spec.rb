@@ -10,8 +10,7 @@ describe "a configured imagemagick app" do
       app.configure do
         use :imagemagick
       end
-      processor = app.processors[:resize]
-      processor.command_line.convert_command.should == 'convert'
+      app.plugins[:imagemagick].processor.command_line.convert_command.should == 'convert'
     end
     
     it "should allow configuring" do
@@ -20,8 +19,7 @@ describe "a configured imagemagick app" do
           convert_command '/usr/eggs'
         end
       end
-      processor = app.processors[:resize]
-      processor.command_line.convert_command.should == '/usr/eggs'
+      app.plugins[:imagemagick].processor.command_line.convert_command.should == '/usr/eggs'
     end
     
   end
