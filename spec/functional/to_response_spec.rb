@@ -4,7 +4,7 @@ describe "getting rack response directly" do
   
   before(:each) do
     @app = test_app.configure do |c|
-      c.generator.add :test do
+      c.generators.add :test do
         "bunheads"
       end
     end

@@ -60,6 +60,7 @@ module Dragonfly
       def uid
         args.first
       end
+
       def apply
         content, meta = job.app.datastore.retrieve(uid)
         job.update(content, meta)
@@ -67,7 +68,6 @@ module Dragonfly
     end
 
     class Process < Step
-
       # Exceptions
       class NoProcessorError < RuntimeError; end
       class ProcessingError < RuntimeError
@@ -79,19 +79,23 @@ module Dragonfly
       end
 
       def init
-        if processor && processor.respond_to?(:update_url)
+        if processor.respond_to?(:update_url)
           processor.update_url(job.url_attrs, *arguments)
         end
       end
+
       def name
         args.first
       end
+
       def processor
         job.app.processors[name]
       end
+
       def arguments
         args[1..-1]
       end
+
       def apply
         raise NothingToProcess, "Can't process because temp object has not been initialized. Need to fetch first?" unless job.temp_object
         raise NoProcessorError, "No such processor #{name.inspect}" unless processor
@@ -105,8 +109,26 @@ module Dragonfly
     end
 
     class Generate < Step
+      def init
+        if generator.respond_to?(:update_url)
+          generator.update_url(job.url_attrs, *arguments)
+        end
+      end
+
+      def name
+        args.first
+      end
+
+      def generator
+        job.app.generators[name]
+      end
+
+      def arguments
+        args[1..-1]
+      end
+
       def apply
-        content, meta = job.app.generator.generate(*args)
+        content, meta = generator.call(*arguments)
         job.update(content, meta)
       end
     end
@@ -115,19 +137,21 @@ module Dragonfly
       def init
         job.url_attrs[:name] = filename
       end
+
       def path
         @path ||= File.expand_path(args.first)
       end
+
       def filename
         @filename ||= File.basename(path)
       end
+
       def apply
         job.update(Pathname.new(path), :name => filename)
       end
     end
 
     class FetchUrl < Step
-
       class ErrorResponse < RuntimeError
         def initialize(status, body)
           @status, @body = status, body
@@ -138,15 +162,19 @@ module Dragonfly
       def init
         job.url_attrs[:name] = filename
       end
+
       def url
         @url ||= (args.first[%r<^\w+://>] ? args.first : "http://#{args.first}")
       end
+
       def path
         @path ||= URI.parse(url).path
       end
+
       def filename
         @filename ||= File.basename(path) if path[/[^\/]$/]
       end
+
       def apply
         begin
           open(url) do |f|

@@ -11,8 +11,13 @@ module Dragonfly
 
       def call(app)
         app.analyser.register(ImageMagick::Analyser, command_line)
-        app.generator.register(ImageMagick::Generator, command_line)
 
+        # Generators
+        app.generators.add :plain, ImageMagick::Generator::Plain.new(command_line)
+        app.generators.add :plasma, ImageMagick::Generator::Plasma.new(command_line)
+        app.generators.add :text, ImageMagick::Generator::Text.new(command_line)
+
+        # Processors
         app.processors.delegate_to(processor, [
           :resize,
           :auto_orient,

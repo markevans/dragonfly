@@ -6,7 +6,7 @@ require 'spec_helper'
 describe "Dragonfly::JobEndpoint Rack::Lint tests" do
   before(:each) do
     @app = test_app
-    @app.generator.add(:test_data){ "Test Data" }
+    @app.generators.add(:test_data){ "Test Data" }
     @job = @app.generate(:test_data)
     @endpoint = Rack::Lint.new(Dragonfly::JobEndpoint.new(@job))
   end
@@ -198,7 +198,7 @@ describe Dragonfly::JobEndpoint do
 
   describe "setting the job in the env for communicating with other rack middlewares" do
     before(:each) do
-      @app.generator.add(:test_data){ "TEST DATA" }
+      @app.generators.add(:test_data){ "TEST DATA" }
       @job = @app.generate(:test_data)
       @endpoint = Dragonfly::JobEndpoint.new(@job)
       @middleware = Class.new do

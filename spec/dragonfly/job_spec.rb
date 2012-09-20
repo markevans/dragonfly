@@ -108,17 +108,18 @@ describe Dragonfly::Job do
     describe "generate" do
       before(:each) do
         @job.generate!(:plasma, 20, 30)
+        @generator = @app.generators.add(:plasma)
       end
 
       it { @job.steps.should match_steps([Dragonfly::Job::Generate]) }
 
       it "should use the generator when applied" do
-        @app.generator.should_receive(:generate).with(:plasma, 20, 30).and_return('hi')
+        @generator.should_receive(:call).with(20, 30).and_return('hi')
         @job.data.should == 'hi'
       end
 
       it "should save extra data if the generator returns it" do
-        @app.generator.should_receive(:generate).with(:plasma, 20, 30).and_return(['hi', {:name => 'plasma.png'}])
+        @generator.should_receive(:call).with(20, 30).and_return(['hi', {:name => 'plasma.png'}])
         @job.data.should == 'hi'
         @job.meta.should == {:name => 'plasma.png'}
       end
@@ -828,7 +829,7 @@ describe Dragonfly::Job do
   describe "meta" do
     before(:each) do
       @app = test_app
-      @app.generator.add(:gollum){|t| "OK"}
+      @app.generators.add(:gollum){|t| "OK"}
       @job = @app.new_job("Goo")
     end
     it "should default meta to an empty hash" do
@@ -910,7 +911,7 @@ describe Dragonfly::Job do
       job.format.should == :pdf
     end
     it "should apply the job" do
-      @app.generator.add(:test){ ["skid marks", {:name => 'terry.burton'}] }
+      @app.generators.add(:test){ ["skid marks", {:name => 'terry.burton'}] }
       job = @app.generate(:test)
       job.format.should == :burton
       job.should be_applied
@@ -941,7 +942,7 @@ describe Dragonfly::Job do
   describe "store" do
     before(:each) do
       @app = test_app
-      @app.generator.add(:test){ ["Toes", {:name => 'doogie.txt'}] }
+      @app.generators.add(:test){ ["Toes", {:name => 'doogie.txt'}] }
       @job = @app.generate(:test)
     end
     it "should store its data along with the meta and mime_type" do
@@ -965,7 +966,7 @@ describe Dragonfly::Job do
       @string = "terry"
       @string.stub!(:original_filename).and_return("gum.tree")
       @app = test_app
-      @app.generator.add(:test){ @string }
+      @app.generators.add(:test){ @string }
     end
     it "should set it as the name" do
       @app.create(@string).name.should == 'gum.tree'
@@ -977,7 +978,7 @@ describe Dragonfly::Job do
       @app.generate(:test).apply.name.should == 'gum.tree'
     end
     it "should favour an e.g. generator returned name" do
-      @app.generator.add(:test2){ [@string, {:name => 'gen.ome'}] }
+      @app.generators.add(:test2){ [@string, {:name => 'gen.ome'}] }
       @app.generate(:test2).apply.name.should == 'gen.ome'
     end
     it "should not overwrite a set name" do
@@ -990,7 +991,7 @@ describe Dragonfly::Job do
   describe "close" do
     before(:each) do
       @app = test_app
-      @app.generator.add(:toast){ "toast" }
+      @app.generators.add(:toast){ "toast" }
       @app.processors.add(:upcase){|t| t.data.upcase }
       @job = @app.generate(:toast)
       @path1 = @job.tempfile.path

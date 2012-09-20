@@ -38,7 +38,7 @@ describe Dragonfly::Analysis::FileCommandAnalyser do
         @temp_object.instance_eval{@tempfile}.should be_nil
       end
       it "should work properly (without a broken pipe error) for big files of format jpg" do
-        data = Dragonfly::ImageMagick::Generator.new.plasma(1000, 1000, :jpg).first
+        data = Dragonfly::ImageMagick::Generator::Plasma.new.call(1000, 1000, :jpg).first
         temp_object = Dragonfly::TempObject.new(data)
         @analyser.mime_type(temp_object).should == "image/jpeg"
       end

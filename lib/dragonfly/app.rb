@@ -32,10 +32,7 @@ module Dragonfly
 
     def initialize(name)
       @name = name
-      @analyser, @processors, @generator = Analyser.new, ProcessorList.new, Generator.new
-      [@analyser, @generator].each do |obj|
-        obj.use_same_log_as(self)
-      end
+      @analyser, @processors, @generators = Analyser.new, Register.new, Register.new
       @server = Server.new(self)
       @job_definitions = JobDefinitions.new
       @content_filename = Dragonfly::Response::DEFAULT_FILENAME
@@ -69,7 +66,7 @@ module Dragonfly
       end
       
       # TODO: change this!
-      [:analyser, :processors, :generator].each do |method|
+      [:analyser, :processors, :generators].each do |method|
         define_method method do
           obj.send(method)
         end
@@ -95,7 +92,7 @@ module Dragonfly
 
     attr_reader :analyser
     attr_reader :processors
-    attr_reader :generator
+    attr_reader :generators
     attr_reader :server
 
     def datastore
@@ -171,11 +168,11 @@ module Dragonfly
 
     # Reflection
     def processor_methods
-      processors.processor_names
+      processors.item_names
     end
     
     def generator_methods
-      generator.functions.keys
+      generators.item_names
     end
     
     def analyser_methods

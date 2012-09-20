@@ -300,7 +300,7 @@ describe "models" do
 
     describe "other types of assignment" do
       before(:each) do
-        @app.generator.add :egg do
+        @app.generators.add :egg do
           "Gungedin"
         end
         @app.processors.add :doogie do |temp_object|

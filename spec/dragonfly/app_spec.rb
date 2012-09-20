@@ -154,7 +154,7 @@ describe Dragonfly::App do
     before(:each) do
       @app = test_app.configure do |c|
         c.processors.add(:milk){}
-        c.generator.add(:butter){}
+        c.generators.add(:butter){}
         c.analyser.add(:cheese){}
         c.job(:bacon){}
       end
