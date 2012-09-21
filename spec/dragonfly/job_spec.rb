@@ -108,7 +108,7 @@ describe Dragonfly::Job do
     describe "generate" do
       before(:each) do
         @job.generate!(:plasma, 20, 30)
-        @generator = @app.generators.add(:plasma)
+        @generator = @app.generators.add(:plasma){'hi'}
       end
 
       it { @job.steps.should match_steps([Dragonfly::Job::Generate]) }
