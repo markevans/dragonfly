@@ -1,11 +1,7 @@
 module Dragonfly
   module ImageMagick
 
-    # The ImageMagick Plugin does the following:
-    # - registers an imagemagick analyser
-    # - registers an imagemagick processor
-    # - registers an imagemagick generator
-    # - adds thumb shortcuts like '280x140!', etc.
+    # The ImageMagick Plugin registers an app with generators, analysers and processors.
     # Look at the source code for #call to see exactly how it configures the app.
     class Plugin
 
@@ -18,47 +14,46 @@ module Dragonfly
         app.generators.add :text, ImageMagick::Generator::Text.new(command_line)
 
         # Processors
-        app.processors.delegate_to(processor, [
-          :resize,
-          :auto_orient,
-          :crop,
-          :flip,
-          :flop,
-          :greyscale,
-          :grayscale,
-          :resize_and_crop,
-          :rotate,
-          :strip,
-          :thumb
-        ])
-        app.processors.add :convert, Processor::Convert.new(command_line)
-        app.processors.add :encode, Processor::Encode.new(command_line)
+        app.processors.add :convert, Processors::Convert.new(command_line)
+        app.processors.add :thumb, Processors::Thumb.new(command_line)
 
-        app.configure do
-          job :thumb do |geometry, format|
-            process :thumb, geometry
-            encode format if format
-          end
-          job :gif do
-            encode :gif
-          end
-          job :jpg do
-            encode :jpg
-          end
-          job :png do
-            encode :png
-          end
-          job :convert do |args, format|
-            process :convert, args, format
-          end
-          job :encode do |format, args|
-            process :encode, format, args
-          end
+        app.job :convert do |format, args|
+          process :convert, format, args
         end
-      end
+        app.job :encode do |format, args|
+          process :convert, args, format
+        end
+        app.job :gif do
+          process :encode, :gif
+        end
+        app.job :jpg do
+          process :encode, :jpg
+        end
+        app.job :png do
+          process :encode, :png
+        end
+        app.job :auto_orient do
+          process :convert, '-auto-orient'
+        end
+        app.job :flip do
+          process :convert, '-flip'
+        end
+        app.job :flop do
+          process :convert, '-flop'
+        end
 
-      def processor
-        @processor ||= Processor.new(command_line)
+        greyscale = proc do
+          process :convert, '-colorspace Gray'
+        end
+        app.job :greyscale, &greyscale
+        app.job :grayscale, &greyscale
+
+        app.job :rotate do |amount, opts={}|
+          process :convert, "-rotate #{amount}#{opts[:qualifier]}"
+        end
+        app.job :strip do
+          process :convert, '-strip'
+        end
       end
 
       def command_line

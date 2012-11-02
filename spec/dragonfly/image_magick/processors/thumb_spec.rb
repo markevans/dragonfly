@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Dragonfly::ImageMagick::Processor do
+describe Dragonfly::ImageMagick::Processors::Thumb do
   
   before(:each) do
     @image = Dragonfly::TempObject.new(SAMPLES_DIR.join('beach.png')) # 280x355
-    @processor = Dragonfly::ImageMagick::Processor.new
+    @processor = Dragonfly::ImageMagick::Processors::Thumb.new
   end
 
   describe "resize" do
@@ -131,13 +131,6 @@ describe Dragonfly::ImageMagick::Processor do
 
   end
 
-  describe "greyscale" do
-    it "should not raise an error" do
-      # Bit tricky to test
-      @processor.greyscale(@image)
-    end
-  end
-
   describe "resize_and_crop" do
 
     it "should do nothing if no args given" do
@@ -179,137 +172,29 @@ describe Dragonfly::ImageMagick::Processor do
 
   end
 
-  describe "rotate" do
-
-    it "should rotate by 90 degrees" do
-      image = @processor.rotate(@image, 90)
-      image.should have_width(355)
-      image.should have_height(280)
-    end
-
-    it "should not rotate given a larger height and the '>' qualifier" do
-      image = @processor.rotate(@image, 90, :qualifier => '>')
-      image.should have_width(280)
-      image.should have_height(355)
-    end
-
-    it "should rotate given a larger height and the '<' qualifier" do
-      image = @processor.rotate(@image, 90, :qualifier => '<')
-      image.should have_width(355)
-      image.should have_height(280)
-    end
-
-  end
-
-  describe "strip" do
-    it "should strip exif data" do
-      jpg = Dragonfly::TempObject.new(Pathname.new(File.dirname(__FILE__) + '/../../../samples/taj.jpg'))
-      image = @processor.strip(jpg)
-      image.should have_width(300)
-      image.should have_height(300)
-      image.size.should < jpg.size
-    end
-  end
-
-  describe "thumb" do
+  describe "call" do
     it "should call resize if the correct string given" do
       @processor.should_receive(:resize).with(@image, '30x40').and_return(image = mock)
-      @processor.thumb(@image, '30x40').should == image
+      @processor.call(@image, '30x40').should == image
     end
     it "should call resize_and_crop if the correct string given" do
       @processor.should_receive(:resize_and_crop).with(@image, :width => '30', :height => '40', :gravity => 'se').and_return(image = mock)
-      @processor.thumb(@image, '30x40#se').should == image
+      @processor.call(@image, '30x40#se').should == image
     end
     it "should call crop if x and y given" do
       @processor.should_receive(:crop).with(@image, :width => '30', :height => '40', :x => '+10', :y => '+20', :gravity => nil).and_return(image = mock)
-      @processor.thumb(@image, '30x40+10+20').should == image
+      @processor.call(@image, '30x40+10+20').should == image
     end
     it "should call crop if just gravity given" do
       @processor.should_receive(:crop).with(@image, :width => '30', :height => '40', :x => nil, :y => nil, :gravity => 'sw').and_return(image = mock)
-      @processor.thumb(@image, '30x40sw').should == image
+      @processor.call(@image, '30x40sw').should == image
     end
     it "should call crop if x, y and gravity given" do
       @processor.should_receive(:crop).with(@image, :width => '30', :height => '40', :x => '-10', :y => '-20', :gravity => 'se').and_return(image = mock)
-      @processor.thumb(@image, '30x40-10-20se').should == image
+      @processor.call(@image, '30x40-10-20se').should == image
     end
     it "should raise an argument error if an unrecognized string is given" do
-      lambda{ @processor.thumb(@image, '30x40#ne!') }.should raise_error(ArgumentError)
-    end
-  end
-
-  describe "auto-orient" do
-    it "should rotate an image according to exif information" do
-      @image = Dragonfly::TempObject.new(SAMPLES_DIR.join('beach.jpg'))
-      @image.should have_width(355)
-      @image.should have_height(280)
-      image = @processor.auto_orient(@image)
-      image.should have_width(280)
-      image.should have_height(355)
-    end
-  end
-
-  describe "flip" do
-    it "should flip the image, leaving the same dimensions" do
-      image = @processor.flip(@image)
-      image.should have_width(280)
-      image.should have_height(355)
-    end
-  end
-
-  describe "flop" do
-    it "should flop the image, leaving the same dimensions" do
-      image = @processor.flop(@image)
-      image.should have_width(280)
-      image.should have_height(355)
-    end
-  end
-  
-  describe "convert" do
-    it "should allow for general convert commands" do
-      image = @processor.convert(@image, '-scale 56x71')
-      image.should have_width(56)
-      image.should have_height(71)
-    end
-    
-    it "should allow for general convert commands with added format" do
-      image, extra = @processor.convert(@image, '-scale 56x71', :gif)
-      image.should have_width(56)
-      image.should have_height(71)
-      image.should have_format('gif')
-      extra[:format].should == :gif
-    end
-
-    it "should work for commands with parenthesis" do
-      image = @processor.convert(@image, "\\( +clone -sparse-color Barycentric '0,0 black 0,%[fx:h-1] white' -function polynomial 2,-2,0.5 \\) -compose Blur -set option:compose:args 15 -composite")
-      image.should have_width(280)
-    end
-
-    it "should work for files with spaces in the name" do
-      image = Dragonfly::TempObject.new(SAMPLES_DIR.join('white pixel.png'))
-      @processor.convert(image, "-resize 2x2!").should have_width(2)
-    end
-  end
-
-  describe "encode" do
-    it "should encode the image to the correct format" do
-      image, meta = @processor.encode(@image, :gif)
-      image.should have_format('gif')
-    end
-
-    it "should do nothing if the image is already in the correct format" do
-      image, meta = @processor.encode(@image, :png)
-      image.should == @image
-    end
-
-    it "should allow for extra args" do
-      image, meta = @processor.encode(@image, :jpg, '-quality 1')
-      image.should have_format('jpeg')
-      image.should have_size('1.45KB')
-    end
-
-    it "should still work even if the image is already in the correct format and args are given" do
-      image, meta = @processor.encode(@image, :png, '-quality 1')
-      image.should_not == @image
+      lambda{ @processor.call(@image, '30x40#ne!') }.should raise_error(ArgumentError)
     end
   end
 
