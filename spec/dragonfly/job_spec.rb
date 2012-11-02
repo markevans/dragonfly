@@ -74,7 +74,7 @@ describe Dragonfly::Job do
       end
       
       it "shouldn't set any url_attrs" do
-        @job.url_attrs.should == {}
+        @job.url_attrs.should be_empty
       end
     end
 
@@ -125,7 +125,7 @@ describe Dragonfly::Job do
       end
       
       it "shouldn't set any url_attrs" do
-        @job.url_attrs.should == {}
+        @job.url_attrs.should be_empty
       end
     end
 
@@ -141,7 +141,7 @@ describe Dragonfly::Job do
       end
       
       it "should set the url_attrs" do
-        @job.url_attrs.should == {:name => 'egg.png'}
+        @job.url_attrs.name.should == 'egg.png'
       end
       
       it "should set the name" do
@@ -182,7 +182,7 @@ describe Dragonfly::Job do
       
       it "should set the name url_attr if there is one" do
         @job.fetch_url!('some.place.com/dung.beetle')
-        @job.url_attrs.should == {:name =>'dung.beetle'}
+        @job.url_attrs.name.should == 'dung.beetle'
       end
 
       it "should raise an error if not found" do
@@ -219,7 +219,7 @@ describe Dragonfly::Job do
 
         it "should not set the name url_attr if there isn't one, e.g. #{url}" do
           @job.fetch_url!(url)
-          @job.url_attrs[:name].should be_nil
+          @job.url_attrs.name.should be_nil
         end
       end
     end
@@ -276,13 +276,14 @@ describe Dragonfly::Job do
       end
 
       it "should call update_url immediately with the url_attrs" do
-        @job.url_attrs = {:some => 'thing'}
+        @job.url_attrs.some = 'thing'
         processor = @app.processors[:resize]
         def processor.update_url(url_attrs, size)
-          url_attrs[:sizio] = size
+          url_attrs.sizio = size
         end
         @job.process!(:resize, '20x30')
-        @job.url_attrs.should == {:some => 'thing', :sizio => '20x30'}
+        @job.url_attrs.some.should == 'thing'
+        @job.url_attrs.sizio.should == '20x30'
       end
 
       it "should allow returning an array with extra attributes from the processor" do
@@ -547,6 +548,23 @@ describe Dragonfly::Job do
     end
   end
 
+  describe "update_url_attrs" do
+    before(:each) do
+      @app = test_app
+      @job = Dragonfly::Job.new(:app)
+      @job.url_attrs.hello = 'goose'
+    end
+    it "updates the url_attrs" do
+      @job.update_url_attrs(:jimmy => 'cricket')
+      @job.url_attrs.hello.should == 'goose'
+      @job.url_attrs.jimmy.should == 'cricket'
+    end
+    it "overrides keys" do
+      @job.update_url_attrs(:hello => 'cricket')
+      @job.url_attrs.hello.should == 'cricket'
+    end
+  end
+
   describe "url" do
     before(:each) do
       @app = test_app
@@ -569,15 +587,15 @@ describe Dragonfly::Job do
         @job.url(:zoo => 'jokes', :on => 'me').should == "/media/#{@job.serialize}/jokes?on=me"
       end
       it "should use the url_attr if it exists" do
-        @job.url_attrs[:zoo] = 'hair'
+        @job.url_attrs.zoo = 'hair'
         @job.url.should == "/media/#{@job.serialize}/hair"
       end
       it "should not add any url_attrs that aren't needed" do
-        @job.url_attrs[:gump] = 'flub'
+        @job.url_attrs.gump = 'flub'
         @job.url.should == "/media/#{@job.serialize}"
       end
       it "should override if a param is passed in" do
-        @job.url_attrs[:zoo] = 'hair'
+        @job.url_attrs.zoo = 'hair'
         @job.url(:zoo => 'dare').should == "/media/#{@job.serialize}/dare"
       end
       
@@ -586,11 +604,10 @@ describe Dragonfly::Job do
           @app.server.url_format = '/:job/:basename'
         end
         it "should use the name" do
-          @job.url_attrs = {:name => 'hello.egg'}
+          @job.url_attrs.name = 'hello.egg'
           @job.url.should == "/#{@job.serialize}/hello"
         end
         it "should not set if neither exist" do
-          @job.url_attrs = {}
           @job.url.should == "/#{@job.serialize}"
         end
       end
@@ -598,35 +615,16 @@ describe Dragonfly::Job do
       describe "ext" do
         before(:each) do
           @app.server.url_format = '/:job.:ext'
-          @job.url_attrs = {:name => 'hello.egg', :ext => 'hi'}
         end
         it "should use the name" do
-          @job.url_attrs = {:name => 'hello.egg'}
+          @job.url_attrs.name = 'hello.egg'
           @job.url.should == "/#{@job.serialize}.egg"
         end
         it "should not set if neither exist" do
-          @job.url_attrs = {}
           @job.url.should == "/#{@job.serialize}"
         end
       end
 
-      describe "format" do
-        before(:each) do
-          @app.server.url_format = '/:job.:format'
-        end
-        it "should use the url_attr if it exists" do
-          @job.url_attrs = {:ext => 'hi', :format => :txt}
-          @job.url.should == "/#{@job.serialize}.txt"
-        end
-        it "should use the ext if format url_attr doesn't exist" do
-          @job.url_attrs = {:name => 'hup.hi'}
-          @job.url.should == "/#{@job.serialize}.hi"
-        end
-        it "should not set if neither exist" do
-          @job.url_attrs = {}
-          @job.url.should == "/#{@job.serialize}"
-        end
-      end
     end
   end
 
@@ -649,9 +647,9 @@ describe Dragonfly::Job do
       new_job.meta.should == {:right => 'said fred'}
     end
     it "should maintain the url_attrs" do
-      @job.url_attrs = {:dang => 'that dawg'}
+      @job.url_attrs.dang = 'that dawg'
       new_job = @job.to_fetched_job('some_uid')
-      new_job.url_attrs.should == {:dang => 'that dawg'}
+      new_job.url_attrs.dang.should == 'that dawg'
     end
   end
 

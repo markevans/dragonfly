@@ -135,7 +135,7 @@ module Dragonfly
 
     class FetchFile < Step
       def init
-        job.url_attrs[:name] = filename
+        job.url_attrs.name = filename
       end
 
       def path
@@ -160,7 +160,7 @@ module Dragonfly
       end
       
       def init
-        job.url_attrs[:name] = filename
+        job.url_attrs.name = filename
       end
 
       def url
@@ -248,13 +248,13 @@ module Dragonfly
       
     end
 
-    def initialize(app, content=nil, meta={}, url_attrs={})
+    def initialize(app, content=nil, meta={}, url_attrs=nil)
       @app = app
       @steps = []
       @next_step_index = 0
       @previous_temp_objects = []
       update(content, meta) if content
-      self.url_attrs = url_attrs
+      @url_attrs = url_attrs ? url_attrs.dup : UrlAttributes.new
     end
 
     # Used by 'dup' and 'clone'
@@ -353,11 +353,13 @@ module Dragonfly
       app.url_for(self, attributes_for_url.merge(opts)) unless steps.empty?
     end
 
-    def url_attrs=(hash)
-      @url_attrs = UrlAttributes[hash]
-    end
-    
     attr_reader :url_attrs
+
+    def update_url_attrs(hash)
+      hash.each do |key, value|
+        url_attrs.send("#{key}=", value)
+      end
+    end
 
     def b64_data
       "data:#{mime_type};base64,#{Base64.encode64(data)}"
@@ -443,20 +445,21 @@ module Dragonfly
       apply
       temp_object || raise(NoContent, "Job has not been initialized with content. Need to fetch first?")
     end
-    
+
     def attributes_for_url
-      attrs = url_attrs.slice(*server.params_in_url)
-      attrs[:format] = (attrs[:format] || (url_attrs.ext)).to_s if server.params_in_url.include?('format')
-      attrs.delete_if{|k, v| v.blank? }
-      attrs
+      server.params_in_url.inject({}) do |attrs, key|
+        value = url_attrs.send(key)
+        attrs[key] = value unless value.blank?
+        attrs
+      end
     end
-    
+
     attr_reader :previous_temp_objects
 
     def last_step_of_type(type)
       steps.select{|s| s.is_a?(type) }.last
     end
-    
+
     def opts_for_store
       {:mime_type => mime_type}
     end

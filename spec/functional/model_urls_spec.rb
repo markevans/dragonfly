@@ -91,7 +91,7 @@ describe "model urls" do
     @item.preview_image = "HELLO"
     @item.save!
     item = @item_class.find(@item.id)
-    item.preview_image.encode(:bum).url.should =~ %r{^/media/\w+\.bum$}
+    item.preview_image.encode(:bum).url.should =~ %r{^/media/\w+/file\.bum$}
   end
   
   it "should work as normal with dos protection" do
