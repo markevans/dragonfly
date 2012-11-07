@@ -13,7 +13,7 @@ module Dragonfly
       @app = app
       use_same_log_as(app)
       @dragonfly_url = '/dragonfly'
-      @url_format = '/:job/:basename.:format'
+      @url_format = '/:job/:name'
     end
 
     attr_accessor :allow_fetch_file, :allow_fetch_url, :protect_from_dos_attacks, :url_host, :dragonfly_url, :url_format
