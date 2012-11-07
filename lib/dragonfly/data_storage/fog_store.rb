@@ -93,7 +93,7 @@ module Dragonfly
       def storage
         @storage ||= begin
           case provider
-            # when :aws
+          when :aws
             #   storage = Fog::Storage.new(
             #     :provider => 'AWS',
             #     :aws_aws_access_key_id => aws_access_key_id,
