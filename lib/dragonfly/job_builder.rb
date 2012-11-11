@@ -13,21 +13,16 @@ module Dragonfly
       evaluate_block(job, true, *args)
     end
 
-    Job.step_names.each do |step|
-      
-      # fetch, process, etc.
-      define_method step do |*args|
-        if @perform_with_bangs
-          @job.send("#{step}!", *args)
-        else
-          @job = @job.send(step, *args)
-        end
+    def process(*args)
+      if @perform_with_bangs
+        @job.process!(*args)
+      else
+        @job = @job.process(*args)
       end
-      
     end
-    
+
     private
-    
+
     def evaluate_block(job, perform_with_bangs, *args)
       @job = job
       @perform_with_bangs = perform_with_bangs

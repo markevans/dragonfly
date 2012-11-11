@@ -11,7 +11,7 @@ describe Dragonfly::JobBuilder do
       end
     end
 
-    it "should correctly call job steps" do
+    it "should correctly call process job steps" do
       job = mock
       job.should_receive(:process).with(:thumb, '30x30#').and_return(job2=mock)
       job2.should_receive(:process).with(:encode, :jpg).and_return(job3=mock)
