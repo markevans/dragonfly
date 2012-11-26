@@ -50,10 +50,9 @@ module Dragonfly
           x = '+' + x unless x[/^[+-]/]
           y       = "#{opts[:y] || 0}"
           y = '+' + y unless y[/^[+-]/]
-          repage  = opts[:repage] == false ? '' : '+repage'
           resize  = opts[:resize]
 
-          command_line.convert(temp_object, "#{"-resize #{resize} " if resize}#{"-gravity #{gravity} " if gravity}-crop #{width}x#{height}#{x}#{y} #{repage}")
+          command_line.convert(temp_object, "#{"-resize #{resize} " if resize}#{"-gravity #{gravity} " if gravity}-crop #{width}x#{height}#{x}#{y} +repage")
         end
 
         def resize_and_crop(temp_object, opts={})
