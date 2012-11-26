@@ -50,24 +50,16 @@ module Dragonfly
           x = '+' + x unless x[/^[+-]/]
           y       = "#{opts[:y] || 0}"
           y = '+' + y unless y[/^[+-]/]
-          resize  = opts[:resize]
 
-          command_line.convert(temp_object, "#{"-resize #{resize} " if resize}#{"-gravity #{gravity} " if gravity}-crop #{width}x#{height}#{x}#{y} +repage")
+          command_line.convert(temp_object, "#{"-gravity #{gravity} " if gravity}-crop #{width}x#{height}#{x}#{y} +repage")
         end
 
         def resize_and_crop(temp_object, opts={})
-          if !opts[:width] && !opts[:height]
-            return temp_object
-          elsif !opts[:width] || !opts[:height]
-            attrs          = command_line.identify(temp_object)
-            opts[:width]   ||= attrs[:width]
-            opts[:height]  ||= attrs[:height]
-          end
+          width = opts[:width] || command_line.identify(temp_object)[:width]
+          height = opts[:height] || command_line.identify(temp_object)[:height]
+          gravity = GRAVITIES[opts[:gravity] || 'c']
 
-          opts[:gravity] ||= 'c'
-
-          opts[:resize]  = "#{opts[:width]}x#{opts[:height]}^^"
-          crop(temp_object, opts)
+          command_line.convert(temp_object, "-resize #{width}x#{height}^^ -gravity #{gravity} -crop #{width}x#{height}+0+0 +repage")
         end
 
       end
