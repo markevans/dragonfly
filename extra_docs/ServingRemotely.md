@@ -78,13 +78,15 @@ It has two string columns; 'job' and 'uid'.
 
       # Before serving from the local Dragonfly server...
       c.server.before_serve do |job, env|
+        job_hash = job.serialize
+        
         # ...store the thumbnail in the datastore...
         uid = job.store
         
         # ...keep track of its uid so next time we can serve directly from the datastore
         Thumb.create!(
           :uid => uid,
-          :job => job.serialize     # 'BAhbBls...' - holds all the job info
+          :job => job_hash          # 'BAhbBls...' - holds all the job info
         )                           # e.g. fetch 'some_uid' then resize to '40x40'
       end
   
