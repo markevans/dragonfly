@@ -1,29 +1,29 @@
 require 'spec_helper'
 
-describe Dragonfly::JobDefinitions do
+describe Dragonfly::ProcessorShortcuts do
 
-  describe "defining jobs" do
+  describe "defining processors" do
 
     before(:each) do
-      @job_definitions = Dragonfly::JobDefinitions.new
+      @processor_shortcuts = Dragonfly::ProcessorShortcuts.new
       @object = Object.new
-      @object.extend @job_definitions
+      @object.extend @processor_shortcuts
     end
 
     describe "a simple job" do
 
       before(:each) do
-        @job_definitions.add :thumb do |size|
+        @processor_shortcuts.add :thumb do |size|
           process :thumb, size
         end
       end
 
-      it "correctly call job steps" do
+      it "correctly call process steps" do
         @object.should_receive(:process).with(:thumb, '30x30#').and_return(job=mock)
         @object.thumb('30x30#').should == job
       end
 
-      it "should correctly call job steps when bang is given" do
+      it "should correctly call process steps when bang is given" do
         @object.should_receive(:process!).with(:thumb, '30x30#').and_return(@object)
         @object.thumb!('30x30#').should == @object
       end
@@ -33,23 +33,23 @@ describe Dragonfly::JobDefinitions do
   end
   
   
-  describe "#definition_names" do
+  describe "#names" do
     
     before(:each) do
-      @job_definitions = Dragonfly::JobDefinitions.new
+      @processor_shortcuts = Dragonfly::ProcessorShortcuts.new
       @object = Object.new
-      @object.extend @job_definitions
+      @object.extend @processor_shortcuts
     end
     
     it "should provide an empty list when no jobs have been defined" do
-      @job_definitions.definition_names.should == []
+      @processor_shortcuts.names.should == []
     end
     
     it "should contain the job name when one is defined" do
-      @job_definitions.add :foo do |size|
+      @processor_shortcuts.add :foo do |size|
         process :thumb, size
       end
-      @job_definitions.definition_names.should eq [:foo]
+      @processor_shortcuts.names.should eq [:foo]
     end
     
   end
