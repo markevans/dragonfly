@@ -32,7 +32,7 @@ module Dragonfly
 
     def initialize(name)
       @name = name
-      @analyser, @processors, @generators = Analyser.new, Register.new, Register.new
+      @analyser, @processors, @generators = Analyser.new, {}, {}
       @server = Server.new(self)
       @job_definitions = JobDefinitions.new
       @content_filename = Dragonfly::Response::DEFAULT_FILENAME
