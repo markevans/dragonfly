@@ -1,5 +1,5 @@
 module Dragonfly
-  class JobBuilder
+  class ProcessorBuilder
 
     def initialize(&block)
       @block = block
