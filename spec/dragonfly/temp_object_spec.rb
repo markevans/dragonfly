@@ -314,7 +314,7 @@ describe Dragonfly::TempObject do
     end
     
     before(:each) do
-      @temp_object1 = Dragonfly::TempObject.new(new_tempfile('hello'))
+      @temp_object1 = Dragonfly::TempObject.new(new_tempfile('hello'), 'some' => 'meta')
       @temp_object2 = Dragonfly::TempObject.new(@temp_object1)
     end
     
@@ -328,6 +328,9 @@ describe Dragonfly::TempObject do
     end
     it "should have the same file path" do
       @temp_object1.path.should == @temp_object2.path
+    end
+    it "should maintain the meta" do
+      @temp_object2.meta.should == {'some' => 'meta'}
     end
   end
 
