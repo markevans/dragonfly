@@ -32,9 +32,8 @@ module Dragonfly
 
     def initialize(name)
       @name = name
-      @analyser, @processors, @generators = Analyser.new, {}, {}
+      @analyser, @processor, @generators = Analyser.new, Processor.new, {}
       @server = Server.new(self)
-      @job_definitions = JobDefinitions.new
       @content_filename = Dragonfly::Response::DEFAULT_FILENAME
     end
 
@@ -49,10 +48,10 @@ module Dragonfly
     setup_config do
       # Exceptions (these come under App namespace)
       class UnregisteredDataStore < RuntimeError; end
-      
+
       writer :cache_duration, :secret, :log, :content_disposition, :content_filename
-      meth :register_mime_type, :response_headers, :define_url, :job
-      
+      meth :register_mime_type, :response_headers, :define_url, :add_processor, :build_processor, :add_generator
+
       def datastore(store, *args)
         obj.datastore = if store.is_a?(Symbol)
           get_klass = _datastores[store]
@@ -64,22 +63,15 @@ module Dragonfly
           store
         end
       end
-      
-      # TODO: change this!
-      [:analyser, :processors, :generators].each do |method|
-        define_method method do
-          obj.send(method)
-        end
-      end
-      
+
       writer :allow_fetch_file, :allow_fetch_url, :dragonfly_url, :protect_from_dos_attacks, :url_format, :url_host,
              :for => :server
       meth :before_serve, :for => :server
-      
+
       def analyser_cache_size(value)
         obj.analyser.cache_size = value
       end
-      
+
       def register_datastore(symbol, &block) # For use publicly, not in a config block
         _datastores[symbol] = block
       end
@@ -91,7 +83,7 @@ module Dragonfly
     end
 
     attr_reader :analyser
-    attr_reader :processors
+    attr_reader :processor
     attr_reader :generators
     attr_reader :server
 
@@ -100,7 +92,17 @@ module Dragonfly
     end
     attr_writer :datastore
 
-    attr_accessor :job_definitions
+    def add_generator(name, generator=nil, &block)
+      generators[name] = (generator || block)
+    end
+
+    def add_processor(*args, &block)
+      processor.add(*args, &block)
+    end
+
+    def build_processor(*args, &block)
+      processor.build(*args, &block)
+    end
 
     def new_job(content=nil, meta={})
       job_class.new(self, content, meta)
@@ -111,16 +113,11 @@ module Dragonfly
       block ? RoutedEndpoint.new(self, &block) : JobEndpoint.new(job)
     end
 
-    def job(name, &block)
-      job_definitions.add(name, &block)
-    end
-
     def job_class
       @job_class ||= begin
         app = self
         Class.new(Job).class_eval do
           include app.analyser.analysis_methods
-          include app.job_definitions
           include Job::OverrideInstanceMethods
           self
         end
@@ -168,46 +165,42 @@ module Dragonfly
 
     # Reflection
     def processor_methods
-      processors.item_names
+      processor.names
     end
-    
+
     def generator_methods
       generators.item_names
     end
-    
+
     def analyser_methods
       analyser.analysis_method_names
     end
-    
-    def job_methods
-      job_definitions.definition_names
-    end
-    
+
     def inspect
       "<#{self.class.name} name=#{name.inspect} >"
     end
-    
+
     def fallback_mime_type
       'application/octet-stream'
     end
-    
+
     def cache_duration
       @cache_duration ||= 3600*24*365 # (1 year)
     end
     attr_writer :cache_duration
-    
+
     def secret
       @secret ||= 'secret yo'
     end
     attr_writer :secret
-    
+
     def log
       @log ||= Logger.new('/var/tmp/dragonfly.log')
     end
     attr_writer :log
-    
+
     attr_accessor :content_disposition, :content_filename
-    
+
     private
 
     def file_ext_string(format)

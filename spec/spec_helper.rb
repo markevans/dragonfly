@@ -42,7 +42,6 @@ def mock_app(extra_stubs={})
     :generator => mock('generator', :generate => "SOME_GENERATED_DATA"),
     :log => Logger.new(LOG_FILE),
     :cache_duration => 10000,
-    :job_definitions => Module.new
   }.merge(extra_stubs)
   )
 end

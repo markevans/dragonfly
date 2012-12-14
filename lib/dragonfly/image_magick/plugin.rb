@@ -9,50 +9,15 @@ module Dragonfly
         app.analyser.register(ImageMagick::Analyser, command_line)
 
         # Generators
-        app.generators.add :plain, ImageMagick::Generator::Plain.new(command_line)
-        app.generators.add :plasma, ImageMagick::Generator::Plasma.new(command_line)
-        app.generators.add :text, ImageMagick::Generator::Text.new(command_line)
+        app.add_generator :plain, ImageMagick::Generator::Plain.new(command_line)
+        app.add_generator :plasma, ImageMagick::Generator::Plasma.new(command_line)
+        app.add_generator :text, ImageMagick::Generator::Text.new(command_line)
 
         # Processors
-        app.processors.add :convert, Processors::Convert.new(command_line)
-        app.processors.add :thumb, Processors::Thumb.new(command_line)
-
-        app.job :convert do |format, args|
-          process :convert, format, args
-        end
-        app.job :encode do |format, args|
+        app.add_processor :convert, Processors::Convert.new(command_line)
+        app.add_processor :thumb, Processors::Thumb.new(command_line)
+        app.build_processor :encode do |format, args=""|
           process :convert, args, format
-        end
-        app.job :gif do
-          process :encode, :gif
-        end
-        app.job :jpg do
-          process :encode, :jpg
-        end
-        app.job :png do
-          process :encode, :png
-        end
-        app.job :auto_orient do
-          process :convert, '-auto-orient'
-        end
-        app.job :flip do
-          process :convert, '-flip'
-        end
-        app.job :flop do
-          process :convert, '-flop'
-        end
-
-        greyscale = proc do
-          process :convert, '-colorspace Gray'
-        end
-        app.job :greyscale, &greyscale
-        app.job :grayscale, &greyscale
-
-        app.job :rotate do |amount, opts={}|
-          process :convert, "-rotate #{amount}#{opts[:qualifier]}"
-        end
-        app.job :strip do
-          process :convert, '-strip'
         end
       end
 

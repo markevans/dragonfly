@@ -32,7 +32,7 @@ describe Dragonfly::App do
       }.should raise_error(NoMethodError)
     end
   end
-  
+
   describe "default_app" do
     it "returns the default app" do
       Dragonfly::App.default_app.should == Dragonfly::App[:default]
@@ -152,13 +152,13 @@ describe Dragonfly::App do
 
   describe "reflection methods" do
     before(:each) do
+      pending
       @app = test_app.configure do |c|
-        c.processors.add(:milk){}
-        c.generators.add(:butter){}
-        c.analyser.add(:cheese){}
-        c.job(:bacon){}
+        c.add_processor(:milk){}
+        c.add_generator(:butter){}
+        c.add_analyser(:cheese){}
       end
-      
+
     end
     it "should return processor methods" do
       @app.processor_methods.should == [:milk]
@@ -169,9 +169,6 @@ describe Dragonfly::App do
     it "should return analyser methods" do
       @app.analyser_methods.should == [:cheese]
     end
-    it "should return job methods" do
-      @app.job_methods.should == [:bacon]
-    end
   end
 
   describe "inspect" do
@@ -179,11 +176,11 @@ describe Dragonfly::App do
       Dragonfly[:hello].inspect.should == "<Dragonfly::App name=:hello >"
     end
   end
-  
+
   describe "configuration" do
-    
+
     let(:app){ test_app }
-    
+
     describe "datastore" do
       it "sets the datastore" do
         store = mock('datastore')

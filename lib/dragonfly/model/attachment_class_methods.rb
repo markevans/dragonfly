@@ -64,7 +64,6 @@ module Dragonfly
         def init(model_class, attribute, app, config_block)
           @model_class, @attribute, @app, @config_block = model_class, attribute, app, config_block
           include app.analyser.analysis_methods
-          include app.job_definitions
           define_method :format do
             job.format
           end

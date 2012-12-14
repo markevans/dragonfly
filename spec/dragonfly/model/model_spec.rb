@@ -535,19 +535,6 @@ describe "models" do
       end
     end
     
-    describe "job shortcuts" do
-      before(:each) do
-        @app.job :bacon do
-          process :breakfast
-        end
-        @item = @item_class.new :preview_image => 'gurg'
-      end
-      it "should add job shortcuts for that app" do
-        job = @item.preview_image.bacon
-        job.steps.first.should be_a(Dragonfly::Job::Process)
-      end
-    end
-
     describe "setting things on the attachment" do
 
       before(:each) do
