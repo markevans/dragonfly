@@ -3,7 +3,7 @@ require 'digest/sha1'
 require 'base64'
 require 'open-uri'
 require 'pathname'
-require 'thread'
+require 'monitor'
 
 module Dragonfly
   class Job
@@ -26,7 +26,7 @@ module Dragonfly
                   :server
 
     class Step
-      @@mutex = Mutex.new
+      @@mutex = Monitor.new
 
       class << self
 
@@ -159,7 +159,7 @@ module Dragonfly
     ]
 
     # Class methods
-    @@mutex = Mutex.new
+    @@mutex = Monitor.new
     class << self
       def from_a(steps_array, app)
         unless steps_array.is_a?(Array) &&
