@@ -3,6 +3,7 @@ require 'digest/sha1'
 require 'base64'
 require 'open-uri'
 require 'pathname'
+require 'monitor'
 
 module Dragonfly
   class Job
@@ -25,19 +26,27 @@ module Dragonfly
                   :server
 
     class Step
+      @@mutex = Monitor.new
 
       class << self
+
         # Dragonfly::Job::Fetch -> 'Fetch'
         def basename
-          @basename ||= name.split('::').last
+          @@mutex.synchronize {
+            @basename ||= name.split('::').last
+          }
         end
         # Dragonfly::Job::Fetch -> :fetch
         def step_name
-          @step_name ||= basename.gsub(/[A-Z]/){ "_#{$&.downcase}" }.sub('_','').to_sym
+          @@mutex.synchronize {
+            @step_name ||= basename.gsub(/[A-Z]/){ "_#{$&.downcase}" }.sub('_','').to_sym
+          }
         end
         # Dragonfly::Job::Fetch -> :f
         def abbreviation
-          @abbreviation ||= basename.scan(/[A-Z]/).join.downcase.to_sym
+          @@mutex.synchronize {
+            @abbreviation ||= basename.scan(/[A-Z]/).join.downcase.to_sym
+          }
         end
       end
 
@@ -150,8 +159,8 @@ module Dragonfly
     ]
 
     # Class methods
+    @@mutex = Monitor.new
     class << self
-
       def from_a(steps_array, app)
         unless steps_array.is_a?(Array) &&
                steps_array.all?{|s| s.is_a?(Array) && step_abbreviations[s.first] }
@@ -170,11 +179,15 @@ module Dragonfly
       end
 
       def step_abbreviations
-        @step_abbreviations ||= STEPS.inject({}){|hash, step_class| hash[step_class.abbreviation] = step_class; hash }
+        @@mutex.synchronize {
+          @step_abbreviations ||= STEPS.inject({}){|hash, step_class| hash[step_class.abbreviation] = step_class; hash }
+        }
       end
 
       def step_names
-        @step_names ||= STEPS.map{|step_class| step_class.step_name }
+        @@mutex.synchronize {
+          @step_names ||= STEPS.map{|step_class| step_class.step_name }
+        }
       end
 
     end

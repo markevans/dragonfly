@@ -8,10 +8,10 @@ group :development, :test, :cucumber do
   gem 'cucumber', '~>0.10.0'
   gem 'cucumber-rails', '~>0.5.2'
   gem 'database_cleaner'
-  gem 'jeweler', '~> 1.5.2'
+  gem 'jeweler', '~> 1.8.4'
   gem 'fog'
   gem 'github-markup'
-  gem 'mongo'
+  gem 'mongo', '~> 1.8.0'
   gem 'couchrest', '~> 1.0'
   gem 'rack-cache'
   gem 'rails', '~>3.1.0', :require => nil

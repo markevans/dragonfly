@@ -274,7 +274,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
       s.add_dependency(%q<fog>, [">= 0"])
       s.add_dependency(%q<github-markup>, [">= 0"])
-      s.add_dependency(%q<mongo>, [">= 0"])
+      s.add_dependency(%q<mongo>, [">= 1.8.0"])
       s.add_dependency(%q<couchrest>, ["~> 1.0"])
       s.add_dependency(%q<rack-cache>, [">= 0"])
       s.add_dependency(%q<rails>, ["~> 3.1.0"])

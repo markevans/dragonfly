@@ -19,7 +19,7 @@ module Dragonfly
       private
 
       def apps
-        @apps ||= {}
+        Thread.current[:dragonfly_apps] ||= {}
       end
 
     end
