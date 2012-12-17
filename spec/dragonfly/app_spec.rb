@@ -23,6 +23,14 @@ describe Dragonfly::App do
       Dragonfly[:images].should == Dragonfly::App.instance(:images)
     end
 
+    it "should create a new app instance per thread" do
+      thread_1_instance = nil
+      thread_2_instance = nil
+      Thread.new { thread_1_instance = Dragonfly::App.instance(:images) }.join
+      Thread.new { thread_2_instance = Dragonfly::App.instance(:images) }.join
+      thread_1_instance.object_id.should_not == thread_2_instance.object_id
+    end
+
   end
 
   describe ".new" do
