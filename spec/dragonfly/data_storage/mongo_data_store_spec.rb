@@ -7,7 +7,7 @@ describe Dragonfly::DataStorage::MongoDataStore do
 
   before(:each) do
     begin
-      Mongo::Connection.new
+      Mongo::MongoClient.new
     rescue Mongo::ConnectionFailure => e
       pending "You need to start mongo on localhost:27017 to test the MongoDataStore"
     end
@@ -20,7 +20,7 @@ describe Dragonfly::DataStorage::MongoDataStore do
     it "should initiate a replica set connection if hosts is set" do
       @data_store.hosts = ['1.2.3.4:27017', '1.2.3.4:27017']
       @data_store.connection_opts = {:name => 'testingset'}
-      Mongo::ReplSetConnection.should_receive(:new).with(['1.2.3.4:27017', '1.2.3.4:27017'], :name => 'testingset')
+      Mongo::MongoReplicaSetClient.should_receive(:new).with(['1.2.3.4:27017', '1.2.3.4:27017'], :name => 'testingset')
       @data_store.connection
     end
   end
@@ -46,7 +46,7 @@ describe Dragonfly::DataStorage::MongoDataStore do
 
   describe "sharing already configured stuff" do
     before(:each) do
-      @connection = Mongo::Connection.new
+      @connection = Mongo::MongoClient.new
       @temp_object = Dragonfly::TempObject.new('asdf')
     end
 

@@ -1,4 +1,4 @@
-require 'mongo'
+  require 'mongo'
 
 module Dragonfly
   module DataStorage
@@ -65,9 +65,9 @@ module Dragonfly
 
       def connection
         @connection ||= if hosts
-          Mongo::ReplSetConnection.new(hosts, connection_opts)
+          Mongo::MongoReplicaSetClient.new(hosts, connection_opts)
         else
-          Mongo::Connection.new(host, port, connection_opts)
+          Mongo::MongoClient.new(host, port, connection_opts)
         end
       end
 
