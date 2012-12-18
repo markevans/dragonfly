@@ -34,6 +34,10 @@ module Dragonfly
     def get(name)
       generators[name] || raise(NoSuchGenerator, "generator #{name.inspect} not registered")
     end
-    
+
+    def names
+      processors.keys
+    end
+
   end
 end

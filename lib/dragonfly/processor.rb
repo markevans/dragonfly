@@ -1,6 +1,7 @@
 module Dragonfly
   class Processor
 
+    # Exceptions
     class NoSuchProcessor < RuntimeError; end
     class ProcessingError < RuntimeError
       def initialize(message, original_error)
@@ -72,7 +73,7 @@ module Dragonfly
       begin
         content, meta = processor.call(temp_object, *args)
       rescue RuntimeError => e
-        raise ProcessingError.new("Couldn't process #{temp_object.inspect} with arguments #{args.inspect} - got: #{e}", e)
+        raise ProcessingError.new("Couldn't process #{name.inspect} with #{temp_object.inspect} and arguments #{args.inspect} - got: #{e}", e)
       end
       TempObject.new(content, original_meta.merge(meta || {}))
     end
@@ -84,6 +85,10 @@ module Dragonfly
 
     def get(name)
       processors[name] || raise(NoSuchProcessor, "processor #{name.inspect} not registered")
+    end
+
+    def names
+      processors.keys
     end
 
   end
