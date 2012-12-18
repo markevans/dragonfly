@@ -32,7 +32,7 @@ module Dragonfly
 
     def initialize(name)
       @name = name
-      @analyser, @processor, @generators = Analyser.new, Processor.new, {}
+      @analyser, @processor, @generator = Analyser.new, Processor.new, Generator.new
       @server = Server.new(self)
       @content_filename = Dragonfly::Response::DEFAULT_FILENAME
     end
@@ -84,7 +84,7 @@ module Dragonfly
 
     attr_reader :analyser
     attr_reader :processor
-    attr_reader :generators
+    attr_reader :generator
     attr_reader :server
 
     def datastore
@@ -92,8 +92,8 @@ module Dragonfly
     end
     attr_writer :datastore
 
-    def add_generator(name, generator=nil, &block)
-      generators[name] = (generator || block)
+    def add_generator(*args, &block)
+      generator.add(*args, &block)
     end
 
     def add_processor(*args, &block)
@@ -169,7 +169,7 @@ module Dragonfly
     end
 
     def generator_methods
-      generators.item_names
+      generator.names
     end
 
     def analyser_methods
