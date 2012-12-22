@@ -66,7 +66,7 @@ module Dragonfly
 
       def destroy!
         destroy_previous!
-        destroy_content(uid) if uid
+        destroy_content(uid) if uid.present?
       end
 
       def save!
@@ -187,7 +187,7 @@ module Dragonfly
       end
 
       def destroy_previous!
-        if previous_uid
+        if previous_uid.present?
           destroy_content(previous_uid)
           self.previous_uid = nil
         end

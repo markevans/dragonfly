@@ -124,6 +124,18 @@ describe Item do
       end
     end
 
+    describe "after a record with an empty uid is saved" do
+      before(:each) do
+        @item.preview_image_uid = ''
+        @item.save!
+      end
+
+      it "should not try to destroy anything on destroy" do
+        @app.datastore.should_not_receive(:destroy)
+        @item.destroy
+      end
+    end
+
     describe "when the uid is set manually" do
       before(:each) do
         @item.preview_image_uid = 'some_known_uid'
