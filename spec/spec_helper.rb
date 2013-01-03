@@ -46,9 +46,8 @@ def mock_app(extra_stubs={})
   )
 end
 
-def test_app(name=nil)
+def test_app(name=:default)
   time = Time.now
-  name ||= :default
   app = Dragonfly::App[name]
   app.datastore = Dragonfly::DataStorage::MemoryDataStore.new
   app.log = Logger.new(LOG_FILE)
