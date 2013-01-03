@@ -9,6 +9,18 @@ end
 
 describe Dragonfly::Job do
 
+  def add_dummy_generator(app, name)
+    app.add_generator(name) do |*args|
+      "DUMMY GENERATED CONTENT"
+    end
+  end
+
+  def add_dummy_processor(app, name)
+    app.add_processor(name) do |temp_object, *args|
+      "DUMMY PROCESSED CONTENT"
+    end
+  end
+
   describe "Step types" do
 
     {
@@ -80,7 +92,7 @@ describe Dragonfly::Job do
 
     describe "process" do
       it "should raise an error when applying" do
-        @app.processors.add :resize
+        add_dummy_processor(@app, :resize)
         @job.process!(:resize, '20x30')
         lambda{
           @job.apply
@@ -107,8 +119,8 @@ describe Dragonfly::Job do
 
     describe "generate" do
       before(:each) do
+        @generator = @app.add_generator(:plasma){'hi'}
         @job.generate!(:plasma, 20, 30)
-        @generator = @app.generators.add(:plasma){'hi'}
       end
 
       it { @job.steps.should match_steps([Dragonfly::Job::Generate]) }
@@ -242,7 +254,7 @@ describe Dragonfly::Job do
 
     describe "process" do
       before(:each) do
-        @app.processors.add :resize do |temp_object, size| size[0] end
+        @app.add_processor :resize do |temp_object, size| size[0] end
       end
 
       it "should be a Process job" do
@@ -253,22 +265,6 @@ describe Dragonfly::Job do
       it "should use the processor when applied" do
         @job.process(:resize, '20x30').data.should == '2'
       end
-      
-      it "should raise an error if the processor doesn't exist on apply" do
-        expect{
-          @job.process(:goofy, '20x30').apply
-        }.to raise_error(Dragonfly::Job::Process::NoProcessorError)
-      end
-
-      it "should raise an error if there's a processing error" do
-        class TestError < RuntimeError; end
-        @app.processors.add :goofy do |temp_object, size| raise TestError end
-        expect{
-          @job.process(:goofy, '20x30').apply
-        }.to raise_error(Dragonfly::Job::Process::ProcessingError) do |error|
-          error.original_error.should be_a(NoMethodError)
-        end
-      end
 
       it "should maintain the meta attributes" do
         @job.process!(:resize, '20x30')
@@ -276,23 +272,10 @@ describe Dragonfly::Job do
       end
 
       it "should call update_url immediately with the url_attrs" do
-        @job.url_attrs.some = 'thing'
-        processor = @app.processors[:resize]
-        def processor.update_url(url_attrs, size)
-          url_attrs.sizio = size
-        end
-        @job.process!(:resize, '20x30')
-        @job.url_attrs.some.should == 'thing'
-        @job.url_attrs.sizio.should == '20x30'
+        @app.processor.should_receive(:update_url).with(:resize, @job.url_attrs, '20x30')
+        @job.process(:resize, '20x30')
       end
 
-      it "should allow returning an array with extra attributes from the processor" do
-        @app.processors.add :resize do |temp_object, size|
-          ['hi', {:eggs => 'asdf'}]
-        end
-        @job.process!(:resize, '20x30')
-        @job.meta.should == {:name => "hello.txt", :a => :b, :eggs => "asdf"}
-      end
     end
 
   end
@@ -318,7 +301,7 @@ describe Dragonfly::Job do
       }.should raise_error(NoMethodError)
     end
     it "should work correctly with chained jobs, applying before analysing" do
-      @app.processors.add(:double){|temp_object| temp_object.data * 2 }
+      @app.add_processor(:double){|temp_object| temp_object.data * 2 }
       @job.process(:double).num_letters('L').should == 4
     end
   end
@@ -326,8 +309,8 @@ describe Dragonfly::Job do
   describe "defining extra steps after applying" do
     before(:each) do
       @app = test_app
-      @app.processors.add(:resize){|temp_object, *args| temp_object}
-      @app.processors.add(:encode){|temp_object, *args| temp_object}
+      @app.add_processor(:resize){|temp_object, *args| temp_object}
+      @app.add_processor(:encode){|temp_object, *args| temp_object}
       @job = Dragonfly::Job.new(@app)
       @job.temp_object = Dragonfly::TempObject.new("hello")
       @job.process! :resize
@@ -364,7 +347,7 @@ describe Dragonfly::Job do
     before(:each) do
       @app = test_app
       @job = Dragonfly::Job.new(@app)
-      @app.processors.add(:resize){ "SOME_PROCESSED_DATA"}
+      @app.add_processor(:resize){ "SOME_PROCESSED_DATA"}
       @app.store("SOME_DATA", :uid => 'some_uid')
     end
 
@@ -447,6 +430,8 @@ describe Dragonfly::Job do
   describe "to_a" do
     before(:each) do
       @app = test_app
+      add_dummy_generator(@app, :plasma)
+      add_dummy_processor(@app, :resize)
     end
     it "should represent all the steps in array form" do
       job = Dragonfly::Job.new(@app)
@@ -465,6 +450,8 @@ describe Dragonfly::Job do
 
     before(:each) do
       @app = test_app
+      add_dummy_generator(@app, :plasma)
+      add_dummy_processor(@app, :resize)
     end
 
     describe "a well-defined array" do
@@ -517,6 +504,7 @@ describe Dragonfly::Job do
   describe "serialization" do
     before(:each) do
       @app = test_app
+      add_dummy_processor(@app, :resize_and_crop)
       @job = Dragonfly::Job.new(@app).fetch('uid').process(:resize_and_crop, :width => 270, :height => 92, :gravity => 'n')
     end
     it "should serialize itself" do
@@ -578,6 +566,7 @@ describe Dragonfly::Job do
     describe "using url_attrs in the url" do
       before(:each) do
         @app.server.url_format = '/media/:job/:zoo'
+        add_dummy_generator(@app, :fish)
         @job.generate!(:fish)
       end
       it "should act as per usual if no params given" do
@@ -655,7 +644,9 @@ describe Dragonfly::Job do
 
   describe "to_unique_s" do
     it "should use the arrays of args to create the string" do
-      job = test_app.fetch('uid').process(:gug, 4, :some => 'arg', :and => 'more')
+      app = test_app
+      add_dummy_processor(app, :gug)
+      job = app.fetch('uid').process(:gug, 4, :some => 'arg', :and => 'more')
       job.to_unique_s.should == 'fuidpgug4andmoresomearg'
     end
   end
@@ -738,6 +729,8 @@ describe Dragonfly::Job do
   describe "querying stuff without applying steps" do
     before(:each) do
       @app = test_app
+      add_dummy_generator(@app, :ponies)
+      add_dummy_processor(@app, :jam)
     end
     
     describe "fetch_step" do
@@ -745,7 +738,7 @@ describe Dragonfly::Job do
         @app.generate(:ponies).process(:jam).fetch_step.should be_nil
       end
       it "should return the fetch step otherwise" do
-        step = @app.fetch('hello').process(:cheese).fetch_step
+        step = @app.fetch('hello').process(:jam).fetch_step
         step.should be_a(Dragonfly::Job::Fetch)
         step.uid.should == 'hello'
       end
@@ -774,7 +767,7 @@ describe Dragonfly::Job do
         @app.generate(:ponies).process(:jam).fetch_file_step.should be_nil
       end
       it "should return the fetch_file step otherwise" do
-        step = @app.fetch_file('/my/file.png').process(:cheese).fetch_file_step
+        step = @app.fetch_file('/my/file.png').process(:jam).fetch_file_step
         step.should be_a(Dragonfly::Job::FetchFile)
         if Dragonfly.running_on_windows?
           step.path.should =~ %r(:/my/file\.png$)
@@ -789,7 +782,7 @@ describe Dragonfly::Job do
         @app.generate(:ponies).fetch_url_step.should be_nil
       end
       it "should return the fetch_url step otherwise" do
-        step = @app.fetch_url('egg.heads').process(:cheese).fetch_url_step
+        step = @app.fetch_url('egg.heads').process(:jam).fetch_url_step
         step.should be_a(Dragonfly::Job::FetchUrl)
         step.url.should == 'http://egg.heads'
       end
@@ -800,7 +793,7 @@ describe Dragonfly::Job do
         @app.fetch('many/ponies').process(:jam).generate_step.should be_nil
       end
       it "should return the generate step otherwise" do
-        step = @app.generate(:ponies).process(:cheese).generate_step
+        step = @app.generate(:ponies).process(:jam).generate_step
         step.should be_a(Dragonfly::Job::Generate)
         step.args.should == [:ponies]
       end
@@ -808,6 +801,7 @@ describe Dragonfly::Job do
     
     describe "process_steps" do
       it "should return the processing steps" do
+        add_dummy_processor(@app, :eggs)
         job = @app.fetch('many/ponies').process(:jam).process(:eggs)
         job.process_steps.should match_steps([
           Dragonfly::Job::Process,
@@ -818,7 +812,7 @@ describe Dragonfly::Job do
 
     describe "step_types" do
       it "should return the step types" do
-        job = @app.fetch('eggs').process(:beat, 'strongly')
+        job = @app.fetch('eggs').process(:jam)
         job.step_types.should == [:fetch, :process]
       end
     end
@@ -827,7 +821,6 @@ describe Dragonfly::Job do
   describe "meta" do
     before(:each) do
       @app = test_app
-      @app.generators.add(:gollum){|t| "OK"}
       @job = @app.new_job("Goo")
     end
     it "should default meta to an empty hash" do
@@ -848,10 +841,6 @@ describe Dragonfly::Job do
     it "should allow setting on initialize" do
       job = @app.new_job('asdf', :b => :c)
       job.meta.should == {:b => :c}
-    end
-    it "should keep them when chained" do
-      @job.meta[:darn] = 'it'
-      @job.generate(:gollum).meta.should == {:darn => 'it'}
     end
   end
 
@@ -909,7 +898,7 @@ describe Dragonfly::Job do
       job.format.should == :pdf
     end
     it "should apply the job" do
-      @app.generators.add(:test){ ["skid marks", {:name => 'terry.burton'}] }
+      @app.add_generator(:test){ ["skid marks", {:name => 'terry.burton'}] }
       job = @app.generate(:test)
       job.format.should == :burton
       job.should be_applied
@@ -940,7 +929,7 @@ describe Dragonfly::Job do
   describe "store" do
     before(:each) do
       @app = test_app
-      @app.generators.add(:test){ ["Toes", {:name => 'doogie.txt'}] }
+      @app.add_generator(:test){ ["Toes", {:name => 'doogie.txt'}] }
       @job = @app.generate(:test)
     end
     it "should store its data along with the meta and mime_type" do
@@ -964,7 +953,7 @@ describe Dragonfly::Job do
       @string = "terry"
       @string.stub!(:original_filename).and_return("gum.tree")
       @app = test_app
-      @app.generators.add(:test){ @string }
+      @app.add_generator(:test){ @string }
     end
     it "should set it as the name" do
       @app.create(@string).name.should == 'gum.tree'
@@ -976,7 +965,7 @@ describe Dragonfly::Job do
       @app.generate(:test).apply.name.should == 'gum.tree'
     end
     it "should favour an e.g. generator returned name" do
-      @app.generators.add(:test2){ [@string, {:name => 'gen.ome'}] }
+      @app.add_generator(:test2){ [@string, {:name => 'gen.ome'}] }
       @app.generate(:test2).apply.name.should == 'gen.ome'
     end
     it "should not overwrite a set name" do
@@ -989,8 +978,8 @@ describe Dragonfly::Job do
   describe "close" do
     before(:each) do
       @app = test_app
-      @app.generators.add(:toast){ "toast" }
-      @app.processors.add(:upcase){|t| t.data.upcase }
+      @app.add_generator(:toast){ "toast" }
+      @app.add_processor(:upcase){|t| t.data.upcase }
       @job = @app.generate(:toast)
       @path1 = @job.tempfile.path
       @job.process!(:upcase)
