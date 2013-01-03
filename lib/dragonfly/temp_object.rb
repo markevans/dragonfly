@@ -39,7 +39,7 @@ module Dragonfly
 
     # Instance Methods
 
-    def initialize(obj, meta={})
+    def initialize(obj, meta=nil)
       if obj.is_a? TempObject
         @data = obj.get_data
         @tempfile = obj.get_tempfile
@@ -70,7 +70,8 @@ module Dragonfly
       end
 
       # Meta
-      @meta = meta
+      @meta = {}
+      @meta.merge! meta if meta
       @meta.merge! obj.meta if obj.respond_to?(:meta)
       @meta[:name] ||= @original_filename if @original_filename
     end

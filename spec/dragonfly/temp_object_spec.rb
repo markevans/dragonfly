@@ -386,6 +386,9 @@ describe Dragonfly::TempObject do
     it "should allow setting on initialize" do
       Dragonfly::TempObject.new('sdf', :dub => 'wub').meta.should == {:dub => 'wub'}
     end
+    it "should still be a hash if set to nil" do
+      Dragonfly::TempObject.new('sdf', nil).meta.should == {}
+    end
     it "should allow setting" do
       temp_object = Dragonfly::TempObject.new('boo')
       temp_object.meta = {:far => 'gone'}
