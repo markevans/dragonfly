@@ -31,6 +31,11 @@ module Dragonfly
       TempObject.new(content, meta)
     end
 
+    def update_url(name, url_attrs, *args)
+      generator = get(name)
+      generator.update_url(url_attrs, *args) if generator.respond_to?(:update_url)
+    end
+
     def get(name)
       generators[name] || raise(NoSuchGenerator, "generator #{name.inspect} not registered")
     end
