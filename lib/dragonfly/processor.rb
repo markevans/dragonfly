@@ -59,7 +59,7 @@ module Dragonfly
     attr_reader :processors
 
     def add(name, processor=nil, &block)
-      processors[name] = processor || block
+      processors[name] = processor || block || raise(ArgumentError, "you must give a processor either as an argument or a block")
     end
 
     def build(name, &block)

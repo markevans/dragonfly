@@ -14,6 +14,11 @@ describe Dragonfly::Generator do
       generator.add(:my_generator, &my_generator)
       generator.generators[:my_generator].should == my_generator
     end
+    it "raises an error if neither are given" do
+      expect {
+        generator.add(:something)
+      }.to raise_error(ArgumentError)
+    end
   end
 
   describe "#generate" do

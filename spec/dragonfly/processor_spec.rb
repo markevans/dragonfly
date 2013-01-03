@@ -14,6 +14,11 @@ describe Dragonfly::Processor do
       processor.add(:upcase, &upcase_processor)
       processor.processors[:upcase].should == upcase_processor
     end
+    it "raises an error if neither are given" do
+      expect {
+        processor.add(:upcase)
+      }.to raise_error(ArgumentError)
+    end
   end
 
   describe "#process" do

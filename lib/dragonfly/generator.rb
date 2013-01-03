@@ -18,7 +18,7 @@ module Dragonfly
     attr_reader :generators
 
     def add(name, generator=nil, &block)
-      generators[name] = generator || block
+      generators[name] = generator || block || raise(ArgumentError, "you must give a generator either as an argument or a block")
     end
 
     def generate(name, *args)
