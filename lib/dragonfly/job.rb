@@ -68,20 +68,8 @@ module Dragonfly
     end
 
     class Process < Step
-      # Exceptions
-      class NoProcessorError < RuntimeError; end
-      class ProcessingError < RuntimeError
-        def initialize(message, original_error)
-          super(message)
-          @original_error = original_error
-        end
-        attr_reader :original_error
-      end
-
       def init
-        if processor.respond_to?(:update_url)
-          processor.update_url(job.url_attrs, *arguments)
-        end
+        processor.update_url(name, job.url_attrs, *arguments)
       end
 
       def name
@@ -89,7 +77,7 @@ module Dragonfly
       end
 
       def processor
-        job.app.processors[name]
+        job.app.processor
       end
 
       def arguments
@@ -97,22 +85,13 @@ module Dragonfly
       end
 
       def apply
-        raise NothingToProcess, "Can't process because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        raise NoProcessorError, "No such processor #{name.inspect}" unless processor
-        begin
-          content, meta = processor.call(job.temp_object, *arguments)
-        rescue RuntimeError => e
-          raise ProcessingError.new("Couldn't process #{job.temp_object.inspect} with arguments #{arguments.inspect} - got: #{e}", e)
-        end
-        job.update(content, meta)
+        job.temp_object = processor.process(name, job.temp_object, *arguments)
       end
     end
 
     class Generate < Step
       def init
-        if generator.respond_to?(:update_url)
-          generator.update_url(job.url_attrs, *arguments)
-        end
+        generator.update_url(name, job.url_attrs, *arguments)
       end
 
       def name
@@ -120,7 +99,7 @@ module Dragonfly
       end
 
       def generator
-        job.app.generators[name]
+        job.app.generator
       end
 
       def arguments
@@ -128,8 +107,7 @@ module Dragonfly
       end
 
       def apply
-        content, meta = generator.call(*arguments)
-        job.update(content, meta)
+        job.temp_object = generator.generate(name, *arguments)
       end
     end
 
@@ -158,7 +136,7 @@ module Dragonfly
         end
         attr_reader :status, :body
       end
-      
+
       def init
         job.url_attrs.name = filename
       end
@@ -233,19 +211,19 @@ module Dragonfly
     # If we had traits/classboxes in ruby maybe this wouldn't be needed
     # Think of it as like a normal instance method but with a css-like !important after it
     module OverrideInstanceMethods
-      
+
       def format
         meta[:format] || (ext.to_sym if ext) || analyse(:format)
       end
-      
+
       def mime_type
         app.mime_type_for(format) || analyse(:mime_type) || app.fallback_mime_type
       end
-      
+
       def to_s
         super.sub(/#<Class:\w+>/, 'Extended Dragonfly::Job')
       end
-      
+
     end
 
     def initialize(app, content=nil, meta={}, url_attrs=nil)
@@ -423,17 +401,17 @@ module Dragonfly
     def inspect
       "<Dragonfly::Job app=#{app.name.inspect}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >"
     end
-    
+
     def update(content, new_meta)
       old_meta = temp_object ? temp_object.meta : {}
       self.temp_object = TempObject.new(content, old_meta.merge(new_meta || {}))
     end
-    
+
     def close
       previous_temp_objects.each{|temp_object| temp_object.close }
       temp_object.close if temp_object
     end
-    
+
     protected
 
     attr_writer :steps
