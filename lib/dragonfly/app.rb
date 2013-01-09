@@ -35,6 +35,7 @@ module Dragonfly
       @analyser, @processor, @generator = Analyser.new, Processor.new, Generator.new
       @server = Server.new(self)
       @content_filename = Dragonfly::Response::DEFAULT_FILENAME
+      @job_methods = Module.new
     end
 
     attr_reader :name
@@ -113,15 +114,22 @@ module Dragonfly
       block ? RoutedEndpoint.new(self, &block) : JobEndpoint.new(job)
     end
 
+    attr_reader :job_methods
+
     def job_class
       @job_class ||= begin
         app = self
         Class.new(Job).class_eval do
+          include app.job_methods
           include app.analyser.analysis_methods
           include Job::OverrideInstanceMethods
           self
         end
       end
+    end
+
+    def define(method, &block)
+      job_methods.send(:define_method, method, &block)
     end
 
     def store(object, opts={})

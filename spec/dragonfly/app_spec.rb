@@ -222,4 +222,18 @@ describe Dragonfly::App do
 
   end
 
+  describe "define" do
+    let(:app){ test_app }
+
+    before :each do
+      app.define :exclaim do |n|
+        data.upcase + "!"*n
+      end
+    end
+
+    it "allows defining methods on jobs" do
+      app.create("snowman").exclaim(3).should == 'SNOWMAN!!!'
+    end
+  end
+
 end
