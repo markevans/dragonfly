@@ -16,8 +16,8 @@ module Dragonfly
         # Processors
         app.add_processor :convert, Processors::Convert.new(command_line)
         app.add_processor :thumb, Processors::Thumb.new(command_line)
-        app.build_processor :encode do |format, args=""|
-          process :convert, args, format
+        app.define :encode do |format, args=""|
+          convert(args, format)
         end
       end
 

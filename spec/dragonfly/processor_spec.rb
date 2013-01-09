@@ -98,33 +98,4 @@ describe Dragonfly::Processor do
     end
   end
 
-  describe "building processors" do
-    let (:processor) { Dragonfly::Processor.new }
-
-    before :each do
-      processor.add(:thumb) {|temp_object, size| temp_object.data + "-thumb-#{size}" }
-      processor.add(:encode) {|temp_object, format| temp_object.data + "-encoded-#{format}" }
-      processor.build :thumcode do |size, format|
-        process :thumb, size
-        process :encode, format
-      end
-    end
-
-    it "builds a new processor" do
-      result = processor.process(:thumcode, 'smarties', 4, 'jpg')
-      result.data.should == "smarties-thumb-4-encoded-jpg"
-    end
-
-    it "deals correctly with update_url" do
-      thumb_processor = processor.processors[:thumcode]
-      def thumb_processor.update_url(url_attrs, size, format)
-        url_attrs[:size] = size
-      end
-      url_attrs = {}
-      processor.update_url(:thumcode, url_attrs, 4, 'jpg')
-      url_attrs.should == {:size => 4}
-    end
-
-  end
-
 end

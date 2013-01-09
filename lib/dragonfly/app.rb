@@ -51,7 +51,7 @@ module Dragonfly
       class UnregisteredDataStore < RuntimeError; end
 
       writer :cache_duration, :secret, :log, :content_disposition, :content_filename
-      meth :register_mime_type, :response_headers, :define_url, :add_processor, :build_processor, :add_generator
+      meth :register_mime_type, :response_headers, :define_url, :add_processor, :add_generator
 
       def datastore(store, *args)
         obj.datastore = if store.is_a?(Symbol)
@@ -99,10 +99,6 @@ module Dragonfly
 
     def add_processor(*args, &block)
       processor.add(*args, &block)
-    end
-
-    def build_processor(*args, &block)
-      processor.build(*args, &block)
     end
 
     def new_job(content=nil, meta={})
