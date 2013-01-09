@@ -2,25 +2,6 @@ require 'spec_helper'
 
 describe Dragonfly::Processor do
 
-  describe "adding processors" do
-    let (:processor) { Dragonfly::Processor.new }
-    let (:upcase_processor) { proc{} }
-
-    it "adds the processor" do
-      processor.add(:upcase, upcase_processor)
-      processor.processors[:upcase].should == upcase_processor
-    end
-    it "adds a processor from a block" do
-      processor.add(:upcase, &upcase_processor)
-      processor.processors[:upcase].should == upcase_processor
-    end
-    it "raises an error if neither are given" do
-      expect {
-        processor.add(:upcase)
-      }.to raise_error(ArgumentError)
-    end
-  end
-
   describe "#process" do
     let (:processor) { Dragonfly::Processor.new }
 
@@ -39,7 +20,7 @@ describe Dragonfly::Processor do
     it "should raise an error if the processor doesn't exist" do
       expect{
         processor.process(:goofy, "baah", 'BA')
-      }.to raise_error(Dragonfly::Processor::NoSuchProcessor)
+      }.to raise_error(Dragonfly::Processor::NotFound)
     end
 
     it "should raise an error if there's a processing error" do

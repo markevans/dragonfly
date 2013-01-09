@@ -1,25 +1,8 @@
 module Dragonfly
-  class Processor
+  class Processor < Register
 
     # Exceptions
-    class NoSuchProcessor < RuntimeError; end
-    class ProcessingError < RuntimeError
-      def initialize(message, original_error)
-        super(message)
-        @original_error = original_error
-      end
-      attr_reader :original_error
-    end
-
-    def initialize
-      @processors = {}
-    end
-
-    attr_reader :processors
-
-    def add(name, processor=nil, &block)
-      processors[name] = processor || block || raise(ArgumentError, "you must give a processor either as an argument or a block")
-    end
+    class ProcessingError < RuntimeErrorWithOriginal; end
 
     def process(name, content, *args)
       temp_object = TempObject.new(content)
@@ -36,14 +19,6 @@ module Dragonfly
     def update_url(name, url_attrs, *args)
       processor = get(name)
       processor.update_url(url_attrs, *args) if processor.respond_to?(:update_url)
-    end
-
-    def get(name)
-      processors[name] || raise(NoSuchProcessor, "processor #{name.inspect} not registered")
-    end
-
-    def names
-      processors.keys
     end
 
   end

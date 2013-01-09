@@ -2,25 +2,6 @@ require 'spec_helper'
 
 describe Dragonfly::Generator do
 
-  describe "adding generators" do
-    let (:generator) { Dragonfly::Generator.new }
-    let (:my_generator) { proc{ "BOO" } }
-
-    it "adds the generator" do
-      generator.add(:my_generator, my_generator)
-      generator.generators[:my_generator].should == my_generator
-    end
-    it "adds a generator from a block" do
-      generator.add(:my_generator, &my_generator)
-      generator.generators[:my_generator].should == my_generator
-    end
-    it "raises an error if neither are given" do
-      expect {
-        generator.add(:something)
-      }.to raise_error(ArgumentError)
-    end
-  end
-
   describe "#generate" do
     let (:generator) { Dragonfly::Generator.new }
 
@@ -39,7 +20,7 @@ describe Dragonfly::Generator do
     it "should raise an error if the generator doesn't exist" do
       expect{
         generator.generate(:goofy)
-      }.to raise_error(Dragonfly::Generator::NoSuchGenerator)
+      }.to raise_error(Dragonfly::Generator::NotFound)
     end
 
     it "should raise an error if there's a generating error" do
