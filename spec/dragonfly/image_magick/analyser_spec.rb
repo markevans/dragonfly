@@ -27,14 +27,6 @@ describe Dragonfly::ImageMagick::Analyser do
     @analyser.landscape?(@image).should be_false
   end
 
-  it "should return the number of colours" do
-    @analyser.number_of_colours(@image).should == 34703
-  end
-
-  it "should return the depth" do
-    @analyser.depth(@image).should == 8
-  end
-
   it "should return the format" do
     @analyser.format(@image).should == :png
   end

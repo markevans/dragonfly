@@ -33,16 +33,6 @@ module Dragonfly
       end
       alias landscape landscape?
 
-      def depth(temp_object)
-        identify(temp_object)[:depth]
-      end
-
-      def number_of_colours(temp_object)
-        details = command_line.raw_identify(temp_object, '-verbose -unique')
-        details[/Colors: (\d+)/, 1].to_i
-      end
-      alias number_of_colors number_of_colours
-
       def format(temp_object)
         identify(temp_object)[:format]
       end

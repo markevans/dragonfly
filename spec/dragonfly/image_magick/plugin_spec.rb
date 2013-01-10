@@ -102,14 +102,6 @@ describe "a configured imagemagick app" do
       end
     end
 
-    describe "greyscale" do
-      it "should not raise an error" do
-        image.number_of_colours.should > 256
-        image.greyscale!
-        image.number_of_colours.should == 256
-      end
-    end
-
     describe "rotate" do
       it "should rotate by 90 degrees" do
         image.rotate!(90)
