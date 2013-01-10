@@ -1,14 +1,15 @@
 module Dragonfly
   class SimpleCache < Hash
-    
+
     def initialize(max_size)
       @max_size = max_size
       @keys = []
     end
-    
+
     attr_reader :max_size
-    
+
     def []=(key, value)
+      return if max_size.zero?
       if !has_key?(key)
         @keys << key
         if size == max_size
@@ -18,6 +19,6 @@ module Dragonfly
       end
       super
     end
-    
+
   end
 end
