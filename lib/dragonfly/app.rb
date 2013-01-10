@@ -45,13 +45,16 @@ module Dragonfly
     def_delegators :new_job, :fetch, :generate, :fetch_file, :fetch_url
     def_delegators :server, :call
 
+    # Configuration
+
     extend Configurable
+
     setup_config do
       # Exceptions (these come under App namespace)
       class UnregisteredDataStore < RuntimeError; end
 
       writer :cache_duration, :secret, :log, :content_disposition, :content_filename
-      meth :register_mime_type, :response_headers, :define_url, :add_processor, :add_generator
+      meth :register_mime_type, :response_headers, :define_url, :add_processor, :add_generator, :add_analyser
 
       def datastore(store, *args)
         obj.datastore = if store.is_a?(Symbol)
@@ -101,6 +104,10 @@ module Dragonfly
       processor.add(*args, &block)
     end
 
+    def add_analyser(*args, &block)
+      analyser.add(*args, &block)
+    end
+
     def new_job(content=nil, meta={})
       job_class.new(self, content, meta)
     end
@@ -117,7 +124,6 @@ module Dragonfly
         app = self
         Class.new(Job).class_eval do
           include app.job_methods
-          include app.analyser.analysis_methods
           include Job::OverrideInstanceMethods
           self
         end
@@ -177,7 +183,7 @@ module Dragonfly
     end
 
     def analyser_methods
-      analyser.analysis_method_names
+      analyser.names
     end
 
     def inspect

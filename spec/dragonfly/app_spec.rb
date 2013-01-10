@@ -152,7 +152,6 @@ describe Dragonfly::App do
 
   describe "reflection methods" do
     before(:each) do
-      pending
       @app = test_app.configure do |c|
         c.add_processor(:milk){}
         c.add_generator(:butter){}
