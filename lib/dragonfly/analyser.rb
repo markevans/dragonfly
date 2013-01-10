@@ -1,19 +1,15 @@
 module Dragonfly
-  class Analyser < FunctionManager
-    
-    def initialize
-      super
-      analyser = self
-      @analysis_methods = Module.new do
+  class Analyser < Register
 
-        define_method :analyser do
-          analyser
-        end
-        
+    def analyse(name, temp_object, *args)
+      if cache_enabled?
+        key = [temp_object.unique_id, name, *args]
+        cache[key] ||= get(name).call(temp_object, *args)
+      else
+        get(name).call(temp_object, *args)
       end
-      @analysis_method_names = []
     end
-    
+
     def cache_enabled?
       cache_size > 0
     end
@@ -21,44 +17,18 @@ module Dragonfly
     def cache_size
       @cache_size ||= 100
     end
+
     attr_writer :cache_size
-    
-    attr_reader :analysis_methods, :analysis_method_names
-    
-    def analyse(temp_object, method, *args)
-      if cache_enabled?
-        key = [temp_object.unique_id, method, *args]
-        cache[key] ||= call_last(method, temp_object, *args)
-      else
-        call_last(method, temp_object, *args)
-      end
-    rescue NotDefined, UnableToHandle => e
-      log.warn(e.message)
-      nil
-    end
-    
-    # Each time a function is registered with the analyser,
-    # add a method to the analysis_methods module.
-    # Expects the object that is extended to define 'analyse(method, *args)'
-    def add(name, *args, &block)
-      analysis_methods.module_eval %(
-        def #{name}(*args)
-          analyse(:#{name}, *args)
-        end
-      )
-      analysis_method_names << name.to_sym
-      super
-    end
-    
+
     def clear_cache!
       @cache = nil
     end
-    
+
     private
-    
+
     def cache
       @cache ||= SimpleCache.new(cache_size)
     end
-    
+
   end
 end
