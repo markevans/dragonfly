@@ -4,14 +4,26 @@ describe Dragonfly::Shell do
 
   let(:shell){ Dragonfly::Shell.new }
 
-  it "should raise an error if the identify command isn't found" do
+  it "returns the result of the command" do
+    shell.run("echo 10").strip.should == '10'
+  end
+
+  it "should raise an error if the command isn't found" do
     suppressing_stderr do
       lambda{
         shell.run "non-existent-command"
       }.should raise_error(Dragonfly::Shell::CommandFailed)
     end
   end
-  
+
+  it "should raise an error if the command fails" do
+    suppressing_stderr do
+      lambda{
+        shell.run "ls -j"
+      }.should raise_error(Dragonfly::Shell::CommandFailed)
+    end
+  end
+
   describe "escaping args" do
     {
       %q(hello) => %q('hello'),

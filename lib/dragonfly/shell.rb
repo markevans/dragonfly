@@ -16,11 +16,7 @@ module Dragonfly
       rescue Errno::ENOENT
         raise_shell_command_failed(full_command)
       end
-      if $?.exitstatus == 1
-        throw :unable_to_handle
-      elsif !$?.success?
-        raise_shell_command_failed(full_command)
-      end
+      raise_shell_command_failed(full_command) unless $?.success?
       result
     end
   
