@@ -12,7 +12,7 @@ describe Dragonfly::Shell do
     suppressing_stderr do
       lambda{
         shell.run "non-existent-command"
-      }.should raise_error(Dragonfly::Shell::CommandFailed)
+      }.should raise_error(Dragonfly::Shell::CommandNotFound)
     end
   end
 
