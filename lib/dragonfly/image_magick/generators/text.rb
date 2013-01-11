@@ -1,48 +1,8 @@
 module Dragonfly
   module ImageMagick
-    class Generator
-
-      class Base
-        def initialize(command_line=nil)
-          @command_line = command_line || CommandLine.new
-        end
-        
-        attr_reader :command_line
-        
-        def convert(args, format, tempfile=nil)
-          command_line.convert(nil, args, format, tempfile)
-        end
-      end
-
-
-      # PLAIN generator
-
-      class Plain < Base
-        def call(width, height, colour, opts={})
-          format = opts[:format] || 'png'
-          [
-            convert("-size #{width}x#{height} xc:#{colour}", format),
-            {:format => format.to_sym, :name => "plain.#{format}"}
-          ]
-        end
-      end
-
-
-      # PLASMA generator
-
-      class Plasma < Base
-        def call(width, height, format='png')
-          [
-            convert("-size #{width}x#{height} plasma:fractal", format),
-            {:format => format.to_sym, :name => "plasma.#{format}"}
-          ]
-        end
-      end
-
-
-      # TEXT generator
-
+    module Generators
       class Text < Base
+
         FONT_STYLES = {
           'normal'  => 'normal',
           'italic'  => 'italic',

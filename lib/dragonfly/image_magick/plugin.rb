@@ -9,9 +9,9 @@ module Dragonfly
         app.analyser.register(ImageMagick::Analyser, command_line)
 
         # Generators
-        app.add_generator :plain, ImageMagick::Generator::Plain.new(command_line)
-        app.add_generator :plasma, ImageMagick::Generator::Plasma.new(command_line)
-        app.add_generator :text, ImageMagick::Generator::Text.new(command_line)
+        app.add_generator :plain, ImageMagick::Generators::Plain.new(command_line)
+        app.add_generator :plasma, ImageMagick::Generators::Plasma.new(command_line)
+        app.add_generator :text, ImageMagick::Generators::Text.new(command_line)
 
         # Processors
         app.add_processor :convert, Processors::Convert.new(command_line)
