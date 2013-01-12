@@ -59,7 +59,7 @@ ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":me
 
 def setup_db
   ActiveRecord::Schema.define(:version => 1) do
-    create_table :relational_dragon_flies do |t|
+    create_table :relational_dragonflies do |t|
       t.binary :data
       t.string :meta
       t.timestamps
@@ -73,5 +73,5 @@ def teardown_db
   end
 end
 
-class RelationalDragonFly < ActiveRecord::Base
+class RelationalDragonfly < ActiveRecord::Base
 end

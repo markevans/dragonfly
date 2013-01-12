@@ -5,7 +5,7 @@ module Dragonfly
       include Serializer
       include Configurable
 
-      configurable_attr :class_name, 'RelationalDragonFly'
+      configurable_attr :class_name, 'RelationalDragonfly'
       configurable_attr :store_meta, true
 
       def store(temp_object, opts={})
