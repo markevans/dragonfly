@@ -11,7 +11,7 @@ module Dragonfly
 
       extend Forwardable
       def_delegators :job,
-        :data, :to_file, :file, :tempfile, :path,
+        :data, :b64_data, :to_file, :file, :tempfile, :path,
         :process, :encode, :analyse,
         :meta, :meta=,
         :name, :size,
