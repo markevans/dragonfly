@@ -10,5 +10,5 @@ Feature: winner uses dragonfly to serve different kinds of files
     Given a stored file "sample.docx"
     When I go to the url for "sample.docx"
     Then the response should be OK
-    And the response should have mime-type 'application/zip'
+    And the response should have mime-type 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
     And the response should have the same content as the file "sample.docx"
