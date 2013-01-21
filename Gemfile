@@ -5,8 +5,8 @@ gem "rack"
 # These gems are needed for development and testing
 group :development, :test, :cucumber do
   gem 'capybara'
-  gem 'cucumber', '~>0.10.0'
-  gem 'cucumber-rails', '~>0.5.2'
+  gem 'cucumber', '~>1.2.1'
+  gem 'cucumber-rails', "~> 1.3.0"
   gem 'database_cleaner'
   gem 'jeweler', '>= 1.5.2'
   gem 'fog'
