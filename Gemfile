@@ -8,13 +8,13 @@ group :development, :test, :cucumber do
   gem 'cucumber', '~>0.10.0'
   gem 'cucumber-rails', '~>0.5.2'
   gem 'database_cleaner'
-  gem 'jeweler', '~> 1.5.2'
+  gem 'jeweler', '>= 1.5.2'
   gem 'fog'
   gem 'github-markup'
   gem 'mongo'
   gem 'couchrest', '~> 1.0'
   gem 'rack-cache'
-  gem 'rails', '~>3.1.0', :require => nil
+  gem 'rails', '~>3.2.0', :require => nil
   gem 'redcarpet', '~>1.0'
   gem 'rspec', '~> 2.5'
   gem 'webmock'
@@ -26,6 +26,6 @@ group :development, :test, :cucumber do
   else
     gem 'bluecloth'
     gem 'bson_ext'
-    gem 'sqlite3-ruby'
+    gem 'sqlite3'
   end
 end
