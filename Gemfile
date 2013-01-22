@@ -1,6 +1,7 @@
 source :rubygems
 
 gem "rack"
+gem "multi_json", "~> 1.0"
 
 # These gems are needed for development and testing
 group :development, :test, :cucumber do

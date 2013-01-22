@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'base64'
-require 'json'
+require 'multi_json'
 
 module Dragonfly
   module Serializer
@@ -30,12 +30,12 @@ module Dragonfly
     end
 
     def json_encode(object)
-      b64_encode(JSON.generate(object))
+      b64_encode(MultiJson.encode(object))
     end
 
     def json_decode(string)
-      JSON.parse(b64_decode(string))
-    rescue JSON::ParserError => e
+      MultiJson.decode(b64_decode(string))
+    rescue MultiJson::DecodeError => e
       raise BadString, "couldn't decode #{string} - got #{e}"
     end
 
