@@ -33,8 +33,8 @@ module Dragonfly
       b64_encode(MultiJson.encode(object))
     end
 
-    def json_decode(string)
-      MultiJson.decode(b64_decode(string))
+    def json_decode(string, opts={})
+      MultiJson.decode(b64_decode(string), :symbolize_keys => opts[:symbolize_keys])
     rescue MultiJson::DecodeError => e
       raise BadString, "couldn't decode #{string} - got #{e}"
     end
