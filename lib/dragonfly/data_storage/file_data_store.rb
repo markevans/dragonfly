@@ -1,12 +1,79 @@
 require 'pathname'
+require 'yaml'
 
 module Dragonfly
   module DataStorage
-
     class FileDataStore
 
       # Exceptions
       class UnableToFormUrl < RuntimeError; end
+
+      class MetaStore
+        def store(data_path, meta)
+          File.open(meta_path(data_path), 'wb') do |f|
+            f.write dump(meta)
+          end
+        end
+
+        def retrieve(data_path)
+          path = meta_path(data_path)
+          File.open(path,'rb'){|f| load(f.read) } if File.exist?(path)
+        end
+
+        def destroy(path)
+          FileUtils.rm_f meta_path(path)
+        end
+
+        private
+
+        def meta_path(data_path)
+          raise NotImplementedError
+        end
+
+        def dump(meta)
+          raise NotImplementedError
+        end
+
+        def load(string)
+          raise NotImplementedError
+        end
+      end
+
+      class YAMLMetaStore < MetaStore
+        def meta_path(data_path)
+          "#{data_path}.meta.yml"
+        end
+
+        def dump(meta)
+          YAML.dump(meta)
+        end
+
+        def load(string)
+          YAML.load(string)
+        end
+      end
+
+      class MarshalMetaStore < MetaStore
+        def meta_path(data_path)
+          "#{data_path}.meta"
+        end
+
+        def dump(meta)
+          Marshal.dump(meta)
+        end
+
+        def load(string)
+          Marshal.load(string)
+        end
+      end
+
+      def initialize(opts={})
+        self.root_path = opts[:root_path] || '/var/tmp/dragonfly'
+        self.server_root = opts[:server_root]
+        self.store_meta = opts[:store_meta] if opts.has_key?(:store_meta)
+        @meta_store = YAMLMetaStore.new
+        @deprecated_meta_store = MarshalMetaStore.new
+      end
 
       include Configurable
 
@@ -28,7 +95,7 @@ module Dragonfly
             path = disambiguate(path)
           end
           temp_object.to_file(path).close
-          store_meta_data(path, temp_object.meta) if store_meta
+          meta_store.store(path, temp_object.meta) if store_meta
         rescue Errno::EACCES => e
           raise UnableToStore, e.message
         end
@@ -41,18 +108,19 @@ module Dragonfly
         path = absolute(relative_path)
         pathname = Pathname.new(path)
         raise DataNotFound, "couldn't find file #{path}" unless pathname.exist?
-        [
-          pathname,
-          (store_meta ? retrieve_meta_data(path) : {})
-        ]
+        meta = if store_meta
+          meta_store.retrieve(path) || deprecated_meta_store.retrieve(path) || {}
+        else
+          {}
+        end
+        [pathname, meta]
       end
 
       def destroy(relative_path)
         validate_uid!(relative_path)
         path = absolute(relative_path)
         FileUtils.rm path
-        FileUtils.rm_f meta_data_path(path)
-        FileUtils.rm_f deprecated_meta_data_path(path)
+        meta_store.destroy(path)
         purge_empty_directories(relative_path)
       rescue Errno::ENOENT => e
         raise DataNotFound, e.message
@@ -60,7 +128,7 @@ module Dragonfly
 
       def url_for(relative_path, opts={})
         if server_root.nil?
-          raise NotConfigured, "you need to configure server_root for #{self.class.name} in order to form urls"
+          raise UnableToFormUrl, "you need to configure server_root for #{self.class.name} in order to form urls"
         else
           _, __, path = absolute(relative_path).partition(server_root)
           if path.empty?
@@ -80,6 +148,8 @@ module Dragonfly
 
       private
 
+      attr_reader :meta_store, :deprecated_meta_store
+
       def absolute(relative_path)
         relative_path.to_s == '.' ? root_path : File.join(root_path, relative_path)
       end
@@ -91,39 +161,15 @@ module Dragonfly
       def directory_empty?(path)
         Dir.entries(path) == ['.','..']
       end
-      
+
       def root_path?(dir)
         root_path == dir
-      end
-
-      def meta_data_path(data_path)
-        "#{data_path}.meta"
-      end
-
-      def deprecated_meta_data_path(data_path)
-        "#{data_path}.extra"
       end
 
       def relative_path_for(filename)
         time = Time.now
         msec = time.usec / 1000
         "#{time.strftime '%Y/%m/%d/%H_%M_%S'}_#{msec}_#{filename.gsub(/[^\w.]+/,'_')}"
-      end
-
-      def store_meta_data(data_path, meta)
-        File.open(meta_data_path(data_path), 'wb') do |f|
-          f.write Marshal.dump(meta)
-        end
-      end
-
-      def retrieve_meta_data(data_path)
-        path = meta_data_path(data_path)
-        if File.exist?(path)
-          File.open(path,'rb'){|f| Marshal.load(f.read) }
-        else
-          deprecated_path = deprecated_meta_data_path(data_path)
-          File.exist?(deprecated_path) ? File.open(deprecated_path,'rb'){|f| Marshal.load(f.read) } : {}
-        end
       end
 
       def purge_empty_directories(path)
