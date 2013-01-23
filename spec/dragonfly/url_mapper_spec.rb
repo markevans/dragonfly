@@ -66,9 +66,18 @@ describe Dragonfly::UrlMapper do
       @url_mapper.url_for('job' => 'asdf', 'size' => 500).should == '/media/asdf-500'
     end
     
-    it "should url-escape funny characters" do
+    it "should url-escape funny characters in the path" do
       @url_mapper.url_for('job' => 'a#c').should == '/media/a%23c'
     end
+
+    it "should url-escape funny characters in the query string" do
+      @url_mapper.url_for('bigjobs' => 'a#c').should == '/media?bigjobs=a%23c'
+    end
+
+    it "should url-escape the / character in a single segment" do
+      @url_mapper.url_for('job' => 'a/c').should == '/media/a%2Fc'
+    end
+
   end
 
   describe "params_for" do
@@ -117,7 +126,7 @@ describe Dragonfly::UrlMapper do
       '/media/asdf.egg' =>       {'job' => 'asdf', 'basename' => nil,     'format' => 'egg'},
       '/media/asdf/stuff/egg' => nil,
       '/media/asdf/stuff.dog.egg' => {'job' => 'asdf', 'basename' => 'stuff.dog', 'format' => 'egg'},
-      '/media/asdf/s=2%20-.d.e' => {'job' => 'asdf', 'basename' => 's=2 -.d', 'format' => 'e'},
+      '/media/asdf/s%3D2+-.d.e' => {'job' => 'asdf', 'basename' => 's=2 -.d', 'format' => 'e'},
       '/media/asdf-40x40/stuff.egg' => nil
     }.each do |path, params|
       
