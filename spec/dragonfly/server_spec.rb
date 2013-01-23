@@ -51,24 +51,6 @@ describe Dragonfly::Server do
         response.body.should == 'HELLO THERE'
       end
 
-
-      it "should work ok with + symbols" do
-        @app.processor.add(:thumb){|t, geometry| "eggs" }
-        @app.datastore.should_receive(:retrieve).with('2011/04/20/20_55_04_114_female_1.jpg').and_return "EGGS"
-        response = request(@server, '/media/BAhbB1sHOgZmSSIpMjAxMS8wNC8yMC8yMF81NV8wNF8xMTRfZmVtYWxlXzEuanBnBjoGRVRbCDoGcDoKdGh1bWJJIgwxMDB4NzU+BjsGVA')
-        response.status.should == 200
-        response.body.should == 'eggs'
-      end
-
-      it "should work ok with ~ symbols" do
-        funny_filename = (127..255).map{|c| c.chr }.join
-        @app.datastore.should_receive(:retrieve).with(funny_filename).and_return "EGGS"
-        # the following is the url for 'fetch(funny_filename)'
-        response = request(@server, '/media/BAhbBlsHOgZmIgGBf4CBgoOEhYaHiImKi4yNjo+QkZKTlJWWl5iZmpucnZ6foKGio6SlpqeoqaqrrK2ur7CxsrO0tba3uLm6u7y9vr~AwcLDxMXGx8jJysvMzc7P0NHS09TV1tfY2drb3N3e3+Dh4uPk5ebn6Onq6+zt7u~w8fLz9PX29~j5+vv8~f7~')
-        response.status.should == 200
-        response.body.should == 'EGGS'
-      end
-
       it "should return a cacheable response" do
         url = "/media/#{@job.serialize}"
         cache = Rack::Cache.new(@server, :entitystore => 'heap:/')
