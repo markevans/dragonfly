@@ -80,27 +80,5 @@ describe Dragonfly::DataStorage::CouchDataStore do
       response['Content-Type'].should == 'text/plain-yo'
     end
   end
-
-  describe "already stored stuff" do
-    def store_pdf(meta)
-      doc = CouchRest::Document.new(:meta => meta)
-      doc_id = @data_store.db.save_doc(doc)['id']
-      doc.put_attachment("pdf", "PDF data here")
-      doc_id
-    end
-    
-    it "still works" do
-      doc_id = store_pdf(:some => 'cool things')
-      content, meta = @data_store.retrieve("#{doc_id}/pdf")
-      content.should == "PDF data here"
-      meta[:some].should == 'cool things'
-    end
-
-    it "still works when meta was stored as a marshal dumped hash" do
-      doc_id = store_pdf(Dragonfly::Serializer.marshal_encode(:some => 'shizzle'))
-      content, meta = @data_store.retrieve("#{doc_id}/pdf")
-      meta[:some].should == 'shizzle'
-    end
-  end
-
+  
 end
