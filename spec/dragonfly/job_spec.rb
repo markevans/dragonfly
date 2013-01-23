@@ -25,12 +25,12 @@ describe Dragonfly::Job do
     end
 
     {
-      Dragonfly::Job::Fetch => :f,
-      Dragonfly::Job::Process => :p,
-      Dragonfly::Job::Encode => :e,
-      Dragonfly::Job::Generate => :g,
-      Dragonfly::Job::FetchFile => :ff,
-      Dragonfly::Job::FetchUrl => :fu
+      Dragonfly::Job::Fetch => 'f',
+      Dragonfly::Job::Process => 'p',
+      Dragonfly::Job::Encode => 'e',
+      Dragonfly::Job::Generate => 'g',
+      Dragonfly::Job::FetchFile => 'ff',
+      Dragonfly::Job::FetchUrl => 'fu'
     }.each do |klass, abbreviation|
       it "should return the correct abbreviation for #{klass}" do
         klass.abbreviation.should == abbreviation
@@ -74,7 +74,7 @@ describe Dragonfly::Job do
         @job.data.should == 'HELLO'
         @job.meta.should == {:name => 'test.txt'}
       end
-      
+
       it "shouldn't set any url_attrs" do
         @job.url_attrs.should == {}
       end
@@ -132,7 +132,7 @@ describe Dragonfly::Job do
         @job.data.should == 'hi'
         @job.meta.should == {:name => 'plasma.png'}
       end
-      
+
       it "shouldn't set any url_attrs" do
         @job.url_attrs.should == {}
       end
@@ -148,11 +148,11 @@ describe Dragonfly::Job do
       it "should fetch the specified file when applied" do
         @job.size.should == 62664
       end
-      
+
       it "should set the url_attrs" do
         @job.url_attrs.should == {:name => 'egg.png'}
       end
-      
+
       it "should set the name" do
         @job.meta[:name].should == 'egg.png'
       end
@@ -188,7 +188,7 @@ describe Dragonfly::Job do
         @job.fetch_url!('some.place.com/dung.beetle')
         @job.meta[:name].should == 'dung.beetle'
       end
-      
+
       it "should set the name url_attr if there is one" do
         @job.fetch_url!('some.place.com/dung.beetle')
         @job.url_attrs.should == {:name =>'dung.beetle'}
@@ -255,18 +255,18 @@ describe Dragonfly::Job do
     describe "encode" do
       before(:each) do
         @job.url_attrs = {:name => 'boid'}
-        @job.encode!(:gif, :bitrate => 'mumma')
+        @job.encode!(:gif, 'bitrate' => 'mumma')
       end
 
       it { @job.steps.should match_steps([Dragonfly::Job::Encode]) }
 
       it "should use the encoder when applied" do
-        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
+        @app.encoder.should_receive(:encode).with(@temp_object, :gif, 'bitrate' => 'mumma').and_return('alo')
         @job.data.should == 'alo'
       end
 
       it "should maintain the meta and update the format" do
-        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return('alo')
+        @app.encoder.should_receive(:encode).with(@temp_object, :gif, 'bitrate' => 'mumma').and_return('alo')
         @job.meta.should == {:name => 'hello.txt', :a => :b, :format => :gif}
       end
 
@@ -276,20 +276,20 @@ describe Dragonfly::Job do
       end
 
       it "should allow returning an array with extra attributes form the encoder" do
-        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return(['alo', {:name => 'doobie', :eggs => 'fish'}])
+        @app.encoder.should_receive(:encode).with(@temp_object, :gif, 'bitrate' => 'mumma').and_return(['alo', {:name => 'doobie', :eggs => 'fish'}])
         @job.data.should == 'alo'
         @job.meta.should == {:name => 'doobie', :a => :b, :eggs => 'fish', :format => :gif}
       end
 
       it "not allow overriding the format" do
-        @app.encoder.should_receive(:encode).with(@temp_object, :gif, :bitrate => 'mumma').and_return(['alo', {:format => :png}])
+        @app.encoder.should_receive(:encode).with(@temp_object, :gif, 'bitrate' => 'mumma').and_return(['alo', {:format => :png}])
         @job.apply.meta[:format].should == :gif
       end
 
       it "should maintain the url_attrs" do
         @job.url_attrs[:name].should == 'boid'
       end
-      
+
     end
   end
 
@@ -452,12 +452,12 @@ describe Dragonfly::Job do
       job.fetch! 'some_uid'
       job.generate! :plasma # you wouldn't really call this after fetch but still works
       job.process! :resize, '30x40'
-      job.encode! :gif, :bitrate => 20
+      job.encode! :gif, 'bitrate' => 20
       job.to_a.should == [
-        [:f, 'some_uid'],
-        [:g, :plasma],
-        [:p, :resize, '30x40'],
-        [:e, :gif, {:bitrate => 20}]
+        ['f', 'some_uid'],
+        ['g', :plasma],
+        ['p', :resize, '30x40'],
+        ['e', :gif, {'bitrate' => 20}]
       ]
     end
   end
@@ -471,10 +471,10 @@ describe Dragonfly::Job do
     describe "a well-defined array" do
       before(:each) do
         @job = Dragonfly::Job.from_a([
-          [:f, 'some_uid'],
-          [:g, :plasma],
-          [:p, :resize, '30x40'],
-          [:e, :gif, {:bitrate => 20}]
+          ['f', 'some_uid'],
+          ['g', 'plasma'],
+          ['p', 'resize', '30x40'],
+          ['e', 'gif', {'bitrate' => 20}]
         ], @app)
       end
       it "should have the correct step types" do
@@ -487,9 +487,9 @@ describe Dragonfly::Job do
       end
       it "should have the correct args" do
         @job.steps[0].args.should == ['some_uid']
-        @job.steps[1].args.should == [:plasma]
-        @job.steps[2].args.should == [:resize, '30x40']
-        @job.steps[3].args.should == [:gif, {:bitrate => 20}]
+        @job.steps[1].args.should == ['plasma']
+        @job.steps[2].args.should == ['resize', '30x40']
+        @job.steps[3].args.should == ['gif', {'bitrate' => 20}]
       end
       it "should have no applied steps" do
         @job.applied_steps.should be_empty
@@ -500,10 +500,10 @@ describe Dragonfly::Job do
     end
 
     [
-      :f,
-      [:f],
+      'f',
+      ['f'],
       [[]],
-      [[:egg]]
+      [['egg']]
     ].each do |object|
       it "should raise an error if the object passed in is #{object.inspect}" do
         lambda {
@@ -521,22 +521,23 @@ describe Dragonfly::Job do
   describe "serialization" do
     before(:each) do
       @app = test_app
-      @job = Dragonfly::Job.new(@app).fetch('uid').process(:resize_and_crop, :width => 270, :height => 92, :gravity => 'n')
+      @job = Dragonfly::Job.new(@app).fetch('uid').process(:resize_and_crop, 'width' => 270, 'height' => 92, 'gravity' => 'n')
     end
     it "should serialize itself" do
       @job.serialize.should =~ /^\w{1,}$/
     end
     it "should deserialize to the same as the original" do
       new_job = Dragonfly::Job.deserialize(@job.serialize, @app)
-      new_job.to_a.should == @job.to_a
-    end
-    it "should correctly deserialize a string serialized with ruby 1.8.7" do
-      job = Dragonfly::Job.deserialize('BAhbB1sHOgZmSSIIdWlkBjoGRVRbCDoGcDoUcmVzaXplX2FuZF9jcm9wewg6CndpZHRoaQIOAToLaGVpZ2h0aWE6DGdyYXZpdHlJIgZuBjsGVA', @app)
-      job.to_a.should == @job.to_a
-    end
-    it "should correctly deserialize a string serialized with ruby 1.9.2" do
-      job = Dragonfly::Job.deserialize('BAhbB1sHOgZmIgh1aWRbCDoGcDoUcmVzaXplX2FuZF9jcm9wewg6CndpZHRoaQIOAToLaGVpZ2h0aWE6DGdyYXZpdHkiBm4', @app)
-      job.to_a.should == @job.to_a
+
+      new_job.steps.length.should == 2
+      fetch_step, process_step = new_job.steps
+
+      fetch_step.should be_a(Dragonfly::Job::Fetch)
+      fetch_step.uid.should == 'uid'
+
+      process_step.should be_a(Dragonfly::Job::Process)
+      process_step.name.should == :resize_and_crop
+      process_step.arguments.should == [{'width' => 270, 'height' => 92, 'gravity' => 'n'}]
     end
   end
 
@@ -561,7 +562,7 @@ describe Dragonfly::Job do
     it "should return nil if there are no steps" do
       @job.url.should be_nil
     end
-    
+
     describe "using url_attrs in the url" do
       before(:each) do
         @app.server.url_format = '/media/:job/:zoo'
@@ -585,7 +586,7 @@ describe Dragonfly::Job do
         @job.url_attrs[:zoo] = 'hair'
         @job.url(:zoo => 'dare').should == "/media/#{@job.serialize}/dare"
       end
-      
+
       describe "basename" do
         before(:each) do
           @app.server.url_format = '/:job/:basename'
@@ -649,7 +650,7 @@ describe Dragonfly::Job do
       new_job = @job.to_fetched_job('some_uid')
       new_job.data.should == 'HELLO'
       new_job.to_a.should == [
-        [:f, 'some_uid']
+        ['f', 'some_uid']
       ]
       new_job.pending_steps.should be_empty
     end
@@ -667,7 +668,7 @@ describe Dragonfly::Job do
 
   describe "to_unique_s" do
     it "should use the arrays of args to create the string" do
-      job = test_app.fetch('uid').process(:gug, 4, :some => 'arg', :and => 'more')
+      job = test_app.fetch('uid').process(:gug, 4, 'some' => 'arg', 'and' => 'more')
       job.to_unique_s.should == 'fuidpgug4andmoresomearg'
     end
   end
@@ -677,15 +678,15 @@ describe Dragonfly::Job do
       @app = test_app
       @job = @app.fetch('eggs')
     end
-    
+
     it "should be of the correct format" do
       @job.sha.should =~ /^\w{8}$/
     end
-    
+
     it "should be the same for the same job steps" do
       @app.fetch('eggs').sha.should == @job.sha
     end
-    
+
     it "should be different for different jobs" do
       @app.fetch('figs').sha.should_not == @job.sha
     end
@@ -751,7 +752,7 @@ describe Dragonfly::Job do
     before(:each) do
       @app = test_app
     end
-    
+
     describe "fetch_step" do
       it "should return nil if it doesn't exist" do
         @app.generate(:ponies).process(:jam).fetch_step.should be_nil
@@ -814,10 +815,10 @@ describe Dragonfly::Job do
       it "should return the generate step otherwise" do
         step = @app.generate(:ponies).process(:cheese).generate_step
         step.should be_a(Dragonfly::Job::Generate)
-        step.args.should == [:ponies]
+        step.name.should == :ponies
       end
     end
-    
+
     describe "process_steps" do
       it "should return the processing steps" do
         job = @app.fetch('many/ponies').process(:jam).process(:eggs).encode(:gif)
@@ -838,7 +839,7 @@ describe Dragonfly::Job do
         step.format.should == :cheese
       end
     end
-    
+
     describe "step_types" do
       it "should return the step types" do
         job = @app.fetch('eggs').process(:beat, 'strongly').encode(:meringue)

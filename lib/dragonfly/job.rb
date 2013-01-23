@@ -35,9 +35,9 @@ module Dragonfly
         def step_name
           @step_name ||= basename.gsub(/[A-Z]/){ "_#{$&.downcase}" }.sub('_','').to_sym
         end
-        # Dragonfly::Job::Fetch -> :f
+        # Dragonfly::Job::Fetch -> 'f'
         def abbreviation
-          @abbreviation ||= basename.scan(/[A-Z]/).join.downcase.to_sym
+          @abbreviation ||= basename.scan(/[A-Z]/).join.downcase
         end
       end
 
@@ -69,7 +69,7 @@ module Dragonfly
 
     class Process < Step
       def name
-        args.first
+        args.first.to_sym
       end
       def arguments
         args[1..-1]
@@ -86,7 +86,7 @@ module Dragonfly
         job.url_attrs[:format] = format
       end
       def format
-        args.first
+        args.first.to_sym
       end
       def arguments
         args[1..-1]
@@ -99,8 +99,14 @@ module Dragonfly
     end
 
     class Generate < Step
+      def name
+        args.first.to_sym
+      end
+      def arguments
+        args[1..-1]
+      end
       def apply
-        content, meta = job.app.generator.generate(*args)
+        content, meta = job.app.generator.generate(name, *arguments)
         job.update(content, meta)
       end
     end
@@ -166,7 +172,7 @@ module Dragonfly
       end
 
       def deserialize(string, app)
-        from_a(Serializer.marshal_decode(string), app)
+        from_a(Serializer.json_decode(string), app)
       end
 
       def step_abbreviations
@@ -187,20 +193,20 @@ module Dragonfly
     # If we had traits/classboxes in ruby maybe this wouldn't be needed
     # Think of it as like a normal instance method but with a css-like !important after it
     module OverrideInstanceMethods
-      
+
       def format
         apply
         meta[:format] || (ext.to_sym if ext && app.trust_file_extensions) || analyse(:format)
       end
-      
+
       def mime_type
         app.mime_type_for(format) || analyse(:mime_type) || app.fallback_mime_type
       end
-      
+
       def to_s
         super.sub(/#<Class:\w+>/, 'Extended Dragonfly::Job')
       end
-      
+
     end
 
     def initialize(app, content=nil, meta={}, url_attrs={})
@@ -280,7 +286,7 @@ module Dragonfly
     end
 
     def serialize
-      Serializer.marshal_encode(to_a)
+      Serializer.json_encode(to_a)
     end
 
     def unique_signature
@@ -311,7 +317,7 @@ module Dragonfly
     def url_attrs=(hash)
       @url_attrs = UrlAttributes[hash]
     end
-    
+
     attr_reader :url_attrs
 
     def b64_data
@@ -380,7 +386,7 @@ module Dragonfly
     def inspect
       "<Dragonfly::Job app=#{app.name.inspect}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >"
     end
-    
+
     def update(content, new_meta)
       if new_meta
         new_meta.merge!(new_meta.delete(:meta)) if new_meta[:meta] # legacy data etc. may have nested meta hash - deprecate gracefully here
@@ -388,12 +394,12 @@ module Dragonfly
       old_meta = temp_object ? temp_object.meta : {}
       self.temp_object = TempObject.new(content, old_meta.merge(new_meta || {}))
     end
-    
+
     def close
       previous_temp_objects.each{|temp_object| temp_object.close }
       temp_object.close if temp_object
     end
-    
+
     protected
 
     attr_writer :steps
@@ -405,20 +411,20 @@ module Dragonfly
       apply
       temp_object || raise(NoContent, "Job has not been initialized with content. Need to fetch first?")
     end
-    
+
     def attributes_for_url
       attrs = url_attrs.slice(*server.params_in_url)
       attrs[:format] = (attrs[:format] || (url_attrs.ext if app.trust_file_extensions)).to_s if server.params_in_url.include?('format')
       attrs.delete_if{|k, v| v.blank? }
       attrs
     end
-    
+
     attr_reader :previous_temp_objects
 
     def last_step_of_type(type)
       steps.select{|s| s.is_a?(type) }.last
     end
-    
+
     def opts_for_store
       {:mime_type => mime_type}
     end
