@@ -2,9 +2,9 @@
 require 'spec_helper'
 
 describe Dragonfly::Serializer do
-  
+
   include Dragonfly::Serializer
-  
+
   [
     'a',
     'sdhflasd',
@@ -22,21 +22,7 @@ describe Dragonfly::Serializer do
       str.should == string
     end
   end
-  
-  describe "replacing the '/' character in b64_encode" do
-    before(:each) do
-      @string = (127..255).map{|c| c.chr }.join
-    end
-    it "should replace '/' with '~'" do
-      b64_encode(@string).should_not =~ /\//
-      b64_encode(@string).should =~ /[\w+]+~[\w+]+/
-    end
-    it "should correctly encode and decode to the same string" do
-      str = b64_decode(b64_encode(@string))
-      str.should == @string
-    end
-  end
-  
+
   [
     :hello,
     nil,
@@ -57,7 +43,7 @@ describe Dragonfly::Serializer do
       marshal_decode(marshal_encode(object)).should == object
     end
   end
-  
+
   describe "marshal_decode" do
     it "should raise an error if the string passed in is empty" do
       lambda{
@@ -85,7 +71,7 @@ describe Dragonfly::Serializer do
       json_decode(json_encode(object)).should == object
     end
   end
-  
+
   describe "json_decode" do
     it "optionally symbolizes keys" do
       json_decode(json_encode('a' => 1), :symbolize_keys => true).should == {:a => 1}
