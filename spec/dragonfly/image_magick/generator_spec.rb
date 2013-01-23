@@ -62,12 +62,6 @@ describe Dragonfly::ImageMagick::Generator do
       image.should have_width(1)
     end
 
-    it "should blow up with an invalid colour" do
-      lambda{
-        @generator.plain(1,1,'rgb(doogie)')
-      }.should_not raise_error()
-    end
-
     describe "specifying the format" do
       before(:each) do
         @image, @meta = @generator.plain(23, 12, 'white', :format => :gif)
