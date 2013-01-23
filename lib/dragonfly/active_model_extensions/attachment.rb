@@ -20,11 +20,11 @@ module Dragonfly
       include HasFilename
 
       alias_method :length, :size
-      
+
       def initialize(model)
         @model = model
         self.uid = model_uid
-        set_job_from_uid if uid
+        set_job_from_uid if uid?
         @should_run_callbacks = true
         self.class.ensure_uses_cached_magic_attributes
       end
@@ -32,7 +32,7 @@ module Dragonfly
       def app
         self.class.app
       end
-      
+
       def attribute
         self.class.attribute
       end
@@ -66,7 +66,7 @@ module Dragonfly
 
       def destroy!
         destroy_previous!
-        destroy_content(uid) unless uid.nil? || uid.empty?
+        destroy_content(uid) if uid?
       end
 
       def save!
@@ -95,18 +95,18 @@ module Dragonfly
         assign(encode(*args))
         self
       end
-      
+
       def remote_url(opts={})
-        app.remote_url_for(uid, opts) if uid
+        app.remote_url_for(uid, opts) if uid?
       end
-      
+
       def apply
         job.apply
         self
       end
 
       attr_writer :should_run_callbacks
-      
+
       def should_run_callbacks?
         !!@should_run_callbacks
       end
@@ -121,26 +121,26 @@ module Dragonfly
       end
 
       attr_writer :should_retain
-      
+
       def should_retain?
         !!@should_retain
       end
-      
+
       def retained?
         !!@retained
       end
-      
+
       def destroy_retained!
         destroy_content(retained_attrs[:uid])
       end
-      
+
       def retained_attrs
         attribute_keys.inject({}) do |hash, key|
           hash[key] = send(key)
           hash
         end if retained?
       end
-      
+
       def retained_attrs=(attrs)
         if changed? # if already set, ignore and destroy this retained content
           destroy_content(attrs[:uid])
@@ -156,7 +156,7 @@ module Dragonfly
           self.retained = true
         end
       end
-      
+
       def inspect
         "<Dragonfly Attachment uid=#{uid.inspect}, app=#{app.name.inspect}>"
       end
@@ -187,7 +187,7 @@ module Dragonfly
       end
 
       def destroy_previous!
-        unless previous_uid.nil? || previous_uid.empty?
+        if previous_uid?
           destroy_content(previous_uid)
           self.previous_uid = nil
         end
@@ -217,7 +217,7 @@ module Dragonfly
         meth = "#{attribute}_uid_will_change!"
         model.send(meth) if model.respond_to?(meth)
       end
-      
+
       attr_reader :model, :uid
       attr_writer :job
       attr_accessor :previous_uid
@@ -225,6 +225,14 @@ module Dragonfly
       def uid=(uid)
         self.previous_uid = @uid if @uid
         @uid = uid
+      end
+
+      def uid?
+        !uid.nil? && !uid.empty?
+      end
+
+      def previous_uid?
+         !previous_uid.nil? && !previous_uid.empty?
       end
 
       def magic_attributes
@@ -264,11 +272,11 @@ module Dragonfly
           :model_attachment => attribute
         }
       end
-      
+
       def all_extra_attributes
         magic_attributes_hash.merge(extra_attributes)
       end
-      
+
       def set_job_from_uid
         self.job = app.fetch(uid)
         job.url_attrs = all_extra_attributes
