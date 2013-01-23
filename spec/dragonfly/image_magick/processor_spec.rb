@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Dragonfly::ImageMagick::Processor do
-  
+
   before(:each) do
     @image = Dragonfly::TempObject.new(SAMPLES_DIR.join('beach.png')) # 280x355
     @processor = Dragonfly::ImageMagick::Processor.new
@@ -82,40 +82,40 @@ describe Dragonfly::ImageMagick::Processor do
     end
 
     it "should crop using the offset given" do
-      image = @processor.crop(@image, :x => '7', :y => '12')
+      image = @processor.crop(@image, 'x' => '7', 'y' => '12')
       image.should have_width(273)
       image.should have_height(343)
     end
 
     it "should crop using the dimensions given" do
-      image = @processor.crop(@image, :width => '10', :height => '20')
+      image = @processor.crop(@image, 'width' => '10', 'height' => '20')
       image.should have_width(10)
       image.should have_height(20)
     end
 
     it "should crop in one dimension if given" do
-      image = @processor.crop(@image, :width => '10')
+      image = @processor.crop(@image, 'width' => '10')
       image.should have_width(10)
       image.should have_height(355)
     end
 
     it "should take into account the gravity given" do
-      image1 = @processor.crop(@image, :width => '10', :height => '10', :gravity => 'nw')
-      image2 = @processor.crop(@image, :width => '10', :height => '10', :gravity => 'se')
+      image1 = @processor.crop(@image, 'width' => '10', 'height' => '10', 'gravity' => 'nw')
+      image2 = @processor.crop(@image, 'width' => '10', 'height' => '10', 'gravity' => 'se')
       image1.should_not equal_image(image2)
     end
 
     it "should clip bits of the image outside of the requested crop area when not nw gravity" do
       # Rmagick was previously throwing an error when the cropping area was outside the image size, when
       # using a gravity other than nw
-      image = @processor.crop(@image, :width => '500', :height => '1000', :x => '100', :y => '200', :gravity => 'se')
+      image = @processor.crop(@image, 'width' => '500', 'height' => '1000', 'x' => '100', 'y' => '200', 'gravity' => 'se')
       image.should have_width(180)
       image.should have_height(155)
     end
-    
+
     it "should crop twice in a row correctly" do
-      image1 = @processor.crop(@image,  :x => '10', :y => '10', :width => '100', :height => '100')
-      image2 = @processor.crop(Dragonfly::TempObject.new(image1), :x => '0' , :y => '0' , :width => '50' , :height => '50' )
+      image1 = @processor.crop(@image,  'x' => '10', 'y' => '10', 'width' => '100', 'height' => '100')
+      image2 = @processor.crop(Dragonfly::TempObject.new(image1), 'x' => '0' , 'y' => '0' , 'width' => '50' , 'height' => '50' )
       image2.should have_width(50)
       image2.should have_height(50)
     end
@@ -123,8 +123,8 @@ describe Dragonfly::ImageMagick::Processor do
     it "should crop twice in a row while consciously keeping page geometry" do
       # see http://www.imagemagick.org/Usage/crop/#crop_page
       # it explains how cropping multiple times without resetting geometry behaves
-      image1 = @processor.crop(@image,  :x => '10', :y => '10', :width => '100', :height => '100', :repage => false)
-      image2 = @processor.crop(Dragonfly::TempObject.new(image1), :x => '0' , :y => '0' , :width => '50' , :height => '50')
+      image1 = @processor.crop(@image,  'x' => '10', 'y' => '10', 'width' => '100', 'height' => '100', 'repage' => false)
+      image2 = @processor.crop(Dragonfly::TempObject.new(image1), 'x' => '0' , 'y' => '0' , 'width' => '50' , 'height' => '50')
       image2.should have_width(40)
       image2.should have_height(40)
     end
@@ -154,26 +154,26 @@ describe Dragonfly::ImageMagick::Processor do
     end
 
     it "should crop to the correct dimensions" do
-      image = @processor.resize_and_crop(@image, :width => '100', :height => '100')
+      image = @processor.resize_and_crop(@image, 'width' => '100', 'height' => '100')
       image.should have_width(100)
       image.should have_height(100)
     end
 
     it "should actually resize before cropping" do
-      image1 = @processor.resize_and_crop(@image, :width => '100', :height => '100')
-      image2 = @processor.crop(@image, :width => '100', :height => '100', :gravity => 'c')
+      image1 = @processor.resize_and_crop(@image, 'width' => '100', 'height' => '100')
+      image2 = @processor.crop(@image, 'width' => '100', 'height' => '100', 'gravity' => 'c')
       image1.should_not equal_image(image2)
     end
 
     it "should allow cropping in one dimension" do
-      image = @processor.resize_and_crop(@image, :width => '100')
+      image = @processor.resize_and_crop(@image, 'width' => '100')
       image.should have_width(100)
       image.should have_height(355)
     end
 
     it "should take into account the gravity given" do
-      image1 = @processor.resize_and_crop(@image, :width => '10', :height => '10', :gravity => 'nw')
-      image2 = @processor.resize_and_crop(@image, :width => '10', :height => '10', :gravity => 'se')
+      image1 = @processor.resize_and_crop(@image, 'width' => '10', 'height' => '10', 'gravity' => 'nw')
+      image2 = @processor.resize_and_crop(@image, 'width' => '10', 'height' => '10', 'gravity' => 'se')
       image1.should_not equal_image(image2)
     end
 
@@ -188,13 +188,13 @@ describe Dragonfly::ImageMagick::Processor do
     end
 
     it "should not rotate given a larger height and the '>' qualifier" do
-      image = @processor.rotate(@image, 90, :qualifier => '>')
+      image = @processor.rotate(@image, 90, 'qualifier' => '>')
       image.should have_width(280)
       image.should have_height(355)
     end
 
     it "should rotate given a larger height and the '<' qualifier" do
-      image = @processor.rotate(@image, 90, :qualifier => '<')
+      image = @processor.rotate(@image, 90, 'qualifier' => '<')
       image.should have_width(355)
       image.should have_height(280)
     end
@@ -217,19 +217,19 @@ describe Dragonfly::ImageMagick::Processor do
       @processor.thumb(@image, '30x40').should == image
     end
     it "should call resize_and_crop if the correct string given" do
-      @processor.should_receive(:resize_and_crop).with(@image, :width => '30', :height => '40', :gravity => 'se').and_return(image = mock)
+      @processor.should_receive(:resize_and_crop).with(@image, 'width' => '30', 'height' => '40', 'gravity' => 'se').and_return(image = mock)
       @processor.thumb(@image, '30x40#se').should == image
     end
     it "should call crop if x and y given" do
-      @processor.should_receive(:crop).with(@image, :width => '30', :height => '40', :x => '+10', :y => '+20', :gravity => nil).and_return(image = mock)
+      @processor.should_receive(:crop).with(@image, 'width' => '30', 'height' => '40', 'x' => '+10', 'y' => '+20', 'gravity' => nil).and_return(image = mock)
       @processor.thumb(@image, '30x40+10+20').should == image
     end
     it "should call crop if just gravity given" do
-      @processor.should_receive(:crop).with(@image, :width => '30', :height => '40', :x => nil, :y => nil, :gravity => 'sw').and_return(image = mock)
+      @processor.should_receive(:crop).with(@image, 'width' => '30', 'height' => '40', 'x' => nil, 'y' => nil, 'gravity' => 'sw').and_return(image = mock)
       @processor.thumb(@image, '30x40sw').should == image
     end
     it "should call crop if x, y and gravity given" do
-      @processor.should_receive(:crop).with(@image, :width => '30', :height => '40', :x => '-10', :y => '-20', :gravity => 'se').and_return(image = mock)
+      @processor.should_receive(:crop).with(@image, 'width' => '30', 'height' => '40', 'x' => '-10', 'y' => '-20', 'gravity' => 'se').and_return(image = mock)
       @processor.thumb(@image, '30x40-10-20se').should == image
     end
     it "should raise an argument error if an unrecognized string is given" do
@@ -263,16 +263,16 @@ describe Dragonfly::ImageMagick::Processor do
       image.should have_height(355)
     end
   end
-  
+
   describe "convert" do
     it "should allow for general convert commands" do
       image = @processor.convert(@image, '-scale 56x71')
       image.should have_width(56)
       image.should have_height(71)
     end
-    
+
     it "should allow for general convert commands with added format" do
-      image, extra = @processor.convert(@image, '-scale 56x71', :gif)
+      image, extra = @processor.convert(@image, '-scale 56x71', 'gif')
       image.should have_width(56)
       image.should have_height(71)
       image.should have_format('gif')
@@ -289,5 +289,5 @@ describe Dragonfly::ImageMagick::Processor do
       @processor.convert(image, "-resize 2x2!").should have_width(2)
     end
   end
-  
+
 end
