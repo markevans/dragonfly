@@ -16,7 +16,7 @@ describe Dragonfly::ImageMagick::Generator do
       it {@image.should have_format('png')}
       it {@meta.should == {:format => :png, :name => 'plain.png'}}
     end
-    
+
     it "should cope with colour name format" do
       image, meta = @generator.plain(1, 1, 'red')
       image.should have_width(1)
@@ -69,6 +69,11 @@ describe Dragonfly::ImageMagick::Generator do
       it {@image.should have_format('gif')}
       it {@meta.should == {:format => :gif, :name => 'plain.gif'}}
     end
+
+    it "works with string args" do
+      image, meta = @generator.plain(1, 1, 'white', 'format' => 'gif')
+      image.should have_format('gif')
+    end
   end
 
   describe "plasma" do
@@ -88,6 +93,11 @@ describe Dragonfly::ImageMagick::Generator do
       end
       it {@image.should have_format('gif')}
       it {@meta.should == {:format => :gif, :name => 'plasma.gif'}}
+    end
+
+    it "works with string args" do
+      image, meta = @generator.plasma(1, 1, 'gif')
+      image.should have_format('gif')
     end
   end
 
@@ -155,7 +165,14 @@ describe Dragonfly::ImageMagick::Generator do
           @generator.text(@text, :padding => '1 2 3 4 5')
         }.should raise_error(ArgumentError)
       end
+
+      it "works with string args" do
+        image, meta = @generator.text(@text, 'format' => 'gif', 'padding' => '10')
+        image.should have_format('gif')
+        image.should have_width(@width + 20)
+      end
     end
+
   end
 
 end

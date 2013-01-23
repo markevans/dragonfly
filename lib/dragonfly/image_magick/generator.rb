@@ -40,6 +40,8 @@ module Dragonfly
       include Utils
 
       def plain(width, height, colour, opts={})
+        opts = Dragonfly::Utils.symbolize_keys(opts)
+
         format = opts[:format] || 'png'
         [
           convert(nil, "-size #{width}x#{height} xc:#{colour}", format),
