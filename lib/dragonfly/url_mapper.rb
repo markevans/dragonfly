@@ -5,15 +5,9 @@ module Dragonfly
     class BadUrlFormat < StandardError; end
 
     class Segment < Struct.new(:param, :seperator, :pattern)
-
       def regexp_string
         @regexp_string ||= "(#{Regexp.escape(seperator)}#{pattern}+?)?"
       end
-      #
-      # def regexp
-      #   @regexp ||= Regexp.new(regexp_string)
-      # end
-
     end
 
     def initialize(url_format, patterns={})
