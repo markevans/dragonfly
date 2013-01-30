@@ -1,3 +1,9 @@
+0.9.13 (2013-01-30)
+===================
+Changes
+-------
+- URLS are encoded/decoded with JSON, not with Marshal
+
 0.9.12 (2012-04-08)
 ===================
 Features
