@@ -16,7 +16,6 @@ group :development, :test, :cucumber do
   gem 'couchrest', '~> 1.0'
   gem 'rack-cache'
   gem 'rails', '~>3.2.0', :require => nil
-  gem 'redcarpet', '~>1.0'
   gem 'rspec', '~> 2.5'
   gem 'webmock'
   gem 'yard'
@@ -25,6 +24,7 @@ group :development, :test, :cucumber do
     gem "activerecord-jdbcsqlite3-adapter"
     gem "jruby-openssl"
   else
+    gem 'redcarpet', '~>1.0'
     gem 'bluecloth'
     gem 'bson_ext'
     gem 'sqlite3'
