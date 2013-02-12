@@ -539,6 +539,14 @@ describe Dragonfly::Job do
       process_step.name.should == :resize_and_crop
       process_step.arguments.should == [{'width' => 270, 'height' => 92, 'gravity' => 'n'}]
     end
+    it "works with json encoded strings" do
+      job = Dragonfly::Job.deserialize("W1siZiIsInNvbWVfdWlkIl1d", @app)
+      job.fetch_step.uid.should == 'some_uid'
+    end
+    it "works with marshal encoded strings (deprecated)" do
+      job = Dragonfly::Job.deserialize("BAhbBlsHSSIGZgY6BkVUSSINc29tZV91aWQGOwBU", @app)
+      job.fetch_step.uid.should == 'some_uid'
+    end
   end
 
   describe "to_app" do

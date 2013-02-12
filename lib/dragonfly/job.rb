@@ -172,7 +172,12 @@ module Dragonfly
       end
 
       def deserialize(string, app)
-        from_a(Serializer.json_decode(string), app)
+        array = begin
+          Serializer.json_decode(string)
+        rescue Serializer::BadString
+          Serializer.marshal_decode(string) # legacy strings
+        end
+        from_a(array, app)
       end
 
       def step_abbreviations
