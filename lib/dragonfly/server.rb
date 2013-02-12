@@ -52,7 +52,7 @@ module Dragonfly
     rescue JobNotAllowed => e
       log.warn(e.message)
       [403, {"Content-Type" => 'text/plain'}, ["Forbidden"]]
-    rescue Serializer::BadString, Job::InvalidArray => e
+    rescue Serializer::BadString, Serializer::MaliciousString, Job::InvalidArray => e
       log.warn(e.message)
       [404, {'Content-Type' => 'text/plain'}, ['Not found']]
     end
