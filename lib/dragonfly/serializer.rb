@@ -7,6 +7,7 @@ module Dragonfly
 
     # Exceptions
     class BadString < RuntimeError; end
+    class MaliciousString < RuntimeError; end
 
     extend self # So we can do Serializer.b64_encode, etc.
 
@@ -25,7 +26,9 @@ module Dragonfly
     end
 
     def marshal_decode(string)
-      Marshal.load(b64_decode(string))
+      marshal_string = b64_decode(string)
+      raise MaliciousString, "potentially malicious marshal string #{marshal_string.inspect}" if marshal_string[/@[a-z_]/i]
+      Marshal.load(marshal_string)
     rescue TypeError, ArgumentError => e
       raise BadString, "couldn't decode #{string} - got #{e}"
     end
