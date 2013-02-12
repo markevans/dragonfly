@@ -5,22 +5,32 @@ describe Dragonfly::Serializer do
 
   include Dragonfly::Serializer
 
-  [
-    'a',
-    'sdhflasd',
-    '/2010/03/01/hello.png',
-    '//..',
-    'whats/up.egg.frog',
-    '£ñçùí;'
-  ].each do |string|
-    it "should encode #{string.inspect} properly with no padding/line break" do
-      b64_encode(string).should_not =~ /\n|=/
+  describe "base 64 encoding/decoding" do
+    [
+      'a',
+      'sdhflasd',
+      '/2010/03/01/hello.png',
+      '//..',
+      'whats/up.egg.frog',
+      '£ñçùí;',
+      '~'
+    ].each do |string|
+      it "should encode #{string.inspect} properly with no padding/line break" do
+        b64_encode(string).should_not =~ /\n|=/
+      end
+      it "should correctly encode and decode #{string.inspect} to the same string" do
+        str = b64_decode(b64_encode(string))
+        str.force_encoding('UTF-8') if str.respond_to?(:force_encoding)
+        str.should == string
+      end
     end
-    it "should correctly encode and decode #{string.inspect} to the same string" do
-      str = b64_decode(b64_encode(string))
-      str.force_encoding('UTF-8') if str.respond_to?(:force_encoding)
-      str.should == string
+
+    describe "b64_decode" do
+      it "converts (deprecated) '~' characters to '/' characters" do
+        b64_decode('asdf~asdf').should == b64_decode('asdf/asdf')
+      end
     end
+
   end
 
   [

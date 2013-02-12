@@ -16,6 +16,7 @@ module Dragonfly
 
     def b64_decode(string)
       padding_length = string.length % 4
+      string = string.tr('~', '/')
       Base64.decode64(string + '=' * padding_length)
     end
 
