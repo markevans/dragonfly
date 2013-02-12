@@ -499,6 +499,11 @@ describe Dragonfly::Job do
       end
     end
 
+    it "works with symbols" do
+      job = Dragonfly::Job.from_a([[:f, 'some_uid']], @app)
+      job.steps.should match_steps([Dragonfly::Job::Fetch])
+    end
+
     [
       'f',
       ['f'],

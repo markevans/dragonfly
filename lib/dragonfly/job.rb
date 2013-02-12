@@ -160,12 +160,12 @@ module Dragonfly
 
       def from_a(steps_array, app)
         unless steps_array.is_a?(Array) &&
-               steps_array.all?{|s| s.is_a?(Array) && step_abbreviations[s.first] }
+               steps_array.all?{|s| s.is_a?(Array) && step_abbreviations[s.first.to_s] }
           raise InvalidArray, "can't define a job from #{steps_array.inspect}"
         end
         job = app.new_job
         steps_array.each do |step_array|
-          step_class = step_abbreviations[step_array.shift]
+          step_class = step_abbreviations[step_array.shift.to_s]
           job.steps << step_class.new(job, *step_array)
         end
         job
