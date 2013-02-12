@@ -24,7 +24,7 @@ module Dragonfly
         params = Rack::Utils.parse_query(query)
         params_in_url.each_with_index do |var, i|
           value = md[i+1][1..-1] if md[i+1]
-          params[var] = value && Rack::Utils.unescape(value)
+          params[var] = value && Utils.uri_unescape(value)
         end
         params
       end
@@ -39,7 +39,7 @@ module Dragonfly
       url = url_format.dup
       segments.each do |seg|
         value = params[seg.param]
-        value ? url.sub!(/:[\w_]+/, Rack::Utils.escape(value.to_s)) : url.sub!(/.:[\w_]+/, '')
+        value ? url.sub!(/:[\w_]+/, Utils.uri_escape_segment(value.to_s)) : url.sub!(/.:[\w_]+/, '')
         params.delete(seg.param)
       end
       url << "?#{Rack::Utils.build_query(params)}" if params.any?
