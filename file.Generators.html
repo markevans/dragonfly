@@ -6,7 +6,7 @@
 <title>
   File: Generators
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -86,13 +86,13 @@
 
 <p>Given a Dragonfly app</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
-</pre>
+<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+</code></pre>
 
 <p>we can get generated content using</p>
 
-<pre class="code"><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:some_method</span><span class='comma token'>,</span> <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>
-</pre>
+<pre class="code ruby"><code><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:some_method</span><span class='comma token'>,</span> <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>
+</code></pre>
 
 <p>where <code>:some_method</code> is added by the configured generators.</p>
 
@@ -104,16 +104,16 @@
 
 <p>To register a single custom generator:</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generator identifier id'>generator</span><span class='dot token'>.</span><span class='rubyid_add identifier id'>add</span> <span class='symbol val'>:triangle</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_height identifier id'>height</span><span class='bitor op'>|</span>
+<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generator identifier id'>generator</span><span class='dot token'>.</span><span class='rubyid_add identifier id'>add</span> <span class='symbol val'>:triangle</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_height identifier id'>height</span><span class='bitor op'>|</span>
   <span class='rubyid_SomeLibrary constant id'>SomeLibrary</span><span class='dot token'>.</span><span class='rubyid_create_triangle identifier id'>create_triangle</span><span class='lparen token'>(</span><span class='rubyid_height identifier id'>height</span><span class='rparen token'>)</span>     <span class='comment val'># return a String, Pathname, File or Tempfile</span>
 <span class='rubyid_end end kw'>end</span>
 
 <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:triangle</span><span class='comma token'>,</span> <span class='integer val'>10</span><span class='rparen token'>)</span>      <span class='comment val'># =&gt; 'Job' object which we can get data, etc.</span>
-</pre>
+</code></pre>
 
 <p>Or create a class like the ImageMagick one above, in which case all public methods will be counted as generator methods.</p>
 
-<pre class="code"><span class='rubyid_class class kw'>class</span> <span class='rubyid_RoundedCornerGenerator constant id'>RoundedCornerGenerator</span>
+<pre class="code ruby"><code><span class='rubyid_class class kw'>class</span> <span class='rubyid_RoundedCornerGenerator constant id'>RoundedCornerGenerator</span>
 
   <span class='rubyid_def def kw'>def</span> <span class='rubyid_top_left_corner identifier id'>top_left_corner</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
     <span class='rubyid_SomeLib constant id'>SomeLib</span><span class='dot token'>.</span><span class='rubyid_tlc identifier id'>tlc</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='rparen token'>)</span>
@@ -139,17 +139,17 @@
 
 <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:top_left_corner</span><span class='comma token'>,</span> <span class='symbol val'>:colour</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'green'</span><span class='rparen token'>)</span>
 <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:bottom_right_corner</span><span class='comma token'>,</span> <span class='symbol val'>:colour</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'mauve'</span><span class='rparen token'>)</span>
-</pre>
+</code></pre>
 
 <p>You can also return meta data like name and format if you return an array from the generator</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generator identifier id'>generator</span><span class='dot token'>.</span><span class='rubyid_add identifier id'>add</span> <span class='symbol val'>:triangle</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_height identifier id'>height</span><span class='bitor op'>|</span>
+<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generator identifier id'>generator</span><span class='dot token'>.</span><span class='rubyid_add identifier id'>add</span> <span class='symbol val'>:triangle</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_height identifier id'>height</span><span class='bitor op'>|</span>
   <span class='lbrack token'>[</span>
     <span class='rubyid_SomeLibrary constant id'>SomeLibrary</span><span class='dot token'>.</span><span class='rubyid_create_triangle identifier id'>create_triangle</span><span class='lparen token'>(</span><span class='rubyid_height identifier id'>height</span><span class='rparen token'>)</span><span class='comma token'>,</span>
     <span class='lbrace token'>{</span><span class='symbol val'>:name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'triangle.png'</span><span class='comma token'>,</span> <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:png</span><span class='rbrace token'>}</span>
   <span class='rbrack token'>]</span>
 <span class='rubyid_end end kw'>end</span>
-</pre>
+</code></pre>
 </div>
       </div>
       <div class="col2">
@@ -160,9 +160,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:03 2012 by 
+  Generated on Wed Feb 13 11:00:23 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

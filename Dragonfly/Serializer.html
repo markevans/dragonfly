@@ -6,7 +6,7 @@
 <title>
   Module: Dragonfly::Serializer
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -113,10 +113,12 @@
     
    
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Serializer/BadString.html" title="Dragonfly::Serializer::BadString (class)">BadString</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Serializer/BadString.html" title="Dragonfly::Serializer::BadString (class)">BadString</a></span>, <span class='object_link'><a href="Serializer/MaliciousString.html" title="Dragonfly::Serializer::MaliciousString (class)">MaliciousString</a></span>
     
   
 </p>
+
+
 
 
 
@@ -157,6 +159,48 @@
   <span class="summary_signature">
     
       <a href="#b64_encode-instance_method" title="#b64_encode (instance method)">- (Object) <strong>b64_encode</strong>(string) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#json_decode-instance_method" title="#json_decode (instance method)">- (Object) <strong>json_decode</strong>(string, opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#json_encode-instance_method" title="#json_encode (instance method)">- (Object) <strong>json_encode</strong>(object) </a>
     
 
     
@@ -238,17 +282,19 @@
       <pre class="lines">
 
 
-16
-17
 18
-19</pre>
+19
+20
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/serializer.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/serializer.rb', line 18</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_b64_decode identifier id'>b64_decode</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span>
   <span class='rubyid_padding_length identifier id'>padding_length</span> <span class='assign token'>=</span> <span class='rubyid_string identifier id'>string</span><span class='dot token'>.</span><span class='rubyid_length identifier id'>length</span> <span class='mod op'>%</span> <span class='integer val'>4</span>
-  <span class='rubyid_Base64 constant id'>Base64</span><span class='dot token'>.</span><span class='rubyid_decode64 identifier id'>decode64</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='dot token'>.</span><span class='rubyid_tr identifier id'>tr</span><span class='lparen token'>(</span><span class='string val'>'~'</span><span class='comma token'>,</span><span class='string val'>'/'</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='string val'>'='</span> <span class='mult op'>*</span> <span class='rubyid_padding_length identifier id'>padding_length</span><span class='rparen token'>)</span>
+  <span class='rubyid_string identifier id'>string</span> <span class='assign token'>=</span> <span class='rubyid_string identifier id'>string</span><span class='dot token'>.</span><span class='rubyid_tr identifier id'>tr</span><span class='lparen token'>(</span><span class='string val'>'~'</span><span class='comma token'>,</span> <span class='string val'>'/'</span><span class='rparen token'>)</span>
+  <span class='rubyid_Base64 constant id'>Base64</span><span class='dot token'>.</span><span class='rubyid_decode64 identifier id'>decode64</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span> <span class='plus op'>+</span> <span class='string val'>'='</span> <span class='mult op'>*</span> <span class='rubyid_padding_length identifier id'>padding_length</span><span class='rparen token'>)</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -269,15 +315,15 @@
       <pre class="lines">
 
 
-12
-13
-14</pre>
+14
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/serializer.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/serializer.rb', line 14</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_b64_encode identifier id'>b64_encode</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span>
-  <span class='rubyid_Base64 constant id'>Base64</span><span class='dot token'>.</span><span class='rubyid_encode64 identifier id'>encode64</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_tr identifier id'>tr</span><span class='lparen token'>(</span><span class='string val'>&quot;\n=&quot;</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_tr identifier id'>tr</span><span class='lparen token'>(</span><span class='string val'>'/'</span><span class='comma token'>,</span><span class='string val'>'~'</span><span class='rparen token'>)</span>
+  <span class='rubyid_Base64 constant id'>Base64</span><span class='dot token'>.</span><span class='rubyid_encode64 identifier id'>encode64</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_tr identifier id'>tr</span><span class='lparen token'>(</span><span class='string val'>&quot;\n=&quot;</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -286,9 +332,9 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="marshal_decode-instance_method">
+  <p class="signature " id="json_decode-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>marshal_decode</strong>(string) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>json_decode</strong>(string, opts = {}) 
   
 
   
@@ -320,17 +366,105 @@
       <pre class="lines">
 
 
-25
-26
-27
-28
-29</pre>
+40
+41
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/serializer.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/serializer.rb', line 40</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_json_decode identifier id'>json_decode</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_MultiJson constant id'>MultiJson</span><span class='dot token'>.</span><span class='rubyid_decode identifier id'>decode</span><span class='lparen token'>(</span><span class='rubyid_b64_decode identifier id'>b64_decode</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:symbolize_keys</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:symbolize_keys</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_MultiJson constant id'>MultiJson</span><span class='colon2 op'>::</span><span class='rubyid_DecodeError constant id'>DecodeError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
+  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_BadString constant id'>BadString</span><span class='comma token'>,</span> <span class='dstring node'>&quot;couldn't decode #{string} - got #{e}&quot;</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="json_encode-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>json_encode</strong>(object) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+36
+37
+38</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/serializer.rb', line 36</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_json_encode identifier id'>json_encode</span><span class='lparen token'>(</span><span class='rubyid_object identifier id'>object</span><span class='rparen token'>)</span>
+  <span class='rubyid_b64_encode identifier id'>b64_encode</span><span class='lparen token'>(</span><span class='rubyid_MultiJson constant id'>MultiJson</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='rubyid_object identifier id'>object</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="marshal_decode-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>marshal_decode</strong>(string) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<h3>Raises:</h3>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Serializer/MaliciousString.html" title="Dragonfly::Serializer::MaliciousString (class)">MaliciousString</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+28
+29
+30
+31
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/serializer.rb', line 28</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_marshal_decode identifier id'>marshal_decode</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span>
-  <span class='rubyid_Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='rubyid_load identifier id'>load</span><span class='lparen token'>(</span><span class='rubyid_b64_decode identifier id'>b64_decode</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rubyid_marshal_string identifier id'>marshal_string</span> <span class='assign token'>=</span> <span class='rubyid_b64_decode identifier id'>b64_decode</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_MaliciousString constant id'>MaliciousString</span><span class='comma token'>,</span> <span class='dstring node'>&quot;potentially malicious marshal string #{marshal_string.inspect}&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_marshal_string identifier id'>marshal_string</span><span class='lbrack token'>[</span><span class='regexp val'>/@[a-z_]/i</span><span class='rbrack token'>]</span>
+  <span class='rubyid_Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='rubyid_load identifier id'>load</span><span class='lparen token'>(</span><span class='rubyid_marshal_string identifier id'>marshal_string</span><span class='rparen token'>)</span>
 <span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_TypeError constant id'>TypeError</span><span class='comma token'>,</span> <span class='rubyid_ArgumentError constant id'>ArgumentError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
   <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_BadString constant id'>BadString</span><span class='comma token'>,</span> <span class='dstring node'>&quot;couldn't decode #{string} - got #{e}&quot;</span>
 <span class='rubyid_end end kw'>end</span>
@@ -353,12 +487,12 @@
       <pre class="lines">
 
 
-21
-22
-23</pre>
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/serializer.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/serializer.rb', line 24</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_marshal_encode identifier id'>marshal_encode</span><span class='lparen token'>(</span><span class='rubyid_object identifier id'>object</span><span class='rparen token'>)</span>
   <span class='rubyid_b64_encode identifier id'>b64_encode</span><span class='lparen token'>(</span><span class='rubyid_Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='rubyid_dump identifier id'>dump</span><span class='lparen token'>(</span><span class='rubyid_object identifier id'>object</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
@@ -381,9 +515,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:06 2012 by 
+  Generated on Wed Feb 13 11:00:26 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

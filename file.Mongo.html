@@ -6,7 +6,7 @@
 <title>
   File: Mongo
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -93,7 +93,7 @@ so you can make use of this with the supplied <span class='object_link'><a href=
 
 <p>In config/initializers/dragonfly.rb:</p>
 
-<pre class="code"><span class='rubyid_require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
+<pre class="code ruby"><code><span class='rubyid_require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
 
 <span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
 
@@ -107,11 +107,11 @@ so you can make use of this with the supplied <span class='object_link'><a href=
 <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_define_macro_on_include identifier id'>define_macro_on_include</span><span class='lparen token'>(</span><span class='rubyid_Mongoid constant id'>Mongoid</span><span class='colon2 op'>::</span><span class='rubyid_Document constant id'>Document</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
 
 <span class='comment val'># ... any other setup, see Rails docs</span>
-</pre>
+</code></pre>
 
 <p>Then in models:</p>
 
-<pre class="code"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Album constant id'>Album</span>
+<pre class="code ruby"><code><span class='rubyid_class class kw'>class</span> <span class='rubyid_Album constant id'>Album</span>
   <span class='rubyid_include identifier id'>include</span> <span class='rubyid_Mongoid constant id'>Mongoid</span><span class='colon2 op'>::</span><span class='rubyid_Document constant id'>Document</span>
 
   <span class='rubyid_field identifier id'>field</span> <span class='symbol val'>:cover_image_uid</span>
@@ -119,7 +119,7 @@ so you can make use of this with the supplied <span class='object_link'><a href=
 
   <span class='comment val'># ...</span>
 <span class='rubyid_end end kw'>end</span>
-</pre>
+</code></pre>
 
 <p>See <a href="file.Models.html" title="Models">Models</a> for more info.</p>
 </div>
@@ -132,9 +132,9 @@ so you can make use of this with the supplied <span class='object_link'><a href=
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:03 2012 by 
+  Generated on Wed Feb 13 11:00:23 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

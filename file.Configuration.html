@@ -6,7 +6,7 @@
 <title>
   File: Configuration
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -82,26 +82,26 @@
 
 <p>Given a Dragonfly app</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:app_name</span><span class='rbrack token'>]</span>
-</pre>
+<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:app_name</span><span class='rbrack token'>]</span>
+</code></pre>
 
 <p>Configuration can either be done using a block...</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
+<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/media/:job'</span>
   <span class='comment val'># ...</span>
 <span class='rubyid_end end kw'>end</span>
-</pre>
+</code></pre>
 
 <p>...or directly...</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/media/:job'</span>
-</pre>
+<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/media/:job'</span>
+</code></pre>
 
 <p>The defaults should be fairly sensible, but you can tweak a number of things if you wish.
 Here is an example of an app with all attributes configured:</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
+<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='rubyid_SomeCustomDataStore constant id'>SomeCustomDataStore</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span> <span class='symbol val'>:egg</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'head'</span>  <span class='comment val'># defaults to FileDataStore</span>
 
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_cache_duration identifier id'>cache_duration</span> <span class='assign token'>=</span> <span class='integer val'>3600</span><span class='mult op'>*</span><span class='integer val'>24</span><span class='mult op'>*</span><span class='integer val'>365</span><span class='mult op'>*</span><span class='integer val'>2</span>                      <span class='comment val'># defaults to 1 year # (1 year)</span>
@@ -157,7 +157,7 @@ Here is an example of an app with all attributes configured:</p>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_identify_command identifier id'>identify_command</span> <span class='assign token'>=</span> <span class='string val'>&quot;/opt/local/bin/identify&quot;</span>        <span class='comment val'># defaults to &quot;identify&quot;</span>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_log_commands identifier id'>log_commands</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>                                 <span class='comment val'># defaults to false</span>
 <span class='rubyid_end end kw'>end</span>
-</pre>
+</code></pre>
 
 <h2>Where is configuration done?</h2>
 
@@ -175,8 +175,8 @@ There are a number that are provided with Dragonfly:</p>
 
 <h2>ImageMagick</h2>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
-</pre>
+<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
+</code></pre>
 
 <p>The <span class='object_link'><a href="Dragonfly/ImageMagick/Config.html" title="Dragonfly::ImageMagick::Config (module)">ImageMagick configuration</a></span> registers the app with the <span class='object_link'><a href="Dragonfly/ImageMagick/Analyser.html" title="Dragonfly::ImageMagick::Analyser (class)">ImageMagick Analyser</a></span>, <span class='object_link'><a href="Dragonfly/ImageMagick/Processor.html" title="Dragonfly::ImageMagick::Processor (class)">ImageMagick Processor</a></span>,
 <span class='object_link'><a href="Dragonfly/ImageMagick/Encoder.html" title="Dragonfly::ImageMagick::Encoder (class)">ImageMagick Encoder</a></span> and <span class='object_link'><a href="Dragonfly/ImageMagick/Generator.html" title="Dragonfly::ImageMagick::Generator (class)">ImageMagick Generator</a></span>, and a number of job shortcuts.</p>
@@ -187,8 +187,8 @@ There are a number that are provided with Dragonfly:</p>
 
 <h2>Rails</h2>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span>
-</pre>
+<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:rails</span><span class='rparen token'>)</span>
+</code></pre>
 
 <p>The <span class='object_link'><a href="Dragonfly/Config/Rails.html" title="Dragonfly::Config::Rails (module)">Rails configuration</a></span> points the log to the Rails logger, configures the file data store root path, sets the url path prefix to '/media', and
 registers the <span class='object_link'><a href="Dragonfly/Analysis/FileCommandAnalyser.html" title="Dragonfly::Analysis::FileCommandAnalyser (class)">FileCommandAnalyser</a></span> for helping with mime_type validations.</p>
@@ -199,7 +199,7 @@ registers the <span class='object_link'><a href="Dragonfly/Analysis/FileCommandA
 
 <p>You can create your own saved configuration with any object that responds to 'apply_configuration':</p>
 
-<pre class="code"><span class='rubyid_module module kw'>module</span> <span class='rubyid_MyConfiguration constant id'>MyConfiguration</span>
+<pre class="code ruby"><code><span class='rubyid_module module kw'>module</span> <span class='rubyid_MyConfiguration constant id'>MyConfiguration</span>
 
   <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_apply_configuration identifier id'>apply_configuration</span><span class='lparen token'>(</span><span class='rubyid_app identifier id'>app</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
     <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
@@ -210,31 +210,31 @@ registers the <span class='object_link'><a href="Dragonfly/Analysis/FileCommandA
   <span class='rubyid_end end kw'>end</span>
 
 <span class='rubyid_end end kw'>end</span>
-</pre>
+</code></pre>
 
 <p>Then to configure:</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='rubyid_MyConfiguration constant id'>MyConfiguration</span><span class='comma token'>,</span> <span class='symbol val'>:any_other</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>     <span class='comment val'># other args get passed through to apply_configuration</span>
-</pre>
+<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='rubyid_MyConfiguration constant id'>MyConfiguration</span><span class='comma token'>,</span> <span class='symbol val'>:any_other</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>     <span class='comment val'># other args get passed through to apply_configuration</span>
+</code></pre>
 
 <p>You can also carry on configuring by passing a block</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='rubyid_MyConfiguration constant id'>MyConfiguration</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
+<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='rubyid_MyConfiguration constant id'>MyConfiguration</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_any_extra identifier id'>any_extra</span> <span class='assign token'>=</span> <span class='symbol val'>:config_here</span>
   <span class='comment val'># ...</span>
 <span class='rubyid_end end kw'>end</span>
-</pre>
+</code></pre>
 
 <p>If you wish to be able to use a symbol to represent your configuration (e.g. for a plugin, etc.) you can register it
 globally as a one-off:</p>
 
-<pre class="code"><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_App constant id'>App</span><span class='dot token'>.</span><span class='rubyid_register_configuration identifier id'>register_configuration</span><span class='lparen token'>(</span><span class='symbol val'>:myconfig</span><span class='rparen token'>)</span><span class='lbrace token'>{</span> <span class='rubyid_My constant id'>My</span><span class='colon2 op'>::</span><span class='rubyid_Saved constant id'>Saved</span><span class='colon2 op'>::</span><span class='rubyid_Configuration constant id'>Configuration</span> <span class='rbrace token'>}</span>
-</pre>
+<pre class="code ruby"><code><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_App constant id'>App</span><span class='dot token'>.</span><span class='rubyid_register_configuration identifier id'>register_configuration</span><span class='lparen token'>(</span><span class='symbol val'>:myconfig</span><span class='rparen token'>)</span><span class='lbrace token'>{</span> <span class='rubyid_My constant id'>My</span><span class='colon2 op'>::</span><span class='rubyid_Saved constant id'>Saved</span><span class='colon2 op'>::</span><span class='rubyid_Configuration constant id'>Configuration</span> <span class='rbrace token'>}</span>
+</code></pre>
 
 <p>Then from then on you can configure Dragonfly apps using</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:myconfig</span><span class='comma token'>,</span> <span class='symbol val'>:any_other</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>
-</pre>
+<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:myconfig</span><span class='comma token'>,</span> <span class='symbol val'>:any_other</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>
+</code></pre>
 </div>
       </div>
       <div class="col2">
@@ -245,9 +245,9 @@ globally as a one-off:</p>
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:03 2012 by 
+  Generated on Wed Feb 13 11:00:23 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

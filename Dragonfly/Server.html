@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::Server
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -134,28 +134,14 @@
 </p>
 
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
 
 
-  
-  
-  
-  
-  
-  
-  
+
+
   <h2>Instance Attribute Summary</h2>
   
   <h3 class="inherited">Attributes included from <span class='object_link'><a href="Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Loggable.html#log_object-instance_method" title="Dragonfly::Loggable#log_object (method)">log_object</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Loggable.html#log_object-instance_method" title="Dragonfly::Loggable#log_object (method)">#log_object</a></span></p>
 
 
 
@@ -497,7 +483,7 @@ or
 <span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_JobNotAllowed constant id'>JobNotAllowed</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
   <span class='rubyid_log identifier id'>log</span><span class='dot token'>.</span><span class='rubyid_warn identifier id'>warn</span><span class='lparen token'>(</span><span class='rubyid_e identifier id'>e</span><span class='dot token'>.</span><span class='rubyid_message identifier id'>message</span><span class='rparen token'>)</span>
   <span class='lbrack token'>[</span><span class='integer val'>403</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='string val'>&quot;Content-Type&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'text/plain'</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='string val'>&quot;Forbidden&quot;</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
-<span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Serializer constant id'>Serializer</span><span class='colon2 op'>::</span><span class='rubyid_BadString constant id'>BadString</span><span class='comma token'>,</span> <span class='rubyid_Job constant id'>Job</span><span class='colon2 op'>::</span><span class='rubyid_InvalidArray constant id'>InvalidArray</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
+<span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Serializer constant id'>Serializer</span><span class='colon2 op'>::</span><span class='rubyid_BadString constant id'>BadString</span><span class='comma token'>,</span> <span class='rubyid_Serializer constant id'>Serializer</span><span class='colon2 op'>::</span><span class='rubyid_MaliciousString constant id'>MaliciousString</span><span class='comma token'>,</span> <span class='rubyid_Job constant id'>Job</span><span class='colon2 op'>::</span><span class='rubyid_InvalidArray constant id'>InvalidArray</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
   <span class='rubyid_log identifier id'>log</span><span class='dot token'>.</span><span class='rubyid_warn identifier id'>warn</span><span class='lparen token'>(</span><span class='rubyid_e identifier id'>e</span><span class='dot token'>.</span><span class='rubyid_message identifier id'>message</span><span class='rparen token'>)</span>
   <span class='lbrack token'>[</span><span class='integer val'>404</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='string val'>'Content-Type'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'text/plain'</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='string val'>'Not found'</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
 <span class='rubyid_end end kw'>end</span>
@@ -560,9 +546,9 @@ or
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:05 2012 by 
+  Generated on Wed Feb 13 11:00:25 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

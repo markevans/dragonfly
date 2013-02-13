@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::ImageMagick::Processor
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -197,41 +197,15 @@
   
 
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
+
   <h2>Instance Attribute Summary</h2>
   
   <h3 class="inherited">Attributes included from <span class='object_link'><a href="../Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Loggable.html#log_object-instance_method" title="Dragonfly::Loggable#log_object (method)">log_object</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="../Loggable.html#log_object-instance_method" title="Dragonfly::Loggable#log_object (method)">#log_object</a></span></p>
 
-  
-  
-  
 
 
 
@@ -562,12 +536,12 @@
       <pre class="lines">
 
 
-102
-103
-104</pre>
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 108</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_convert identifier id'>convert</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_args identifier id'>args</span><span class='assign token'>=</span><span class='string val'>''</span><span class='comma token'>,</span> <span class='rubyid_format identifier id'>format</span><span class='assign token'>=</span><span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span>
   <span class='rubyid_format identifier id'>format</span> <span class='integer val'>? </span><span class='lbrack token'>[</span><span class='rubyid_super super kw'>super</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_format identifier id'>format</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span><span class='rbrace token'>}</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='rubyid_super super kw'>super</span>
@@ -603,12 +577,16 @@
 43
 44
 45
-46</pre>
+46
+47
+48</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 34</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_crop identifier id'>crop</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_Utils constant id'>Utils</span><span class='dot token'>.</span><span class='rubyid_symbolize_keys identifier id'>symbolize_keys</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='rparen token'>)</span>
+
   <span class='rubyid_width identifier id'>width</span>   <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:width</span><span class='rbrack token'>]</span>
   <span class='rubyid_height identifier id'>height</span>  <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:height</span><span class='rbrack token'>]</span>
   <span class='rubyid_gravity identifier id'>gravity</span> <span class='assign token'>=</span> <span class='rubyid_GRAVITIES constant id'>GRAVITIES</span><span class='lbrack token'>[</span><span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:gravity</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
@@ -618,7 +596,7 @@
   <span class='rubyid_y identifier id'>y</span> <span class='assign token'>=</span> <span class='string val'>'+'</span> <span class='plus op'>+</span> <span class='rubyid_y identifier id'>y</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_y identifier id'>y</span><span class='lbrack token'>[</span><span class='regexp val'>/^[+-]/</span><span class='rbrack token'>]</span>
   <span class='rubyid_repage identifier id'>repage</span>  <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:repage</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='rubyid_false false kw'>false</span> <span class='question op'>?</span> <span class='string val'>''</span> <span class='colon op'>:</span> <span class='string val'>'+repage'</span>
   <span class='rubyid_resize identifier id'>resize</span>  <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:resize</span><span class='rbrack token'>]</span>
-    
+
   <span class='rubyid_convert identifier id'>convert</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{&quot;-resize #{resize} &quot; if resize}#{&quot;-gravity #{gravity} &quot; if gravity}-crop #{width}x#{height}#{x}#{y} #{repage}&quot;</span><span class='rparen token'>)</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
@@ -640,12 +618,12 @@
       <pre class="lines">
 
 
-48
-49
-50</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 50</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_flip identifier id'>flip</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
   <span class='rubyid_convert identifier id'>convert</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='string val'>&quot;-flip&quot;</span><span class='rparen token'>)</span>
@@ -669,12 +647,12 @@
       <pre class="lines">
 
 
-52
-53
-54</pre>
+54
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 54</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_flop identifier id'>flop</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
   <span class='rubyid_convert identifier id'>convert</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='string val'>&quot;-flop&quot;</span><span class='rparen token'>)</span>
@@ -702,12 +680,12 @@
       <pre class="lines">
 
 
-56
-57
-58</pre>
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 58</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_greyscale identifier id'>greyscale</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
   <span class='rubyid_convert identifier id'>convert</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='string val'>&quot;-colorspace Gray&quot;</span><span class='rparen token'>)</span>
@@ -760,8 +738,6 @@
       <pre class="lines">
 
 
-61
-62
 63
 64
 65
@@ -773,12 +749,18 @@
 71
 72
 73
-74</pre>
+74
+75
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 63</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_resize_and_crop identifier id'>resize_and_crop</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_Utils constant id'>Utils</span><span class='dot token'>.</span><span class='rubyid_symbolize_keys identifier id'>symbolize_keys</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='rparen token'>)</span>
+
   <span class='rubyid_if if kw'>if</span> <span class='notop op'>!</span><span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:width</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:height</span><span class='rbrack token'>]</span>
     <span class='rubyid_return return kw'>return</span> <span class='rubyid_temp_object identifier id'>temp_object</span>
   <span class='rubyid_elsif elsif kw'>elsif</span> <span class='notop op'>!</span><span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:width</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='notop op'>!</span><span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:height</span><span class='rbrack token'>]</span>
@@ -811,14 +793,18 @@
       <pre class="lines">
 
 
-76
-77
-78</pre>
+80
+81
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 80</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_rotate identifier id'>rotate</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_amount identifier id'>amount</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_Utils constant id'>Utils</span><span class='dot token'>.</span><span class='rubyid_symbolize_keys identifier id'>symbolize_keys</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='rparen token'>)</span>
+
   <span class='rubyid_convert identifier id'>convert</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='dstring node'>&quot;-rotate #{amount}#{opts[:qualifier]}&quot;</span><span class='rparen token'>)</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
@@ -840,12 +826,12 @@
       <pre class="lines">
 
 
-80
-81
-82</pre>
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 86</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_strip identifier id'>strip</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
   <span class='rubyid_convert identifier id'>convert</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='string val'>&quot;-strip&quot;</span><span class='rparen token'>)</span>
@@ -869,12 +855,6 @@
       <pre class="lines">
 
 
-84
-85
-86
-87
-88
-89
 90
 91
 92
@@ -885,24 +865,30 @@
 97
 98
 99
-100</pre>
+100
+101
+102
+103
+104
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/processor.rb', line 90</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_geometry identifier id'>geometry</span><span class='rparen token'>)</span>
   <span class='rubyid_case case kw'>case</span> <span class='rubyid_geometry identifier id'>geometry</span>
   <span class='rubyid_when when kw'>when</span> <span class='rubyid_RESIZE_GEOMETRY constant id'>RESIZE_GEOMETRY</span>
     <span class='rubyid_resize identifier id'>resize</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_geometry identifier id'>geometry</span><span class='rparen token'>)</span>
   <span class='rubyid_when when kw'>when</span> <span class='rubyid_CROPPED_RESIZE_GEOMETRY constant id'>CROPPED_RESIZE_GEOMETRY</span>
-    <span class='rubyid_resize_and_crop identifier id'>resize_and_crop</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$1 nth_ref id'>$1</span><span class='comma token'>,</span> <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$2 nth_ref id'>$2</span><span class='comma token'>,</span> <span class='symbol val'>:gravity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$3 nth_ref id'>$3</span><span class='rparen token'>)</span>
+    <span class='rubyid_resize_and_crop identifier id'>resize_and_crop</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='string val'>'width'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$1 nth_ref id'>$1</span><span class='comma token'>,</span> <span class='string val'>'height'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$2 nth_ref id'>$2</span><span class='comma token'>,</span> <span class='string val'>'gravity'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$3 nth_ref id'>$3</span><span class='rparen token'>)</span>
   <span class='rubyid_when when kw'>when</span> <span class='rubyid_CROP_GEOMETRY constant id'>CROP_GEOMETRY</span>
     <span class='rubyid_crop identifier id'>crop</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span>
-      <span class='symbol val'>:width</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$1 nth_ref id'>$1</span><span class='comma token'>,</span>
-      <span class='symbol val'>:height</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$2 nth_ref id'>$2</span><span class='comma token'>,</span>
-      <span class='symbol val'>:x</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$3 nth_ref id'>$3</span><span class='comma token'>,</span>
-      <span class='symbol val'>:y</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$4 nth_ref id'>$4</span><span class='comma token'>,</span>
-      <span class='symbol val'>:gravity</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$5 nth_ref id'>$5</span>
+      <span class='string val'>'width'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$1 nth_ref id'>$1</span><span class='comma token'>,</span>
+      <span class='string val'>'height'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$2 nth_ref id'>$2</span><span class='comma token'>,</span>
+      <span class='string val'>'x'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$3 nth_ref id'>$3</span><span class='comma token'>,</span>
+      <span class='string val'>'y'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$4 nth_ref id'>$4</span><span class='comma token'>,</span>
+      <span class='string val'>'gravity'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_$5 nth_ref id'>$5</span>
     <span class='rparen token'>)</span>
   <span class='rubyid_else else kw'>else</span> <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Didn't recognise the geometry string #{geometry}&quot;</span>
   <span class='rubyid_end end kw'>end</span>
@@ -925,9 +911,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:07 2012 by 
+  Generated on Wed Feb 13 11:00:28 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

@@ -6,7 +6,7 @@
 <title>
   File: Encoding
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -86,32 +86,32 @@
 
 <p>Let's say we have a Dragonfly app</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
-</pre>
+<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+</code></pre>
 
 <p>and an image object (actually a <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object)...</p>
 
-<pre class="code"><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some/uid'</span><span class='rparen token'>)</span>
-</pre>
+<pre class="code ruby"><code><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some/uid'</span><span class='rparen token'>)</span>
+</code></pre>
 
 <p>...OR a Dragonfly model accessor...</p>
 
-<pre class="code"><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span>
-</pre>
+<pre class="code ruby"><code><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span>
+</code></pre>
 
 <p>We can encode it to any format registered with the encoder.</p>
 
 <h2>Lazy evaluation</h2>
 
-<pre class="code"><span class='rubyid_gif_image identifier id'>gif_image</span> <span class='assign token'>=</span> <span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>
-</pre>
+<pre class="code ruby"><code><span class='rubyid_gif_image identifier id'>gif_image</span> <span class='assign token'>=</span> <span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>
+</code></pre>
 
 <p>doesn't actually do anything until you call something on the returned <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object, like <code>url</code>, <code>data</code>, etc.</p>
 
 <h2>Bang method</h2>
 
-<pre class="code"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_encode! fid id'>encode!</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>
-</pre>
+<pre class="code ruby"><code><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_encode! fid id'>encode!</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>
+</code></pre>
 
 <p>modifies the image object itself, rather than returning a new object.</p>
 
@@ -123,7 +123,7 @@
 
 <p>To register a custom encoder, for e.g. pdf format:</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='rubyid_add identifier id'>add</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_format identifier id'>format</span><span class='bitor op'>|</span>
+<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='rubyid_add identifier id'>add</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_format identifier id'>format</span><span class='bitor op'>|</span>
   <span class='rubyid_throw identifier id'>throw</span> <span class='symbol val'>:unable_to_handle</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_format identifier id'>format</span> <span class='eq op'>==</span> <span class='symbol val'>:pdf</span>
   <span class='comment val'># use temp_object.data, temp_object.path, temp_object.file, etc.</span>
   <span class='rubyid_SomeLibrary constant id'>SomeLibrary</span><span class='dot token'>.</span><span class='rubyid_convert_to_pdf identifier id'>convert_to_pdf</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_data identifier id'>data</span><span class='rparen token'>)</span>
@@ -131,13 +131,13 @@
 <span class='rubyid_end end kw'>end</span>
 
 <span class='rubyid_pdf_image identifier id'>pdf_image</span> <span class='assign token'>=</span> <span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:pdf</span><span class='rparen token'>)</span>
-</pre>
+</code></pre>
 
 <p>If <code>:unable_to_handle</code> is thrown, the next most recently registered encoder is used, and so on.</p>
 
 <p>Alternatively you can create a class like the ImageMagick one above, which implements the method <code>encode</code>, and register this.</p>
 
-<pre class="code"><span class='rubyid_class class kw'>class</span> <span class='rubyid_MyEncoder constant id'>MyEncoder</span>
+<pre class="code ruby"><code><span class='rubyid_class class kw'>class</span> <span class='rubyid_MyEncoder constant id'>MyEncoder</span>
 
   <span class='rubyid_def def kw'>def</span> <span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_format identifier id'>format</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
     <span class='rubyid_SomeLib constant id'>SomeLib</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_data identifier id'>data</span><span class='comma token'>,</span> <span class='rubyid_format identifier id'>format</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
@@ -148,7 +148,7 @@
 <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_encoder identifier id'>encoder</span><span class='dot token'>.</span><span class='rubyid_register identifier id'>register</span><span class='lparen token'>(</span><span class='rubyid_MyEncoder constant id'>MyEncoder</span><span class='rparen token'>)</span>
 
 <span class='rubyid_pdf_image identifier id'>pdf_image</span> <span class='assign token'>=</span> <span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:pdf</span><span class='comma token'>,</span> <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>
-</pre>
+</code></pre>
 </div>
       </div>
       <div class="col2">
@@ -159,9 +159,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:03 2012 by 
+  Generated on Wed Feb 13 11:00:23 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

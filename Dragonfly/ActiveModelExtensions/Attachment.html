@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::ActiveModelExtensions::Attachment
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -136,11 +136,8 @@
 </p>
 
 
-  
-  
-  
-  
-  
+
+
   <h2>Class Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
   <ul class="summary">
     
@@ -303,10 +300,6 @@
 
 
 
-  
-  
-  
-  
 
 
 
@@ -997,7 +990,7 @@
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_model identifier id'>model</span><span class='rparen token'>)</span>
   <span class='rubyid_@model ivar id'>@model</span> <span class='assign token'>=</span> <span class='rubyid_model identifier id'>model</span>
   <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='rubyid_model_uid identifier id'>model_uid</span>
-  <span class='rubyid_set_job_from_uid identifier id'>set_job_from_uid</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_uid identifier id'>uid</span>
+  <span class='rubyid_set_job_from_uid identifier id'>set_job_from_uid</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_uid? fid id'>uid?</span>
   <span class='rubyid_@should_run_callbacks ivar id'>@should_run_callbacks</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>
   <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_ensure_uses_cached_magic_attributes identifier id'>ensure_uses_cached_magic_attributes</span>
 <span class='rubyid_end end kw'>end</span>
@@ -1892,7 +1885,7 @@
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_destroy! fid id'>destroy!</span>
   <span class='rubyid_destroy_previous! fid id'>destroy_previous!</span>
-  <span class='rubyid_destroy_content identifier id'>destroy_content</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_uid identifier id'>uid</span>
+  <span class='rubyid_destroy_content identifier id'>destroy_content</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_uid? fid id'>uid?</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -2072,7 +2065,7 @@
       <pre class="code"><span class="info file"># File 'lib/dragonfly/active_model_extensions/attachment.rb', line 99</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_remote_url identifier id'>remote_url</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_remote_url_for identifier id'>remote_url_for</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_uid identifier id'>uid</span>
+  <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_remote_url_for identifier id'>remote_url_for</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_uid? fid id'>uid?</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -2444,9 +2437,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:08 2012 by 
+  Generated on Wed Feb 13 11:00:29 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

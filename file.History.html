@@ -6,7 +6,7 @@
 <title>
   File: History
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -78,7 +78,31 @@
 
     <div id="content" class="clearfix">
       <div class="col1">
-        <div id='filecontents'><h1>0.9.12 (2012-04-08)</h1>
+        <div id='filecontents'><h1>0.9.14 (2013-02-13)</h1>
+
+<h2>Features</h2>
+
+<ul>
+<li>Attachment#b64_data</li>
+</ul>
+
+<h2>Fixes</h2>
+
+<ul>
+<li>Fix '+' character being converted to ' ' (revert to URI.escape instead of Rack::Utils.escape)</li>
+<li>Support old-style deprecated urls (with a check for malicious ones)</li>
+<li>Handle case where uid is an empty string</li>
+</ul>
+
+<h1>0.9.13 (2013-01-30)</h1>
+
+<h2>Changes</h2>
+
+<ul>
+<li>URLS are encoded/decoded with JSON, not with Marshal</li>
+</ul>
+
+<h1>0.9.12 (2012-04-08)</h1>
 
 <h2>Features</h2>
 
@@ -686,9 +710,9 @@ Can also pass a block to temp_object.file which closes the file automatically</l
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:04 2012 by 
+  Generated on Wed Feb 13 11:00:23 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

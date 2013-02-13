@@ -6,7 +6,7 @@
 <title>
   Module: Dragonfly::ActiveModelExtensions::ClassMethods
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -105,15 +105,10 @@
 
 
 
-  
-  
-  
-  
 
 
-  
-  
-  
+
+
 
 
 
@@ -368,7 +363,7 @@
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_register_dragonfly_app identifier id'>register_dragonfly_app</span><span class='lparen token'>(</span><span class='rubyid_macro_name identifier id'>macro_name</span><span class='comma token'>,</span> <span class='rubyid_app identifier id'>app</span><span class='rparen token'>)</span>
   <span class='lparen token'>(</span><span class='rubyid_class class kw'>class</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_self self kw'>self</span><span class='semicolon token'>;</span> <span class='rubyid_self self kw'>self</span><span class='semicolon token'>;</span> <span class='rubyid_end end kw'>end</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_class_eval identifier id'>class_eval</span> <span class='rubyid_do do kw'>do</span>
-    
+
     <span class='comment val'># Defines e.g. 'image_accessor' for any activemodel class body</span>
     <span class='rubyid_define_method identifier id'>define_method</span> <span class='rubyid_macro_name identifier id'>macro_name</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_config_block identifier id'>config_block</span><span class='bitor op'>|</span>
 
@@ -378,7 +373,7 @@
 
       <span class='comment val'># Register the new attribute</span>
       <span class='rubyid_dragonfly_attachment_classes identifier id'>dragonfly_attachment_classes</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_new_dragonfly_attachment_class identifier id'>new_dragonfly_attachment_class</span><span class='lparen token'>(</span><span class='rubyid_attribute identifier id'>attribute</span><span class='comma token'>,</span> <span class='rubyid_app identifier id'>app</span><span class='comma token'>,</span> <span class='rubyid_config_block identifier id'>config_block</span><span class='rparen token'>)</span>
-      
+
       <span class='comment val'># Define the setter for the attribute</span>
       <span class='rubyid_define_method identifier id'>define_method</span> <span class='dstring node'>&quot;#{attribute}=&quot;</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_value identifier id'>value</span><span class='bitor op'>|</span>
         <span class='rubyid_dragonfly_attachments identifier id'>dragonfly_attachments</span><span class='lbrack token'>[</span><span class='rubyid_attribute identifier id'>attribute</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_assign identifier id'>assign</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
@@ -416,24 +411,24 @@
       <span class='rubyid_define_method identifier id'>define_method</span> <span class='dstring node'>&quot;retained_#{attribute}=&quot;</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_string identifier id'>string</span><span class='bitor op'>|</span>
         <span class='rubyid_unless unless kw'>unless</span> <span class='rubyid_string identifier id'>string</span><span class='dot token'>.</span><span class='rubyid_blank? fid id'>blank?</span>
           <span class='rubyid_begin begin kw'>begin</span>
-            <span class='rubyid_dragonfly_attachments identifier id'>dragonfly_attachments</span><span class='lbrack token'>[</span><span class='rubyid_attribute identifier id'>attribute</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_retained_attrs identifier id'>retained_attrs</span> <span class='assign token'>=</span> <span class='rubyid_Serializer constant id'>Serializer</span><span class='dot token'>.</span><span class='rubyid_marshal_decode identifier id'>marshal_decode</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span>
+            <span class='rubyid_dragonfly_attachments identifier id'>dragonfly_attachments</span><span class='lbrack token'>[</span><span class='rubyid_attribute identifier id'>attribute</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_retained_attrs identifier id'>retained_attrs</span> <span class='assign token'>=</span> <span class='rubyid_Serializer constant id'>Serializer</span><span class='dot token'>.</span><span class='rubyid_json_decode identifier id'>json_decode</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='comma token'>,</span> <span class='symbol val'>:symbolize_keys</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='rparen token'>)</span>
           <span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Serializer constant id'>Serializer</span><span class='colon2 op'>::</span><span class='rubyid_BadString constant id'>BadString</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
-            <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_log identifier id'>log</span><span class='dot token'>.</span><span class='rubyid_warn identifier id'>warn</span><span class='lparen token'>(</span><span class='dstring node'>&quot;*** WARNING ***: couldn't update attachment with serialized retained_#{attribute} string #{string.inspect}&quot;</span><span class='rparen token'>)</span>              
+            <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_log identifier id'>log</span><span class='dot token'>.</span><span class='rubyid_warn identifier id'>warn</span><span class='lparen token'>(</span><span class='dstring node'>&quot;*** WARNING ***: couldn't update attachment with serialized retained_#{attribute} string #{string.inspect}&quot;</span><span class='rparen token'>)</span>
           <span class='rubyid_end end kw'>end</span>
         <span class='rubyid_end end kw'>end</span>
         <span class='rubyid_dragonfly_attachments identifier id'>dragonfly_attachments</span><span class='lbrack token'>[</span><span class='rubyid_attribute identifier id'>attribute</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_should_retain identifier id'>should_retain</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>
         <span class='rubyid_dragonfly_attachments identifier id'>dragonfly_attachments</span><span class='lbrack token'>[</span><span class='rubyid_attribute identifier id'>attribute</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_retain! fid id'>retain!</span>
         <span class='rubyid_string identifier id'>string</span>
       <span class='rubyid_end end kw'>end</span>
-      
+
       <span class='comment val'># Define the retained getter</span>
       <span class='rubyid_define_method identifier id'>define_method</span> <span class='dstring node'>&quot;retained_#{attribute}&quot;</span> <span class='rubyid_do do kw'>do</span>
         <span class='rubyid_attrs identifier id'>attrs</span> <span class='assign token'>=</span> <span class='rubyid_dragonfly_attachments identifier id'>dragonfly_attachments</span><span class='lbrack token'>[</span><span class='rubyid_attribute identifier id'>attribute</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_retained_attrs identifier id'>retained_attrs</span>
-        <span class='rubyid_Serializer constant id'>Serializer</span><span class='dot token'>.</span><span class='rubyid_marshal_encode identifier id'>marshal_encode</span><span class='lparen token'>(</span><span class='rubyid_attrs identifier id'>attrs</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_attrs identifier id'>attrs</span>
+        <span class='rubyid_Serializer constant id'>Serializer</span><span class='dot token'>.</span><span class='rubyid_json_encode identifier id'>json_encode</span><span class='lparen token'>(</span><span class='rubyid_attrs identifier id'>attrs</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_attrs identifier id'>attrs</span>
       <span class='rubyid_end end kw'>end</span>
-      
+
     <span class='rubyid_end end kw'>end</span>
-    
+
   <span class='rubyid_end end kw'>end</span>
   <span class='rubyid_app identifier id'>app</span>
 <span class='rubyid_end end kw'>end</span>
@@ -455,9 +450,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:09 2012 by 
+  Generated on Wed Feb 13 11:00:29 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

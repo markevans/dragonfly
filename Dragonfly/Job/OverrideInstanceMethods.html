@@ -6,7 +6,7 @@
 <title>
   Module: Dragonfly::Job::OverrideInstanceMethods
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -114,6 +114,8 @@ Think of it as like a normal instance method but with a css-like !important afte
   
 
 </div>
+
+
 
 
 
@@ -213,13 +215,13 @@ Think of it as like a normal instance method but with a css-like !important afte
       <pre class="lines">
 
 
-191
-192
-193
-194</pre>
+202
+203
+204
+205</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 191</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 202</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_format identifier id'>format</span>
   <span class='rubyid_apply identifier id'>apply</span>
@@ -244,12 +246,12 @@ Think of it as like a normal instance method but with a css-like !important afte
       <pre class="lines">
 
 
-196
-197
-198</pre>
+207
+208
+209</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 196</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 207</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_mime_type identifier id'>mime_type</span>
   <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_mime_type_for identifier id'>mime_type_for</span><span class='lparen token'>(</span><span class='rubyid_format identifier id'>format</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='rubyid_analyse identifier id'>analyse</span><span class='lparen token'>(</span><span class='symbol val'>:mime_type</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fallback_mime_type identifier id'>fallback_mime_type</span>
@@ -273,12 +275,12 @@ Think of it as like a normal instance method but with a css-like !important afte
       <pre class="lines">
 
 
-200
-201
-202</pre>
+211
+212
+213</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 200</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 211</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_to_s identifier id'>to_s</span>
   <span class='rubyid_super super kw'>super</span><span class='dot token'>.</span><span class='rubyid_sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/#&lt;Class:\w+&gt;/</span><span class='comma token'>,</span> <span class='string val'>'Extended Dragonfly::Job'</span><span class='rparen token'>)</span>
@@ -301,9 +303,9 @@ Think of it as like a normal instance method but with a css-like !important afte
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:05 2012 by 
+  Generated on Wed Feb 13 11:00:25 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

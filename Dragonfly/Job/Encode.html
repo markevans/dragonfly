@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::Job::Encode
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -118,19 +118,14 @@
 
 
 
-  
-  
-  
-  
 
 
-  
-  
-  
+
+
   <h2>Instance Attribute Summary</h2>
   
   <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="Step.html" title="Dragonfly::Job::Step (class)">Step</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Step.html#args-instance_method" title="Dragonfly::Job::Step#args (method)">args</a></span>, <span class='object_link'><a href="Step.html#job-instance_method" title="Dragonfly::Job::Step#job (method)">job</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Step.html#args-instance_method" title="Dragonfly::Job::Step#args (method)">#args</a></span>, <span class='object_link'><a href="Step.html#job-instance_method" title="Dragonfly::Job::Step#job (method)">#job</a></span></p>
 
 
 
@@ -357,7 +352,7 @@
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 88</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_format identifier id'>format</span>
-  <span class='rubyid_args identifier id'>args</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span>
+  <span class='rubyid_args identifier id'>args</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -406,9 +401,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:04 2012 by 
+  Generated on Wed Feb 13 11:00:24 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

@@ -6,7 +6,7 @@
 <title>
   File: Sinatra
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -82,12 +82,12 @@
 
 <p>You can use <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span>'s <code>to_response</code> method like so:</p>
 
-<pre class="code"><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
+<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
 
 <span class='rubyid_get identifier id'>get</span> <span class='string val'>'/images/:size.:format'</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_size identifier id'>size</span><span class='comma token'>,</span> <span class='rubyid_format identifier id'>format</span><span class='bitor op'>|</span>
   <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch_file identifier id'>fetch_file</span><span class='lparen token'>(</span><span class='string val'>'~/some/image.png'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='rubyid_size identifier id'>size</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='rubyid_format identifier id'>format</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_response identifier id'>to_response</span><span class='lparen token'>(</span><span class='rubyid_env identifier id'>env</span><span class='rparen token'>)</span>
 <span class='rubyid_end end kw'>end</span>
-</pre>
+</code></pre>
 
 <p><code>to_response</code> returns a rack-style response array with status, headers and body.</p>
 
@@ -96,7 +96,7 @@ a path segment.</p>
 
 <p>or you can mount as a middleware, like in rails:</p>
 
-<pre class="code"><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
+<pre class="code ruby"><code><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_url_format identifier id'>url_format</span> <span class='assign token'>=</span> <span class='string val'>'/media/:job'</span>
 <span class='rubyid_end end kw'>end</span>
 
@@ -104,7 +104,7 @@ a path segment.</p>
 
 <span class='rubyid_get identifier id'>get</span> <span class='string val'>'/'</span> <span class='comment val'>#... do</span>
   <span class='comment val'># ...</span>
-</pre>
+</code></pre>
 </div>
       </div>
       <div class="col2">
@@ -115,9 +115,9 @@ a path segment.</p>
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:03 2012 by 
+  Generated on Wed Feb 13 11:00:23 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

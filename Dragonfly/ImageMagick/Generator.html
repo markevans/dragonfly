@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::ImageMagick::Generator
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -173,41 +173,15 @@
   
 
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
+
   <h2>Instance Attribute Summary</h2>
   
   <h3 class="inherited">Attributes included from <span class='object_link'><a href="../Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Loggable.html#log_object-instance_method" title="Dragonfly::Loggable#log_object (method)">log_object</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="../Loggable.html#log_object-instance_method" title="Dragonfly::Loggable#log_object (method)">#log_object</a></span></p>
 
-  
-  
-  
 
 
 
@@ -345,12 +319,16 @@
 45
 46
 47
-48</pre>
+48
+49
+50</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/generator.rb', line 42</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_plain identifier id'>plain</span><span class='lparen token'>(</span><span class='rubyid_width identifier id'>width</span><span class='comma token'>,</span> <span class='rubyid_height identifier id'>height</span><span class='comma token'>,</span> <span class='rubyid_colour identifier id'>colour</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_Utils constant id'>Utils</span><span class='dot token'>.</span><span class='rubyid_symbolize_keys identifier id'>symbolize_keys</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='rparen token'>)</span>
+
   <span class='rubyid_format identifier id'>format</span> <span class='assign token'>=</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:format</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>'png'</span>
   <span class='lbrack token'>[</span>
     <span class='rubyid_convert identifier id'>convert</span><span class='lparen token'>(</span><span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='dstring node'>&quot;-size #{width}x#{height} xc:#{colour}&quot;</span><span class='comma token'>,</span> <span class='rubyid_format identifier id'>format</span><span class='rparen token'>)</span><span class='comma token'>,</span>
@@ -376,15 +354,15 @@
       <pre class="lines">
 
 
-50
-51
 52
 53
 54
-55</pre>
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/generator.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/generator.rb', line 52</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_plasma identifier id'>plasma</span><span class='lparen token'>(</span><span class='rubyid_width identifier id'>width</span><span class='comma token'>,</span> <span class='rubyid_height identifier id'>height</span><span class='comma token'>,</span> <span class='rubyid_format identifier id'>format</span><span class='assign token'>=</span><span class='string val'>'png'</span><span class='rparen token'>)</span>
   <span class='lbrack token'>[</span>
@@ -411,8 +389,6 @@
       <pre class="lines">
 
 
-57
-58
 59
 60
 61
@@ -460,10 +436,12 @@
 103
 104
 105
-106</pre>
+106
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/generator.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/image_magick/generator.rb', line 59</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_text identifier id'>text</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_opts identifier id'>opts</span> <span class='assign token'>=</span> <span class='rubyid_HashWithCssStyleKeys constant id'>HashWithCssStyleKeys</span><span class='lbrack token'>[</span><span class='rubyid_opts identifier id'>opts</span><span class='rbrack token'>]</span>
@@ -533,9 +511,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:07 2012 by 
+  Generated on Wed Feb 13 11:00:28 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

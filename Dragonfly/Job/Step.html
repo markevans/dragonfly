@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::Job::Step
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -118,6 +118,8 @@
   <h2>Direct Known Subclasses</h2>
   <p class="children"><span class='object_link'><a href="Encode.html" title="Dragonfly::Job::Encode (class)">Encode</a></span>, <span class='object_link'><a href="Fetch.html" title="Dragonfly::Job::Fetch (class)">Fetch</a></span>, <span class='object_link'><a href="FetchFile.html" title="Dragonfly::Job::FetchFile (class)">FetchFile</a></span>, <span class='object_link'><a href="FetchUrl.html" title="Dragonfly::Job::FetchUrl (class)">FetchUrl</a></span>, <span class='object_link'><a href="Generate.html" title="Dragonfly::Job::Generate (class)">Generate</a></span>, <span class='object_link'><a href="Process.html" title="Dragonfly::Job::Process (class)">Process</a></span></p>
 </div>
+
+
 
 
   <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
@@ -204,7 +206,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Dragonfly::Job::Fetch -&gt; :f.</p>
+    <span class="summary_desc"><div class='inline'><p>Dragonfly::Job::Fetch -&gt; 'f'.</p>
 </div></span>
   
 </li>
@@ -482,7 +484,7 @@
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>Dragonfly::Job::Fetch -&gt; :f</p>
+    <p>Dragonfly::Job::Fetch -&gt; 'f'</p>
 
 
   </div>
@@ -504,7 +506,7 @@
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 39</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_abbreviation identifier id'>abbreviation</span>
-  <span class='rubyid_@abbreviation ivar id'>@abbreviation</span> <span class='opasgn op'>||=</span> <span class='rubyid_basename identifier id'>basename</span><span class='dot token'>.</span><span class='rubyid_scan identifier id'>scan</span><span class='lparen token'>(</span><span class='regexp val'>/[A-Z]/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='dot token'>.</span><span class='rubyid_downcase identifier id'>downcase</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
+  <span class='rubyid_@abbreviation ivar id'>@abbreviation</span> <span class='opasgn op'>||=</span> <span class='rubyid_basename identifier id'>basename</span><span class='dot token'>.</span><span class='rubyid_scan identifier id'>scan</span><span class='lparen token'>(</span><span class='regexp val'>/[A-Z]/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='dot token'>.</span><span class='rubyid_downcase identifier id'>downcase</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -674,9 +676,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:04 2012 by 
+  Generated on Wed Feb 13 11:00:24 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

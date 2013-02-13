@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::Job
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -152,7 +152,8 @@
   
 
 
-  
+
+
   <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
   <ul class="summary">
     
@@ -260,7 +261,6 @@
 
 
 
-  
 
 
 
@@ -1035,17 +1035,17 @@
       <pre class="lines">
 
 
-206
-207
-208
-209
-210
-211
-212
-213</pre>
+217
+218
+219
+220
+221
+222
+223
+224</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 206</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 217</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_app identifier id'>app</span><span class='comma token'>,</span> <span class='rubyid_content identifier id'>content</span><span class='assign token'>=</span><span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_meta identifier id'>meta</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='rubyid_url_attrs identifier id'>url_attrs</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_@app ivar id'>@app</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span>
@@ -1092,12 +1092,12 @@
       <pre class="lines">
 
 
-222
-223
-224</pre>
+233
+234
+235</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 222</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 233</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_app identifier id'>app</span>
   <span class='rubyid_@app ivar id'>@app</span>
@@ -1134,12 +1134,12 @@
       <pre class="lines">
 
 
-222
-223
-224</pre>
+233
+234
+235</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 222</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 233</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_steps identifier id'>steps</span>
   <span class='rubyid_@steps ivar id'>@steps</span>
@@ -1176,12 +1176,12 @@
       <pre class="lines">
 
 
-223
-224
-225</pre>
+234
+235
+236</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 223</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 234</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_temp_object identifier id'>temp_object</span>
   <span class='rubyid_@temp_object ivar id'>@temp_object</span>
@@ -1218,12 +1218,12 @@
       <pre class="lines">
 
 
-315
-316
-317</pre>
+326
+327
+328</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 315</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 326</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_url_attrs identifier id'>url_attrs</span>
   <span class='rubyid_@url_attrs ivar id'>@url_attrs</span>
@@ -1254,15 +1254,25 @@
       <pre class="lines">
 
 
-168
-169
-170</pre>
+174
+175
+176
+177
+178
+179
+180
+181</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 174</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_deserialize identifier id'>deserialize</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='comma token'>,</span> <span class='rubyid_app identifier id'>app</span><span class='rparen token'>)</span>
-  <span class='rubyid_from_a identifier id'>from_a</span><span class='lparen token'>(</span><span class='rubyid_Serializer constant id'>Serializer</span><span class='dot token'>.</span><span class='rubyid_marshal_decode identifier id'>marshal_decode</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_app identifier id'>app</span><span class='rparen token'>)</span>
+  <span class='rubyid_array identifier id'>array</span> <span class='assign token'>=</span> <span class='rubyid_begin begin kw'>begin</span>
+    <span class='rubyid_Serializer constant id'>Serializer</span><span class='dot token'>.</span><span class='rubyid_json_decode identifier id'>json_decode</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Serializer constant id'>Serializer</span><span class='colon2 op'>::</span><span class='rubyid_BadString constant id'>BadString</span>
+    <span class='rubyid_Serializer constant id'>Serializer</span><span class='dot token'>.</span><span class='rubyid_marshal_decode identifier id'>marshal_decode</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span> <span class='comment val'># legacy strings</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_from_a identifier id'>from_a</span><span class='lparen token'>(</span><span class='rubyid_array identifier id'>array</span><span class='comma token'>,</span> <span class='rubyid_app identifier id'>app</span><span class='rparen token'>)</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -1305,30 +1315,30 @@
       <pre class="lines">
 
 
-155
-156
-157
-158
-159
-160
 161
 162
 163
 164
 165
-166</pre>
+166
+167
+168
+169
+170
+171
+172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 161</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_from_a identifier id'>from_a</span><span class='lparen token'>(</span><span class='rubyid_steps_array identifier id'>steps_array</span><span class='comma token'>,</span> <span class='rubyid_app identifier id'>app</span><span class='rparen token'>)</span>
   <span class='rubyid_unless unless kw'>unless</span> <span class='rubyid_steps_array identifier id'>steps_array</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Array constant id'>Array</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span>
-         <span class='rubyid_steps_array identifier id'>steps_array</span><span class='dot token'>.</span><span class='rubyid_all? fid id'>all?</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_s identifier id'>s</span><span class='bitor op'>|</span> <span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Array constant id'>Array</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_step_abbreviations identifier id'>step_abbreviations</span><span class='lbrack token'>[</span><span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span><span class='rbrack token'>]</span> <span class='rbrace token'>}</span>
+         <span class='rubyid_steps_array identifier id'>steps_array</span><span class='dot token'>.</span><span class='rubyid_all? fid id'>all?</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_s identifier id'>s</span><span class='bitor op'>|</span> <span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Array constant id'>Array</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_step_abbreviations identifier id'>step_abbreviations</span><span class='lbrack token'>[</span><span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rbrack token'>]</span> <span class='rbrace token'>}</span>
     <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_InvalidArray constant id'>InvalidArray</span><span class='comma token'>,</span> <span class='dstring node'>&quot;can't define a job from #{steps_array.inspect}&quot;</span>
   <span class='rubyid_end end kw'>end</span>
   <span class='rubyid_job identifier id'>job</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_new_job identifier id'>new_job</span>
   <span class='rubyid_steps_array identifier id'>steps_array</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_step_array identifier id'>step_array</span><span class='bitor op'>|</span>
-    <span class='rubyid_step_class identifier id'>step_class</span> <span class='assign token'>=</span> <span class='rubyid_step_abbreviations identifier id'>step_abbreviations</span><span class='lbrack token'>[</span><span class='rubyid_step_array identifier id'>step_array</span><span class='dot token'>.</span><span class='rubyid_shift identifier id'>shift</span><span class='rbrack token'>]</span>
+    <span class='rubyid_step_class identifier id'>step_class</span> <span class='assign token'>=</span> <span class='rubyid_step_abbreviations identifier id'>step_abbreviations</span><span class='lbrack token'>[</span><span class='rubyid_step_array identifier id'>step_array</span><span class='dot token'>.</span><span class='rubyid_shift identifier id'>shift</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rbrack token'>]</span>
     <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_steps identifier id'>steps</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_step_class identifier id'>step_class</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_step_array identifier id'>step_array</span><span class='rparen token'>)</span>
   <span class='rubyid_end end kw'>end</span>
   <span class='rubyid_job identifier id'>job</span>
@@ -1352,12 +1362,12 @@
       <pre class="lines">
 
 
-172
-173
-174</pre>
+183
+184
+185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 183</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_step_abbreviations identifier id'>step_abbreviations</span>
   <span class='rubyid_@step_abbreviations ivar id'>@step_abbreviations</span> <span class='opasgn op'>||=</span> <span class='rubyid_STEPS constant id'>STEPS</span><span class='dot token'>.</span><span class='rubyid_inject identifier id'>inject</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_hash identifier id'>hash</span><span class='comma token'>,</span> <span class='rubyid_step_class identifier id'>step_class</span><span class='bitor op'>|</span> <span class='rubyid_hash identifier id'>hash</span><span class='lbrack token'>[</span><span class='rubyid_step_class identifier id'>step_class</span><span class='dot token'>.</span><span class='rubyid_abbreviation identifier id'>abbreviation</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_step_class identifier id'>step_class</span><span class='semicolon token'>;</span> <span class='rubyid_hash identifier id'>hash</span> <span class='rbrace token'>}</span>
@@ -1381,12 +1391,12 @@
       <pre class="lines">
 
 
-176
-177
-178</pre>
+187
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 187</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_step_names identifier id'>step_names</span>
   <span class='rubyid_@step_names ivar id'>@step_names</span> <span class='opasgn op'>||=</span> <span class='rubyid_STEPS constant id'>STEPS</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_step_class identifier id'>step_class</span><span class='bitor op'>|</span> <span class='rubyid_step_class identifier id'>step_class</span><span class='dot token'>.</span><span class='rubyid_step_name identifier id'>step_name</span> <span class='rbrace token'>}</span>
@@ -1416,12 +1426,12 @@
       <pre class="lines">
 
 
-246
-247
-248</pre>
+257
+258
+259</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 246</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 257</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_analyse identifier id'>analyse</span><span class='lparen token'>(</span><span class='rubyid_method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='rubyid_analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='rubyid_analyse identifier id'>analyse</span><span class='lparen token'>(</span><span class='rubyid_result identifier id'>result</span><span class='comma token'>,</span> <span class='rubyid_method identifier id'>method</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
@@ -1467,12 +1477,12 @@
       <pre class="lines">
 
 
-258
-259
-260</pre>
+269
+270
+271</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 258</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 269</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_applied? fid id'>applied?</span>
   <span class='rubyid_next_step_index identifier id'>next_step_index</span> <span class='eq op'>==</span> <span class='rubyid_steps identifier id'>steps</span><span class='dot token'>.</span><span class='rubyid_length identifier id'>length</span>
@@ -1496,12 +1506,12 @@
       <pre class="lines">
 
 
-262
-263
-264</pre>
+273
+274
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 262</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 273</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_applied_steps identifier id'>applied_steps</span>
   <span class='rubyid_steps identifier id'>steps</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='dot3 op'>...</span><span class='rubyid_next_step_index identifier id'>next_step_index</span><span class='rbrack token'>]</span>
@@ -1535,14 +1545,14 @@
       <pre class="lines">
 
 
-252
-253
-254
-255
-256</pre>
+263
+264
+265
+266
+267</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 252</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 263</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_apply identifier id'>apply</span>
   <span class='rubyid_pending_steps identifier id'>pending_steps</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_step identifier id'>step</span><span class='bitor op'>|</span> <span class='rubyid_step identifier id'>step</span><span class='dot token'>.</span><span class='rubyid_apply identifier id'>apply</span> <span class='rbrace token'>}</span>
@@ -1568,12 +1578,12 @@
       <pre class="lines">
 
 
-317
-318
-319</pre>
+328
+329
+330</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 317</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 328</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_b64_data identifier id'>b64_data</span>
   <span class='dstring node'>&quot;data:#{mime_type};base64,#{Base64.encode64(data)}&quot;</span>
@@ -1597,13 +1607,13 @@
       <pre class="lines">
 
 
-392
-393
-394
-395</pre>
+403
+404
+405
+406</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 392</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 403</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_close identifier id'>close</span>
   <span class='rubyid_previous_temp_objects identifier id'>previous_temp_objects</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='bitor op'>|</span> <span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span> <span class='rbrace token'>}</span>
@@ -1628,12 +1638,12 @@
       <pre class="lines">
 
 
-365
-366
-367</pre>
+376
+377
+378</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 365</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 376</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_encode_step identifier id'>encode_step</span>
   <span class='rubyid_last_step_of_type identifier id'>last_step_of_type</span><span class='lparen token'>(</span><span class='rubyid_Encode constant id'>Encode</span><span class='rparen token'>)</span>
@@ -1657,12 +1667,12 @@
       <pre class="lines">
 
 
-353
-354
-355</pre>
+364
+365
+366</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 353</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 364</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_fetch_file_step identifier id'>fetch_file_step</span>
   <span class='rubyid_last_step_of_type identifier id'>last_step_of_type</span><span class='lparen token'>(</span><span class='rubyid_FetchFile constant id'>FetchFile</span><span class='rparen token'>)</span>
@@ -1686,12 +1696,12 @@
       <pre class="lines">
 
 
-345
-346
-347</pre>
+356
+357
+358</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 345</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 356</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_fetch_step identifier id'>fetch_step</span>
   <span class='rubyid_last_step_of_type identifier id'>last_step_of_type</span><span class='lparen token'>(</span><span class='rubyid_Fetch constant id'>Fetch</span><span class='rparen token'>)</span>
@@ -1715,12 +1725,12 @@
       <pre class="lines">
 
 
-357
-358
-359</pre>
+368
+369
+370</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 357</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 368</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_fetch_url_step identifier id'>fetch_url_step</span>
   <span class='rubyid_last_step_of_type identifier id'>last_step_of_type</span><span class='lparen token'>(</span><span class='rubyid_FetchUrl constant id'>FetchUrl</span><span class='rparen token'>)</span>
@@ -1744,12 +1754,12 @@
       <pre class="lines">
 
 
-349
-350
-351</pre>
+360
+361
+362</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 349</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 360</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_generate_step identifier id'>generate_step</span>
   <span class='rubyid_last_step_of_type identifier id'>last_step_of_type</span><span class='lparen token'>(</span><span class='rubyid_Generate constant id'>Generate</span><span class='rparen token'>)</span>
@@ -1783,14 +1793,14 @@
       <pre class="lines">
 
 
-216
-217
-218
-219
-220</pre>
+227
+228
+229
+230
+231</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 216</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 227</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize_copy identifier id'>initialize_copy</span><span class='lparen token'>(</span><span class='rubyid_other identifier id'>other</span><span class='rparen token'>)</span>
   <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_steps identifier id'>steps</span> <span class='assign token'>=</span> <span class='rubyid_other identifier id'>other</span><span class='dot token'>.</span><span class='rubyid_steps identifier id'>steps</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_step identifier id'>step</span><span class='bitor op'>|</span>
@@ -1816,12 +1826,12 @@
       <pre class="lines">
 
 
-380
-381
-382</pre>
+391
+392
+393</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 380</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 391</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_inspect identifier id'>inspect</span>
   <span class='dstring node'>&quot;&lt;Dragonfly::Job app=#{app.name.inspect}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} &gt;&quot;</span>
@@ -1845,12 +1855,12 @@
       <pre class="lines">
 
 
-266
-267
-268</pre>
+277
+278
+279</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 266</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 277</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_pending_steps identifier id'>pending_steps</span>
   <span class='rubyid_steps identifier id'>steps</span><span class='lbrack token'>[</span><span class='rubyid_next_step_index identifier id'>next_step_index</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rbrack token'>]</span>
@@ -1874,12 +1884,12 @@
       <pre class="lines">
 
 
-361
-362
-363</pre>
+372
+373
+374</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 361</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 372</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_process_steps identifier id'>process_steps</span>
   <span class='rubyid_steps identifier id'>steps</span><span class='dot token'>.</span><span class='rubyid_select identifier id'>select</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_s identifier id'>s</span><span class='bitor op'>|</span> <span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Process constant id'>Process</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
@@ -1903,15 +1913,15 @@
       <pre class="lines">
 
 
-282
-283
-284</pre>
+293
+294
+295</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 282</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 293</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_serialize identifier id'>serialize</span>
-  <span class='rubyid_Serializer constant id'>Serializer</span><span class='dot token'>.</span><span class='rubyid_marshal_encode identifier id'>marshal_encode</span><span class='lparen token'>(</span><span class='rubyid_to_a identifier id'>to_a</span><span class='rparen token'>)</span>
+  <span class='rubyid_Serializer constant id'>Serializer</span><span class='dot token'>.</span><span class='rubyid_json_encode identifier id'>json_encode</span><span class='lparen token'>(</span><span class='rubyid_to_a identifier id'>to_a</span><span class='rparen token'>)</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -1932,12 +1942,12 @@
       <pre class="lines">
 
 
-290
-291
-292</pre>
+301
+302
+303</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 290</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 301</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_sha identifier id'>sha</span>
   <span class='rubyid_Digest constant id'>Digest</span><span class='colon2 op'>::</span><span class='rubyid_SHA1 constant id'>SHA1</span><span class='dot token'>.</span><span class='rubyid_hexdigest identifier id'>hexdigest</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{to_unique_s}#{app.secret}&quot;</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='dot3 op'>...</span><span class='integer val'>8</span><span class='rbrack token'>]</span>
@@ -1961,12 +1971,12 @@
       <pre class="lines">
 
 
-369
-370
-371</pre>
+380
+381
+382</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 369</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 380</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_step_types identifier id'>step_types</span>
   <span class='rubyid_steps identifier id'>steps</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_s identifier id'>s</span><span class='bitor op'>|</span> <span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_step_name identifier id'>step_name</span> <span class='rbrace token'>}</span>
@@ -2000,13 +2010,13 @@
       <pre class="lines">
 
 
-375
-376
-377
-378</pre>
+386
+387
+388
+389</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 375</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 386</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_temp_object identifier id'>temp_object</span> <span class='assign token'>=</span> <span class='rubyid_result identifier id'>result</span>
@@ -2031,14 +2041,14 @@
       <pre class="lines">
 
 
-270
-271
-272
-273
-274</pre>
+281
+282
+283
+284
+285</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 270</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 281</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_to_a identifier id'>to_a</span>
   <span class='rubyid_steps identifier id'>steps</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_step identifier id'>step</span><span class='bitor op'>|</span>
@@ -2074,12 +2084,12 @@
       <pre class="lines">
 
 
-323
-324
-325</pre>
+334
+335
+336</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 323</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 334</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_to_app identifier id'>to_app</span>
   <span class='rubyid_JobEndpoint constant id'>JobEndpoint</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span>
@@ -2103,15 +2113,15 @@
       <pre class="lines">
 
 
-331
-332
-333
-334
-335
-336</pre>
+342
+343
+344
+345
+346
+347</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 331</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 342</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_to_fetched_job identifier id'>to_fetched_job</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
   <span class='rubyid_new_job identifier id'>new_job</span> <span class='assign token'>=</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_app identifier id'>app</span><span class='comma token'>,</span> <span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_meta identifier id'>meta</span><span class='comma token'>,</span> <span class='rubyid_url_attrs identifier id'>url_attrs</span><span class='rparen token'>)</span>
@@ -2138,12 +2148,12 @@
       <pre class="lines">
 
 
-327
-328
-329</pre>
+338
+339
+340</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 327</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 338</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_to_response identifier id'>to_response</span><span class='lparen token'>(</span><span class='rubyid_env identifier id'>env</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='string val'>&quot;REQUEST_METHOD&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;GET&quot;</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_to_app identifier id'>to_app</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_env identifier id'>env</span><span class='rparen token'>)</span>
@@ -2177,12 +2187,12 @@
       <pre class="lines">
 
 
-278
-279
-280</pre>
+289
+290
+291</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 278</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 289</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_to_unique_s identifier id'>to_unique_s</span>
   <span class='rubyid_to_a identifier id'>to_a</span><span class='dot token'>.</span><span class='rubyid_to_dragonfly_unique_s identifier id'>to_dragonfly_unique_s</span>
@@ -2216,13 +2226,13 @@
       <pre class="lines">
 
 
-340
-341
-342
-343</pre>
+351
+352
+353
+354</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 340</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 351</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_uid identifier id'>uid</span>
   <span class='rubyid_step identifier id'>step</span> <span class='assign token'>=</span> <span class='rubyid_fetch_step identifier id'>fetch_step</span>
@@ -2247,12 +2257,12 @@
       <pre class="lines">
 
 
-286
-287
-288</pre>
+297
+298
+299</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 286</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 297</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_unique_signature identifier id'>unique_signature</span>
   <span class='rubyid_Digest constant id'>Digest</span><span class='colon2 op'>::</span><span class='rubyid_SHA1 constant id'>SHA1</span><span class='dot token'>.</span><span class='rubyid_hexdigest identifier id'>hexdigest</span><span class='lparen token'>(</span><span class='rubyid_to_unique_s identifier id'>to_unique_s</span><span class='rparen token'>)</span>
@@ -2276,16 +2286,16 @@
       <pre class="lines">
 
 
-384
-385
-386
-387
-388
-389
-390</pre>
+395
+396
+397
+398
+399
+400
+401</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 384</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 395</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_update identifier id'>update</span><span class='lparen token'>(</span><span class='rubyid_content identifier id'>content</span><span class='comma token'>,</span> <span class='rubyid_new_meta identifier id'>new_meta</span><span class='rparen token'>)</span>
   <span class='rubyid_if if kw'>if</span> <span class='rubyid_new_meta identifier id'>new_meta</span>
@@ -2323,12 +2333,12 @@
       <pre class="lines">
 
 
-307
-308
-309</pre>
+318
+319
+320</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 307</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 318</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_url identifier id'>url</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='comma token'>,</span> <span class='rubyid_attributes_for_url identifier id'>attributes_for_url</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_steps identifier id'>steps</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
@@ -2352,19 +2362,19 @@
       <pre class="lines">
 
 
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303</pre>
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 294</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 305</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_validate_sha! fid id'>validate_sha!</span><span class='lparen token'>(</span><span class='rubyid_sha identifier id'>sha</span><span class='rparen token'>)</span>
   <span class='rubyid_case case kw'>case</span> <span class='rubyid_sha identifier id'>sha</span>
@@ -2394,9 +2404,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:04 2012 by 
+  Generated on Wed Feb 13 11:00:24 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

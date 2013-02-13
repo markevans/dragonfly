@@ -4,6 +4,9 @@ var searchCache = [];
 var searchString = '';
 var regexSearchString = '';
 var caseSensitiveMatch = false;
+var ignoreKeyCodeMin = 8;
+var ignoreKeyCodeMax = 46;
+var commandKey = 91;
 
 RegExp.escape = function(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
@@ -19,6 +22,9 @@ function fullListSearch() {
   });
   
   $('#search input').keyup(function() {
+    if ((event.keyCode > ignoreKeyCodeMin && event.keyCode < ignoreKeyCodeMax) 
+         || event.keyCode == commandKey)
+      return;
     searchString = this.value;
     caseSensitiveMatch = searchString.match(/[A-Z]/) != null;
     regexSearchString = RegExp.escape(searchString);

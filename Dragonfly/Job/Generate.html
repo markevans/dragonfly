@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::Job::Generate
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -118,19 +118,14 @@
 
 
 
-  
-  
-  
-  
 
 
-  
-  
-  
+
+
   <h2>Instance Attribute Summary</h2>
   
   <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="Step.html" title="Dragonfly::Job::Step (class)">Step</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Step.html#args-instance_method" title="Dragonfly::Job::Step#args (method)">args</a></span>, <span class='object_link'><a href="Step.html#job-instance_method" title="Dragonfly::Job::Step#job (method)">job</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Step.html#args-instance_method" title="Dragonfly::Job::Step#args (method)">#args</a></span>, <span class='object_link'><a href="Step.html#job-instance_method" title="Dragonfly::Job::Step#job (method)">#job</a></span></p>
 
 
 
@@ -147,6 +142,48 @@
   <span class="summary_signature">
     
       <a href="#apply-instance_method" title="#apply (instance method)">- (Object) <strong>apply</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#arguments-instance_method" title="#arguments (instance method)">- (Object) <strong>arguments</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#name-instance_method" title="#name (instance method)">- (Object) <strong>name</strong> </a>
     
 
     
@@ -202,17 +239,75 @@
       <pre class="lines">
 
 
+108
+109
+110
+111</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 108</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_apply identifier id'>apply</span>
+  <span class='rubyid_content identifier id'>content</span><span class='comma token'>,</span> <span class='rubyid_meta identifier id'>meta</span> <span class='assign token'>=</span> <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generator identifier id'>generator</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_arguments identifier id'>arguments</span><span class='rparen token'>)</span>
+  <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_update identifier id'>update</span><span class='lparen token'>(</span><span class='rubyid_content identifier id'>content</span><span class='comma token'>,</span> <span class='rubyid_meta identifier id'>meta</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="arguments-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>arguments</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+105
+106
+107</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 105</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_arguments identifier id'>arguments</span>
+  <span class='rubyid_args identifier id'>args</span><span class='lbrack token'>[</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rbrack token'>]</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="name-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>name</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
 102
 103
-104
-105</pre>
+104</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 102</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_apply identifier id'>apply</span>
-  <span class='rubyid_content identifier id'>content</span><span class='comma token'>,</span> <span class='rubyid_meta identifier id'>meta</span> <span class='assign token'>=</span> <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generator identifier id'>generator</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_update identifier id'>update</span><span class='lparen token'>(</span><span class='rubyid_content identifier id'>content</span><span class='comma token'>,</span> <span class='rubyid_meta identifier id'>meta</span><span class='rparen token'>)</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_name identifier id'>name</span>
+  <span class='rubyid_args identifier id'>args</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -232,9 +327,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:04 2012 by 
+  Generated on Wed Feb 13 11:00:25 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

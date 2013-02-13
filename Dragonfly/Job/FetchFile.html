@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::Job::FetchFile
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -118,19 +118,14 @@
 
 
 
-  
-  
-  
-  
 
 
-  
-  
-  
+
+
   <h2>Instance Attribute Summary</h2>
   
   <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="Step.html" title="Dragonfly::Job::Step (class)">Step</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Step.html#args-instance_method" title="Dragonfly::Job::Step#args (method)">args</a></span>, <span class='object_link'><a href="Step.html#job-instance_method" title="Dragonfly::Job::Step#job (method)">job</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Step.html#args-instance_method" title="Dragonfly::Job::Step#args (method)">#args</a></span>, <span class='object_link'><a href="Step.html#job-instance_method" title="Dragonfly::Job::Step#job (method)">#job</a></span></p>
 
 
 
@@ -265,12 +260,12 @@
       <pre class="lines">
 
 
-118
-119
-120</pre>
+124
+125
+126</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 124</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_apply identifier id'>apply</span>
   <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_update identifier id'>update</span><span class='lparen token'>(</span><span class='rubyid_Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_filename identifier id'>filename</span><span class='rparen token'>)</span>
@@ -294,12 +289,12 @@
       <pre class="lines">
 
 
-115
-116
-117</pre>
+121
+122
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 121</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_filename identifier id'>filename</span>
   <span class='rubyid_@filename ivar id'>@filename</span> <span class='opasgn op'>||=</span> <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_basename identifier id'>basename</span><span class='lparen token'>(</span><span class='rubyid_path identifier id'>path</span><span class='rparen token'>)</span>
@@ -323,12 +318,12 @@
       <pre class="lines">
 
 
-109
-110
-111</pre>
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 115</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_init identifier id'>init</span>
   <span class='rubyid_job identifier id'>job</span><span class='dot token'>.</span><span class='rubyid_url_attrs identifier id'>url_attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_filename identifier id'>filename</span>
@@ -352,12 +347,12 @@
       <pre class="lines">
 
 
-112
-113
-114</pre>
+118
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'lib/dragonfly/job.rb', line 118</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_path identifier id'>path</span>
   <span class='rubyid_@path ivar id'>@path</span> <span class='opasgn op'>||=</span> <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_expand_path identifier id'>expand_path</span><span class='lparen token'>(</span><span class='rubyid_args identifier id'>args</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span><span class='rparen token'>)</span>
@@ -380,9 +375,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:04 2012 by 
+  Generated on Wed Feb 13 11:00:25 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

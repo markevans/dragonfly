@@ -6,7 +6,7 @@
 <title>
   Class: Dragonfly::RoutedEndpoint
   
-    &mdash; Documentation by YARD 0.7.4
+    &mdash; Documentation by YARD 0.7.5
   
 </title>
 
@@ -60,7 +60,7 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.12)</div>
+      <div id="logo">DRAGONFLY (v 0.9.14)</div>
       <div id="search">
   
     <a id="class_list_link" href="#">Class List</a>
@@ -124,6 +124,8 @@
     
   
 </p>
+
+
 
 
 
@@ -286,7 +288,7 @@
       <pre class="code"><span class="info file"># File 'lib/dragonfly/routed_endpoint.rb', line 11</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_env identifier id'>env</span><span class='rparen token'>)</span>
-  <span class='rubyid_params identifier id'>params</span> <span class='assign token'>=</span> <span class='rubyid_symbolize_keys_of identifier id'>symbolize_keys_of</span> <span class='rubyid_Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='rubyid_Request constant id'>Request</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_env identifier id'>env</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_params identifier id'>params</span>
+  <span class='rubyid_params identifier id'>params</span> <span class='assign token'>=</span> <span class='rubyid_Utils constant id'>Utils</span><span class='dot token'>.</span><span class='rubyid_symbolize_keys identifier id'>symbolize_keys</span> <span class='rubyid_Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='rubyid_Request constant id'>Request</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_env identifier id'>env</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_params identifier id'>params</span>
   <span class='rubyid_job identifier id'>job</span> <span class='assign token'>=</span> <span class='rubyid_@block ivar id'>@block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_params identifier id'>params</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='rubyid_routing_params identifier id'>routing_params</span><span class='lparen token'>(</span><span class='rubyid_env identifier id'>env</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_@app ivar id'>@app</span><span class='rparen token'>)</span>
   <span class='rubyid_Response constant id'>Response</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_env identifier id'>env</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_response identifier id'>to_response</span>
 <span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Job constant id'>Job</span><span class='colon2 op'>::</span><span class='rubyid_NoSHAGiven constant id'>NoSHAGiven</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
@@ -341,9 +343,9 @@
     </div>
 
     <div id="footer">
-  Generated on Sun Apr  8 21:02:07 2012 by 
+  Generated on Wed Feb 13 11:00:27 2013 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.9.3).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>
