@@ -1,3 +1,15 @@
+0.9.14 (2013-02-13)
+===================
+Features
+--------
+- Attachment#b64_data
+
+Fixes
+-----
+- Fix '+' character being converted to ' ' (revert to URI.escape instead of Rack::Utils.escape)
+- Support old-style deprecated urls (with a check for malicious ones)
+- Handle case where uid is an empty string
+
 0.9.13 (2013-01-30)
 ===================
 Changes
