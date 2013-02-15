@@ -1,6 +1,7 @@
 source :rubygems
 
 gem "rack"
+gem "multi_json", "~> 1.0"
 
 # These gems are needed for development and testing
 group :development, :test do
@@ -12,13 +13,13 @@ group :development, :test do
   gem 'mongo'
   gem 'pry'
   gem 'rack-cache'
-  gem 'redcarpet', '~>1.0'
   gem 'rspec', '~> 2.5'
   gem 'webmock'
   gem 'yard'
   if RUBY_PLATFORM == "java"
     gem "jruby-openssl"
   else
+    gem 'redcarpet', '~>1.0'
     gem 'bluecloth'
     gem 'bson_ext'
   end

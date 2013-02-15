@@ -2,41 +2,37 @@
 require 'spec_helper'
 
 describe Dragonfly::Serializer do
-  
+
   include Dragonfly::Serializer
-  
-  [
-    'a',
-    'sdhflasd',
-    '/2010/03/01/hello.png',
-    '//..',
-    'whats/up.egg.frog',
-    '£ñçùí;'
-  ].each do |string|
-    it "should encode #{string.inspect} properly with no padding/line break" do
-      b64_encode(string).should_not =~ /\n|=/
+
+  describe "base 64 encoding/decoding" do
+    [
+      'a',
+      'sdhflasd',
+      '/2010/03/01/hello.png',
+      '//..',
+      'whats/up.egg.frog',
+      '£ñçùí;',
+      '~'
+    ].each do |string|
+      it "should encode #{string.inspect} properly with no padding/line break" do
+        b64_encode(string).should_not =~ /\n|=/
+      end
+      it "should correctly encode and decode #{string.inspect} to the same string" do
+        str = b64_decode(b64_encode(string))
+        str.force_encoding('UTF-8') if str.respond_to?(:force_encoding)
+        str.should == string
+      end
     end
-    it "should correctly encode and decode #{string.inspect} to the same string" do
-      str = b64_decode(b64_encode(string))
-      str.force_encoding('UTF-8') if str.respond_to?(:force_encoding)
-      str.should == string
+
+    describe "b64_decode" do
+      it "converts (deprecated) '~' characters to '/' characters" do
+        b64_decode('asdf~asdf').should == b64_decode('asdf/asdf')
+      end
     end
+
   end
-  
-  describe "replacing the '/' character in b64_encode" do
-    before(:each) do
-      @string = (127..255).map{|c| c.chr }.join
-    end
-    it "should replace '/' with '~'" do
-      b64_encode(@string).should_not =~ /\//
-      b64_encode(@string).should =~ /[\w+]+~[\w+]+/
-    end
-    it "should correctly encode and decode to the same string" do
-      str = b64_decode(b64_encode(@string))
-      str.should == @string
-    end
-  end
-  
+
   [
     :hello,
     nil,
@@ -57,7 +53,7 @@ describe Dragonfly::Serializer do
       marshal_decode(marshal_encode(object)).should == object
     end
   end
-  
+
   describe "marshal_decode" do
     it "should raise an error if the string passed in is empty" do
       lambda{
@@ -68,6 +64,19 @@ describe Dragonfly::Serializer do
       lambda{
         marshal_decode('ahasdkjfhasdkfjh')
       }.should raise_error(Dragonfly::Serializer::BadString)
+    end
+    describe "potentially harmful strings" do
+      ['_', 'hello', 'h2', '__send__', 'F'].each do |variable_name|
+        it "should raise an error if the string passed in is potentially harmful (e.g. contains instance variable #{variable_name})" do
+          class C; end
+          c = C.new
+          c.instance_eval{ instance_variable_set("@#{variable_name}", 1) }
+          string = Dragonfly::Serializer.b64_encode(Marshal.dump(c))
+          lambda{
+            marshal_decode(string)
+          }.should raise_error(Dragonfly::Serializer::MaliciousString)
+        end
+      end
     end
   end
 
@@ -81,12 +90,16 @@ describe Dragonfly::Serializer do
       encoded.should be_a(String)
       encoded.should_not =~ /\n|=/
     end
-    it "should correctly marshal encode and decode #{object.inspect} to the same object" do
+
+    it "should correctly json encode and decode #{object.inspect} to the same object" do
       json_decode(json_encode(object)).should == object
     end
   end
-  
-  describe "marshal_decode" do
+
+  describe "json_decode" do
+    it "optionally symbolizes keys" do
+      json_decode(json_encode('a' => 1), :symbolize_keys => true).should == {:a => 1}
+    end
     it "should raise an error if the string passed in is empty" do
       lambda{
         json_decode('')

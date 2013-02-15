@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Dragonfly::ImageMagick::Analyser do
-  
+
   before(:each) do
     @image = Dragonfly::TempObject.new(SAMPLES_DIR.join('beach.png'))
     @analyser = Dragonfly::ImageMagick::Analyser.new
@@ -34,7 +34,7 @@ describe Dragonfly::ImageMagick::Analyser do
   it "should say if it's an image" do
     @analyser.image?(@image).should == true
   end
-  
+
   it "should say if it's not an image" do
     suppressing_stderr do
       @analyser.image?(Dragonfly::TempObject.new('blah')).should == false
@@ -45,14 +45,9 @@ describe Dragonfly::ImageMagick::Analyser do
     image = Dragonfly::TempObject.new(SAMPLES_DIR.join('white pixel.png'))
     @analyser.width(image).should == 1
   end
-  
+
   it "should work (width) for images with capital letter extensions" do
     image = Dragonfly::TempObject.new(SAMPLES_DIR.join('DSC02119.JPG'))
-    @analyser.width(image).should == 1
-  end
-
-  it "should work (width) for images with numbers in the format" do
-    image = Dragonfly::TempObject.new(SAMPLES_DIR.join('a.jp2'))
     @analyser.width(image).should == 1
   end
 

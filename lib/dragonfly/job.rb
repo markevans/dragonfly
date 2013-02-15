@@ -34,9 +34,9 @@ module Dragonfly
         def step_name
           @step_name ||= basename.gsub(/[A-Z]/){ "_#{$&.downcase}" }.sub('_','').to_sym
         end
-        # Dragonfly::Job::Fetch -> :f
+        # Dragonfly::Job::Fetch -> 'f'
         def abbreviation
-          @abbreviation ||= basename.scan(/[A-Z]/).join.downcase.to_sym
+          @abbreviation ||= basename.scan(/[A-Z]/).join.downcase
         end
       end
 
@@ -73,7 +73,7 @@ module Dragonfly
       end
 
       def name
-        args.first
+        args.first.to_sym
       end
 
       def processor
@@ -179,19 +179,24 @@ module Dragonfly
 
       def from_a(steps_array, app)
         unless steps_array.is_a?(Array) &&
-               steps_array.all?{|s| s.is_a?(Array) && step_abbreviations[s.first] }
+               steps_array.all?{|s| s.is_a?(Array) && step_abbreviations[s.first.to_s] }
           raise InvalidArray, "can't define a job from #{steps_array.inspect}"
         end
         job = app.new_job
         steps_array.each do |step_array|
-          step_class = step_abbreviations[step_array.shift]
+          step_class = step_abbreviations[step_array.shift.to_s]
           job.steps << step_class.new(job, *step_array)
         end
         job
       end
 
       def deserialize(string, app)
-        from_a(Serializer.marshal_decode(string), app)
+        array = begin
+          Serializer.json_decode(string)
+        rescue Serializer::BadString
+          Serializer.marshal_decode(string) # legacy strings
+        end
+        from_a(array, app)
       end
 
       def step_abbreviations
@@ -304,7 +309,7 @@ module Dragonfly
     end
 
     def serialize
-      Serializer.marshal_encode(to_a)
+      Serializer.json_encode(to_a)
     end
 
     def unique_signature

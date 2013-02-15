@@ -24,7 +24,7 @@ describe "models" do
       @classes = @model_class.dragonfly_attachment_classes
       @class1, @class2 = @classes
     end
-    
+
     it "should return the attachment classes" do
       @class1.superclass.should == Dragonfly::Model::Attachment
       @class2.superclass.should == Dragonfly::Model::Attachment
@@ -34,24 +34,24 @@ describe "models" do
       @class1.app.should == @app1
       @class2.app.should == @app2
     end
-    
+
     it "should associate the correct attribute with each class" do
       @class1.attribute.should == :preview_image
       @class2.attribute.should == :trailer_video
     end
-    
+
     it "should associate the correct model class with each class" do
       @class1.model_class.should == @model_class
       @class2.model_class.should == @model_class
     end
-    
+
     it "should allow passing the app name as the :app value" do
       klass = new_model_class do
         dragonfly_accessor :egg_nog, :app => :vid
       end
       klass.dragonfly_attachment_classes.first.app.should == @app2
     end
-    
+
     it "should default the app to the default app" do
       klass = new_model_class do
         dragonfly_accessor :egg_nog
@@ -93,6 +93,18 @@ describe "models" do
         @app.datastore.should_not_receive(:destroy)
         @item.save!
       end
+      it "should not try to destroy anything on destroy" do
+        @app.datastore.should_not_receive(:destroy)
+        @item.destroy
+      end
+    end
+
+    describe "after a record with an empty uid is saved" do
+      before(:each) do
+        @item.preview_image_uid = ''
+        @item.save!
+      end
+
       it "should not try to destroy anything on destroy" do
         @app.datastore.should_not_receive(:destroy)
         @item.destroy
@@ -214,7 +226,7 @@ describe "models" do
           @app.datastore.should_receive(:destroy).with('some_uid')
           @item.save!
         end
-        
+
         it "should not try to destroy the old data if saved again" do
           @app.datastore.should_receive(:destroy).with('some_uid')
           @item.save!
@@ -275,11 +287,11 @@ describe "models" do
           @app.datastore.should_receive(:destroy).with('some_uid')
           @item.destroy
         end
-        
+
         it 'should mark the attribute as changed' do
           @item.preview_image_uid_changed?.should be_true
         end
-        
+
       end
 
       describe "destroy errors" do
@@ -387,8 +399,8 @@ describe "models" do
         def number_of_As(temp_object); temp_object.data.count('A'); end
       end
       @app.analyser.register(custom_analyser)
-      
-      @item_class = new_model_class('Item', 
+
+      @item_class = new_model_class('Item',
         :preview_image_uid,
         :preview_image_some_analyser_method,
         :preview_image_blah_blah,
@@ -447,14 +459,14 @@ describe "models" do
     end
 
     describe "meta from magic attributes" do
-      
+
       it "should store the meta for the original file name if it exists" do
         data = 'jasdlkf sadjl'
         data.stub!(:original_filename).and_return('hello.png')
         @item.preview_image = data
         @item.preview_image.meta[:name].should == 'hello.png'
       end
-      
+
       it "should include magic attributes in the saved meta" do
         @item.preview_image = '123'
         @item.save!
@@ -534,7 +546,7 @@ describe "models" do
         }.should raise_error(NoMethodError)
       end
     end
-    
+
     describe "setting things on the attachment" do
 
       before(:each) do
@@ -583,7 +595,7 @@ describe "models" do
         it "should include meta info about the model" do
           @item.save!
           item = @item_class.find(@item.id)
-          item.preview_image.meta.should include_hash(:model_class => 'Item', :model_attachment => :preview_image)  
+          item.preview_image.meta.should include_hash(:model_class => 'Item', :model_attachment => :preview_image)
         end
       end
 
@@ -684,7 +696,7 @@ describe "models" do
       @item = @item_class.new
       @item.preview_image = "something"
     end
-    
+
     [
       1,
       "1",
@@ -721,24 +733,24 @@ describe "models" do
         @item.remove_preview_image.should be_false
       end
     end
-    
+
     it "should return false by default for the getter" do
       @item.remove_preview_image.should be_false
     end
-    
+
   end
-  
+
   describe "callbacks" do
 
     describe "after_assign" do
-      
+
       before(:each) do
         @app = test_app
         @item_class = new_model_class('Item', :preview_image_uid, :title)
       end
 
       describe "as a block" do
-        
+
         def set_after_assign(*args, &block)
           @item_class.class_eval do
             dragonfly_accessor :preview_image do
@@ -760,14 +772,14 @@ describe "models" do
           @item_class.new.preview_image = nil
           x.should be_nil
         end
-        
+
         it "should yield the attachment" do
           x = nil
           set_after_assign{|a| x = a.data }
           @item_class.new.preview_image = "discussion"
           x.should == "discussion"
         end
-        
+
         it "should evaluate in the model context" do
           x = nil
           set_after_assign{ x = title.upcase }
@@ -776,7 +788,7 @@ describe "models" do
           item.preview_image = "jobs"
           x.should == "BIG"
         end
-        
+
         it "should allow passing a symbol for calling a model method" do
           set_after_assign :set_title
           item = @item_class.new
@@ -793,7 +805,7 @@ describe "models" do
           item.preview_image = "jobs"
           item.title.should == "DOOBIE"
         end
-        
+
         it "should not re-trigger callbacks (causing an infinite loop)" do
           set_after_assign{|a| self.preview_image = 'dogman' }
           item = @item_class.new
@@ -801,9 +813,9 @@ describe "models" do
         end
 
       end
-    
+
     end
-    
+
     describe "after_unassign" do
       before(:each) do
         @app = test_app
@@ -814,18 +826,18 @@ describe "models" do
         end
         @item = @item_class.new :title => 'yo'
       end
-      
+
       it "should not call it after assign" do
         @item.preview_image = 'suggs'
         @item.title.should == 'yo'
       end
-      
+
       it "should call it after unassign" do
         @item.preview_image = nil
         @item.title.should == 'unassigned'
       end
     end
-    
+
     describe "copy_to" do
       before(:each) do
         @app = test_app
@@ -842,7 +854,7 @@ describe "models" do
         end
         @item = @item_class.new :title => 'yo'
       end
-      
+
       it "should copy to the other image when assigned" do
         @item.preview_image = 'hello bear'
         @item.other_image.data.should == 'hello bearyo'
@@ -853,18 +865,18 @@ describe "models" do
         @item.preview_image = nil
         @item.other_image.should be_nil
       end
-      
+
       it "should allow simply copying over without args" do
         @item.preview_image = 'hello bear'
         @item.yet_another_image.data.should == 'hello bear'
       end
-      
+
     end
-    
+
   end
 
   describe "storage_opts" do
-    
+
     def set_storage_opts(*args, &block)
       @item_class.class_eval do
         dragonfly_accessor :preview_image do
@@ -872,19 +884,19 @@ describe "models" do
         end
       end
     end
-    
+
     before(:each) do
       @app = test_app
       @item_class = new_model_class('Item', :preview_image_uid, :title)
     end
-    
+
     it "should send the specified options to the datastore on store" do
       set_storage_opts :egg => 'head'
       item = @item_class.new :preview_image => 'hello'
       @app.datastore.should_receive(:store).with(anything, hash_including(:egg => 'head'))
       item.save!
     end
-    
+
     it "should allow putting in a proc" do
       set_storage_opts{ {:egg => 'numb'} }
       item = @item_class.new :preview_image => 'hello'
@@ -906,7 +918,7 @@ describe "models" do
       @app.datastore.should_receive(:store).with(anything, hash_including(:a => 1))
       item.save!
     end
-    
+
     it "should allow setting more than once" do
       @item_class.class_eval do
         dragonfly_accessor :preview_image do
@@ -923,7 +935,7 @@ describe "models" do
   end
 
   describe "storage_path, etc." do
-   
+
     def set_storage_path(path=nil, &block)
       @item_class.class_eval do
         dragonfly_accessor :preview_image do
@@ -958,7 +970,7 @@ describe "models" do
       ))
       item.save!
     end
-  
+
     it "should allow setting as a block" do
       set_storage_path{|a| "#{a.data}/megs/#{title}" }
       item = @item_class.new :title => 'billy'
@@ -982,7 +994,7 @@ describe "models" do
       item.save!
     end
   end
-  
+
   describe "unknown config method" do
     it "should raise an error" do
       item_class = new_model_class('Item', :preview_image_uid)
@@ -995,7 +1007,7 @@ describe "models" do
       }.should raise_error(NoMethodError)
     end
   end
-  
+
   describe "changed?" do
     before(:each) do
       @item_class = new_model_class('Item', :preview_image_uid) do
@@ -1003,12 +1015,12 @@ describe "models" do
       end
       @item = @item_class.new
     end
-    
+
     it "should be changed when assigned" do
       @item.preview_image = 'ggg'
       @item.preview_image.should be_changed
     end
-    
+
     it "should not be changed when saved" do
       @item.preview_image = 'ggg'
       @item.save!
@@ -1022,7 +1034,7 @@ describe "models" do
       item.preview_image.should_not be_changed
     end
   end
-  
+
   describe "retain and pending" do
     before(:each) do
       @app=test_app
@@ -1048,13 +1060,13 @@ describe "models" do
       @item.preview_image = 'hello'
       @item.retained_preview_image.should be_nil
     end
-    
+
     it "should return nil if assigned and saved" do
       @item.preview_image = 'hello'
       @item.save!
       @item.retained_preview_image.should be_nil
     end
-    
+
     it "should return the saved stuff if assigned and retained" do
       @item.preview_image = 'hello'
       @item.preview_image.name = 'dog.biscuit'
@@ -1069,14 +1081,14 @@ describe "models" do
         }
       end.and_return('new/uid')
       @item.preview_image.retain!
-      Dragonfly::Serializer.marshal_decode(@item.retained_preview_image).should == {
+      Dragonfly::Serializer.json_decode(@item.retained_preview_image, :symbolize_keys => true).should == {
         :uid => 'new/uid',
         :some_analyser_method => 'HELLO',
         :size => 5,
         :name => 'dog.biscuit'
       }
     end
-    
+
     it "should return nil if assigned, retained and saved" do
       @item.preview_image = 'hello'
       @item.preview_image.retain!
@@ -1099,14 +1111,14 @@ describe "models" do
       item.retained_preview_image.should be_nil
     end
   end
-  
+
   describe "assigning from a pending state" do
     before(:each) do
       @app=test_app
       @app.analyser.add :some_analyser_method do |temp_object|
         temp_object.data.upcase
       end
-      @pending_string = Dragonfly::Serializer.marshal_encode(
+      @pending_string = Dragonfly::Serializer.json_encode(
         :uid => 'new/uid',
         :some_analyser_method => 'HELLO',
         :size => 5,
@@ -1127,7 +1139,7 @@ describe "models" do
       @item.dragonfly_attachments[:preview_image].should_receive(:retain!)
       @item.retained_preview_image = @pending_string
     end
-    
+
     it "should update the attributes" do
       @item.retained_preview_image = @pending_string
       @item.preview_image_uid.should == 'new/uid'
@@ -1135,7 +1147,7 @@ describe "models" do
       @item.preview_image_size.should == 5
       @item.preview_image_name.should == 'dog.biscuit'
     end
-    
+
     it "should be a normal fetch job" do
       @item.retained_preview_image = @pending_string
       @app.datastore.should_receive(:retrieve).with('new/uid').and_return(Dragonfly::TempObject.new('retrieved yo'))
@@ -1146,9 +1158,9 @@ describe "models" do
       @item.retained_preview_image = @pending_string
       @item.preview_image.url.should =~ %r{^/\w+/dog.biscuit$}
     end
-    
+
     it "should raise an error if the pending string contains a non-magic attr method" do
-      pending_string = Dragonfly::Serializer.marshal_encode(
+      pending_string = Dragonfly::Serializer.json_encode(
         :uid => 'new/uid',
         :some_analyser_method => 'HELLO',
         :size => 5,
@@ -1160,20 +1172,20 @@ describe "models" do
         item.retained_preview_image = pending_string
       }.should raise_error(Dragonfly::Model::Attachment::BadAssignmentKey)
     end
-    
+
     [nil, "", "asdfsad"].each do |value|
       it "should do nothing if assigned with #{value}" do
         @item.retained_preview_image = value
         @item.preview_image_uid.should be_nil
       end
     end
-    
+
     it "should return the pending string again" do
       @item.retained_preview_image = @pending_string
-      Dragonfly::Serializer.marshal_decode(@item.retained_preview_image).should ==
-        Dragonfly::Serializer.marshal_decode(@pending_string)
+      Dragonfly::Serializer.json_decode(@item.retained_preview_image).should ==
+        Dragonfly::Serializer.json_decode(@pending_string)
     end
-    
+
     it "should destroy the old one on save" do
       @item.preview_image = 'oldone'
       @app.datastore.should_receive(:store).with(a_temp_object_with_data('oldone'), anything).and_return('old/uid')
@@ -1208,7 +1220,7 @@ describe "models" do
         @app.datastore.should_receive(:destroy).with('new/uid')
         @item.retained_preview_image = @pending_string
       end
-      
+
       describe "automatically retaining (hack to test for existence of hidden form field)" do
         it "should automatically retain if set as an empty string then changed" do
           @item.retained_preview_image = ""
@@ -1237,7 +1249,7 @@ describe "models" do
     end
 
   end
-  
+
   describe "format and mime type" do
     before(:each) do
       @app = test_app
@@ -1260,7 +1272,7 @@ describe "models" do
       @item.preview_image.mime_type.should == 'image/png'
     end
   end
-  
+
   describe "inspect" do
     before(:each) do
       @item_class = new_model_class('Item', :preview_image_uid) do
@@ -1273,5 +1285,5 @@ describe "models" do
       @item.preview_image.inspect.should =~ %r{^<Dragonfly Attachment uid="[^"]+", app=:default>$}
     end
   end
-  
+
 end
