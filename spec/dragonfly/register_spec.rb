@@ -27,4 +27,9 @@ describe Dragonfly::Register do
     }.to raise_error(Dragonfly::Register::NotFound)
   end
 
+  it "allows getting with a string" do
+    register.add(:thing, thing)
+    register.get('thing').should == thing
+  end
+
 end

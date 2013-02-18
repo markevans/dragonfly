@@ -18,11 +18,11 @@ module Dragonfly
     attr_reader :items
 
     def add(name, item=nil, &block)
-      items[name] = item || block || raise(ArgumentError, "you must give either an argument or a block")
+      items[name.to_sym] = item || block || raise(ArgumentError, "you must give either an argument or a block")
     end
 
     def get(name)
-      items[name] || raise(NotFound, "#{name.inspect} not registered")
+      items[name.to_sym] || raise(NotFound, "#{name.inspect} not registered")
     end
 
     def names
