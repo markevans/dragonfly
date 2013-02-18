@@ -100,12 +100,14 @@ module Dragonfly
       generator.add(*args, &block)
     end
 
-    def add_processor(*args, &block)
-      processor.add(*args, &block)
+    def add_processor(name, callable=nil, &block)
+      processor.add(name, callable, &block)
+      define(name){|*args| process(name, *args) }
     end
 
-    def add_analyser(*args, &block)
-      analyser.add(*args, &block)
+    def add_analyser(name, callable=nil, &block)
+      analyser.add(name, callable, &block)
+      define(name){|*args| analyse(name, *args) }
     end
 
     def new_job(content=nil, meta={})

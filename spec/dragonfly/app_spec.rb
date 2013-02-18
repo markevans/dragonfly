@@ -150,23 +150,42 @@ describe Dragonfly::App do
     end
   end
 
-  describe "reflection methods" do
+  describe "adding generators" do
     before(:each) do
       @app = test_app.configure do |c|
-        c.add_processor(:milk){}
-        c.add_generator(:butter){}
-        c.add_analyser(:cheese){}
+        c.add_generator(:butter){ "BUTTER" }
       end
-
-    end
-    it "should return processor methods" do
-      @app.processor_methods.should == [:milk]
     end
     it "should return generator methods" do
       @app.generator_methods.should == [:butter]
     end
+  end
+
+  describe "adding processors" do
+    before(:each) do
+      @app = test_app.configure do |c|
+        c.add_processor(:double){|temp_object| temp_object.data * 2 }
+      end
+    end
+    it "should add a method" do
+      @app.create("bunga").double.data.should == 'bungabunga'
+    end
+    it "should return processor methods" do
+      @app.processor_methods.should == [:double]
+    end
+  end
+
+  describe "adding analysers" do
+    before(:each) do
+      @app = test_app.configure do |c|
+        c.add_analyser(:length){|temp_object| temp_object.size }
+      end
+    end
+    it "should add a method" do
+      @app.create('123').length.should == 3
+    end
     it "should return analyser methods" do
-      @app.analyser_methods.should == [:cheese]
+      @app.analyser_methods.should == [:length]
     end
   end
 
