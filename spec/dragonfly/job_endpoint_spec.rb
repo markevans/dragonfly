@@ -126,11 +126,6 @@ describe Dragonfly::JobEndpoint do
         response = make_request(@job)
         response['Content-Disposition'].should == 'filename="gung.txt"'
       end
-      it "should return a filename with a different extension if the meta is set" do
-        @job.meta[:format] = :doogs
-        response = make_request(@job)
-        response['Content-Disposition'].should == 'filename="gung.doogs"'
-      end
       it "should not have the filename if name doesn't exist" do
         response = make_request(@app.new_job("ADFSDF"))
         response['Content-Disposition'].should be_nil

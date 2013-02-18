@@ -4,7 +4,7 @@ module Dragonfly
   class Response
 
     DEFAULT_FILENAME = proc do |job, request|
-      [job.basename, job.format].compact.join('.') if job.basename
+      job.name
     end
 
     def initialize(job, env)
@@ -76,7 +76,7 @@ module Dragonfly
       parts << %(filename="#{URI.encode(filename)}") if filename
       parts.any? ? {"Content-Disposition" => parts.join('; ')} : {}
     end
-    
+
     def method_not_allowed_headers
       {
         'Content-Type' => 'text/plain',
