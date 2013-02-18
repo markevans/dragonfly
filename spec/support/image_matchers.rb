@@ -23,28 +23,17 @@ def image_properties(image)
   }
 end
 
-RSpec::Matchers.define :have_width do |width|
-  match do |given|
-    width.should === image_properties(given)[:width].to_i
-  end
-end
+[:width, :height, :format, :size].each do |property|
 
-RSpec::Matchers.define :have_height do |height|
-  match do |given|
-    height.should === image_properties(given)[:height].to_i
+  RSpec::Matchers.define "have_#{property}" do |value|
+    match do |actual|
+      image_properties(actual)[property].to_i.should == value
+    end
+    failure_message_for_should do |actual|
+      "expected image to have #{property} #{value}, but it had #{image_properties(actual)[property]}"
+    end
   end
-end
 
-RSpec::Matchers.define :have_format do |format|
-  match do |given|
-    image_properties(given)[:format].should == format
-  end
-end
-
-RSpec::Matchers.define :have_size do |size|
-  match do |given|
-    image_properties(given)[:size].should == size
-  end
 end
 
 RSpec::Matchers.define :equal_image do |other|
