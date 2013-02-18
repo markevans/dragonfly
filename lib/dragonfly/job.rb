@@ -20,8 +20,8 @@ module Dragonfly
     def_delegators :result,
                    :data, :file, :tempfile, :path, :to_file, :size, :each,
                    :meta, :meta=, :name, :name=, :basename, :basename=, :ext, :ext=
-    def_delegator :app,
-                  :server
+    def_delegators :app,
+                   :analyser, :server
 
     class Step
 
@@ -209,29 +209,6 @@ module Dragonfly
 
     end
 
-    ####### Instance methods #######
-
-    # This is needed because we need a way of overriding
-    # the methods added to Job objects by the analyser and by
-    # the job shortcuts like 'thumb', etc.
-    # If we had traits/classboxes in ruby maybe this wouldn't be needed
-    # Think of it as like a normal instance method but with a css-like !important after it
-    module OverrideInstanceMethods
-
-      def format
-        meta[:format] || (ext.to_sym if ext) || analyse(:format)
-      end
-
-      def mime_type
-        app.mime_type_for(format) || analyse(:mime_type) || app.fallback_mime_type
-      end
-
-      def to_s
-        super.sub(/#<Class:\w+>/, 'Extended Dragonfly::Job')
-      end
-
-    end
-
     def initialize(app, content=nil, meta={}, url_attrs=nil)
       @app = app
       @steps = []
@@ -273,7 +250,7 @@ module Dragonfly
     end
 
     def analyse(method, *args)
-      analyser.analyse(result, method, *args)
+      analyser.analyse(method, result, *args)
     end
 
     # Applying, etc.
@@ -416,6 +393,10 @@ module Dragonfly
     def close
       previous_temp_objects.each{|temp_object| temp_object.close }
       temp_object.close if temp_object
+    end
+
+    def mime_type
+      app.mime_type_for(ext)
     end
 
     protected

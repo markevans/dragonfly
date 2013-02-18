@@ -283,7 +283,7 @@ describe Dragonfly::Job do
     before(:each) do
       @app = test_app
       @job = @app.new_job('HELLO')
-      @app.analyser.add(:num_letters){|temp_object, letter| temp_object.data.count(letter) }
+      @app.add_analyser(:num_letters){|temp_object, letter| temp_object.data.count(letter) }
     end
     it "should return correctly when calling analyse" do
       @job.analyse(:num_letters, 'L').should == 2
@@ -291,8 +291,10 @@ describe Dragonfly::Job do
     it "should have mixed in the analyser method" do
       @job.num_letters('L').should == 2
     end
-    it "should return nil from analyse if calling any old method" do
-      @job.analyse(:robin_van_persie).should be_nil
+    it "should raise if analysing any old method" do
+      expect{
+        @job.analyse(:robin_van_persie).should be_nil
+      }.to raise_error(Dragonfly::Analyser::NotFound)
     end
     it "should not allow calling any old method" do
       lambda{
@@ -457,8 +459,8 @@ describe Dragonfly::Job do
       before(:each) do
         @job = Dragonfly::Job.from_a([
           ['f', 'some_uid'],
-          ['g', :plasma],
-          ['p', :resize, '30x40']
+          ['g', 'plasma'],
+          ['p', 'resize', '30x40']
         ], @app)
       end
       it "should have the correct step types" do
@@ -872,70 +874,6 @@ describe Dragonfly::Job do
       @job.name.should == 'monkey.egg'
       @job.basename.should == 'monkey'
       @job.ext.should == 'egg'
-    end
-  end
-
-  describe "format" do
-    before(:each) do
-      @app = test_app
-    end
-    it "should default to nil" do
-      job = @app.new_job("HELLO")
-      job.format.should be_nil
-    end
-    it "should use the meta format if it exists" do
-      job = @app.new_job("HELLO")
-      job.meta[:format] = :txt
-      job.format.should == :txt
-    end
-    it "should use the analyser format if it exists" do
-      @app.analyser.add :format do |temp_object|
-        :egg
-      end
-      job = @app.new_job("HELLO")
-      job.format.should == :egg
-    end
-    it "should use the file extension if it has no format" do
-      job = @app.new_job("HIMATE", :name => 'test.pdf')
-      job.format.should == :pdf
-    end
-    it "should prefer the set format over the file extension" do
-      job = @app.new_job("HELLO", :name => 'test.pdf', :format => :txt)
-      job.format.should == :txt
-    end
-    it "should prefer the file extension over the analysed format" do
-      @app.analyser.add :format do |temp_object|
-        :egg
-      end
-      job = @app.new_job("HELLO", :name => 'test.pdf')
-      job.format.should == :pdf
-    end
-    it "should apply the job" do
-      @app.add_generator(:test){ ["skid marks", {:name => 'terry.burton'}] }
-      job = @app.generate(:test)
-      job.format.should == :burton
-      job.should be_applied
-    end
-  end
-
-  describe "mime_type" do
-    before(:each) do
-      @app = test_app
-    end
-    it "should return the correct mime_type if the format is given" do
-      @job = @app.new_job("HIMATE")
-      @job.should_receive(:format).and_return(:tiff)
-      @job.mime_type.should == 'image/tiff'
-    end
-    it "should fall back to the mime_type analyser if the format is nil" do
-      @app.analyser.add :mime_type do |temp_object|
-        'image/jpeg'
-      end
-      @job = @app.new_job("HIMATE")
-      @job.mime_type.should == 'image/jpeg'
-    end
-    it "should fall back to the fallback mime_type if neither format or analyser exist" do
-      @app.new_job("HIMATE").mime_type.should == 'application/octet-stream'
     end
   end
 
