@@ -103,6 +103,7 @@ module Dragonfly
     def add_processor(name, callable=nil, &block)
       processor.add(name, callable, &block)
       define(name){|*args| process(name, *args) }
+      define("#{name}!"){|*args| process!(name, *args) }
     end
 
     def add_analyser(name, callable=nil, &block)

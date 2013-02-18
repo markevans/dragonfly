@@ -168,7 +168,15 @@ describe Dragonfly::App do
       end
     end
     it "should add a method" do
-      @app.create("bunga").double.data.should == 'bungabunga'
+      job1 = @app.create("bunga")
+      job2 = job1.double
+      job1.should_not == job2
+      job2.data.should == 'bungabunga'
+    end
+    it "should add a bang method" do
+      job = @app.create("bunga")
+      job.double!.should == job
+      job.data.should == 'bungabunga'
     end
     it "should return processor methods" do
       @app.processor_methods.should == [:double]
