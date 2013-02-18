@@ -125,7 +125,7 @@ module Dragonfly
       end
 
       def destroy_retained!
-        destroy_content(retained_attrs[:uid])
+        destroy_content(retained_attrs['uid'])
       end
 
       def retained_attrs
@@ -137,7 +137,7 @@ module Dragonfly
 
       def retained_attrs=(attrs)
         if changed? # if already set, ignore and destroy this retained content
-          destroy_content(attrs[:uid])
+          destroy_content(attrs['uid'])
         else
           attrs.each do |key, value|
             unless attribute_keys.include?(key)
@@ -164,7 +164,7 @@ module Dragonfly
       attr_writer :changed, :retained
 
       def attribute_keys
-        [:uid] + magic_attributes
+        @attribute_keys ||= ['uid'] + magic_attributes.map{|attribute| attribute.to_s }
       end
 
       def store_job!

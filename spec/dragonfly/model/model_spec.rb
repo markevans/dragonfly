@@ -312,10 +312,10 @@ describe "models" do
 
     describe "other types of assignment" do
       before(:each) do
-        @app.generators.add :egg do
+        @app.add_generator :egg do
           "Gungedin"
         end
-        @app.processors.add :doogie do |temp_object|
+        @app.add_processor :doogie do |temp_object|
           temp_object.data.upcase
         end
       end
@@ -353,7 +353,7 @@ describe "models" do
 
       describe "assigning by means of a bang method" do
         before(:each) do
-          @app.processors.add :double do |temp_object|
+          @app.add_processor :double do |temp_object|
             temp_object.data * 2
           end
           @item.preview_image = "HELLO"
@@ -392,13 +392,12 @@ describe "models" do
 
     before(:each) do
       @app = test_app
-      custom_analyser = Class.new do
-        def some_analyser_method(temp_object)
-          "abc" + temp_object.data[0..0]
-        end
-        def number_of_As(temp_object); temp_object.data.count('A'); end
+      @app.add_analyser :some_analyser_method do |temp_object|
+        "abc" + temp_object.data[0..0]
       end
-      @app.analyser.register(custom_analyser)
+      @app.add_analyser :number_of_As do |temp_object|
+        temp_object.data.count('A')
+      end
 
       @item_class = new_model_class('Item',
         :preview_image_uid,
@@ -841,7 +840,7 @@ describe "models" do
     describe "copy_to" do
       before(:each) do
         @app = test_app
-        @app.processors.add(:append) do |temp_object, string|
+        @app.add_processor(:append) do |temp_object, string|
           temp_object.data + string
         end
         @item_class = new_model_class('Item', :preview_image_uid, :other_image_uid, :yet_another_image_uid, :title) do
@@ -1038,7 +1037,7 @@ describe "models" do
   describe "retain and pending" do
     before(:each) do
       @app=test_app
-      @app.analyser.add :some_analyser_method do |temp_object|
+      @app.add_analyser :some_analyser_method do |temp_object|
         temp_object.data.upcase
       end
       @item_class = new_model_class('Item',
@@ -1081,11 +1080,11 @@ describe "models" do
         }
       end.and_return('new/uid')
       @item.preview_image.retain!
-      Dragonfly::Serializer.json_decode(@item.retained_preview_image, :symbolize_keys => true).should == {
-        :uid => 'new/uid',
-        :some_analyser_method => 'HELLO',
-        :size => 5,
-        :name => 'dog.biscuit'
+      Dragonfly::Serializer.json_decode(@item.retained_preview_image).should == {
+        'uid' => 'new/uid',
+        'some_analyser_method' => 'HELLO',
+        'size' => 5,
+        'name' => 'dog.biscuit'
       }
     end
 
@@ -1115,14 +1114,14 @@ describe "models" do
   describe "assigning from a pending state" do
     before(:each) do
       @app=test_app
-      @app.analyser.add :some_analyser_method do |temp_object|
+      @app.add_analyser :some_analyser_method do |temp_object|
         temp_object.data.upcase
       end
       @pending_string = Dragonfly::Serializer.json_encode(
-        :uid => 'new/uid',
-        :some_analyser_method => 'HELLO',
-        :size => 5,
-        :name => 'dog.biscuit'
+        'uid' => 'new/uid',
+        'some_analyser_method' => 'HELLO',
+        'size' => 5,
+        'name' => 'dog.biscuit'
       )
       @item_class = new_model_class('Item',
         :preview_image_uid,
@@ -1161,11 +1160,11 @@ describe "models" do
 
     it "should raise an error if the pending string contains a non-magic attr method" do
       pending_string = Dragonfly::Serializer.json_encode(
-        :uid => 'new/uid',
-        :some_analyser_method => 'HELLO',
-        :size => 5,
-        :name => 'dog.biscuit',
-        :something => 'else'
+        'uid' => 'new/uid',
+        'some_analyser_method' => 'HELLO',
+        'size' => 5,
+        'name' => 'dog.biscuit',
+        'something' => 'else'
       )
       item = @item
       lambda{
