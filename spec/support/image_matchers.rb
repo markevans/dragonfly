@@ -15,11 +15,11 @@ def image_properties(image)
   {
     :filename => filename,
     :format => format.downcase,
-    :width => width,
-    :height => height,
+    :width => width.to_i,
+    :height => height.to_i,
     :depth => depth,
     :image_class => image_class,
-    :size => size
+    :size => size.to_i
   }
 end
 
@@ -27,10 +27,10 @@ end
 
   RSpec::Matchers.define "have_#{property}" do |value|
     match do |actual|
-      image_properties(actual)[property].to_i.should == value
+      value.should === image_properties(actual)[property]
     end
     failure_message_for_should do |actual|
-      "expected image to have #{property} #{value}, but it had #{image_properties(actual)[property]}"
+      "expected image to have #{property} #{value.inspect}, but it had #{image_properties(actual)[property].inspect}"
     end
   end
 
