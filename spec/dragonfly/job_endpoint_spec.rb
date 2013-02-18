@@ -6,7 +6,7 @@ require 'spec_helper'
 describe "Dragonfly::JobEndpoint Rack::Lint tests" do
   before(:each) do
     @app = test_app
-    @app.generators.add(:test_data){ "Test Data" }
+    @app.add_generator(:test_data){ "Test Data" }
     @job = @app.generate(:test_data)
     @endpoint = Rack::Lint.new(Dragonfly::JobEndpoint.new(@job))
   end
