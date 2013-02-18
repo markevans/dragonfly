@@ -10,7 +10,7 @@ describe Dragonfly::ImageMagick::Analysers::IdentifyBasic do
       analyser.call(temp_object).should == {
         'width' => 280,
         'height' => 355,
-        'format' => 'png'
+        'format' => :png
       }
     end
   end
