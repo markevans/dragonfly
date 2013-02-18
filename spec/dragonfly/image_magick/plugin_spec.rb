@@ -10,8 +10,8 @@ describe "a configured imagemagick app" do
       app.configure do
         use :imagemagick
       end
-      app.processors[:convert].command_line.convert_command.should == 'convert'
-      app.processors[:thumb].command_line.convert_command.should == 'convert'
+      app.processor.get(:convert).command_line.convert_command.should == 'convert'
+      app.processor.get(:thumb).command_line.convert_command.should == 'convert'
     end
 
     it "should allow configuring" do
@@ -20,8 +20,8 @@ describe "a configured imagemagick app" do
           convert_command '/usr/eggs/convert'
         end
       end
-      app.processors[:convert].command_line.convert_command.should == '/usr/eggs/convert'
-      app.processors[:thumb].command_line.convert_command.should == '/usr/eggs/convert'
+      app.processor.get(:convert).command_line.convert_command.should == '/usr/eggs/convert'
+      app.processor.get(:thumb).command_line.convert_command.should == '/usr/eggs/convert'
     end
 
   end
@@ -35,7 +35,7 @@ describe "a configured imagemagick app" do
         thumb = image.convert('-resize 1x1!', :jpg)
         thumb.url.should =~ /^\/beach\.jpg\?job=\w+/
         thumb.width.should == 1
-        thumb.analyse(:format).should == :jpeg
+        thumb.format.should == :jpeg
         thumb.meta[:format].should == :jpg
       end
 
@@ -43,7 +43,7 @@ describe "a configured imagemagick app" do
         thumb = image.convert('-resize 1x1!')
         thumb.url.should =~ /^\/beach\.png\?job=\w+/
         thumb.width.should == 1
-        thumb.analyse(:format).should == :png
+        thumb.format.should == :png
         thumb.meta[:format].should be_nil
       end
     end
@@ -52,7 +52,7 @@ describe "a configured imagemagick app" do
       it "sanity check" do
         thumb = image.encode(:jpg)
         thumb.url.should =~ /^\/beach\.jpg\?job=\w+/
-        thumb.analyse(:format).should == :jpeg
+        thumb.format.should == :jpeg
         thumb.meta[:format].should == :jpg
       end
     end

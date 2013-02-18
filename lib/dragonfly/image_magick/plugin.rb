@@ -6,7 +6,18 @@ module Dragonfly
     class Plugin
 
       def call(app)
-        app.analyser.register(ImageMagick::Analyser, command_line)
+        # Analysers
+        app.add_analyser :identify, ImageMagick::Analysers::Identify.new(command_line)
+        app.add_analyser :identify_basic, ImageMagick::Analysers::IdentifyBasic.new(command_line)
+        app.define :width do
+          identify_basic['width']
+        end
+        app.define :height do
+          identify_basic['height']
+        end
+        app.define :format do
+          identify_basic['format']
+        end
 
         # Generators
         app.add_generator :plain, ImageMagick::Generators::Plain.new(command_line)
