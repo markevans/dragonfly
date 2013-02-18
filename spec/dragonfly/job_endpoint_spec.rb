@@ -193,7 +193,7 @@ describe Dragonfly::JobEndpoint do
 
   describe "setting the job in the env for communicating with other rack middlewares" do
     before(:each) do
-      @app.generators.add(:test_data){ "TEST DATA" }
+      @app.add_generator(:test_data){ "TEST DATA" }
       @job = @app.generate(:test_data)
       @endpoint = Dragonfly::JobEndpoint.new(@job)
       @middleware = Class.new do
