@@ -25,14 +25,14 @@ module Dragonfly
           when RESIZE_GEOMETRY
             resize(temp_object, geometry)
           when CROPPED_RESIZE_GEOMETRY
-            resize_and_crop(temp_object, :width => $1, :height => $2, :gravity => $3)
+            resize_and_crop(temp_object, 'width' => $1, 'height' => $2, 'gravity' => $3)
           when CROP_GEOMETRY
             crop(temp_object,
-              :width => $1,
-              :height => $2,
-              :x => $3,
-              :y => $4,
-              :gravity => $5
+              'width' => $1,
+              'height' => $2,
+              'x' => $3,
+              'y' => $4,
+              'gravity' => $5
             )
           else raise ArgumentError, "Didn't recognise the geometry string #{geometry}"
           end
@@ -43,21 +43,22 @@ module Dragonfly
         end
 
         def crop(temp_object, opts={})
-          width   = opts[:width]
-          height  = opts[:height]
-          gravity = GRAVITIES[opts[:gravity]]
-          x       = "#{opts[:x] || 0}"
+          width   = opts['width']
+          height  = opts['height']
+          gravity = GRAVITIES[opts['gravity']]
+          x       = "#{opts['x'] || 0}"
           x = '+' + x unless x[/^[+-]/]
-          y       = "#{opts[:y] || 0}"
+          y       = "#{opts['y'] || 0}"
           y = '+' + y unless y[/^[+-]/]
 
           command_line.convert(temp_object, "#{"-gravity #{gravity} " if gravity}-crop #{width}x#{height}#{x}#{y} +repage")
         end
 
         def resize_and_crop(temp_object, opts={})
-          width = opts[:width] || command_line.identify(temp_object)[:width]
-          height = opts[:height] || command_line.identify(temp_object)[:height]
-          gravity = GRAVITIES[opts[:gravity] || 'c']
+          w, h = command_line.identify(temp_object, "-ping -format '%w %h'").split unless opts['width'] && opts['height']
+          width = opts['width'] || w
+          height = opts['height'] || h
+          gravity = GRAVITIES[opts['gravity'] || 'c']
 
           command_line.convert(temp_object, "-resize #{width}x#{height}^^ -gravity #{gravity} -crop #{width}x#{height}+0+0 +repage")
         end
