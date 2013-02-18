@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "getting rack response directly" do
   
   before(:each) do
-    @app = test_app.configure do |c|
-      c.generators.add :test do
+    @app = test_app.configure do
+      add_generator :test do
         "bunheads"
       end
     end

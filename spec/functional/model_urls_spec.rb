@@ -15,7 +15,7 @@ describe "model urls" do
     @app = test_app.configure do
       use :imagemagick
       url_format '/media/:job/:name'
-      analyser.add :some_analyser_method do |t|
+      add_analyser :some_analyser_method do |t|
         53
       end
     end
