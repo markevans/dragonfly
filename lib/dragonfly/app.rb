@@ -126,7 +126,6 @@ module Dragonfly
         app = self
         Class.new(Job).class_eval do
           include app.job_methods
-          include Job::OverrideInstanceMethods
           self
         end
       end
@@ -150,7 +149,7 @@ module Dragonfly
     end
 
     def mime_type_for(format)
-      registered_mime_types[file_ext_string(format)]
+      registered_mime_types[file_ext_string(format)] || fallback_mime_type
     end
 
     def response_headers

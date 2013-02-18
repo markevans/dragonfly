@@ -66,8 +66,8 @@ describe Dragonfly::App do
       it "should work with a dot" do
         @app.mime_type_for('.png').should == 'image/png'
       end
-      it "should return nil if not known" do
-        @app.mime_type_for(:mark).should be_nil
+      it "should return the fallback if not known" do
+        @app.mime_type_for(:mark).should == 'application/octet-stream'
       end
       it "should allow for configuring extra mime types" do
         @app.register_mime_type 'mark', 'application/mark'
