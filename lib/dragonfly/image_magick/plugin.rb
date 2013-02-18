@@ -30,6 +30,16 @@ module Dragonfly
         app.define :encode do |format, args=""|
           convert(args, format)
         end
+        app.define :encode! do |format, args=""|
+          convert!(args, format)
+        end
+        app.define :rotate do |amount, opts={}|
+          convert("-rotate #{amount}#{opts['qualifier']}")
+        end
+        app.define :rotate! do |amount, opts={}|
+          convert!("-rotate #{amount}#{opts['qualifier']}")
+        end
+
       end
 
       def command_line

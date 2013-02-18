@@ -62,33 +62,6 @@ describe "a configured imagemagick app" do
     let(:app){ test_app.configure_with(:imagemagick) }
     let(:image){ app.fetch_file(SAMPLES_DIR.join('beach.png')) }
 
-    describe "auto-orient" do
-      it "should rotate an image according to exif information" do
-        image = app.fetch_file(SAMPLES_DIR.join('beach.jpg'))
-        image.width.should == 355
-        image.height.should == 280
-        image.auto_orient!
-        image.width.should == 280
-        image.height.should == 355
-      end
-    end
-
-    describe "flip" do
-      it "should flip the image, leaving the same dimensions" do
-        image.flip!
-        image.width.should == 280
-        image.height.should == 355
-      end
-    end
-
-    describe "flop" do
-      it "should flop the image, leaving the same dimensions" do
-        image.flop!
-        image.width.should == 280
-        image.height.should == 355
-      end
-    end
-
     describe "encode" do
       it "should encode the image to the correct format" do
         image.encode!(:gif)
@@ -97,7 +70,7 @@ describe "a configured imagemagick app" do
 
       it "should allow for extra args" do
         image.encode!(:jpg, '-quality 1')
-        image.format.should == :jpg
+        image.format.should == :jpeg
         image.size.should == 1445
       end
     end
@@ -110,25 +83,15 @@ describe "a configured imagemagick app" do
       end
 
       it "should not rotate given a larger height and the '>' qualifier" do
-        image.rotate!(90, :qualifier => '>')
+        image.rotate!(90, 'qualifier' => '>')
         image.width.should == 280
         image.height.should == 355
       end
 
       it "should rotate given a larger height and the '<' qualifier" do
-        image.rotate!(90, :qualifier => '<')
+        image.rotate!(90, 'qualifier' => '<')
         image.width.should == 355
         image.height.should == 280
-      end
-    end
-
-    describe "strip" do
-      it "should strip exif data" do
-        jpg = app.fetch_file(SAMPLES_DIR.join('taj.jpg'))
-        image = jpg.strip
-        image.width.should == 300
-        image.height.should == 300
-        image.size.should < jpg.size
       end
     end
 
