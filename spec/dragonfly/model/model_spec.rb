@@ -1250,29 +1250,6 @@ describe "models" do
 
   end
 
-  describe "format and mime type" do
-    before(:each) do
-      @app = test_app
-      @app.analyser.add :mime_type do |temp_object|
-        'some/type'
-      end
-      @item_class = new_model_class('Item', :preview_image_uid) do
-        dragonfly_accessor :preview_image
-      end
-      @item = @item_class.new
-      @content = "doggo"
-      @content.stub!(:original_filename).and_return('egg.png')
-    end
-    it "should use the file extension for format" do
-      @item.preview_image = @content
-      @item.preview_image.format.should == :png
-    end
-    it "should use the file extension for mime_type" do
-      @item.preview_image = @content
-      @item.preview_image.mime_type.should == 'image/png'
-    end
-  end
-
   describe "inspect" do
     before(:each) do
       @item_class = new_model_class('Item', :preview_image_uid) do

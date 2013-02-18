@@ -2,33 +2,33 @@ module Dragonfly
   module Model
     class Attachment
       class << self
-    
+
         class ConfigProxy
-      
+
           def initialize(spec, block)
             @spec = spec
             instance_eval(&block)
           end
-      
+
           private
-      
+
           attr_reader :spec
-      
+
           def after_assign(*callbacks, &block)
             add_callbacks(:after_assign, *callbacks, &block)
           end
-      
+
           def after_unassign(*callbacks, &block)
             add_callbacks(:after_unassign, *callbacks, &block)
           end
-      
+
           def copy_to(accessor, &block)
             after_assign do |a|
               self.send "#{accessor}=", (block_given? ? instance_exec(a, &block) : a)
             end
             after_unassign{|a| self.send("#{accessor}=", nil) }
           end
-      
+
           def storage_opts(opts=nil, &block)
             spec.storage_opts_specs << (opts || block)
           end
@@ -42,7 +42,7 @@ module Dragonfly
               storage_opts{|a| {key => value} }
             end
           end
-      
+
           def add_callbacks(name, *callbacks, &block)
             if block_given?
               spec.callbacks[name] << block
@@ -50,7 +50,7 @@ module Dragonfly
               spec.callbacks[name].push(*callbacks)
             end
           end
-      
+
           def method_missing(meth, *args, &block)
             if meth.to_s =~ /^storage_(.*)$/
               storage_opt($1.to_sym, args.first, &block)
@@ -58,18 +58,12 @@ module Dragonfly
               super
             end
           end
-      
+
         end
-    
+
         def init(model_class, attribute, app, config_block)
           @model_class, @attribute, @app, @config_block = model_class, attribute, app, config_block
-          include app.analyser.analysis_methods
-          define_method :format do
-            job.format
-          end
-          define_method :mime_type do
-            job.mime_type
-          end
+          include app.job_methods
           ConfigProxy.new(self, config_block) if config_block
           self
         end
@@ -80,7 +74,7 @@ module Dragonfly
         def callbacks
           @callbacks ||= Hash.new{|h,k| h[k] = [] }
         end
-    
+
         def run_callbacks(name, model, attachment)
           attachment.should_run_callbacks = false
           callbacks[name].each do |callback|
@@ -94,7 +88,7 @@ module Dragonfly
 
         # Magic attributes
         def allowed_magic_attributes
-          app.analyser.analysis_method_names + [:size, :name]
+          app.analyser_methods + [:size, :name]
         end
 
         def magic_attributes
@@ -124,7 +118,7 @@ module Dragonfly
         def storage_opts_specs
           @storage_opts_specs ||= []
         end
-    
+
         def evaluate_storage_opts(model, attachment)
           storage_opts_specs.inject({}) do |opts, spec|
             options = case spec
