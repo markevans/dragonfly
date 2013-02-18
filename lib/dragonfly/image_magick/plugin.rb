@@ -18,6 +18,34 @@ module Dragonfly
         app.define :format do
           identify_basic['format']
         end
+        app.define :aspect_ratio do
+          attrs = identify_basic
+          attrs['width'].to_f / attrs['height']
+        end
+        app.define :portrait? do
+          attrs = identify_basic
+          attrs['width'] <= attrs['height']
+        end
+        app.define :portrait do
+          portrait?
+        end
+        app.define :landscape? do
+          !portrait?
+        end
+        app.define :landscape do
+          landscape?
+        end
+        app.define :image? do
+          begin
+            identify
+            true
+          rescue Shell::CommandFailed
+            false
+          end
+        end
+        app.define :image do
+          image?
+        end
 
         # Generators
         app.add_generator :plain, ImageMagick::Generators::Plain.new(command_line)

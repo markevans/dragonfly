@@ -26,6 +26,48 @@ describe "a configured imagemagick app" do
 
   end
 
+  describe "analysers" do
+    let(:app){ test_app.configure_with(:imagemagick) }
+    let(:image){ app.fetch_file(SAMPLES_DIR.join('beach.png')) }
+
+    it "should return the width" do
+      image.width.should == 280
+    end
+
+    it "should return the height" do
+      image.height.should == 355
+    end
+
+    it "should return the aspect ratio" do
+      image.aspect_ratio.should == (280.0/355.0)
+    end
+
+    it "should say if it's portrait" do
+      image.portrait?.should be_true
+      image.portrait.should be_true # for using with magic attributes
+    end
+
+    it "should say if it's landscape" do
+      image.landscape?.should be_false
+      image.landscape.should be_false # for using with magic attributes
+    end
+
+    it "should return the format" do
+      image.format.should == :png
+    end
+
+    it "should say if it's an image" do
+      image.image?.should be_true
+      image.image.should be_true # for using with magic attributes
+    end
+
+    it "should say if it's not an image" do
+      suppressing_stderr do
+        app.create("blah").image?.should be_false
+      end
+    end
+  end
+
   describe "processors that change the url" do
     let(:app){ test_app.configure_with(:imagemagick).configure{ url_format '/:name' } }
     let(:image){ app.fetch_file(SAMPLES_DIR.join('beach.png')) }
