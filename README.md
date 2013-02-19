@@ -7,6 +7,8 @@ Ideal for using with Ruby on Rails (2.3 and 3), Sinatra and all that gubbins.
 
 However, Dragonfly is NOT JUST FOR RAILS, and NOT JUST FOR IMAGES!!
 
+**IMPORTANT: if you're running a version between 0.7.0 and 0.9.12, please update to 0.9.14 for a security update [details here](https://groups.google.com/forum/?fromgroups=#!topic/dragonfly-users/3c3WIU3VQTo)**
+
 For the lazy Rails user...
 --------------------------
 **Gemfile**:
