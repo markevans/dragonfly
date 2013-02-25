@@ -4,7 +4,7 @@ module Dragonfly
       class IdentifyBasic < Base
 
         def call(temp_object)
-          format, width, height = command_line.identify(temp_object, "-ping -format '%m %w %h'").split
+          format, width, height = command_line.identify(temp_object.path, "-ping -format '%m %w %h'").split
           {
             'format' => format.downcase.to_sym,
             'width' => width.to_i,

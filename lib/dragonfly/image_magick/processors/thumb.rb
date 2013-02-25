@@ -39,7 +39,7 @@ module Dragonfly
         end
 
         def resize(temp_object, geometry)
-          command_line.convert(temp_object, "-resize #{geometry}")
+          command_line.convert(temp_object.path, "-resize #{geometry}")
         end
 
         def crop(temp_object, opts={})
@@ -51,16 +51,16 @@ module Dragonfly
           y       = "#{opts['y'] || 0}"
           y = '+' + y unless y[/^[+-]/]
 
-          command_line.convert(temp_object, "#{"-gravity #{gravity} " if gravity}-crop #{width}x#{height}#{x}#{y} +repage")
+          command_line.convert(temp_object.path, "#{"-gravity #{gravity} " if gravity}-crop #{width}x#{height}#{x}#{y} +repage")
         end
 
         def resize_and_crop(temp_object, opts={})
-          w, h = command_line.identify(temp_object, "-ping -format '%w %h'").split unless opts['width'] && opts['height']
+          w, h = command_line.identify(temp_object.path, "-ping -format '%w %h'").split unless opts['width'] && opts['height']
           width = opts['width'] || w
           height = opts['height'] || h
           gravity = GRAVITIES[opts['gravity'] || 'c']
 
-          command_line.convert(temp_object, "-resize #{width}x#{height}^^ -gravity #{gravity} -crop #{width}x#{height}+0+0 +repage")
+          command_line.convert(temp_object.path, "-resize #{width}x#{height}^^ -gravity #{gravity} -crop #{width}x#{height}+0+0 +repage")
         end
 
       end

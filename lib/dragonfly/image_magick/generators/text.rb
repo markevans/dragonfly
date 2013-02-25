@@ -69,7 +69,7 @@ module Dragonfly
           tempfile = convert(args.join(' '), format)
 
           if (padding_top || padding_right || padding_bottom || padding_left)
-            dimensions = command_line.identify(tempfile, "-ping -format '%w %h'").split
+            dimensions = command_line.identify(tempfile.path, "-ping -format '%w %h'").split
             text_width  = dimensions[0].to_i
             text_height = dimensions[1].to_i
             width  = padding_left + text_width  + padding_right

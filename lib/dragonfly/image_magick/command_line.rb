@@ -18,14 +18,14 @@ module Dragonfly
       end
       attr_writer :identify_command
 
-      def convert(temp_object=nil, args='', format=nil, tempfile=nil)
+      def convert(path=nil, args='', format=nil, tempfile=nil)
         tempfile ||= Dragonfly::Utils.new_tempfile(format)
-        shell.run convert_command, %(#{shell.quote(temp_object.path) if temp_object} #{args} #{shell.quote(tempfile.path)})
+        shell.run convert_command, %(#{shell.quote(path) if path} #{args} #{shell.quote(tempfile.path)})
         tempfile
       end
 
-      def identify(temp_object, args="")
-        shell.run(identify_command, "#{args} #{shell.quote(temp_object.path)}").strip
+      def identify(path, args="")
+        shell.run(identify_command, "#{args} #{shell.quote(path)}").strip
       end
 
     end

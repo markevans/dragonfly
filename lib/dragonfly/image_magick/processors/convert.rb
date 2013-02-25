@@ -4,7 +4,7 @@ module Dragonfly
       class Convert < Base
 
         def call(temp_object, args='', format=nil)
-          result = command_line.convert(temp_object, args, format)
+          result = command_line.convert(temp_object.path, args, format)
           meta = format ? {:format => format.to_sym} : {}
           [result, meta]
         end
