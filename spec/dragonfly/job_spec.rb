@@ -548,10 +548,20 @@ describe Dragonfly::Job do
       job = Dragonfly::Job.deserialize("W1siZiIsInNvbWVfdWlkIl1d", @app)
       job.fetch_step.uid.should == 'some_uid'
     end
-    it "works with marshal encoded strings (deprecated)" do
-      job = Dragonfly::Job.deserialize("BAhbBlsHSSIGZgY6BkVUSSINc29tZV91aWQGOwBU", @app)
-      job.fetch_step.uid.should == 'some_uid'
+
+    context 'legacy urls are enabled' do
+      it "works with marshal encoded strings (deprecated)" do
+        job = Dragonfly::Job.deserialize("BAhbBlsHSSIGZgY6BkVUSSINc29tZV91aWQGOwBU", @app)
+        job.fetch_step.uid.should == 'some_uid'
+      end
     end
+
+    context 'legacy urls are disabled' do
+      it "rejects marshal encoded strings " do
+        @app.allow_legacy_urls = false
+        expect {Dragonfly::Job.deserialize("BAhbBlsHSSIGZgY6BkVUSSINc29tZV91aWQGOwBU", @app)}.to raise_error(Dragonfly::Serializer::BadString)
+      end
+    end    
   end
 
   describe "to_app" do
