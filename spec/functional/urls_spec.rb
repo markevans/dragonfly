@@ -38,4 +38,11 @@ describe "urls" do
     job_should_match [["f", "2012/11/03/17_38_08_578__MG_5899_.jpg"], ["p", "thumb", "450x450>"]]
     response = request(app, url)
   end
+
+  it "works with potentially tricky url characters for the url" do
+    url = app.fetch('uid []=~/+').url(:basename => 'name []=~/+')
+    url.should =~ %r(^/[\w%]+/name%20%5B%5D%3D%7E%2F%2B$)
+    job_should_match [["f", "uid []=~/+"]]
+    response = request(app, url)
+  end
 end

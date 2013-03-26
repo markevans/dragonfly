@@ -122,7 +122,7 @@ describe Dragonfly::UrlMapper do
       '/media/asdf.egg' =>       {'job' => 'asdf', 'basename' => nil,     'format' => 'egg'},
       '/media/asdf/stuff/egg' => nil,
       '/media/asdf/stuff.dog.egg' => {'job' => 'asdf', 'basename' => 'stuff.dog', 'format' => 'egg'},
-      '/media/asdf/s=2+-.d.e' => {'job' => 'asdf', 'basename' => 's=2+-.d', 'format' => 'e'},
+      '/media/asdf/s%3D2%2B-.d.e' => {'job' => 'asdf', 'basename' => 's=2+-.d', 'format' => 'e'},
       '/media/asdf-40x40/stuff.egg' => nil,
       '/media/a%23c' => {'job' => 'a#c', 'basename' => nil, 'format' => nil}
     }.each do |path, params|
