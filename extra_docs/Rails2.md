@@ -34,7 +34,7 @@ Gems
 ----
 environment.rb
 
-    config.gem 'dragonfly', '~>0.8.5'
+    config.gem 'dragonfly', '~>0.8.6'
     config.gem 'rack-cache', :lib => 'rack/cache'
 
 Capistrano
