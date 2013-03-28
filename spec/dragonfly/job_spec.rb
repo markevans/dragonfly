@@ -2,14 +2,6 @@ require 'spec_helper'
 
 describe Dragonfly::Job do
 
-  def add_dummy_generator(app, name)
-    app.add_generator(name){}
-  end
-
-  def add_dummy_processor(app, name)
-    app.add_processor(name){}
-  end
-
   describe "Step types" do
 
     {
@@ -223,7 +215,7 @@ describe Dragonfly::Job do
       @app = test_app
       @job = Dragonfly::Job.new(@app, 'HELLO', :name => 'hello.txt', :a => :b)
       @temp_object = @job.temp_object
-      add_dummy_processor(@app, :resize)
+      @app.add_processor(:resize){}
     end
 
     describe "apply" do
@@ -415,8 +407,8 @@ describe Dragonfly::Job do
   describe "to_a" do
     before(:each) do
       @app = test_app
-      add_dummy_generator(@app, :plasma)
-      add_dummy_processor(@app, :resize)
+      @app.add_generator(:plasma){}
+      @app.add_processor(:resize){}
     end
     it "should represent all the steps in array form" do
       job = Dragonfly::Job.new(@app)
@@ -435,8 +427,8 @@ describe Dragonfly::Job do
 
     before(:each) do
       @app = test_app
-      add_dummy_generator(@app, :plasma)
-      add_dummy_processor(@app, :resize)
+      @app.add_generator(:plasma){}
+      @app.add_processor(:resize){}
     end
 
     describe "a well-defined array" do
@@ -494,7 +486,7 @@ describe Dragonfly::Job do
   describe "serialization" do
     before(:each) do
       @app = test_app
-      add_dummy_processor(@app, :resize_and_crop)
+      @app.add_processor(:resize_and_crop){}
       @job = Dragonfly::Job.new(@app).fetch('uid').process(:resize_and_crop, 'width' => 270, 'height' => 92, 'gravity' => 'n')
     end
     it "should serialize itself" do
@@ -565,7 +557,7 @@ describe Dragonfly::Job do
     describe "using url_attrs in the url" do
       before(:each) do
         @app.server.url_format = '/media/:job/:zoo'
-        add_dummy_generator(@app, :fish)
+        @app.add_generator(:fish){}
         @job.generate!(:fish)
       end
       it "should act as per usual if no params given" do
@@ -644,7 +636,7 @@ describe Dragonfly::Job do
   describe "to_unique_s" do
     it "should use the arrays of args to create the string" do
       app = test_app
-      add_dummy_processor(app, :gug)
+      app.add_processor(:gug){}
       job = app.fetch('uid').process(:gug, 4, 'some' => 'arg', 'and' => 'more')
       job.to_unique_s.should == 'fuidpgug4andmoresomearg'
     end
@@ -728,8 +720,8 @@ describe Dragonfly::Job do
   describe "querying stuff without applying steps" do
     before(:each) do
       @app = test_app
-      add_dummy_generator(@app, :ponies)
-      add_dummy_processor(@app, :jam)
+      @app.add_generator(:ponies){}
+      @app.add_processor(:jam){}
     end
 
     describe "fetch_step" do
@@ -800,7 +792,7 @@ describe Dragonfly::Job do
 
     describe "process_steps" do
       it "should return the processing steps" do
-        add_dummy_processor(@app, :eggs)
+        @app.add_processor(:eggs){}
         job = @app.fetch('many/ponies').process(:jam).process(:eggs)
         job.process_steps.should match_steps([
           Dragonfly::Job::Process,
