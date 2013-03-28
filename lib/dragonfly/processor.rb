@@ -4,16 +4,13 @@ module Dragonfly
     # Exceptions
     class ProcessingError < RuntimeErrorWithOriginal; end
 
-    def process(name, content, *args)
-      temp_object = TempObject.new(content)
-      original_meta = temp_object.meta
+    def process(name, job, *args)
       processor = get(name)
       begin
-        content, meta = processor.call(temp_object, *args)
+        processor.call(job, *args)
       rescue RuntimeError => e
-        raise ProcessingError.new("Couldn't process #{name.inspect} with #{temp_object.inspect} and arguments #{args.inspect} - got: #{e}", e)
+        raise ProcessingError.new("Couldn't process #{name.inspect} with #{job.inspect} and arguments #{args.inspect} - got: #{e}", e)
       end
-      TempObject.new(content, original_meta.merge(meta || {}))
     end
 
     def update_url(name, url_attrs, *args)

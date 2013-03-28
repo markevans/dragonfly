@@ -5,48 +5,30 @@ describe Dragonfly::Processor do
   describe "#process" do
     let (:processor) { Dragonfly::Processor.new }
 
-    before :each do
-      processor.add :upcase do |temp_object, suffix=nil|
-        "#{temp_object.data.upcase}#{suffix}"
-      end
-    end
-
     it "should use the processor when applied (converting content into a temp_object)" do
-      temp_object = processor.process(:upcase, "baah", 'BA')
-      temp_object.should be_a(Dragonfly::TempObject)
-      temp_object.data.should == 'BAAHBA'
+      upcase_processor = processor.add(:upcase){}
+      job = mock('job')
+
+      upcase_processor.should_receive(:call).with(job, 'BA')
+      processor.process(:upcase, job, 'BA')
     end
 
     it "should raise an error if the processor doesn't exist" do
       expect{
-        processor.process(:goofy, "baah", 'BA')
+        processor.process(:goofy, mock('job'), 'BA')
       }.to raise_error(Dragonfly::Processor::NotFound)
     end
 
     it "should raise an error if there's a processing error" do
       class TestError < RuntimeError; end
-      processor.add :goofy do |temp_object|
+      processor.add :goofy do
         raise TestError
       end
       expect{
-        processor.process(:goofy, "baah")
+        processor.process(:goofy, mock('job'))
       }.to raise_error(Dragonfly::Processor::ProcessingError) do |error|
         error.original_error.should be_a(TestError)
       end
-    end
-
-    it "should maintain any TempObject meta attributes" do
-      result = processor.process(:upcase, Dragonfly::TempObject.new("baah", 'name' => 'hello.txt', 'a' => 'b'))
-      result.meta.should == {'name' => 'hello.txt', 'a' => 'b'}
-    end
-
-    it "should allow returning an array with extra attributes from the processor" do
-      processor.add :goofy do |temp_object|
-        ['hi', {'eggs' => 'asdf'}]
-      end
-      result = processor.process(:goofy, Dragonfly::TempObject.new("baah", 'a' => 'b'))
-      result.data.should == 'hi'
-      result.meta.should == {'a' => 'b', 'eggs' => "asdf"}
     end
   end
 
