@@ -1,24 +1,13 @@
 require 'spec_helper'
 
-# Matchers
-RSpec::Matchers.define :match_steps do |steps|
-  match do |given|
-    given.map{|step| step.class } == steps
-  end
-end
-
 describe Dragonfly::Job do
 
   def add_dummy_generator(app, name)
-    app.add_generator(name) do |*args|
-      "DUMMY GENERATED CONTENT"
-    end
+    app.add_generator(name){}
   end
 
   def add_dummy_processor(app, name)
-    app.add_processor(name) do |temp_object, *args|
-      "DUMMY PROCESSED CONTENT"
-    end
+    app.add_processor(name){}
   end
 
   describe "Step types" do
@@ -87,16 +76,6 @@ describe Dragonfly::Job do
 
       it "shouldn't set any url_attrs" do
         @job.url_attrs.should be_empty
-      end
-    end
-
-    describe "process" do
-      it "should raise an error when applying" do
-        add_dummy_processor(@app, :resize)
-        @job.process!(:resize, '20x30')
-        lambda{
-          @job.apply
-        }.should raise_error(Dragonfly::Job::NothingToProcess)
       end
     end
 
@@ -244,6 +223,7 @@ describe Dragonfly::Job do
       @app = test_app
       @job = Dragonfly::Job.new(@app, 'HELLO', :name => 'hello.txt', :a => :b)
       @temp_object = @job.temp_object
+      add_dummy_processor(@app, :resize)
     end
 
     describe "apply" do
@@ -253,10 +233,6 @@ describe Dragonfly::Job do
     end
 
     describe "process" do
-      before(:each) do
-        @app.add_processor :resize do |temp_object, size| size[0] end
-      end
-
       it "should be a Process job" do
         @job.process!(:resize, '20x30')
         @job.steps.should match_steps([Dragonfly::Job::Process])
@@ -274,6 +250,14 @@ describe Dragonfly::Job do
       it "should call update_url immediately with the url_attrs" do
         @app.processor.should_receive(:update_url).with(:resize, @job.url_attrs, '20x30')
         @job.process(:resize, '20x30')
+      end
+    end
+
+    describe "apply_process" do
+      it "processes immediately and returns itself" do
+        @app.processor.should_receive(:process).with(:resize, @job, '20x30')
+        job = @job.apply_process(:resize, '20x30')
+        job.should == @job
       end
     end
 
@@ -302,7 +286,7 @@ describe Dragonfly::Job do
       }.should raise_error(NoMethodError)
     end
     it "should work correctly with chained jobs, applying before analysing" do
-      @app.add_processor(:double){|temp_object| temp_object.data * 2 }
+      @app.add_processor(:double){|job| job.update(job.temp_object.data * 2, {}) }
       @job.process(:double).num_letters('L').should == 4
     end
   end
@@ -310,8 +294,8 @@ describe Dragonfly::Job do
   describe "defining extra steps after applying" do
     before(:each) do
       @app = test_app
-      @app.add_processor(:resize){|temp_object, *args| temp_object}
-      @app.add_processor(:encode){|temp_object, *args| temp_object}
+      @app.add_processor(:resize){}
+      @app.add_processor(:encode){}
       @job = Dragonfly::Job.new(@app)
       @job.temp_object = Dragonfly::TempObject.new("hello")
       @job.process! :resize

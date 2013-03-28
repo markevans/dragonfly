@@ -57,3 +57,9 @@ RSpec::Matchers.define :have_keys do |*keys|
     given.keys.map{|sym| sym.to_s }.sort == keys.map{|sym| sym.to_s }.sort
   end
 end
+
+RSpec::Matchers.define :match_steps do |steps|
+  match do |given|
+    given.map{|step| step.class } == steps
+  end
+end

@@ -21,7 +21,7 @@ module Dragonfly
                    :data, :file, :tempfile, :path, :to_file, :size, :each,
                    :meta, :meta=, :name, :name=, :basename, :basename=, :ext, :ext=
     def_delegators :app,
-                   :analyser, :server
+                   :analyser, :processor, :server
 
     class Step
 
@@ -76,17 +76,16 @@ module Dragonfly
         args.first.to_sym
       end
 
-      def processor
-        job.app.processor
-      end
-
       def arguments
         args[1..-1]
       end
 
+      def processor
+        job.app.processor
+      end
+
       def apply
-        raise NothingToProcess, "Can't process because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        job.temp_object = processor.process(name, job.temp_object, *arguments)
+        job.apply_process(name, *arguments)
       end
     end
 
@@ -254,6 +253,11 @@ module Dragonfly
     end
 
     # Applying, etc.
+
+    def apply_process(name, *args)
+      processor.process(name, self, *args)
+      self
+    end
 
     def apply
       pending_steps.each{|step| step.apply }

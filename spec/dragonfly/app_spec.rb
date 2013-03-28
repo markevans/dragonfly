@@ -164,19 +164,20 @@ describe Dragonfly::App do
   describe "adding processors" do
     before(:each) do
       @app = test_app.configure do |c|
-        c.add_processor(:double){|temp_object| temp_object.data * 2 }
+        c.add_processor(:double){}
       end
     end
     it "should add a method" do
       job1 = @app.create("bunga")
       job2 = job1.double
       job1.should_not == job2
-      job2.data.should == 'bungabunga'
+      job1.to_a.should == []
+      job2.to_a.should == [['p', :double]]
     end
     it "should add a bang method" do
       job = @app.create("bunga")
       job.double!.should == job
-      job.data.should == 'bungabunga'
+      job.to_a.should == [['p', :double]]
     end
     it "should return processor methods" do
       @app.processor_methods.should == [:double]
