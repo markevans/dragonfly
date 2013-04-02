@@ -32,14 +32,12 @@ module Dragonfly
   #
   class TempObject
 
-    include HasFilename
-
     # Exceptions
     class Closed < RuntimeError; end
 
     # Instance Methods
 
-    def initialize(obj, meta=nil)
+    def initialize(obj, name=nil)
       if obj.is_a? TempObject
         @data = obj.get_data
         @tempfile = obj.get_tempfile
@@ -69,22 +67,18 @@ module Dragonfly
         @pathname.basename.to_s
       end
 
-      # Meta
-      @meta = {}
-      @meta.merge! meta if meta
-      @meta.merge! obj.meta if obj.respond_to?(:meta)
-      @meta[:name] ||= @original_filename if @original_filename
+      # Name
+      @name = name
     end
 
     attr_reader :original_filename
-    attr_accessor :meta
 
     def name
-      meta[:name]
+      @name || original_filename
     end
 
-    def name=(name)
-      meta[:name] = name
+    def ext
+      name.split('.').last if name
     end
 
     def data

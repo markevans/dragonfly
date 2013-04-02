@@ -171,7 +171,7 @@ describe Dragonfly::TempObject do
         parts.last.bytesize.should <= 8192
       end
     end
-    
+
     describe "closing" do
       before(:each) do
         @temp_object = new_temp_object("wassup")
@@ -217,7 +217,7 @@ describe Dragonfly::TempObject do
     end
     
     it "should use set the file extension in path from the name" do
-      temp_object = Dragonfly::TempObject.new("hi", :name => 'dark.cloud')
+      temp_object = Dragonfly::TempObject.new("hi", 'dark.cloud')
       temp_object.path.should =~ /\.cloud$/
     end
   end
@@ -261,7 +261,7 @@ describe Dragonfly::TempObject do
       temp_object = Dragonfly::TempObject.new(file)
       temp_object.path.should == File.expand_path(file.path)
     end
-    
+
     it "should return an absolute path even if the file wasn't instantiated like that" do
       file = new_file('HELLO', 'tmp/bongo')
       temp_object = Dragonfly::TempObject.new(file)
@@ -294,7 +294,7 @@ describe Dragonfly::TempObject do
       temp_object = Dragonfly::TempObject.new(pathname)
       temp_object.path.should == File.expand_path(pathname.to_s)
     end
-    
+
     it "should return an absolute path even if the pathname is relative" do
       pathname = new_pathname('HELLO', 'tmp/bingo')
       temp_object = Dragonfly::TempObject.new(pathname)
@@ -308,18 +308,18 @@ describe Dragonfly::TempObject do
   end
 
   describe "initializing from another temp object" do
-    
+
     def initialization_object(data)
       Dragonfly::TempObject.new(data)
     end
-    
+
     before(:each) do
-      @temp_object1 = Dragonfly::TempObject.new(new_tempfile('hello'), 'some' => 'meta')
+      @temp_object1 = Dragonfly::TempObject.new(new_tempfile('hello'))
       @temp_object2 = Dragonfly::TempObject.new(@temp_object1)
     end
-    
+
     it_should_behave_like "common behaviour"
-    
+
     it "should not be the same object" do
       @temp_object1.should_not == @temp_object2
     end
@@ -328,9 +328,6 @@ describe Dragonfly::TempObject do
     end
     it "should have the same file path" do
       @temp_object1.path.should == @temp_object2.path
-    end
-    it "should maintain the meta" do
-      @temp_object2.meta.should == {'some' => 'meta'}
     end
   end
 
@@ -378,58 +375,30 @@ describe Dragonfly::TempObject do
       temp_object.original_filename.should == 'round.gif'
     end
   end
-  
-  describe "meta" do
-    it "should default to an empty hash" do
-      Dragonfly::TempObject.new('sdf').meta.should == {}
+
+  describe "name" do
+    let(:temp_object) { Dragonfly::TempObject.new("stuff") }
+
+    it "defaults to nil" do
+      temp_object.name.should be_nil
     end
-    it "should allow setting on initialize" do
-      Dragonfly::TempObject.new('sdf', :dub => 'wub').meta.should == {:dub => 'wub'}
+    it "uses original_filename if present" do
+      temp_object.should_receive(:original_filename).and_return('some.thing')
+      temp_object.name.should == 'some.thing'
     end
-    it "should still be a hash if set to nil" do
-      Dragonfly::TempObject.new('sdf', nil).meta.should == {}
+    it "allows setting on initialize" do
+      temp_object = Dragonfly::TempObject.new("content here", 'some.thing')
+      temp_object.name.should == 'some.thing'
     end
-    it "should allow setting" do
-      temp_object = Dragonfly::TempObject.new('boo')
-      temp_object.meta = {:far => 'gone'}
-      temp_object.meta.should == {:far => 'gone'}
+    it "defaults ext to nil" do
+      temp_object.ext.should be_nil
+    end
+    it "returns the ext if it exists" do
+      temp_object = Dragonfly::TempObject.new("content here", 'some.thing.yo')
+      temp_object.ext.should == 'yo'
     end
   end
 
-  describe "name" do
-    it "should default to nil" do
-      Dragonfly::TempObject.new("HELLO").name.should be_nil
-    end
-    it "should allow setting the name via the meta" do
-      Dragonfly::TempObject.new("HELLO", :name => 'gosh.pig').name.should == "gosh.pig"
-    end
-    it "should fallback to the original filename if not set" do
-      content = "HELLO"
-      content.should_receive(:original_filename).and_return("some.egg")
-      temp_object = Dragonfly::TempObject.new(content)
-      temp_object.name.should == "some.egg"
-    end
-    it "should prefer the specified name to the original filename" do
-      content = "HELLO"
-      content.stub!(:original_filename).and_return("brase.nose")
-      temp_object = Dragonfly::TempObject.new("HELLO", :name => 'some.gug')
-      temp_object.name.should == "some.gug"
-    end
-    it "should allow setting with a setter" do
-      temp_object = Dragonfly::TempObject.new("HELLO")
-      temp_object.name = 'bugs'
-      temp_object.name.should == "bugs"
-    end
-  end
-  
-  describe "sanity check for using HasFilename" do
-    it "should act like Dragonfly::HasFilename" do
-      temp_object = Dragonfly::TempObject.new('h', :name => 'one.big.park')
-      temp_object.ext = 'smeagol'
-      temp_object.name.should == 'one.big.smeagol'
-    end
-  end
-  
   describe "unique_id" do
     before(:each) do
       @temp_object = Dragonfly::TempObject.new('hello')
