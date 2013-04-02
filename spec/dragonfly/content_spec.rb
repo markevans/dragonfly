@@ -53,6 +53,10 @@ describe Dragonfly::Content do
   end
 
   describe "analyse" do
+    it "calls the app's analyser on itself" do
+      content.analyser.should_receive(:analyse).with(:shizzle, content, 'args')
+      content.analyse(:shizzle, 'args')
+    end
   end
 
   describe "update" do

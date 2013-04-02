@@ -27,6 +27,10 @@ module Dragonfly
       processor.process(name, self, *args)
     end
 
+    def analyse(name, *args)
+      analyser.analyse(name, self, *args)
+    end
+
     private
 
     attr_writer :temp_object
