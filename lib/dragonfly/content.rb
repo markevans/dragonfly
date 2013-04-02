@@ -46,8 +46,8 @@ module Dragonfly
     end
 
     def update(obj, meta=nil)
-      self.temp_object = TempObject.new(obj)
       self.meta.merge!(meta) if meta
+      self.temp_object = TempObject.new(obj, name)
     end
 
     private

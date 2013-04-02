@@ -69,6 +69,13 @@ describe Dragonfly::Content do
       content.update("stuff", 'meta' => 'here')
       content.meta.should == {'meta' => 'here'}
     end
+
+    it "sets the name on the temp_object if present" do
+      content.update("adsf")
+      content.temp_object.name.should be_nil
+      content.update("adsf", :name => 'good.stuff')
+      content.temp_object.name.should == "good.stuff"
+    end
   end
 
   describe "delegated methods to temp_object" do
