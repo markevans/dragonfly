@@ -57,25 +57,25 @@ NB: REMEMBER THE MULTIPART BIT!!!
 You can avoid having to re-upload when validations fail with
 
 ```erb
-  <%= f.hidden_field :retained_cover_image %>
+<%= f.hidden_field :retained_cover_image %>
 ```
 
 remove the attachment with
 
 ```erb
-  <%= f.check_box :remove_cover_image %>
+<%= f.check_box :remove_cover_image %>
 ```
 
 assign from some other url with
 
 ```erb
-  <%= f.text_field :cover_image_url %>
+<%= f.text_field :cover_image_url %>
 ```
 
 and display a thumbnail (on the upload form) with
 
 ```erb
-  <%= image_tag @album.cover_image.thumb('100x100').url if @album.cover_image_uid %>
+<%= image_tag @album.cover_image.thumb('100x100').url if @album.cover_image_uid %>
 ```
 
 **View** (to display):
