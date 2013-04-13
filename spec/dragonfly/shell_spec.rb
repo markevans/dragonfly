@@ -24,23 +24,34 @@ describe Dragonfly::Shell do
     end
   end
 
-  describe "escaping args" do
-    {
-      %q(hello) => %q('hello'),
-      %q("hello") => %q('hello'),
-      %q('hello') => %q('hello'),
-      %q(he\'llo) => %q('he'\''llo'),
-      %q('he'\''llo') => %q('he'\''llo'),
-      %q("he'llo") => %q('he'\''llo'),
-      %q(hel$(lo)) => %q('hel$(lo)'),
-      %q(hel\$(lo)) => %q('hel$(lo)'),
-      %q('hel\$(lo)') => %q('hel\$(lo)')
-    }.each do |args, escaped_args|
-      it "should escape #{args.inspect} -> #{escaped_args.inspect}" do
-        pending "not applicable to windows" if Dragonfly.running_on_windows?
-        shell.escape_args(args).should == escaped_args
+  unless Dragonfly.running_on_windows?
+
+    describe "escaping args" do
+      {
+        %q(hello) => %q('hello'),
+        %q("hello") => %q('hello'),
+        %q('hello') => %q('hello'),
+        %q(he\'llo) => %q('he'\''llo'),
+        %q('he'\''llo') => %q('he'\''llo'),
+        %q("he'llo") => %q('he'\''llo'),
+        %q(hel$(lo)) => %q('hel$(lo)'),
+        %q(hel\$(lo)) => %q('hel$(lo)'),
+        %q('hel\$(lo)') => %q('hel\$(lo)')
+      }.each do |args, escaped_args|
+        it "should escape #{args.inspect} -> #{escaped_args.inspect}" do
+          shell.escape_args(args).should == escaped_args
+        end
       end
     end
+
+    it "escapes commands by default" do
+      shell.run("echo `echo 1`").strip.should == "`echo 1`"
+    end
+
+    it "allows running non-escaped commands" do
+      shell.run("echo `echo 1`", escape: false).strip.should == "1"
+    end
+
   end
-  
+
 end

@@ -8,11 +8,11 @@ module Dragonfly
     # Exceptions
     class CommandFailed < RuntimeError; end
 
-    def run(command)
-      escaped_command = escape_args(command)
-      log.debug("Running command: #{escaped_command}") if log_commands
-      result = `#{escaped_command}`
-      raise CommandFailed, "Command failed (#{escaped_command}) with exit status #{$?.exitstatus}" unless $?.success?
+    def run(command, opts={})
+      command = escape_args(command) unless opts[:escape] == false
+      log.debug("Running command: #{command}") if log_commands
+      result = `#{command}`
+      raise CommandFailed, "Command failed (#{command}) with exit status #{$?.exitstatus}" unless $?.success?
       result
     end
 
