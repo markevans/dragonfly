@@ -16,7 +16,8 @@ module Dragonfly
     def_delegators :app,
                    :analyser, :processor
 
-    attr_reader :temp_object, :meta
+    attr_reader :temp_object
+    attr_accessor :meta
     def_delegators :temp_object, :each
 
     [:data, :file, :tempfile, :path, :to_file, :size, :each].each do |meth|
@@ -30,15 +31,16 @@ module Dragonfly
     end
 
     def name
-      meta[:name] || (temp_object.original_filename if temp_object)
+      meta["name"] || (temp_object.original_filename if temp_object)
     end
 
     def name=(name)
-      meta[:name] = name
+      meta["name"] = name
     end
 
     def process!(name, *args)
       processor.process(name, self, *args)
+      self
     end
 
     def analyse(name, *args)
@@ -46,8 +48,14 @@ module Dragonfly
     end
 
     def update(obj, meta=nil)
-      self.meta.merge!(meta) if meta
+      add_meta(meta) if meta
       self.temp_object = TempObject.new(obj, name)
+      self
+    end
+
+    def add_meta(meta)
+      self.meta.merge!(meta)
+      self
     end
 
     private

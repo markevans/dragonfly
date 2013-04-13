@@ -16,6 +16,17 @@ describe Dragonfly::Content do
     it "defaults to an empty hash" do
       content.meta.should == {}
     end
+
+    it "sets meta" do
+      content.meta = {"hello" => 'there'}
+      content.meta.should == {"hello" => 'there'}
+    end
+
+    it "adds meta and returns itself" do
+      content.meta = {'hello' => 'there'}
+      content.add_meta('wassup' => 'guys?').should == content
+      content.meta.should == {'hello' => 'there', 'wassup' => 'guys?'}
+    end
   end
 
   describe "name" do
@@ -24,7 +35,7 @@ describe Dragonfly::Content do
     end
 
     it "gets taken from the meta" do
-      content.meta[:name] = 'some.name'
+      content.meta["name"] = 'some.name'
       content.name.should == 'some.name'
     end
 
@@ -46,9 +57,9 @@ describe Dragonfly::Content do
   end
 
   describe "process!" do
-    it "calls the app's processor on itself" do
+    it "calls the app's processor on itself and returns itself" do
       content.processor.should_receive(:process).with(:shizzle, content, 'args')
-      content.process!(:shizzle, 'args')
+      content.process!(:shizzle, 'args').should == content
     end
   end
 
@@ -73,8 +84,12 @@ describe Dragonfly::Content do
     it "sets the name on the temp_object if present" do
       content.update("adsf")
       content.temp_object.name.should be_nil
-      content.update("adsf", :name => 'good.stuff')
+      content.update("adsf", "name" => 'good.stuff')
       content.temp_object.name.should == "good.stuff"
+    end
+
+    it "returns itself" do
+      content.update('abc').should == content
     end
   end
 
