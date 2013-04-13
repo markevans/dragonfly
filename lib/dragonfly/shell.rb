@@ -7,17 +7,12 @@ module Dragonfly
 
     # Exceptions
     class CommandFailed < RuntimeError; end
-    class CommandNotFound < RuntimeError; end
 
-    def run(command, args="")
-      full_command = "#{command} #{escape_args(args)}"
-      log.debug("Running command: #{full_command}") if log_commands
-      begin
-        result = `#{full_command}`
-      rescue Errno::ENOENT
-        raise CommandNotFound, "Command #{command.inspect} not found"
-      end
-      raise CommandFailed, "Command failed (#{full_command}) with exit status #{$?.exitstatus}" unless $?.success?
+    def run(command)
+      escaped_command = escape_args(command)
+      log.debug("Running command: #{escaped_command}") if log_commands
+      result = `#{escaped_command}`
+      raise CommandFailed, "Command failed (#{escaped_command}) with exit status #{$?.exitstatus}" unless $?.success?
       result
     end
 
