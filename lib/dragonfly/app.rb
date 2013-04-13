@@ -36,6 +36,7 @@ module Dragonfly
       @server = Server.new(self)
       @content_filename = Dragonfly::Response::DEFAULT_FILENAME
       @job_methods = Module.new
+      @shell = Shell.new
     end
 
     attr_reader :name
@@ -115,6 +116,8 @@ module Dragonfly
       job_class.new(self, content, meta)
     end
     alias create new_job
+
+    attr_reader :shell
 
     def endpoint(job=nil, &block)
       block ? RoutedEndpoint.new(self, &block) : JobEndpoint.new(job)

@@ -2,7 +2,7 @@ require 'shellwords'
 
 module Dragonfly
   class Shell
-    
+
     attr_accessor :log_commands
 
     # Exceptions
@@ -20,13 +20,13 @@ module Dragonfly
       raise CommandFailed, "Command failed (#{full_command}) with exit status #{$?.exitstatus}" unless $?.success?
       result
     end
-    
+
     def escape_args(args)
       args.shellsplit.map do |arg|
         quote arg.gsub(/\\?'/, %q('\\\\''))
       end.join(' ')
     end
-    
+
     def quote(string)
       q = Dragonfly.running_on_windows? ? '"' : "'"
       q + string + q

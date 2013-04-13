@@ -263,4 +263,12 @@ describe Dragonfly::App do
     end
   end
 
+  describe "shell" do
+    let(:app){ test_app }
+
+    it "has a shell" do
+      app.shell.should be_a(Dragonfly::Shell)
+    end
+  end
+
 end
