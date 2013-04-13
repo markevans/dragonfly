@@ -151,4 +151,69 @@ describe Dragonfly::Content do
     end
 
   end
+
+  describe "shell commands" do
+    let (:content) { Dragonfly::Content.new(app, "big\nstuff", 'name' => 'content.jpg') }
+
+    it "evalutes using the shell" do
+      path = nil
+      content.shell_eval do |p|
+        path = p
+        "cat #{path}"
+      end.should == "big\nstuff"
+      path.should == app.shell.quote(content.path)
+    end
+
+    it "allows evaluating without escaping" do
+      path = nil
+      content.shell_eval(:escape => false) do |p|
+        path = p
+        %{$(echo cat) #{path}}
+      end.should == "big\nstuff"
+      path.should == content.path
+    end
+
+    it "runs the shell command with a new tempfile path, returning self" do
+      original_path = content.path
+      old_path = nil
+      new_path = nil
+      content.shell_update do |o, n|
+        old_path = o
+        new_path = n
+        "cp #{o} #{n}"
+      end.should == content
+      old_path.should == app.shell.quote(original_path)
+      new_path.should == app.shell.quote(content.path)
+      content.data.should == "big\nstuff"
+    end
+
+    it "allows updating without escaping" do
+      original_path = content.path
+      old_path = nil
+      new_path = nil
+      content.shell_update(:escape => false) do |o, n|
+        old_path = o
+        new_path = n
+        "cat #{o} > #{n}"
+      end.should == content
+      old_path.should == original_path
+      new_path.should == content.path
+      content.data.should == "big\nstuff"
+    end
+
+    it "defaults the extension to the same" do
+      content.shell_update do |old_path, new_path|
+        "cp #{old_path} #{new_path}"
+      end
+      content.path.should =~ /\.jpg$/
+    end
+
+    it "allows changing the new_path file extension" do
+      content.shell_update :ext => 'png' do |old_path, new_path|
+        "cp #{old_path} #{new_path}"
+      end
+      content.path.should =~ /\.png$/
+    end
+  end
+
 end

@@ -15,7 +15,7 @@ module Dragonfly
 
     attr_reader :app
     def_delegators :app,
-                   :analyser, :processor
+                   :analyser, :processor, :shell
 
     attr_reader :temp_object
     attr_accessor :meta
@@ -57,6 +57,23 @@ module Dragonfly
     def add_meta(meta)
       self.meta.merge!(meta)
       self
+    end
+
+    def shell_eval(opts={})
+      should_escape = opts[:escape] != false
+      command = yield(should_escape ? shell.quote(path) : path)
+      shell.run command, :escape => should_escape
+    end
+
+    def shell_update(opts={})
+      ext = opts[:ext] || self.ext
+      should_escape = opts[:escape] != false
+      tempfile = Dragonfly::Utils.new_tempfile(ext)
+      old_path = should_escape ? shell.quote(path) : path
+      new_path = should_escape ? shell.quote(tempfile.path) : tempfile.path
+      command = yield(old_path, new_path)
+      shell.run(command, :escape => should_escape)
+      update(tempfile)
     end
 
     private
