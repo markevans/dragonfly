@@ -6,6 +6,14 @@ describe Dragonfly::Content do
 
   let(:content) { Dragonfly::Content.new(app) }
 
+  describe "initializing" do
+    it "allows initializing with content and meta" do
+      content = Dragonfly::Content.new(app, "things", 'some' => 'meta')
+      content.data.should == 'things'
+      content.meta.should == {'some' => 'meta'}
+    end
+  end
+
   describe "temp_object" do
     it "starts as nil" do
       content.temp_object.should == nil

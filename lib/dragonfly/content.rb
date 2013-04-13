@@ -7,9 +7,10 @@ module Dragonfly
     include HasFilename
     extend Forwardable
 
-    def initialize(app)
+    def initialize(app, obj=nil, meta=nil)
       @app = app
       @meta = {}
+      update(obj, meta) if obj
     end
 
     attr_reader :app
