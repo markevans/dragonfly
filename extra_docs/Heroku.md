@@ -1,12 +1,7 @@
 Heroku
 ======
 
-The default configuration won't work out of the box for Heroku, because
-
-- Heroku doesn't allow saving files to the filesystem (although it does use tempfiles)
-- If on Heroku {http://devcenter.heroku.com/articles/stack Aspen/Bamboo stacks}, we won't need {http://rtomayko.github.com/rack-cache/ Rack::Cache},
-because it already uses the caching proxy {http://varnish.projects.linpro.no/ Varnish}, which we can make use of.
-We will still need it on {http://devcenter.heroku.com/articles/cedar Heroku Cedar}, however, as it doesn't include Varnish.
+The default configuration won't work out of the box for Heroku, because the platform doesn't allow saving files to the filesystem (although it does use tempfiles).
 
 Instead of the normal {file:DataStorage#File\_datastore FileDataStore}, we can use the {file:DataStorage#S3\_datastore S3DataStore}.
 
@@ -50,8 +45,6 @@ From your app's directory:
     heroku config:add S3_KEY=XXXXXXXXX S3_SECRET=XXXXXXXXXX
 
 Replace 'XXXXXXXXX' with your access key and secret.
-
-**NOTE**: HEROKU'S VARNISH CACHE IS CLEARED EVERY TIME YOU DEPLOY!!! (DOESN'T APPLY TO CEDAR STACK)
 
 If this is an issue, you may want to look into storing thumbnails on S3 (see {file:ServingRemotely}), or maybe generating thumbnails _on upload_ (see {file:Models#Up-front_thumbnailing}), or maybe an after-deploy hook for hitting specific Dragonfly urls you want to cache, etc.
 It won't be a problem for most sites though.
