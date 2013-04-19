@@ -4,7 +4,7 @@ Heroku
 The default configuration won't work out of the box for Heroku, because
 
 - Heroku doesn't allow saving files to the filesystem (although it does use tempfiles)
-- If on Heroku {http://devcenter.heroku.com/articles/stack Aspen/Bamboo stacks}, we won't need {http://tomayko.com/src/rack-cache/ Rack::Cache},
+- If on Heroku {http://devcenter.heroku.com/articles/stack Aspen/Bamboo stacks}, we won't need {http://rtomayko.github.com/rack-cache/ Rack::Cache},
 because it already uses the caching proxy {http://varnish.projects.linpro.no/ Varnish}, which we can make use of.
 We will still need it on {http://devcenter.heroku.com/articles/cedar Heroku Cedar}, however, as it doesn't include Varnish.
 
