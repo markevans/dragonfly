@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gem "rack"
 gem "multi_json", "~> 1.0"
