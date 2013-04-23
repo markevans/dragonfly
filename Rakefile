@@ -9,19 +9,6 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
-require 'jeweler'
-Jeweler::Tasks.new do |gem|
-  gem.name = "dragonfly"
-  gem.email = "mark@new-bamboo.co.uk"
-  gem.summary = %Q{Ideal gem for handling attachments in Rails, Sinatra and Rack applications.}
-  gem.description = %Q{Dragonfly is a framework that enables on-the-fly processing for any content type.
-  It is especially suited to image handling. Its uses range from image thumbnails to standard attachments to on-demand text generation.}
-  gem.homepage = "http://github.com/markevans/dragonfly"
-  gem.license = "MIT"
-  gem.authors = ["Mark Evans"]
-end
-Jeweler::RubygemsDotOrgTasks.new
-
 require 'rspec/core'
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec) do |spec|
