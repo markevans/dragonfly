@@ -118,7 +118,9 @@ The {Dragonfly::ImageMagick::Generator ImageMagick Generator} gives us these met
       :format => :gif                                   # defaults to png
     )
 
-Note that the text generation options are meant to resemble css as much as possible. You can also use, for example, `'font-family'` instead of `:font_family`.
+Note that the text generation options requires ghostscript (gs) to be installed.
+
+Options are meant to resemble css as much as possible. You can also use, for example, `'font-family'` instead of `:font_family`.
 
 You can use `padding-top`, `padding-left`, etc., as well as the standard css shortcuts for `padding` (it assumes unit is px).
 
