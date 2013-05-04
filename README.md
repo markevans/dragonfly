@@ -7,13 +7,15 @@ Ideal for using with Ruby on Rails (2.3 and 3), Sinatra and all that gubbins.
 
 However, Dragonfly is NOT JUST FOR RAILS, and NOT JUST FOR IMAGES!!
 
+**IMPORTANT: if you're running a version between 0.7.0 and 0.9.12, please update to at least 0.9.14 for a security update [details here](https://groups.google.com/forum/?fromgroups=#!topic/dragonfly-users/3c3WIU3VQTo)**
+
 For the lazy Rails user...
 --------------------------
 **Gemfile**:
 
 ```ruby
 gem 'rack-cache', :require => 'rack/cache'
-gem 'dragonfly', '~>0.9.14'
+gem 'dragonfly', '~>0.9.15'
 ```
 
 **Initializer** (e.g. config/initializers/dragonfly.rb):
@@ -55,25 +57,25 @@ NB: REMEMBER THE MULTIPART BIT!!!
 You can avoid having to re-upload when validations fail with
 
 ```erb
-  <%= f.hidden_field :retained_cover_image %>
+<%= f.hidden_field :retained_cover_image %>
 ```
 
 remove the attachment with
 
 ```erb
-  <%= f.check_box :remove_cover_image %>
+<%= f.check_box :remove_cover_image %>
 ```
 
 assign from some other url with
 
 ```erb
-  <%= f.text_field :cover_image_url %>
+<%= f.text_field :cover_image_url %>
 ```
 
 and display a thumbnail (on the upload form) with
 
 ```erb
-  <%= image_tag @album.cover_image.thumb('100x100').url if @album.cover_image_uid %>
+<%= image_tag @album.cover_image.thumb('100x100').url if @album.cover_image_uid %>
 ```
 
 **View** (to display):

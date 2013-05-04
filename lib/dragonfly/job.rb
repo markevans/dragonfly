@@ -193,7 +193,11 @@ module Dragonfly
         array = begin
           Serializer.json_decode(string)
         rescue Serializer::BadString
-          Serializer.marshal_decode(string) # legacy strings
+          if app.allow_legacy_urls
+            Serializer.marshal_decode(string, :check_malicious => true) # legacy strings
+          else
+            raise
+          end
         end
         from_a(array, app)
       end

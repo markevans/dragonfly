@@ -54,7 +54,7 @@ module Dragonfly
       # Exceptions (these come under App namespace)
       class UnregisteredDataStore < RuntimeError; end
 
-      writer :cache_duration, :secret, :log, :content_disposition, :content_filename
+      writer :cache_duration, :secret, :log, :content_disposition, :content_filename, :allow_legacy_urls
       meth :register_mime_type, :response_headers, :define_url, :add_processor, :add_generator, :add_analyser
 
       def datastore(store, *args)
@@ -215,6 +215,12 @@ module Dragonfly
     attr_writer :log
 
     attr_accessor :content_disposition, :content_filename
+
+    def allow_legacy_urls
+      @allow_legacy_urls = true if @allow_legacy_urls.nil?
+      @allow_legacy_urls
+    end
+    attr_writer :allow_legacy_urls
 
     private
 

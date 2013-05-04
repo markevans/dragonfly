@@ -21,8 +21,8 @@ describe "urls" do
   end
 
   it "blows up if it detects bad objects" do
-    url = "/BAhvOgZDBjoLQHRoaW5nSSIId2VlBjoGRVQ"
-    Dragonfly::Response.should_not_receive(:new)
+    url = "/BAhvOhpEcmFnb25mbHk6OlRlbXBPYmplY3QIOgpAZGF0YUkiCWJsYWgGOgZFVDoXQG9yaWdpbmFsX2ZpbGVuYW1lMDoKQG1ldGF7AA"
+    Dragonfly::Job.should_not_receive(:from_a)
     response = request(app, url)
     response.status.should == 404
   end
@@ -36,6 +36,13 @@ describe "urls" do
   it "works when '%2B' has been converted to + (e.g. with nginx)" do
     url = "/W1siZiIsIjIwMTIvMTEvMDMvMTdfMzhfMDhfNTc4X19NR181ODk5Xy5qcGciXSxbInAiLCJ0aHVtYiIsIjQ1MHg0NTA+Il1d/_MG_5899+.jpg"
     job_should_match [["f", "2012/11/03/17_38_08_578__MG_5899_.jpg"], ["p", "thumb", "450x450>"]]
+    response = request(app, url)
+  end
+
+  it "works with potentially tricky url characters for the url" do
+    url = app.fetch('uid []=~/+').url(:basename => 'name []=~/+')
+    url.should =~ %r(^/[\w%]+/name%20%5B%5D%3D%7E%2F%2B$)
+    job_should_match [["f", "uid []=~/+"]]
     response = request(app, url)
   end
 end

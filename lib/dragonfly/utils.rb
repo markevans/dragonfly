@@ -22,7 +22,7 @@ module Dragonfly
     end
 
     def uri_escape_segment(string)
-      URI.escape(string).sub('/', '%2F')
+      Rack::Utils.escape_path(string)
     end
 
     def uri_unescape(string)
