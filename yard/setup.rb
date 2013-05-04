@@ -11,5 +11,6 @@ DRAGONFLY_VERSION = if version
   puts "Setting the version in the docs to #{version}"
   version
 else
-  File.read(this_dir + '/../VERSION').strip
+  require "#{this_dir}/../lib/dragonfly/version"
+  Dragonfly::VERSION
 end
