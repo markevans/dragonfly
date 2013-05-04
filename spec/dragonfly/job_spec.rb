@@ -554,6 +554,13 @@ describe Dragonfly::Job do
         job = Dragonfly::Job.deserialize("BAhbBlsHSSIGZgY6BkVUSSINc29tZV91aWQGOwBU", @app)
         job.fetch_step.uid.should == 'some_uid'
       end
+
+      it "checks for potentially malicious strings" do
+        string = Dragonfly::Serializer.marshal_encode(Dragonfly::TempObject.new('a'))
+        expect{
+          Dragonfly::Job.deserialize(string, @app)
+        }.to raise_error(Dragonfly::Serializer::MaliciousString)
+      end
     end
 
     context 'legacy urls are disabled' do

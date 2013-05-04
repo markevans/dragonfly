@@ -121,16 +121,6 @@ describe Dragonfly::Server do
         response.headers['X-Cascade'].should be_nil
       end
 
-      it "should return a 404 when the url is malicious" do
-        class C; def initialize; @a = 1; end; end
-        url = "/media/#{Dragonfly::Serializer.marshal_encode(C.new)}"
-        response = request(@server, url)
-        response.status.should == 404
-        response.body.should == 'Not found'
-        response.content_type.should == 'text/plain'
-        response.headers['X-Cascade'].should be_nil
-      end
-
       it "should return a 403 Forbidden when someone uses fetch_file" do
         response = request(@server, "/media/#{@app.fetch_file('/some/file.txt').serialize}")
         response.status.should == 403

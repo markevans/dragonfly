@@ -21,8 +21,8 @@ describe "urls" do
   end
 
   it "blows up if it detects bad objects" do
-    url = "/BAhvOgZDBjoLQHRoaW5nSSIId2VlBjoGRVQ"
-    Dragonfly::Response.should_not_receive(:new)
+    url = "/BAhvOhpEcmFnb25mbHk6OlRlbXBPYmplY3QIOgpAZGF0YUkiCWJsYWgGOgZFVDoXQG9yaWdpbmFsX2ZpbGVuYW1lMDoKQG1ldGF7AA"
+    Dragonfly::Job.should_not_receive(:from_a)
     response = request(app, url)
     response.status.should == 404
   end

@@ -176,7 +176,7 @@ module Dragonfly
           Serializer.json_decode(string)
         rescue Serializer::BadString
           if app.allow_legacy_urls
-            Serializer.marshal_decode(string) # legacy strings
+            Serializer.marshal_decode(string, :check_malicious => true) # legacy strings
           else
             raise
           end
