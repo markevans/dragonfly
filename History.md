@@ -1,3 +1,14 @@
+0.9.15 (2013-05-04)
+===================
+Features
+--------
+- Allow turning off support of legacy urls
+
+Fixes
+-----
+- More conservative URL escaping - back to Rack::Utils.escape_path
+- Don't check for malicious strings when deserializing from datastores (they're to be trusted)
+
 0.9.14 (2013-02-13)
 ===================
 Features
