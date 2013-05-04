@@ -4,7 +4,7 @@ def image_properties(image)
   else
     tempfile = Tempfile.new('image')
     tempfile.binmode
-    tempfile.write(image.is_a?(Dragonfly::TempObject) ? image.data : image)
+    tempfile.write(image.respond_to?(:data) ? image.data : image)
     tempfile.close
   end
   details = `identify #{tempfile.path}`
