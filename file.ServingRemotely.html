@@ -2,22 +2,24 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII" />
 <title>
   File: ServingRemotely
   
-    &mdash; Documentation by YARD 0.7.5
+    &mdash; Documentation by YARD 0.8.6.1
   
 </title>
 
-  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
   relpath = '';
-  if (relpath != '') relpath += '/';
+  framesUrl = "frames.html#!" + escape(window.location.href);
 </script>
+
 
   <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 
@@ -60,14 +62,23 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.14)</div>
+      <div id="logo">DRAGONFLY (v 0.9.15)</div>
       <div id="search">
   
-    <a id="class_list_link" href="#">Class List</a>
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
   
-    <a id="method_list_link" href="#">Method List</a>
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
   
-    <a id="file_list_link" href="#">File List</a>
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
   
 </div>
     </div>
@@ -94,22 +105,22 @@ provides a number of ways of doing this.</p>
 <p>The <a href="file.DataStorage.html#File_datastore" title="FileDataStore">FileDataStore</a>, <a href="file.DataStorage.html#S3_datastore" title="S3DataStore">S3DataStore</a> and
 <a href="file.DataStorage.html#Couch_datastore" title="CouchDataStore">CouchDataStore</a> allow for serving data directly, so given a Dragonfly app</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span>
 </code></pre>
 
 <p>and the uid for some stored content</p>
 
-<pre class="code ruby"><code><span class='rubyid_uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='rubyid_Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'some/file.jpg'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='rubyid_Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'some/file.jpg'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 </code></pre>
 
 <p>we can get the remote url using</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_remote_url_for identifier id'>remote_url_for</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>            <span class='comment val'># e.g. http://my-bucket.s3.amazonaws.com/2011/04/01/03/03/05/243/file.jpg</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_remote_url_for identifier id'>remote_url_for</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>            <span class='comment val'># e.g. http://my-bucket.s3.amazonaws.com/2011/04/01/03/03/05/243/file.jpg</span>
 </code></pre>
 
 <p>or from a model attachment:</p>
 
-<pre class="code ruby"><code><span class='rubyid_my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span>     <span class='comment val'># http://my-bucket.s3.amazonaws.com/2011...</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span>     <span class='comment val'># http://my-bucket.s3.amazonaws.com/2011...</span>
 </code></pre>
 
 <h2>Processed Content</h2>
@@ -118,7 +129,7 @@ provides a number of ways of doing this.</p>
 like most other attachment ruby gems (see <a href="file.Models.html#Up-front_thumbnailing" title="Models">Models</a>),
 e.g. for my avatar model,</p>
 
-<pre class="code ruby"><code><span class='rubyid_class class kw'>class</span> <span class='rubyid_Avatar constant id'>Avatar</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Avatar constant id'>Avatar</span>
   <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:image</span> <span class='rubyid_do do kw'>do</span>
     <span class='rubyid_copy_to identifier id'>copy_to</span><span class='lparen token'>(</span><span class='symbol val'>:small_image</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_a identifier id'>a</span><span class='bitor op'>|</span> <span class='rubyid_a identifier id'>a</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'200x200#'</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
   <span class='rubyid_end end kw'>end</span>
@@ -128,7 +139,7 @@ e.g. for my avatar model,</p>
 
 <p>Then we can use <code>remote_url</code> for for each accessor.</p>
 
-<pre class="code ruby"><code><span class='rubyid_avatar identifier id'>avatar</span><span class='dot token'>.</span><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span>            <span class='comment val'># http://my-bucket.s3.amazonaws.com/some/path.jpg</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_avatar identifier id'>avatar</span><span class='dot token'>.</span><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span>            <span class='comment val'># http://my-bucket.s3.amazonaws.com/some/path.jpg</span>
 <span class='rubyid_avatar identifier id'>avatar</span><span class='dot token'>.</span><span class='rubyid_small_image identifier id'>small_image</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span>      <span class='comment val'># http://my-bucket.s3.amazonaws.com/some/other/path.jpg</span>
 </code></pre>
 
@@ -147,7 +158,7 @@ to the datastore in the on-the-fly manner.</p>
 Below is an example using an ActiveRecord 'Thumb' table to keep track of already created thumbnail uids.
 It has two string columns; 'job' and 'uid'.</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
 
   <span class='comment val'># Override the .url method...</span>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_define_url identifier id'>define_url</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_app identifier id'>app</span><span class='comma token'>,</span> <span class='rubyid_job identifier id'>job</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='bitor op'>|</span>
@@ -178,12 +189,12 @@ It has two string columns; 'job' and 'uid'.</p>
 
 <p>This would give</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'40x40'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>    <span class='comment val'># normal Dragonfly url e.g. /media/BAhbBls...</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'40x40'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>    <span class='comment val'># normal Dragonfly url e.g. /media/BAhbBls...</span>
 </code></pre>
 
 <p>then from the second time onwards</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'40x40'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>    <span class='comment val'># http://my-bucket.s3.amazonaws.com/2011...</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'some_uid'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>'40x40'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>    <span class='comment val'># http://my-bucket.s3.amazonaws.com/2011...</span>
 </code></pre>
 
 <p>The above is just an example - there are a number of things you could do with <code>before_serve</code> and <code>define_url</code> -
@@ -200,9 +211,9 @@ is left up to you as it's outside of the scope of Dragonfly.</p>
     </div>
 
     <div id="footer">
-  Generated on Tue Feb 19 10:46:05 2013 by 
+  Generated on Sat May  4 12:19:55 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.9.3).
+  0.8.6.1 (ruby-1.9.3).
 </div>
 
   </body>

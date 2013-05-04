@@ -2,22 +2,24 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII" />
 <title>
   File: DataStorage
   
-    &mdash; Documentation by YARD 0.7.5
+    &mdash; Documentation by YARD 0.8.6.1
   
 </title>
 
-  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
   relpath = '';
-  if (relpath != '') relpath += '/';
+  framesUrl = "frames.html#!" + escape(window.location.href);
 </script>
+
 
   <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 
@@ -60,14 +62,23 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.14)</div>
+      <div id="logo">DRAGONFLY (v 0.9.15)</div>
       <div id="search">
   
-    <a id="class_list_link" href="#">Class List</a>
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
   
-    <a id="method_list_link" href="#">Method List</a>
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
   
-    <a id="file_list_link" href="#">File List</a>
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
   
 </div>
     </div>
@@ -84,18 +95,18 @@
 
 <p>Lets say we have an app</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app_name</span><span class='rbrack token'>]</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app_name</span><span class='rbrack token'>]</span>
 </code></pre>
 
 <p>Then we can store data like so:</p>
 
-<pre class="code ruby"><code><span class='comment val'># Can pass in a String, Pathname, File or Tempfile</span>
+<pre class="code ruby"><code class="ruby"><span class='comment val'># Can pass in a String, Pathname, File or Tempfile</span>
 <span class='rubyid_uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='string val'>'SOME CONTENT'</span><span class='rparen token'>)</span>
 </code></pre>
 
 <p>We can also save metadata at the same time, and any other options the configured datastore accepts</p>
 
-<pre class="code ruby"><code><span class='rubyid_uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='string val'>'SOME CONTENT'</span><span class='comma token'>,</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='string val'>'SOME CONTENT'</span><span class='comma token'>,</span>
   <span class='symbol val'>:meta</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:time</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_Time constant id'>Time</span><span class='dot token'>.</span><span class='rubyid_now identifier id'>now</span><span class='comma token'>,</span> <span class='symbol val'>:name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'content.txt'</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
   <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span>
 <span class='rparen token'>)</span>
@@ -103,36 +114,36 @@
 
 <p>We can get content with</p>
 
-<pre class="code ruby"><code><span class='rubyid_content identifier id'>content</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_content identifier id'>content</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
 <span class='rubyid_content identifier id'>content</span><span class='dot token'>.</span><span class='rubyid_data identifier id'>data</span>         <span class='comment val'># &quot;SOME CONTENT&quot;</span>
 </code></pre>
 
 <p>We can also get the extra saved attributes</p>
 
-<pre class="code ruby"><code><span class='rubyid_content identifier id'>content</span><span class='dot token'>.</span><span class='rubyid_meta identifier id'>meta</span>         <span class='comment val'># {:time =&gt; Sat Aug 14 12:04:13 +0100 2010, :name =&gt; 'content.txt'}</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_content identifier id'>content</span><span class='dot token'>.</span><span class='rubyid_meta identifier id'>meta</span>         <span class='comment val'># {:time =&gt; Sat Aug 14 12:04:13 +0100 2010, :name =&gt; 'content.txt'}</span>
 <span class='rubyid_content identifier id'>content</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span>         <span class='comment val'># 'content.txt'</span>
 </code></pre>
 
 <p>We can destroy it with</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_destroy identifier id'>destroy</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='rparen token'>)</span>
 </code></pre>
 
 <h2>Serving directly from the datastore</h2>
 
 <p>Datastores can optionally serve data directly too, by implementing <code>url_for</code></p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='rubyid_url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span> <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rparen token'>)</span>   <span class='comment val'># ---&gt; &quot;http://some.url/thing.txt&quot;</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='rubyid_url_for identifier id'>url_for</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span> <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rparen token'>)</span>   <span class='comment val'># ---&gt; &quot;http://some.url/thing.txt&quot;</span>
 </code></pre>
 
 <p>or (the same)</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_remote_url_for identifier id'>remote_url_for</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span> <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rparen token'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_remote_url_for identifier id'>remote_url_for</span><span class='lparen token'>(</span><span class='rubyid_uid identifier id'>uid</span><span class='comma token'>,</span> <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rparen token'>)</span>
 </code></pre>
 
 <p>or</p>
 
-<pre class="code ruby"><code><span class='rubyid_my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span><span class='lparen token'>(</span><span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rparen token'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span><span class='lparen token'>(</span><span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'option'</span><span class='rparen token'>)</span>
 </code></pre>
 
 <p>You can create your own datastore, or use one of the provided ones as outlined below.</p>
@@ -145,7 +156,7 @@
 
 <p>If for whatever reason you need to configure it again:</p>
 
-<pre class="code ruby"><code><span class='comment val'># shouldn't need this - it is the default</span>
+<pre class="code ruby"><code class="ruby"><span class='comment val'># shouldn't need this - it is the default</span>
 <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='rubyid_FileDataStore constant id'>FileDataStore</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
 
 <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_d identifier id'>d</span><span class='bitor op'>|</span>
@@ -160,7 +171,7 @@
 
 <p>To customize the storage path (and therefore the uid), use the <code>:path</code> option on store</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='string val'>&quot;SOME CONTENT&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'some/path.txt'</span><span class='rparen token'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='string val'>&quot;SOME CONTENT&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'some/path.txt'</span><span class='rparen token'>)</span>
 </code></pre>
 
 <p>To do this on a per-model basis see <a href="file.Models.html#Storage_options" title="Models">Models</a>.</p>
@@ -172,7 +183,7 @@ is changed, otherwise you could have caching problems, as the generated urls wil
 
 <p>To configure with the <span class='object_link'><a href="Dragonfly/DataStorage/S3DataStore.html" title="Dragonfly::DataStorage::S3DataStore (class)">S3DataStore</a></span>:</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='rubyid_S3DataStore constant id'>S3DataStore</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='rubyid_S3DataStore constant id'>S3DataStore</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
 
 <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_bucket_name identifier id'>bucket_name</span> <span class='assign token'>=</span> <span class='string val'>'my_bucket'</span>
@@ -189,27 +200,27 @@ is changed, otherwise you could have caching problems, as the generated urls wil
 
 <p>You can serve directly from the S3DataStore using e.g.</p>
 
-<pre class="code ruby"><code><span class='rubyid_my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span>
 </code></pre>
 
 <p>or with an expiring url:</p>
 
-<pre class="code ruby"><code><span class='rubyid_my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span><span class='lparen token'>(</span><span class='symbol val'>:expires</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='float val'>3</span><span class='dot token'>.</span><span class='rubyid_days identifier id'>days</span><span class='dot token'>.</span><span class='rubyid_from_now identifier id'>from_now</span><span class='rparen token'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span><span class='lparen token'>(</span><span class='symbol val'>:expires</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='float val'>3</span><span class='dot token'>.</span><span class='rubyid_days identifier id'>days</span><span class='dot token'>.</span><span class='rubyid_from_now identifier id'>from_now</span><span class='rparen token'>)</span>
 </code></pre>
 
 <p>or with an https url:</p>
 
-<pre class="code ruby"><code><span class='rubyid_my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span><span class='lparen token'>(</span><span class='symbol val'>:scheme</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'https'</span><span class='rparen token'>)</span>   <span class='comment val'># also configurable for all urls with 'url_scheme'</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span><span class='lparen token'>(</span><span class='symbol val'>:scheme</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'https'</span><span class='rparen token'>)</span>   <span class='comment val'># also configurable for all urls with 'url_scheme'</span>
 </code></pre>
 
 <p>or with a custom host:</p>
 
-<pre class="code ruby"><code><span class='rubyid_my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span><span class='lparen token'>(</span><span class='symbol val'>:host</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'custom.domain'</span><span class='rparen token'>)</span>   <span class='comment val'># also configurable for all urls with 'url_host'</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_my_model identifier id'>my_model</span><span class='dot token'>.</span><span class='rubyid_attachment identifier id'>attachment</span><span class='dot token'>.</span><span class='rubyid_remote_url identifier id'>remote_url</span><span class='lparen token'>(</span><span class='symbol val'>:host</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'custom.domain'</span><span class='rparen token'>)</span>   <span class='comment val'># also configurable for all urls with 'url_host'</span>
 </code></pre>
 
 <p>Extra options you can use on store are <code>:path</code> and <code>:headers</code></p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='string val'>&quot;SOME CONTENT&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'some/path.txt'</span><span class='comma token'>,</span> <span class='symbol val'>:headers</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='string val'>'x-amz-acl'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'public-read-write'</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='string val'>&quot;SOME CONTENT&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'some/path.txt'</span><span class='comma token'>,</span> <span class='symbol val'>:headers</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='string val'>'x-amz-acl'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'public-read-write'</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
 </code></pre>
 
 <p>To do this on a per-model basis see <a href="file.Models.html#Storage_options" title="Models">Models</a>.</p>
@@ -221,12 +232,12 @@ is changed, otherwise you could have caching problems, as the generated urls wil
 
 <p>To configure with the <span class='object_link'><a href="Dragonfly/DataStorage/MongoDataStore.html" title="Dragonfly::DataStorage::MongoDataStore (class)">MongoDataStore</a></span>:</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='rubyid_MongoDataStore constant id'>MongoDataStore</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='rubyid_MongoDataStore constant id'>MongoDataStore</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
 </code></pre>
 
 <p>It won't normally need configuring, but if you wish to:</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_d identifier id'>d</span><span class='bitor op'>|</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_d identifier id'>d</span><span class='bitor op'>|</span>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_host identifier id'>host</span> <span class='assign token'>=</span> <span class='string val'>'http://egg.heads:5000'</span>                  <span class='comment val'># defaults to localhost</span>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_port identifier id'>port</span> <span class='assign token'>=</span> <span class='string val'>'27018'</span>                                  <span class='comment val'># defaults to mongo default (27017)</span>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_database identifier id'>database</span> <span class='assign token'>=</span> <span class='string val'>'my_database'</span>                        <span class='comment val'># defaults to 'dragonfly'</span>
@@ -251,12 +262,12 @@ is changed, otherwise you could have caching problems, as the generated urls wil
 
 <p>To configure with the <span class='object_link'><a href="Dragonfly/DataStorage/CouchDataStore.html" title="Dragonfly::DataStorage::CouchDataStore (class)">CouchDataStore</a></span>:</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='rubyid_CouchDataStore constant id'>CouchDataStore</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_DataStorage constant id'>DataStorage</span><span class='colon2 op'>::</span><span class='rubyid_CouchDataStore constant id'>CouchDataStore</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
 </code></pre>
 
 <p>To configure:</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_d identifier id'>d</span><span class='bitor op'>|</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_d identifier id'>d</span><span class='bitor op'>|</span>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_host identifier id'>host</span> <span class='assign token'>=</span> <span class='string val'>'localhost'</span>                            <span class='comment val'># defaults to localhost</span>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_port identifier id'>port</span> <span class='assign token'>=</span> <span class='string val'>'5984'</span>                                 <span class='comment val'># defaults to couchdb default (5984)</span>
   <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_database identifier id'>database</span> <span class='assign token'>=</span> <span class='string val'>'dragonfly'</span>                        <span class='comment val'># defaults to 'dragonfly'</span>
@@ -275,7 +286,7 @@ is changed, otherwise you could have caching problems, as the generated urls wil
 
 <p>Data stores are key-value in nature, and need to implement 3 methods: <code>store</code>, <code>retrieve</code> and <code>destroy</code>.</p>
 
-<pre class="code ruby"><code><span class='rubyid_class class kw'>class</span> <span class='rubyid_MyDataStore constant id'>MyDataStore</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_MyDataStore constant id'>MyDataStore</span>
 
   <span class='rubyid_def def kw'>def</span> <span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
     <span class='comment val'># ... use temp_object.data, temp_object.file, temp_object.path, etc.</span>
@@ -302,14 +313,14 @@ is changed, otherwise you could have caching problems, as the generated urls wil
 
 <p>You can now configure the app to use your datastore:</p>
 
-<pre class="code ruby"><code><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app_name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='rubyid_MyDataStore constant id'>MyDataStore</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app_name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_datastore identifier id'>datastore</span> <span class='assign token'>=</span> <span class='rubyid_MyDataStore constant id'>MyDataStore</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
 </code></pre>
 
 <p>Notice that <code>store</code> takes a second <code>opts</code> argument.
 Any options, get passed here.
 <code>:meta</code> is treated specially and is accessible inside <code>MyDataStore#store</code> as <code>temp_object.meta</code></p>
 
-<pre class="code ruby"><code><span class='rubyid_uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='string val'>'SOME CONTENT'</span><span class='comma token'>,</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_uid identifier id'>uid</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_store identifier id'>store</span><span class='lparen token'>(</span><span class='string val'>'SOME CONTENT'</span><span class='comma token'>,</span>
   <span class='symbol val'>:meta</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'great_content.txt'</span><span class='rbrace token'>}</span><span class='comma token'>,</span>
   <span class='symbol val'>:some_other</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:option</span>
 <span class='rparen token'>)</span>
@@ -319,7 +330,7 @@ Any options, get passed here.
 
 <p>You can also optionally serve data directly from the datastore if it implements <code>url_for</code>:</p>
 
-<pre class="code ruby"><code><span class='rubyid_class class kw'>class</span> <span class='rubyid_MyDataStore constant id'>MyDataStore</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_MyDataStore constant id'>MyDataStore</span>
 
   <span class='comment val'># ...</span>
 
@@ -339,9 +350,9 @@ Any options, get passed here.
     </div>
 
     <div id="footer">
-  Generated on Tue Feb 19 10:46:04 2013 by 
+  Generated on Sat May  4 12:19:55 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.9.3).
+  0.8.6.1 (ruby-1.9.3).
 </div>
 
   </body>

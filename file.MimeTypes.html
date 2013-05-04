@@ -2,22 +2,24 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII" />
 <title>
   File: MimeTypes
   
-    &mdash; Documentation by YARD 0.7.5
+    &mdash; Documentation by YARD 0.8.6.1
   
 </title>
 
-  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
   relpath = '';
-  if (relpath != '') relpath += '/';
+  framesUrl = "frames.html#!" + escape(window.location.href);
 </script>
+
 
   <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 
@@ -60,14 +62,23 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.14)</div>
+      <div id="logo">DRAGONFLY (v 0.9.15)</div>
       <div id="search">
   
-    <a id="class_list_link" href="#">Class List</a>
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
   
-    <a id="method_list_link" href="#">Method List</a>
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
   
-    <a id="file_list_link" href="#">File List</a>
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
   
 </div>
     </div>
@@ -101,7 +112,7 @@ Formats are mapped to mime-types using the app's registered list of mime-types.<
 
 <p>To register a mime-type for the format 'egg':</p>
 
-<pre class="code ruby"><code><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_register_mime_type identifier id'>register_mime_type</span><span class='lparen token'>(</span><span class='symbol val'>:egg</span><span class='comma token'>,</span> <span class='string val'>'fried/egg'</span><span class='rparen token'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_register_mime_type identifier id'>register_mime_type</span><span class='lparen token'>(</span><span class='symbol val'>:egg</span><span class='comma token'>,</span> <span class='string val'>'fried/egg'</span><span class='rparen token'>)</span>
 </code></pre>
 
 <p>You can also do this inside a configuration block.</p>
@@ -117,7 +128,7 @@ Formats are mapped to mime-types using the app's registered list of mime-types.<
 
 <p>By default this is 'application/octet-stream', but it can be changed using</p>
 
-<pre class="code ruby"><code><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_fallback_mime_type identifier id'>fallback_mime_type</span> <span class='assign token'>=</span> <span class='string val'>'meaty/beef'</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:my_app</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_fallback_mime_type identifier id'>fallback_mime_type</span> <span class='assign token'>=</span> <span class='string val'>'meaty/beef'</span>
 </code></pre>
 
 <p>This can also be done inside a configuration block.</p>
@@ -131,9 +142,9 @@ Formats are mapped to mime-types using the app's registered list of mime-types.<
     </div>
 
     <div id="footer">
-  Generated on Tue Feb 19 10:46:05 2013 by 
+  Generated on Sat May  4 12:19:55 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.9.3).
+  0.8.6.1 (ruby-1.9.3).
 </div>
 
   </body>

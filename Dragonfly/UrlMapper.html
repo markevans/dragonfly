@@ -6,18 +6,20 @@
 <title>
   Class: Dragonfly::UrlMapper
   
-    &mdash; Documentation by YARD 0.7.5
+    &mdash; Documentation by YARD 0.8.6.1
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  relpath = '..';
-  if (relpath != '') relpath += '/';
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
 </script>
+
 
   <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
 
@@ -60,14 +62,23 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.14)</div>
+      <div id="logo">DRAGONFLY (v 0.9.15)</div>
       <div id="search">
   
-    <a id="class_list_link" href="#">Class List</a>
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
   
-    <a id="method_list_link" href="#">Method List</a>
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
   
-    <a id="file_list_link" href="#">File List</a>
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
   
 </div>
     </div>
@@ -116,9 +127,9 @@
 
 <h2>Defined Under Namespace</h2>
 <p class="children">
-   
+  
     
-   
+  
     
       <strong class="classes">Classes:</strong> <span class='object_link'><a href="UrlMapper/BadUrlFormat.html" title="Dragonfly::UrlMapper::BadUrlFormat (class)">BadUrlFormat</a></span>, <span class='object_link'><a href="UrlMapper/Segment.html" title="Dragonfly::UrlMapper::Segment (class)">Segment</a></span>
     
@@ -141,7 +152,10 @@
   </span>
   
   
-    <span class="note title readonly">readonly</span>
+  
+    
+      <span class="note title readonly">readonly</span>
+    
     
   
   
@@ -166,7 +180,10 @@
   </span>
   
   
-    <span class="note title readonly">readonly</span>
+  
+    
+      <span class="note title readonly">readonly</span>
+    
     
   
   
@@ -191,7 +208,10 @@
   </span>
   
   
-    <span class="note title readonly">readonly</span>
+  
+    
+      <span class="note title readonly">readonly</span>
+    
     
   
   
@@ -230,6 +250,7 @@
     
   </span>
   
+  
     <span class="note title constructor">constructor</span>
   
   
@@ -259,6 +280,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -274,6 +296,7 @@
 
     
   </span>
+  
   
   
   
@@ -301,6 +324,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -315,13 +339,15 @@
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
-  <p class="signature first" id="initialize-instance_method">
+  <h3 class="signature first" id="initialize-instance_method">
   
     - (<tt><span class='object_link'><a href="" title="Dragonfly::UrlMapper (class)">UrlMapper</a></span></tt>) <strong>initialize</strong>(url_format, patterns = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>A new instance of UrlMapper</p>
 
@@ -330,7 +356,7 @@
 </div>
 <div class="tags">
   
-<h3>Raises:</h3>
+<p class="tag_title">Raises:</p>
 <ul class="raise">
   
     <li>
@@ -379,15 +405,16 @@
     
       
       <span id=""></span>
-      <span id="segments-instance_method"></span>
       <div class="method_details first">
-  <p class="signature first" id="segments-instance_method">
+  <h3 class="signature first" id="segments-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>segments</strong>  <span class="extras">(readonly)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns the value of attribute segments</p>
 
@@ -421,15 +448,16 @@
     
       
       <span id=""></span>
-      <span id="url_format-instance_method"></span>
       <div class="method_details ">
-  <p class="signature " id="url_format-instance_method">
+  <h3 class="signature " id="url_format-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>url_format</strong>  <span class="extras">(readonly)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns the value of attribute url_format</p>
 
@@ -463,15 +491,16 @@
     
       
       <span id=""></span>
-      <span id="url_regexp-instance_method"></span>
       <div class="method_details ">
-  <p class="signature " id="url_regexp-instance_method">
+  <h3 class="signature " id="url_regexp-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>url_regexp</strong>  <span class="extras">(readonly)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns the value of attribute url_regexp</p>
 
@@ -508,16 +537,18 @@
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
-    
+
     
       <div class="method_details first">
-  <p class="signature first" id="params_for-instance_method">
+  <h3 class="signature first" id="params_for-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>params_for</strong>(path, query = nil) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -554,13 +585,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="params_in_url-instance_method">
+  <h3 class="signature " id="params_in_url-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>params_in_url</strong> 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -583,13 +616,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="url_for-instance_method">
+  <h3 class="signature " id="url_for-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>url_for</strong>(params) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -639,9 +674,9 @@
     </div>
 
     <div id="footer">
-  Generated on Tue Feb 19 10:46:07 2013 by 
+  Generated on Sat May  4 12:19:58 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.9.3).
+  0.8.6.1 (ruby-1.9.3).
 </div>
 
   </body>

@@ -2,22 +2,24 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII" />
 <title>
   File: Analysers
   
-    &mdash; Documentation by YARD 0.7.5
+    &mdash; Documentation by YARD 0.8.6.1
   
 </title>
 
-  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
   relpath = '';
-  if (relpath != '') relpath += '/';
+  framesUrl = "frames.html#!" + escape(window.location.href);
 </script>
+
 
   <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 
@@ -60,14 +62,23 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.14)</div>
+      <div id="logo">DRAGONFLY (v 0.9.15)</div>
       <div id="search">
   
-    <a id="class_list_link" href="#">Class List</a>
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
   
-    <a id="method_list_link" href="#">Method List</a>
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
   
-    <a id="file_list_link" href="#">File List</a>
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
   
 </div>
     </div>
@@ -95,17 +106,17 @@
 
 <p>If not already registered:</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='rubyid_register identifier id'>register</span><span class='lparen token'>(</span><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='rubyid_FileCommandAnalyser constant id'>FileCommandAnalyser</span><span class='rparen token'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='rubyid_register identifier id'>register</span><span class='lparen token'>(</span><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='rubyid_FileCommandAnalyser constant id'>FileCommandAnalyser</span><span class='rparen token'>)</span>
 </code></pre>
 
 <p>gives us:</p>
 
-<pre class="code ruby"><code><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_mime_type identifier id'>mime_type</span>    <span class='comment val'># =&gt; 'image/png'</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_mime_type identifier id'>mime_type</span>    <span class='comment val'># =&gt; 'image/png'</span>
 </code></pre>
 
 <p>You shouldn't need to configure it but if you need to:</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='rubyid_register identifier id'>register</span><span class='lparen token'>(</span><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='rubyid_FileCommandAnalyser constant id'>FileCommandAnalyser</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_a identifier id'>a</span><span class='bitor op'>|</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='rubyid_register identifier id'>register</span><span class='lparen token'>(</span><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='colon2 op'>::</span><span class='rubyid_Analysis constant id'>Analysis</span><span class='colon2 op'>::</span><span class='rubyid_FileCommandAnalyser constant id'>FileCommandAnalyser</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_a identifier id'>a</span><span class='bitor op'>|</span>
   <span class='rubyid_a identifier id'>a</span><span class='dot token'>.</span><span class='rubyid_use_filesystem identifier id'>use_filesystem</span> <span class='assign token'>=</span> <span class='rubyid_false false kw'>false</span>                 <span class='comment val'># defaults to true</span>
   <span class='rubyid_a identifier id'>a</span><span class='dot token'>.</span><span class='rubyid_file_command identifier id'>file_command</span> <span class='assign token'>=</span> <span class='string val'>'/opt/local/bin/file'</span>   <span class='comment val'># defaults to 'file'</span>
   <span class='rubyid_a identifier id'>a</span><span class='dot token'>.</span><span class='rubyid_num_bytes_to_check identifier id'>num_bytes_to_check</span> <span class='assign token'>=</span> <span class='integer val'>1024</span>              <span class='comment val'># defaults to 255 - only applies if not using the filesystem</span>
@@ -116,7 +127,7 @@
 
 <p>To register a single custom analyser:</p>
 
-<pre class="code ruby"><code><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='rubyid_add identifier id'>add</span> <span class='symbol val'>:wobbliness</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='bitor op'>|</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_analyser identifier id'>analyser</span><span class='dot token'>.</span><span class='rubyid_add identifier id'>add</span> <span class='symbol val'>:wobbliness</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='bitor op'>|</span>
   <span class='comment val'># can use temp_object.data, temp_object.path, temp_object.file, etc.</span>
   <span class='rubyid_SomeLibrary constant id'>SomeLibrary</span><span class='dot token'>.</span><span class='rubyid_assess_wobbliness identifier id'>assess_wobbliness</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_data identifier id'>data</span><span class='rparen token'>)</span>
 <span class='rubyid_end end kw'>end</span>
@@ -127,7 +138,7 @@
 <p>You can create a class like the ImageMagick one above, in which case all public methods will be counted as analysis methods.
 Each method takes the temp_object as its argument.</p>
 
-<pre class="code ruby"><code><span class='rubyid_class class kw'>class</span> <span class='rubyid_MyAnalyser constant id'>MyAnalyser</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_MyAnalyser constant id'>MyAnalyser</span>
 
   <span class='rubyid_def def kw'>def</span> <span class='rubyid_coolness identifier id'>coolness</span><span class='lparen token'>(</span><span class='rubyid_temp_object identifier id'>temp_object</span><span class='rparen token'>)</span>
     <span class='rubyid_temp_object identifier id'>temp_object</span><span class='dot token'>.</span><span class='rubyid_size identifier id'>size</span> <span class='div op'>/</span> <span class='integer val'>30</span>
@@ -160,9 +171,9 @@ Each method takes the temp_object as its argument.</p>
     </div>
 
     <div id="footer">
-  Generated on Tue Feb 19 10:46:04 2013 by 
+  Generated on Sat May  4 12:19:55 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.9.3).
+  0.8.6.1 (ruby-1.9.3).
 </div>
 
   </body>

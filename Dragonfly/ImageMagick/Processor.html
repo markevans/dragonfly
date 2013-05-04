@@ -6,18 +6,20 @@
 <title>
   Class: Dragonfly::ImageMagick::Processor
   
-    &mdash; Documentation by YARD 0.7.5
+    &mdash; Documentation by YARD 0.8.6.1
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  relpath = '../..';
-  if (relpath != '') relpath += '/';
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!" + escape(window.location.href);
 </script>
+
 
   <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
 
@@ -60,14 +62,23 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.14)</div>
+      <div id="logo">DRAGONFLY (v 0.9.15)</div>
       <div id="search">
   
-    <a id="class_list_link" href="#">Class List</a>
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
   
-    <a id="method_list_link" href="#">Method List</a>
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
   
-    <a id="file_list_link" href="#">File List</a>
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
   
 </div>
     </div>
@@ -231,6 +242,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -246,6 +258,7 @@
 
     
   </span>
+  
   
   
   
@@ -273,6 +286,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -294,6 +308,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -309,6 +324,7 @@
 
     
   </span>
+  
   
   
   
@@ -338,6 +354,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -353,6 +370,7 @@
 
     
   </span>
+  
   
   
   
@@ -380,6 +398,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -395,6 +414,7 @@
 
     
   </span>
+  
   
   
   
@@ -422,6 +442,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -437,6 +458,7 @@
 
     
   </span>
+  
   
   
   
@@ -466,9 +488,12 @@
   
   
   
+  
+  
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Configurable.html#included-class_method" title="Dragonfly::Configurable.included (method)">included</a></span></p>
 
+  
   
   
   
@@ -486,22 +511,25 @@
   
   
   
+  
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Shell.html" title="Dragonfly::Shell (module)">Shell</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Shell.html#escape_args-instance_method" title="Dragonfly::Shell#escape_args (method)">#escape_args</a></span>, <span class='object_link'><a href="../Shell.html#quote-instance_method" title="Dragonfly::Shell#quote (method)">#quote</a></span>, <span class='object_link'><a href="../Shell.html#raise_shell_command_failed-instance_method" title="Dragonfly::Shell#raise_shell_command_failed (method)">#raise_shell_command_failed</a></span>, <span class='object_link'><a href="../Shell.html#run-instance_method" title="Dragonfly::Shell#run (method)">#run</a></span></p>
 
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
-    
+
     
       <div class="method_details first">
-  <p class="signature first" id="auto_orient-instance_method">
+  <h3 class="signature first" id="auto_orient-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>auto_orient</strong>(temp_object) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -524,13 +552,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="convert-instance_method">
+  <h3 class="signature " id="convert-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>convert</strong>(temp_object, args = '', format = nil) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -553,13 +583,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="crop-instance_method">
+  <h3 class="signature " id="crop-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>crop</strong>(temp_object, opts = {}) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -606,13 +638,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="flip-instance_method">
+  <h3 class="signature " id="flip-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>flip</strong>(temp_object) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -635,13 +669,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="flop-instance_method">
+  <h3 class="signature " id="flop-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>flop</strong>(temp_object) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -664,7 +700,7 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="greyscale-instance_method">
+  <h3 class="signature " id="greyscale-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>greyscale</strong>(temp_object) 
   
@@ -674,7 +710,9 @@
     <span class="names"><span id='grayscale-instance_method'>grayscale</span></span>
     </span>
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -697,13 +735,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="resize-instance_method">
+  <h3 class="signature " id="resize-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>resize</strong>(temp_object, geometry) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -726,13 +766,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="resize_and_crop-instance_method">
+  <h3 class="signature " id="resize_and_crop-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>resize_and_crop</strong>(temp_object, opts = {}) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -781,13 +823,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="rotate-instance_method">
+  <h3 class="signature " id="rotate-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>rotate</strong>(temp_object, amount, opts = {}) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -814,13 +858,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="strip-instance_method">
+  <h3 class="signature " id="strip-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>strip</strong>(temp_object) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -843,13 +889,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="thumb-instance_method">
+  <h3 class="signature " id="thumb-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>thumb</strong>(temp_object, geometry) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -911,9 +959,9 @@
     </div>
 
     <div id="footer">
-  Generated on Tue Feb 19 10:46:10 2013 by 
+  Generated on Sat May  4 12:20:00 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.9.3).
+  0.8.6.1 (ruby-1.9.3).
 </div>
 
   </body>

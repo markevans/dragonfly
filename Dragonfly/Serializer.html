@@ -6,18 +6,20 @@
 <title>
   Module: Dragonfly::Serializer
   
-    &mdash; Documentation by YARD 0.7.5
+    &mdash; Documentation by YARD 0.8.6.1
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  relpath = '..';
-  if (relpath != '') relpath += '/';
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
 </script>
+
 
   <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
 
@@ -60,14 +62,23 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.14)</div>
+      <div id="logo">DRAGONFLY (v 0.9.15)</div>
       <div id="search">
   
-    <a id="class_list_link" href="#">Class List</a>
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
   
-    <a id="method_list_link" href="#">Method List</a>
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
   
-    <a id="file_list_link" href="#">File List</a>
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
   
 </div>
     </div>
@@ -109,9 +120,9 @@
 
 <h2>Defined Under Namespace</h2>
 <p class="children">
-   
+  
     
-   
+  
     
       <strong class="classes">Classes:</strong> <span class='object_link'><a href="Serializer/BadString.html" title="Dragonfly::Serializer::BadString (class)">BadString</a></span>, <span class='object_link'><a href="Serializer/MaliciousString.html" title="Dragonfly::Serializer::MaliciousString (class)">MaliciousString</a></span>
     
@@ -148,6 +159,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -163,6 +175,7 @@
 
     
   </span>
+  
   
   
   
@@ -190,6 +203,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -211,6 +225,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -221,11 +236,12 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#marshal_decode-instance_method" title="#marshal_decode (instance method)">- (Object) <strong>marshal_decode</strong>(string) </a>
+      <a href="#marshal_decode-instance_method" title="#marshal_decode (instance method)">- (Object) <strong>marshal_decode</strong>(string, opts = {}) </a>
     
 
     
   </span>
+  
   
   
   
@@ -253,6 +269,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -267,16 +284,18 @@
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
-    
+
     
       <div class="method_details first">
-  <p class="signature first" id="b64_decode-instance_method">
+  <h3 class="signature first" id="b64_decode-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>b64_decode</strong>(string) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -303,13 +322,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="b64_encode-instance_method">
+  <h3 class="signature " id="b64_encode-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>b64_encode</strong>(string) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -332,13 +353,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="json_decode-instance_method">
+  <h3 class="signature " id="json_decode-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>json_decode</strong>(string, opts = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     
 
@@ -346,7 +369,7 @@
 </div>
 <div class="tags">
   
-<h3>Raises:</h3>
+<p class="tag_title">Raises:</p>
 <ul class="raise">
   
     <li>
@@ -387,13 +410,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="json_encode-instance_method">
+  <h3 class="signature " id="json_encode-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>json_encode</strong>(object) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -416,13 +441,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="marshal_decode-instance_method">
+  <h3 class="signature " id="marshal_decode-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>marshal_decode</strong>(string) 
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>marshal_decode</strong>(string, opts = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     
 
@@ -430,7 +457,7 @@
 </div>
 <div class="tags">
   
-<h3>Raises:</h3>
+<p class="tag_title">Raises:</p>
 <ul class="raise">
   
     <li>
@@ -461,9 +488,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/dragonfly/serializer.rb', line 28</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_marshal_decode identifier id'>marshal_decode</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_marshal_decode identifier id'>marshal_decode</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='comma token'>,</span> <span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_marshal_string identifier id'>marshal_string</span> <span class='assign token'>=</span> <span class='rubyid_b64_decode identifier id'>b64_decode</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span>
-  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_MaliciousString constant id'>MaliciousString</span><span class='comma token'>,</span> <span class='dstring node'>&quot;potentially malicious marshal string #{marshal_string.inspect}&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_marshal_string identifier id'>marshal_string</span><span class='lbrack token'>[</span><span class='regexp val'>/@[a-z_]/i</span><span class='rbrack token'>]</span>
+  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_MaliciousString constant id'>MaliciousString</span><span class='comma token'>,</span> <span class='dstring node'>&quot;potentially malicious marshal string #{marshal_string.inspect}&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_opts identifier id'>opts</span><span class='lbrack token'>[</span><span class='symbol val'>:check_malicious</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_marshal_string identifier id'>marshal_string</span><span class='lbrack token'>[</span><span class='regexp val'>/@[a-z_]/i</span><span class='rbrack token'>]</span>
   <span class='rubyid_Marshal constant id'>Marshal</span><span class='dot token'>.</span><span class='rubyid_load identifier id'>load</span><span class='lparen token'>(</span><span class='rubyid_marshal_string identifier id'>marshal_string</span><span class='rparen token'>)</span>
 <span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_TypeError constant id'>TypeError</span><span class='comma token'>,</span> <span class='rubyid_ArgumentError constant id'>ArgumentError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
   <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_BadString constant id'>BadString</span><span class='comma token'>,</span> <span class='dstring node'>&quot;couldn't decode #{string} - got #{e}&quot;</span>
@@ -475,13 +502,15 @@
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="marshal_encode-instance_method">
+  <h3 class="signature " id="marshal_encode-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>marshal_encode</strong>(object) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -515,9 +544,9 @@
     </div>
 
     <div id="footer">
-  Generated on Tue Feb 19 10:46:07 2013 by 
+  Generated on Sat May  4 12:19:56 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.9.3).
+  0.8.6.1 (ruby-1.9.3).
 </div>
 
   </body>

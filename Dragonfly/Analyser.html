@@ -6,18 +6,20 @@
 <title>
   Class: Dragonfly::Analyser
   
-    &mdash; Documentation by YARD 0.7.5
+    &mdash; Documentation by YARD 0.8.6.1
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  relpath = '..';
-  if (relpath != '') relpath += '/';
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
 </script>
+
 
   <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
 
@@ -60,14 +62,23 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.14)</div>
+      <div id="logo">DRAGONFLY (v 0.9.15)</div>
       <div id="search">
   
-    <a id="class_list_link" href="#">Class List</a>
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
   
-    <a id="method_list_link" href="#">Method List</a>
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
   
-    <a id="file_list_link" href="#">File List</a>
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
   
 </div>
     </div>
@@ -133,7 +144,10 @@
   </span>
   
   
-    <span class="note title readonly">readonly</span>
+  
+    
+      <span class="note title readonly">readonly</span>
+    
     
   
   
@@ -158,7 +172,10 @@
   </span>
   
   
-    <span class="note title readonly">readonly</span>
+  
+    
+      <span class="note title readonly">readonly</span>
+    
     
   
   
@@ -247,6 +264,7 @@ or
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Each time a function is registered with the analyser,
@@ -264,6 +282,7 @@ add a method to the analysis_methods module.</p>
 
     
   </span>
+  
   
   
   
@@ -291,6 +310,7 @@ add a method to the analysis_methods module.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -306,6 +326,7 @@ add a method to the analysis_methods module.</p>
 
     
   </span>
+  
   
     <span class="note title constructor">constructor</span>
   
@@ -333,9 +354,11 @@ add a method to the analysis_methods module.</p>
   
   
   
+  
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="FunctionManager.html" title="Dragonfly::FunctionManager (class)">FunctionManager</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="FunctionManager.html#call_last-instance_method" title="Dragonfly::FunctionManager#call_last (method)">#call_last</a></span>, <span class='object_link'><a href="FunctionManager.html#get_registered-instance_method" title="Dragonfly::FunctionManager#get_registered (method)">#get_registered</a></span>, <span class='object_link'><a href="FunctionManager.html#inspect-instance_method" title="Dragonfly::FunctionManager#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="FunctionManager.html#register-instance_method" title="Dragonfly::FunctionManager#register (method)">#register</a></span></p>
 
+  
   
   
   
@@ -353,19 +376,22 @@ add a method to the analysis_methods module.</p>
   
   
   
+  
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="Loggable.html#log-instance_method" title="Dragonfly::Loggable#log (method)">#log</a></span>, <span class='object_link'><a href="Loggable.html#log%3D-instance_method" title="Dragonfly::Loggable#log= (method)">#log=</a></span>, <span class='object_link'><a href="Loggable.html#use_same_log_as-instance_method" title="Dragonfly::Loggable#use_same_log_as (method)">#use_same_log_as</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
-  <p class="signature first" id="initialize-instance_method">
+  <h3 class="signature first" id="initialize-instance_method">
   
     - (<tt><span class='object_link'><a href="" title="Dragonfly::Analyser (class)">Analyser</a></span></tt>) <strong>initialize</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>A new instance of Analyser</p>
 
@@ -422,15 +448,16 @@ add a method to the analysis_methods module.</p>
     
       
       <span id=""></span>
-      <span id="analysis_method_names-instance_method"></span>
       <div class="method_details first">
-  <p class="signature first" id="analysis_method_names-instance_method">
+  <h3 class="signature first" id="analysis_method_names-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>analysis_method_names</strong>  <span class="extras">(readonly)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns the value of attribute analysis_method_names</p>
 
@@ -464,15 +491,16 @@ add a method to the analysis_methods module.</p>
     
       
       <span id=""></span>
-      <span id="analysis_methods-instance_method"></span>
       <div class="method_details ">
-  <p class="signature " id="analysis_methods-instance_method">
+  <h3 class="signature " id="analysis_methods-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>analysis_methods</strong>  <span class="extras">(readonly)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns the value of attribute analysis_methods</p>
 
@@ -509,16 +537,18 @@ add a method to the analysis_methods module.</p>
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
-    
+
     
       <div class="method_details first">
-  <p class="signature first" id="add-instance_method">
+  <h3 class="signature first" id="add-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>add</strong>(name, *args, &amp;block) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Each time a function is registered with the analyser,
 add a method to the analysis_methods module.
@@ -565,13 +595,15 @@ Expects the object that is extended to define 'analyse(method, *args)'</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="analyse-instance_method">
+  <h3 class="signature " id="analyse-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>analyse</strong>(temp_object, method, *args) 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -610,13 +642,15 @@ Expects the object that is extended to define 'analyse(method, *args)'</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="clear_cache!-instance_method">
+  <h3 class="signature " id="clear_cache!-instance_method">
   
     - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>clear_cache!</strong> 
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -650,9 +684,9 @@ Expects the object that is extended to define 'analyse(method, *args)'</p>
     </div>
 
     <div id="footer">
-  Generated on Tue Feb 19 10:46:07 2013 by 
+  Generated on Sat May  4 12:19:58 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.9.3).
+  0.8.6.1 (ruby-1.9.3).
 </div>
 
   </body>

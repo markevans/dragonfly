@@ -2,22 +2,24 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII" />
 <title>
   File: Heroku
   
-    &mdash; Documentation by YARD 0.7.5
+    &mdash; Documentation by YARD 0.8.6.1
   
 </title>
 
-  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
   relpath = '';
-  if (relpath != '') relpath += '/';
+  framesUrl = "frames.html#!" + escape(window.location.href);
 </script>
+
 
   <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
 
@@ -60,14 +62,23 @@
 
     <div id="header" class="clearfix">
       
-      <div id="logo">DRAGONFLY (v 0.9.14)</div>
+      <div id="logo">DRAGONFLY (v 0.9.15)</div>
       <div id="search">
   
-    <a id="class_list_link" href="#">Class List</a>
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
   
-    <a id="method_list_link" href="#">Method List</a>
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
   
-    <a id="file_list_link" href="#">File List</a>
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
   
 </div>
     </div>
@@ -80,14 +91,7 @@
       <div class="col1">
         <div id='filecontents'><h1>Heroku</h1>
 
-<p>The default configuration won't work out of the box for Heroku, because</p>
-
-<ul>
-<li>Heroku doesn't allow saving files to the filesystem (although it does use tempfiles)</li>
-<li>If on Heroku <a href="http://devcenter.heroku.com/articles/stack" target="_parent" title="Aspen/Bamboo stacks">Aspen/Bamboo stacks</a>, we won't need <a href="http://tomayko.com/src/rack-cache/" target="_parent" title="Rack::Cache">Rack::Cache</a>,
-because it already uses the caching proxy <a href="http://varnish.projects.linpro.no/" target="_parent" title="Varnish">Varnish</a>, which we can make use of.
-We will still need it on <a href="http://devcenter.heroku.com/articles/cedar" target="_parent" title="Heroku Cedar">Heroku Cedar</a>, however, as it doesn't include Varnish.</li>
-</ul>
+<p>The default configuration won't work out of the box for Heroku, because the platform doesn't allow saving files to the filesystem (although it does use tempfiles).</p>
 
 <p>Instead of the normal <a href="file.DataStorage.html#File_datastore" title="FileDataStore">FileDataStore</a>, we can use the <a href="file.DataStorage.html#S3_datastore" title="S3DataStore">S3DataStore</a>.</p>
 
@@ -95,13 +99,13 @@ We will still need it on <a href="http://devcenter.heroku.com/articles/cedar" ta
 
 <p>Gem dependencies:</p>
 
-<pre class="code ruby"><code><span class='minus op'>-</span> <span class='rubyid_fog identifier id'>fog</span>
+<pre class="code ruby"><code class="ruby"><span class='minus op'>-</span> <span class='rubyid_fog identifier id'>fog</span>
 <span class='minus op'>-</span> <span class='rubyid_dragonfly identifier id'>dragonfly</span>
 </code></pre>
 
 <p>Initializer (e.g. config/initializers/dragonfly.rb in Rails):</p>
 
-<pre class="code ruby"><code><span class='rubyid_require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_require identifier id'>require</span> <span class='string val'>'dragonfly'</span>
 <span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
 
 <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure_with identifier id'>configure_with</span><span class='lparen token'>(</span><span class='symbol val'>:imagemagick</span><span class='rparen token'>)</span>
@@ -123,7 +127,7 @@ We will still need it on <a href="http://devcenter.heroku.com/articles/cedar" ta
 
 <p>application.rb if using with Rails:</p>
 
-<pre class="code ruby"><code><span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='rubyid_insert identifier id'>insert</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='string val'>'Dragonfly::Middleware'</span><span class='comma token'>,</span> <span class='symbol val'>:images</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_config identifier id'>config</span><span class='dot token'>.</span><span class='rubyid_middleware identifier id'>middleware</span><span class='dot token'>.</span><span class='rubyid_insert identifier id'>insert</span> <span class='integer val'>1</span><span class='comma token'>,</span> <span class='string val'>'Dragonfly::Middleware'</span><span class='comma token'>,</span> <span class='symbol val'>:images</span>
 </code></pre>
 
 <p>We don't store the S3 access key and secret in the repository, rather we use Heroku's
@@ -131,12 +135,10 @@ We will still need it on <a href="http://devcenter.heroku.com/articles/cedar" ta
 
 <p>From your app's directory:</p>
 
-<pre class="code ruby"><code><span class='rubyid_heroku identifier id'>heroku</span> <span class='rubyid_config identifier id'>config</span><span class='symbol val'>:add</span> <span class='rubyid_S3_KEY constant id'>S3_KEY</span><span class='assign token'>=</span><span class='rubyid_XXXXXXXXX constant id'>XXXXXXXXX</span> <span class='rubyid_S3_SECRET constant id'>S3_SECRET</span><span class='assign token'>=</span><span class='rubyid_XXXXXXXXXX constant id'>XXXXXXXXXX</span>
+<pre class="code ruby"><code class="ruby"><span class='rubyid_heroku identifier id'>heroku</span> <span class='label val'>config:</span><span class='rubyid_add identifier id'>add</span> <span class='rubyid_S3_KEY constant id'>S3_KEY</span><span class='assign token'>=</span><span class='rubyid_XXXXXXXXX constant id'>XXXXXXXXX</span> <span class='rubyid_S3_SECRET constant id'>S3_SECRET</span><span class='assign token'>=</span><span class='rubyid_XXXXXXXXXX constant id'>XXXXXXXXXX</span>
 </code></pre>
 
 <p>Replace 'XXXXXXXXX' with your access key and secret.</p>
-
-<p><strong>NOTE</strong>: HEROKU'S VARNISH CACHE IS CLEARED EVERY TIME YOU DEPLOY!!! (DOESN'T APPLY TO CEDAR STACK)</p>
 
 <p>If this is an issue, you may want to look into storing thumbnails on S3 (see <a href="file.ServingRemotely.html" title="ServingRemotely">ServingRemotely</a>), or maybe generating thumbnails <em>on upload</em> (see <a href="file.Models.html#Up-front_thumbnailing" title="Models">Models</a>), or maybe an after-deploy hook for hitting specific Dragonfly urls you want to cache, etc.
 It won't be a problem for most sites though.</p>
@@ -150,9 +152,9 @@ It won't be a problem for most sites though.</p>
     </div>
 
     <div id="footer">
-  Generated on Tue Feb 19 10:46:04 2013 by 
+  Generated on Sat May  4 12:19:54 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.9.3).
+  0.8.6.1 (ruby-1.9.3).
 </div>
 
   </body>
