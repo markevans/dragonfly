@@ -1,13 +1,5 @@
 def image_properties(image)
-  if image.is_a?(Tempfile)
-    tempfile = image
-  else
-    tempfile = Tempfile.new('image')
-    tempfile.binmode
-    tempfile.write(image.respond_to?(:data) ? image.data : image)
-    tempfile.close
-  end
-  details = `identify #{tempfile.path}`
+  details = `identify #{image.path}`
   # example of details string:
   # myimage.png PNG 200x100 200x100+0+0 8-bit DirectClass 31.2kb
   filename, format, geometry, geometry_2, depth, image_class, size = details.split(' ')
@@ -38,10 +30,6 @@ end
 
 RSpec::Matchers.define :equal_image do |other|
   match do |given|
-    image_data = given.open.read
-    other_image_data = other.open.read
-    given.close
-    other.close
-    image_data == other_image_data
+    given.data == other.data
   end
 end
