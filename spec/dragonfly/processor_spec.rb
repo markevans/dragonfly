@@ -5,27 +5,27 @@ describe Dragonfly::Processor do
   describe "#process" do
     let (:processor) { Dragonfly::Processor.new }
 
-    it "should use the processor when applied (converting content into a temp_object)" do
+    it "uses the processor when applied" do
       upcase_processor = processor.add(:upcase){}
-      job = mock('job')
+      content = mock('content')
 
-      upcase_processor.should_receive(:call).with(job, 'BA')
-      processor.process(:upcase, job, 'BA')
+      upcase_processor.should_receive(:call).with(content, 'BA')
+      processor.process(:upcase, content, 'BA')
     end
 
-    it "should raise an error if the processor doesn't exist" do
+    it "raises an error if the processor doesn't exist" do
       expect{
-        processor.process(:goofy, mock('job'), 'BA')
+        processor.process(:goofy, mock('content'), 'BA')
       }.to raise_error(Dragonfly::Processor::NotFound)
     end
 
-    it "should raise an error if there's a processing error" do
+    it "raises an error if there's a processing error" do
       class TestError < RuntimeError; end
       processor.add :goofy do
         raise TestError
       end
       expect{
-        processor.process(:goofy, mock('job'))
+        processor.process(:goofy, mock('content'))
       }.to raise_error(Dragonfly::Processor::ProcessingError) do |error|
         error.original_error.should be_a(TestError)
       end
@@ -62,3 +62,4 @@ describe Dragonfly::Processor do
   end
 
 end
+
