@@ -244,15 +244,6 @@ describe Dragonfly::Job do
         @job.process(:resize, '20x30')
       end
     end
-
-    describe "apply_process" do
-      it "processes immediately and returns itself" do
-        @app.processor.should_receive(:process).with(:resize, @job, '20x30')
-        job = @job.apply_process(:resize, '20x30')
-        job.should == @job
-      end
-    end
-
   end
 
   describe "analysis" do

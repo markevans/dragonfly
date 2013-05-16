@@ -85,7 +85,7 @@ module Dragonfly
       end
 
       def apply
-        job.apply_process(name, *arguments)
+        processor.process(name, job, *arguments)
       end
     end
 
@@ -257,11 +257,6 @@ module Dragonfly
     end
 
     # Applying, etc.
-
-    def apply_process(name, *args)
-      processor.process(name, self, *args)
-      self
-    end
 
     def apply
       pending_steps.each{|step| step.apply }
