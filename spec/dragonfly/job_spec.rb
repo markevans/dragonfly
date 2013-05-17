@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 
 # Matchers
@@ -162,6 +163,7 @@ describe Dragonfly::Job do
       before(:each) do
         stub_request(:get, %r{http://some\.place\.com/.*}).to_return(:body => 'result!')
         stub_request(:get, 'https://some.place.com').to_return(:body => 'secure result!')
+        stub_request(:get, 'http://some.place.com/tilde/niños/emphasis/después').to_return(:body => 'still a valid URL!')
       end
 
       it {
@@ -193,7 +195,12 @@ describe Dragonfly::Job do
         @job.fetch_url!('some.place.com/dung.beetle')
         @job.url_attrs.should == {:name =>'dung.beetle'}
       end
-
+      
+      it 'should work with non-English URLs' do
+        @job.fetch_url!('http://some.place.com/tilde/niños/emphasis/después')
+        @job.data.should == 'still a valid URL!'
+      end
+      
       ["some.place.com", "some.place.com/", "some.place.com/eggs/"].each do |url|
         it "should not set the name if there isn't one, e.g. #{url}" do
           @job.fetch_url!(url)
