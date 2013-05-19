@@ -131,7 +131,7 @@ module Dragonfly
         job.url_attrs[:name] = filename
       end
       def url
-        @url ||= (args.first[%r<^\w+://>] ? args.first : "http://#{args.first}")
+        @url ||= URI.escape((args.first[%r<^\w+://>] ? args.first : "http://#{args.first}"))
       end
       def path
         @path ||= URI.parse(url).path
