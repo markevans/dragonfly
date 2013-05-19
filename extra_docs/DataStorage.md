@@ -111,6 +111,10 @@ or with a custom host:
 
     my_model.attachment.remote_url(:host => 'custom.domain')   # also configurable for all urls with 'url_host'
 
+or with a custom reponse header:
+
+    my_model.attachment.remote_url(:query => {"response-content-disposition" => "attachment; filename=Custom Filename.jpg"}, :expires => 3.days.from_now)
+
 Extra options you can use on store are `:path` and `:headers`
 
     app.store("SOME CONTENT", :path => 'some/path.txt', :headers => {'x-amz-acl' => 'public-read-write'})
