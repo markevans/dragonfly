@@ -4,14 +4,13 @@ module Dragonfly
     # Exceptions
     class GenerationError < RuntimeErrorWithOriginal; end
 
-    def generate(name, *args)
+    def generate(name, content, *args)
       generator = get(name)
       begin
-        content, meta = generator.call(*args)
+        generator.call(content, *args)
       rescue RuntimeError => e
-        raise GenerationError.new("Couldn't generate #{name.inspect} with arguments #{args.inspect} - got: #{e}", e)
+        raise GenerationError.new("Couldn't generate #{name.inspect} with content #{content.inspect} and arguments #{args.inspect} - got: #{e}", e)
       end
-      TempObject.new(content, meta)
     end
 
     def update_url(name, url_attrs, *args)

@@ -2,51 +2,42 @@ require 'spec_helper'
 
 describe Dragonfly::Generator do
 
-  describe "#generate" do
-    let (:generator) { Dragonfly::Generator.new }
+  let (:app) { test_app }
+  let (:generator) { Dragonfly::Generator.new }
+  let (:content) { Dragonfly::Content.new(app) }
 
+  describe "#generate" do
     before :each do
-      generator.add :my_generator do |num|
-        "B" + "O" * num
+      generator.add :my_generator do |content, num|
+        content.update("B" + "O" * num)
       end
     end
 
     it "should use the generator when applied (converting content into a temp_object)" do
-      temp_object = generator.generate(:my_generator, 3)
-      temp_object.should be_a(Dragonfly::TempObject)
-      temp_object.data.should == 'BOOO'
+      generator.generate(:my_generator, content, 3)
+      content.data.should == 'BOOO'
     end
 
     it "should raise an error if the generator doesn't exist" do
       expect{
-        generator.generate(:goofy)
+        generator.generate(:goofy, content)
       }.to raise_error(Dragonfly::Generator::NotFound)
     end
 
     it "should raise an error if there's a generating error" do
       class TestError < RuntimeError; end
-      generator.add :goofy do |temp_object|
+      generator.add :goofy do |content|
         raise TestError
       end
       expect{
-        generator.generate(:goofy)
+        generator.generate(:goofy, content)
       }.to raise_error(Dragonfly::Generator::GenerationError) do |error|
         error.original_error.should be_a(TestError)
       end
     end
-
-    it "should allow returning an array with extra attributes from the generator" do
-      generator.add :goofy do |temp_object|
-        ['hi', {'eggs' => 'asdf'}]
-      end
-      result = generator.generate(:goofy)
-      result.data.should == 'hi'
-      result.meta.should == {'eggs' => "asdf"}
-    end
-  end
+ end
 
   describe "#update_url" do
-    let (:generator) { Dragonfly::Generator.new }
     let (:generator_with_update_url) {
       generator = Object.new
       def generator.update_url(url_attrs, *args)
