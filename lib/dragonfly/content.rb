@@ -10,6 +10,7 @@ module Dragonfly
     def initialize(app, obj=nil, meta=nil)
       @app = app
       @meta = {}
+      @previous_temp_objects = []
       update(obj, meta) if obj
     end
 
@@ -76,9 +77,18 @@ module Dragonfly
       update(tempfile)
     end
 
+    def close
+      previous_temp_objects.each{|temp_object| temp_object.close }
+      temp_object.close if temp_object
+    end
+
     private
 
-    attr_writer :temp_object
+    attr_reader :previous_temp_objects
+    def temp_object=(temp_object)
+      previous_temp_objects.push(@temp_object) if @temp_object
+      @temp_object = temp_object
+    end
 
   end
 end

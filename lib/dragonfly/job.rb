@@ -216,7 +216,6 @@ module Dragonfly
       @app = app
       @steps = []
       @next_step_index = 0
-      @previous_temp_objects = []
       update(content, meta) if content
       @url_attrs = url_attrs ? url_attrs.dup : UrlAttributes.new
     end
@@ -231,10 +230,6 @@ module Dragonfly
     attr_reader :app, :steps
     attr_reader :temp_object
 
-    def temp_object=(temp_object)
-      previous_temp_objects.push(@temp_object) if @temp_object
-      @temp_object = temp_object
-    end
 
     # define fetch(), fetch!(), process(), etc.
     STEPS.each do |step_class|
@@ -393,11 +388,6 @@ module Dragonfly
       self.temp_object = TempObject.new(content, old_meta.merge(new_meta || {}))
     end
 
-    def close
-      previous_temp_objects.each{|temp_object| temp_object.close }
-      temp_object.close if temp_object
-    end
-
     def mime_type
       app.mime_type_for(ext)
     end
@@ -421,8 +411,6 @@ module Dragonfly
         attrs
       end
     end
-
-    attr_reader :previous_temp_objects
 
     def last_step_of_type(type)
       steps.select{|s| s.is_a?(type) }.last

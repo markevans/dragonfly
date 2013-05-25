@@ -909,29 +909,4 @@ describe Dragonfly::Job do
       job.apply.name.should == 'egg.mumma'
     end
   end
-
-  describe "close" do
-    before(:each) do
-      @app = test_app
-      @app.add_generator(:toast){ "toast" }
-      @app.add_processor(:upcase){|t| t.data.upcase }
-      @job = @app.generate(:toast)
-      @path1 = @job.tempfile.path
-      @job.process!(:upcase)
-      @path2 = @job.tempfile.path
-    end
-
-    it "should clean up tempfiles for the last temp_object" do
-      File.exist?(@path2).should be_true
-      @job.close
-      File.exist?(@path2).should be_false
-    end
-
-    it "should clean up tempfiles for previous temp_objects" do
-      File.exist?(@path1).should be_true
-      @job.close
-      File.exist?(@path1).should be_false
-    end
-  end
-
 end

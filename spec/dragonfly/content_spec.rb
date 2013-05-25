@@ -216,4 +216,26 @@ describe Dragonfly::Content do
     end
   end
 
+  describe "close" do
+    before(:each) do
+      @app = test_app
+      @app.add_processor(:upcase){|c| c.update("HELLO") }
+      @content = Dragonfly::Content.new(@app, "hello")
+      @temp_object1 = @content.temp_object
+      @content.process!(:upcase)
+      @temp_object2 = @content.temp_object
+      @temp_object1.should_not == @temp_object2 # just checking
+    end
+
+    it "should clean up tempfiles for the last temp_object" do
+      @temp_object2.should_receive(:close)
+      @content.close
+    end
+
+    it "should clean up tempfiles for previous temp_objects" do
+      @temp_object1.should_receive(:close)
+      @content.close
+    end
+  end
+
 end
