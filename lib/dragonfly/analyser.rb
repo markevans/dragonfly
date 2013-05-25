@@ -1,12 +1,12 @@
 module Dragonfly
   class Analyser < Register
 
-    def analyse(name, temp_object, *args)
+    def analyse(name, content, *args)
       if cache_enabled?
-        key = [temp_object.unique_id, name, *args]
-        cache[key] ||= get(name).call(temp_object, *args)
+        key = [content.unique_id, name, *args]
+        cache[key] ||= get(name).call(content, *args)
       else
-        get(name).call(temp_object, *args)
+        get(name).call(content, *args)
       end
     end
 
