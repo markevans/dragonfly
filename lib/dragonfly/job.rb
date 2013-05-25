@@ -10,7 +10,6 @@ module Dragonfly
     # Exceptions
     class AppDoesNotMatch < StandardError; end
     class JobAlreadyApplied < StandardError; end
-    class NoContent < StandardError; end
     class NothingToProcess < StandardError; end
     class InvalidArray < StandardError; end
     class NoSHAGiven < StandardError; end
@@ -85,7 +84,7 @@ module Dragonfly
       end
 
       def apply
-        processor.process(name, job, *arguments)
+        processor.process(name, job.content, *arguments)
       end
     end
 
@@ -107,7 +106,7 @@ module Dragonfly
       end
 
       def apply
-        job.temp_object = generator.generate(name, *arguments)
+        generator.generate(name, job.content, *arguments)
       end
     end
 
@@ -125,7 +124,7 @@ module Dragonfly
       end
 
       def apply
-        job.update(Pathname.new(path), :name => filename)
+        job.content.update(Pathname.new(path), 'name' => filename)
       end
     end
 
@@ -156,7 +155,7 @@ module Dragonfly
       def apply
         begin
           open(url) do |f|
-            job.update(f.read, :name => filename)
+            job.content.update(f.read, 'name' => filename)
           end
         rescue OpenURI::HTTPError => e
           status, message = e.io.status
@@ -216,7 +215,7 @@ module Dragonfly
       @app = app
       @steps = []
       @next_step_index = 0
-      update(content, meta) if content
+      @content = Content.new(app, content, meta)
       @url_attrs = url_attrs ? url_attrs.dup : UrlAttributes.new
     end
 
@@ -228,7 +227,7 @@ module Dragonfly
     end
 
     attr_reader :app, :steps
-    attr_reader :temp_object
+    attr_reader :content
 
 
     # define fetch(), fetch!(), process(), etc.
@@ -383,11 +382,6 @@ module Dragonfly
       "<Dragonfly::Job app=#{app.name.inspect}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >"
     end
 
-    def update(content, new_meta)
-      old_meta = temp_object ? temp_object.meta : {}
-      self.temp_object = TempObject.new(content, old_meta.merge(new_meta || {}))
-    end
-
     def mime_type
       app.mime_type_for(ext)
     end
@@ -401,7 +395,7 @@ module Dragonfly
 
     def result
       apply
-      temp_object || raise(NoContent, "Job has not been initialized with content. Need to fetch first?")
+      content
     end
 
     def attributes_for_url

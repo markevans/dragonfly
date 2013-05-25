@@ -36,241 +36,215 @@ describe Dragonfly::Job do
 
   end
 
-  it "should allow initializing with content" do
-    job = Dragonfly::Job.new(@app, 'eggheads')
+  let (:app) { test_app }
+  let (:job) { Dragonfly::Job.new(app) }
+
+  it "allows initializing with content" do
+    job = Dragonfly::Job.new(app, 'eggheads')
     job.data.should == 'eggheads'
   end
 
-  describe "without content" do
-
-    before(:each) do
-      @app = test_app
-      @job = Dragonfly::Job.new(@app)
+  describe "content" do
+    it "starts with an empty content" do
+      job.content.should be_a(Dragonfly::Content)
+      job.content.data.should be_nil
+      job.content.meta.should == {}
     end
-
-    describe "fetch" do
-      before(:each) do
-        @job.fetch!('some_uid')
-      end
-
-      it { @job.steps.should match_steps([Dragonfly::Job::Fetch]) }
-
-      it "should retrieve from the app's datastore when applied" do
-        @app.datastore.should_receive(:retrieve).with('some_uid').and_return('HELLO')
-        @job.data.should == 'HELLO'
-      end
-
-      it "should set extra data if returned from the datastore" do
-        @app.datastore.should_receive(:retrieve).with('some_uid').and_return(['HELLO', {:name => 'test.txt'}])
-        @job.data.should == 'HELLO'
-        @job.meta.should == {:name => 'test.txt'}
-      end
-
-      it "shouldn't set any url_attrs" do
-        @job.url_attrs.should be_empty
-      end
-    end
-
-    describe "analyse" do
-      it "should raise a NoContent error" do
-        job = @app.new_job # This will define #analyser on it
-        lambda{
-          job.analyse(:width)
-        }.should raise_error(Dragonfly::Job::NoContent)
-      end
-    end
-
-    describe "data" do
-      it "should raise a NoContent error" do
-        lambda{
-          @job.data
-        }.should raise_error(Dragonfly::Job::NoContent)
-      end
-    end
-
-    describe "generate" do
-      before(:each) do
-        @generator = @app.add_generator(:plasma){'hi'}
-        @job.generate!(:plasma, 20, 30)
-      end
-
-      it { @job.steps.should match_steps([Dragonfly::Job::Generate]) }
-
-      it "should use the generator when applied" do
-        @generator.should_receive(:call).with(20, 30).and_return('hi')
-        @job.data.should == 'hi'
-      end
-
-      it "should save extra data if the generator returns it" do
-        @generator.should_receive(:call).with(20, 30).and_return(['hi', {:name => 'plasma.png'}])
-        @job.data.should == 'hi'
-        @job.meta.should == {:name => 'plasma.png'}
-      end
-
-      it "shouldn't set any url_attrs" do
-        @job.url_attrs.should be_empty
-      end
-    end
-
-    describe "fetch_file" do
-      before(:each) do
-        @job.fetch_file!(File.dirname(__FILE__) + '/../../samples/egg.png')
-      end
-
-      it { @job.steps.should match_steps([Dragonfly::Job::FetchFile]) }
-
-      it "should fetch the specified file when applied" do
-        @job.size.should == 62664
-      end
-
-      it "should set the url_attrs" do
-        @job.url_attrs.name.should == 'egg.png'
-      end
-
-      it "should set the name" do
-        @job.meta[:name].should == 'egg.png'
-      end
-    end
-
-    describe "fetch_url" do
-      before(:each) do
-        stub_request(:get, %r{http://some\.place\.com/.*}).to_return(:body => 'result!')
-      end
-
-      it {
-        @job.fetch_url!('some.url')
-        @job.steps.should match_steps([Dragonfly::Job::FetchUrl])
-      }
-
-      it "should fetch the specified url when applied" do
-        @job.fetch_url!('http://some.place.com')
-        @job.data.should == "result!"
-      end
-
-      it "should default to http" do
-        @job.fetch_url!('some.place.com')
-        @job.data.should == "result!"
-      end
-
-      it "should also work with https" do
-        stub_request(:get, 'https://some.place.com').to_return(:body => 'secure result!')
-        @job.fetch_url!('https://some.place.com')
-        @job.data.should == "secure result!"
-      end
-
-      it "should set the name if there is one" do
-        @job.fetch_url!('some.place.com/dung.beetle')
-        @job.meta[:name].should == 'dung.beetle'
-      end
-
-      it "should set the name url_attr if there is one" do
-        @job.fetch_url!('some.place.com/dung.beetle')
-        @job.url_attrs.name.should == 'dung.beetle'
-      end
-
-      it "should raise an error if not found" do
-        stub_request(:get, "notfound.com").to_return(:status => 404, :body => "BLAH")
-        expect{
-          @job.fetch_url!('notfound.com').apply
-        }.to raise_error(Dragonfly::Job::FetchUrl::ErrorResponse){|error|
-          error.status.should == 404
-          error.body.should == "BLAH"
-        }
-      end
-
-      it "should raise an error if server error" do
-        stub_request(:get, "error.com").to_return(:status => 500, :body => "BLAH")
-        expect{
-          @job.fetch_url!('error.com').apply
-        }.to raise_error(Dragonfly::Job::FetchUrl::ErrorResponse){|error|
-          error.status.should == 500
-          error.body.should == "BLAH"
-        }
-      end
-
-      it "should follow redirects" do
-        stub_request(:get, "redirectme.com").to_return(:status => 302, :headers => {'Location' => 'http://ok.com'})
-        stub_request(:get, "ok.com").to_return(:body => "OK!")
-        @job.fetch_url('redirectme.com').data.should == 'OK!'
-      end
-
-      ["some.place.com", "some.place.com/", "some.place.com/eggs/"].each do |url|
-        it "should not set the name if there isn't one, e.g. #{url}" do
-          @job.fetch_url!(url)
-          @job.meta[:name].should be_nil
-        end
-
-        it "should not set the name url_attr if there isn't one, e.g. #{url}" do
-          @job.fetch_url!(url)
-          @job.url_attrs.name.should be_nil
-        end
-      end
-    end
-
   end
 
-  describe "with content already there" do
-
+  describe "fetch" do
     before(:each) do
-      @app = test_app
-      @job = Dragonfly::Job.new(@app, 'HELLO', :name => 'hello.txt', :a => :b)
-      @temp_object = @job.temp_object
-      @app.add_processor(:resize){}
+      job.fetch!('some_uid')
     end
 
-    describe "apply" do
-      it "should return itself" do
-        @job.apply.should == @job
-      end
+    it { job.steps.should match_steps([Dragonfly::Job::Fetch]) }
+
+    it "should retrieve from the app's datastore when applied" do
+      app.datastore.should_receive(:retrieve).with('some_uid').and_return('HELLO')
+      job.data.should == 'HELLO'
     end
 
-    describe "process" do
-      it "should be a Process job" do
-        @job.process!(:resize, '20x30')
-        @job.steps.should match_steps([Dragonfly::Job::Process])
+    it "should set extra data if returned from the datastore" do
+      app.datastore.should_receive(:retrieve).with('some_uid').and_return(['HELLO', {:name => 'test.txt'}])
+      job.data.should == 'HELLO'
+      job.meta.should == {:name => 'test.txt'}
+    end
+
+    it "shouldn't set any url_attrs" do
+      job.url_attrs.should be_empty
+    end
+  end
+
+  describe "generate" do
+    before :each do
+      app.add_generator(:plasma){}
+    end
+
+    it "adds a step" do
+      job.generate!(:plasma, 20)
+      job.steps.should match_steps([Dragonfly::Job::Generate])
+    end
+
+    it "uses the generator when applied" do
+      job.generate!(:plasma, 20)
+      app.generator.should_receive(:generate).with(:plasma, job.content, 20)
+      job.apply
+    end
+
+    it "updates the url if method exists" do
+      app.generator.should_receive(:update_url).with(:plasma, job.url_attrs, 20)
+      job.generate!(:plasma, 20)
+    end
+  end
+
+  describe "fetch_file" do
+    before(:each) do
+      job.fetch_file!(File.dirname(__FILE__) + '/../../samples/egg.png')
+    end
+
+    it { job.steps.should match_steps([Dragonfly::Job::FetchFile]) }
+
+    it "should fetch the specified file when applied" do
+      job.size.should == 62664
+    end
+
+    it "should set the url_attrs" do
+      job.url_attrs.name.should == 'egg.png'
+    end
+
+    it "should set the name" do
+      job.name.should == 'egg.png'
+    end
+  end
+
+  describe "fetch_url" do
+    before(:each) do
+      stub_request(:get, %r{http://some\.place\.com/.*}).to_return(:body => 'result!')
+    end
+
+    it "adds a step" do
+      job.fetch_url!('some.url')
+      job.steps.should match_steps([Dragonfly::Job::FetchUrl])
+    end
+
+    it "should fetch the specified url when applied" do
+      job.fetch_url!('http://some.place.com')
+      job.data.should == "result!"
+    end
+
+    it "should default to http" do
+      job.fetch_url!('some.place.com')
+      job.data.should == "result!"
+    end
+
+    it "should also work with https" do
+      stub_request(:get, 'https://some.place.com').to_return(:body => 'secure result!')
+      job.fetch_url!('https://some.place.com')
+      job.data.should == "secure result!"
+    end
+
+    it "should set the name if there is one" do
+      job.fetch_url!('some.place.com/dung.beetle')
+      job.name.should == 'dung.beetle'
+    end
+
+    it "should set the name url_attr if there is one" do
+      job.fetch_url!('some.place.com/dung.beetle')
+      job.url_attrs.name.should == 'dung.beetle'
+    end
+
+    it "should raise an error if not found" do
+      stub_request(:get, "notfound.com").to_return(:status => 404, :body => "BLAH")
+      expect{
+        job.fetch_url!('notfound.com').apply
+      }.to raise_error(Dragonfly::Job::FetchUrl::ErrorResponse){|error|
+        error.status.should == 404
+        error.body.should == "BLAH"
+      }
+    end
+
+    it "should raise an error if server error" do
+      stub_request(:get, "error.com").to_return(:status => 500, :body => "BLAH")
+      expect{
+        job.fetch_url!('error.com').apply
+      }.to raise_error(Dragonfly::Job::FetchUrl::ErrorResponse){|error|
+        error.status.should == 500
+        error.body.should == "BLAH"
+      }
+    end
+
+    it "should follow redirects" do
+      stub_request(:get, "redirectme.com").to_return(:status => 302, :headers => {'Location' => 'http://ok.com'})
+      stub_request(:get, "ok.com").to_return(:body => "OK!")
+      job.fetch_url('redirectme.com').data.should == 'OK!'
+    end
+
+    ["some.place.com", "some.place.com/", "some.place.com/eggs/"].each do |url|
+      it "should not set the name if there isn't one, e.g. #{url}" do
+        job.fetch_url!(url)
+        job.name.should be_nil
       end
 
-      it "should use the processor when applied" do
-        @job.process(:resize, '20x30').data.should == '2'
+      it "should not set the name url_attr if there isn't one, e.g. #{url}" do
+        job.fetch_url!(url)
+        job.url_attrs.name.should be_nil
       end
+    end
+  end
 
-      it "should maintain the meta attributes" do
-        @job.process!(:resize, '20x30')
-        @job.meta.should == {:name => 'hello.txt', :a => :b}
-      end
+  describe "apply" do
+    it "should return itself" do
+      job.apply.should == job
+    end
+  end
 
-      it "should call update_url immediately with the url_attrs" do
-        @app.processor.should_receive(:update_url).with(:resize, @job.url_attrs, '20x30')
-        @job.process(:resize, '20x30')
-      end
+  describe "process" do
+    before :each do
+      app.add_processor(:resize){}
+    end
+
+    it "adds a step" do
+      job.process!(:resize, '20x30')
+      job.steps.should match_steps([Dragonfly::Job::Process])
+    end
+
+    it "should use the processor when applied" do
+      job.process!(:resize, '20x30')
+      app.processor.should_receive(:process).with(:resize, job.content, '20x30')
+      job.apply
+    end
+
+    it "should call update_url immediately with the url_attrs" do
+      app.processor.should_receive(:update_url).with(:resize, job.url_attrs, '20x30')
+      job.process!(:resize, '20x30')
     end
   end
 
   describe "analysis" do
+    let (:job) { Dragonfly::Job.new(app, "HELLO") }
+
     before(:each) do
-      @app = test_app
-      @job = @app.new_job('HELLO')
-      @app.add_analyser(:num_letters){|temp_object, letter| temp_object.data.count(letter) }
+      app.add_analyser(:num_letters){|content, letter| content.data.count(letter) }
     end
     it "should return correctly when calling analyse" do
-      @job.analyse(:num_letters, 'L').should == 2
+      job.analyse(:num_letters, 'L').should == 2
     end
     it "should have mixed in the analyser method" do
-      @job.num_letters('L').should == 2
+      job.num_letters('L').should == 2
     end
     it "should raise if analysing any old method" do
       expect{
-        @job.analyse(:robin_van_persie).should be_nil
+        job.analyse(:robin_van_persie).should be_nil
       }.to raise_error(Dragonfly::Analyser::NotFound)
     end
     it "should not allow calling any old method" do
       lambda{
-        @job.robin_van_persie
+        job.robin_van_persie
       }.should raise_error(NoMethodError)
     end
     it "should work correctly with chained jobs, applying before analysing" do
-      @app.add_processor(:double){|job| job.update(job.temp_object.data * 2, {}) }
-      @job.process(:double).num_letters('L').should == 4
+      app.add_processor(:double){|content| content.update(content.data * 2) }
+      job.process(:double).num_letters('L').should == 4
     end
   end
 
