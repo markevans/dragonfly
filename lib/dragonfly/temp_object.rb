@@ -164,10 +164,6 @@ module Dragonfly
       "<#{self.class.name} #{content_string} >"
     end
 
-    def unique_id
-      @unique_id ||= "#{object_id}#{rand(1000000)}"
-    end
-
     protected
 
     # We don't use normal accessors here because #data etc. do more than just return the instance var

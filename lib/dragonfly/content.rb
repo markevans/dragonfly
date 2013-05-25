@@ -14,6 +14,10 @@ module Dragonfly
       update(obj, meta) if obj
     end
 
+    def initialize_copy(other)
+      @unique_id = nil
+    end
+
     attr_reader :app
     def_delegators :app,
                    :analyser, :processor, :shell
@@ -80,6 +84,10 @@ module Dragonfly
     def close
       previous_temp_objects.each{|temp_object| temp_object.close }
       temp_object.close if temp_object
+    end
+
+    def unique_id
+      @unique_id ||= "#{object_id}#{rand(1000000)}"
     end
 
     private
