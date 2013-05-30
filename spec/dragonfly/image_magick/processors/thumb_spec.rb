@@ -2,12 +2,7 @@ require 'spec_helper'
 
 describe Dragonfly::ImageMagick::Processors::Thumb do
 
-  let (:app) {
-    test_app.configure do
-      add_processor :convert, Dragonfly::ImageMagick::Processors::Convert.new
-      add_analyser :identify_basic, Dragonfly::ImageMagick::Analysers::IdentifyBasic.new
-    end
-  }
+  let (:app) { test_imagemagick_app }
   let (:image) { Dragonfly::Content.new(app, SAMPLES_DIR.join('beach.png')) } # 280x355
   let (:processor) { Dragonfly::ImageMagick::Processors::Thumb.new }
 

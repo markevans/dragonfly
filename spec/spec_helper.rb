@@ -54,6 +54,13 @@ def test_app(name=:default)
   app
 end
 
+def test_imagemagick_app
+  test_app.configure do
+    add_processor :convert, Dragonfly::ImageMagick::Processors::Convert.new
+    add_analyser :identify_basic, Dragonfly::ImageMagick::Analysers::IdentifyBasic.new
+  end
+end
+
 def suppressing_stderr
   original_stderr = $stderr.dup
   tempfile = Tempfile.new('stderr')
