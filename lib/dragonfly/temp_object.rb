@@ -86,19 +86,6 @@ module Dragonfly
       @data ||= file{|f| f.read }
     end
 
-    def tempfile
-      raise Closed, "can't read from tempfile as TempObject has been closed" if closed?
-      @tempfile ||= begin
-        case
-        when @data
-          @tempfile = Utils.new_tempfile(ext, @data)
-        when @pathname
-          @tempfile = copy_to_tempfile(@pathname.expand_path)
-        end
-        @tempfile
-      end
-    end
-
     def file(&block)
       f = tempfile.open
       tempfile.binmode
@@ -180,6 +167,19 @@ module Dragonfly
     end
 
     private
+
+    def tempfile
+      raise Closed, "can't read from tempfile as TempObject has been closed" if closed?
+      @tempfile ||= begin
+        case
+        when @data
+          @tempfile = Utils.new_tempfile(ext, @data)
+        when @pathname
+          @tempfile = copy_to_tempfile(@pathname.expand_path)
+        end
+        @tempfile
+      end
+    end
 
     def block_size
       8192

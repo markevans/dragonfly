@@ -92,16 +92,6 @@ describe Dragonfly::TempObject do
         end
       end
 
-      describe "tempfile" do
-        it "should create a closed tempfile" do
-          @temp_object.tempfile.should be_a(Tempfile)
-          @temp_object.tempfile.should be_closed
-        end
-        it "should contain the correct data" do
-          @temp_object.tempfile.open.read.should == 'HELLO'
-        end
-      end
-
       describe "path" do
         it "should return an absolute file path" do
           if Dragonfly.running_on_windows?
@@ -176,14 +166,7 @@ describe Dragonfly::TempObject do
       before(:each) do
         @temp_object = new_temp_object("wassup")
       end
-      it "should delete its tempfile" do
-        tempfile = @temp_object.tempfile
-        path = tempfile.path
-        path.should_not be_empty
-        @temp_object.close
-        File.exist?(path).should be_false
-      end
-      %w(tempfile file data).each do |method|
+      %w(file data).each do |method|
         it "should raise error when calling #{method}" do
           @temp_object.close
           expect{
@@ -220,12 +203,21 @@ describe Dragonfly::TempObject do
       temp_object = Dragonfly::TempObject.new("hi", 'dark.cloud')
       temp_object.path.should =~ /\.cloud$/
     end
-  end
+
+    it "should delete its internal tempfile on close" do
+      temp_object = new_temp_object("HELLO")
+      path = temp_object.path
+      File.exist?(path).should be_true
+      temp_object.close
+      File.exist?(path).should be_false
+    end
+
+ end
 
   describe "initializing from a tempfile" do
 
     def initialization_object(data)
-      new_tempfile(data)
+      @tempfile = new_tempfile(data)
     end
 
     it_should_behave_like "common behaviour"
@@ -238,7 +230,15 @@ describe Dragonfly::TempObject do
 
     it "should return the tempfile's path" do
       temp_object = new_temp_object('HELLO')
-      temp_object.path.should == temp_object.tempfile.path
+      temp_object.path.should == @tempfile.path
+    end
+
+    it "should delete its internal tempfile on close" do
+      temp_object = new_temp_object("HELLO")
+      path = temp_object.path
+      File.exist?(path).should be_true
+      temp_object.close
+      File.exist?(path).should be_false
     end
   end
 
@@ -273,6 +273,12 @@ describe Dragonfly::TempObject do
       file.close
       FileUtils.rm(file.path)
     end
+
+    it "doesn't remove the file on close" do
+      temp_object = new_temp_object("HELLO")
+      temp_object.close
+      File.exist?(temp_object.path).should be_true
+    end
   end
 
   describe "initializing from a pathname" do
@@ -305,6 +311,13 @@ describe Dragonfly::TempObject do
       end
       pathname.delete
     end
+
+    it "doesn't remove the file on close" do
+      temp_object = new_temp_object("HELLO")
+      temp_object.close
+      File.exist?(temp_object.path).should be_true
+    end
+
   end
 
   describe "initializing from another temp object" do
