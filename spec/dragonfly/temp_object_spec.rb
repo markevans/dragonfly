@@ -149,6 +149,15 @@ describe Dragonfly::TempObject do
         end
       end
 
+      describe "to_tempfile" do
+        it "returns a new open tempfile" do
+          tempfile = @temp_object.to_tempfile
+          tempfile.should be_a(Tempfile)
+          tempfile.path.should_not == @temp_object.path
+          tempfile.read.should == @temp_object.data
+          tempfile.should_not be_closed
+        end
+      end
     end
 
     describe "each" do

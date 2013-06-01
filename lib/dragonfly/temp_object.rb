@@ -126,6 +126,12 @@ module Dragonfly
       File.new(path, 'rb')
     end
 
+    def to_tempfile
+      tempfile = copy_to_tempfile(path)
+      tempfile.open
+      tempfile
+    end
+
     def to_io(&block)
       @data ? StringIO.open(@data, 'rb', &block) : file(&block)
     end
