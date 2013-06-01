@@ -208,11 +208,6 @@ describe Dragonfly::TempObject do
       temp_object.each{}
     end
 
-    it "should use set the file extension in path from the name" do
-      temp_object = Dragonfly::TempObject.new("hi", 'dark.cloud')
-      temp_object.path.should =~ /\.cloud$/
-    end
-
     it "should delete its internal tempfile on close" do
       temp_object = new_temp_object("HELLO")
       path = temp_object.path
@@ -374,51 +369,49 @@ describe Dragonfly::TempObject do
   end
 
   describe "original_filename" do
+
     before(:each) do
       @obj = new_tempfile
     end
+
     it "should set the original_filename if the initial object responds to 'original filename'" do
       def @obj.original_filename
         'jimmy.page'
       end
       Dragonfly::TempObject.new(@obj).original_filename.should == 'jimmy.page'
     end
+
     it "should not set the name if the initial object doesn't respond to 'original filename'" do
       Dragonfly::TempObject.new(@obj).original_filename.should be_nil
     end
+
     it "should set the name if the initial object is a file object" do
       file = File.new(SAMPLES_DIR.join('round.gif'))
       temp_object = Dragonfly::TempObject.new(file)
       temp_object.original_filename.should == 'round.gif'
     end
+
     it "should set the name if the initial object is a pathname" do
       pathname = Pathname.new(SAMPLES_DIR + '/round.gif')
       temp_object = Dragonfly::TempObject.new(pathname)
       temp_object.original_filename.should == 'round.gif'
     end
+
   end
 
-  describe "name" do
+  describe "ext" do
+
     let(:temp_object) { Dragonfly::TempObject.new("stuff") }
 
     it "defaults to nil" do
-      temp_object.name.should be_nil
-    end
-    it "uses original_filename if present" do
-      temp_object.should_receive(:original_filename).and_return('some.thing')
-      temp_object.name.should == 'some.thing'
-    end
-    it "allows setting on initialize" do
-      temp_object = Dragonfly::TempObject.new("content here", 'some.thing')
-      temp_object.name.should == 'some.thing'
-    end
-    it "defaults ext to nil" do
       temp_object.ext.should be_nil
     end
-    it "returns the ext if it exists" do
-      temp_object = Dragonfly::TempObject.new("content here", 'some.thing.yo')
+
+    it "uses original_filename if present" do
+      temp_object.should_receive(:original_filename).and_return('some.thing.yo')
       temp_object.ext.should == 'yo'
     end
+
   end
 
 end
