@@ -15,8 +15,8 @@ describe Dragonfly::Content do
   end
 
   describe "temp_object" do
-    it "starts as nil" do
-      content.temp_object.should == nil
+    it "has one from the beginning" do
+      content.temp_object.should be_a(Dragonfly::TempObject)
     end
   end
 
@@ -89,13 +89,6 @@ describe Dragonfly::Content do
       content.meta.should == {'meta' => 'here'}
     end
 
-    it "sets the name on the temp_object if present" do
-      content.update("adsf")
-      content.temp_object.name.should be_nil
-      content.update("adsf", "name" => 'good.stuff')
-      content.temp_object.name.should == "good.stuff"
-    end
-
     it "returns itself" do
       content.update('abc').should == content
     end
@@ -103,42 +96,30 @@ describe Dragonfly::Content do
 
   describe "delegated methods to temp_object" do
     it "data" do
-      content.data.should be_nil
+      content.data.should == ""
       content.update("ASDF")
       content.data.should == 'ASDF'
     end
 
     it "file" do
-      content.file.should == nil
+      content.file.should be_a(File)
+      content.file.read.should == ""
       content.update("sdf")
       content.file.should be_a(File)
       content.file.read.should == 'sdf'
       content.file{|f| f.read.should == 'sdf'}
     end
 
-    it "tempfile" do
-      content.tempfile.should == nil
-      content.update("sdf")
-      content.tempfile.should be_a(Tempfile)
-    end
-
     it "path" do
-      content.path.should be_nil
+      content.path.should =~ %r{\w+/\w+}
       content.update(Pathname.new('/usr/eggs'))
       content.path.should == '/usr/eggs'
     end
 
     it "size" do
-      content.size.should be_nil
+      content.size.should == 0
       content.update("hjk")
       content.size.should == 3
-    end
-
-    it "to_file" do
-      expect{ content.to_file }.to raise_error(Dragonfly::Content::NoContent)
-      content.update("asdf")
-      content.temp_object.should_receive(:to_file).and_return(file=mock)
-      content.to_file.should == file
     end
 
     it "each" do
