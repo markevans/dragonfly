@@ -195,6 +195,32 @@ describe Dragonfly::Content do
       end
       content.path.should =~ /\.png$/
     end
+
+    describe "generating" do
+      let(:content_2) { Dragonfly::Content.new(app) }
+
+      it "allows generating with the shell" do
+        content_2.shell_generate do |path|
+          "cp #{content.path} #{path}"
+        end.should == content_2
+        content_2.data.should == "big\nstuff"
+      end
+
+      it "allows generating without escaping" do
+        content_2.shell_generate(:escape => false) do |path|
+          "echo dogs >> #{path}"
+        end
+        content_2.data.should == "dogs\n"
+      end
+
+      it "allows setting the ext on generate" do
+        content_2.shell_generate(:ext => 'txt') do |path|
+          "cp #{content.path} #{path}"
+        end
+        content_2.path.should =~ /\.txt$/
+      end
+    end
+
   end
 
   describe "close" do

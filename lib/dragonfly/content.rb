@@ -58,6 +58,16 @@ module Dragonfly
       shell.run command, :escape => should_escape
     end
 
+    def shell_generate(opts={})
+      ext = opts[:ext] || self.ext
+      should_escape = opts[:escape] != false
+      tempfile = Dragonfly::Utils.new_tempfile(ext)
+      new_path = should_escape ? shell.quote(tempfile.path) : tempfile.path
+      command = yield(new_path)
+      shell.run(command, :escape => should_escape)
+      update(tempfile)
+    end
+
     def shell_update(opts={})
       ext = opts[:ext] || self.ext
       should_escape = opts[:escape] != false
