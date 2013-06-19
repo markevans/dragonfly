@@ -17,7 +17,7 @@ module Dragonfly
 
     attr_reader :app
     def_delegators :app,
-                   :analyser, :processor, :shell
+                   :analyser, :generator, :processor, :shell
 
     attr_reader :temp_object
     attr_accessor :meta
@@ -30,6 +30,11 @@ module Dragonfly
 
     def name=(name)
       meta["name"] = name
+    end
+
+    def generate!(name, *args)
+      generator.generate(name, self, *args)
+      self
     end
 
     def process!(name, *args)

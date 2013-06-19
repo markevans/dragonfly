@@ -71,6 +71,13 @@ describe Dragonfly::Content do
     end
   end
 
+  describe "generate!" do
+    it "calls the app's generator on itself and returns itself" do
+      content.generator.should_receive(:generate).with(:shizzle, content, 'args')
+      content.generate!(:shizzle, 'args').should == content
+    end
+  end
+
   describe "analyse" do
     it "calls the app's analyser on itself" do
       content.analyser.should_receive(:analyse).with(:shizzle, content, 'args')
