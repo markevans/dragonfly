@@ -1,7 +1,7 @@
 module Dragonfly
   module ImageMagick
     module Processors
-      class Thumb < Base
+      class Thumb
 
         GRAVITIES = {
           'nw' => 'NorthWest',
