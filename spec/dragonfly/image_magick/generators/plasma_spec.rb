@@ -1,25 +1,22 @@
 require 'spec_helper'
 
 describe Dragonfly::ImageMagick::Generators::Plasma do
-  before(:each) do
-    @generator = Dragonfly::ImageMagick::Generators::Plasma.new
+  let (:generator) { Dragonfly::ImageMagick::Generators::Plasma.new }
+  let (:app) { test_imagemagick_app }
+  let (:image) { Dragonfly::Content.new(app) }
+
+  it "generates a png image" do
+    generator.call(image, 5, 3)
+    image.should have_width(5)
+    image.should have_height(3)
+    image.should have_format('png')
+    image.meta.should == {'format' => 'png', 'name' => 'plasma.png'}
   end
 
-  describe "of given dimensions" do
-    before(:each) do
-      @image, @meta = @generator.call(23,12)
-    end
-    it {@image.should have_width(23)}
-    it {@image.should have_height(12)}
-    it {@image.should have_format('png')}
-    it {@meta.should == {:format => :png, :name => 'plasma.png'}}
-  end
-
-  describe "specifying the format" do
-    before(:each) do
-      @image, @meta = @generator.call(23, 12, :gif)
-    end
-    it {@image.should have_format('gif')}
-    it {@meta.should == {:format => :gif, :name => 'plasma.gif'}}
+  it "allows changing the format" do
+    generator.call(image, 1, 1, 'format' => 'jpg')
+    image.should have_format('jpeg')
+    image.meta.should == {'format' => 'jpg', 'name' => 'plasma.jpg'}
   end
 end
+

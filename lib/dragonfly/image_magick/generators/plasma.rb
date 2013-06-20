@@ -1,13 +1,12 @@
 module Dragonfly
   module ImageMagick
     module Generators
-      class Plasma < Base
+      class Plasma
 
-        def call(width, height, format='png')
-          [
-            convert("-size #{width}x#{height} plasma:fractal", format),
-            {:format => format.to_sym, :name => "plasma.#{format}"}
-          ]
+        def call(content, width, height, opts={})
+          format = opts['format'] || 'png'
+          content.generate!(:convert, "-size #{width}x#{height} plasma:fractal", format)
+          content.add_meta('format' => format, 'name' => "plasma.#{format}")
         end
 
       end
