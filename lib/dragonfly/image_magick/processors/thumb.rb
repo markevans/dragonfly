@@ -25,7 +25,7 @@ module Dragonfly
           when RESIZE_GEOMETRY
             resize(content, geometry)
           when CROPPED_RESIZE_GEOMETRY
-            resize_and_crop(content, 'width' => $1, 'height' => $2, 'gravity' => $3)
+            resize_and_crop(content, $1, $2, $3)
           when CROP_GEOMETRY
             crop(content,
               'width' => $1,
@@ -58,12 +58,8 @@ module Dragonfly
           content.process!(:convert, "#{"-gravity #{gravity} " if gravity}-crop #{width}x#{height}#{x}#{y} +repage")
         end
 
-        def resize_and_crop(content, opts={})
-          attrs = content.analyse(:identify_basic) unless opts['width'] && opts['height']
-          width = opts['width'] || attrs['width']
-          height = opts['height'] || attrs['height']
-          gravity = GRAVITIES[opts['gravity'] || 'c']
-
+        def resize_and_crop(content, width, height, gravity)
+          gravity = GRAVITIES[gravity || 'c']
           content.process!(:convert, "-resize #{width}x#{height}^^ -gravity #{gravity} -crop #{width}x#{height}+0+0 +repage")
         end
 
