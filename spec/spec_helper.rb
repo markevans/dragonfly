@@ -56,6 +56,7 @@ end
 
 def test_imagemagick_app
   test_app.configure do
+    add_generator :convert, Dragonfly::ImageMagick::Generators::Convert.new
     add_processor :convert, Dragonfly::ImageMagick::Processors::Convert.new
     add_analyser :identify_basic, Dragonfly::ImageMagick::Analysers::IdentifyBasic.new
   end

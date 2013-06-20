@@ -35,7 +35,7 @@ describe Dragonfly::ImageMagick::Generators::Plain do
     it "blows up with a bad colour" do
       expect {
         generator.call(image, 1, 1, 'colour' => 'lardoin')
-      }.to raise_error(Dragonfly::Shell::CommandFailed)
+      }.to raise_error(Dragonfly::Generator::GenerationError)
     end
   end
 
