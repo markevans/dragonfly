@@ -1,12 +1,12 @@
 module Dragonfly
   module ImageMagick
     module Analysers
-      class IdentifyBasic < Base
+      class IdentifyBasic
 
-        def call(temp_object)
-          format, width, height = command_line.identify(temp_object.path, "-ping -format '%m %w %h'").split
+        def call(content)
+          format, width, height = content.analyse(:identify, "-ping -format '%m %w %h'").split
           {
-            'format' => format.downcase.to_sym,
+            'format' => format.downcase,
             'width' => width.to_i,
             'height' => height.to_i
           }

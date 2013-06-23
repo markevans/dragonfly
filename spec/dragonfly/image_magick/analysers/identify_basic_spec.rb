@@ -2,17 +2,19 @@ require 'spec_helper'
 
 describe Dragonfly::ImageMagick::Analysers::IdentifyBasic do
 
+  let(:app) { test_imagemagick_app }
   let(:analyser) { Dragonfly::ImageMagick::Analysers::IdentifyBasic.new }
-  let(:temp_object) { Dragonfly::TempObject.new(SAMPLES_DIR.join('beach.png')) } # 280x355
+  let(:content) { Dragonfly::Content.new(app, SAMPLES_DIR.join('beach.png')) } # 280x355
 
   describe "call" do
     it "returns a hash of properties" do
-      analyser.call(temp_object).should == {
+      analyser.call(content).should == {
         'width' => 280,
         'height' => 355,
-        'format' => :png
+        'format' => 'png'
       }
     end
   end
 
 end
+
