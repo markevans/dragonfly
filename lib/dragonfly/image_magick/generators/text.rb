@@ -1,7 +1,7 @@
 module Dragonfly
   module ImageMagick
     module Generators
-      class Text < Base
+      class Text
 
         FONT_STYLES = {
           'normal'  => 'normal',
@@ -37,41 +37,41 @@ module Dragonfly
           '900'     => 900
         }
 
-        def call(string, opts={})
+        def call(content, string, opts={})
           opts = HashWithCssStyleKeys[opts]
           args = []
-          format = (opts[:format] || :png)
-          background = opts[:background_color] || 'none'
-          font_size = (opts[:font_size] || 12).to_i
+          format = (opts['format'] || 'png')
+          background = opts['background_color'] || 'none'
+          font_size = (opts['font_size'] || 12).to_i
           escaped_string = "\"#{string.gsub(/"/, '\"')}\""
 
           # Settings
           args.push("-gravity NorthWest")
           args.push("-antialias")
           args.push("-pointsize #{font_size}")
-          args.push("-font \"#{opts[:font]}\"") if opts[:font]
-          args.push("-family '#{opts[:font_family]}'") if opts[:font_family]
-          args.push("-fill #{opts[:color]}") if opts[:color]
-          args.push("-stroke #{opts[:stroke_color]}") if opts[:stroke_color]
-          args.push("-style #{FONT_STYLES[opts[:font_style]]}") if opts[:font_style]
-          args.push("-stretch #{FONT_STRETCHES[opts[:font_stretch]]}") if opts[:font_stretch]
-          args.push("-weight #{FONT_WEIGHTS[opts[:font_weight]]}") if opts[:font_weight]
+          args.push("-font \"#{opts['font']}\"") if opts['font']
+          args.push("-family '#{opts['font_family']}'") if opts['font_family']
+          args.push("-fill #{opts['color']}") if opts['color']
+          args.push("-stroke #{opts['stroke_color']}") if opts['stroke_color']
+          args.push("-style #{FONT_STYLES[opts['font_style']]}") if opts['font_style']
+          args.push("-stretch #{FONT_STRETCHES[opts['font_stretch']]}") if opts['font_stretch']
+          args.push("-weight #{FONT_WEIGHTS[opts['font_weight']]}") if opts['font_weight']
           args.push("-background #{background}")
           args.push("label:#{escaped_string}")
 
           # Padding
-          pt, pr, pb, pl = parse_padding_string(opts[:padding]) if opts[:padding]
-          padding_top    = (opts[:padding_top]    || pt || 0)
-          padding_right  = (opts[:padding_right]  || pr || 0)
-          padding_bottom = (opts[:padding_bottom] || pb || 0)
-          padding_left   = (opts[:padding_left]   || pl || 0)
+          pt, pr, pb, pl = parse_padding_string(opts['padding']) if opts['padding']
+          padding_top    = (opts['padding_top']    || pt || 0)
+          padding_right  = (opts['padding_right']  || pr || 0)
+          padding_bottom = (opts['padding_bottom'] || pb || 0)
+          padding_left   = (opts['padding_left']   || pl || 0)
 
-          tempfile = convert(args.join(' '), format)
+          content.generate!(:convert, args.join(' '), format)
 
           if (padding_top || padding_right || padding_bottom || padding_left)
-            dimensions = command_line.identify(tempfile.path, "-ping -format '%w %h'").split
-            text_width  = dimensions[0].to_i
-            text_height = dimensions[1].to_i
+            dimensions = content.analyse(:identify_basic)
+            text_width  = dimensions['width']
+            text_height = dimensions['height']
             width  = padding_left + text_width  + padding_right
             height = padding_top  + text_height + padding_bottom
 
@@ -79,13 +79,10 @@ module Dragonfly
             args.push("-size #{width}x#{height}")
             args.push("xc:#{background}")
             args.push("-annotate 0x0+#{padding_left}+#{padding_top} #{escaped_string}")
-            convert(args.join(' '), nil, tempfile)
+            content.generate!(:convert, args.join(' '), format)
           end
 
-          [
-            tempfile,
-            {:format => format, :name => "text.#{format}"}
-          ]
+          content.add_meta('format' => format, 'name' => "text.#{format}")
         end
 
         private
@@ -117,3 +114,4 @@ module Dragonfly
     end
   end
 end
+

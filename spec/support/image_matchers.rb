@@ -1,5 +1,6 @@
 def image_properties(image)
   details = `identify #{image.path}`
+  raise "couldn't identify #{image.path} in image_properties" if details.empty?
   # example of details string:
   # myimage.png PNG 200x100 200x100+0+0 8-bit DirectClass 31.2kb
   filename, format, geometry, geometry_2, depth, image_class, size = details.split(' ')
