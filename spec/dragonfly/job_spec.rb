@@ -220,7 +220,7 @@ describe Dragonfly::Job do
       job.analyse(:num_letters, 'L').should == 2
     end
     it "should have mixed in the analyser method" do
-      pending
+      pending "job methods module not implemented yet"
       job.num_letters('L').should == 2
     end
     it "should work correctly with chained jobs, applying before analysing" do
@@ -772,28 +772,11 @@ describe Dragonfly::Job do
   end
 
   describe "meta" do
-    before(:each) do
-      @app = test_app
-      @job = @app.new_job("Goo")
-    end
-    it "should default meta to an empty hash" do
-      @job.meta.should == {}
-    end
-    it "should allow setting" do
-      @job.meta = {:a => :b}
-      @job.meta.should == {:a => :b}
-    end
-    it "should apply the job" do
-      @job.should_receive :apply
-      @job.meta
-    end
-    it "should apply the job before setting (for consistency)" do
-      @job.should_receive :apply
-      @job.meta = {}
-    end
-    it "should allow setting on initialize" do
-      job = @app.new_job('asdf', :b => :c)
-      job.meta.should == {:b => :c}
+    it "delegates to the result" do
+      job.should_receive(:apply)
+      job.meta = {'a' => 'b'}
+      job.should_receive(:apply)
+      job.meta.should == {'a' => 'b'}
     end
   end
 
