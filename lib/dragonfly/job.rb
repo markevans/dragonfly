@@ -19,7 +19,7 @@ module Dragonfly
     def_delegators :result,
                    :data, :file, :tempfile, :path, :to_file, :size, :each,
                    :meta, :meta=, :name, :name=, :basename, :basename=, :ext, :ext=,
-                   :analyse
+                   :analyse, :store
 
     class Step
 
@@ -370,11 +370,6 @@ module Dragonfly
     end
 
     # Misc
-
-    def store(opts={})
-      temp_object = result
-      app.store(temp_object, opts_for_store.merge(opts).merge(:meta => temp_object.meta))
-    end
 
     def inspect
       "<Dragonfly::Job app=#{app.name.inspect}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >"

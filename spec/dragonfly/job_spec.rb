@@ -816,24 +816,10 @@ describe Dragonfly::Job do
   end
 
   describe "store" do
-    before(:each) do
-      @app = test_app
-      @app.add_generator(:test){ ["Toes", {:name => 'doogie.txt'}] }
-      @job = @app.generate(:test)
-    end
-    it "should store its data along with the meta and mime_type" do
-      @job.meta[:eggs] = 'doolally'
-      @app.datastore.should_receive(:store).with do |temp_object, opts|
-        temp_object.data.should == "Toes"
-        temp_object.name.should == 'doogie.txt'
-        temp_object.meta[:eggs].should == 'doolally'
-        opts[:mime_type].should == 'text/plain'
-      end
-      @job.store
-    end
-    it "should add extra opts" do
-      @app.datastore.should_receive(:store).with(anything, hash_including(:path => 'blah', :mime_type => 'text/plain'))
-      @job.store(:path => 'blah')
+    it "calls store on the applied content" do
+      job.should_receive(:apply)
+      app.datastore.should_receive(:store).with(job.content, {})
+      job.store
     end
   end
 
