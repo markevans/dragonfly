@@ -33,17 +33,17 @@ module Dragonfly
     end
 
     def generate!(name, *args)
-      generator.generate(name, self, *args)
+      app.get_generator(name).call(self, *args)
       self
     end
 
     def process!(name, *args)
-      processor.process(name, self, *args)
+      app.get_processor(name).call(self, *args)
       self
     end
 
     def analyse(name, *args)
-      analyser.analyse(name, self, *args)
+      app.get_analyser(name).call(self, *args)
     end
 
     def update(obj, meta=nil)

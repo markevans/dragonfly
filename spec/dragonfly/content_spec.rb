@@ -66,22 +66,25 @@ describe Dragonfly::Content do
 
   describe "process!" do
     it "calls the app's processor on itself and returns itself" do
-      content.processor.should_receive(:process).with(:shizzle, content, 'args')
+      app.add_processor(:shizzle){}
+      app.get_processor(:shizzle).should_receive(:call).with(content, 'args')
       content.process!(:shizzle, 'args').should == content
     end
   end
 
   describe "generate!" do
     it "calls the app's generator on itself and returns itself" do
-      content.generator.should_receive(:generate).with(:shizzle, content, 'args')
+      app.add_generator(:shizzle){}
+      app.get_generator(:shizzle).should_receive(:call).with(content, 'args')
       content.generate!(:shizzle, 'args').should == content
     end
   end
 
   describe "analyse" do
     it "calls the app's analyser on itself" do
-      content.analyser.should_receive(:analyse).with(:shizzle, content, 'args')
-      content.analyse(:shizzle, 'args')
+      app.add_analyser(:shizzle){}
+      app.get_analyser(:shizzle).should_receive(:call).with(content, 'args').and_return("shiz")
+      content.analyse(:shizzle, 'args').should == "shiz"
     end
   end
 
