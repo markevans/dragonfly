@@ -228,9 +228,7 @@ module Dragonfly
       end
     end
 
-    attr_reader :app, :steps
-    attr_reader :content
-
+    attr_reader :app, :steps, :content
 
     # define fetch(), fetch!(), process(), etc.
     STEPS.each do |step_class|
@@ -401,10 +399,6 @@ module Dragonfly
 
     def last_step_of_type(type)
       steps.select{|s| s.is_a?(type) }.last
-    end
-
-    def opts_for_store
-      {:mime_type => mime_type}
     end
 
   end
