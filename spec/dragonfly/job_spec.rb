@@ -780,7 +780,7 @@ describe Dragonfly::Job do
     end
   end
 
-  describe "sanity check for name, basename, ext" do
+  describe "sanity check for name, basename, ext, mime_type" do
     before(:each) do
       @app = test_app
       @job = @app.new_job('asdf')
@@ -791,10 +791,11 @@ describe Dragonfly::Job do
     end
 
     it "reflect the meta" do
-      @job.meta[:name] = 'monkey.egg'
-      @job.name.should == 'monkey.egg'
+      @job.meta['name'] = 'monkey.png'
+      @job.name.should == 'monkey.png'
       @job.basename.should == 'monkey'
-      @job.ext.should == 'egg'
+      @job.ext.should == 'png'
+      @job.mime_type.should == 'image/png'
     end
   end
 

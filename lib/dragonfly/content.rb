@@ -32,6 +32,10 @@ module Dragonfly
       meta["name"] = name
     end
 
+    def mime_type
+      app.mime_type_for(ext)
+    end
+
     def generate!(name, *args)
       app.get_generator(name).call(self, *args)
       self

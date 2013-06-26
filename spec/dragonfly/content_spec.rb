@@ -64,6 +64,15 @@ describe Dragonfly::Content do
     end
   end
 
+  describe "mime_type" do
+    it "takes it from the extension" do
+      content.name = "thing"
+      content.mime_type.should == "application/octet-stream"
+      content.name = "thing.png"
+      content.mime_type.should == "image/png"
+    end
+  end
+
   describe "process!" do
     it "calls the app's processor on itself and returns itself" do
       app.add_processor(:shizzle){}
