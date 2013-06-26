@@ -18,9 +18,8 @@ module Dragonfly
     extend Forwardable
     def_delegators :result,
                    :data, :file, :tempfile, :path, :to_file, :size, :each,
-                   :meta, :meta=, :name, :name=, :basename, :basename=, :ext, :ext=
-    def_delegators :app,
-                   :analyser, :processor, :server
+                   :meta, :meta=, :name, :name=, :basename, :basename=, :ext, :ext=,
+                   :analyse
 
     class Step
 
@@ -49,6 +48,10 @@ module Dragonfly
 
       attr_reader :job, :args
 
+      def app
+        job.app
+      end
+
       def inspect
         "#{self.class.step_name}(#{args.map{|a| a.inspect }.join(', ')})"
       end
@@ -61,14 +64,13 @@ module Dragonfly
       end
 
       def apply
-        content, meta = job.app.datastore.retrieve(uid)
-        job.update(content, meta)
+        app.datastore.retrieve(job.content, uid)
       end
     end
 
     class Process < Step
       def init
-        processor.update_url(name, job.url_attrs, *arguments)
+        processor.update_url(job.url_attrs, *arguments) if processor.respond_to?(:update_url)
       end
 
       def name
@@ -80,17 +82,17 @@ module Dragonfly
       end
 
       def processor
-        job.app.processor
+        @processor ||= app.get_processor(name)
       end
 
       def apply
-        processor.process(name, job.content, *arguments)
+        processor.call(job.content, *arguments)
       end
     end
 
     class Generate < Step
       def init
-        generator.update_url(name, job.url_attrs, *arguments)
+        generator.update_url(job.url_attrs, *arguments) if generator.respond_to?(:update_url)
       end
 
       def name
@@ -98,7 +100,7 @@ module Dragonfly
       end
 
       def generator
-        job.app.generator
+        @generator ||= app.get_generator(name)
       end
 
       def arguments
@@ -106,7 +108,7 @@ module Dragonfly
       end
 
       def apply
-        generator.generate(name, job.content, *arguments)
+        generator.call(job.content, *arguments)
       end
     end
 
@@ -211,7 +213,7 @@ module Dragonfly
 
     end
 
-    def initialize(app, content=nil, meta={}, url_attrs=nil)
+    def initialize(app, content="", meta={}, url_attrs=nil)
       @app = app
       @steps = []
       @next_step_index = 0
@@ -244,10 +246,6 @@ module Dragonfly
           self
         end
       )
-    end
-
-    def analyse(method, *args)
-      analyser.analyse(method, result, *args)
     end
 
     # Applying, etc.

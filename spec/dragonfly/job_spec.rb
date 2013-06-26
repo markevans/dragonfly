@@ -47,7 +47,7 @@ describe Dragonfly::Job do
   describe "content" do
     it "starts with an empty content" do
       job.content.should be_a(Dragonfly::Content)
-      job.content.data.should be_nil
+      job.content.data.should == ""
       job.content.meta.should == {}
     end
   end
@@ -60,18 +60,8 @@ describe Dragonfly::Job do
     it { job.steps.should match_steps([Dragonfly::Job::Fetch]) }
 
     it "should retrieve from the app's datastore when applied" do
-      app.datastore.should_receive(:retrieve).with('some_uid').and_return('HELLO')
-      job.data.should == 'HELLO'
-    end
-
-    it "should set extra data if returned from the datastore" do
-      app.datastore.should_receive(:retrieve).with('some_uid').and_return(['HELLO', {:name => 'test.txt'}])
-      job.data.should == 'HELLO'
-      job.meta.should == {:name => 'test.txt'}
-    end
-
-    it "shouldn't set any url_attrs" do
-      job.url_attrs.should be_empty
+      app.datastore.should_receive(:retrieve).with(job.content, 'some_uid')
+      job.apply
     end
   end
 
@@ -87,12 +77,12 @@ describe Dragonfly::Job do
 
     it "uses the generator when applied" do
       job.generate!(:plasma, 20)
-      app.generator.should_receive(:generate).with(:plasma, job.content, 20)
+      app.get_generator(:plasma).should_receive(:call).with(job.content, 20)
       job.apply
     end
 
     it "updates the url if method exists" do
-      app.generator.should_receive(:update_url).with(:plasma, job.url_attrs, 20)
+      app.get_generator(:plasma).should_receive(:update_url).with(job.url_attrs, 20)
       job.generate!(:plasma, 20)
     end
   end
@@ -210,12 +200,12 @@ describe Dragonfly::Job do
 
     it "should use the processor when applied" do
       job.process!(:resize, '20x30')
-      app.processor.should_receive(:process).with(:resize, job.content, '20x30')
+      app.get_processor(:resize).should_receive(:call).with(job.content, '20x30')
       job.apply
     end
 
     it "should call update_url immediately with the url_attrs" do
-      app.processor.should_receive(:update_url).with(:resize, job.url_attrs, '20x30')
+      app.get_processor(:resize).should_receive(:update_url).with(job.url_attrs, '20x30')
       job.process!(:resize, '20x30')
     end
   end
@@ -230,21 +220,12 @@ describe Dragonfly::Job do
       job.analyse(:num_letters, 'L').should == 2
     end
     it "should have mixed in the analyser method" do
+      pending
       job.num_letters('L').should == 2
-    end
-    it "should raise if analysing any old method" do
-      expect{
-        job.analyse(:robin_van_persie).should be_nil
-      }.to raise_error(Dragonfly::Analyser::NotFound)
-    end
-    it "should not allow calling any old method" do
-      lambda{
-        job.robin_van_persie
-      }.should raise_error(NoMethodError)
     end
     it "should work correctly with chained jobs, applying before analysing" do
       app.add_processor(:double){|content| content.update(content.data * 2) }
-      job.process(:double).num_letters('L').should == 4
+      job.process(:double).analyse(:num_letters, 'L').should == 4
     end
   end
 
@@ -254,7 +235,6 @@ describe Dragonfly::Job do
       @app.add_processor(:resize){}
       @app.add_processor(:encode){}
       @job = Dragonfly::Job.new(@app)
-      @job.temp_object = Dragonfly::TempObject.new("hello")
       @job.process! :resize
       @job.apply
       @job.process! :encode
@@ -289,7 +269,7 @@ describe Dragonfly::Job do
     before(:each) do
       @app = test_app
       @job = Dragonfly::Job.new(@app)
-      @app.add_processor(:resize){ "SOME_PROCESSED_DATA"}
+      @app.add_processor(:resize){}
       @app.store("SOME_DATA", :uid => 'some_uid')
     end
 
