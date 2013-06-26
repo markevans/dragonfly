@@ -233,6 +233,18 @@ describe Dragonfly::Content do
 
   end
 
+  describe "store" do
+    it "stores itself in the app's datastore" do
+      app.datastore.should_receive(:store).with(content, {})
+      content.store
+    end
+
+    it "allows passing options" do
+      app.datastore.should_receive(:store).with(content, hello: 'there')
+      content.store(hello: 'there')
+    end
+  end
+
   describe "close" do
     before(:each) do
       @app = test_app

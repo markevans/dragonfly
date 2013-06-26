@@ -17,7 +17,7 @@ module Dragonfly
 
     attr_reader :app
     def_delegators :app,
-                   :analyser, :generator, :processor, :shell
+                   :analyser, :generator, :processor, :shell, :datastore
 
     attr_reader :temp_object
     attr_accessor :meta
@@ -82,6 +82,10 @@ module Dragonfly
       command = yield(old_path, new_path)
       shell.run(command, :escape => should_escape)
       update(tempfile)
+    end
+
+    def store(opts={})
+      datastore.store(self, opts)
     end
 
     def close
