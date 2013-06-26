@@ -32,7 +32,7 @@ module Dragonfly
 
     def initialize(name)
       @name = name
-      @analyser, @processor, @generator = Analyser.new, Processor.new, Generator.new
+      @analysers, @processors, @generators = Register.new, Register.new, Register.new
       @server = Server.new(self)
       @content_filename = Dragonfly::Response::DEFAULT_FILENAME
       @job_methods = Module.new
@@ -87,9 +87,9 @@ module Dragonfly
       end
     end
 
-    attr_reader :analyser
-    attr_reader :processor
-    attr_reader :generator
+    attr_reader :analysers
+    attr_reader :processors
+    attr_reader :generators
     attr_reader :server
 
     def datastore
@@ -98,18 +98,30 @@ module Dragonfly
     attr_writer :datastore
 
     def add_generator(*args, &block)
-      generator.add(*args, &block)
+      generators.add(*args, &block)
+    end
+
+    def get_generator(name)
+      generators.get(name)
     end
 
     def add_processor(name, callable=nil, &block)
-      processor.add(name, callable, &block)
+      processors.add(name, callable, &block)
       define(name){|*args| process(name, *args) }
       define("#{name}!"){|*args| process!(name, *args) }
     end
 
+    def get_processor(name)
+      processors.get(name)
+    end
+
     def add_analyser(name, callable=nil, &block)
-      analyser.add(name, callable, &block)
+      analysers.add(name, callable, &block)
       define(name){|*args| analyse(name, *args) }
+    end
+
+    def get_analyser(name)
+      analysers.get(name)
     end
 
     def new_job(content=nil, meta={})
@@ -180,15 +192,15 @@ module Dragonfly
 
     # Reflection
     def processor_methods
-      processor.names
+      processors.names
     end
 
     def generator_methods
-      generator.names
+      generators.names
     end
 
     def analyser_methods
-      analyser.names
+      analysers.names
     end
 
     def inspect
