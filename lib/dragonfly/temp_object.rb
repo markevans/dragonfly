@@ -55,7 +55,7 @@ module Dragonfly
       elsif obj.respond_to?(:path) # e.g. Rack::Test::UploadedFile
         @pathname = Pathname.new(obj.path)
       else
-        raise ArgumentError, "#{self.class.name} must be initialized with a String, a Pathname, a File, a Tempfile, another TempObject, something that responds to .tempfile, or something that responds to .path"
+        raise ArgumentError, "#{self.class.name} must be initialized with a String, a Pathname, a File, a Tempfile, another TempObject, something that responds to .tempfile, or something that responds to .path - you gave #{obj.inspect}"
       end
 
       @tempfile.close if @tempfile
