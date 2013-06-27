@@ -1,3 +1,5 @@
+require 'base64'
+
 module Dragonfly
   class Content
 
@@ -90,6 +92,10 @@ module Dragonfly
 
     def store(opts={})
       datastore.store(self, opts)
+    end
+
+    def b64_data
+      "data:#{mime_type};base64,#{Base64.encode64(data)}"
     end
 
     def close

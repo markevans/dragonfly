@@ -1,6 +1,5 @@
 require 'forwardable'
 require 'digest/sha1'
-require 'base64'
 require 'open-uri'
 require 'pathname'
 
@@ -19,7 +18,8 @@ module Dragonfly
     def_delegators :result,
                    :data, :file, :tempfile, :path, :to_file, :size, :each,
                    :meta, :meta=, :name, :name=, :basename, :basename=, :ext, :ext=, :mime_type,
-                   :analyse, :store
+                   :analyse, :store,
+                   :b64_data
 
     class Step
 
@@ -313,10 +313,6 @@ module Dragonfly
       hash.each do |key, value|
         url_attrs.send("#{key}=", value)
       end
-    end
-
-    def b64_data
-      "data:#{mime_type};base64,#{Base64.encode64(data)}"
     end
 
     # to_stuff...

@@ -254,6 +254,13 @@ describe Dragonfly::Content do
     end
   end
 
+  describe "b64_data" do
+    it "returns a b64 data string" do
+      content.update("HELLO", "name" => "hello.txt")
+      content.b64_data.should == "data:text/plain;base64,SEVMTE8=\n"
+    end
+  end
+
   describe "close" do
     before(:each) do
       @app = test_app
