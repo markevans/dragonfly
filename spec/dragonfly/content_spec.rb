@@ -239,7 +239,6 @@ describe Dragonfly::Content do
         content_2.path.should =~ /\.txt$/
       end
     end
-
   end
 
   describe "store" do

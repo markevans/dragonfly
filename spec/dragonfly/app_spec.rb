@@ -104,49 +104,37 @@ describe Dragonfly::App do
   end
 
   describe "#store" do
-    before(:each) do
-      @app = test_app
-    end
+    let (:app) { test_app }
+
     it "should allow just storing content" do
-      @app.datastore.should_receive(:store).with(a_temp_object_with_data("HELLO"), {})
-      @app.store("HELLO")
-    end
-    it "should allow storing using a TempObject" do
-      temp_object = Dragonfly::TempObject.new("HELLO")
-      @app.datastore.should_receive(:store).with(temp_object, {})
-      @app.store(temp_object)
-    end
-    it "should allow storing with extra stuff" do
-      @app.datastore.should_receive(:store).with do |temp_object, opts|
-        temp_object.data.should == 'HELLO'
-        temp_object.meta.should == {:egg => :head}
-        opts[:option].should == :blarney
+      app.datastore.should_receive(:store).with do |content, opts|
+        content.data.should == "HELLO"
+        opts.should == {:a => :b}
       end
-      @app.store("HELLO", :meta => {:egg => :head}, :option => :blarney)
+      app.store("HELLO", :a => :b)
     end
   end
 
   describe "url_for" do
-    before(:each) do
-      @app = test_app
-      @job = @app.fetch('eggs')
-    end
+    let (:app) { test_app }
+    let (:job) { app.fetch('eggs') }
+
     it "should give the server url by default" do
-      @app.url_for(@job).should =~ %r{^/\w+$}
+      app.url_for(job).should =~ %r{^/\w+$}
     end
     it "should allow configuring" do
-      @app.configure do |c|
-        c.define_url do |app, job, opts|
+      app.configure do
+        define_url do |app, job, opts|
           "doogies"
         end
       end
-      @app.url_for(@job).should == 'doogies'
+      app.url_for(job).should == 'doogies'
     end
     it "should yield the correct dooberries" do
-      @app.define_url do |app, job, opts|
+      app.define_url do |app, job, opts|
         [app, job, opts]
       end
-      @app.url_for(@job, {'chuddies' => 'margate'}).should == [@app, @job, {'chuddies' => 'margate'}]
+      app.url_for(job, {'chuddies' => 'margate'}).should == [app, job, {'chuddies' => 'margate'}]
     end
   end
 

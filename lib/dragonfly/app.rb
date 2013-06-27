@@ -124,7 +124,7 @@ module Dragonfly
       analysers.get(name)
     end
 
-    def new_job(content=nil, meta={})
+    def new_job(content="", meta={})
       job_class.new(self, content, meta)
     end
     alias create new_job
@@ -152,8 +152,7 @@ module Dragonfly
     end
 
     def store(object, opts={})
-      temp_object = object.is_a?(TempObject) ? object : TempObject.new(object, opts[:meta] || {})
-      datastore.store(temp_object, opts)
+      create(object).store(opts)
     end
 
     def register_mime_type(format, mime_type)
