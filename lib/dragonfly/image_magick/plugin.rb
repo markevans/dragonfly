@@ -8,64 +8,55 @@ module Dragonfly
       def call(app)
         # Analysers
         app.add_analyser :identify, ImageMagick::Analysers::Identify.new(command_line)
-        app.add_analyser :identify_basic, ImageMagick::Analysers::IdentifyBasic.new(command_line)
-        app.define :width do
-          identify_basic['width']
+        app.add_analyser :identify_basic, ImageMagick::Analysers::IdentifyBasic.new
+        app.add_analyser :width do |content|
+          content.analyse(:identify_basic)['width']
         end
-        app.define :height do
-          identify_basic['height']
+        app.add_analyser :height do |content|
+          content.analyse(:identify_basic)['height']
         end
-        app.define :format do
-          identify_basic['format']
+        app.add_analyser :format do |content|
+          content.analyse(:identify_basic)['format']
         end
-        app.define :aspect_ratio do
-          attrs = identify_basic
+        app.add_analyser :aspect_ratio do |content|
+          attrs = content.analyse(:identify_basic)
           attrs['width'].to_f / attrs['height']
         end
-        app.define :portrait? do
-          attrs = identify_basic
+        app.add_analyser :portrait do |content|
+          attrs = content.analyse(:identify_basic)
           attrs['width'] <= attrs['height']
         end
-        app.define :portrait do
-          portrait?
+        app.add_analyser :landscape do |content|
+          !content.analyse(:portrait)
         end
-        app.define :landscape? do
-          !portrait?
-        end
-        app.define :landscape do
-          landscape?
-        end
-        app.define :image? do
+        app.add_analyser :image do |content|
           begin
-            identify
+            content.analyse(:identify)
             true
           rescue Shell::CommandFailed
             false
           end
         end
-        app.define :image do
-          image?
-        end
+
+        # Aliases
+        app.define(:portrait?) { portrait }
+        app.define(:landscape?) { landscape }
+        app.define(:image?) { image }
 
         # Generators
-        app.add_generator :plain, ImageMagick::Generators::Plain.new(command_line)
-        app.add_generator :plasma, ImageMagick::Generators::Plasma.new(command_line)
-        app.add_generator :text, ImageMagick::Generators::Text.new(command_line)
+        app.add_generator :convert, ImageMagick::Generators::Convert.new(command_line)
+        app.add_generator :plain, ImageMagick::Generators::Plain.new
+        app.add_generator :plasma, ImageMagick::Generators::Plasma.new
+        app.add_generator :text, ImageMagick::Generators::Text.new
 
         # Processors
         app.add_processor :convert, Processors::Convert.new(command_line)
-        app.add_processor :thumb, Processors::Thumb.new(command_line)
-        app.define :encode do |format, args=""|
-          convert(args, format)
+        app.add_processor :thumb, Processors::Thumb.new
+        app.add_processor :encode do |content, format, args=""|
+          content.process!(:convert, args, format)
         end
-        app.define :encode! do |format, args=""|
-          convert!(args, format)
-        end
-        app.define :rotate do |amount, opts={}|
-          convert("-rotate #{amount}#{opts['qualifier']}")
-        end
-        app.define :rotate! do |amount, opts={}|
-          convert!("-rotate #{amount}#{opts['qualifier']}")
+        app.add_processor :rotate do |content, amount, opts={}|
+          content.process!(:convert, "-rotate #{amount}#{opts['qualifier']}")
         end
 
       end

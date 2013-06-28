@@ -10,8 +10,7 @@ describe "a configured imagemagick app" do
       app.configure do
         use :imagemagick
       end
-      app.processor.get(:convert).command_line.convert_command.should == 'convert'
-      app.processor.get(:thumb).command_line.convert_command.should == 'convert'
+      app.get_processor(:convert).command_line.convert_command.should == 'convert'
     end
 
     it "should allow configuring" do
@@ -20,8 +19,7 @@ describe "a configured imagemagick app" do
           convert_command '/usr/eggs/convert'
         end
       end
-      app.processor.get(:convert).command_line.convert_command.should == '/usr/eggs/convert'
-      app.processor.get(:thumb).command_line.convert_command.should == '/usr/eggs/convert'
+      app.get_processor(:convert).command_line.convert_command.should == '/usr/eggs/convert'
     end
 
   end
@@ -53,7 +51,7 @@ describe "a configured imagemagick app" do
     end
 
     it "should return the format" do
-      image.format.should == :png
+      image.format.should == "png"
     end
 
     it "should say if it's an image" do
@@ -74,28 +72,28 @@ describe "a configured imagemagick app" do
 
     describe "convert" do
       it "sanity check with format" do
-        thumb = image.convert('-resize 1x1!', :jpg)
+        thumb = image.convert('-resize 1x1!', 'jpg')
         thumb.url.should =~ /^\/beach\.jpg\?job=\w+/
         thumb.width.should == 1
-        thumb.format.should == :jpeg
-        thumb.meta[:format].should == :jpg
+        thumb.format.should == 'jpeg'
+        thumb.meta['format'].should == 'jpg'
       end
 
       it "sanity check without format" do
         thumb = image.convert('-resize 1x1!')
         thumb.url.should =~ /^\/beach\.png\?job=\w+/
         thumb.width.should == 1
-        thumb.format.should == :png
-        thumb.meta[:format].should be_nil
+        thumb.format.should == 'png'
+        thumb.meta['format'].should be_nil
       end
     end
 
     describe "encode" do
       it "sanity check" do
-        thumb = image.encode(:jpg)
+        thumb = image.encode('jpg')
         thumb.url.should =~ /^\/beach\.jpg\?job=\w+/
-        thumb.format.should == :jpeg
-        thumb.meta[:format].should == :jpg
+        thumb.format.should == 'jpeg'
+        thumb.meta['format'].should == 'jpg'
       end
     end
   end
@@ -106,13 +104,13 @@ describe "a configured imagemagick app" do
 
     describe "encode" do
       it "should encode the image to the correct format" do
-        image.encode!(:gif)
-        image.format.should == :gif
+        image.encode!('gif')
+        image.format.should == 'gif'
       end
 
       it "should allow for extra args" do
-        image.encode!(:jpg, '-quality 1')
-        image.format.should == :jpeg
+        image.encode!('jpg', '-quality 1')
+        image.format.should == 'jpeg'
         image.size.should == 1445
       end
     end
