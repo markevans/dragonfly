@@ -13,10 +13,21 @@ module Dragonfly
       @app = app
       use_same_log_as(app)
       @dragonfly_url = '/dragonfly'
-      @url_format = '/:job/:name'
+      self.url_format = '/:job/:name'
     end
 
-    attr_accessor :allow_fetch_file, :allow_fetch_url, :protect_from_dos_attacks, :url_host, :dragonfly_url, :url_format
+    attr_accessor :allow_fetch_file, :allow_fetch_url, :protect_from_dos_attacks, :url_host, :dragonfly_url
+
+    attr_reader :url_format
+
+    def url_format=(url_format)
+      @url_format = url_format
+      self.url_mapper = UrlMapper.new(url_format,
+        :basename => '[^\/]',
+        :name => '[^\/]',
+        :format => '[^\.]'
+      )
+    end
 
     def before_serve(&block)
       self.before_serve_callback = block
@@ -54,7 +65,8 @@ module Dragonfly
     def url_for(job, opts={})
       opts = opts.dup
       host = opts.delete(:host) || url_host
-      params = stringify_keys(opts)
+      params = job.url_attrs.extract(url_mapper.params_in_url)
+      params.merge!(stringify_keys(opts))
       params['job'] = job.serialize
       params['sha'] = job.sha if protect_from_dos_attacks
       url = url_mapper.url_for(params)
@@ -64,15 +76,7 @@ module Dragonfly
     private
 
     attr_reader :app
-    attr_accessor :before_serve_callback
-
-    def url_mapper
-      @url_mapper ||= UrlMapper.new(url_format,
-        :basename => '[^\/]',
-        :name => '[^\/]',
-        :format => '[^\.]'
-      )
-    end
+    attr_accessor :before_serve_callback, :url_mapper
 
     def stringify_keys(params)
       params.inject({}) do |hash, (k, v)|
@@ -111,3 +115,4 @@ module Dragonfly
 
   end
 end
+

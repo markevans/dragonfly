@@ -164,52 +164,82 @@ describe Dragonfly::Server do
 
   describe "urls" do
 
-    before(:each) do
-      @app = test_app
-      @server = Dragonfly::Server.new(@app)
-      @server.url_format = '/media/:job/:basename.:format'
-      @job = @app.fetch('some_uid')
+    let (:app) { test_app }
+    let (:server) { Dragonfly::Server.new(app) }
+    let (:job) { app.fetch("some_uid") }
+
+    describe "params" do
+      before(:each) do
+        server.url_format = '/media/:job/:zoo'
+      end
+      it "substitutes the relevant params" do
+        server.url_for(job).should == "/media/#{job.serialize}"
+      end
+      it "adds given params" do
+        server.url_for(job, :zoo => 'jokes', :on => 'me').should == "/media/#{job.serialize}/jokes?on=me"
+      end
+      it "uses the url_attr if it exists" do
+        job.url_attrs.zoo = 'hair'
+        server.url_for(job).should == "/media/#{job.serialize}/hair"
+      end
+      it "doesn't add any url_attrs that aren't needed" do
+        job.url_attrs.gump = 'flub'
+        server.url_for(job).should == "/media/#{job.serialize}"
+      end
+      it "overrides if a param is passed in" do
+        job.url_attrs.zoo = 'hair'
+        server.url_for(job, :zoo => 'dare').should == "/media/#{job.serialize}/dare"
+      end
+
+      describe "basename" do
+        before(:each) do
+          server.url_format = '/:job/:basename'
+        end
+        it "should use the name" do
+          job.url_attrs.name = 'hello.egg'
+          server.url_for(job).should == "/#{job.serialize}/hello"
+        end
+        it "should not set if neither exist" do
+          server.url_for(job).should == "/#{job.serialize}"
+        end
+      end
+
+      describe "ext" do
+        before(:each) do
+          server.url_format = '/:job.:ext'
+        end
+        it "should use the name" do
+          job.url_attrs.name = 'hello.egg'
+          server.url_for(job).should == "/#{job.serialize}.egg"
+        end
+        it "should not set if neither exist" do
+          server.url_for(job).should == "/#{job.serialize}"
+        end
+      end
     end
 
-    it "should generate the correct url when no basename/format" do
-      @server.url_for(@job).should == "/media/#{@job.serialize}"
-    end
+    describe "host" do
+      it "should add the host to the url if configured" do
+        server.url_host = 'http://some.server:4000'
+        server.url_for(job).should == "http://some.server:4000/#{job.serialize}"
+      end
 
-    it "should generate the correct url when there is a basename and no format" do
-      @server.url_for(@job, :basename => 'hello').should == "/media/#{@job.serialize}/hello"
-    end
+      it "should add the host to the url if passed in" do
+        server.url_for(job, :host => 'https://bungle.com').should == "https://bungle.com/#{job.serialize}"
+      end
 
-    it "should generate the correct url when there is a basename and different format" do
-      @server.url_for(@job, :basename => 'hello', :format => 'gif').should == "/media/#{@job.serialize}/hello.gif"
-    end
-
-    it "should add extra params to the url query string" do
-      @server.url_for(@job, :a => 'thing', :b => 'nuther').should match_url "/media/#{@job.serialize}?a=thing&b=nuther"
-    end
-
-    it "should add the host to the url if configured" do
-      @server.url_host = 'http://some.server:4000'
-      @server.url_for(@job).should == "http://some.server:4000/media/#{@job.serialize}"
-    end
-
-    it "should add the host to the url if passed in" do
-      @server.url_for(@job, :host => 'https://bungle.com').should == "https://bungle.com/media/#{@job.serialize}"
-    end
-
-    it "should favour the passed in host" do
-      @server.url_host = 'http://some.server:4000'
-      @server.url_for(@job, :host => 'https://smeedy').should == "https://smeedy/media/#{@job.serialize}"
+      it "should favour the passed in host" do
+        server.url_host = 'http://some.server:4000'
+        server.url_for(job, :host => 'https://smeedy').should == "https://smeedy/#{job.serialize}"
+      end
     end
 
     describe "Denial of Service protection" do
       before(:each) do
-        @app = test_app
-        @server = Dragonfly::Server.new(@app)
-        @server.protect_from_dos_attacks = true
-        @job = @app.fetch('some_uid')
+        server.protect_from_dos_attacks = true
       end
       it "should generate the correct url" do
-        @server.url_for(@job).should == "/#{@job.serialize}?sha=#{@job.sha}"
+        server.url_for(job).should == "/#{job.serialize}?sha=#{job.sha}"
       end
     end
 

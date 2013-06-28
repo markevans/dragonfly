@@ -507,66 +507,18 @@ describe Dragonfly::Job do
   end
 
   describe "url" do
-    before(:each) do
-      @app = test_app
-      @job = Dragonfly::Job.new(@app)
+    let (:app) { test_app }
+    let (:job) { Dragonfly::Job.new(app) }
+
+    it "returns nil if there are no steps" do
+      job.url.should be_nil
     end
 
-    it "should return nil if there are no steps" do
-      @job.url.should be_nil
-    end
-
-    describe "using url_attrs in the url" do
-      before(:each) do
-        @app.server.url_format = '/media/:job/:zoo'
-        @app.add_generator(:fish){}
-        @job.generate!(:fish)
-      end
-      it "should act as per usual if no params given" do
-        @job.url.should == "/media/#{@job.serialize}"
-      end
-      it "should add given params" do
-        @job.url(:zoo => 'jokes', :on => 'me').should == "/media/#{@job.serialize}/jokes?on=me"
-      end
-      it "should use the url_attr if it exists" do
-        @job.url_attrs.zoo = 'hair'
-        @job.url.should == "/media/#{@job.serialize}/hair"
-      end
-      it "should not add any url_attrs that aren't needed" do
-        @job.url_attrs.gump = 'flub'
-        @job.url.should == "/media/#{@job.serialize}"
-      end
-      it "should override if a param is passed in" do
-        @job.url_attrs.zoo = 'hair'
-        @job.url(:zoo => 'dare').should == "/media/#{@job.serialize}/dare"
-      end
-
-      describe "basename" do
-        before(:each) do
-          @app.server.url_format = '/:job/:basename'
-        end
-        it "should use the name" do
-          @job.url_attrs.name = 'hello.egg'
-          @job.url.should == "/#{@job.serialize}/hello"
-        end
-        it "should not set if neither exist" do
-          @job.url.should == "/#{@job.serialize}"
-        end
-      end
-
-      describe "ext" do
-        before(:each) do
-          @app.server.url_format = '/:job.:ext'
-        end
-        it "should use the name" do
-          @job.url_attrs.name = 'hello.egg'
-          @job.url.should == "/#{@job.serialize}.egg"
-        end
-        it "should not set if neither exist" do
-          @job.url.should == "/#{@job.serialize}"
-        end
-      end
-
+    it "uses the server url otherwise" do
+      job.fetch!("some_stuff")
+      opts = {:some => "opts"}
+      app.server.should_receive(:url_for).with(job, opts).and_return("some.url")
+      job.url(opts).should == "some.url"
     end
   end
 

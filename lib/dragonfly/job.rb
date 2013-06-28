@@ -304,7 +304,7 @@ module Dragonfly
     # URLs, etc.
 
     def url(opts={})
-      app.url_for(self, attributes_for_url.merge(opts)) unless steps.empty?
+      app.url_for(self, opts) unless steps.empty?
     end
 
     attr_reader :url_attrs
@@ -379,14 +379,6 @@ module Dragonfly
     def result
       apply
       content
-    end
-
-    def attributes_for_url
-      server.params_in_url.inject({}) do |attrs, key|
-        value = url_attrs.send(key)
-        attrs[key] = value unless value.blank?
-        attrs
-      end
     end
 
     def last_step_of_type(type)
