@@ -6,18 +6,15 @@ module Dragonfly
         @content_store = Hash.new{ raise DataNotFound }
       end
 
-      def store(temp_object, opts={})
+      def store(content, opts={})
         uid = opts[:uid] || generate_uid
-        content_store[uid] = {:content => temp_object.data, :meta => temp_object.meta}
+        content_store[uid] = {:content => content.data, :meta => content.meta.dup}
         uid
       end
 
-      def retrieve(uid)
+      def retrieve(content, uid)
         data = content_store[uid]
-        [
-          data[:content],
-          data[:meta]
-        ]
+        content.update(data[:content], data[:meta])
       end
 
       def destroy(uid)
