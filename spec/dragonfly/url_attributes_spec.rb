@@ -30,4 +30,20 @@ describe Dragonfly::UrlAttributes do
     end
   end
 
+  describe "extract" do
+    it "returns a hash for the given keys" do
+      url_attrs.egg = 'boiled'
+      url_attrs.veg = 'beef'
+      url_attrs.lard = 'lean'
+      url_attrs.extract(['egg', 'veg']).should == {'egg' => 'boiled', 'veg' => 'beef'}
+    end
+
+    it "excludes blank values" do
+      url_attrs.egg = ''
+      url_attrs.veg = nil
+      url_attrs.extract(['egg', 'veg']).should == {}
+    end
+  end
+
 end
+

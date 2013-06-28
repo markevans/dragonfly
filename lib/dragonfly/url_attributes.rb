@@ -1,7 +1,6 @@
 require 'ostruct'
 
 module Dragonfly
-
   class UrlAttributes < OpenStruct
     include HasFilename # Updating ext / basename also updates the name
 
@@ -13,6 +12,14 @@ module Dragonfly
     def format
       @table[:format]
     end
-  end
 
+    def extract(keys)
+      keys.inject({}) do |attrs, key|
+        value = send(key)
+        attrs[key] = value unless value.blank?
+        attrs
+      end
+    end
+  end
 end
+
