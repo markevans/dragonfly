@@ -269,7 +269,7 @@ describe Dragonfly::Job do
     before(:each) do
       @app = test_app
       @job = Dragonfly::Job.new(@app)
-      @app.add_processor(:resize){}
+      @app.add_processor(:resize){|content, length| content.update(content.data[0...length]) }
       @app.store("SOME_DATA", :uid => 'some_uid')
     end
 
@@ -284,7 +284,7 @@ describe Dragonfly::Job do
     describe "when a chained job is defined" do
       before(:each) do
         @job.fetch!('some_uid')
-        @job2 = @job.process(:resize, '30x30')
+        @job2 = @job.process(:resize, 4)
       end
 
       it "should return the correct steps for the original job" do
@@ -309,42 +309,23 @@ describe Dragonfly::Job do
       end
 
       it "should return the correct data for the new job" do
-        @job2.data.should == 'SOME_PROCESSED_DATA'
-      end
-
-      it "should not affect the other one when one is applied" do
-        @job.apply
-        @job.applied_steps.should match_steps([
-          Dragonfly::Job::Fetch
-        ])
-        @job.pending_steps.should match_steps([
-        ])
-        @job.temp_object.data.should == 'SOME_DATA'
-        @job2.applied_steps.should match_steps([
-        ])
-        @job2.pending_steps.should match_steps([
-          Dragonfly::Job::Fetch,
-          Dragonfly::Job::Process
-        ])
-        @job2.temp_object.should be_nil
+        @job2.data.should == 'SOME'
       end
     end
 
   end
 
   describe "applied?" do
-    before(:each) do
-      @app = test_app
-    end
     it "should return true when empty" do
-      @app.new_job.should be_applied
+      app.new_job.should be_applied
     end
     it "should return false when not applied" do
-      @app.fetch('eggs').should_not be_applied
+      app.fetch('eggs').should_not be_applied
     end
     it "should return true when applied" do
-      @app.datastore.should_receive(:retrieve).with('eggs').and_return("cracked")
-      job = @app.fetch('eggs').apply
+      job = app.fetch('eggs')
+      app.datastore.should_receive(:retrieve).with(job.content, 'eggs')
+      job.apply
       job.should be_applied
     end
   end
@@ -523,27 +504,29 @@ describe Dragonfly::Job do
   end
 
   describe "to_fetched_job" do
-    before(:each) do
-      @app = test_app
-      @job = @app.create("HELLO")
+    let (:fetched_job) { job.to_fetched_job('some_uid') }
+
+    before :each do
+      job.content.update "bugs", "bug" => "bear"
+      job.update_url_attrs "boog" => "bar"
     end
-    it "should maintain the same temp_object and be already applied" do
-      new_job = @job.to_fetched_job('some_uid')
-      new_job.data.should == 'HELLO'
-      new_job.to_a.should == [
+
+    it "updates the steps" do
+      fetched_job.to_a.should == [
         ['f', 'some_uid']
       ]
-      new_job.pending_steps.should be_empty
+      fetched_job.should be_applied
     end
-    it "should maintain the meta" do
-      @job.meta = {:right => 'said fred'}
-      new_job = @job.to_fetched_job('some_uid')
-      new_job.meta.should == {:right => 'said fred'}
+    it "maintains the same content (but different object)" do
+      fetched_job.data.should == "bugs"
+      fetched_job.meta.should == {"bug" => "bear"}
+      job.content.update("dogs")
+      fetched_job.data.should == "bugs" # still
     end
-    it "should maintain the url_attrs" do
-      @job.url_attrs.dang = 'that dawg'
-      new_job = @job.to_fetched_job('some_uid')
-      new_job.url_attrs.dang.should == 'that dawg'
+    it "maintains the url_attrs (but different object)" do
+      fetched_job.url_attrs.boog.should == "bar"
+      job.update_url_attrs "boog" => "dogs"
+      fetched_job.url_attrs.boog.should == "bar" # still
     end
   end
 

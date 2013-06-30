@@ -213,19 +213,19 @@ module Dragonfly
 
     end
 
-    def initialize(app, content="", meta={}, url_attrs=nil)
+    def initialize(app, content="", meta={})
       @app = app
-      @steps = []
       @next_step_index = 0
+      @steps = []
       @content = Content.new(app, content, meta)
-      @url_attrs = url_attrs ? url_attrs.dup : UrlAttributes.new
+      @url_attrs = UrlAttributes.new
     end
 
     # Used by 'dup' and 'clone'
     def initialize_copy(other)
-      self.steps = other.steps.map do |step|
-        step.class.new(self, *step.args)
-      end
+      @steps = other.steps.dup
+      @content = other.content.dup
+      @url_attrs = other.url_attrs.dup
     end
 
     attr_reader :app, :steps, :content
@@ -326,7 +326,8 @@ module Dragonfly
     end
 
     def to_fetched_job(uid)
-      new_job = self.class.new(app, temp_object, meta, url_attrs)
+      new_job = dup
+      new_job.steps = []
       new_job.fetch!(uid)
       new_job.next_step_index = 1
       new_job
