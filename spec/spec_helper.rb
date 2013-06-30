@@ -34,18 +34,6 @@ RSpec.configure do |c|
   end
 end
 
-def mock_app(extra_stubs={})
-  mock('app', {
-    :datastore => mock('datastore', :store => 'some_uid', :retrieve => ["SOME_DATA", {}], :destroy => nil),
-    :processor => mock('processor', :process => "SOME_PROCESSED_DATA"),
-    :analyser => mock('analyser', :analyse => "some_result", :analysis_methods => Module.new),
-    :generator => mock('generator', :generate => "SOME_GENERATED_DATA"),
-    :log => Logger.new(LOG_FILE),
-    :cache_duration => 10000,
-  }.merge(extra_stubs)
-  )
-end
-
 def test_app(name=:default)
   time = Time.now
   app = Dragonfly::App[name]
