@@ -713,21 +713,16 @@ describe Dragonfly::Job do
   end
 
   describe "sanity check for name, basename, ext, mime_type" do
-    before(:each) do
-      @app = test_app
-      @job = @app.new_job('asdf')
-    end
-
     it "should default to nil" do
-      @job.name.should be_nil
+      job.name.should be_nil
     end
 
     it "reflect the meta" do
-      @job.meta['name'] = 'monkey.png'
-      @job.name.should == 'monkey.png'
-      @job.basename.should == 'monkey'
-      @job.ext.should == 'png'
-      @job.mime_type.should == 'image/png'
+      job.meta['name'] = 'monkey.png'
+      job.name.should == 'monkey.png'
+      job.basename.should == 'monkey'
+      job.ext.should == 'png'
+      job.mime_type.should == 'image/png'
     end
   end
 
@@ -739,30 +734,5 @@ describe Dragonfly::Job do
     end
   end
 
-  describe "dealing with original_filename" do
-    before(:each) do
-      @string = "terry"
-      @string.stub!(:original_filename).and_return("gum.tree")
-      @app = test_app
-      @app.add_generator(:test){ @string }
-    end
-    it "should set it as the name" do
-      @app.create(@string).name.should == 'gum.tree'
-    end
-    it "should prefer the initialized name over the original_filename" do
-      @app.create(@string, :name => 'doo.berry').name.should == 'doo.berry'
-    end
-    it "should work with e.g. generators" do
-      @app.generate(:test).apply.name.should == 'gum.tree'
-    end
-    it "should favour an e.g. generator returned name" do
-      @app.add_generator(:test2){ [@string, {:name => 'gen.ome'}] }
-      @app.generate(:test2).apply.name.should == 'gen.ome'
-    end
-    it "should not overwrite a set name" do
-      job = @app.generate(:test)
-      job.name = 'egg.mumma'
-      job.apply.name.should == 'egg.mumma'
-    end
-  end
 end
+
