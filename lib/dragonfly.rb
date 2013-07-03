@@ -38,6 +38,7 @@ require 'dragonfly/core_ext/hash'
 
 Dragonfly::Railtie if defined?(::Rails) # Coz it will autoload
 
+require 'rbconfig'
 module Dragonfly
   class << self
 
@@ -53,7 +54,7 @@ module Dragonfly
     App.register_configuration(:heroku){ Config::Heroku }
 
     def running_on_windows?
-      ENV['OS'] && ENV['OS'].downcase == 'windows_nt'
+      !!(RbConfig::CONFIG['host_os'] =~ %r!(msdos|mswin|djgpp|mingw)!)
     end
 
   end
