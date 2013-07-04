@@ -52,12 +52,12 @@ module Dragonfly
           YAML.load(string)
         end
       end
-      
+
       class MarshalMetaStore < MetaStore
         def meta_path(data_path)
           "#{data_path}.meta"
         end
-        
+
         def dump(meta)
           Marshal.dump(meta)
         end
@@ -81,20 +81,20 @@ module Dragonfly
       def root_path=(path)
         @root_path = path ? path.to_s : nil
       end
-      
+
       def server_root=(path)
         @server_root = path ? path.to_s : nil
       end
-      
+
       def store_meta?
         @store_meta != false # Default to true if not set
       end
 
-      def store(temp_object, opts={})
+      def store(content, opts={})
         relative_path = if opts[:path]
           opts[:path]
         else
-          filename = temp_object.name || 'file'
+          filename = content.name || 'file'
           relative_path = relative_path_for(filename)
         end
 
@@ -103,8 +103,8 @@ module Dragonfly
           until !File.exist?(path)
             path = disambiguate(path)
           end
-          temp_object.to_file(path).close
-          meta_store.store(path, temp_object.meta) if store_meta?
+          content.to_file(path).close
+          meta_store.store(path, content.meta) if store_meta?
         rescue Errno::EACCES => e
           raise UnableToStore, e.message
         end
@@ -112,17 +112,16 @@ module Dragonfly
         relative(path)
       end
 
-      def retrieve(relative_path)
+      def retrieve(content, relative_path)
         validate_uid!(relative_path)
         path = absolute(relative_path)
         pathname = Pathname.new(path)
         raise DataNotFound, "couldn't find file #{path}" unless pathname.exist?
-        meta = if store_meta?
-          meta_store.retrieve(path) || deprecated_meta_store.retrieve(path) || {}
-        else
-          {}
+        content.update(pathname)
+        if store_meta?
+          meta = meta_store.retrieve(path) || deprecated_meta_store.retrieve(path) || {}
+          content.add_meta(meta)
         end
-        [pathname, meta]
       end
 
       def destroy(relative_path)
@@ -170,7 +169,7 @@ module Dragonfly
       def directory_empty?(path)
         Dir.entries(path) == ['.','..']
       end
-      
+
       def root_path?(dir)
         root_path == dir
       end
