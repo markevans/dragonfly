@@ -20,20 +20,20 @@ module Dragonfly
 
       attr_accessor :host, :hosts, :connection_opts, :port, :database, :username, :password
 
-      def store(temp_object, opts={})
+      def store(content, opts={})
         ensure_authenticated!
         content_type = opts[:content_type] || opts[:mime_type] || 'application/octet-stream'
-        temp_object.file do |f|
-          mongo_id = grid.put(f, :content_type => content_type, :metadata => temp_object.meta)
+        content.file do |f|
+          mongo_id = grid.put(f, :content_type => content_type, :metadata => content.meta)
           mongo_id.to_s
         end
       end
 
-      def retrieve(uid)
+      def retrieve(content, uid)
         ensure_authenticated!
         grid_io = grid.get(bson_id(uid))
         meta = extract_meta(grid_io)
-        [grid_io.read, meta]
+        content.update(grid_io.read, meta)
       rescue Mongo::GridFileNotFound, BSON::InvalidObjectId => e
         raise DataNotFound, "#{e} - #{uid}"
       end
@@ -76,8 +76,7 @@ module Dragonfly
       def extract_meta(grid_io)
         meta = grid_io.metadata
         meta = marshal_decode(meta) if meta.is_a?(String) # Deprecated encoded meta
-        meta = Utils.symbolize_keys(meta)
-        meta.merge!(:stored_at => grid_io.upload_date)
+        meta.merge!('stored_at' => grid_io.upload_date)
         meta
       end
 

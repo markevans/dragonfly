@@ -5,6 +5,10 @@ require 'mongo'
 
 describe Dragonfly::DataStorage::MongoDataStore do
 
+  let(:app) { test_app }
+  let(:content) { Dragonfly::Content.new(app, "Pernumbucano") }
+  let(:new_content) { Dragonfly::Content.new(app) }
+
   before(:each) do
     begin
       Mongo::Connection.new
@@ -24,30 +28,25 @@ describe Dragonfly::DataStorage::MongoDataStore do
       @data_store.connection
     end
   end
-  
-  describe "authenticating" do
-    before(:each) do
-      @temp_object = Dragonfly::TempObject.new('Feijão verde')
-    end
 
+  describe "authenticating" do
     it "should not attempt to authenticate if a username is not given" do
       @data_store.db.should_not_receive(:authenticate)
-      @data_store.store(@temp_object)
+      @data_store.store(content)
     end
 
     it "should attempt to authenticate once if a username is given" do
       @data_store.username = 'terry'
       @data_store.password = 'butcher'
       @data_store.db.should_receive(:authenticate).exactly(:once).with('terry','butcher').and_return(true)
-      uid = @data_store.store(@temp_object)
-      @data_store.retrieve(uid)
+      uid = @data_store.store(content)
+      @data_store.retrieve(new_content, uid)
     end
   end
 
   describe "sharing already configured stuff" do
     before(:each) do
       @connection = Mongo::Connection.new
-      @temp_object = Dragonfly::TempObject.new('asdf')
     end
 
     it "should allow sharing the connection" do
@@ -64,33 +63,29 @@ describe Dragonfly::DataStorage::MongoDataStore do
   end
 
   describe "extra options" do
-
-    before(:each) do
-      @temp_object = Dragonfly::TempObject.new('testingyo')
-    end
-
     [:content_type, :mime_type].each do |key|
       it "should allow setting content type on store with #{key.inspect}" do
-        uid = @data_store.store(@temp_object, key => 'text/plain')
+        uid = @data_store.store(content, key => 'text/plain')
         @data_store.grid.get(BSON::ObjectId(uid)).content_type.should == 'text/plain'
-        @data_store.grid.get(BSON::ObjectId(uid)).read.should == 'testingyo'
+        @data_store.grid.get(BSON::ObjectId(uid)).read.should == content.data
       end
     end
   end
 
   describe "already stored stuff" do
     it "still works" do
-      uid = @data_store.grid.put("DOOBS", :metadata => {:some => 'meta'}).to_s
-      content, meta = @data_store.retrieve(uid)
-      content.should == "DOOBS"
-      meta[:some].should == 'meta'
+      uid = @data_store.grid.put("DOOBS", :metadata => {'some' => 'meta'}).to_s
+      @data_store.retrieve(new_content, uid)
+      new_content.data.should == "DOOBS"
+      new_content.meta['some'].should == 'meta'
     end
 
     it "still works when meta was stored as a marshal dumped hash" do
-      uid = @data_store.grid.put("DOOBS", :metadata => Dragonfly::Serializer.marshal_encode(:some => 'stuff')).to_s
-      content, meta = @data_store.retrieve(uid)
-      meta[:some].should == 'stuff'
+      uid = @data_store.grid.put("DOOBS", :metadata => Dragonfly::Serializer.marshal_encode('some' => 'stuff')).to_s
+      @data_store.retrieve(new_content, uid)
+      new_content.meta['some'].should == 'stuff'
     end
   end
 
 end
+
