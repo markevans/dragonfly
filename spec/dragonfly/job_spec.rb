@@ -578,32 +578,6 @@ describe Dragonfly::Job do
     end
   end
 
-  describe "setting the name" do
-    before(:each) do
-      @app = test_app
-      @job = @app.new_job("HELLO", :name => 'not.me')
-    end
-    it "should allow setting the name" do
-      @job.name = 'wassup.doc'
-      @job.name.should == 'wassup.doc'
-    end
-  end
-
-  describe "setting the meta" do
-    before(:each) do
-      @app = test_app
-      @job = @app.new_job("HiThere", :five => 'beans')
-    end
-    it "should allow setting the meta" do
-      @job.meta = {:doogie => 'ladders'}
-      @job.meta.should == {:doogie => 'ladders'}
-    end
-    it "should allow updating the meta" do
-      @job.meta[:doogie] = 'ladders'
-      @job.meta.should == {:five => 'beans', :doogie => 'ladders'}
-    end
-  end
-
   describe "b64_data" do
     it "takes it from the result" do
       job.should_receive(:apply)
