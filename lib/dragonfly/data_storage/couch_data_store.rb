@@ -16,24 +16,24 @@ module Dragonfly
 
       attr_reader :host, :port, :database, :username, :password
 
-      def store(temp_object, opts={})
-        name = temp_object.name || 'file'
+      def store(content, opts={})
+        name = content.name || 'file'
         content_type = opts[:content_type] || opts[:mime_type] || 'application/octet-stream'
-        
-        temp_object.file do |f|
-          doc = CouchRest::Document.new(:meta => temp_object.meta)
+
+        content.file do |f|
+          doc = CouchRest::Document.new(:meta => content.meta)
           response = db.save_doc(doc)
           doc.put_attachment(name, f.dup, :content_type => content_type)
           form_uid(response['id'], name)
         end
       rescue RuntimeError => e
-        raise UnableToStore, "#{e} - #{temp_object.inspect}"
+        raise UnableToStore, "#{e} - #{content.inspect}"
       end
 
-      def retrieve(uid)
+      def retrieve(content, uid)
         doc_id, attachment = parse_uid(uid)
         doc = db.get(doc_id)
-        [doc.fetch_attachment(attachment), extract_meta(doc)]
+        content.update(doc.fetch_attachment(attachment), extract_meta(doc))
       rescue RestClient::ResourceNotFound => e
         raise DataNotFound, "#{e} - #{uid}"
       end
@@ -57,17 +57,17 @@ module Dragonfly
         doc_id, attachment = parse_uid(uid)
         "http://#{host}:#{port}/#{database}/#{doc_id}/#{attachment}"
       end
-      
+
       private
-      
+
       def auth
         username.blank? ? nil : "#{username}:#{password}@"
       end
-      
+
       def form_uid(doc_id, attachment)
         "#{doc_id}/#{attachment}"
       end
-      
+
       def parse_uid(uid)
         doc_id, attachment = uid.split('/')
         [doc_id, (attachment || 'file')]
@@ -76,7 +76,6 @@ module Dragonfly
       def extract_meta(doc)
         meta = doc['meta']
         meta = marshal_decode(meta) if meta.is_a?(String) # Deprecated encoded meta
-        meta = Utils.symbolize_keys(meta)
         meta
       end
 

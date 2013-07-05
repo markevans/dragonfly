@@ -17,35 +17,35 @@ describe Dragonfly::DataStorage::CouchDataStore do
       pending "You need to start CouchDB on localhost:5984 to test the CouchDataStore"
     rescue RestClient::ResourceNotFound
     end
-    
+
   end
-  
+
   it_should_behave_like 'data_store'
-  
+
+  let (:app) { test_app }
+  let (:content) { Dragonfly::Content.new(app, "gollum") }
+  let (:new_content) { Dragonfly::Content.new(app) }
+
   describe "destroy" do
-    before(:each) do
-      @temp_object = Dragonfly::TempObject.new('gollum')
-    end
-    
     it "should raise an error if the data doesn't exist on destroy" do
-      uid = @data_store.store(@temp_object)
+      uid = @data_store.store(content)
       @data_store.destroy(uid)
       lambda{
         @data_store.destroy(uid)
       }.should raise_error(Dragonfly::DataStorage::DataNotFound)
     end
   end
-  
+
   describe "url_for" do
     it "should give the correct url" do
       @data_store.url_for('asd7fas9df/thing.txt').should == 'http://localhost:5984/dragonfly_test/asd7fas9df/thing.txt'
     end
-    
+
     it "should assume the attachment is called 'file' if not given" do
       @data_store.url_for('asd7fas9df').should == 'http://localhost:5984/dragonfly_test/asd7fas9df/file'
     end
   end
-  
+
   describe "serving from couchdb" do
 
     def get_content(url)
@@ -55,28 +55,24 @@ describe Dragonfly::DataStorage::CouchDataStore do
       }
     end
 
-    before(:each) do
-      @temp_object = Dragonfly::TempObject.new('testingyo')
-    end
-    
     it "should use the fallback by default" do
-      uid = @data_store.store(@temp_object)
+      uid = @data_store.store(content)
       response = get_content(@data_store.url_for(uid))
-      response.body.should == 'testingyo'
+      response.body.should == 'gollum'
       response['Content-Type'].should == 'application/octet-stream'
     end
-    
+
     it "should allow setting on store with 'content_type'" do
-      uid = @data_store.store(@temp_object, :content_type => 'text/plain')
+      uid = @data_store.store(content, :content_type => 'text/plain')
       response = get_content(@data_store.url_for(uid))
-      response.body.should == 'testingyo'
+      response.body.should == 'gollum'
       response['Content-Type'].should == 'text/plain'
     end
-    
+
     it "should allow setting on store with 'mime_type'" do
-      uid = @data_store.store(@temp_object, :mime_type => 'text/plain-yo')
+      uid = @data_store.store(content, :mime_type => 'text/plain-yo')
       response = get_content(@data_store.url_for(uid))
-      response.body.should == 'testingyo'
+      response.body.should == 'gollum'
       response['Content-Type'].should == 'text/plain-yo'
     end
   end
@@ -88,18 +84,18 @@ describe Dragonfly::DataStorage::CouchDataStore do
       doc.put_attachment("pdf", "PDF data here")
       doc_id
     end
-    
+
     it "still works" do
-      doc_id = store_pdf(:some => 'cool things')
-      content, meta = @data_store.retrieve("#{doc_id}/pdf")
-      content.should == "PDF data here"
-      meta[:some].should == 'cool things'
+      doc_id = store_pdf('some' => 'cool things')
+      @data_store.retrieve(new_content, "#{doc_id}/pdf")
+      new_content.data.should == "PDF data here"
+      new_content.meta['some'].should == 'cool things'
     end
 
     it "still works when meta was stored as a marshal dumped hash" do
       doc_id = store_pdf(Dragonfly::Serializer.marshal_encode(:some => 'shizzle'))
-      content, meta = @data_store.retrieve("#{doc_id}/pdf")
-      meta[:some].should == 'shizzle'
+      @data_store.retrieve(new_content, "#{doc_id}/pdf")
+      new_content.meta[:some].should == 'shizzle'
     end
   end
 
