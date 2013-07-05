@@ -34,40 +34,37 @@ module Dragonfly
 
       attr_accessor :bucket_name, :access_key_id, :secret_access_key, :region, :storage_headers, :url_scheme, :url_host
       attr_writer :use_filesystem
-      
+
       def use_filesystem?
         @use_filesystem != false
       end
 
-      def store(temp_object, opts={})
+      def store(content, opts={})
         ensure_configured
         ensure_bucket_initialized
-        
+
         headers = opts[:headers] || {}
         mime_type = opts[:mime_type] || opts[:content_type]
         headers['Content-Type'] = mime_type if mime_type
-        uid = opts[:path] || generate_uid(temp_object.name || 'file')
-        
+        uid = opts[:path] || generate_uid(content.name || 'file')
+
         rescuing_socket_errors do
           if use_filesystem?
-            temp_object.file do |f|
-              storage.put_object(bucket_name, uid, f, full_storage_headers(headers, temp_object.meta))
+            content.file do |f|
+              storage.put_object(bucket_name, uid, f, full_storage_headers(headers, content.meta))
             end
           else
-            storage.put_object(bucket_name, uid, temp_object.data, full_storage_headers(headers, temp_object.meta))
+            storage.put_object(bucket_name, uid, content.data, full_storage_headers(headers, content.meta))
           end
         end
-        
+
         uid
       end
 
-      def retrieve(uid)
+      def retrieve(content, uid)
         ensure_configured
         response = rescuing_socket_errors{ storage.get_object(bucket_name, uid) }
-        [
-          response.body,
-          headers_to_meta(response.headers)
-        ]
+        content.update(response.body, headers_to_meta(response.headers))
       rescue Excon::Errors::NotFound => e
         raise DataNotFound, "#{e} - #{uid}"
       end
@@ -154,7 +151,7 @@ module Dragonfly
               # Deprecated "extra" header
               meta.merge!(marshal_decode(value))
             else
-              meta[key.to_sym] = value
+              meta[key] = value
             end
           end
           meta

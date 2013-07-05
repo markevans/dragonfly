@@ -50,52 +50,53 @@ describe Dragonfly::DataStorage::S3DataStore do
 
   it_should_behave_like 'data_store'
 
+  let (:app) { test_app }
+  let (:content) { Dragonfly::Content.new(app, "eggheads") }
+  let (:new_content) { Dragonfly::Content.new(app) }
+
   describe "store" do
-    it "should use the name from the temp_object if set" do
-      temp_object = Dragonfly::TempObject.new('eggheads', :name => 'doobie')
-      uid = @data_store.store(temp_object)
-      uid.should =~ /doobie$/
-      data, meta = @data_store.retrieve(uid)
-      data.should == 'eggheads'
+    it "should use the name from the content if set" do
+      content.name = 'doobie.doo'
+      uid = @data_store.store(content)
+      uid.should =~ /doobie\.doo$/
+      @data_store.retrieve(new_content, uid)
+      new_content.data.should == 'eggheads'
     end
 
     it "should work ok with files with funny names" do
-      temp_object = Dragonfly::TempObject.new('eggheads', :name => 'A Picture with many spaces in its name (at 20:00 pm).png')
-      uid = @data_store.store(temp_object)
+      content.name = "A Picture with many spaces in its name (at 20:00 pm).png"
+      uid = @data_store.store(content)
       uid.should =~ /A_Picture_with_many_spaces_in_its_name_at_20_00_pm_\.png$/
-      data, meta = @data_store.retrieve(uid)
-      data.should == 'eggheads'
+      @data_store.retrieve(new_content, uid)
+      new_content.data.should == 'eggheads'
     end
 
     it "should allow for setting the path manually" do
-      temp_object = Dragonfly::TempObject.new('eggheads')
-      uid = @data_store.store(temp_object, :path => 'hello/there')
+      uid = @data_store.store(content, :path => 'hello/there')
       uid.should == 'hello/there'
-      data, meta = @data_store.retrieve(uid)
-      data.should == 'eggheads'
+      @data_store.retrieve(new_content, uid)
+      new_content.data.should == 'eggheads'
     end
 
     it "should work fine when not using the filesystem" do
       @data_store.use_filesystem = false
-      temp_object = Dragonfly::TempObject.new('gollum')
-      uid = @data_store.store(temp_object)
-      @data_store.retrieve(uid).first.should == "gollum"
+      uid = @data_store.store(content)
+      @data_store.retrieve(new_content, uid)
+      new_content.data.should == "eggheads"
     end
 
     if enabled # Fog.mock! doesn't act consistently here
       it "should reset the connection and try again if Fog throws a socket EOFError" do
-        temp_object = Dragonfly::TempObject.new('gollum')
         @data_store.storage.should_receive(:put_object).exactly(:once).and_raise(Excon::Errors::SocketError.new(EOFError.new))
         @data_store.storage.should_receive(:put_object).with(BUCKET_NAME, anything, anything, hash_including)
-        @data_store.store(temp_object)
+        @data_store.store(content)
       end
 
       it "should just let it raise if Fog throws a socket EOFError again" do
-        temp_object = Dragonfly::TempObject.new('gollum')
         @data_store.storage.should_receive(:put_object).and_raise(Excon::Errors::SocketError.new(EOFError.new))
         @data_store.storage.should_receive(:put_object).and_raise(Excon::Errors::SocketError.new(EOFError.new))
         expect{
-          @data_store.store(temp_object)
+          @data_store.store(content)
         }.to raise_error(Excon::Errors::SocketError)
       end
     end
@@ -103,11 +104,8 @@ describe Dragonfly::DataStorage::S3DataStore do
 
   # Doesn't appear to raise anything right now
   # describe "destroy" do
-  #   before(:each) do
-  #     @temp_object = Dragonfly::TempObject.new('gollum')
-  #   end
   #   it "should raise an error if the data doesn't exist on destroy" do
-  #     uid = @data_store.store(@temp_object)
+  #     uid = @data_store.store(content)
   #     @data_store.destroy(uid)
   #     lambda{
   #       @data_store.destroy(uid)
@@ -135,57 +133,52 @@ describe Dragonfly::DataStorage::S3DataStore do
   end
 
   describe "not configuring stuff properly" do
-    before(:each) do
-      @temp_object = Dragonfly::TempObject.new("Hi guys")
-    end
-
     it "should require a bucket name on store" do
       @data_store.bucket_name = nil
-      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.store(content) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
 
     it "should require an access_key_id on store" do
       @data_store.access_key_id = nil
-      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.store(content) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
 
     it "should require a secret access key on store" do
       @data_store.secret_access_key = nil
-      proc{ @data_store.store(@temp_object) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.store(content) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
 
     it "should require a bucket name on retrieve" do
       @data_store.bucket_name = nil
-      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.retrieve(new_content, 'asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
 
     it "should require an access_key_id on retrieve" do
       @data_store.access_key_id = nil
-      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.retrieve(new_content, 'asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
 
     it "should require a secret access key on retrieve" do
       @data_store.secret_access_key = nil
-      proc{ @data_store.retrieve('asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.retrieve(new_content, 'asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
   end
 
   describe "autocreating the bucket" do
     it "should create the bucket on store if it doesn't exist" do
       @data_store.bucket_name = "dragonfly-test-blah-blah-#{rand(100000000)}"
-      @data_store.store(Dragonfly::TempObject.new("asdfj"))
+      @data_store.store(content)
     end
 
     it "should not try to create the bucket on retrieve if it doesn't exist" do
       @data_store.bucket_name = "dragonfly-test-blah-blah-#{rand(100000000)}"
       @data_store.send(:storage).should_not_receive(:put_bucket)
-      proc{ @data_store.retrieve("gungle") }.should raise_error(Dragonfly::DataStorage::DataNotFound)
+      proc{ @data_store.retrieve(new_content, "gungle") }.should raise_error(Dragonfly::DataStorage::DataNotFound)
     end
   end
 
   describe "headers" do
     before(:each) do
-      @temp_object = Dragonfly::TempObject.new('fjkdlsa')
       @data_store.storage_headers = {'x-amz-foo' => 'biscuithead'}
     end
 
@@ -193,28 +186,28 @@ describe Dragonfly::DataStorage::S3DataStore do
       @data_store.storage.should_receive(:put_object).with(BUCKET_NAME, anything, anything,
         hash_including('x-amz-foo' => 'biscuithead')
       )
-      @data_store.store(@temp_object)
+      @data_store.store(content)
     end
 
     it "should allow adding per-store" do
       @data_store.storage.should_receive(:put_object).with(BUCKET_NAME, anything, anything,
         hash_including('x-amz-foo' => 'biscuithead', 'hello' => 'there')
       )
-      @data_store.store(@temp_object, :headers => {'hello' => 'there'})
+      @data_store.store(content, :headers => {'hello' => 'there'})
     end
 
     it "should let the per-store one take precedence" do
       @data_store.storage.should_receive(:put_object).with(BUCKET_NAME, anything, anything,
         hash_including('x-amz-foo' => 'override!')
       )
-      @data_store.store(@temp_object, :headers => {'x-amz-foo' => 'override!'})
+      @data_store.store(content, :headers => {'x-amz-foo' => 'override!'})
     end
 
     it "should store with the content-type if passed in" do
       @data_store.storage.should_receive(:put_object) do |_, __, ___, headers|
         headers['Content-Type'].should == 'text/plain'
       end
-      @data_store.store(@temp_object, :mime_type => 'text/plain')
+      @data_store.store(content, :mime_type => 'text/plain')
     end
   end
 
@@ -260,19 +253,17 @@ describe Dragonfly::DataStorage::S3DataStore do
   end
 
   describe "meta" do
-    let(:temp_object) { Dragonfly::TempObject.new("hello") }
-
     it "adds any x-amz-meta- headers to the meta" do
-      uid = @data_store.store(temp_object, :headers => {'x-amz-meta-potato' => 'zanzibar'})
-      content, meta = @data_store.retrieve(uid)
-      meta[:potato].should == 'zanzibar'
+      uid = @data_store.store(content, :headers => {'x-amz-meta-potato' => 'zanzibar'})
+      @data_store.retrieve(new_content, uid)
+      new_content.meta['potato'].should == 'zanzibar'
     end
 
     it "works with the deprecated x-amz-meta-extra header" do
-      uid = @data_store.store(temp_object, :headers => {'x-amz-meta-extra' => Dragonfly::Serializer.marshal_encode(:some => 'meta', :wo => 4)})
-      content, meta = @data_store.retrieve(uid)
-      meta[:some].should == 'meta'
-      meta[:wo].should == 4
+      uid = @data_store.store(content, :headers => {'x-amz-meta-extra' => Dragonfly::Serializer.marshal_encode(:some => 'meta', :wo => 4)})
+      @data_store.retrieve(new_content, uid)
+      new_content.meta[:some].should == 'meta'
+      new_content.meta[:wo].should == 4
     end
   end
 
