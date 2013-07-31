@@ -55,13 +55,6 @@ describe Dragonfly::Content do
       content.ext = 'schmo'
       content.name.should == 'hello.schmo'
     end
-
-    it "falls back to the temp_object original_filename" do
-      content.should_receive(:temp_object).at_least(:once).and_return(mock('temp_object', :original_filename => 'something.original'))
-      content.name.should == "something.original"
-      content.basename.should == 'something'
-      content.ext.should == 'original'
-    end
   end
 
   describe "mime_type" do
@@ -110,6 +103,36 @@ describe Dragonfly::Content do
 
     it "returns itself" do
       content.update('abc').should == content
+    end
+
+    describe "meta name" do
+      let (:object) { "HI EVERYONE" }
+      let (:object_with_original_filename) {
+        obj = "Hi Guys"
+        def obj.original_filename; 'something.original'; end
+        obj
+      }
+
+      it "is nil if there is no original_filename" do
+        content.update(object)
+        content.meta['name'].should be_nil
+      end
+
+      it "sets the name to the original filename" do
+        content.update(object_with_original_filename)
+        content.meta['name'].should == 'something.original'
+      end
+
+      it "overrides original filename with the specified name" do
+        content.update(object_with_original_filename, 'name' => 'summink.else')
+        content.meta['name'].should == 'summink.else'
+      end
+
+      it "doesn't override a name already there" do
+        content.meta['name'] = 'already.here'
+        content.update(object_with_original_filename)
+        content.meta['name'].should == 'already.here'
+      end
     end
   end
 

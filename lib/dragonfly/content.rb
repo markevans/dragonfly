@@ -53,8 +53,10 @@ module Dragonfly
     end
 
     def update(obj, meta=nil)
-      add_meta(meta) if meta
       self.temp_object = TempObject.new(obj)
+      original_filename = temp_object.original_filename
+      self.meta['name'] ||= original_filename if original_filename
+      add_meta(meta) if meta
       self
     end
 
