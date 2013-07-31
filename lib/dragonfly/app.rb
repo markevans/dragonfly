@@ -151,8 +151,8 @@ module Dragonfly
       job_methods.send(:define_method, method, &block)
     end
 
-    def store(object, opts={})
-      create(object).store(opts)
+    def store(object, meta={}, opts={})
+      create(object, meta).store(opts)
     end
 
     def register_mime_type(format, mime_type)

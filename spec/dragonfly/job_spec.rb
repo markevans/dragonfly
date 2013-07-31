@@ -270,7 +270,7 @@ describe Dragonfly::Job do
       @app = test_app
       @job = Dragonfly::Job.new(@app)
       @app.add_processor(:resize){|content, length| content.update(content.data[0...length]) }
-      @app.store("SOME_DATA", :uid => 'some_uid')
+      @app.store("SOME_DATA", {}, :uid => 'some_uid')
     end
 
     it "should return itself if bang is used" do
