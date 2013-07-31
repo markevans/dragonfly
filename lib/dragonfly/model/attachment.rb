@@ -255,15 +255,15 @@ module Dragonfly
 
       def magic_attributes_hash
         magic_attributes.inject({}) do |attrs, property|
-          attrs[property] = model.send("#{attribute}_#{property}")
+          attrs[property.to_s] = model.send("#{attribute}_#{property}")
           attrs
         end
       end
 
       def extra_attributes
         @extra_attributes ||= {
-          :model_class => model.class.name,
-          :model_attachment => attribute
+          'model_class' => model.class.name,
+          'model_attachment' => attribute.to_s
         }
       end
 

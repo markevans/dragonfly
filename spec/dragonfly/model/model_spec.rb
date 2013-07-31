@@ -469,13 +469,13 @@ describe "models" do
       it "should include magic attributes in the saved meta" do
         @item.preview_image = '123'
         @item.save!
-        @app.fetch(@item.preview_image_uid).meta[:some_analyser_method].should == 'abc1'
+        @app.fetch(@item.preview_image_uid).meta['some_analyser_method'].should == 'abc1'
       end
 
       it "should include the size in the saved meta" do
         @item.preview_image = '123'
         @item.save!
-        @app.fetch(@item.preview_image_uid).meta[:size].should == 3
+        @app.fetch(@item.preview_image_uid).meta['size'].should == 3
       end
 
     end
@@ -572,27 +572,27 @@ describe "models" do
       describe "meta" do
         before(:each) do
           @item.preview_image = "Hello all"
-          @item.preview_image.meta = {:slime => 'balls'}
+          @item.preview_image.meta = {'slime' => 'balls'}
         end
         it "should allow for setting the meta" do
-          @item.preview_image.meta.should == {:slime => 'balls'}
+          @item.preview_image.meta.should == {'slime' => 'balls'}
         end
         it "should allow for updating the meta" do
-          @item.preview_image.meta[:numb] = 'nuts'
-          @item.preview_image.meta.should == {:slime => 'balls', :numb => 'nuts'}
+          @item.preview_image.meta['numb'] = 'nuts'
+          @item.preview_image.meta.should == {'slime' => 'balls', 'numb' => 'nuts'}
         end
         it "should return the meta" do
-          (@item.preview_image.meta = {:doogs => 'boogs'}).should == {:doogs => 'boogs'}
+          (@item.preview_image.meta = {'doogs' => 'boogs'}).should == {'doogs' => 'boogs'}
         end
         it "should save it correctly" do
           @item.save!
           item = @item_class.find(@item.id)
-          item.preview_image.meta.should include_hash(:slime => 'balls')
+          item.preview_image.meta.should include_hash('slime' => 'balls')
         end
         it "should include meta info about the model" do
           @item.save!
           item = @item_class.find(@item.id)
-          item.preview_image.meta.should include_hash(:model_class => 'Item', :model_attachment => :preview_image)
+          item.preview_image.meta.should include_hash('model_class' => 'Item', 'model_attachment' => 'preview_image')
         end
       end
 
@@ -675,7 +675,7 @@ describe "models" do
     it "should have set the name" do
       @item.preview_image_url = 'http://some.url/yo.png'
       @item.preview_image_name.should == 'yo.png'
-      @item.preview_image.meta[:name].should == 'yo.png'
+      @item.preview_image.meta['name'].should == 'yo.png'
     end
     [nil, ""].each do |value|
       it "should do nothing if set with #{value.inspect}" do
@@ -1139,8 +1139,8 @@ describe "models" do
     end
 
     it "should update the attributes" do
-      @item.retained_preview_image = @pending_string,
-      @item.preview_image_uid.should == @uid,
+      @item.retained_preview_image = @pending_string
+      @item.preview_image_uid.should == @uid
       @item.preview_image_some_analyser_method.should == 'HELLO'
       @item.preview_image_size.should == 5
       @item.preview_image_name.should == 'dog.biscuit'
