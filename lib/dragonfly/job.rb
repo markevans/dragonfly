@@ -369,7 +369,7 @@ module Dragonfly
     # Misc
 
     def inspect
-      "<Dragonfly::Job app=#{app.name.inspect}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >"
+      "<Dragonfly::Job app=#{app.name.inspect}, steps=#{steps.inspect}, content=#{content.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >"
     end
 
     protected
