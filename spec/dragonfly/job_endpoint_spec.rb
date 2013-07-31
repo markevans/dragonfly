@@ -6,7 +6,7 @@ require 'spec_helper'
 describe "Dragonfly::JobEndpoint Rack::Lint tests" do
   before(:each) do
     @app = test_app
-    @app.add_generator(:test_data){ "Test Data" }
+    @app.add_generator(:test_data){|content| content.update("Test Data") }
     @job = @app.generate(:test_data)
     @endpoint = Rack::Lint.new(Dragonfly::JobEndpoint.new(@job))
   end
@@ -42,8 +42,8 @@ describe Dragonfly::JobEndpoint do
 
   before(:each) do
     @app = test_app
-    @app.datastore.stub!(:retrieve).with('egg').and_return(["GUNGLE", {:name => 'gung.txt'}])
-    @job = @app.new_job.fetch('egg')
+    uid = @app.store("GUNGLE", 'name' => 'gung.txt')
+    @job = @app.fetch(uid)
   end
 
   it "should return a correct response to a successful GET request" do
@@ -131,11 +131,11 @@ describe Dragonfly::JobEndpoint do
         response['Content-Disposition'].should be_nil
       end
       it "should cope with filenames with no ext" do
-        response = make_request(@app.new_job("ASDF", :name => 'asdf'))
+        response = make_request(@app.new_job("ASDF", 'name' => 'asdf'))
         response['Content-Disposition'].should == 'filename="asdf"'
       end
       it "should uri encode funny characters" do
-        response = make_request(@app.new_job("ASDF", :name => '£@$£ `'))
+        response = make_request(@app.new_job("ASDF", 'name' => '£@$£ `'))
         response['Content-Disposition'].should == 'filename="%C2%A3@$%C2%A3%20%60"'
       end
       it "should allow for setting the filename using a block" do
