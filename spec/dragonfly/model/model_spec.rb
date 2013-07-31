@@ -140,7 +140,7 @@ describe "models" do
         @item.preview_image_uid.should be_nil
       end
       it "should store the image when saved" do
-        @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING"), hash_including)
+        @app.datastore.should_receive(:store).with(content_with_data("DATASTRING"), hash_including)
         @item.save!
       end
       it "should not try to destroy anything on destroy" do
@@ -174,7 +174,7 @@ describe "models" do
 
       before(:each) do
         @item.preview_image = "DATASTRING"
-        @app.datastore.should_receive(:store).with(a_temp_object_with_data("DATASTRING"), hash_including).once.and_return('some_uid')
+        @app.datastore.should_receive(:store).with(content_with_data("DATASTRING"), hash_including).once.and_return('some_uid')
         @item.save!
       end
 
@@ -239,7 +239,7 @@ describe "models" do
           @item.save!
         end
         it "should store the new data when saved" do
-          @app.datastore.should_receive(:store).with(a_temp_object_with_data("ANEWDATASTRING"), hash_including)
+          @app.datastore.should_receive(:store).with(content_with_data("ANEWDATASTRING"), hash_including)
           @item.save!
         end
         it "should destroy the old data on destroy" do
@@ -312,11 +312,11 @@ describe "models" do
 
     describe "other types of assignment" do
       before(:each) do
-        @app.add_generator :egg do
-          "Gungedin"
+        @app.add_generator :egg do |content|
+          content.update "Gungedin"
         end
-        @app.add_processor :doogie do |temp_object|
-          temp_object.data.upcase
+        @app.add_processor :doogie do |content|
+          content.update content.data.upcase
         end
       end
 
@@ -353,8 +353,8 @@ describe "models" do
 
       describe "assigning by means of a bang method" do
         before(:each) do
-          @app.add_processor :double do |temp_object|
-            temp_object.data * 2
+          @app.add_processor :double do |content|
+            content.update content.data * 2
           end
           @item.preview_image = "HELLO"
         end
@@ -392,11 +392,11 @@ describe "models" do
 
     before(:each) do
       @app = test_app
-      @app.add_analyser :some_analyser_method do |temp_object|
-        "abc" + temp_object.data[0..0]
+      @app.add_analyser :some_analyser_method do |content|
+        "abc" + content.data[0..0]
       end
-      @app.add_analyser :number_of_As do |temp_object|
-        temp_object.data.count('A')
+      @app.add_analyser :number_of_As do |content|
+        content.data.count('A')
       end
 
       @item_class = new_model_class('Item',
@@ -463,7 +463,7 @@ describe "models" do
         data = 'jasdlkf sadjl'
         data.stub!(:original_filename).and_return('hello.png')
         @item.preview_image = data
-        @item.preview_image.meta[:name].should == 'hello.png'
+        @item.preview_image.meta['name'].should == 'hello.png'
       end
 
       it "should include magic attributes in the saved meta" do
@@ -504,12 +504,10 @@ describe "models" do
 
       describe "from a new model object" do
         before(:each) do
-          @app.datastore.stub!(:store).and_return('my_uid')
           item = @item_class.create!(:preview_image => 'DATASTRING')
           @item = @item_class.find(item.id)
         end
         it "should load the content then delegate the method" do
-          @app.datastore.should_receive(:retrieve).with('my_uid').and_return(['DATASTRING', {}])
           @item.preview_image.number_of_As.should == 2
         end
         it "should use the magic attribute if there is one, and not load the content" do
@@ -840,8 +838,8 @@ describe "models" do
     describe "copy_to" do
       before(:each) do
         @app = test_app
-        @app.add_processor(:append) do |temp_object, string|
-          temp_object.data + string
+        @app.add_processor(:append) do |content, string|
+          content.update(content.data + string)
         end
         @item_class = new_model_class('Item', :preview_image_uid, :other_image_uid, :yet_another_image_uid, :title) do
           dragonfly_accessor :preview_image do
@@ -1037,8 +1035,8 @@ describe "models" do
   describe "retain and pending" do
     before(:each) do
       @app=test_app
-      @app.add_analyser :some_analyser_method do |temp_object|
-        temp_object.data.upcase
+      @app.add_analyser :some_analyser_method do |content|
+        content.data.upcase
       end
       @item_class = new_model_class('Item',
         :preview_image_uid,
@@ -1069,14 +1067,14 @@ describe "models" do
     it "should return the saved stuff if assigned and retained" do
       @item.preview_image = 'hello'
       @item.preview_image.name = 'dog.biscuit'
-      @app.datastore.should_receive(:store).with do |temp_object, opts|
-        temp_object.data.should == 'hello'
-        temp_object.meta.should == {
-          :name => "dog.biscuit",
-          :some_analyser_method => "HELLO",
-          :size => 5,
-          :model_class => "Item",
-          :model_attachment => :preview_image
+      @app.datastore.should_receive(:store).with do |content, opts|
+        content.data.should == 'hello'
+        content.meta.should == {
+          'name' => 'dog.biscuit',
+          'some_analyser_method' => 'HELLO',
+          'size' => 5,
+          'model_class' => 'Item',
+          'model_attachment' => 'preview_image'
         }
       end.and_return('new/uid')
       @item.preview_image.retain!
@@ -1114,11 +1112,12 @@ describe "models" do
   describe "assigning from a pending state" do
     before(:each) do
       @app=test_app
-      @app.add_analyser :some_analyser_method do |temp_object|
-        temp_object.data.upcase
+      @app.add_analyser :some_analyser_method do |content|
+        content.data.upcase
       end
+      @uid = @app.store('retrieved yo')
       @pending_string = Dragonfly::Serializer.json_encode(
-        'uid' => 'new/uid',
+        'uid' => @uid,
         'some_analyser_method' => 'HELLO',
         'size' => 5,
         'name' => 'dog.biscuit'
@@ -1140,8 +1139,8 @@ describe "models" do
     end
 
     it "should update the attributes" do
-      @item.retained_preview_image = @pending_string
-      @item.preview_image_uid.should == 'new/uid'
+      @item.retained_preview_image = @pending_string,
+      @item.preview_image_uid.should == @uid,
       @item.preview_image_some_analyser_method.should == 'HELLO'
       @item.preview_image_size.should == 5
       @item.preview_image_name.should == 'dog.biscuit'
@@ -1149,7 +1148,6 @@ describe "models" do
 
     it "should be a normal fetch job" do
       @item.retained_preview_image = @pending_string
-      @app.datastore.should_receive(:retrieve).with('new/uid').and_return(Dragonfly::TempObject.new('retrieved yo'))
       @item.preview_image.data.should == 'retrieved yo'
     end
 
@@ -1160,7 +1158,7 @@ describe "models" do
 
     it "should raise an error if the pending string contains a non-magic attr method" do
       pending_string = Dragonfly::Serializer.json_encode(
-        'uid' => 'new/uid',
+        'uid' => @uid,
         'some_analyser_method' => 'HELLO',
         'size' => 5,
         'name' => 'dog.biscuit',
@@ -1187,7 +1185,7 @@ describe "models" do
 
     it "should destroy the old one on save" do
       @item.preview_image = 'oldone'
-      @app.datastore.should_receive(:store).with(a_temp_object_with_data('oldone'), anything).and_return('old/uid')
+      @app.datastore.should_receive(:store).with(content_with_data('oldone'), anything).and_return('old/uid')
       @item.save!
       item = @item_class.find(@item.id)
       item.retained_preview_image = @pending_string
@@ -1198,25 +1196,25 @@ describe "models" do
     describe "combinations of assignment" do
       it "should destroy the previously retained one if something new is then assigned" do
         @item.retained_preview_image = @pending_string
-        @app.datastore.should_receive(:destroy).with('new/uid')
+        @app.datastore.should_receive(:destroy).with(@uid)
         @item.preview_image = 'yet another new thing'
       end
 
       it "should destroy the previously retained one if something new is already assigned" do
         @item.preview_image = 'yet another new thing'
-        @app.datastore.should_receive(:destroy).with('new/uid')
+        @app.datastore.should_receive(:destroy).with(@uid)
         @item.retained_preview_image = @pending_string
       end
 
       it "should destroy the previously retained one if nil is then assigned" do
         @item.retained_preview_image = @pending_string
-        @app.datastore.should_receive(:destroy).with('new/uid')
+        @app.datastore.should_receive(:destroy).with(@uid)
         @item.preview_image = nil
       end
 
       it "should destroy the previously retained one if nil is already assigned" do
         @item.preview_image = nil
-        @app.datastore.should_receive(:destroy).with('new/uid')
+        @app.datastore.should_receive(:destroy).with(@uid)
         @item.retained_preview_image = @pending_string
       end
 

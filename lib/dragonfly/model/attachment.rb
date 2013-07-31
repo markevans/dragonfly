@@ -47,7 +47,7 @@ module Dragonfly
         else
           self.job = case value
           when Job then value.dup
-          when self.class then value.job.dup
+          when Attachment then value.job.dup
           else app.new_job(value)
           end
           set_magic_attributes
