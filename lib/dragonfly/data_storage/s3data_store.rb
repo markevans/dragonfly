@@ -8,8 +8,6 @@ module Dragonfly
       # Exceptions
       class NotConfigured < RuntimeError; end
 
-      include Serializer
-
       REGIONS = {
         'us-east-1' => 's3.amazonaws.com',  #default
         'us-west-1' => 's3-us-west-1.amazonaws.com',
@@ -144,25 +142,16 @@ module Dragonfly
       end
 
       def headers_to_meta(headers)
-        headers.inject({}) do |meta, (header_key, value)|
-          key = header_key[/^x-amz-meta-(.+)$/, 1]
-          if key
-            if key == 'extra'
-              # Deprecated "extra" header
-              meta.merge!(Utils.stringify_keys(marshal_b64_decode(value)))
-            else
-              meta[key] = value
-            end
-          end
-          meta
+        json = headers['x-amz-meta-json']
+        if json && !json.empty?
+          Serializer.json_decode(json)
+        elsif marshal_data = headers['x-amz-meta-extra']
+          Utils.stringify_keys(Serializer.marshal_b64_decode(marshal_data))
         end
       end
 
       def meta_to_headers(meta)
-        meta.inject({}) do |headers, (key, value)|
-          headers["x-amz-meta-#{key}"] = value
-          headers
-        end
+        {'x-amz-meta-json' => Serializer.json_encode(meta)}
       end
 
       def valid_regions

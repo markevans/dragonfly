@@ -253,14 +253,17 @@ describe Dragonfly::DataStorage::S3DataStore do
   end
 
   describe "meta" do
-    it "adds any x-amz-meta- headers to the meta" do
-      uid = @data_store.store(content, :headers => {'x-amz-meta-potato' => 'zanzibar'})
+    it "uses the x-amz-meta-json header for meta" do
+      uid = @data_store.store(content, :headers => {'x-amz-meta-json' => Dragonfly::Serializer.json_encode({'potato' => 44})})
       @data_store.retrieve(new_content, uid)
-      new_content.meta['potato'].should == 'zanzibar'
+      new_content.meta['potato'].should == 44
     end
 
     it "works with the deprecated x-amz-meta-extra header (but stringifies its keys)" do
-      uid = @data_store.store(content, :headers => {'x-amz-meta-extra' => Dragonfly::Serializer.marshal_b64_encode(:some => 'meta', :wo => 4)})
+      uid = @data_store.store(content, :headers => {
+        'x-amz-meta-extra' => Dragonfly::Serializer.marshal_b64_encode(:some => 'meta', :wo => 4),
+        'x-amz-meta-json' => nil
+      })
       @data_store.retrieve(new_content, uid)
       new_content.meta['some'].should == 'meta'
       new_content.meta['wo'].should == 4
