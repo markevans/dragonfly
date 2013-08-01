@@ -63,7 +63,7 @@ module Dragonfly
         end
 
         def load(string)
-          Marshal.load(string)
+          Utils.stringify_keys Marshal.load(string)
         end
       end
 

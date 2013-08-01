@@ -21,6 +21,13 @@ module Dragonfly
       end
     end
 
+    def stringify_keys(hash)
+      hash.inject({}) do |new_hash, (key, value)|
+        new_hash[key.to_s] = value
+        new_hash
+      end
+    end
+
     def uri_escape_segment(string)
       Rack::Utils.escape_path(string)
     end

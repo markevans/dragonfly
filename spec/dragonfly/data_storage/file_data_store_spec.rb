@@ -152,7 +152,7 @@ describe Dragonfly::DataStorage::FileDataStore do
         File.open("#{@data_store.root_path}/jelly_beans/are/good", 'w'){|f| f.write('hey dog') }
         @data_store.retrieve(new_content, "jelly_beans/are/good")
         new_content.data.should == 'hey dog'
-        new_content.meta.should == {}
+        new_content.meta.should == {'name' => 'good'}
       end
 
       it "should raise a BadUID error if the file path has ../ in it" do
@@ -230,7 +230,7 @@ describe Dragonfly::DataStorage::FileDataStore do
     describe "turning meta off" do
       before(:each) do
         @data_store.store_meta = false
-        content.meta = {:bitrate => '35', :name => 'danny.boy'}
+        content.meta = {'bitrate' => '35', 'name' => 'danny.boy'}
       end
 
       it "should not write a meta file" do
@@ -242,7 +242,7 @@ describe Dragonfly::DataStorage::FileDataStore do
       it "should return an empty hash on retrieve" do
         uid = @data_store.store(content)
         @data_store.retrieve(new_content, uid)
-        new_content.meta.should == {}
+        new_content.meta['bitrate'].should be_nil
       end
 
       it "should still destroy the meta file if it exists" do
@@ -316,7 +316,7 @@ describe Dragonfly::DataStorage::FileDataStore do
     it "still works with old-style meta" do
       data_store.retrieve(new_content, 'eggs.bonus')
       new_content.data.should == "Barnicle"
-      new_content.meta.should == {:name => 'eggs.bonus', :some => 'meta', :number => 5}
+      new_content.meta.should == {'name' => 'eggs.bonus', 'some' => 'meta', 'number' => 5}
     end
   end
 end
