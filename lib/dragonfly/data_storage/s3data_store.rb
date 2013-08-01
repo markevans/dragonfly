@@ -149,7 +149,7 @@ module Dragonfly
           if key
             if key == 'extra'
               # Deprecated "extra" header
-              meta.merge!(Utils.stringify_keys(marshal_decode(value)))
+              meta.merge!(Utils.stringify_keys(marshal_b64_decode(value)))
             else
               meta[key] = value
             end

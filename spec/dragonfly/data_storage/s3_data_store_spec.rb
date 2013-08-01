@@ -260,7 +260,7 @@ describe Dragonfly::DataStorage::S3DataStore do
     end
 
     it "works with the deprecated x-amz-meta-extra header (but stringifies its keys)" do
-      uid = @data_store.store(content, :headers => {'x-amz-meta-extra' => Dragonfly::Serializer.marshal_encode(:some => 'meta', :wo => 4)})
+      uid = @data_store.store(content, :headers => {'x-amz-meta-extra' => Dragonfly::Serializer.marshal_b64_encode(:some => 'meta', :wo => 4)})
       @data_store.retrieve(new_content, uid)
       new_content.meta['some'].should == 'meta'
       new_content.meta['wo'].should == 4

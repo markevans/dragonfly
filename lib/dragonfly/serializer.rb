@@ -21,11 +21,11 @@ module Dragonfly
       Base64.decode64(string + '=' * padding_length)
     end
 
-    def marshal_encode(object)
+    def marshal_b64_encode(object)
       b64_encode(Marshal.dump(object))
     end
 
-    def marshal_decode(string, opts={})
+    def marshal_b64_decode(string, opts={})
       marshal_string = b64_decode(string)
       raise MaliciousString, "potentially malicious marshal string #{marshal_string.inspect}" if opts[:check_malicious] && marshal_string[/@[a-z_]/i]
       Marshal.load(marshal_string)

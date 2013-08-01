@@ -93,7 +93,7 @@ describe Dragonfly::DataStorage::CouchDataStore do
     end
 
     it "still works when meta was stored as a marshal dumped hash" do
-      doc_id = store_pdf(Dragonfly::Serializer.marshal_encode(:some => 'shizzle'))
+      doc_id = store_pdf(Dragonfly::Serializer.marshal_b64_encode(:some => 'shizzle'))
       @data_store.retrieve(new_content, "#{doc_id}/pdf")
       new_content.meta[:some].should == 'shizzle'
     end

@@ -443,7 +443,7 @@ describe Dragonfly::Job do
       end
 
       it "checks for potentially malicious strings" do
-        string = Dragonfly::Serializer.marshal_encode(Dragonfly::TempObject.new('a'))
+        string = Dragonfly::Serializer.marshal_b64_encode(Dragonfly::TempObject.new('a'))
         expect{
           Dragonfly::Job.deserialize(string, @app)
         }.to raise_error(Dragonfly::Serializer::MaliciousString)
