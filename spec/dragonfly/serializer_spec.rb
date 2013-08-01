@@ -90,28 +90,28 @@ describe Dragonfly::Serializer do
     [{'this' => 'should', 'work' => [3, 5.3, nil, {'egg' => false}]}, [], true]
   ].each do |object|
     it "should correctly json encode #{object.inspect} properly with no padding/line break" do
-      encoded = json_encode(object)
+      encoded = json_b64_encode(object)
       encoded.should be_a(String)
       encoded.should_not =~ /\n|=/
     end
 
     it "should correctly json encode and decode #{object.inspect} to the same object" do
-      json_decode(json_encode(object)).should == object
+      json_b64_decode(json_b64_encode(object)).should == object
     end
   end
 
-  describe "json_decode" do
+  describe "json_b64_decode" do
     it "optionally symbolizes keys" do
-      json_decode(json_encode('a' => 1), :symbolize_keys => true).should == {:a => 1}
+      json_b64_decode(json_b64_encode('a' => 1), :symbolize_keys => true).should == {:a => 1}
     end
     it "should raise an error if the string passed in is empty" do
       lambda{
-        json_decode('')
+        json_b64_decode('')
       }.should raise_error(Dragonfly::Serializer::BadString)
     end
     it "should raise an error if the string passed in is gobbledeegook" do
       lambda{
-        json_decode('ahasdkjfhasdkfjh')
+        json_b64_decode('ahasdkjfhasdkfjh')
       }.should raise_error(Dragonfly::Serializer::BadString)
     end
   end

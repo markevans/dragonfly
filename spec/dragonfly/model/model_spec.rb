@@ -1078,7 +1078,7 @@ describe "models" do
         }
       end.and_return('new/uid')
       @item.preview_image.retain!
-      Dragonfly::Serializer.json_decode(@item.retained_preview_image).should == {
+      Dragonfly::Serializer.json_b64_decode(@item.retained_preview_image).should == {
         'uid' => 'new/uid',
         'some_analyser_method' => 'HELLO',
         'size' => 5,
@@ -1116,7 +1116,7 @@ describe "models" do
         content.data.upcase
       end
       @uid = @app.store('retrieved yo')
-      @pending_string = Dragonfly::Serializer.json_encode(
+      @pending_string = Dragonfly::Serializer.json_b64_encode(
         'uid' => @uid,
         'some_analyser_method' => 'HELLO',
         'size' => 5,
@@ -1157,7 +1157,7 @@ describe "models" do
     end
 
     it "should raise an error if the pending string contains a non-magic attr method" do
-      pending_string = Dragonfly::Serializer.json_encode(
+      pending_string = Dragonfly::Serializer.json_b64_encode(
         'uid' => @uid,
         'some_analyser_method' => 'HELLO',
         'size' => 5,
@@ -1179,8 +1179,8 @@ describe "models" do
 
     it "should return the pending string again" do
       @item.retained_preview_image = @pending_string
-      Dragonfly::Serializer.json_decode(@item.retained_preview_image).should ==
-        Dragonfly::Serializer.json_decode(@pending_string)
+      Dragonfly::Serializer.json_b64_decode(@item.retained_preview_image).should ==
+        Dragonfly::Serializer.json_b64_decode(@pending_string)
     end
 
     it "should destroy the old one on save" do

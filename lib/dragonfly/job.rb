@@ -192,7 +192,7 @@ module Dragonfly
 
       def deserialize(string, app)
         array = begin
-          Serializer.json_decode(string)
+          Serializer.json_b64_decode(string)
         rescue Serializer::BadString
           if app.allow_legacy_urls
             Serializer.marshal_decode(string, :check_malicious => true) # legacy strings
@@ -281,7 +281,7 @@ module Dragonfly
     end
 
     def serialize
-      Serializer.json_encode(to_a)
+      Serializer.json_b64_encode(to_a)
     end
 
     def unique_signature
