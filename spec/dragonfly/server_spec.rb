@@ -249,7 +249,7 @@ describe Dragonfly::Server do
 
     before(:each) do
       @app = test_app
-      @app.add_generator(:test){ "TEST" }
+      @app.add_generator(:test){|content| content.update("TEST") }
       @server = Dragonfly::Server.new(@app)
       @job = @app.generate(:test)
     end
@@ -288,7 +288,7 @@ describe Dragonfly::Server do
       end
 
       it "should not apply the job if not asked to" do
-        @app.generator.get(:test).should_not_receive(:call)
+        @app.generators.get(:test).should_not_receive(:call)
         response = request(@server, "/#{@job.serialize}")
       end
     end
