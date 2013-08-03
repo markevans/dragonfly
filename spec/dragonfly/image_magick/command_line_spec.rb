@@ -3,25 +3,18 @@ require 'pathname'
 
 describe Dragonfly::ImageMagick::CommandLine do
 
-  let(:command_line){ Dragonfly::ImageMagick::CommandLine.new }
-  let(:path){ 'samples/beach.png' } # 280x355
+  let (:command_line) { Dragonfly::ImageMagick::CommandLine.new }
 
-  describe "convert" do
-    it "converts and returns a tempfile" do
-      tempfile = command_line.convert(path, '-resize 10x')
-      tempfile.should be_a(Tempfile)
-      tempfile.should have_width(10)
-    end
+  it "provides defaults" do
+    command_line.convert_command.should == "convert"
+    command_line.identify_command.should == "identify"
   end
 
-  describe "identify" do
-    it "identifies a path" do
-      command_line.identify(path).should =~ /^samples\/beach.png PNG 280x355/
-    end
+  it "allows setting" do
+    command_line.convert_command = '/bin/convert'
+    command_line.convert_command.should == "/bin/convert"
 
-    it "allows setting args" do
-      command_line.identify(path, "-format '%m %w %h'").should == "PNG 280 355"
-    end
+    command_line.identify_command = "/bin/identify"
+    command_line.identify_command.should == "/bin/identify"
   end
-
 end
