@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe "remote on-the-fly urls" do
-  
+
   THUMBS = {}
-  
+
   before(:each) do
     @app = test_app.configure do
-      add_generator :test do
-        "TEST"
+      add_generator :test do |content|
+        content.update("TEST")
       end
       before_serve do |job, env|
         uid = job.store(:path => 'yay.txt')
@@ -33,11 +33,11 @@ describe "remote on-the-fly urls" do
     THUMBS.delete_if{true}
     FileUtils.rm_f('tmp/dragonfly_test_urls/yay.txt')
   end
-  
+
   it "should give the url for the server" do
     @job.url.should == "/#{@job.serialize}"
   end
-  
+
   it "should store the content when first called" do
     File.exist?('tmp/dragonfly_test_urls/yay.txt').should be_false
     @app.server.call('PATH_INFO' => @job.url, 'REQUEST_METHOD' => 'GET')

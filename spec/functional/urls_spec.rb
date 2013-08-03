@@ -40,7 +40,7 @@ describe "urls" do
   end
 
   it "works with potentially tricky url characters for the url" do
-    url = app.fetch('uid []=~/+').url(:basename => 'name []=~/+')
+    url = app.fetch('uid []=~/+').url(:name => 'name []=~/+')
     url.should =~ %r(^/[\w%]+/name%20%5B%5D%3D%7E%2F%2B$)
     job_should_match [["f", "uid []=~/+"]]
     response = request(app, url)
