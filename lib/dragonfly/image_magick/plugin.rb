@@ -52,9 +52,7 @@ module Dragonfly
         # Processors
         app.add_processor :convert, Processors::Convert.new(command_line)
         app.add_processor :thumb, Processors::Thumb.new
-        app.add_processor :encode do |content, format, args=""|
-          content.process!(:convert, args, format)
-        end
+        app.add_processor :encode, Processors::Encode.new
         app.add_processor :rotate do |content, amount, opts={}|
           content.process!(:convert, "-rotate #{amount}#{opts['qualifier']}")
         end
