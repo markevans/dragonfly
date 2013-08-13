@@ -8,22 +8,21 @@ module Dragonfly
       def call(app)
         # Analysers
         app.add_analyser :identify, ImageMagick::Analysers::Identify.new(command_line)
-        app.add_analyser :identify_basic, ImageMagick::Analysers::IdentifyBasic.new
         app.add_analyser :width do |content|
-          content.analyse(:identify_basic)['width']
+          content.analyse(:identify)['width']
         end
         app.add_analyser :height do |content|
-          content.analyse(:identify_basic)['height']
+          content.analyse(:identify)['height']
         end
         app.add_analyser :format do |content|
-          content.analyse(:identify_basic)['format']
+          content.analyse(:identify)['format']
         end
         app.add_analyser :aspect_ratio do |content|
-          attrs = content.analyse(:identify_basic)
+          attrs = content.analyse(:identify)
           attrs['width'].to_f / attrs['height']
         end
         app.add_analyser :portrait do |content|
-          attrs = content.analyse(:identify_basic)
+          attrs = content.analyse(:identify)
           attrs['width'] <= attrs['height']
         end
         app.add_analyser :landscape do |content|
@@ -74,3 +73,4 @@ module Dragonfly
     end
   end
 end
+

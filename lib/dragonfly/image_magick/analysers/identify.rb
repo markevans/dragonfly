@@ -10,13 +10,20 @@ module Dragonfly
         attr_reader :command_line
 
 
-        def call(content, args="")
-          content.shell_eval do |path|
-            "#{command_line.identify_command} #{args} #{path}"
+        def call(content)
+          details = content.shell_eval do |path|
+            "#{command_line.identify_command} -ping -format '%m %w %h' #{path}"
           end
+          format, width, height = details.split
+          {
+            'format' => format.downcase,
+            'width' => width.to_i,
+            'height' => height.to_i
+          }
         end
 
       end
     end
   end
 end
+

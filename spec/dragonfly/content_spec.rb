@@ -85,8 +85,8 @@ describe Dragonfly::Content do
   describe "analyse" do
     it "calls the app's analyser on itself" do
       app.add_analyser(:shizzle){}
-      app.get_analyser(:shizzle).should_receive(:call).with(content, 'args').and_return("shiz")
-      content.analyse(:shizzle, 'args').should == "shiz"
+      app.get_analyser(:shizzle).should_receive(:call).with(content).and_return("shiz")
+      content.analyse(:shizzle).should == "shiz"
     end
   end
 

@@ -69,7 +69,7 @@ module Dragonfly
           content.generate!(:convert, args.join(' '), format)
 
           if (padding_top || padding_right || padding_bottom || padding_left)
-            dimensions = content.analyse(:identify_basic)
+            dimensions = content.analyse(:identify)
             text_width  = dimensions['width']
             text_height = dimensions['height']
             width  = padding_left + text_width  + padding_right

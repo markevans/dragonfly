@@ -214,14 +214,14 @@ describe Dragonfly::Job do
     let (:job) { Dragonfly::Job.new(app, "HELLO") }
 
     before(:each) do
-      app.add_analyser(:num_letters){|content, letter| content.data.count(letter) }
+      app.add_analyser(:num_ls){|content| content.data.count('L') }
     end
     it "should return correctly when calling analyse" do
-      job.analyse(:num_letters, 'L').should == 2
+      job.analyse(:num_ls).should == 2
     end
     it "should work correctly with chained jobs, applying before analysing" do
       app.add_processor(:double){|content| content.update(content.data * 2) }
-      job.process(:double).analyse(:num_letters, 'L').should == 4
+      job.process(:double).analyse(:num_ls).should == 4
     end
   end
 
