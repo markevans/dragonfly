@@ -219,10 +219,6 @@ describe Dragonfly::Job do
     it "should return correctly when calling analyse" do
       job.analyse(:num_letters, 'L').should == 2
     end
-    it "should have mixed in the analyser method" do
-      pending "job methods module not implemented yet"
-      job.num_letters('L').should == 2
-    end
     it "should work correctly with chained jobs, applying before analysing" do
       app.add_processor(:double){|content| content.update(content.data * 2) }
       job.process(:double).analyse(:num_letters, 'L').should == 4
