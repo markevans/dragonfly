@@ -73,10 +73,6 @@ module Dragonfly
              :for => :server
       meth :before_serve, :for => :server
 
-      def analyser_cache_size(value)
-        obj.analyser.cache_size = value
-      end
-
       def register_datastore(symbol, &block) # For use publicly, not in a config block
         _datastores[symbol] = block
       end
