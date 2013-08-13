@@ -83,10 +83,35 @@ describe Dragonfly::Content do
   end
 
   describe "analyse" do
+    before do
+      app.add_analyser(:len){|content| content.size }
+      content.update("shizzle")
+    end
+
     it "calls the app's analyser on itself" do
-      app.add_analyser(:shizzle){}
-      app.get_analyser(:shizzle).should_receive(:call).with(content).and_return("shiz")
-      content.analyse(:shizzle).should == "shiz"
+      app.get_analyser(:len).should_receive(:call).with(content).and_return(7)
+      content.analyse(:len).should == 7
+    end
+
+    it "caches the result" do
+      content.analyse(:len).should == 7
+      app.get_analyser(:len).should_not_receive(:call)
+      content.analyse(:len).should == 7
+    end
+
+    it "caches it in the meta" do
+      content.meta["analyser_cache"].should be_nil
+      content.analyse(:len).should == 7
+      content.meta["analyser_cache"].should == {"len" => 7}
+    end
+
+    it "empties the cache if updated" do
+      content.analyse(:len).should == 7
+      content.meta["analyser_cache"].should == {"len" => 7}
+      content.update("something else")
+      content.meta["analyser_cache"].should be_nil
+      content.analyse(:len).should == 14
+      content.meta["analyser_cache"].should == {"len" => 14}
     end
   end
 

@@ -45,13 +45,14 @@ module Dragonfly
     end
 
     def analyse(name)
-      app.get_analyser(name).call(self)
+      analyser_cache[name.to_s] ||= app.get_analyser(name).call(self)
     end
 
     def update(obj, meta=nil)
       self.temp_object = TempObject.new(obj)
       original_filename = temp_object.original_filename
       self.meta['name'] ||= original_filename if original_filename
+      self.meta.delete("analyser_cache")
       add_meta(meta) if meta
       self
     end
@@ -109,5 +110,10 @@ module Dragonfly
       @temp_object = temp_object
     end
 
+    def analyser_cache
+      meta["analyser_cache"] ||= {}
+    end
+
   end
 end
+

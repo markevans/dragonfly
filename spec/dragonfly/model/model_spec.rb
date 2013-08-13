@@ -1069,13 +1069,11 @@ describe "models" do
       @item.preview_image.name = 'dog.biscuit'
       @app.datastore.should_receive(:store).with do |content, opts|
         content.data.should == 'hello'
-        content.meta.should == {
-          'name' => 'dog.biscuit',
-          'some_analyser_method' => 'HELLO',
-          'size' => 5,
-          'model_class' => 'Item',
-          'model_attachment' => 'preview_image'
-        }
+        content.meta['name'].should == 'dog.biscuit'
+        content.meta['some_analyser_method'].should =='HELLO'
+        content.meta['size'].should == 5
+        content.meta['model_class'].should == 'Item'
+        content.meta['model_attachment'].should == 'preview_image'
       end.and_return('new/uid')
       @item.preview_image.retain!
       Dragonfly::Serializer.json_b64_decode(@item.retained_preview_image).should == {
