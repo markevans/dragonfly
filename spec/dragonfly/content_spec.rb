@@ -305,21 +305,5 @@ describe Dragonfly::Content do
     end
   end
 
-  describe "unique_id" do
-    it "returns a unique id" do
-      content.unique_id.should =~ /^\d+$/
-    end
-    it "is unique" do
-      content2 = Dragonfly::Content.new(app, content.data)
-      content.unique_id.should_not == content2.unique_id
-    end
-    it "is unique after cloning" do
-      content.unique_id.should_not == content.clone.unique_id
-    end
-    it "doesn't change" do
-      content.unique_id.should == content.unique_id
-    end
-  end
-
 end
 

@@ -13,10 +13,6 @@ module Dragonfly
       update(obj, meta)
     end
 
-    def initialize_copy(other)
-      @unique_id = nil
-    end
-
     attr_reader :app
     def_delegators :app,
                    :analyser, :generator, :processor, :shell, :datastore
@@ -103,10 +99,6 @@ module Dragonfly
     def close
       previous_temp_objects.each{|temp_object| temp_object.close }
       temp_object.close
-    end
-
-    def unique_id
-      @unique_id ||= "#{object_id}#{rand(1000000)}"
     end
 
     private
