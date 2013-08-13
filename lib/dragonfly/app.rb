@@ -117,7 +117,7 @@ module Dragonfly
 
     def add_analyser(name, callable=nil, &block)
       analysers.add(name, callable, &block)
-      define(name){|*args| analyse(name, *args) }
+      define(name){ analyse(name) }
     end
 
     def get_analyser(name)

@@ -48,8 +48,8 @@ module Dragonfly
       self
     end
 
-    def analyse(name, *args)
-      app.get_analyser(name).call(self, *args)
+    def analyse(name)
+      app.get_analyser(name).call(self)
     end
 
     def update(obj, meta=nil)
