@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'ostruct'
 
 describe Dragonfly::ImageMagick::Processors::Thumb do
 
@@ -143,6 +144,30 @@ describe Dragonfly::ImageMagick::Processors::Thumb do
       image2.should_not equal_image(image)
     end
 
+  end
+
+  describe "format" do
+    let (:url_attrs) { OpenStruct.new }
+
+    it "changes the format if passed in" do
+      processor.call(image, '2x2', 'jpeg')
+      image.should have_format('jpeg')
+    end
+
+    it "doesn't change the format if not passed in" do
+      processor.call(image, '2x2')
+      image.should have_format('png')
+    end
+
+    it "updates the url ext if passed in" do
+      processor.update_url(url_attrs, '2x2', 'png')
+      url_attrs.ext.should == 'png'
+    end
+
+    it "doesn't update the url ext if not passed in" do
+      processor.update_url(url_attrs, '2x2')
+      url_attrs.ext.should be_nil
+    end
   end
 
 end

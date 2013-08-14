@@ -20,14 +20,18 @@ module Dragonfly
         CROPPED_RESIZE_GEOMETRY = /^(\d+)x(\d+)#(\w{1,2})?$/ # e.g. '20x50#ne'
         CROP_GEOMETRY           = /^(\d+)x(\d+)([+-]\d+)?([+-]\d+)?(\w{1,2})?$/ # e.g. '30x30+10+10'
 
-        def call(content, geometry)
-          case geometry
+        def update_url(url_attrs, geometry, format=nil)
+          url_attrs.ext = format if format
+        end
+
+        def call(content, geometry, format=nil)
+          args = case geometry
           when RESIZE_GEOMETRY
-            resize(content, geometry)
+            resize_args(geometry)
           when CROPPED_RESIZE_GEOMETRY
-            resize_and_crop(content, $1, $2, $3)
+            resize_and_crop_args($1, $2, $3)
           when CROP_GEOMETRY
-            crop(content,
+            crop_args(
               'width' => $1,
               'height' => $2,
               'x' => $3,
@@ -36,15 +40,16 @@ module Dragonfly
             )
           else raise ArgumentError, "Didn't recognise the geometry string #{geometry}"
           end
+          content.process!(:convert, args, format)
         end
 
         private
 
-        def resize(content, geometry)
-          content.process!(:convert, "-resize #{geometry}")
+        def resize_args(geometry)
+          "-resize #{geometry}"
         end
 
-        def crop(content, opts={})
+        def crop_args(opts)
           raise ArgumentError, "you can't give a crop offset and gravity at the same time" if opts['x'] && opts['gravity']
 
           width   = opts['width']
@@ -55,15 +60,16 @@ module Dragonfly
           y       = "#{opts['y'] || 0}"
           y = '+' + y unless y[/^[+-]/]
 
-          content.process!(:convert, "#{"-gravity #{gravity} " if gravity}-crop #{width}x#{height}#{x}#{y} +repage")
+          "#{"-gravity #{gravity} " if gravity}-crop #{width}x#{height}#{x}#{y} +repage"
         end
 
-        def resize_and_crop(content, width, height, gravity)
+        def resize_and_crop_args(width, height, gravity)
           gravity = GRAVITIES[gravity || 'c']
-          content.process!(:convert, "-resize #{width}x#{height}^^ -gravity #{gravity} -crop #{width}x#{height}+0+0 +repage")
+          "-resize #{width}x#{height}^^ -gravity #{gravity} -crop #{width}x#{height}+0+0 +repage"
         end
 
       end
     end
   end
 end
+
