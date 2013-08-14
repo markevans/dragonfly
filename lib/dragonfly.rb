@@ -53,16 +53,16 @@ module Dragonfly
     # Dragonfly[:my_app].configure_with(:image_magick)
     App.configurer.register_plugin(:imagemagick){ ImageMagick::Plugin.new }
     App.configurer.register_plugin(:image_magick){ ImageMagick::Plugin.new }
-    
+
     # Register saved datastores so we can do e.g.
     # Dragonfly[:my_app].configure do
     #   datastore :file
     # end
-    App.configurer.register_datastore(:file){ DataStorage::FileDataStore }
-    App.configurer.register_datastore(:s3){ DataStorage::S3DataStore }
-    App.configurer.register_datastore(:couch){ DataStorage::CouchDataStore }
-    App.configurer.register_datastore(:mongo){ DataStorage::MongoDataStore }
-    App.configurer.register_datastore(:memory){ DataStorage::MemoryDataStore }
+    App.register_datastore(:file){ DataStorage::FileDataStore }
+    App.register_datastore(:s3){ DataStorage::S3DataStore }
+    App.register_datastore(:couch){ DataStorage::CouchDataStore }
+    App.register_datastore(:mongo){ DataStorage::MongoDataStore }
+    App.register_datastore(:memory){ DataStorage::MemoryDataStore }
 
     def running_on_windows?
       ENV['OS'] && ENV['OS'].downcase == 'windows_nt'
@@ -70,3 +70,4 @@ module Dragonfly
 
   end
 end
+

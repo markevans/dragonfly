@@ -5,6 +5,9 @@ require 'rack'
 module Dragonfly
   class App
 
+    # Exceptions
+    class UnregisteredDataStore < RuntimeError; end
+
     class << self
 
       private :new # Hide 'new' - need to use 'instance'
@@ -26,6 +29,14 @@ module Dragonfly
 
       def destroy_apps
         apps.clear
+      end
+
+      def register_datastore(symbol, &block)
+        available_datastores[symbol] = block
+      end
+
+      def available_datastores
+        @available_datastores ||= {}
       end
 
     end
@@ -51,36 +62,16 @@ module Dragonfly
     extend Configurable
 
     setup_config do
-      # Exceptions (these come under App namespace)
-      class UnregisteredDataStore < RuntimeError; end
-
       writer :cache_duration, :secret, :log, :content_disposition, :content_filename, :allow_legacy_urls
       meth :register_mime_type, :response_headers, :define_url, :add_processor, :add_generator, :add_analyser
 
-      def datastore(store, *args)
-        obj.datastore = if store.is_a?(Symbol)
-          get_klass = _datastores[store]
-          raise UnregisteredDataStore, "the datastore '#{store}' is not registered" unless get_klass
-          klass = get_klass.call
-          klass.new(*args)
-        else
-          raise ArgumentError, "datastore only takes 1 argument unless you use a symbol" if args.any?
-          store
-        end
+      def datastore(*args)
+        obj.use_datastore(*args)
       end
 
       writer :allow_fetch_file, :allow_fetch_url, :dragonfly_url, :protect_from_dos_attacks, :url_format, :url_host,
              :for => :server
       meth :before_serve, :for => :server
-
-      def register_datastore(symbol, &block) # For use publicly, not in a config block
-        _datastores[symbol] = block
-      end
-
-      # "private"
-      def _datastores
-        @_datastores ||= {}
-      end
     end
 
     attr_reader :analysers
@@ -92,6 +83,18 @@ module Dragonfly
       @datastore ||= DataStorage::FileDataStore.new
     end
     attr_writer :datastore
+
+    def use_datastore(store, *args)
+      self.datastore = if store.is_a?(Symbol)
+        get_klass = self.class.available_datastores[store]
+        raise UnregisteredDataStore, "the datastore '#{store}' is not registered" unless get_klass
+        klass = get_klass.call
+        klass.new(*args)
+      else
+        raise ArgumentError, "datastore only takes 1 argument unless you use a symbol" if args.any?
+        store
+      end
+    end
 
     def add_generator(*args, &block)
       generators.add(*args, &block)
