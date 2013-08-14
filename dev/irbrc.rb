@@ -4,7 +4,7 @@ $:.unshift(File.expand_path('../../lib', __FILE__))
 require 'dragonfly'
 include Dragonfly::Serializer
 
-APP = Dragonfly[:images].configure do
+APP = Dragonfly.default_app.configure do
   use :imagemagick
   datastore :memory
 end
