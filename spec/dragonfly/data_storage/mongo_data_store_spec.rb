@@ -62,13 +62,13 @@ describe Dragonfly::DataStorage::MongoDataStore do
     end
   end
 
-  describe "extra options" do
-    [:content_type, :mime_type].each do |key|
-      it "should allow setting content type on store with #{key.inspect}" do
-        uid = @data_store.store(content, key => 'text/plain')
-        @data_store.grid.get(BSON::ObjectId(uid)).content_type.should == 'text/plain'
-        @data_store.grid.get(BSON::ObjectId(uid)).read.should == content.data
-      end
+  describe "content type" do
+    it "should serve straight from mongo with the correct content type (taken from ext)" do
+      content.name = 'text.txt'
+      uid = @data_store.store(content)
+      response = @data_store.grid.get(BSON::ObjectId(uid))
+      response.content_type.should == 'text/plain'
+      response.read.should == content.data
     end
   end
 
