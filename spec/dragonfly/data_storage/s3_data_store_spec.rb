@@ -203,11 +203,20 @@ describe Dragonfly::DataStorage::S3DataStore do
       @data_store.store(content, :headers => {'x-amz-foo' => 'override!'})
     end
 
-    it "should store with the content-type if passed in" do
+    it "should store setting the content type" do
+      @data_store.storage.should_receive(:put_object) do |_, __, ___, headers|
+        headers['Content-Type'].should == 'image/png'
+      end
+      content.name = 'egg.png'
+      @data_store.store(content)
+    end
+
+    it "allow overriding the content type" do
       @data_store.storage.should_receive(:put_object) do |_, __, ___, headers|
         headers['Content-Type'].should == 'text/plain'
       end
-      @data_store.store(content, :mime_type => 'text/plain')
+      content.name = 'egg.png'
+      @data_store.store(content, :headers => {'Content-Type' => 'text/plain'})
     end
   end
 

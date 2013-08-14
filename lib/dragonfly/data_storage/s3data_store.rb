@@ -41,9 +41,8 @@ module Dragonfly
         ensure_configured
         ensure_bucket_initialized
 
-        headers = opts[:headers] || {}
-        mime_type = opts[:mime_type] || opts[:content_type]
-        headers['Content-Type'] = mime_type if mime_type
+        headers = {'Content-Type' => content.mime_type}
+        headers.merge!(opts[:headers]) if opts[:headers]
         uid = opts[:path] || generate_uid(content.name || 'file')
 
         rescuing_socket_errors do
