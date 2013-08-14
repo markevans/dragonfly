@@ -55,27 +55,15 @@ describe Dragonfly::DataStorage::CouchDataStore do
       }
     end
 
-    it "should use the fallback by default" do
+    it "serves with the correct data type (taken from ext)" do
+      content.name = 'doogie.png'
       uid = @data_store.store(content)
       response = get_content(@data_store.url_for(uid))
       response.body.should == 'gollum'
-      response['Content-Type'].should == 'application/octet-stream'
+      response['Content-Type'].should == 'image/png'
     end
 
-    it "should allow setting on store with 'content_type'" do
-      uid = @data_store.store(content, :content_type => 'text/plain')
-      response = get_content(@data_store.url_for(uid))
-      response.body.should == 'gollum'
-      response['Content-Type'].should == 'text/plain'
-    end
-
-    it "should allow setting on store with 'mime_type'" do
-      uid = @data_store.store(content, :mime_type => 'text/plain-yo')
-      response = get_content(@data_store.url_for(uid))
-      response.body.should == 'gollum'
-      response['Content-Type'].should == 'text/plain-yo'
-    end
-  end
+ end
 
   describe "already stored stuff" do
     def store_pdf(meta)
