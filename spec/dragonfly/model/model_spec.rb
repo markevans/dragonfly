@@ -3,6 +3,10 @@ require 'spec_helper'
 # This spec is more of a functional spec for all of the model bits put together
 describe "models" do
 
+  before do
+    Dragonfly.default_app.use_datastore(:memory)
+  end
+
   describe "using the module" do
     it "adds 'dragonfly_accessor'" do
       klass = Class.new do

@@ -68,7 +68,7 @@ module Dragonfly
       end
 
       def initialize(opts={})
-        self.root_path = opts[:root_path] || '/var/tmp/dragonfly'
+        self.root_path = opts[:root_path] || 'dragonfly'
         self.server_root = opts[:server_root]
         self.store_meta = opts[:store_meta]
         @meta_store = YAMLMetaStore.new
