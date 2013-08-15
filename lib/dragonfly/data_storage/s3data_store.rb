@@ -40,12 +40,12 @@ module Dragonfly
       def store(temp_object, opts={})
         ensure_configured
         ensure_bucket_initialized
-        
+
         headers = opts[:headers] || {}
         mime_type = opts[:mime_type] || opts[:content_type]
         headers['Content-Type'] = mime_type if mime_type
         uid = opts[:path] || generate_uid(temp_object.name || 'file')
-        
+
         rescuing_socket_errors do
           if use_filesystem
             temp_object.file do |f|
@@ -55,7 +55,7 @@ module Dragonfly
             storage.put_object(bucket_name, uid, temp_object.data, full_storage_headers(headers, temp_object.meta))
           end
         end
-        
+
         uid
       end
 
@@ -122,7 +122,7 @@ module Dragonfly
       def ensure_configured
         unless @configured
           if use_iam_profile
-            raise NotConfigured, "You need to configure #{self.class.name} with #{attr}" if bucket_name.nil?
+            raise NotConfigured, "You need to configure #{self.class.name} with bucket_name" if bucket_name.nil?
           else
             [:bucket_name, :access_key_id, :secret_access_key].each do |attr|
               raise NotConfigured, "You need to configure #{self.class.name} with #{attr}" if send(attr).nil?
