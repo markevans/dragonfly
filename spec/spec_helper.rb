@@ -7,6 +7,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rspec'
 require 'dragonfly'
 require 'fileutils'
+require 'tempfile'
 
 require 'webmock/rspec'
 
