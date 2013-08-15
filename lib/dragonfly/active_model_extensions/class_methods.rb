@@ -27,6 +27,10 @@ module Dragonfly
               dragonfly_attachments[attribute].to_value
             end
 
+            define_method "#{attribute}?" do
+              send "#{attribute}_uid?"
+            end
+
             # Define the URL setter
             define_method "#{attribute}_url=" do |url|
               unless url.blank?
