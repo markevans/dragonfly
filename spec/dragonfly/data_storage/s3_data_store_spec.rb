@@ -263,6 +263,17 @@ describe Dragonfly::DataStorage::S3DataStore do
         %r{^https://#{BUCKET_NAME}\.#{@data_store.domain}/some/path/on/s3\?AWSAccessKeyId=#{@data_store.access_key_id}&Signature=[\w%]+&Expires=1301476942$}
     end
 
+    it "should allow to give the query headers" do
+      @data_store.url_for(@uid, :expires => 1301476942, :query => {"response-content-disposition" => "attachment"}).should =~
+        %r{^https://#{BUCKET_NAME}\.#{@data_store.domain}/some/path/on/s3\?response-content-disposition=attachment&AWSAccessKeyId=#{@data_store.access_key_id}&Signature=[\w%]+&Expires=1301476942$}
+    end
+
+    it "should not allow to give query headers without expiry date" do
+      lambda {
+        @data_store.url_for(@uid, :query => {"response-content-disposition" => "attachment"})
+      }.should raise_error(ArgumentError)
+    end
+
     it "should allow for using https" do
       @data_store.url_for(@uid, :scheme => 'https').should == "https://#{BUCKET_NAME}.s3.amazonaws.com/some/path/on/s3"
     end

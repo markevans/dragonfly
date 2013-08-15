@@ -79,11 +79,13 @@ module Dragonfly
       end
 
       def url_for(uid, opts={})
-        if opts && opts[:expires]
+        if opts && (opts[:expires] || opts[:query])
+          raise ArgumentError.new("When passing the :query option to url_for you need to pass the :expires option as well") if opts[:expires].nil?
+          query_opts = opts[:query] ? {:query => opts[:query]} : {}
           if storage.respond_to?(:get_object_https_url) # fog's get_object_url is deprecated (aug 2011)
-            storage.get_object_https_url(bucket_name, uid, opts[:expires])
+            storage.get_object_https_url(bucket_name, uid, opts[:expires], query_opts)
           else
-            storage.get_object_url(bucket_name, uid, opts[:expires])
+            storage.get_object_url(bucket_name, uid, opts[:expires], query_opts)
           end
         else
           scheme = opts[:scheme] || url_scheme
