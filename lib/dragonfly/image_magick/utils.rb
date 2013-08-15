@@ -9,7 +9,8 @@ module Dragonfly
       include Configurable
       configurable_attr :convert_command, "convert"
       configurable_attr :identify_command, "identify"
-    
+      configurable_attr :smart_dimensions, false
+      
       private
 
       def convert(temp_object=nil, args='', format=nil)
@@ -22,8 +23,17 @@ module Dragonfly
         # example of details string:
         # myimage.png PNG 200x100 200x100+0+0 8-bit DirectClass 31.2kb
         format, width, height, depth = raw_identify(temp_object).scan(/([A-Z0-9]+) (\d+)x(\d+) .+ (\d+)-bit/)[0]
+        format = format.downcase.to_sym
+        
+        if smart_dimensions and format == :jpeg
+          # Swap the width and height if we have a 'mirrored' EXIF orientation flag
+          # (between 5 and 8). ImageMagick identify returns the wrong (?) values for these.
+          orientation   = raw_identify(temp_object, "-format '%[exif:orientation]'").to_i
+          width, height = height, width if (orientation >= 5 and orientation <= 8)
+        end
+        
         {
-          :format => format.downcase.to_sym,
+          :format => format,
           :width => width.to_i,
           :height => height.to_i,
           :depth => depth.to_i
