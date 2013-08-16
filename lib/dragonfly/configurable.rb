@@ -68,7 +68,11 @@ module Dragonfly
       def add_child_configurable(obj)
         child_configurables << obj
         config_methods.push(*obj.config_methods)
-        fallback_configurable.config_methods.push(*obj.config_methods) if fallback_configurable
+        default_configuration.merge!(obj.default_configuration)
+        if fallback_configurable
+          fallback_configurable.config_methods.push(*obj.config_methods)
+          fallback_configurable.default_configuration.merge!(obj.default_configuration)
+        end
       end
 
       def set_if_unset(key, value)
