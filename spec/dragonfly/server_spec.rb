@@ -121,13 +121,6 @@ describe Dragonfly::Server do
         response.headers['X-Cascade'].should be_nil
       end
 
-      it "should return a 403 Forbidden when someone uses fetch_file" do
-        response = request(@server, "/media/#{@app.fetch_file('/some/file.txt').serialize}")
-        response.status.should == 403
-        response.body.should == 'Forbidden'
-        response.content_type.should == 'text/plain'
-      end
-
       it "should return a 403 Forbidden when someone uses fetch_url" do
         response = request(@server, "/media/#{@app.fetch_url('some.url').serialize}")
         response.status.should == 403
@@ -136,6 +129,22 @@ describe Dragonfly::Server do
       end
     end
 
+    describe "fetch_file" do
+      it "should return a 403 Forbidden when someone uses fetch_file " do
+        response = request(@server, "/media/#{@app.fetch_file('/some/file.txt').serialize}")
+        response.status.should == 403
+        response.body.should == 'Forbidden'
+        response.content_type.should == 'text/plain'
+      end
+
+      it "returns an OK response when included on the whitelist" do
+        @server.fetch_file_whitelist = [/egg/]
+        response = request(@server, "/media/#{@app.fetch_file('samples/egg.png').serialize}")
+        response.status.should == 200
+        response.body.size.should == 62664
+        response.content_type.should == 'image/png'
+      end
+    end
   end
 
   describe "dragonfly response" do

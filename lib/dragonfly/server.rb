@@ -14,9 +14,10 @@ module Dragonfly
       use_same_log_as(app)
       @dragonfly_url = '/dragonfly'
       self.url_format = '/:job/:name'
+      @fetch_file_whitelist = []
     end
 
-    attr_accessor :allow_fetch_file, :allow_fetch_url, :protect_from_dos_attacks, :url_host, :dragonfly_url
+    attr_accessor :fetch_file_whitelist, :allow_fetch_url, :protect_from_dos_attacks, :url_host, :dragonfly_url
 
     attr_reader :url_format
 
@@ -107,9 +108,17 @@ module Dragonfly
     end
 
     def validate_job!(job)
-      if job.fetch_file_step && !allow_fetch_file ||
-         job.fetch_url_step && !allow_fetch_url
+      if step = job.fetch_file_step
+        validate_fetch_file_step!(step)
+      end
+      if job.fetch_url_step && !allow_fetch_url
         raise JobNotAllowed, "Dragonfly Server doesn't allow requesting job with steps #{job.steps.inspect}"
+      end
+    end
+
+    def validate_fetch_file_step!(step)
+      unless fetch_file_whitelist.any?{|pattern| pattern === step.path}
+        raise JobNotAllowed, "fetch file #{step.path} disallowed - use fetch_file_whitelist to allow it"
       end
     end
 
