@@ -64,6 +64,10 @@ describe "a configured imagemagick app" do
         app.create("blah").image?.should be_false
       end
     end
+
+    it "should return false for pdfs" do
+      image.encode('pdf').image?.should be_false
+    end
   end
 
   describe "processors that change the url" do

@@ -30,8 +30,7 @@ module Dragonfly
         end
         app.add_analyser :image do |content|
           begin
-            content.analyse(:identify)
-            true
+            content.analyse(:identify)['format'] != 'pdf'
           rescue Shell::CommandFailed
             false
           end
