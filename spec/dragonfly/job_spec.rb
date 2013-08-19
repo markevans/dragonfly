@@ -623,6 +623,13 @@ describe Dragonfly::Job do
         @job.url_attrs[:zoo] = 'hair'
         @job.url(:zoo => 'dare').should == "/media/#{@job.serialize}/dare"
       end
+      it "doesn't interfere with other jobs' attributes" do
+        @job.url_attrs[:zoo] = 'hair'
+        job2 = @job.dup
+        job2.url_attrs[:zoo] = 'dare'
+        @job.url.should =~ /hair$/
+        job2.url.should =~ /dare$/
+      end
 
       describe "basename" do
         before(:each) do

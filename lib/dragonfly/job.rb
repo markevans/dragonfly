@@ -236,6 +236,7 @@ module Dragonfly
 
     # Used by 'dup' and 'clone'
     def initialize_copy(other)
+      self.url_attrs = other.url_attrs.dup
       self.steps = other.steps.map do |step|
         step.class.new(self, *step.args)
       end
