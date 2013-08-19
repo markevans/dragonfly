@@ -51,6 +51,10 @@ module Dragonfly
 
       attr_reader :job, :args
 
+      def to_a
+        [self.class.abbreviation, *args]
+      end
+
       def inspect
         "#{self.class.step_name}(#{args.map{|a| a.inspect }.join(', ')})"
       end
@@ -283,9 +287,7 @@ module Dragonfly
     end
 
     def to_a
-      steps.map{|step|
-        [step.class.abbreviation, *step.args]
-      }
+      steps.map{|step| step.to_a }
     end
 
     # Serializing, etc.
