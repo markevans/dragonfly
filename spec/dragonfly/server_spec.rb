@@ -129,20 +129,42 @@ describe Dragonfly::Server do
       end
     end
 
-    describe "fetch_file" do
-      it "should return a 403 Forbidden when someone uses fetch_file " do
-        response = request(@server, "/media/#{@app.fetch_file('/some/file.txt').serialize}")
+    describe "whitelists" do
+      def assert_ok(job)
+        response = request(@server, "/media/#{job.serialize}")
+        response.status.should == 200
+      end
+
+      def assert_forbidden(job)
+        response = request(@server, "/media/#{job.serialize}")
         response.status.should == 403
         response.body.should == 'Forbidden'
         response.content_type.should == 'text/plain'
       end
 
-      it "returns an OK response when included on the whitelist" do
-        @server.fetch_file_whitelist = [/egg/]
-        response = request(@server, "/media/#{@app.fetch_file('samples/egg.png').serialize}")
-        response.status.should == 200
-        response.body.size.should == 62664
-        response.content_type.should == 'image/png'
+      describe "fetch_file" do
+        it "should return a 403 Forbidden when someone uses fetch_file " do
+          assert_forbidden @app.fetch_file('samples/egg.png')
+        end
+
+        it "returns OK when on whitelist (using full path)" do
+          @server.fetch_file_whitelist = [File.expand_path('samples/egg.png')]
+          assert_ok @app.fetch_file('samples/egg.png')
+        end
+      end
+
+      describe "fetch_url" do
+        let (:url) {'some.org/path:3000/boogie?yes=please'}
+
+        it "should return a 403 Forbidden when someone uses fetch_url " do
+          assert_forbidden @app.fetch_url(url)
+        end
+
+        it "returns OK when on whitelist (using full url)" do
+          stub_request(:get, url).to_return(:status => 200)
+          @server.fetch_url_whitelist = ["http://#{url}"]
+          assert_ok @app.fetch_url(url)
+        end
       end
     end
   end

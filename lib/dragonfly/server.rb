@@ -15,11 +15,20 @@ module Dragonfly
       @dragonfly_url = '/dragonfly'
       self.url_format = '/:job/:name'
       @fetch_file_whitelist = []
+      @fetch_url_whitelist = []
     end
 
-    attr_accessor :fetch_file_whitelist, :allow_fetch_url, :protect_from_dos_attacks, :url_host, :dragonfly_url
+    attr_accessor :protect_from_dos_attacks, :url_host, :dragonfly_url
 
-    attr_reader :url_format
+    attr_reader :url_format, :fetch_file_whitelist, :fetch_url_whitelist
+
+    def fetch_file_whitelist=(patterns)
+      @fetch_file_whitelist = Whitelist.new(patterns)
+    end
+
+    def fetch_url_whitelist=(patterns)
+      @fetch_url_whitelist = Whitelist.new(patterns)
+    end
 
     def url_format=(url_format)
       @url_format = url_format
@@ -111,17 +120,22 @@ module Dragonfly
       if step = job.fetch_file_step
         validate_fetch_file_step!(step)
       end
-      if job.fetch_url_step && !allow_fetch_url
-        raise JobNotAllowed, "Dragonfly Server doesn't allow requesting job with steps #{job.steps.inspect}"
+      if step = job.fetch_url_step
+        validate_fetch_url_step!(step)
       end
     end
 
     def validate_fetch_file_step!(step)
-      unless fetch_file_whitelist.any?{|pattern| pattern === step.path}
+      unless fetch_file_whitelist.include?(step.path)
         raise JobNotAllowed, "fetch file #{step.path} disallowed - use fetch_file_whitelist to allow it"
       end
     end
 
+    def validate_fetch_url_step!(step)
+      unless fetch_url_whitelist.include?(step.url)
+        raise JobNotAllowed, "fetch url #{step.url} disallowed - use fetch_url_whitelist to allow it"
+      end
+    end
   end
 end
 
