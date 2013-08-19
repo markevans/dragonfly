@@ -43,7 +43,7 @@ describe Dragonfly::Model::Validations do
   describe "validates_property" do
 
     before(:each) do
-      @item_class = new_model_class('Item', 
+      @item_class = new_model_class('Item',
         :preview_image_uid,
         :other_image_uid,
         :title
@@ -168,7 +168,7 @@ describe Dragonfly::Model::Validations do
       @item.should_not be_valid
       @item.errors[:preview_image].should  == ["errado, seu burro"]
     end
-    
+
     it "should allow for custom messages including access to the property name and expected/allowed values" do
       @item_class.class_eval do
         validates_property :size, :of => :preview_image, :as => 4,
@@ -178,18 +178,6 @@ describe Dragonfly::Model::Validations do
       @item.preview_image = "too long"
       @item.should_not be_valid
       @item.errors[:preview_image].should  == ["Unlucky scubby! Was 8"]
-    end
-
-    [:analyse, :analyze].each do |analyse|
-      it "should use 'analyse' instead of 'send' if :#{analyse} => true is passed in" do
-        @item_class.class_eval do
-          validates_property :gungle, :of => :preview_image, :as => 'bungo', analyse => true
-        end
-        @item.preview_image = "something"
-        @item.preview_image.should_not_receive(:gungle)
-        @item.preview_image.should_receive(:analyse).with(:gungle).and_return('bungo')
-        @item.should be_valid
-      end
     end
 
   end
