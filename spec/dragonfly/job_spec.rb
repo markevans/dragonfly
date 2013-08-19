@@ -195,12 +195,12 @@ describe Dragonfly::Job do
         @job.fetch_url!('some.place.com/dung.beetle')
         @job.url_attrs.should == {:name =>'dung.beetle'}
       end
-      
+
       it 'should work with non-English URLs' do
         @job.fetch_url!('http://some.place.com/tilde/niños/emphasis/después')
         @job.data.should == 'still a valid URL!'
       end
-      
+
       ["some.place.com", "some.place.com/", "some.place.com/eggs/"].each do |url|
         it "should not set the name if there isn't one, e.g. #{url}" do
           @job.fetch_url!(url)
@@ -575,7 +575,7 @@ describe Dragonfly::Job do
         @app.allow_legacy_urls = false
         expect {Dragonfly::Job.deserialize("BAhbBlsHSSIGZgY6BkVUSSINc29tZV91aWQGOwBU", @app)}.to raise_error(Dragonfly::Serializer::BadString)
       end
-    end    
+    end
   end
 
   describe "to_app" do
@@ -831,6 +831,10 @@ describe Dragonfly::Job do
         else
           step.path.should == '/my/file.png'
         end
+      end
+      it "converts pathname to a string in to_a" do
+        job = @app.fetch_file(Pathname.new('some/where'))
+        job.to_a.should == [['ff', 'some/where']]
       end
     end
 

@@ -116,6 +116,9 @@ module Dragonfly
     end
 
     class FetchFile < Step
+      def initialize(job, path)
+        super(job, path.to_s)
+      end
       def init
         job.url_attrs[:name] = filename
       end
