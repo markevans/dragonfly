@@ -69,7 +69,7 @@ module Dragonfly
         obj.use_datastore(*args)
       end
 
-      writer :allow_fetch_file, :allow_fetch_url, :dragonfly_url, :protect_from_dos_attacks, :url_format, :url_host,
+      writer :fetch_file_whitelist, :fetch_url_whitelist, :dragonfly_url, :protect_from_dos_attacks, :url_format, :url_host,
              :for => :server
       meth :before_serve, :for => :server
     end

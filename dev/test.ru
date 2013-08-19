@@ -6,7 +6,8 @@ require 'dragonfly'
 Dragonfly.default_app.configure do
   use :imagemagick
   url_format '/images/:job'
-  allow_fetch_file true
+  log Logger.new(STDOUT)
+  fetch_file_whitelist [String]
 end
 
 class App
