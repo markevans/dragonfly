@@ -9,7 +9,7 @@ module Dragonfly
       include Configurable
       configurable_attr :convert_command, "convert"
       configurable_attr :identify_command, "identify"
-    
+
       private
 
       def convert(temp_object=nil, args='', format=nil)
@@ -21,7 +21,7 @@ module Dragonfly
       def identify(temp_object)
         # example of details string:
         # myimage.png PNG 200x100 200x100+0+0 8-bit DirectClass 31.2kb
-        format, width, height, depth = raw_identify(temp_object).scan(/([A-Z0-9]+) (\d+)x(\d+) .+ (\d+)-bit/)[0]
+        format, width, height, depth = raw_identify(temp_object, "-ping -format '%m %w %h %z'").split(' ')
         {
           :format => format.downcase.to_sym,
           :width => width.to_i,
@@ -29,11 +29,11 @@ module Dragonfly
           :depth => depth.to_i
         }
       end
-    
+
       def raw_identify(temp_object, args='')
         run identify_command, "#{args} #{quote(temp_object.path)}"
       end
-    
+
       def new_tempfile(ext=nil)
         tempfile = ext ? Tempfile.new(['dragonfly', ".#{ext}"]) : Tempfile.new('dragonfly')
         tempfile.binmode
