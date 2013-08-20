@@ -96,6 +96,16 @@ describe Dragonfly::Model::Validations do
       @item.errors[:preview_image].should == ["gungle is incorrect. It needs to be one of 'bungo', 'jerry', but was 'spangle'"]
     end
 
+    it "is invalid if the property raises" do
+      @item_class.class_eval do
+        validates_property :gungle, :of => :preview_image, :as => 'bungo'
+      end
+      @item.preview_image = "something"
+      @item.preview_image.should_receive(:gungle).and_raise(RuntimeError, "yikes!")
+      @item.should_not be_valid
+      @item.errors[:preview_image].should == ["gungle is incorrect. It needs to be 'bungo'"]
+    end
+
     it "should work for a range" do
       @item_class.class_eval do
         validates_property :gungle, :of => :preview_image, :in => (0..2)

@@ -9,6 +9,8 @@ module Dragonfly
             property = attachment.send(property_name)
             model.errors.add(attribute, message(property, model)) unless matches?(property)
           end
+        rescue RuntimeError => e
+          model.errors.add(attribute, message(nil, model))
         end
 
         private
