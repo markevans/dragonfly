@@ -220,7 +220,7 @@ module Dragonfly
     attr_writer :secret
 
     def log
-      @log ||= Logger.new('/var/tmp/dragonfly.log')
+      @log ||= Logger.new('dragonfly.log')
     end
     attr_writer :log
 
