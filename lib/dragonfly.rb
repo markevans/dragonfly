@@ -38,6 +38,7 @@ require 'dragonfly/core_ext/hash'
 
 require 'dragonfly/railtie' if defined?(::Rails)
 
+require 'rbconfig'
 module Dragonfly
   class << self
 
@@ -65,7 +66,7 @@ module Dragonfly
     App.register_datastore(:memory){ DataStorage::MemoryDataStore }
 
     def running_on_windows?
-      ENV['OS'] && ENV['OS'].downcase == 'windows_nt'
+      !!(RbConfig::CONFIG['host_os'] =~ %r!(msdos|mswin|djgpp|mingw)!)
     end
 
   end

@@ -27,10 +27,11 @@ module Dragonfly
         @use_filesystem    = opts[:use_filesystem]
         @storage_headers   = opts[:storage_headers] || {'x-amz-acl' => 'public-read'}
         @url_scheme        = opts[:url_scheme] || 'http'
-        @url_host
+        @url_host          = opts[:url_host]
+        @use_iam_profile   = opts[:use_iam_profile]
       end
 
-      attr_accessor :bucket_name, :access_key_id, :secret_access_key, :region, :storage_headers, :url_scheme, :url_host
+      attr_accessor :bucket_name, :access_key_id, :secret_access_key, :region, :storage_headers, :url_scheme, :url_host, :use_iam_profile
       attr_writer :use_filesystem
 
       def use_filesystem?
@@ -90,19 +91,20 @@ module Dragonfly
 
       def storage
         @storage ||= begin
-          storage = Fog::Storage.new(
+          storage = Fog::Storage.new({
             :provider => 'AWS',
             :aws_access_key_id => access_key_id,
             :aws_secret_access_key => secret_access_key,
-            :region => region
-          )
+            :region => region,
+            :use_iam_profile => use_iam_profile
+          }.reject {|name, option| option.nil?})
           storage.sync_clock
           storage
         end
       end
 
       def bucket_exists?
-        rescuing_socket_errors{ storage.get_bucket(bucket_name) }
+        rescuing_socket_errors{ storage.get_bucket_location(bucket_name) }
         true
       rescue Excon::Errors::NotFound => e
         false
@@ -112,8 +114,12 @@ module Dragonfly
 
       def ensure_configured
         unless @configured
-          [:bucket_name, :access_key_id, :secret_access_key].each do |attr|
-            raise NotConfigured, "You need to configure #{self.class.name} with #{attr}" if send(attr).nil?
+          if use_iam_profile
+            raise NotConfigured, "You need to configure #{self.class.name} with bucket_name" if bucket_name.nil?
+          else
+            [:bucket_name, :access_key_id, :secret_access_key].each do |attr|
+              raise NotConfigured, "You need to configure #{self.class.name} with #{attr}" if send(attr).nil?
+            end
           end
           @configured = true
         end

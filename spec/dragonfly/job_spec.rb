@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 
 describe Dragonfly::Job do
@@ -483,6 +484,17 @@ describe Dragonfly::Job do
     end
   end
 
+  describe "url_attrs" do
+    it "doesn't interfere with other jobs' attributes" do
+      job.url_attrs.zoo = 'hair'
+      job2 = job.dup
+      job2.url_attrs.zoo = 'dare'
+
+      job.url_attrs.zoo.should == 'hair'
+      job2.url_attrs.zoo.should == 'dare'
+    end
+  end
+
   describe "url" do
     let (:app) { test_app }
     let (:job) { Dragonfly::Job.new(app) }
@@ -629,6 +641,10 @@ describe Dragonfly::Job do
         else
           step.path.should == '/my/file.png'
         end
+      end
+      it "converts pathname to a string in to_a" do
+        job = @app.fetch_file(Pathname.new('some/where'))
+        job.to_a.should == [['ff', 'some/where']]
       end
     end
 

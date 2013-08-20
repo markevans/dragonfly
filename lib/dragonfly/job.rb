@@ -52,6 +52,10 @@ module Dragonfly
         job.app
       end
 
+      def to_a
+        [self.class.abbreviation, *args]
+      end
+
       def inspect
         "#{self.class.step_name}(#{args.map{|a| a.inspect }.join(', ')})"
       end
@@ -113,6 +117,9 @@ module Dragonfly
     end
 
     class FetchFile < Step
+      def initialize(job, path)
+        super(job, path.to_s)
+      end
       def init
         job.url_attrs.name = filename
       end
@@ -143,7 +150,7 @@ module Dragonfly
       end
 
       def url
-        @url ||= (args.first[%r<^\w+://>] ? args.first : "http://#{args.first}")
+        @url ||= URI.escape((args.first[%r<^\w+://>] ? args.first : "http://#{args.first}"))
       end
 
       def path
@@ -269,9 +276,7 @@ module Dragonfly
     end
 
     def to_a
-      steps.map{|step|
-        [step.class.abbreviation, *step.args]
-      }
+      steps.map{|step| step.to_a }
     end
 
     # Serializing, etc.
