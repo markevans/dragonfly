@@ -10,6 +10,9 @@ module Dragonfly
             model.errors.add(attribute, message(property, model)) unless matches?(property)
           end
         rescue RuntimeError => e
+          if attachment.respond_to?(:log)
+            attachment.log.warn("validation of property #{property_name} of #{attribute} failed with error #{e}")
+          end
           model.errors.add(attribute, message(nil, model))
         end
 
