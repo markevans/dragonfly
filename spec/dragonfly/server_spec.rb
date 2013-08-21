@@ -265,6 +265,26 @@ describe Dragonfly::Server do
       end
     end
 
+    describe "path_prefix" do
+      before do
+        server.url_format = '/media/:job'
+      end
+
+      it "adds the path_prefix to the url if configured" do
+        server.url_path_prefix = '/logs'
+        server.url_for(job).should == "/logs/media/#{job.serialize}"
+      end
+
+      it "favours the passed in path_prefix" do
+        server.url_path_prefix = '/logs'
+        server.url_for(job, :path_prefix => '/bugs').should == "/bugs/media/#{job.serialize}"
+      end
+
+      it "goes after the host" do
+        server.url_for(job, :path_prefix => '/bugs', :host => 'http://wassup').should == "http://wassup/bugs/media/#{job.serialize}"
+      end
+    end
+
     describe "Denial of Service protection" do
       before(:each) do
         server.protect_from_dos_attacks = true

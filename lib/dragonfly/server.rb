@@ -18,7 +18,7 @@ module Dragonfly
       @fetch_url_whitelist = []
     end
 
-    attr_accessor :protect_from_dos_attacks, :url_host, :dragonfly_url
+    attr_accessor :protect_from_dos_attacks, :url_host, :url_path_prefix, :dragonfly_url
 
     attr_reader :url_format, :fetch_file_whitelist, :fetch_url_whitelist
 
@@ -75,12 +75,13 @@ module Dragonfly
     def url_for(job, opts={})
       opts = opts.dup
       host = opts.delete(:host) || url_host
+      path_prefix = opts.delete(:path_prefix) || url_path_prefix
       params = job.url_attrs.extract(url_mapper.params_in_url)
       params.merge!(stringify_keys(opts))
       params['job'] = job.serialize
       params['sha'] = job.sha if protect_from_dos_attacks
       url = url_mapper.url_for(params)
-      "#{host}#{url}"
+      "#{host}#{path_prefix}#{url}"
     end
 
     private
