@@ -469,29 +469,6 @@ describe "models" do
 
     end
 
-    describe "meta from magic attributes" do
-
-      it "should store the meta for the original file name if it exists" do
-        data = 'jasdlkf sadjl'
-        data.stub!(:original_filename).and_return('hello.png')
-        @item.preview_image = data
-        @item.preview_image.meta['name'].should == 'hello.png'
-      end
-
-      it "should include magic attributes in the saved meta" do
-        @item.preview_image = '123'
-        @item.save!
-        @app.fetch(@item.preview_image_uid).meta['some_analyser_method'].should == 'abc1'
-      end
-
-      it "should include the size in the saved meta" do
-        @item.preview_image = '123'
-        @item.save!
-        @app.fetch(@item.preview_image_uid).meta['size'].should == 3
-      end
-
-    end
-
     describe "delegating methods to the job" do
       before(:each) do
         @item.preview_image = "DATASTRING"
@@ -582,29 +559,15 @@ describe "models" do
       end
 
       describe "meta" do
-        before(:each) do
-          @item.preview_image = "Hello all"
+        before :each do
+          @item.preview_image = 'hello'
+        end
+        it "should include meta info about the model by default" do
+          @item.preview_image.meta.should include_hash('model_class' => 'Item', 'model_attachment' => 'preview_image')
+        end
+        it "provides accessors" do
           @item.preview_image.meta = {'slime' => 'balls'}
-        end
-        it "should allow for setting the meta" do
           @item.preview_image.meta.should == {'slime' => 'balls'}
-        end
-        it "should allow for updating the meta" do
-          @item.preview_image.meta['numb'] = 'nuts'
-          @item.preview_image.meta.should == {'slime' => 'balls', 'numb' => 'nuts'}
-        end
-        it "should return the meta" do
-          (@item.preview_image.meta = {'doogs' => 'boogs'}).should == {'doogs' => 'boogs'}
-        end
-        it "should save it correctly" do
-          @item.save!
-          item = @item_class.find(@item.id)
-          item.preview_image.meta.should include_hash('slime' => 'balls')
-        end
-        it "should include meta info about the model" do
-          @item.save!
-          item = @item_class.find(@item.id)
-          item.preview_image.meta.should include_hash('model_class' => 'Item', 'model_attachment' => 'preview_image')
         end
       end
 
@@ -1081,11 +1044,6 @@ describe "models" do
       @item.preview_image.name = 'dog.biscuit'
       @app.datastore.should_receive(:store).with do |content, opts|
         content.data.should == 'hello'
-        content.meta['name'].should == 'dog.biscuit'
-        content.meta['some_analyser_method'].should =='HELLO'
-        content.meta['size'].should == 5
-        content.meta['model_class'].should == 'Item'
-        content.meta['model_attachment'].should == 'preview_image'
       end.and_return('new/uid')
       @item.preview_image.retain!
       Dragonfly::Serializer.json_b64_decode(@item.retained_preview_image).should == {

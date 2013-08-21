@@ -53,7 +53,8 @@ module Dragonfly
           else app.new_job(value)
           end
           set_magic_attributes
-          job.update_url_attrs(all_extra_attributes)
+          job.update_url_attrs(magic_attributes_hash)
+          meta.merge!(standard_meta_attributes)
           self.class.run_callbacks(:after_assign, model, self) if should_run_callbacks?
           retain! if should_retain?
         end
@@ -170,7 +171,6 @@ module Dragonfly
       end
 
       def store_job!
-        meta.merge!(all_extra_attributes)
         opts = self.class.evaluate_storage_opts(model, self)
         set_uid_and_model_uid job.store(opts)
         self.job = job.to_fetched_job(uid)
@@ -270,20 +270,16 @@ module Dragonfly
         end
       end
 
-      def extra_attributes
-        @extra_attributes ||= {
+      def standard_meta_attributes
+        @standard_meta_attributes ||= {
           'model_class' => model.class.name,
           'model_attachment' => attribute.to_s
         }
       end
 
-      def all_extra_attributes
-        magic_attributes_hash.merge(extra_attributes)
-      end
-
       def set_job_from_uid
         self.job = app.fetch(uid)
-        job.update_url_attrs(all_extra_attributes)
+        job.update_url_attrs(magic_attributes_hash)
       end
 
     end
