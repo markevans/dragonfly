@@ -9,6 +9,7 @@ module Dragonfly
       include Serializer
 
       configurable_attr :bucket_name
+      configurable_attr :path_prefix
       configurable_attr :access_key_id
       configurable_attr :secret_access_key
       configurable_attr :region
@@ -146,7 +147,7 @@ module Dragonfly
       end
 
       def generate_uid(name)
-        "#{Time.now.strftime '%Y/%m/%d/%H/%M/%S'}/#{rand(1000)}/#{name.gsub(/[^\w.]+/, '_')}"
+        [path_prefix, "#{Time.now.strftime '%Y/%m/%d/%H/%M/%S'}/#{rand(1000)}/#{name.gsub(/[^\w.]+/, '_')}"].compact.join('/')
       end
 
       def full_storage_headers(headers, meta)

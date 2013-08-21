@@ -85,6 +85,7 @@ To configure with the {Dragonfly::DataStorage::S3DataStore S3DataStore}:
 
     app.datastore.configure do |c|
       c.bucket_name = 'my_bucket'
+      c.path_prefix = 'attachments'                 # define a namespace inside the bucket where files will be saved, defaults to ''
       c.access_key_id = 'salfjasd34u23'
       c.secret_access_key = '8u2u3rhkhfo23...'
       c.region = 'eu-west-1'                        # defaults to 'us-east-1'
@@ -136,7 +137,7 @@ It won't normally need configuring, but if you wish to:
       c.password = 'some_password'                      # only needed if mongo is running in auth mode
       c.connection_opts = {:name => 'prod'}             # arg gets passed to Mongo::Connection
                                                         #  or Mongo::ReplSetConnection initializer - see http://api.mongodb.org/ruby/current
-      
+
       c.hosts = ['localhost:30000', 'localhost:30001']  # will use Mongo::ReplSetConnection instead of Mongo::Connection
     end
 
@@ -179,7 +180,7 @@ Data stores are key-value in nature, and need to implement 3 methods: `store`, `
       def store(temp_object, opts={})
         # ... use temp_object.data, temp_object.file, temp_object.path, etc.
         # ... also we can use temp_object.meta and store it ...
-        
+
         # store and return the uid
         'return_some_unique_uid'
       end

@@ -30,6 +30,7 @@ describe Dragonfly::DataStorage::S3DataStore do
         d.access_key_id = KEY
         d.secret_access_key = SECRET
         d.region = 'eu-west-1'
+        d.path_prefix = 'path_prefix'
       end
     end
 
@@ -45,6 +46,7 @@ describe Dragonfly::DataStorage::S3DataStore do
         d.access_key_id = 'XXXXXXXXX'
         d.secret_access_key = 'XXXXXXXXX'
         d.region = 'eu-west-1'
+        d.path_prefix = 'path_prefix'
       end
     end
 
@@ -65,6 +67,12 @@ describe Dragonfly::DataStorage::S3DataStore do
       uid.should =~ /doobie$/
       data, meta = @data_store.retrieve(uid)
       data.should == 'eggheads'
+    end
+
+    it "should set a path prefix if specified" do
+      temp_object = Dragonfly::TempObject.new('eggheads', :name => 'doobie')
+      uid = @data_store.store(temp_object)
+      uid.should =~ /^path_prefix\//
     end
 
     it "should work ok with files with funny names" do
