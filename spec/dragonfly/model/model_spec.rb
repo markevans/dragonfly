@@ -569,6 +569,10 @@ describe "models" do
           @item.preview_image.meta = {'slime' => 'balls'}
           @item.preview_image.meta.should == {'slime' => 'balls'}
         end
+        it "provides add_meta" do
+          @item.preview_image.add_meta('sum' => 'ting').should == @item.preview_image
+          @item.preview_image.meta['sum'].should == 'ting'
+        end
       end
 
     end

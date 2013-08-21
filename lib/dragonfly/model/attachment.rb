@@ -154,6 +154,11 @@ module Dragonfly
         end
       end
 
+      def add_meta(meta)
+        job.add_meta(meta)
+        self
+      end
+
       def inspect
         "<Dragonfly Attachment uid=#{uid.inspect}, app=#{app.name.inspect}>"
       end
