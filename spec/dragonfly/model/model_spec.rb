@@ -459,6 +459,14 @@ describe "models" do
         @item.preview_image_name.should == 'hello.png'
       end
 
+      it "sets to nil if the analysis method blows up" do
+        @app.add_analyser :some_analyser_method do |content|
+          raise "oh dear"
+        end
+        @item.preview_image = '123'
+        @item.preview_image_some_analyser_method.should be_nil
+      end
+
     end
 
     describe "meta from magic attributes" do
@@ -1086,6 +1094,14 @@ describe "models" do
         'size' => 5,
         'name' => 'dog.biscuit'
       }
+    end
+
+    it "should rescue analysis errors" do
+      @app.add_analyser(:some_analyser_method){ raise "oh no!" }
+      @item.preview_image = 'hello'
+      @item.preview_image.retain!
+      attrs = Dragonfly::Serializer.json_b64_decode(@item.retained_preview_image)
+      attrs['some_analyser_method'].should be_nil
     end
 
     it "should return nil if assigned, retained and saved" do
