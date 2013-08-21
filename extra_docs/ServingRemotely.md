@@ -63,7 +63,7 @@ Below is an example using an ActiveRecord 'Thumb' table to keep track of already
 It has two string columns; 'job' and 'uid'.
 
     app.configure do |c|
-  
+
       # Override the .url method...
       c.define_url do |app, job, opts|
         thumb = Thumb.find_by_job(job.serialize)
@@ -79,23 +79,24 @@ It has two string columns; 'job' and 'uid'.
       # Before serving from the local Dragonfly server...
       c.server.before_serve do |job, env|
         # ...store the thumbnail in the datastore...
+        serial = job.serialize
         uid = job.store
-        
+
         # ...keep track of its uid so next time we can serve directly from the datastore
         Thumb.create!(
           :uid => uid,
-          :job => job.serialize     # 'BAhbBls...' - holds all the job info
-        )                           # e.g. fetch 'some_uid' then resize to '40x40'
+          :job => serial     # 'BAhbBls...' - holds all the job info
+        )                    # e.g. fetch 'some_uid' then resize to '40x40'
       end
-  
+
     end
 
 This would give
 
     app.fetch('some_uid').thumb('40x40').url    # normal Dragonfly url e.g. /media/BAhbBls...
-    
+
 then from the second time onwards
-    
+
     app.fetch('some_uid').thumb('40x40').url    # http://my-bucket.s3.amazonaws.com/2011...
 
 The above is just an example - there are a number of things you could do with `before_serve` and `define_url` -
