@@ -44,8 +44,8 @@ module Dragonfly
     end
 
     def log_response(response)
-      req = request
-      app.info [req.request_method, req.fullpath, response[0]].join(' - ')
+      r = request
+      app.info [r.request_method, r.fullpath, response[0]].join(' ')
     end
 
     def etag_matches?

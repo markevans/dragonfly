@@ -219,7 +219,7 @@ module Dragonfly
     attr_writer :log
 
     def warn(message)
-      log.warn("DRAGONFLY: WARNING - #{message}")
+      log.warn("DRAGONFLY: #{message}")
     end
 
     def info(message)

@@ -95,7 +95,7 @@ describe Dragonfly::JobEndpoint do
 
   describe "logging" do
     it "logs successful requests" do
-      @app.should_receive(:info).with("GET - /something?great - 200")
+      @app.should_receive(:info).with("GET /something?great 200")
       make_request(@job, :path => '/something?great')
     end
   end
