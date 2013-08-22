@@ -4,14 +4,12 @@ module Dragonfly
     # Exceptions
     class JobNotAllowed < RuntimeError; end
 
-    include Loggable
-
     extend Forwardable
     def_delegator :url_mapper, :params_in_url
+    def_delegator :app, :log
 
     def initialize(app)
       @app = app
-      use_same_log_as(app)
       @dragonfly_url = '/dragonfly'
       self.url_format = '/:job/:name'
       @fetch_file_whitelist = []
