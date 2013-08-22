@@ -287,6 +287,19 @@ describe Dragonfly::Content do
         content_2.path.should =~ /\.txt$/
       end
     end
+
+    describe "logging" do
+      it "doesn't log by default" do
+        app.should_not_receive(:warn)
+        content.shell_eval{|p| "wc -l #{p}" }
+      end
+
+      it "allows logging with log_shell" do
+        app.log_shell = true
+        app.should_receive(:info).with{|m| m.should =~ /^Running Command: wc -l '.+'$/ }
+        content.shell_eval{|p| "wc -l #{p}" }
+      end
+    end
   end
 
   describe "store" do

@@ -15,7 +15,7 @@ module Dragonfly
 
     attr_reader :app
     def_delegators :app,
-                   :analyser, :generator, :processor, :shell, :datastore
+                   :analyser, :generator, :processor, :shell, :datastore, :warn, :info
 
     attr_reader :temp_object
     attr_accessor :meta
@@ -65,7 +65,7 @@ module Dragonfly
     def shell_eval(opts={})
       should_escape = opts[:escape] != false
       command = yield(should_escape ? shell.quote(path) : path)
-      shell.run command, :escape => should_escape
+      run command, :escape => should_escape
     end
 
     def shell_generate(opts={})
@@ -74,7 +74,7 @@ module Dragonfly
       tempfile = Dragonfly::Utils.new_tempfile(ext)
       new_path = should_escape ? shell.quote(tempfile.path) : tempfile.path
       command = yield(new_path)
-      shell.run(command, :escape => should_escape)
+      run(command, :escape => should_escape)
       update(tempfile)
     end
 
@@ -85,7 +85,7 @@ module Dragonfly
       old_path = should_escape ? shell.quote(path) : path
       new_path = should_escape ? shell.quote(tempfile.path) : tempfile.path
       command = yield(old_path, new_path)
-      shell.run(command, :escape => should_escape)
+      run(command, :escape => should_escape)
       update(tempfile)
     end
 
@@ -112,6 +112,11 @@ module Dragonfly
 
     def analyser_cache
       meta["analyser_cache"] ||= {}
+    end
+
+    def run(command, opts)
+      info("Running Command: #{command}") if app.log_shell
+      shell.run(command, opts)
     end
 
   end

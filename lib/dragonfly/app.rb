@@ -61,7 +61,7 @@ module Dragonfly
     extend Configurable
 
     setup_config do
-      writer :secret, :log, :allow_legacy_urls
+      writer :secret, :log, :allow_legacy_urls, :log_shell
       meth :add_mime_type, :response_headers, :define_url, :add_processor, :add_generator, :add_analyser
 
       def datastore(*args)
@@ -231,6 +231,8 @@ module Dragonfly
       @allow_legacy_urls
     end
     attr_writer :allow_legacy_urls
+
+    attr_accessor :log_shell
 
     private
 
