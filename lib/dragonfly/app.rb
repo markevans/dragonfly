@@ -218,6 +218,14 @@ module Dragonfly
     end
     attr_writer :log
 
+    def warn(message)
+      log.warn("DRAGONFLY: WARNING - #{message}")
+    end
+
+    def info(message)
+      log.info("DRAGONFLY: #{message}")
+    end
+
     def allow_legacy_urls
       @allow_legacy_urls = true if @allow_legacy_urls.nil?
       @allow_legacy_urls

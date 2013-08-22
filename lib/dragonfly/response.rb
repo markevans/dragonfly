@@ -3,6 +3,9 @@ require 'uri'
 module Dragonfly
   class Response
 
+    extend Forwardable
+    def_delegators :app, :warn
+
     def initialize(job, env)
       @job, @env = job, env
       @app = @job.app
@@ -23,7 +26,7 @@ module Dragonfly
         [200, success_headers, job]
       end
     rescue DataStorage::DataNotFound, DataStorage::BadUID => e
-      app.log.warn(e.message)
+      warn(e.message)
       [404, {"Content-Type" => 'text/plain'}, ['Not found']]
     end
 

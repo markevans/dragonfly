@@ -70,7 +70,7 @@ module Dragonfly
             begin
               dragonfly_attachments[attribute].retained_attrs = Serializer.json_b64_decode(string)
             rescue Serializer::BadString => e
-              app.log.warn("*** WARNING ***: couldn't update attachment with serialized retained_#{attribute} string #{string.inspect}")              
+              app.warn("couldn't update attachment with serialized retained_#{attribute} string #{string.inspect}")
             end
           end
           dragonfly_attachments[attribute].should_retain = true
