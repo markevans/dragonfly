@@ -73,7 +73,7 @@ module Dragonfly
 
     def cache_headers
       {
-        "Cache-Control" => "public, max-age=#{app.cache_duration}",
+        "Cache-Control" => "public, max-age=31536000", # (1 year)
         "ETag" => %("#{job.unique_signature}")
       }
     end

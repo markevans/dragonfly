@@ -61,7 +61,7 @@ module Dragonfly
     extend Configurable
 
     setup_config do
-      writer :cache_duration, :secret, :log, :allow_legacy_urls
+      writer :secret, :log, :allow_legacy_urls
       meth :add_mime_type, :response_headers, :define_url, :add_processor, :add_generator, :add_analyser
 
       def datastore(*args)
@@ -207,11 +207,6 @@ module Dragonfly
     def fallback_mime_type
       'application/octet-stream'
     end
-
-    def cache_duration
-      @cache_duration ||= 3600*24*365 # (1 year)
-    end
-    attr_writer :cache_duration
 
     def secret
       @secret ||= 'secret yo'
