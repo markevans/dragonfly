@@ -155,15 +155,15 @@ module Dragonfly
     end
 
     def register_mime_type(format, mime_type)
-      registered_mime_types[file_ext_string(format)] = mime_type
+      mime_types[file_ext_string(format)] = mime_type
     end
 
-    def registered_mime_types
-      @registered_mime_types ||= Rack::Mime::MIME_TYPES.dup
+    def mime_types
+      @mime_types ||= Rack::Mime::MIME_TYPES.dup
     end
 
     def mime_type_for(format)
-      registered_mime_types[file_ext_string(format)] || fallback_mime_type
+      mime_types[file_ext_string(format)] || fallback_mime_type
     end
 
     def response_headers
