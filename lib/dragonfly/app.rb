@@ -63,7 +63,7 @@ module Dragonfly
 
     setup_config do
       writer :cache_duration, :secret, :log, :content_disposition, :content_filename, :allow_legacy_urls
-      meth :register_mime_type, :response_headers, :define_url, :add_processor, :add_generator, :add_analyser
+      meth :add_mime_type, :response_headers, :define_url, :add_processor, :add_generator, :add_analyser
 
       def datastore(*args)
         obj.use_datastore(*args)
@@ -154,7 +154,7 @@ module Dragonfly
       create(object, meta).store(opts)
     end
 
-    def register_mime_type(format, mime_type)
+    def add_mime_type(format, mime_type)
       mime_types[file_ext_string(format)] = mime_type
     end
 

@@ -70,17 +70,17 @@ describe Dragonfly::App do
         @app.mime_type_for(:mark).should == 'application/octet-stream'
       end
       it "should allow for configuring extra mime types" do
-        @app.register_mime_type 'mark', 'application/mark'
+        @app.add_mime_type 'mark', 'application/mark'
         @app.mime_type_for(:mark).should == 'application/mark'
       end
       it "should override existing mime types when registered" do
-        @app.register_mime_type :png, 'ping/pong'
+        @app.add_mime_type :png, 'ping/pong'
         @app.mime_type_for(:png).should == 'ping/pong'
       end
       it "should have a per-app mime-type configuration" do
         other_app = Dragonfly[:other_app]
-        @app.register_mime_type(:mark, 'first/one')
-        other_app.register_mime_type(:mark, 'second/one')
+        @app.add_mime_type(:mark, 'first/one')
+        other_app.add_mime_type(:mark, 'second/one')
         @app.mime_type_for(:mark).should == 'first/one'
         other_app.mime_type_for(:mark).should == 'second/one'
       end
