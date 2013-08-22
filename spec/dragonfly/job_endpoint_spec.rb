@@ -120,54 +120,6 @@ describe Dragonfly::JobEndpoint do
     end
   end
 
-  describe "Content Disposition" do
-    describe "filename" do
-      it "should return the original name" do
-        response = make_request(@job)
-        response['Content-Disposition'].should == 'filename="gung.txt"'
-      end
-      it "should not have the filename if name doesn't exist" do
-        response = make_request(@app.new_job("ADFSDF"))
-        response['Content-Disposition'].should be_nil
-      end
-      it "should cope with filenames with no ext" do
-        response = make_request(@app.new_job("ASDF", 'name' => 'asdf'))
-        response['Content-Disposition'].should == 'filename="asdf"'
-      end
-      it "should uri encode funny characters" do
-        response = make_request(@app.new_job("ASDF", 'name' => '£@$£ `'))
-        response['Content-Disposition'].should == 'filename="%C2%A3@$%C2%A3%20%60"'
-      end
-      it "should allow for setting the filename using a block" do
-        @app.content_filename = proc{|job, request|
-          job.basename.reverse.upcase + request['a']
-        }
-        response = make_request(@job, 'QUERY_STRING' => 'a=egg')
-        response['Content-Disposition'].should == 'filename="GNUGegg"'
-      end
-      it "should not include the filename if configured to be nil" do
-        @app.content_filename = nil
-        response = make_request(@job)
-        response['Content-Disposition'].should be_nil
-      end
-    end
-
-    describe "content disposition" do
-      it "should use the app's configured content-disposition" do
-        @app.content_disposition = :attachment
-        response = make_request(@job)
-        response['Content-Disposition'].should == 'attachment; filename="gung.txt"'
-      end
-      it "should allow using a block to set the content disposition" do
-        @app.content_disposition = proc{|job, request|
-          job.basename + request['blah']
-        }
-        response = make_request(@job, 'QUERY_STRING' => 'blah=yo')
-        response['Content-Disposition'].should == 'gungyo; filename="gung.txt"'
-      end
-    end
-  end
-
   describe "custom headers" do
     before(:each) do
       @app.configure{|c| c.response_headers['This-is'] = 'brill' }
@@ -183,11 +135,15 @@ describe Dragonfly::JobEndpoint do
       make_request(@job).headers['Cache-Control'].should == 'try me'
     end
     it "should allow giving a proc" do
-      @app.response_headers['Cache-Control'] = proc{|job, request|
-        job.basename.reverse.upcase + request['a']
+      @app.response_headers['Cache-Control'] = proc{|job, request, headers|
+        [job.basename.reverse.upcase, request['a'], headers['Cache-Control'][0]].join(',')
       }
       response = make_request(@job, 'QUERY_STRING' => 'a=egg')
-      response['Cache-Control'].should == 'GNUGegg'
+      response['Cache-Control'].should == 'GNUG,egg,p'
+    end
+    it "should allow removing by setting to nil" do
+      @app.response_headers['Cache-Control'] = nil
+      make_request(@job).headers.should_not have_key('Cache-Control')
     end
   end
 

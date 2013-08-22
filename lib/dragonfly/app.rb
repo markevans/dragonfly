@@ -45,7 +45,6 @@ module Dragonfly
       @name = name
       @analysers, @processors, @generators = Register.new, Register.new, Register.new
       @server = Server.new(self)
-      @content_filename = Dragonfly::Response::DEFAULT_FILENAME
       @job_methods = Module.new
       @shell = Shell.new
     end
@@ -62,7 +61,7 @@ module Dragonfly
     extend Configurable
 
     setup_config do
-      writer :cache_duration, :secret, :log, :content_disposition, :content_filename, :allow_legacy_urls
+      writer :cache_duration, :secret, :log, :allow_legacy_urls
       meth :add_mime_type, :response_headers, :define_url, :add_processor, :add_generator, :add_analyser
 
       def datastore(*args)
@@ -223,8 +222,6 @@ module Dragonfly
       @log ||= Logger.new('dragonfly.log')
     end
     attr_writer :log
-
-    attr_accessor :content_disposition, :content_filename
 
     def allow_legacy_urls
       @allow_legacy_urls = true if @allow_legacy_urls.nil?
