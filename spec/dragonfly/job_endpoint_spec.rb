@@ -37,7 +37,8 @@ describe Dragonfly::JobEndpoint do
   def make_request(job, opts={})
     endpoint = Dragonfly::JobEndpoint.new(job)
     method = (opts.delete(:method) || :get).to_s.upcase
-    Rack::MockRequest.new(endpoint).request(method, '', opts)
+    uri = opts[:path] || ""
+    Rack::MockRequest.new(endpoint).request(method, uri, opts)
   end
 
   before(:each) do
@@ -90,6 +91,13 @@ describe Dragonfly::JobEndpoint do
     @job.should_receive(:apply).and_raise(Dragonfly::DataStorage::BadUID)
     response = make_request(@job)
     response.status.should == 404
+  end
+
+  describe "logging" do
+    it "logs successful requests" do
+      @app.should_receive(:info).with("GET - /something?great - 200")
+      make_request(@job, :path => '/something?great')
+    end
   end
 
   describe "ETag" do

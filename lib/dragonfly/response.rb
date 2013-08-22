@@ -3,31 +3,32 @@ require 'uri'
 module Dragonfly
   class Response
 
-    extend Forwardable
-    def_delegators :app, :warn
-
     def initialize(job, env)
       @job, @env = job, env
       @app = @job.app
     end
 
     def to_response
-      if !(request.head? || request.get?)
-        [405, method_not_allowed_headers, ["#{request.request_method} method not allowed"]]
-      elsif etag_matches?
-        [304, cache_headers, []]
-      elsif request.head?
-        job.apply
-        env['dragonfly.job'] = job
-        [200, success_headers, []]
-      elsif request.get?
-        job.apply
-        env['dragonfly.job'] = job
-        [200, success_headers, job]
+      response = begin
+        if !(request.head? || request.get?)
+          [405, method_not_allowed_headers, ["#{request.request_method} method not allowed"]]
+        elsif etag_matches?
+          [304, cache_headers, []]
+        elsif request.head?
+          job.apply
+          env['dragonfly.job'] = job
+          [200, success_headers, []]
+        elsif request.get?
+          job.apply
+          env['dragonfly.job'] = job
+          [200, success_headers, job]
+        end
+      rescue DataStorage::DataNotFound, DataStorage::BadUID => e
+        app.warn(e.message)
+        [404, {"Content-Type" => 'text/plain'}, ['Not found']]
       end
-    rescue DataStorage::DataNotFound, DataStorage::BadUID => e
-      warn(e.message)
-      [404, {"Content-Type" => 'text/plain'}, ['Not found']]
+      log_response(response)
+      response
     end
 
     def will_be_served?
@@ -40,6 +41,11 @@ module Dragonfly
 
     def request
       @request ||= Rack::Request.new(env)
+    end
+
+    def log_response(response)
+      req = request
+      app.info [req.request_method, req.fullpath, response[0]].join(' - ')
     end
 
     def etag_matches?
