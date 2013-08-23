@@ -15,12 +15,14 @@ describe "urls" do
   let (:app) { test_app.configure{ add_processor(:thumb){} } }
 
   it "works with old marshalled urls (including with tildes in them)" do
+    app.allow_legacy_urls = true
     url = "/BAhbBlsHOgZmSSIIPD4~BjoGRVQ"
     job_should_match [["f", "<>?"]]
     response = request(app, url)
   end
 
   it "blows up if it detects bad objects" do
+    app.allow_legacy_urls = true
     url = "/BAhvOhpEcmFnb25mbHk6OlRlbXBPYmplY3QIOgpAZGF0YUkiCWJsYWgGOgZFVDoXQG9yaWdpbmFsX2ZpbGVuYW1lMDoKQG1ldGF7AA"
     Dragonfly::Job.should_not_receive(:from_a)
     response = request(app, url)

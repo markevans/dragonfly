@@ -226,13 +226,7 @@ module Dragonfly
       log.info("DRAGONFLY: #{message}")
     end
 
-    def allow_legacy_urls
-      @allow_legacy_urls = true if @allow_legacy_urls.nil?
-      @allow_legacy_urls
-    end
-    attr_writer :allow_legacy_urls
-
-    attr_accessor :log_shell
+    attr_accessor :allow_legacy_urls, :log_shell
 
     private
 
