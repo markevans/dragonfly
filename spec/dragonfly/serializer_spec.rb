@@ -101,9 +101,6 @@ describe Dragonfly::Serializer do
   end
 
   describe "json_b64_decode" do
-    it "optionally symbolizes keys" do
-      json_b64_decode(json_b64_encode('a' => 1), :symbolize_keys => true).should == {:a => 1}
-    end
     it "should raise an error if the string passed in is empty" do
       lambda{
         json_b64_decode('')
