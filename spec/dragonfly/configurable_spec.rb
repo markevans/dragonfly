@@ -135,14 +135,14 @@ describe Dragonfly::Configurable do
       attr_accessor :colour
     end }
 
-    it "adds the setup_config method to the class" do
-      car_class.setup_config do
+    it "adds the set_up_config method to the class" do
+      car_class.set_up_config do
         writer :colour
       end
     end
 
     it "adds the configure method to the instance" do
-      car_class.setup_config do
+      car_class.set_up_config do
         writer :colour
       end
       car = car_class.new
@@ -153,7 +153,7 @@ describe Dragonfly::Configurable do
     end
 
     it "adds the plugins method to the instance" do
-      car_class.setup_config do
+      car_class.set_up_config do
         writer :colour
       end
       car = car_class.new
@@ -179,7 +179,7 @@ describe Dragonfly::Configurable do
         end
         attr_accessor :numbers
       end
-      @car_class.setup_config do
+      @car_class.set_up_config do
         def add(number)
           obj.numbers << number
         end

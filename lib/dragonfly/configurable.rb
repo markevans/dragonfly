@@ -82,7 +82,7 @@ module Dragonfly
 
     #######
 
-    def setup_config(&setup_block)
+    def set_up_config(&setup_block)
       self.configurer = Configurer.new(&setup_block)
       class_eval do
         def configure(&block)
