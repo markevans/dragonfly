@@ -5,9 +5,13 @@ module Dragonfly
     # Look at the source code for #call to see exactly how it configures the app.
     class Plugin
 
-      def call(app)
+      def call(app, opts={})
+        # ENV
+        app.env[:convert_command] = opts[:convert_command] || 'convert'
+        app.env[:identify_command] = opts[:identify_command] || 'identify'
+
         # Analysers
-        app.add_analyser :identify, ImageMagick::Analysers::Identify.new(command_line)
+        app.add_analyser :identify, ImageMagick::Analysers::Identify.new
         app.add_analyser :width do |content|
           content.analyse(:identify)['width']
         end
@@ -42,31 +46,19 @@ module Dragonfly
         app.define(:image?) { image }
 
         # Generators
-        app.add_generator :convert, ImageMagick::Generators::Convert.new(command_line)
+        app.add_generator :convert, ImageMagick::Generators::Convert.new
         app.add_generator :plain, ImageMagick::Generators::Plain.new
         app.add_generator :plasma, ImageMagick::Generators::Plasma.new
         app.add_generator :text, ImageMagick::Generators::Text.new
 
         # Processors
-        app.add_processor :convert, Processors::Convert.new(command_line)
+        app.add_processor :convert, Processors::Convert.new
         app.add_processor :thumb, Processors::Thumb.new
         app.add_processor :encode, Processors::Encode.new
         app.add_processor :rotate do |content, amount, opts={}|
           content.process!(:convert, "-rotate #{amount}#{opts['qualifier']}")
         end
 
-      end
-
-      def command_line
-        @command_line ||= CommandLine.new
-      end
-
-      def convert_command(command)
-        command_line.convert_command = command
-      end
-
-      def identify_command(command)
-        command_line.identify_command = command
       end
 
     end

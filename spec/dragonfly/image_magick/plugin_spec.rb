@@ -4,22 +4,20 @@ describe "a configured imagemagick app" do
 
   let(:app){ test_app }
 
-  describe "convert command path" do
+  describe "env variables" do
 
-    it "should default to 'convert'" do
+    it "allows setting the convert command" do
       app.configure do
-        use :imagemagick
+        use :imagemagick, :convert_command => '/bin/convert'
       end
-      app.get_processor(:convert).command_line.convert_command.should == 'convert'
+      app.env[:convert_command].should == '/bin/convert'
     end
 
-    it "should allow configuring" do
+    it "allows setting the identify command" do
       app.configure do
-        use :imagemagick do
-          convert_command '/usr/eggs/convert'
-        end
+        use :imagemagick, :identify_command => '/bin/identify'
       end
-      app.get_processor(:convert).command_line.convert_command.should == '/usr/eggs/convert'
+      app.env[:identify_command].should == '/bin/identify'
     end
 
   end

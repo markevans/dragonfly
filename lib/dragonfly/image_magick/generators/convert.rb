@@ -3,16 +3,11 @@ module Dragonfly
     module Generators
       class Convert
 
-        def initialize(command_line=nil)
-          @command_line = command_line || CommandLine.new
-        end
-
-        attr_reader :command_line
-
         def call(content, args, format)
           format = format.to_s
+          convert_command = content.env[:convert_command] || 'convert'
           content.shell_generate :ext => format do |path|
-            "#{command_line.convert_command} #{args} #{path}"
+            "#{convert_command} #{args} #{path}"
           end
           content.add_meta('format' => format)
         end
