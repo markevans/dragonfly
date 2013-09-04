@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Dragonfly::Configurable do
 
   describe "Configurer" do
-    
+
     let (:configurer) { Dragonfly::Configurable::Configurer.new do
       def colour(colour)
         obj.colour = colour
@@ -11,7 +11,7 @@ describe Dragonfly::Configurable do
     end }
 
     let (:obj) { Object.new }
-    
+
     it "allows configuring" do
       obj.should_receive(:colour=).with('red')
       configurer.configure(obj) do
@@ -36,7 +36,7 @@ describe Dragonfly::Configurable do
       rescue NoMethodError
       end
     end
-    
+
     it "provides a 'writer' shortcut" do
       configurer = Dragonfly::Configurable::Configurer.new do
         writer :colour, :size
@@ -48,7 +48,7 @@ describe Dragonfly::Configurable do
         size 'big'
       end
     end
-    
+
     it "allows using the writer on another object" do
       configurer = Dragonfly::Configurable::Configurer.new do
         writer :colour, :for => :egg
@@ -60,7 +60,7 @@ describe Dragonfly::Configurable do
         colour 'pink'
       end
     end
-    
+
     it "provides a 'meth' shortcut" do
       configurer = Dragonfly::Configurable::Configurer.new do
         meth :jobby, :nobby
@@ -125,33 +125,22 @@ describe Dragonfly::Configurable do
         end
       }.to raise_error(Dragonfly::Configurable::UnregisteredPlugin)
     end
-    
-    it "calls extra methods on the plugin if a block is given" do
-      plugin = mock('plugin')
-      plugin.should_receive(:call).with(obj, :arg)
-      plugin.should_receive(:dingle).with('dumperton')
-      configurer.configure(obj) do
-        use plugin, :arg do
-          dingle 'dumperton'
-        end
-      end
-    end
 
   end
 
   describe "extending with Configurable" do
-    
+
     let (:car_class) { Class.new do
       extend Dragonfly::Configurable
       attr_accessor :colour
     end }
-    
+
     it "adds the setup_config method to the class" do
       car_class.setup_config do
         writer :colour
       end
     end
-    
+
     it "adds the configure method to the instance" do
       car_class.setup_config do
         writer :colour
@@ -181,7 +170,7 @@ describe Dragonfly::Configurable do
   end
 
   describe "nested configures" do
-    
+
     before(:each) do
       @car_class = Class.new do
         extend Dragonfly::Configurable
@@ -196,7 +185,7 @@ describe Dragonfly::Configurable do
         end
       end
     end
-    
+
     it "should still work (as some plugins will configure inside a configure)" do
       car = @car_class.new
       car.configure do
@@ -211,3 +200,4 @@ describe Dragonfly::Configurable do
   end
 
 end
+

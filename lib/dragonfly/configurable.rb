@@ -8,7 +8,7 @@ module Dragonfly
 
       class << self
         private
-        
+
         def writer(*args)
           names, opts = extract_options(args)
           names.each do |name|
@@ -21,7 +21,7 @@ module Dragonfly
             end
           end
         end
-        
+
         def meth(*args)
           names, opts = extract_options(args)
           names.each do |name|
@@ -34,7 +34,7 @@ module Dragonfly
             end
           end
         end
-        
+
         def extract_options(args)
           opts = args.last.is_a?(Hash) ? args.pop : {}
           [args, opts]
@@ -51,7 +51,7 @@ module Dragonfly
         instance_eval(&block)
         @obj = previous_obj
       end
-      
+
       def configure_with_plugin(obj, plugin, *args, &block)
         if plugin.is_a?(Symbol)
           symbol = plugin
@@ -59,28 +59,27 @@ module Dragonfly
           plugin = registered_plugins[symbol].call
           obj.plugins[symbol] = plugin if obj.respond_to?(:plugins)
         end
-        plugin.call(obj, *args)
-        plugin.instance_eval(&block) if block
+        plugin.call(obj, *args, &block)
         plugin
       end
-      
+
       def register_plugin(name, &block)
         registered_plugins[name] = block
       end
-      
+
       def use(plugin, *args, &block)
         configure_with_plugin(obj, plugin, *args, &block)
       end
-      
+
       private
-      
+
       attr_reader :obj
-      
+
       def registered_plugins
         @registered_plugins ||= {}
       end
     end
-    
+
     #######
 
     def setup_config(&setup_block)
@@ -90,7 +89,7 @@ module Dragonfly
           self.class.configurer.configure(self, &block)
           self
         end
-        
+
         def configure_with(plugin, *args, &block)
           self.class.configurer.configure_with_plugin(self, plugin, *args, &block)
           self
@@ -101,7 +100,7 @@ module Dragonfly
         end
       end
     end
-    
+
     attr_accessor :configurer
 
   end
