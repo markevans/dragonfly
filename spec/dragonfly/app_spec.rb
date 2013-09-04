@@ -267,4 +267,15 @@ describe Dragonfly::App do
     end
   end
 
+  describe "env" do
+    let(:app){ test_app }
+
+    it "stores environment variables" do
+      app.env.should == {}
+      app.env[:doogie] = 'blisto'
+      app.env[:doogie].should == 'blisto'
+    end
+  end
+
 end
+

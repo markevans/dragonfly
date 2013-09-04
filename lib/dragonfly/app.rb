@@ -47,9 +47,10 @@ module Dragonfly
       @server = Server.new(self)
       @job_methods = Module.new
       @shell = Shell.new
+      @env = {}
     end
 
-    attr_reader :name
+    attr_reader :name, :env
 
     extend Forwardable
     def_delegator :datastore, :destroy
