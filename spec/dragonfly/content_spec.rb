@@ -343,5 +343,11 @@ describe Dragonfly::Content do
     end
   end
 
+  describe "env" do
+    it "returns the app's env" do
+      content.env.should == app.env
+    end
+  end
+
 end
 

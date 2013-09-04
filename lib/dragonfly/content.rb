@@ -15,7 +15,7 @@ module Dragonfly
 
     attr_reader :app
     def_delegators :app,
-                   :analyser, :generator, :processor, :shell, :datastore, :warn, :info
+                   :analyser, :generator, :processor, :shell, :datastore, :warn, :info, :env
 
     attr_reader :temp_object
     attr_accessor :meta
