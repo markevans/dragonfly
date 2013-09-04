@@ -1,5 +1,5 @@
 require 'spec_helper'
-require File.dirname(__FILE__) + '/shared_data_store_examples'
+require 'dragonfly/spec/data_store_examples'
 
 describe Dragonfly::DataStorage::FileDataStore do
 

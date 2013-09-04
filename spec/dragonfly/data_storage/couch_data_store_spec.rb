@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'spec_helper'
-require File.dirname(__FILE__) + '/shared_data_store_examples'
+require 'dragonfly/spec/data_store_examples'
 require 'net/http'
 require 'uri'
 
