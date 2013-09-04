@@ -149,7 +149,7 @@ describe Dragonfly::App do
   describe "adding generators" do
     before(:each) do
       @app = test_app.configure do
-        add_generator(:butter){ "BUTTER" }
+        generator(:butter){ "BUTTER" }
       end
     end
     it "should return generator methods" do

@@ -6,7 +6,7 @@ describe "remote on-the-fly urls" do
 
   before(:each) do
     @app = test_app.configure do
-      add_generator :test do |content|
+      generator :test do |content|
         content.update("TEST")
       end
       before_serve do |job, env|
