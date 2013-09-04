@@ -43,7 +43,7 @@ module Dragonfly
   class << self
 
     def [](*args)
-      App[*args]
+      App.instance(*args)
     end
 
     def default_app

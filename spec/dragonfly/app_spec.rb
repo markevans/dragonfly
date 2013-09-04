@@ -19,8 +19,12 @@ describe Dragonfly::App do
       Dragonfly::App.instance(:images).should == app
     end
 
-    it "should also work using square brackets" do
-      Dragonfly[:images].should == Dragonfly::App.instance(:images)
+    it "has a default instance" do
+      Dragonfly::App.instance.should be_a(Dragonfly::App)
+    end
+
+    it "returns the default instance if passed nil" do
+      Dragonfly::App.instance(nil).should == Dragonfly::App.instance
     end
 
   end
@@ -33,16 +37,10 @@ describe Dragonfly::App do
     end
   end
 
-  describe "default_app" do
-    it "returns the default app" do
-      Dragonfly::App.default_app.should == Dragonfly::App[:default]
-    end
-  end
-
   describe "destroy_apps" do
     it "destroys the dragonfly apps" do
-      Dragonfly::App[:gug]
-      Dragonfly::App[:blug]
+      Dragonfly::App.instance(:gug)
+      Dragonfly::App.instance(:blug)
       Dragonfly::App.apps.length.should == 2
       Dragonfly::App.destroy_apps
       Dragonfly::App.apps.length.should == 0

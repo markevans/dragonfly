@@ -34,9 +34,9 @@ RSpec.configure do |c|
   end
 end
 
-def test_app(name=:default)
+def test_app(name=nil)
   time = Time.now
-  app = Dragonfly::App[name]
+  app = Dragonfly::App.instance(name)
   app.datastore = Dragonfly::DataStorage::MemoryDataStore.new
   app.log = Logger.new(LOG_FILE)
   app

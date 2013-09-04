@@ -8,23 +8,24 @@ module Dragonfly
     # Exceptions
     class UnregisteredDataStore < RuntimeError; end
 
+    DEFAULT_NAME = :default
+
     class << self
 
       private :new # Hide 'new' - need to use 'instance'
 
-      def instance(name)
+      def instance(name=nil)
+        name ||= DEFAULT_NAME
         name = name.to_sym
         apps[name] ||= new(name)
       end
-
-      alias [] instance
 
       def apps
         @apps ||= {}
       end
 
       def default_app
-        instance(:default)
+        instance
       end
 
       def destroy_apps
