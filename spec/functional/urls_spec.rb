@@ -12,7 +12,7 @@ describe "urls" do
     end.and_return(mock('response', :to_response => [200, {'Content-Type' => 'text/plain'}, ["OK"]]))
   end
 
-  let (:app) { test_app.configure{ add_processor(:thumb){} } }
+  let (:app) { test_app.configure{ processor(:thumb){} } }
 
   it "works with old marshalled urls (including with tildes in them)" do
     app.allow_legacy_urls = true

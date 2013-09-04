@@ -160,7 +160,7 @@ describe Dragonfly::App do
   describe "adding processors" do
     before(:each) do
       @app = test_app.configure do
-        add_processor(:double){}
+        processor(:double){}
       end
     end
     it "should add a method" do
