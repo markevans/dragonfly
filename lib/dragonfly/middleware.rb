@@ -7,8 +7,7 @@ module Dragonfly
     end
 
     def call(env)
-      dragonfly_app = @dragonfly_app_name ? Dragonfly[@dragonfly_app_name] : Dragonfly.default_app
-      response = dragonfly_app.call(env)
+      response = Dragonfly.app(@dragonfly_app_name).call(env)
       if response[1]['X-Cascade'] == 'pass'
         @app.call(env)
       else
@@ -18,3 +17,4 @@ module Dragonfly
 
   end
 end
+

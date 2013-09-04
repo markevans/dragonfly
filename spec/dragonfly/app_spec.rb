@@ -76,7 +76,7 @@ describe Dragonfly::App do
         @app.mime_type_for(:png).should == 'ping/pong'
       end
       it "should have a per-app mime-type configuration" do
-        other_app = Dragonfly[:other_app]
+        other_app = Dragonfly.app(:other_app)
         @app.add_mime_type(:mark, 'first/one')
         other_app.add_mime_type(:mark, 'second/one')
         @app.mime_type_for(:mark).should == 'first/one'
@@ -194,7 +194,7 @@ describe Dragonfly::App do
 
   describe "inspect" do
     it "should give a neat output" do
-      Dragonfly[:hello].inspect.should == "<Dragonfly::App name=:hello >"
+      Dragonfly.app(:hello).inspect.should == "<Dragonfly::App name=:hello >"
     end
   end
 

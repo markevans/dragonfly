@@ -42,21 +42,19 @@ require 'rbconfig'
 module Dragonfly
   class << self
 
-    def [](*args)
-      App.instance(*args)
+    def app(name=nil)
+      App.instance(name)
     end
 
-    def default_app
-      App.default_app
-    end
-
-    # Register saved configurations so we can do e.g.
-    # Dragonfly[:my_app].configure_with(:image_magick)
+    # Register plugins so we can do e.g.
+    # Dragonfly.app.configure do
+    #   plugin :imagemagick
+    # end
     App.configurer.register_plugin(:imagemagick){ ImageMagick::Plugin.new }
     App.configurer.register_plugin(:image_magick){ ImageMagick::Plugin.new }
 
     # Register saved datastores so we can do e.g.
-    # Dragonfly[:my_app].configure do
+    # Dragonfly.app.configure do
     #   datastore :file
     # end
     App.register_datastore(:file){ DataStorage::FileDataStore }

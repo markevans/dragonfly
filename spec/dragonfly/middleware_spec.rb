@@ -20,7 +20,7 @@ describe Dragonfly::Middleware do
     end
 
     it "should pass through if the app returns X-Cascade: pass" do
-      Dragonfly.default_app.should_receive(:call).and_return(
+      Dragonfly.app.should_receive(:call).and_return(
         [404, {"Content-Type" => 'text/plain', 'X-Cascade' => 'pass'}, ['Not found']]
       )
       response = make_request(@stack, '/media/hello.png?howare=you')
@@ -29,7 +29,7 @@ describe Dragonfly::Middleware do
     end
 
     it "should return a 404 if the app returns a 404" do
-      Dragonfly.default_app.should_receive(:call).and_return(
+      Dragonfly.app.should_receive(:call).and_return(
         [404, {"Content-Type" => 'text/plain'}, ['Not found']]
       )
       response = make_request(@stack, '/media/hello.png?howare=you')
@@ -37,7 +37,7 @@ describe Dragonfly::Middleware do
     end
 
     it "should return as per the dragonfly app if the app returns a 200" do
-      Dragonfly.default_app.should_receive(:call).and_return(
+      Dragonfly.app.should_receive(:call).and_return(
         [200, {"Content-Type" => 'text/plain'}, ['ABCD']]
       )
       response = make_request(@stack, '/media/hello.png?howare=you')
@@ -55,8 +55,8 @@ describe Dragonfly::Middleware do
     end
 
     it "should use the specified dragonfly app" do
-      Dragonfly.default_app.should_not_receive(:call)
-      Dragonfly[:images].should_receive(:call).and_return([
+      Dragonfly.app.should_not_receive(:call)
+      Dragonfly.app(:images).should_receive(:call).and_return([
         200, {"Content-Type" => 'text/plain'}, ['booboo']
       ])
       response = make_request(@stack, '/media/hello.png?howare=you')

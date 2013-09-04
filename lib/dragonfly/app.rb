@@ -24,10 +24,6 @@ module Dragonfly
         @apps ||= {}
       end
 
-      def default_app
-        instance
-      end
-
       def destroy_apps
         apps.clear
       end

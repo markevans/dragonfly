@@ -19,8 +19,7 @@ module Dragonfly
 
       def dragonfly_accessor(attribute, opts={}, &config_block)
         app = case opts[:app]
-        when Symbol then Dragonfly::App.instance(opts[:app])
-        when nil then Dragonfly::App.default_app
+        when Symbol, nil then Dragonfly.app(opts[:app])
         else opts[:app]
         end
 

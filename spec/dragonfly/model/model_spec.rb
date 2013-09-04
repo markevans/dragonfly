@@ -4,7 +4,7 @@ require 'spec_helper'
 describe "models" do
 
   before do
-    Dragonfly.default_app.use_datastore(:memory)
+    Dragonfly.app.use_datastore(:memory)
   end
 
   describe "using the module" do
@@ -19,7 +19,7 @@ describe "models" do
   describe "defining accessors" do
 
     before(:each) do
-      @app1, @app2 = Dragonfly[:img], Dragonfly[:vid]
+      @app1, @app2 = Dragonfly.app(:img), Dragonfly.app(:vid)
       app1, app2 = @app1, @app2
       @model_class = new_model_class do
         dragonfly_accessor :preview_image, :app => app1
@@ -60,7 +60,7 @@ describe "models" do
       klass = new_model_class do
         dragonfly_accessor :egg_nog
       end
-      klass.dragonfly_attachment_classes.first.app.should == Dragonfly.default_app
+      klass.dragonfly_attachment_classes.first.app.should == Dragonfly.app
     end
   end
 
