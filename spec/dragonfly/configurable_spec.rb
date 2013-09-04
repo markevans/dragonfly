@@ -91,37 +91,37 @@ describe Dragonfly::Configurable do
     let (:configurer) { Dragonfly::Configurable::Configurer.new{} }
     let (:obj) { Object.new }
 
-    it "provides 'use' for using plugins" do
-      plugin = mock('plugin')
-      plugin.should_receive(:call).with(obj, :a, 'few' => ['args'])
+    it "provides 'plugin' for using plugins" do
+      pluggy = mock('plugin')
+      pluggy.should_receive(:call).with(obj, :a, 'few' => ['args'])
       configurer.configure(obj) do
-        use plugin, :a, 'few' => ['args']
+        plugin pluggy, :a, 'few' => ['args']
       end
     end
 
-    it "allows using 'use' with symbols" do
-      plugin = mock('plugin')
-      plugin.should_receive(:call).with(obj, :a, 'few' => ['args'])
-      configurer.register_plugin(:pluggy){ plugin }
+    it "allows using 'plugin' with symbols" do
+      pluggy = mock('plugin')
+      pluggy.should_receive(:call).with(obj, :a, 'few' => ['args'])
+      configurer.register_plugin(:pluggy){ pluggy }
       configurer.configure(obj) do
-        use :pluggy, :a, 'few' => ['args']
+        plugin :pluggy, :a, 'few' => ['args']
       end
     end
 
     it "adds the plugin to the object's 'plugins' if it responds to it when using symbols" do
       def obj.plugins; @plugins ||= {}; end
-      plugin = proc{}
-      configurer.register_plugin(:pluggy){ plugin }
+      pluggy = proc{}
+      configurer.register_plugin(:pluggy){ pluggy }
       configurer.configure(obj) do
-        use :pluggy
+        plugin :pluggy
       end
-      obj.plugins[:pluggy].should == plugin
+      obj.plugins[:pluggy].should == pluggy
     end
 
     it "raises an error when a wrong symbol is used" do
       expect{
         configurer.configure(obj) do
-          use :pluggy, :a, 'few' => ['args']
+          plugin :pluggy, :a, 'few' => ['args']
         end
       }.to raise_error(Dragonfly::Configurable::UnregisteredPlugin)
     end

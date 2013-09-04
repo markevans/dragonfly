@@ -8,14 +8,14 @@ describe "a configured imagemagick app" do
 
     it "allows setting the convert command" do
       app.configure do
-        use :imagemagick, :convert_command => '/bin/convert'
+        plugin :imagemagick, :convert_command => '/bin/convert'
       end
       app.env[:convert_command].should == '/bin/convert'
     end
 
     it "allows setting the identify command" do
       app.configure do
-        use :imagemagick, :identify_command => '/bin/identify'
+        plugin :imagemagick, :identify_command => '/bin/identify'
       end
       app.env[:identify_command].should == '/bin/identify'
     end

@@ -67,7 +67,7 @@ module Dragonfly
         registered_plugins[name] = block
       end
 
-      def use(plugin, *args, &block)
+      def plugin(plugin, *args, &block)
         configure_with_plugin(obj, plugin, *args, &block)
       end
 

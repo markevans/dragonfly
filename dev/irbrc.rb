@@ -5,7 +5,7 @@ require 'dragonfly'
 include Dragonfly::Serializer
 
 APP = Dragonfly.default_app.configure do
-  use :imagemagick
+  plugin :imagemagick
   datastore :memory
 end
 
