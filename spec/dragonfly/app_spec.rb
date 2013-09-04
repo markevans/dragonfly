@@ -183,7 +183,7 @@ describe Dragonfly::App do
   describe "adding analysers" do
     before(:each) do
       @app = test_app.configure do
-        add_analyser(:length){|content| content.size }
+        analyser(:length){|content| content.size }
       end
     end
     it "should add a method" do

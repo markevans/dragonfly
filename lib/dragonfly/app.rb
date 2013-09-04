@@ -63,7 +63,7 @@ module Dragonfly
 
     set_up_config do
       writer :secret, :log, :allow_legacy_urls, :log_shell
-      meth :add_mime_type, :response_headers, :define_url, :add_analyser
+      meth :add_mime_type, :response_headers, :define_url
 
       def processor(*args, &block)
         obj.add_processor(*args, &block)
@@ -71,6 +71,10 @@ module Dragonfly
 
       def generator(*args, &block)
         obj.add_generator(*args, &block)
+      end
+
+      def analyser(*args, &block)
+        obj.add_analyser(*args, &block)
       end
 
       def datastore(*args)
