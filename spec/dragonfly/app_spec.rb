@@ -148,8 +148,8 @@ describe Dragonfly::App do
 
   describe "adding generators" do
     before(:each) do
-      @app = test_app.configure do |c|
-        c.add_generator(:butter){ "BUTTER" }
+      @app = test_app.configure do
+        add_generator(:butter){ "BUTTER" }
       end
     end
     it "should return generator methods" do
@@ -159,8 +159,8 @@ describe Dragonfly::App do
 
   describe "adding processors" do
     before(:each) do
-      @app = test_app.configure do |c|
-        c.add_processor(:double){}
+      @app = test_app.configure do
+        add_processor(:double){}
       end
     end
     it "should add a method" do
@@ -182,8 +182,8 @@ describe Dragonfly::App do
 
   describe "adding analysers" do
     before(:each) do
-      @app = test_app.configure do |c|
-        c.add_analyser(:length){|content| content.size }
+      @app = test_app.configure do
+        add_analyser(:length){|content| content.size }
       end
     end
     it "should add a method" do

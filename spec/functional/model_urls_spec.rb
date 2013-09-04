@@ -103,7 +103,7 @@ describe "model urls" do
   end
 
   it "should allow configuring the url" do
-    @app.configure do |c|
+    @app.configure do
       url_format '/img/:job'
     end
     @item.preview_image = new_tempfile
