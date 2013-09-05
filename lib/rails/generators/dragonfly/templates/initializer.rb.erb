@@ -8,11 +8,12 @@ Dragonfly.app.configure do
 
   protect_from_dos_attacks true
   secret "<%= generate_secret %>"
+
   url_format "/media/:job/:name"
 
   datastore :file,
-    :root_path => Rails.root.join('public/system/dragonfly', Rails.env),
-    :server_root => Rails.root.join('public')
+    <%= hash_key(:root_path) %> Rails.root.join('public/system/dragonfly', Rails.env),
+    <%= hash_key(:server_root) %> Rails.root.join('public')
 end
 
 # Mount as middleware
