@@ -20,8 +20,7 @@ end
 Rails.application.middleware.use Dragonfly::Middleware
 
 # Add model functionality
-if defined?(ActiveModel)
-  ActiveModel.extend Dragonfly::Model
-  ActiveModel.extend Dragonfly::Model::Validations
+if defined?(ActiveRecord::Base)
+  ActiveRecord::Base.extend Dragonfly::Model
 end
 
