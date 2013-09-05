@@ -22,6 +22,10 @@ module Dragonfly
       App.instance(name)
     end
 
+    def running_on_windows?
+      !!(RbConfig::CONFIG['host_os'] =~ %r!(msdos|mswin|djgpp|mingw)!)
+    end
+
     # Register plugins so we can do e.g.
     # Dragonfly.app.configure do
     #   plugin :imagemagick
@@ -47,10 +51,6 @@ module Dragonfly
       require 'dragonfly/data_storage/mongo_data_store'
       DataStorage::MongoDataStore
     }
-
-    def running_on_windows?
-      !!(RbConfig::CONFIG['host_os'] =~ %r!(msdos|mswin|djgpp|mingw)!)
-    end
 
   end
 end
