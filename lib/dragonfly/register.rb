@@ -3,13 +3,6 @@ module Dragonfly
 
     # Exceptions
     class NotFound < RuntimeError; end
-    class RuntimeErrorWithOriginal < RuntimeError
-      def initialize(message, original_error)
-        super(message)
-        @original_error = original_error
-      end
-      attr_reader :original_error
-    end
 
     def initialize
       @items = {}
@@ -31,3 +24,4 @@ module Dragonfly
 
   end
 end
+
