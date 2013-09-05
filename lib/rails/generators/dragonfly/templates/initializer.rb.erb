@@ -19,3 +19,9 @@ end
 # Mount as middleware
 Rails.application.middleware.use Dragonfly::Middleware
 
+# Add model functionality
+if defined?(ActiveModel)
+  ActiveModel.extend Dragonfly::Model
+  ActiveModel.extend Dragonfly::Model::Validations
+end
+
