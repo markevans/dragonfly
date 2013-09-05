@@ -1,7 +1,12 @@
 require 'forwardable'
 require 'digest/sha1'
+require 'uri'
 require 'open-uri'
 require 'pathname'
+require 'dragonfly/serializer'
+require 'dragonfly/content'
+require 'dragonfly/url_attributes'
+require 'dragonfly/job_endpoint'
 
 module Dragonfly
   class Job

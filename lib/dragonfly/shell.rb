@@ -1,4 +1,5 @@
 require 'shellwords'
+require 'dragonfly'
 
 module Dragonfly
   class Shell

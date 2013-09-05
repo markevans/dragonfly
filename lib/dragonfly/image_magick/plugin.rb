@@ -1,3 +1,12 @@
+require 'dragonfly/image_magick/analysers/identify'
+require 'dragonfly/image_magick/generators/convert'
+require 'dragonfly/image_magick/generators/plain'
+require 'dragonfly/image_magick/generators/plasma'
+require 'dragonfly/image_magick/generators/text'
+require 'dragonfly/image_magick/processors/convert'
+require 'dragonfly/image_magick/processors/encode'
+require 'dragonfly/image_magick/processors/thumb'
+
 module Dragonfly
   module ImageMagick
 
@@ -53,8 +62,8 @@ module Dragonfly
 
         # Processors
         app.add_processor :convert, Processors::Convert.new
-        app.add_processor :thumb, Processors::Thumb.new
         app.add_processor :encode, Processors::Encode.new
+        app.add_processor :thumb, Processors::Thumb.new
         app.add_processor :rotate do |content, amount, opts={}|
           content.process!(:convert, "-rotate #{amount}#{opts['qualifier']}")
         end

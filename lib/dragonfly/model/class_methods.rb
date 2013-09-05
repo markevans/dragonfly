@@ -1,3 +1,7 @@
+require 'dragonfly'
+require 'dragonfly/serializer'
+require 'dragonfly/model/attachment'
+
 module Dragonfly
   module Model
     module ClassMethods

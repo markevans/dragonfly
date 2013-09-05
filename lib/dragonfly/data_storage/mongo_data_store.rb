@@ -1,4 +1,7 @@
 require 'mongo'
+require 'dragonfly/data_storage'
+require 'dragonfly/serializer'
+require 'dragonfly/utils'
 
 module Dragonfly
   module DataStorage

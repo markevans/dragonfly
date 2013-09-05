@@ -1,3 +1,5 @@
+require 'active_model/validator'
+
 module Dragonfly
   module Model
     module Validations

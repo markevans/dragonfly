@@ -1,44 +1,20 @@
-# AUTOLOAD EVERYTHING IN THE DRAGONFLY DIRECTORY TREE
-
-# The convention is that dirs are modules
-# so declare them here and autoload any modules/classes inside them
-# All paths here are absolute
-camelize = proc do |path|
-  # e.g. 'test/this_one' => Test::ThisOne
-  "#{path}".
-    chomp('/').
-    gsub('/','::').
-    gsub(/([^a-z])(\w)/){ "#{$1}#{$2.upcase}" }.
-    gsub('_','').
-    sub(/^(\w)/){ $1.upcase }
-end
-
-autoload_files_in_dir = proc do |path, namespace|
-  # Define the module
-  eval("module #{namespace}; end")
-  # Autoload modules/classes in that module
-  Dir.glob("#{path}/*.rb").each do |file|
-    file = File.expand_path(file)
-    sub_const_name = camelize[ File.basename(file, '.rb') ]
-    eval("#{namespace}.autoload('#{sub_const_name}', '#{file}')")
-  end
-  # Recurse on subdirectories
-  Dir.glob("#{path}/*/").each do |dir|
-    sub_namespace = camelize[ File.basename(dir) ]
-    autoload_files_in_dir[dir, "#{namespace}::#{sub_namespace}"]
-  end
-end
-
-autoload_files_in_dir["#{File.dirname(__FILE__)}/dragonfly", 'Dragonfly']
-
+require 'rbconfig'
 require 'dragonfly/version'
 require 'dragonfly/core_ext/object'
 require 'dragonfly/core_ext/array'
 require 'dragonfly/core_ext/hash'
+require 'dragonfly/app'
+require 'dragonfly/image_magick/plugin'
+require 'dragonfly/data_storage/file_data_store'
+require 'dragonfly/data_storage/memory_data_store'
+require 'dragonfly/model'
+require 'dragonfly/middleware'
 
-require 'dragonfly/railtie' if defined?(::Rails)
+if defined?(::Rails)
+  require 'dragonfly/railtie'
+  require 'dragonfly/model/validations'
+end
 
-require 'rbconfig'
 module Dragonfly
   class << self
 
@@ -58,10 +34,19 @@ module Dragonfly
     #   datastore :file
     # end
     App.register_datastore(:file){ DataStorage::FileDataStore }
-    App.register_datastore(:s3){ DataStorage::S3DataStore }
-    App.register_datastore(:couch){ DataStorage::CouchDataStore }
-    App.register_datastore(:mongo){ DataStorage::MongoDataStore }
     App.register_datastore(:memory){ DataStorage::MemoryDataStore }
+    App.register_datastore(:s3){
+      require 'dragonfly/data_storage/s3_data_store'
+      DataStorage::S3DataStore
+    }
+    App.register_datastore(:couch){
+      require 'dragonfly/data_storage/couch_data_store'
+      DataStorage::CouchDataStore
+    }
+    App.register_datastore(:mongo){
+      require 'dragonfly/data_storage/mongo_data_store'
+      DataStorage::MongoDataStore
+    }
 
     def running_on_windows?
       !!(RbConfig::CONFIG['host_os'] =~ %r!(msdos|mswin|djgpp|mingw)!)

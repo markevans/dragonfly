@@ -1,4 +1,7 @@
 require 'couchrest'
+require 'dragonfly/data_storage'
+require 'dragonfly/serializer'
+require 'dragonfly/utils'
 
 module Dragonfly
   module DataStorage
@@ -81,3 +84,4 @@ module Dragonfly
     end
   end
 end
+

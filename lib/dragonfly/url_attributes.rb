@@ -1,4 +1,5 @@
 require 'ostruct'
+require 'dragonfly/has_filename'
 
 module Dragonfly
   class UrlAttributes < OpenStruct

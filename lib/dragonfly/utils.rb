@@ -1,5 +1,6 @@
 require 'tempfile'
 require 'uri'
+require 'rack'
 
 module Dragonfly
   module Utils

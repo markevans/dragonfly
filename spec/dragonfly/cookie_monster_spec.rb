@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'rack'
+require 'dragonfly/cookie_monster'
 
 describe Dragonfly::CookieMonster do
 

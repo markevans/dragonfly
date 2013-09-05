@@ -1,3 +1,5 @@
+require 'dragonfly'
+
 module Dragonfly
   class Middleware
 

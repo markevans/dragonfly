@@ -1,3 +1,7 @@
+require 'rack'
+require 'dragonfly/utils'
+require 'dragonfly/response'
+
 module Dragonfly
   class RoutedEndpoint
 

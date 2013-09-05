@@ -1,3 +1,5 @@
+require 'dragonfly/hash_with_css_style_keys'
+
 module Dragonfly
   module ImageMagick
     module Generators

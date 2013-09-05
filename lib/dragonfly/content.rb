@@ -1,4 +1,8 @@
 require 'base64'
+require 'forwardable'
+require 'dragonfly/has_filename'
+require 'dragonfly/temp_object'
+require 'dragonfly/utils'
 
 module Dragonfly
   class Content
@@ -71,7 +75,7 @@ module Dragonfly
     def shell_generate(opts={})
       ext = opts[:ext] || self.ext
       should_escape = opts[:escape] != false
-      tempfile = Dragonfly::Utils.new_tempfile(ext)
+      tempfile = Utils.new_tempfile(ext)
       new_path = should_escape ? shell.quote(tempfile.path) : tempfile.path
       command = yield(new_path)
       run(command, :escape => should_escape)
@@ -81,7 +85,7 @@ module Dragonfly
     def shell_update(opts={})
       ext = opts[:ext] || self.ext
       should_escape = opts[:escape] != false
-      tempfile = Dragonfly::Utils.new_tempfile(ext)
+      tempfile = Utils.new_tempfile(ext)
       old_path = should_escape ? shell.quote(path) : path
       new_path = should_escape ? shell.quote(tempfile.path) : tempfile.path
       command = yield(old_path, new_path)

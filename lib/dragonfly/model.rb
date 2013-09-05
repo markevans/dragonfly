@@ -1,3 +1,6 @@
+require 'dragonfly/model/instance_methods'
+require 'dragonfly/model/class_methods'
+
 module Dragonfly
   module Model
 

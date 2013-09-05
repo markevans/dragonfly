@@ -1,4 +1,5 @@
 require 'active_model'
+require 'dragonfly/model/validations'
 
 # Generic activemodel model
 class MyModel

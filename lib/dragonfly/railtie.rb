@@ -1,5 +1,4 @@
-require 'dragonfly'
-require 'rails'
+require 'dragonfly/cookie_monster'
 
 module Dragonfly
   class Railtie < ::Rails::Railtie

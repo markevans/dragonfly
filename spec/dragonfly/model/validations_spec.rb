@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'dragonfly/model/validations'
 
 describe Dragonfly::Model::Validations do
 

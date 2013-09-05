@@ -1,4 +1,7 @@
 require 'forwardable'
+require 'dragonfly/has_filename'
+require 'dragonfly/job'
+require 'dragonfly/data_storage'
 require 'dragonfly/model/attachment_class_methods'
 
 module Dragonfly
@@ -289,3 +292,4 @@ module Dragonfly
     end
   end
 end
+

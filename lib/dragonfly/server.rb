@@ -1,3 +1,10 @@
+require 'forwardable'
+require 'dragonfly/whitelist'
+require 'dragonfly/url_mapper'
+require 'dragonfly/job'
+require 'dragonfly/response'
+require 'dragonfly/serializer'
+
 module Dragonfly
   class Server
 

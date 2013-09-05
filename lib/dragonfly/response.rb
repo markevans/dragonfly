@@ -1,4 +1,6 @@
 require 'uri'
+require 'rack'
+require 'dragonfly/data_storage'
 
 module Dragonfly
   class Response

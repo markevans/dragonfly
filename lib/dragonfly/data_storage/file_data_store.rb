@@ -1,5 +1,8 @@
 require 'pathname'
 require 'yaml'
+require 'fileutils'
+require 'dragonfly/data_storage'
+require 'dragonfly/utils'
 
 module Dragonfly
   module DataStorage

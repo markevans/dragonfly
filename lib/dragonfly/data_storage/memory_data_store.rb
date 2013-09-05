@@ -1,3 +1,5 @@
+require 'dragonfly/data_storage'
+
 module Dragonfly
   module DataStorage
     class MemoryDataStore

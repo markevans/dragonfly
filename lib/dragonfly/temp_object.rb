@@ -1,6 +1,7 @@
 require 'stringio'
 require 'tempfile'
 require 'pathname'
+require 'fileutils'
 
 module Dragonfly
 

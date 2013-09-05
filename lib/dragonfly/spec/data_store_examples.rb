@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'dragonfly/content'
+require 'dragonfly/data_storage'
 
 shared_examples_for "data_store" do
 

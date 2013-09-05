@@ -1,5 +1,8 @@
 require 'spec_helper'
 require 'rack/mock'
+require 'dragonfly/data_storage/s3_data_store'
+require 'dragonfly/data_storage/couch_data_store'
+require 'dragonfly/data_storage/mongo_data_store'
 
 def request(app, path)
   Rack::MockRequest.new(app).get(path)

@@ -1,3 +1,5 @@
+require 'dragonfly/response'
+
 module Dragonfly
   class JobEndpoint
 
