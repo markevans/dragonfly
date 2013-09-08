@@ -1,11 +1,10 @@
-require 'spec_helper'
 require 'dragonfly/content'
 require 'dragonfly/data_storage'
 
 shared_examples_for "data_store" do
 
   # Using these shared spec requires you to set the inst var @data_store
-  let (:app) { test_app }
+  let (:app) { Dragonfly.app }
   let (:content) { Dragonfly::Content.new(app, "gollum") }
   let (:content2) { Dragonfly::Content.new(app, "gollum") }
 
