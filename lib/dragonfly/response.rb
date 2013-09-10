@@ -25,7 +25,7 @@ module Dragonfly
           env['dragonfly.job'] = job
           [200, success_headers, job]
         end
-      rescue DataStorage::DataNotFound, DataStorage::BadUID => e
+      rescue DataStorage::DataNotFound => e
         Dragonfly.warn(e.message)
         [404, {"Content-Type" => 'text/plain'}, ['Not found']]
       end

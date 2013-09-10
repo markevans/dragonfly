@@ -116,7 +116,7 @@ module Dragonfly
       end
 
       def retrieve(content, relative_path)
-        validate_uid!(relative_path)
+        raise DataNotFound unless valid_path?(relative_path)
         path = absolute(relative_path)
         pathname = Pathname.new(path)
         raise DataNotFound, "couldn't find file #{path}" unless pathname.exist?
@@ -128,7 +128,7 @@ module Dragonfly
       end
 
       def destroy(relative_path)
-        validate_uid!(relative_path)
+        raise DataNotFound unless valid_path?(relative_path)
         path = absolute(relative_path)
         FileUtils.rm path
         meta_store.destroy(path)
@@ -191,11 +191,12 @@ module Dragonfly
         end
       end
 
-      def validate_uid!(uid)
-        raise BadUID, "tried to retrieve uid #{uid.inspect}" if uid.blank? || uid['../']
+      def valid_path?(uid)
+        !(uid.blank? || uid['../'])
       end
 
     end
 
   end
 end
+
