@@ -13,7 +13,6 @@ module Dragonfly
 
     extend Forwardable
     def_delegator :url_mapper, :params_in_url
-    def_delegator :app, :warn, :info
 
     def initialize(app)
       @app = app
@@ -70,10 +69,10 @@ module Dragonfly
     rescue Job::IncorrectSHA => e
       [400, {"Content-Type" => 'text/plain'}, ["The SHA parameter you gave (#{e}) is incorrect"]]
     rescue JobNotAllowed => e
-      warn(e.message)
+      Dragonfly.warn(e.message)
       [403, {"Content-Type" => 'text/plain'}, ["Forbidden"]]
     rescue Serializer::BadString, Serializer::MaliciousString, Job::InvalidArray => e
-      warn(e.message)
+      Dragonfly.warn(e.message)
       [404, {'Content-Type' => 'text/plain'}, ['Not found']]
     end
 

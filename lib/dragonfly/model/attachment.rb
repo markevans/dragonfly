@@ -18,7 +18,6 @@ module Dragonfly
         :meta, :meta=,
         :name, :size,
         :url
-      def_delegators :app, :warn
 
       include HasFilename
 
@@ -186,7 +185,7 @@ module Dragonfly
       def destroy_content(uid)
         app.datastore.destroy(uid)
       rescue DataStorage::DataNotFound, DataStorage::DestroyError => e
-        warn("tried to destroy data with uid #{uid}, but got error: #{e}")
+        Dragonfly.warn("tried to destroy data with uid #{uid}, but got error: #{e}")
       end
 
       def destroy_previous!
@@ -251,7 +250,7 @@ module Dragonfly
           value = begin
             job.send(property)
           rescue RuntimeError => e
-            warn("setting magic attribute for #{property} to nil in #{self.inspect} because got error #{e}")
+            Dragonfly.warn("setting magic attribute for #{property} to nil in #{self.inspect} because got error #{e}")
             nil
           end
           set_magic_attribute(property, value)

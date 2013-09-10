@@ -1,4 +1,3 @@
-require 'logger'
 require 'forwardable'
 require 'rack'
 require 'dragonfly/register'
@@ -67,7 +66,7 @@ module Dragonfly
     extend Configurable
 
     set_up_config do
-      writer :secret, :log, :allow_legacy_urls, :log_shell
+      writer :secret, :allow_legacy_urls, :log_shell
       meth :add_mime_type, :response_headers, :define_url
 
       def processor(*args, &block)
@@ -230,19 +229,6 @@ module Dragonfly
       @secret ||= 'secret yo'
     end
     attr_writer :secret
-
-    def log
-      @log ||= Logger.new('dragonfly.log')
-    end
-    attr_writer :log
-
-    def warn(message)
-      log.warn("DRAGONFLY: #{message}")
-    end
-
-    def info(message)
-      log.info("DRAGONFLY: #{message}")
-    end
 
     attr_accessor :allow_legacy_urls, :log_shell
 

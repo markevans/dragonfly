@@ -19,7 +19,7 @@ module Dragonfly
 
     attr_reader :app
     def_delegators :app,
-                   :analyser, :generator, :processor, :shell, :datastore, :warn, :info, :env
+                   :analyser, :generator, :processor, :shell, :datastore, :env
 
     attr_reader :temp_object
     attr_accessor :meta
@@ -119,7 +119,7 @@ module Dragonfly
     end
 
     def run(command, opts)
-      info("Running Command: #{command}") if app.log_shell
+      Dragonfly.info("Running Command: #{command}") if app.log_shell
       shell.run(command, opts)
     end
 

@@ -1,4 +1,5 @@
 require 'rbconfig'
+require 'logger'
 require 'dragonfly/version'
 require 'dragonfly/core_ext/object'
 require 'dragonfly/core_ext/array'
@@ -24,6 +25,20 @@ module Dragonfly
 
     def running_on_windows?
       !!(RbConfig::CONFIG['host_os'] =~ %r!(msdos|mswin|djgpp|mingw)!)
+    end
+
+    # Logging
+    def log
+      @log ||= Logger.new('dragonfly.log')
+    end
+    attr_writer :log
+
+    def warn(message)
+      log.warn("DRAGONFLY: #{message}")
+    end
+
+    def info(message)
+      log.info("DRAGONFLY: #{message}")
     end
 
     # Register plugins so we can do e.g.

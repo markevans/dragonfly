@@ -26,7 +26,7 @@ module Dragonfly
           [200, success_headers, job]
         end
       rescue DataStorage::DataNotFound, DataStorage::BadUID => e
-        app.warn(e.message)
+        Dragonfly.warn(e.message)
         [404, {"Content-Type" => 'text/plain'}, ['Not found']]
       end
       log_response(response)
@@ -47,7 +47,7 @@ module Dragonfly
 
     def log_response(response)
       r = request
-      app.info [r.request_method, r.fullpath, response[0]].join(' ')
+      Dragonfly.info [r.request_method, r.fullpath, response[0]].join(' ')
     end
 
     def etag_matches?

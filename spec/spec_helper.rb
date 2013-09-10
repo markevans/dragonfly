@@ -27,6 +27,7 @@ end
 require 'logger'
 LOG_FILE = 'tmp/test.log' unless defined?(LOG_FILE)
 FileUtils.rm_rf(LOG_FILE)
+Dragonfly.log = Logger.new(LOG_FILE)
 
 RSpec.configure do |c|
   c.after(:each) do
@@ -38,7 +39,6 @@ def test_app(name=nil)
   time = Time.now
   app = Dragonfly::App.instance(name)
   app.datastore = Dragonfly::DataStorage::MemoryDataStore.new
-  app.log = Logger.new(LOG_FILE)
   app
 end
 

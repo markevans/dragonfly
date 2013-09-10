@@ -3,10 +3,10 @@ require "bundler/setup"
 $:.unshift(File.expand_path('../../lib', __FILE__))
 require 'dragonfly'
 
+Dragonfly.log = Logger.new(STDOUT)
 Dragonfly.app.configure do
   plugin :imagemagick
   url_format '/images/:job'
-  log Logger.new(STDOUT)
   fetch_file_whitelist [String]
 end
 
