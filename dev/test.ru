@@ -3,8 +3,8 @@ require "bundler/setup"
 $:.unshift(File.expand_path('../../lib', __FILE__))
 require 'dragonfly'
 
-Dragonfly.default_app.configure do
-  use :imagemagick
+Dragonfly.app.configure do
+  plugin :imagemagick
   url_format '/images/:job'
   log Logger.new(STDOUT)
   fetch_file_whitelist [String]
@@ -12,7 +12,7 @@ end
 
 class App
   def call(env)
-    image = Dragonfly.default_app.fetch_file('grid.jpg')
+    image = Dragonfly.app.fetch_file('grid.jpg')
     request = Rack::Request.new(env)
     error = nil
     if request['code']
