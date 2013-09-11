@@ -184,7 +184,7 @@ module Dragonfly
 
       def destroy_content(uid)
         app.datastore.destroy(uid)
-      rescue DataStorage::DataNotFound, DataStorage::DestroyError => e
+      rescue DataStorage::DataNotFound => e
         Dragonfly.warn("tried to destroy data with uid #{uid}, but got error: #{e}")
       end
 

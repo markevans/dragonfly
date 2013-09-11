@@ -75,7 +75,7 @@ module Dragonfly
       rescue Excon::Errors::NotFound => e
         raise DataNotFound, "#{e} - #{uid}"
       rescue Excon::Errors::Conflict => e
-        raise DestroyError, "#{e} - #{uid}"
+        Dragonfly.warn("S3DataStore destroy error: #{e}")
       end
 
       def url_for(uid, opts={})

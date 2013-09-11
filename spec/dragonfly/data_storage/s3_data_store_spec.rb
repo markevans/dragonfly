@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'dragonfly/spec/data_store_examples'
+require 'dragonfly/data_storage/s3_data_store'
 require 'yaml'
 
 describe Dragonfly::DataStorage::S3DataStore do
