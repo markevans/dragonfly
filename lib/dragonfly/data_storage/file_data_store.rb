@@ -101,16 +101,12 @@ module Dragonfly
           relative_path = relative_path_for(filename)
         end
 
-        begin
-          path = absolute(relative_path)
-          until !File.exist?(path)
-            path = disambiguate(path)
-          end
-          content.to_file(path).close
-          meta_store.store(path, content.meta) if store_meta?
-        rescue Errno::EACCES => e
-          raise UnableToStore, e.message
+        path = absolute(relative_path)
+        until !File.exist?(path)
+          path = disambiguate(path)
         end
+        content.to_file(path).close
+        meta_store.store(path, content.meta) if store_meta?
 
         relative(path)
       end

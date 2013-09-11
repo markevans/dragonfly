@@ -28,8 +28,6 @@ module Dragonfly
           doc.put_attachment(name, f.dup, :content_type => content.mime_type)
           form_uid(response['id'], name)
         end
-      rescue RuntimeError => e
-        raise UnableToStore, "#{e} - #{content.inspect}"
       end
 
       def retrieve(content, uid)

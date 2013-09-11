@@ -3,6 +3,7 @@ require 'spec_helper'
 require 'dragonfly/spec/data_store_examples'
 require 'net/http'
 require 'uri'
+require 'dragonfly/data_storage/couch_data_store'
 
 describe Dragonfly::DataStorage::CouchDataStore do
 

@@ -132,20 +132,6 @@ describe Dragonfly::DataStorage::FileDataStore do
       end
     end
 
-    describe "errors" do
-
-      it "should raise an error if it can't create a directory" do
-        FileUtils.should_receive(:mkdir_p).and_raise(Errno::EACCES)
-        lambda{ @data_store.store(content) }.should raise_error(Dragonfly::DataStorage::UnableToStore)
-      end
-
-      it "should raise an error if it can't create a file" do
-        content.should_receive(:to_file).and_raise(Errno::EACCES)
-        lambda{ @data_store.store(content) }.should raise_error(Dragonfly::DataStorage::UnableToStore)
-      end
-
-    end
-
     describe "retrieve" do
       it "should be able to retrieve any file, stored or not (and without meta data)" do
         FileUtils.mkdir_p("#{@data_store.root_path}/jelly_beans/are")
