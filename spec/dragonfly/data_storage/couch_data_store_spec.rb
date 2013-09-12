@@ -27,16 +27,6 @@ describe Dragonfly::DataStorage::CouchDataStore do
   let (:content) { Dragonfly::Content.new(app, "gollum") }
   let (:new_content) { Dragonfly::Content.new(app) }
 
-  describe "destroy" do
-    it "should throw if the data doesn't exist on destroy" do
-      uid = @data_store.store(content)
-      @data_store.destroy(uid)
-      lambda{
-        @data_store.destroy(uid)
-      }.should throw_symbol(:not_found, uid)
-    end
-  end
-
   describe "url_for" do
     it "should give the correct url" do
       @data_store.url_for('asd7fas9df/thing.txt').should == 'http://localhost:5984/dragonfly_test/asd7fas9df/thing.txt'

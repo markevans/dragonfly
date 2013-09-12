@@ -141,13 +141,13 @@ describe Dragonfly::DataStorage::FileDataStore do
         new_content.meta.should == {'name' => 'good'}
       end
 
-      it "should throw :not_found if the file path has ../ in it" do
+      it "should raise if the file path has ../ in it" do
         expect{
           @data_store.retrieve(new_content, 'jelly_beans/../are/good')
-        }.to throw_symbol(:not_found, 'jelly_beans/../are/good')
+        }.to raise_error(Dragonfly::DataStorage::FileDataStore::BadUID)
       end
 
-      it "should throw :not_found if the file path has .. but not ../ in it" do
+      it "should not raise if the file path has .. but not ../ in it" do
         @data_store.store(content, :path => 'jelly_beans..good')
         @data_store.retrieve(new_content, 'jelly_beans..good')
         new_content.data.should == 'goobydoo'
@@ -167,18 +167,10 @@ describe Dragonfly::DataStorage::FileDataStore do
         @data_store.root_path.should be_an_empty_directory
       end
 
-      it "should throw :not_found if the data doesn't exist on destroy" do
-        uid = @data_store.store(content)
-        @data_store.destroy(uid)
-        lambda{
-          @data_store.destroy(uid)
-        }.should throw_symbol(:not_found, uid)
-      end
-
-      it "should throw :not_found if the file path has ../ in it" do
+      it "should raise if the file path has ../ in it" do
         expect{
           @data_store.destroy('jelly_beans/../are/good')
-        }.to throw_symbol(:not_found, 'jelly_beans/../are/good')
+        }.to raise_error(Dragonfly::DataStorage::FileDataStore::BadUID)
       end
     end
 

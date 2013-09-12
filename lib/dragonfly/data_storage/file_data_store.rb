@@ -8,6 +8,7 @@ module Dragonfly
     class FileDataStore
 
       # Exceptions
+      class BadUID < RuntimeError; end
       class UnableToFormUrl < RuntimeError; end
 
       class MetaStore
@@ -111,7 +112,7 @@ module Dragonfly
       end
 
       def retrieve(content, relative_path)
-        throw :not_found, relative_path unless valid_path?(relative_path)
+        validate_path!(relative_path)
         path = absolute(relative_path)
         pathname = Pathname.new(path)
         throw :not_found, relative_path unless pathname.exist?
@@ -123,13 +124,13 @@ module Dragonfly
       end
 
       def destroy(relative_path)
-        throw :not_found, relative_path unless valid_path?(relative_path)
+        validate_path!(relative_path)
         path = absolute(relative_path)
         FileUtils.rm path
         meta_store.destroy(path)
         purge_empty_directories(relative_path)
       rescue Errno::ENOENT => e
-        throw :not_found, relative_path
+        Dragonfly.warn("#{self.class.name} destroy error: #{e}")
       end
 
       def url_for(relative_path, opts={})
@@ -186,8 +187,8 @@ module Dragonfly
         end
       end
 
-      def valid_path?(uid)
-        !(uid.blank? || uid['../'])
+      def validate_path!(uid)
+        raise BadUID, uid if uid.blank? || uid['../']
       end
 
     end

@@ -182,11 +182,7 @@ module Dragonfly
       end
 
       def destroy_content(uid)
-        non_existent_uid = catch(:not_found) do
-          app.datastore.destroy(uid)
-          nil
-        end
-        Dragonfly.warn("could not destroy content with uid #{uid}") if non_existent_uid
+        app.datastore.destroy(uid)
       end
 
       def destroy_previous!

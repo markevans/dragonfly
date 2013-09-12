@@ -42,7 +42,7 @@ module Dragonfly
         doc = db.get(doc_id)
         db.delete_doc(doc)
       rescue RestClient::ResourceNotFound => e
-        throw :not_found, uid
+        Dragonfly.warn("#{self.class.name} destroy error: #{e}")
       end
 
       def db

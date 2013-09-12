@@ -103,17 +103,6 @@ describe Dragonfly::DataStorage::S3DataStore do
     end
   end
 
-  # Doesn't appear to raise anything right now
-  # describe "destroy" do
-  #   it "should raise an error if the data doesn't exist on destroy" do
-  #     uid = @data_store.store(content)
-  #     @data_store.destroy(uid)
-  #     lambda{
-  #       @data_store.destroy(uid)
-  #     }.should raise_error(Dragonfly::DataStorage::DataNotFound)
-  #   end
-  # end
-
   describe "domain" do
     it "should default to the US" do
       @data_store.region = nil

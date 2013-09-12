@@ -57,6 +57,12 @@ shared_examples_for "data_store" do
       }.should throw_symbol(:not_found, uid)
     end
 
+    it "should do nothing if the data doesn't exist on destroy" do
+      uid = @data_store.store(content)
+      @data_store.destroy(uid)
+      @data_store.destroy(uid)
+    end
+
   end
 
 end

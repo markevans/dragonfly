@@ -43,7 +43,7 @@ module Dragonfly
         ensure_authenticated!
         grid.delete(bson_id(uid))
       rescue Mongo::GridFileNotFound, BSON::InvalidObjectId => e
-        throw :not_found, uid
+        Dragonfly.warn("#{self.class.name} destroy error: #{e}")
       end
 
       def connection

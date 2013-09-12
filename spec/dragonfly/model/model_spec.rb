@@ -298,19 +298,6 @@ describe "models" do
 
       end
 
-      describe "destroy errors" do
-        it "should log a warning if the data wasn't found on destroy" do
-          @app.datastore.should_receive(:destroy).with('some_uid').and_throw(:not_found, 'some_uid')
-          Dragonfly.should_receive(:warn)
-          @item.destroy
-        end
-
-        it "should not log a warning if data was destroyed ok" do
-          Dragonfly.should_not_receive(:warn)
-          @item.destroy
-        end
-      end
-
     end
 
     describe "other types of assignment" do
