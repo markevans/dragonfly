@@ -1,11 +1,9 @@
-require 'dragonfly/data_storage'
-
 module Dragonfly
   module DataStorage
     class MemoryDataStore
 
       def initialize
-        @content_store = Hash.new{ raise DataNotFound }
+        @content_store = Hash.new{|hash, key| throw :not_found, key }
       end
 
       def store(content, opts={})

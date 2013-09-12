@@ -1,7 +1,6 @@
 require 'pathname'
 require 'yaml'
 require 'fileutils'
-require 'dragonfly/data_storage'
 require 'dragonfly/utils'
 
 module Dragonfly
@@ -112,10 +111,10 @@ module Dragonfly
       end
 
       def retrieve(content, relative_path)
-        raise DataNotFound unless valid_path?(relative_path)
+        throw :not_found, relative_path unless valid_path?(relative_path)
         path = absolute(relative_path)
         pathname = Pathname.new(path)
-        raise DataNotFound, "couldn't find file #{path}" unless pathname.exist?
+        throw :not_found, relative_path unless pathname.exist?
         content.update(pathname)
         if store_meta?
           meta = meta_store.retrieve(path) || deprecated_meta_store.retrieve(path) || {}
@@ -124,13 +123,13 @@ module Dragonfly
       end
 
       def destroy(relative_path)
-        raise DataNotFound unless valid_path?(relative_path)
+        throw :not_found, relative_path unless valid_path?(relative_path)
         path = absolute(relative_path)
         FileUtils.rm path
         meta_store.destroy(path)
         purge_empty_directories(relative_path)
       rescue Errno::ENOENT => e
-        raise DataNotFound, e.message
+        throw :not_found, relative_path
       end
 
       def url_for(relative_path, opts={})

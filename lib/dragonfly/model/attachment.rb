@@ -1,7 +1,6 @@
 require 'forwardable'
 require 'dragonfly/has_filename'
 require 'dragonfly/job'
-require 'dragonfly/data_storage'
 require 'dragonfly/model/attachment_class_methods'
 
 module Dragonfly
@@ -183,9 +182,11 @@ module Dragonfly
       end
 
       def destroy_content(uid)
-        app.datastore.destroy(uid)
-      rescue DataStorage::DataNotFound => e
-        Dragonfly.warn("tried to destroy data with uid #{uid}, but got error: #{e}")
+        non_existent_uid = catch(:not_found) do
+          app.datastore.destroy(uid)
+          nil
+        end
+        Dragonfly.warn("could not destroy content with uid #{uid}") if non_existent_uid
       end
 
       def destroy_previous!

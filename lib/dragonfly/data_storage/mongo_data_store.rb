@@ -1,5 +1,4 @@
 require 'mongo'
-require 'dragonfly/data_storage'
 require 'dragonfly/serializer'
 require 'dragonfly/utils'
 
@@ -37,14 +36,14 @@ module Dragonfly
         meta = extract_meta(grid_io)
         content.update(grid_io.read, meta)
       rescue Mongo::GridFileNotFound, BSON::InvalidObjectId => e
-        raise DataNotFound, "#{e} - #{uid}"
+        throw :not_found, uid
       end
 
       def destroy(uid)
         ensure_authenticated!
         grid.delete(bson_id(uid))
       rescue Mongo::GridFileNotFound, BSON::InvalidObjectId => e
-        raise DataNotFound, "#{e} - #{uid}"
+        throw :not_found, uid
       end
 
       def connection

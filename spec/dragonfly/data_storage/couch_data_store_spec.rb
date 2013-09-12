@@ -28,12 +28,12 @@ describe Dragonfly::DataStorage::CouchDataStore do
   let (:new_content) { Dragonfly::Content.new(app) }
 
   describe "destroy" do
-    it "should raise an error if the data doesn't exist on destroy" do
+    it "should throw if the data doesn't exist on destroy" do
       uid = @data_store.store(content)
       @data_store.destroy(uid)
       lambda{
         @data_store.destroy(uid)
-      }.should raise_error(Dragonfly::DataStorage::DataNotFound)
+      }.should throw_symbol(:not_found, uid)
     end
   end
 

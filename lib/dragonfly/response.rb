@@ -1,6 +1,5 @@
 require 'uri'
 require 'rack'
-require 'dragonfly/data_storage'
 
 module Dragonfly
   class Response
@@ -11,23 +10,26 @@ module Dragonfly
     end
 
     def to_response
-      response = begin
-        if !(request.head? || request.get?)
-          [405, method_not_allowed_headers, ["#{request.request_method} method not allowed"]]
-        elsif etag_matches?
-          [304, cache_headers, []]
-        elsif request.head?
+      response = if !(request.head? || request.get?)
+        [405, method_not_allowed_headers, ["method not allowed"]]
+      elsif etag_matches?
+        [304, cache_headers, []]
+      else
+        not_found_uid = catch(:not_found) {
           job.apply
+          nil
+        }
+        if not_found_uid
+          Dragonfly.warn("uid #{not_found_uid} not found")
+          [404, {"Content-Type" => 'text/plain'}, ['Not found']]
+        else
           env['dragonfly.job'] = job
-          [200, success_headers, []]
-        elsif request.get?
-          job.apply
-          env['dragonfly.job'] = job
-          [200, success_headers, job]
+          [
+            200,
+            success_headers,
+            (request.head? ? [] : job)
+          ]
         end
-      rescue DataStorage::DataNotFound => e
-        Dragonfly.warn(e.message)
-        [404, {"Content-Type" => 'text/plain'}, ['Not found']]
       end
       log_response(response)
       response

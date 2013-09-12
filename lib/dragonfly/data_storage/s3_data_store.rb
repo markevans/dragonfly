@@ -1,5 +1,4 @@
 require 'fog'
-require 'dragonfly/data_storage'
 require 'dragonfly/serializer'
 require 'dragonfly/utils'
 
@@ -67,13 +66,13 @@ module Dragonfly
         response = rescuing_socket_errors{ storage.get_object(bucket_name, uid) }
         content.update(response.body, headers_to_meta(response.headers))
       rescue Excon::Errors::NotFound => e
-        raise DataNotFound, "#{e} - #{uid}"
+        throw :not_found, uid
       end
 
       def destroy(uid)
         rescuing_socket_errors{ storage.delete_object(bucket_name, uid) }
       rescue Excon::Errors::NotFound => e
-        raise DataNotFound, "#{e} - #{uid}"
+        throw :not_found, uid
       rescue Excon::Errors::Conflict => e
         Dragonfly.warn("S3DataStore destroy error: #{e}")
       end

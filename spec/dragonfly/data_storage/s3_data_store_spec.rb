@@ -184,7 +184,7 @@ describe Dragonfly::DataStorage::S3DataStore do
     it "should not try to create the bucket on retrieve if it doesn't exist" do
       @data_store.bucket_name = "dragonfly-test-blah-blah-#{rand(100000000)}"
       @data_store.send(:storage).should_not_receive(:put_bucket)
-      proc{ @data_store.retrieve(new_content, "gungle") }.should raise_error(Dragonfly::DataStorage::DataNotFound)
+      proc{ @data_store.retrieve(new_content, "gungle") }.should throw_symbol(:not_found, 'gungle')
     end
   end
 

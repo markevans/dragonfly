@@ -1,5 +1,4 @@
 require 'dragonfly/content'
-require 'dragonfly/data_storage'
 
 shared_examples_for "data_store" do
 
@@ -41,10 +40,10 @@ shared_examples_for "data_store" do
       @retrieved_content.meta['name'].should == 'danny.boy'
     end
 
-    it "should raise an exception if the data doesn't exist" do
+    it "should throw :not_found if the data doesn't exist" do
       lambda{
         @data_store.retrieve(Dragonfly::Content.new(app), 'gooble/gubbub')
-      }.should raise_error(Dragonfly::DataStorage::DataNotFound)
+      }.should throw_symbol(:not_found, 'gooble/gubbub')
     end
   end
 
@@ -55,7 +54,7 @@ shared_examples_for "data_store" do
       @data_store.destroy(uid)
       lambda{
         @data_store.retrieve(Dragonfly::Content.new(app), uid)
-      }.should raise_error(Dragonfly::DataStorage::DataNotFound)
+      }.should throw_symbol(:not_found, uid)
     end
 
   end

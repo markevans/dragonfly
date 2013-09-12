@@ -25,7 +25,7 @@ describe "getting rack response directly" do
     response.length.should == 3
     response[0].should == 405
     response[1]['Content-Type'].should == 'text/plain'
-    response[2].should == ["POST method not allowed"]
+    response[2].should == ["method not allowed"]
   end
 
 end

@@ -76,13 +76,13 @@ describe Dragonfly::JobEndpoint do
       response.status.should == 405
       response['Allow'].should == "GET, HEAD"
       response['Content-Type'].should == 'text/plain'
-      response.body.should == "#{method} method not allowed"
+      response.body.should == "method not allowed"
     end
 
   end
 
-  it "should return 404 if the datastore raises data not found" do
-    @job.should_receive(:apply).and_raise(Dragonfly::DataStorage::DataNotFound)
+  it "should return 404 if the datastore throws not_found" do
+    @job.should_receive(:apply).and_throw(:not_found, 'some/uid')
     response = make_request(@job)
     response.status.should == 404
   end

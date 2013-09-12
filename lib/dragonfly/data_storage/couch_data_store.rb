@@ -1,5 +1,4 @@
 require 'couchrest'
-require 'dragonfly/data_storage'
 require 'dragonfly/serializer'
 require 'dragonfly/utils'
 
@@ -35,7 +34,7 @@ module Dragonfly
         doc = db.get(doc_id)
         content.update(doc.fetch_attachment(attachment), extract_meta(doc))
       rescue RestClient::ResourceNotFound => e
-        raise DataNotFound, "#{e} - #{uid}"
+        throw :not_found, uid
       end
 
       def destroy(uid)
@@ -43,7 +42,7 @@ module Dragonfly
         doc = db.get(doc_id)
         db.delete_doc(doc)
       rescue RestClient::ResourceNotFound => e
-        raise DataNotFound, "#{e} - #{uid}"
+        throw :not_found, uid
       end
 
       def db
