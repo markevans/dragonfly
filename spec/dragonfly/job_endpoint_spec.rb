@@ -87,6 +87,13 @@ describe Dragonfly::JobEndpoint do
     response.status.should == 404
   end
 
+  it "returns a 500 for any runtime error" do
+    @job.should_receive(:apply).and_raise(RuntimeError, "oh dear")
+    Dragonfly.should_receive(:warn).with(/oh dear/)
+    response = make_request(@job)
+    response.status.should == 500
+  end
+
   describe "logging" do
     it "logs successful requests" do
       Dragonfly.should_receive(:info).with("GET /something?great 200")

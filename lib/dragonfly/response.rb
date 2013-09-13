@@ -10,26 +10,31 @@ module Dragonfly
     end
 
     def to_response
-      response = if !(request.head? || request.get?)
-        [405, method_not_allowed_headers, ["method not allowed"]]
-      elsif etag_matches?
-        [304, cache_headers, []]
-      else
-        not_found_uid = catch(:not_found) {
-          job.apply
-          nil
-        }
-        if not_found_uid
-          Dragonfly.warn("uid #{not_found_uid} not found")
-          [404, {"Content-Type" => 'text/plain'}, ['Not found']]
+      response = begin
+        if !(request.head? || request.get?)
+          [405, method_not_allowed_headers, ["method not allowed"]]
+        elsif etag_matches?
+          [304, cache_headers, []]
         else
-          env['dragonfly.job'] = job
-          [
-            200,
-            success_headers,
-            (request.head? ? [] : job)
-          ]
+          not_found_uid = catch(:not_found) {
+            job.apply
+            nil
+          }
+          if not_found_uid
+            Dragonfly.warn("uid #{not_found_uid} not found")
+            [404, {"Content-Type" => "text/plain"}, ["Not found"]]
+          else
+            env['dragonfly.job'] = job
+            [
+              200,
+              success_headers,
+              (request.head? ? [] : job)
+            ]
+          end
         end
+      rescue RuntimeError => e
+        Dragonfly.warn("caught error - #{e.message}")
+        [500, {"Content-Type" => "text/plain"}, ["Internal Server Error"]]
       end
       log_response(response)
       response
