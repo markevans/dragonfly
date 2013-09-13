@@ -58,10 +58,6 @@ module Dragonfly
       require 'dragonfly/data_storage/s3_data_store'
       DataStorage::S3DataStore
     }
-    App.register_datastore(:couch){
-      require 'dragonfly/data_storage/couch_data_store'
-      DataStorage::CouchDataStore
-    }
 
   end
 end
