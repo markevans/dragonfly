@@ -62,10 +62,6 @@ module Dragonfly
       require 'dragonfly/data_storage/couch_data_store'
       DataStorage::CouchDataStore
     }
-    App.register_datastore(:mongo){
-      require 'dragonfly/data_storage/mongo_data_store'
-      DataStorage::MongoDataStore
-    }
 
   end
 end
