@@ -94,7 +94,7 @@ module Dragonfly
     end
 
     def store(opts={})
-      datastore.store(self, opts)
+      datastore.write(self, opts)
     end
 
     def b64_data

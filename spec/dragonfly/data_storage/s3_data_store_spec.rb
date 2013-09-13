@@ -55,10 +55,10 @@ describe Dragonfly::DataStorage::S3DataStore do
   let (:content) { Dragonfly::Content.new(app, "eggheads") }
   let (:new_content) { Dragonfly::Content.new(app) }
 
-  describe "store" do
+  describe "write" do
     it "should use the name from the content if set" do
       content.name = 'doobie.doo'
-      uid = @data_store.store(content)
+      uid = @data_store.write(content)
       uid.should =~ /doobie\.doo$/
       @data_store.retrieve(new_content, uid)
       new_content.data.should == 'eggheads'
@@ -66,14 +66,14 @@ describe Dragonfly::DataStorage::S3DataStore do
 
     it "should work ok with files with funny names" do
       content.name = "A Picture with many spaces in its name (at 20:00 pm).png"
-      uid = @data_store.store(content)
+      uid = @data_store.write(content)
       uid.should =~ /A_Picture_with_many_spaces_in_its_name_at_20_00_pm_\.png$/
       @data_store.retrieve(new_content, uid)
       new_content.data.should == 'eggheads'
     end
 
     it "should allow for setting the path manually" do
-      uid = @data_store.store(content, :path => 'hello/there')
+      uid = @data_store.write(content, :path => 'hello/there')
       uid.should == 'hello/there'
       @data_store.retrieve(new_content, uid)
       new_content.data.should == 'eggheads'
@@ -81,7 +81,7 @@ describe Dragonfly::DataStorage::S3DataStore do
 
     it "should work fine when not using the filesystem" do
       @data_store.use_filesystem = false
-      uid = @data_store.store(content)
+      uid = @data_store.write(content)
       @data_store.retrieve(new_content, uid)
       new_content.data.should == "eggheads"
     end
@@ -90,14 +90,14 @@ describe Dragonfly::DataStorage::S3DataStore do
       it "should reset the connection and try again if Fog throws a socket EOFError" do
         @data_store.storage.should_receive(:put_object).exactly(:once).and_raise(Excon::Errors::SocketError.new(EOFError.new))
         @data_store.storage.should_receive(:put_object).with(BUCKET_NAME, anything, anything, hash_including)
-        @data_store.store(content)
+        @data_store.write(content)
       end
 
       it "should just let it raise if Fog throws a socket EOFError again" do
         @data_store.storage.should_receive(:put_object).and_raise(Excon::Errors::SocketError.new(EOFError.new))
         @data_store.storage.should_receive(:put_object).and_raise(Excon::Errors::SocketError.new(EOFError.new))
         expect{
-          @data_store.store(content)
+          @data_store.write(content)
         }.to raise_error(Excon::Errors::SocketError)
       end
     end
@@ -123,19 +123,19 @@ describe Dragonfly::DataStorage::S3DataStore do
   end
 
   describe "not configuring stuff properly" do
-    it "should require a bucket name on store" do
+    it "should require a bucket name on write" do
       @data_store.bucket_name = nil
-      proc{ @data_store.store(content) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.write(content) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
 
-    it "should require an access_key_id on store" do
+    it "should require an access_key_id on write" do
       @data_store.access_key_id = nil
-      proc{ @data_store.store(content) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.write(content) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
 
-    it "should require a secret access key on store" do
+    it "should require a secret access key on write" do
       @data_store.secret_access_key = nil
-      proc{ @data_store.store(content) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.write(content) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
 
     it "should require a bucket name on retrieve" do
@@ -154,20 +154,20 @@ describe Dragonfly::DataStorage::S3DataStore do
     end
 
     if !enabled #this will fail since the specs are not running on an ec2 instance with an iam role defined
-      it 'should allow missing secret key and access key on store if iam profiles are allowed' do
+      it 'should allow missing secret key and access key on write if iam profiles are allowed' do
         @data_store.use_iam_profile = true
         @data_store.secret_access_key = nil
         @data_store.access_key_id = nil
-        proc{ @data_store.store(content) }.should_not raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+        proc{ @data_store.write(content) }.should_not raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
       end
     end
 
   end
 
   describe "autocreating the bucket" do
-    it "should create the bucket on store if it doesn't exist" do
+    it "should create the bucket on write if it doesn't exist" do
       @data_store.bucket_name = "dragonfly-test-blah-blah-#{rand(100000000)}"
-      @data_store.store(content)
+      @data_store.write(content)
     end
 
     it "should not try to create the bucket on retrieve if it doesn't exist" do
@@ -186,29 +186,29 @@ describe Dragonfly::DataStorage::S3DataStore do
       @data_store.storage.should_receive(:put_object).with(BUCKET_NAME, anything, anything,
         hash_including('x-amz-foo' => 'biscuithead')
       )
-      @data_store.store(content)
+      @data_store.write(content)
     end
 
     it "should allow adding per-store" do
       @data_store.storage.should_receive(:put_object).with(BUCKET_NAME, anything, anything,
         hash_including('x-amz-foo' => 'biscuithead', 'hello' => 'there')
       )
-      @data_store.store(content, :headers => {'hello' => 'there'})
+      @data_store.write(content, :headers => {'hello' => 'there'})
     end
 
     it "should let the per-store one take precedence" do
       @data_store.storage.should_receive(:put_object).with(BUCKET_NAME, anything, anything,
         hash_including('x-amz-foo' => 'override!')
       )
-      @data_store.store(content, :headers => {'x-amz-foo' => 'override!'})
+      @data_store.write(content, :headers => {'x-amz-foo' => 'override!'})
     end
 
-    it "should store setting the content type" do
+    it "should write setting the content type" do
       @data_store.storage.should_receive(:put_object) do |_, __, ___, headers|
         headers['Content-Type'].should == 'image/png'
       end
       content.name = 'egg.png'
-      @data_store.store(content)
+      @data_store.write(content)
     end
 
     it "allow overriding the content type" do
@@ -216,7 +216,7 @@ describe Dragonfly::DataStorage::S3DataStore do
         headers['Content-Type'].should == 'text/plain'
       end
       content.name = 'egg.png'
-      @data_store.store(content, :headers => {'Content-Type' => 'text/plain'})
+      @data_store.write(content, :headers => {'Content-Type' => 'text/plain'})
     end
   end
 
@@ -263,13 +263,13 @@ describe Dragonfly::DataStorage::S3DataStore do
 
   describe "meta" do
     it "uses the x-amz-meta-json header for meta" do
-      uid = @data_store.store(content, :headers => {'x-amz-meta-json' => Dragonfly::Serializer.json_encode({'potato' => 44})})
+      uid = @data_store.write(content, :headers => {'x-amz-meta-json' => Dragonfly::Serializer.json_encode({'potato' => 44})})
       @data_store.retrieve(new_content, uid)
       new_content.meta['potato'].should == 44
     end
 
     it "works with the deprecated x-amz-meta-extra header (but stringifies its keys)" do
-      uid = @data_store.store(content, :headers => {
+      uid = @data_store.write(content, :headers => {
         'x-amz-meta-extra' => Dragonfly::Serializer.marshal_b64_encode(:some => 'meta', :wo => 4),
         'x-amz-meta-json' => nil
       })

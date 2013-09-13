@@ -22,7 +22,7 @@ module Dragonfly
 
       attr_accessor :host, :hosts, :connection_opts, :port, :database, :username, :password
 
-      def store(content, opts={})
+      def write(content, opts={})
         ensure_authenticated!
         content.file do |f|
           mongo_id = grid.put(f, :content_type => content.mime_type, :metadata => content.meta)

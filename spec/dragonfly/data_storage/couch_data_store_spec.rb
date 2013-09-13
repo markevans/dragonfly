@@ -48,7 +48,7 @@ describe Dragonfly::DataStorage::CouchDataStore do
 
     it "serves with the correct data type (taken from ext)" do
       content.name = 'doogie.png'
-      uid = @data_store.store(content)
+      uid = @data_store.write(content)
       response = get_content(@data_store.url_for(uid))
       response.body.should == 'gollum'
       response['Content-Type'].should == 'image/png'

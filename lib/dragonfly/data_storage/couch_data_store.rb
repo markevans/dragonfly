@@ -18,7 +18,7 @@ module Dragonfly
 
       attr_reader :host, :port, :database, :username, :password
 
-      def store(content, opts={})
+      def write(content, opts={})
         name = content.name || 'file'
 
         content.file do |f|

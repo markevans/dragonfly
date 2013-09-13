@@ -718,7 +718,7 @@ describe Dragonfly::Job do
   describe "store" do
     it "calls store on the applied content" do
       job.should_receive(:apply)
-      app.datastore.should_receive(:store).with(job.content, {})
+      app.datastore.should_receive(:write).with(job.content, {})
       job.store
     end
   end

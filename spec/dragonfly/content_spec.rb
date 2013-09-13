@@ -304,12 +304,12 @@ describe Dragonfly::Content do
 
   describe "store" do
     it "stores itself in the app's datastore" do
-      app.datastore.should_receive(:store).with(content, {})
+      app.datastore.should_receive(:write).with(content, {})
       content.store
     end
 
     it "allows passing options" do
-      app.datastore.should_receive(:store).with(content, hello: 'there')
+      app.datastore.should_receive(:write).with(content, hello: 'there')
       content.store(hello: 'there')
     end
   end

@@ -32,14 +32,14 @@ describe Dragonfly::DataStorage::MongoDataStore do
   describe "authenticating" do
     it "should not attempt to authenticate if a username is not given" do
       @data_store.db.should_not_receive(:authenticate)
-      @data_store.store(content)
+      @data_store.write(content)
     end
 
     it "should attempt to authenticate once if a username is given" do
       @data_store.username = 'terry'
       @data_store.password = 'butcher'
       @data_store.db.should_receive(:authenticate).exactly(:once).with('terry','butcher').and_return(true)
-      uid = @data_store.store(content)
+      uid = @data_store.write(content)
       @data_store.retrieve(new_content, uid)
     end
   end
@@ -65,7 +65,7 @@ describe Dragonfly::DataStorage::MongoDataStore do
   describe "content type" do
     it "should serve straight from mongo with the correct content type (taken from ext)" do
       content.name = 'text.txt'
-      uid = @data_store.store(content)
+      uid = @data_store.write(content)
       response = @data_store.grid.get(BSON::ObjectId(uid))
       response.content_type.should == 'text/plain'
       response.read.should == content.data

@@ -100,15 +100,15 @@ module Dragonfly
     end
     attr_writer :datastore
 
-    def use_datastore(store, *args)
-      self.datastore = if store.is_a?(Symbol)
-        get_klass = self.class.available_datastores[store]
-        raise UnregisteredDataStore, "the datastore '#{store}' is not registered" unless get_klass
+    def use_datastore(datastore, *args)
+      self.datastore = if datastore.is_a?(Symbol)
+        get_klass = self.class.available_datastores[datastore]
+        raise UnregisteredDataStore, "the datastore '#{datastore}' is not registered" unless get_klass
         klass = get_klass.call
         klass.new(*args)
       else
         raise ArgumentError, "datastore only takes 1 argument unless you use a symbol" if args.any?
-        store
+        datastore
       end
     end
 

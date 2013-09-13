@@ -90,7 +90,7 @@ describe "models" do
         @item.preview_image_uid.should be_nil
       end
       it "should not try to store anything on save" do
-        @app.datastore.should_not_receive(:store)
+        @app.datastore.should_not_receive(:write)
         @item.save!
       end
       it "should not try to destroy anything on save" do
@@ -128,7 +128,7 @@ describe "models" do
         @item.save!
       end
       it "should not try to store any data" do
-        @app.datastore.should_not_receive(:store)
+        @app.datastore.should_not_receive(:write)
         @item.save!
       end
     end
@@ -144,7 +144,7 @@ describe "models" do
         @item.preview_image_uid.should be_nil
       end
       it "should store the image when saved" do
-        @app.datastore.should_receive(:store).with(content_with_data("DATASTRING"), hash_including)
+        @app.datastore.should_receive(:write).with(content_with_data("DATASTRING"), hash_including)
         @item.save!
       end
       it "should not try to destroy anything on destroy" do
@@ -167,7 +167,7 @@ describe "models" do
           @item.save!
         end
         it "should not try to store any data" do
-          @app.datastore.should_not_receive(:store)
+          @app.datastore.should_not_receive(:write)
           @item.save!
         end
       end
@@ -178,7 +178,7 @@ describe "models" do
 
       before(:each) do
         @item.preview_image = "DATASTRING"
-        @app.datastore.should_receive(:store).with(content_with_data("DATASTRING"), hash_including).once.and_return('some_uid')
+        @app.datastore.should_receive(:write).with(content_with_data("DATASTRING"), hash_including).once.and_return('some_uid')
         @item.save!
       end
 
@@ -186,7 +186,7 @@ describe "models" do
         @item.preview_image_uid.should == 'some_uid'
       end
       it "should not try to store anything if saved again" do
-        @app.datastore.should_not_receive(:store)
+        @app.datastore.should_not_receive(:write)
         @item.save!
       end
 
@@ -221,7 +221,7 @@ describe "models" do
       describe "when something new is assigned" do
         before(:each) do
           @item.preview_image = "ANEWDATASTRING"
-          @app.datastore.stub!(:store).and_return('some_uid')
+          @app.datastore.stub!(:write).and_return('some_uid')
         end
         it "should set the uid to nil" do
           @item.preview_image_uid.should be_nil
@@ -243,7 +243,7 @@ describe "models" do
           @item.save!
         end
         it "should store the new data when saved" do
-          @app.datastore.should_receive(:store).with(content_with_data("ANEWDATASTRING"), hash_including)
+          @app.datastore.should_receive(:write).with(content_with_data("ANEWDATASTRING"), hash_including)
           @item.save!
         end
         it "should destroy the old data on destroy" do
@@ -855,21 +855,21 @@ describe "models" do
     it "should send the specified options to the datastore on store" do
       set_storage_opts :egg => 'head'
       item = @item_class.new :preview_image => 'hello'
-      @app.datastore.should_receive(:store).with(anything, hash_including(:egg => 'head'))
+      @app.datastore.should_receive(:write).with(anything, hash_including(:egg => 'head'))
       item.save!
     end
 
     it "should allow putting in a proc" do
       set_storage_opts{ {:egg => 'numb'} }
       item = @item_class.new :preview_image => 'hello'
-      @app.datastore.should_receive(:store).with(anything, hash_including(:egg => 'numb'))
+      @app.datastore.should_receive(:write).with(anything, hash_including(:egg => 'numb'))
       item.save!
     end
 
     it "should yield the attachment and exec in model context" do
       set_storage_opts{|a| {:egg => (a.data + title)} }
       item = @item_class.new :title => 'lump', :preview_image => 'hello'
-      @app.datastore.should_receive(:store).with(anything, hash_including(:egg => 'hellolump'))
+      @app.datastore.should_receive(:write).with(anything, hash_including(:egg => 'hellolump'))
       item.save!
     end
 
@@ -877,7 +877,7 @@ describe "models" do
       set_storage_opts :special_ops
       item = @item_class.new :preview_image => 'hello'
       def item.special_ops; {:a => 1}; end
-      @app.datastore.should_receive(:store).with(anything, hash_including(:a => 1))
+      @app.datastore.should_receive(:write).with(anything, hash_including(:a => 1))
       item.save!
     end
 
@@ -889,7 +889,7 @@ describe "models" do
         end
       end
       item = @item_class.new :title => 'lump', :preview_image => 'hello'
-      @app.datastore.should_receive(:store).with(anything, hash_including(
+      @app.datastore.should_receive(:write).with(anything, hash_including(
         :a => 'lump', :b => 'LUMP', :c => 'digby'
       ))
       item.save!
@@ -917,7 +917,7 @@ describe "models" do
     it "should allow setting as a string" do
       set_storage_path 'always/the/same'
       item = @item_class.new :preview_image => 'bilbo'
-      @app.datastore.should_receive(:store).with(anything, hash_including(
+      @app.datastore.should_receive(:write).with(anything, hash_including(
         :path => 'always/the/same'
       ))
       item.save!
@@ -927,7 +927,7 @@ describe "models" do
       set_storage_path :monkey
       item = @item_class.new :title => 'billy'
       item.preview_image = 'bilbo'
-      @app.datastore.should_receive(:store).with(anything, hash_including(
+      @app.datastore.should_receive(:write).with(anything, hash_including(
         :path => 'mr/billy/monkey'
       ))
       item.save!
@@ -937,7 +937,7 @@ describe "models" do
       set_storage_path{|a| "#{a.data}/megs/#{title}" }
       item = @item_class.new :title => 'billy'
       item.preview_image = 'bilbo'
-      @app.datastore.should_receive(:store).with(anything, hash_including(
+      @app.datastore.should_receive(:write).with(anything, hash_including(
         :path => 'bilbo/megs/billy'
       ))
       item.save!
@@ -950,7 +950,7 @@ describe "models" do
         end
       end
       item = @item_class.new :preview_image => 'bilbo'
-      @app.datastore.should_receive(:store).with(anything, hash_including(
+      @app.datastore.should_receive(:write).with(anything, hash_including(
         :eggs => 23
       ))
       item.save!
@@ -1032,7 +1032,7 @@ describe "models" do
     it "should return the saved stuff if assigned and retained" do
       @item.preview_image = 'hello'
       @item.preview_image.name = 'dog.biscuit'
-      @app.datastore.should_receive(:store).with do |content, opts|
+      @app.datastore.should_receive(:write).with do |content, opts|
         content.data.should == 'hello'
       end.and_return('new/uid')
       @item.preview_image.retain!
@@ -1151,7 +1151,7 @@ describe "models" do
 
     it "should destroy the old one on save" do
       @item.preview_image = 'oldone'
-      @app.datastore.should_receive(:store).with(content_with_data('oldone'), anything).and_return('old/uid')
+      @app.datastore.should_receive(:write).with(content_with_data('oldone'), anything).and_return('old/uid')
       @item.save!
       item = @item_class.find(@item.id)
       item.retained_preview_image = @pending_string

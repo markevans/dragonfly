@@ -10,7 +10,7 @@ describe Dragonfly::DataStorage::MemoryDataStore do
   it_should_behave_like 'data_store'
 
   it "allows setting the uid" do
-    uid = @data_store.store(Dragonfly::Content.new(test_app, "Hello"), :uid => 'some_uid')
+    uid = @data_store.write(Dragonfly::Content.new(test_app, "Hello"), :uid => 'some_uid')
     uid.should == 'some_uid'
     content = Dragonfly::Content.new(test_app)
     @data_store.retrieve(content, uid)

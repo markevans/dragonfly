@@ -40,7 +40,7 @@ module Dragonfly
         @use_filesystem != false
       end
 
-      def store(content, opts={})
+      def write(content, opts={})
         ensure_configured
         ensure_bucket_initialized
 

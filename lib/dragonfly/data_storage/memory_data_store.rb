@@ -6,7 +6,7 @@ module Dragonfly
         @content_store = Hash.new{|hash, key| throw :not_found, key }
       end
 
-      def store(content, opts={})
+      def write(content, opts={})
         uid = opts[:uid] || generate_uid
         content_store[uid] = {:content => content.data, :meta => content.meta.dup}
         uid

@@ -12,7 +12,7 @@ module Dragonfly
       class UnableToFormUrl < RuntimeError; end
 
       class MetaStore
-        def store(data_path, meta)
+        def write(data_path, meta)
           File.open(meta_path(data_path), 'wb') do |f|
             f.write dump(meta)
           end
@@ -93,7 +93,7 @@ module Dragonfly
         @store_meta != false # Default to true if not set
       end
 
-      def store(content, opts={})
+      def write(content, opts={})
         relative_path = if opts[:path]
           opts[:path]
         else
@@ -106,7 +106,7 @@ module Dragonfly
           path = disambiguate(path)
         end
         content.to_file(path).close
-        meta_store.store(path, content.meta) if store_meta?
+        meta_store.write(path, content.meta) if store_meta?
 
         relative(path)
       end
