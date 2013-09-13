@@ -119,8 +119,8 @@ describe "models" do
       before(:each) do
         @item.preview_image_uid = 'some_known_uid'
       end
-      it "should not try to retrieve any data" do
-        @app.datastore.should_not_receive(:retrieve)
+      it "should not try to read any data" do
+        @app.datastore.should_not_receive(:read)
         @item.save!
       end
       it "should not try to destroy any data" do
@@ -158,8 +158,8 @@ describe "models" do
         before(:each) do
           @item.preview_image_uid = 'some_known_uid'
         end
-        it "should not try to retrieve any data" do
-          @app.datastore.should_not_receive(:retrieve)
+        it "should not try to read any data" do
+          @app.datastore.should_not_receive(:read)
           @item.save!
         end
         it "should not try to destroy any data" do
@@ -486,7 +486,7 @@ describe "models" do
           @item.preview_image.number_of_As.should == 2
         end
         it "should use the magic attribute if there is one, and not load the content" do
-          @app.datastore.should_not_receive(:retrieve)
+          @app.datastore.should_not_receive(:read)
           @item.should_receive(:preview_image_some_analyser_method).at_least(:once).and_return('result yo')
           @item.preview_image.some_analyser_method.should == 'result yo'
         end

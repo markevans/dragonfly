@@ -29,7 +29,7 @@ module Dragonfly
         end
       end
 
-      def retrieve(content, uid)
+      def read(content, uid)
         doc_id, attachment = parse_uid(uid)
         doc = db.get(doc_id)
         content.update(doc.fetch_attachment(attachment), extract_meta(doc))

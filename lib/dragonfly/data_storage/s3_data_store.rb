@@ -61,7 +61,7 @@ module Dragonfly
         uid
       end
 
-      def retrieve(content, uid)
+      def read(content, uid)
         ensure_configured
         response = rescuing_socket_errors{ storage.get_object(bucket_name, uid) }
         content.update(response.body, headers_to_meta(response.headers))

@@ -60,7 +60,7 @@ describe Dragonfly::DataStorage::S3DataStore do
       content.name = 'doobie.doo'
       uid = @data_store.write(content)
       uid.should =~ /doobie\.doo$/
-      @data_store.retrieve(new_content, uid)
+      @data_store.read(new_content, uid)
       new_content.data.should == 'eggheads'
     end
 
@@ -68,21 +68,21 @@ describe Dragonfly::DataStorage::S3DataStore do
       content.name = "A Picture with many spaces in its name (at 20:00 pm).png"
       uid = @data_store.write(content)
       uid.should =~ /A_Picture_with_many_spaces_in_its_name_at_20_00_pm_\.png$/
-      @data_store.retrieve(new_content, uid)
+      @data_store.read(new_content, uid)
       new_content.data.should == 'eggheads'
     end
 
     it "should allow for setting the path manually" do
       uid = @data_store.write(content, :path => 'hello/there')
       uid.should == 'hello/there'
-      @data_store.retrieve(new_content, uid)
+      @data_store.read(new_content, uid)
       new_content.data.should == 'eggheads'
     end
 
     it "should work fine when not using the filesystem" do
       @data_store.use_filesystem = false
       uid = @data_store.write(content)
-      @data_store.retrieve(new_content, uid)
+      @data_store.read(new_content, uid)
       new_content.data.should == "eggheads"
     end
 
@@ -138,19 +138,19 @@ describe Dragonfly::DataStorage::S3DataStore do
       proc{ @data_store.write(content) }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
 
-    it "should require a bucket name on retrieve" do
+    it "should require a bucket name on read" do
       @data_store.bucket_name = nil
-      proc{ @data_store.retrieve(new_content, 'asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.read(new_content, 'asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
 
-    it "should require an access_key_id on retrieve" do
+    it "should require an access_key_id on read" do
       @data_store.access_key_id = nil
-      proc{ @data_store.retrieve(new_content, 'asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.read(new_content, 'asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
 
-    it "should require a secret access key on retrieve" do
+    it "should require a secret access key on read" do
       @data_store.secret_access_key = nil
-      proc{ @data_store.retrieve(new_content, 'asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
+      proc{ @data_store.read(new_content, 'asdf') }.should raise_error(Dragonfly::DataStorage::S3DataStore::NotConfigured)
     end
 
     if !enabled #this will fail since the specs are not running on an ec2 instance with an iam role defined
@@ -170,10 +170,10 @@ describe Dragonfly::DataStorage::S3DataStore do
       @data_store.write(content)
     end
 
-    it "should not try to create the bucket on retrieve if it doesn't exist" do
+    it "should not try to create the bucket on read if it doesn't exist" do
       @data_store.bucket_name = "dragonfly-test-blah-blah-#{rand(100000000)}"
       @data_store.send(:storage).should_not_receive(:put_bucket)
-      proc{ @data_store.retrieve(new_content, "gungle") }.should throw_symbol(:not_found, 'gungle')
+      proc{ @data_store.read(new_content, "gungle") }.should throw_symbol(:not_found, 'gungle')
     end
   end
 
@@ -264,7 +264,7 @@ describe Dragonfly::DataStorage::S3DataStore do
   describe "meta" do
     it "uses the x-amz-meta-json header for meta" do
       uid = @data_store.write(content, :headers => {'x-amz-meta-json' => Dragonfly::Serializer.json_encode({'potato' => 44})})
-      @data_store.retrieve(new_content, uid)
+      @data_store.read(new_content, uid)
       new_content.meta['potato'].should == 44
     end
 
@@ -273,7 +273,7 @@ describe Dragonfly::DataStorage::S3DataStore do
         'x-amz-meta-extra' => Dragonfly::Serializer.marshal_b64_encode(:some => 'meta', :wo => 4),
         'x-amz-meta-json' => nil
       })
-      @data_store.retrieve(new_content, uid)
+      @data_store.read(new_content, uid)
       new_content.meta['some'].should == 'meta'
       new_content.meta['wo'].should == 4
     end

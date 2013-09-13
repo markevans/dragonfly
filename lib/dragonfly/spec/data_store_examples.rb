@@ -23,15 +23,15 @@ shared_examples_for "data_store" do
     end
   end
 
-  describe "retrieve" do
+  describe "read" do
     before(:each) do
       content.add_meta('bitrate' => 35, 'name' => 'danny.boy')
       uid = @data_store.write(content)
       @retrieved_content = Dragonfly::Content.new(app)
-      @data_store.retrieve(@retrieved_content, uid)
+      @data_store.read(@retrieved_content, uid)
     end
 
-    it "should retrieve the stored data" do
+    it "should read the stored data" do
       @retrieved_content.data.should == "gollum"
     end
 
@@ -42,7 +42,7 @@ shared_examples_for "data_store" do
 
     it "should throw :not_found if the data doesn't exist" do
       lambda{
-        @data_store.retrieve(Dragonfly::Content.new(app), 'gooble/gubbub')
+        @data_store.read(Dragonfly::Content.new(app), 'gooble/gubbub')
       }.should throw_symbol(:not_found, 'gooble/gubbub')
     end
   end
@@ -53,7 +53,7 @@ shared_examples_for "data_store" do
       uid = @data_store.write(content)
       @data_store.destroy(uid)
       lambda{
-        @data_store.retrieve(Dragonfly::Content.new(app), uid)
+        @data_store.read(Dragonfly::Content.new(app), uid)
       }.should throw_symbol(:not_found, uid)
     end
 

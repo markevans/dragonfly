@@ -18,7 +18,7 @@ module Dragonfly
           end
         end
 
-        def retrieve(data_path)
+        def read(data_path)
           path = meta_path(data_path)
           File.open(path,'rb'){|f| load(f.read) } if File.exist?(path)
         end
@@ -111,14 +111,14 @@ module Dragonfly
         relative(path)
       end
 
-      def retrieve(content, relative_path)
+      def read(content, relative_path)
         validate_path!(relative_path)
         path = absolute(relative_path)
         pathname = Pathname.new(path)
         throw :not_found, relative_path unless pathname.exist?
         content.update(pathname)
         if store_meta?
-          meta = meta_store.retrieve(path) || deprecated_meta_store.retrieve(path) || {}
+          meta = meta_store.read(path) || deprecated_meta_store.read(path) || {}
           content.add_meta(meta)
         end
       end

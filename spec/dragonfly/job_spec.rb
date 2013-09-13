@@ -60,8 +60,8 @@ describe Dragonfly::Job do
 
     it { job.steps.should match_steps([Dragonfly::Job::Fetch]) }
 
-    it "should retrieve from the app's datastore when applied" do
-      app.datastore.should_receive(:retrieve).with(job.content, 'some_uid')
+    it "should read from the app's datastore when applied" do
+      app.datastore.should_receive(:read).with(job.content, 'some_uid')
       job.apply
     end
   end
@@ -321,7 +321,7 @@ describe Dragonfly::Job do
     end
     it "should return true when applied" do
       job = app.fetch('eggs')
-      app.datastore.should_receive(:retrieve).with(job.content, 'eggs')
+      app.datastore.should_receive(:read).with(job.content, 'eggs')
       job.apply
       job.should be_applied
     end

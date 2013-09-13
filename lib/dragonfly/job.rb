@@ -73,7 +73,7 @@ module Dragonfly
       end
 
       def apply
-        app.datastore.retrieve(job.content, uid)
+        app.datastore.read(job.content, uid)
       end
     end
 

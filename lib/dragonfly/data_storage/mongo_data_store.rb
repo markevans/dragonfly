@@ -30,7 +30,7 @@ module Dragonfly
         end
       end
 
-      def retrieve(content, uid)
+      def read(content, uid)
         ensure_authenticated!
         grid_io = grid.get(bson_id(uid))
         meta = extract_meta(grid_io)

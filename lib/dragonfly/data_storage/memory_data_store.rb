@@ -12,7 +12,7 @@ module Dragonfly
         uid
       end
 
-      def retrieve(content, uid)
+      def read(content, uid)
         data = content_store[uid]
         content.update(data[:content], data[:meta])
       end
