@@ -54,10 +54,6 @@ module Dragonfly
     # end
     App.register_datastore(:file){ DataStorage::FileDataStore }
     App.register_datastore(:memory){ DataStorage::MemoryDataStore }
-    App.register_datastore(:s3){
-      require 'dragonfly/data_storage/s3_data_store'
-      DataStorage::S3DataStore
-    }
 
   end
 end

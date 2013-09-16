@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'rack/mock'
-require 'dragonfly/data_storage/s3_data_store'
 
 def request(app, path)
   Rack::MockRequest.new(app).get(path)
@@ -212,10 +211,9 @@ describe Dragonfly::App do
 
       {
         :file => Dragonfly::DataStorage::FileDataStore,
-        :s3 => Dragonfly::DataStorage::S3DataStore,
         :memory => Dragonfly::DataStorage::MemoryDataStore
       }.each do |symbol, klass|
-        it "recognises the :s3 shortcut for S3DataStore" do
+        it "recognises the #{symbol.inspect} shortcut for S3DataStore" do
           app.configure{ datastore symbol }
           app.datastore.should be_a(klass)
         end
