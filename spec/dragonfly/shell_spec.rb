@@ -49,7 +49,7 @@ describe Dragonfly::Shell do
     end
 
     it "allows running non-escaped commands" do
-      shell.run("echo `echo 1`", escape: false).strip.should == "1"
+      shell.run("echo `echo 1`", :escape => false).strip.should == "1"
     end
 
   end

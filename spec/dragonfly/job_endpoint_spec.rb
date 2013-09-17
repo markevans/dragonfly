@@ -145,7 +145,7 @@ describe Dragonfly::JobEndpoint do
     end
     it "should allow giving a proc" do
       @app.response_headers['Cache-Control'] = proc{|job, request, headers|
-        [job.basename.reverse.upcase, request['a'], headers['Cache-Control'][0]].join(',')
+        [job.basename.reverse.upcase, request['a'], headers['Cache-Control'].chars.first].join(',')
       }
       response = make_request(@job, 'QUERY_STRING' => 'a=egg')
       response['Cache-Control'].should == 'GNUG,egg,p'

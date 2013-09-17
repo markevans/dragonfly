@@ -62,7 +62,7 @@ describe Dragonfly::DataStorage::FileDataStore do
       it "stores meta as YAML" do
         content.meta = {'wassup' => 'doc'}
         @data_store.write(content)
-        File.read("#{@file_pattern_prefix}file.meta.yml").should == "---\nwassup: doc\n"
+        File.read("#{@file_pattern_prefix}file.meta.yml").should =~ /---\s+wassup: doc/
       end
 
       describe "when the filename already exists" do

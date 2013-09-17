@@ -38,6 +38,7 @@ module Dragonfly
     end
 
     def json_decode(string)
+      raise BadString, "can't decode blank string" if string.blank?
       MultiJson.decode(string)
     rescue MultiJson::DecodeError => e
       raise BadString, "couldn't decode #{string} - got #{e}"

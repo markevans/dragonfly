@@ -11,7 +11,7 @@ describe "getting rack response directly" do
   end
 
   it "should give a rack response" do
-    response = @app.generate(:test, 1, 1).to_response
+    response = @app.generate(:test).to_response
     response.should be_a(Array)
     response.length.should == 3
     response[0].should == 200
@@ -20,7 +20,7 @@ describe "getting rack response directly" do
   end
 
   it "should allow passing in the env" do
-    response = @app.generate(:test, 1, 1).to_response('REQUEST_METHOD' => 'POST')
+    response = @app.generate(:test).to_response('REQUEST_METHOD' => 'POST')
     response.should be_a(Array)
     response.length.should == 3
     response[0].should == 405

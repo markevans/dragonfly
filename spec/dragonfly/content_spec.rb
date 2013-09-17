@@ -309,8 +309,8 @@ describe Dragonfly::Content do
     end
 
     it "allows passing options" do
-      app.datastore.should_receive(:write).with(content, hello: 'there')
-      content.store(hello: 'there')
+      app.datastore.should_receive(:write).with(content, :hello => 'there')
+      content.store(:hello => 'there')
     end
   end
 
