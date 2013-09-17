@@ -1,32 +1,51 @@
+require 'forwardable'
+require 'dragonfly/whitelist'
+require 'dragonfly/url_mapper'
+require 'dragonfly/job'
+require 'dragonfly/response'
+require 'dragonfly/serializer'
+
 module Dragonfly
   class Server
 
     # Exceptions
     class JobNotAllowed < RuntimeError; end
 
-    include Loggable
-    include Configurable
-
-    configurable_attr :allow_fetch_file, false
-    configurable_attr :allow_fetch_url, false
-    configurable_attr :dragonfly_url, '/dragonfly'
-    configurable_attr :protect_from_dos_attacks, false
-    configurable_attr :url_format, '/:job/:basename.:format'
-    configurable_attr :url_host
-
     extend Forwardable
     def_delegator :url_mapper, :params_in_url
 
     def initialize(app)
       @app = app
-      use_same_log_as(app)
-      use_as_fallback_config(app)
+      @dragonfly_url = '/dragonfly'
+      self.url_format = '/:job/:name'
+      @fetch_file_whitelist = []
+      @fetch_url_whitelist = []
+    end
+
+    attr_accessor :protect_from_dos_attacks, :url_host, :url_path_prefix, :dragonfly_url
+
+    attr_reader :url_format, :fetch_file_whitelist, :fetch_url_whitelist
+
+    def fetch_file_whitelist=(patterns)
+      @fetch_file_whitelist = Whitelist.new(patterns)
+    end
+
+    def fetch_url_whitelist=(patterns)
+      @fetch_url_whitelist = Whitelist.new(patterns)
+    end
+
+    def url_format=(url_format)
+      @url_format = url_format
+      self.url_mapper = UrlMapper.new(url_format,
+        :basename => '[^\/]',
+        :name => '[^\/]',
+        :format => '[^\.]'
+      )
     end
 
     def before_serve(&block)
       self.before_serve_callback = block
     end
-    configuration_method :before_serve
 
     def call(env)
       if dragonfly_url == env["PATH_INFO"]
@@ -50,35 +69,29 @@ module Dragonfly
     rescue Job::IncorrectSHA => e
       [400, {"Content-Type" => 'text/plain'}, ["The SHA parameter you gave (#{e}) is incorrect"]]
     rescue JobNotAllowed => e
-      log.warn(e.message)
+      Dragonfly.warn(e.message)
       [403, {"Content-Type" => 'text/plain'}, ["Forbidden"]]
     rescue Serializer::BadString, Serializer::MaliciousString, Job::InvalidArray => e
-      log.warn(e.message)
+      Dragonfly.warn(e.message)
       [404, {'Content-Type' => 'text/plain'}, ['Not found']]
     end
 
     def url_for(job, opts={})
       opts = opts.dup
       host = opts.delete(:host) || url_host
-      params = stringify_keys(opts)
+      path_prefix = opts.delete(:path_prefix) || url_path_prefix
+      params = job.url_attrs.extract(url_mapper.params_in_url)
+      params.merge!(stringify_keys(opts))
       params['job'] = job.serialize
       params['sha'] = job.sha if protect_from_dos_attacks
       url = url_mapper.url_for(params)
-      "#{host}#{url}"
+      "#{host}#{path_prefix}#{url}"
     end
 
     private
 
     attr_reader :app
-    attr_accessor :before_serve_callback
-
-    def url_mapper
-      @url_mapper ||= UrlMapper.new(url_format,
-        :basename => '[^\/]',
-        :name => '[^\/]',
-        :format => '[^\.]'
-      )
-    end
+    attr_accessor :before_serve_callback, :url_mapper
 
     def stringify_keys(params)
       params.inject({}) do |hash, (k, v)|
@@ -109,11 +122,25 @@ module Dragonfly
     end
 
     def validate_job!(job)
-      if job.fetch_file_step && !allow_fetch_file ||
-         job.fetch_url_step && !allow_fetch_url
-        raise JobNotAllowed, "Dragonfly Server doesn't allow requesting job with steps #{job.steps.inspect}"
+      if step = job.fetch_file_step
+        validate_fetch_file_step!(step)
+      end
+      if step = job.fetch_url_step
+        validate_fetch_url_step!(step)
       end
     end
 
+    def validate_fetch_file_step!(step)
+      unless fetch_file_whitelist.include?(step.path)
+        raise JobNotAllowed, "fetch file #{step.path} disallowed - use fetch_file_whitelist to allow it"
+      end
+    end
+
+    def validate_fetch_url_step!(step)
+      unless fetch_url_whitelist.include?(step.url)
+        raise JobNotAllowed, "fetch url #{step.url} disallowed - use fetch_url_whitelist to allow it"
+      end
+    end
   end
 end
+

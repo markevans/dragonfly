@@ -45,30 +45,30 @@ describe Dragonfly::Serializer do
     [{:this => 'should', :work => [3, 5.3, nil, {false => 'egg'}]}, [], true]
   ].each do |object|
     it "should correctly marshal encode #{object.inspect} properly with no padding/line break" do
-      encoded = marshal_encode(object)
+      encoded = marshal_b64_encode(object)
       encoded.should be_a(String)
       encoded.should_not =~ /\n|=/
     end
     it "should correctly marshal encode and decode #{object.inspect} to the same object" do
-      marshal_decode(marshal_encode(object)).should == object
+      marshal_b64_decode(marshal_b64_encode(object)).should == object
     end
   end
 
-  describe "marshal_decode" do
+  describe "marshal_b64_decode" do
     it "should raise an error if the string passed in is empty" do
       lambda{
-        marshal_decode('')
+        marshal_b64_decode('')
       }.should raise_error(Dragonfly::Serializer::BadString)
     end
     it "should raise an error if the string passed in is gobbledeegook" do
       lambda{
-        marshal_decode('ahasdkjfhasdkfjh')
+        marshal_b64_decode('ahasdkjfhasdkfjh')
       }.should raise_error(Dragonfly::Serializer::BadString)
     end
     describe "potentially harmful strings" do
       it "doesn't raise if not flagged to check for malicious strings" do
         class C; end
-        marshal_decode('BAhvOgZDBjoOQF9fc2VuZF9faQY').should be_a(C)
+        marshal_b64_decode('BAhvOgZDBjoOQF9fc2VuZF9faQY').should be_a(C)
       end
       ['_', 'hello', 'h2', '__send__', 'F'].each do |variable_name|
         it "raises if flagged to check for malicious strings and finds one" do
@@ -77,7 +77,7 @@ describe Dragonfly::Serializer do
           c.instance_eval{ instance_variable_set("@#{variable_name}", 1) }
           string = Dragonfly::Serializer.b64_encode(Marshal.dump(c))
           lambda{
-            marshal_decode(string, :check_malicious => true)
+            marshal_b64_decode(string, :check_malicious => true)
           }.should raise_error(Dragonfly::Serializer::MaliciousString)
         end
       end
@@ -90,27 +90,25 @@ describe Dragonfly::Serializer do
     [{'this' => 'should', 'work' => [3, 5.3, nil, {'egg' => false}]}, [], true]
   ].each do |object|
     it "should correctly json encode #{object.inspect} properly with no padding/line break" do
-      encoded = json_encode(object)
+      encoded = json_b64_encode(object)
       encoded.should be_a(String)
       encoded.should_not =~ /\n|=/
     end
+
     it "should correctly json encode and decode #{object.inspect} to the same object" do
-      json_decode(json_encode(object)).should == object
+      json_b64_decode(json_b64_encode(object)).should == object
     end
   end
 
-  describe "json_decode" do
-    it "optionally symbolizes keys" do
-      json_decode(json_encode('a' => 1), :symbolize_keys => true).should == {:a => 1}
-    end
+  describe "json_b64_decode" do
     it "should raise an error if the string passed in is empty" do
       lambda{
-        json_decode('')
+        json_b64_decode('')
       }.should raise_error(Dragonfly::Serializer::BadString)
     end
     it "should raise an error if the string passed in is gobbledeegook" do
       lambda{
-        json_decode('ahasdkjfhasdkfjh')
+        json_b64_decode('ahasdkjfhasdkfjh')
       }.should raise_error(Dragonfly::Serializer::BadString)
     end
   end

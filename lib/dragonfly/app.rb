@@ -1,122 +1,203 @@
-require 'logger'
 require 'forwardable'
 require 'rack'
+require 'dragonfly/register'
+require 'dragonfly/server'
+require 'dragonfly/shell'
+require 'dragonfly/configurable'
+require 'dragonfly/file_data_store'
+require 'dragonfly/routed_endpoint'
+require 'dragonfly/job_endpoint'
+require 'dragonfly/job'
 
 module Dragonfly
   class App
+
+    # Exceptions
+    class UnregisteredDataStore < RuntimeError; end
+
+    DEFAULT_NAME = :default
 
     class << self
 
       private :new # Hide 'new' - need to use 'instance'
 
-      def instance(name)
+      def instance(name=nil)
+        name ||= DEFAULT_NAME
         name = name.to_sym
         apps[name] ||= new(name)
       end
 
-      alias [] instance
-
-      private
+      def [](name)
+        raise "Dragonfly::App[#{name.inspect}] is deprecated - use Dragonfly.app (for the default app) or Dragonfly.app(#{name.inspect}) (for extra named apps) instead. See docs at http://markevans.github.io/dragonfly for details"
+      end
 
       def apps
         @apps ||= {}
+      end
+
+      def destroy_apps
+        apps.clear
+      end
+
+      def register_datastore(symbol, &block)
+        available_datastores[symbol] = block
+      end
+
+      def available_datastores
+        @available_datastores ||= {}
       end
 
     end
 
     def initialize(name)
       @name = name
-      @analyser, @processor, @encoder, @generator = Analyser.new, Processor.new, Encoder.new, Generator.new
-      [@analyser, @processor, @encoder, @generator].each do |obj|
-        obj.use_same_log_as(self)
-        obj.use_as_fallback_config(self)
-      end
+      @analysers, @processors, @generators = Register.new, Register.new, Register.new
       @server = Server.new(self)
-      @job_definitions = JobDefinitions.new
+      @job_methods = Module.new
+      @shell = Shell.new
+      @env = {}
     end
 
-    attr_reader :name
-
-    include Configurable
+    attr_reader :name, :env
 
     extend Forwardable
     def_delegator :datastore, :destroy
     def_delegators :new_job, :fetch, :generate, :fetch_file, :fetch_url
     def_delegators :server, :call
 
-    configurable_attr :datastore do DataStorage::FileDataStore.new end
-    configurable_attr :cache_duration, 3600*24*365 # (1 year)
-    configurable_attr :fallback_mime_type, 'application/octet-stream'
-    configurable_attr :secret, 'secret yo'
-    configurable_attr :log do Logger.new('/var/tmp/dragonfly.log') end
-    configurable_attr :trust_file_extensions, true
-    configurable_attr :content_disposition
-    configurable_attr :content_filename, Dragonfly::Response::DEFAULT_FILENAME
-    configurable_attr :allow_legacy_urls, true
+    # Configuration
 
-    attr_reader :analyser
-    attr_reader :processor
-    attr_reader :encoder
-    attr_reader :generator
+    extend Configurable
+
+    set_up_config do
+      writer :secret, :allow_legacy_urls, :log_shell
+      meth :add_mime_type, :response_headers, :define_url
+
+      def processor(*args, &block)
+        obj.add_processor(*args, &block)
+      end
+
+      def generator(*args, &block)
+        obj.add_generator(*args, &block)
+      end
+
+      def analyser(*args, &block)
+        obj.add_analyser(*args, &block)
+      end
+
+      def datastore(*args)
+        obj.use_datastore(*args)
+      end
+
+      writer :fetch_file_whitelist, :fetch_url_whitelist, :dragonfly_url, :protect_from_dos_attacks, :url_format, :url_host, :url_path_prefix,
+             :for => :server
+      meth :before_serve, :for => :server
+
+      def method_missing(meth, *args)
+        raise NoMethodError, "no method #{meth} for App configuration - but the configuration API has changed! see docs at http://markevans.github.io/dragonfly for details"
+      end
+    end
+
+    attr_reader :analysers
+    attr_reader :processors
+    attr_reader :generators
     attr_reader :server
 
-    nested_configurable :server, :analyser, :processor, :encoder, :generator
+    def datastore
+      @datastore ||= FileDataStore.new
+    end
+    attr_writer :datastore
 
-    attr_accessor :job_definitions
+    def use_datastore(store, *args)
+      self.datastore = if store.is_a?(Symbol)
+        get_klass = self.class.available_datastores[store]
+        raise UnregisteredDataStore, "the datastore '#{store}' is not registered" unless get_klass
+        klass = get_klass.call
+        klass.new(*args)
+      else
+        raise ArgumentError, "datastore only takes 1 argument unless you use a symbol" if args.any?
+        store
+      end
+      raise "datastores have a new interface (read/write/destroy) - see docs at http://markevans.github.io/dragonfly for details" if datastore.respond_to?(:store) && !datastore.respond_to?(:write)
+    end
 
-    def new_job(content=nil, meta={})
+    def add_generator(*args, &block)
+      generators.add(*args, &block)
+    end
+
+    def get_generator(name)
+      generators.get(name)
+    end
+
+    def add_processor(name, callable=nil, &block)
+      processors.add(name, callable, &block)
+      define(name){|*args| process(name, *args) }
+      define("#{name}!"){|*args| process!(name, *args) }
+    end
+
+    def get_processor(name)
+      processors.get(name)
+    end
+
+    def add_analyser(name, callable=nil, &block)
+      analysers.add(name, callable, &block)
+      define(name){ analyse(name) }
+    end
+
+    def get_analyser(name)
+      analysers.get(name)
+    end
+
+    def new_job(content="", meta={})
       job_class.new(self, content, meta)
     end
     alias create new_job
+
+    attr_reader :shell
 
     def endpoint(job=nil, &block)
       block ? RoutedEndpoint.new(self, &block) : JobEndpoint.new(job)
     end
 
-    def job(name, &block)
-      job_definitions.add(name, &block)
-    end
-    configuration_method :job
+    attr_reader :job_methods
 
     def job_class
       @job_class ||= begin
         app = self
         Class.new(Job).class_eval do
-          include app.analyser.analysis_methods
-          include app.job_definitions
-          include Job::OverrideInstanceMethods
+          include app.job_methods
           self
         end
       end
     end
 
-    def store(object, opts={})
-      temp_object = object.is_a?(TempObject) ? object : TempObject.new(object, opts[:meta] || {})
-      datastore.store(temp_object, opts)
+    def define(method, &block)
+      job_methods.send(:define_method, method, &block)
     end
 
-    def register_mime_type(format, mime_type)
-      registered_mime_types[file_ext_string(format)] = mime_type
+    def store(object, meta={}, opts={})
+      create(object, meta).store(opts)
     end
-    configuration_method :register_mime_type
 
-    def registered_mime_types
-      @registered_mime_types ||= Rack::Mime::MIME_TYPES.dup
+    def add_mime_type(format, mime_type)
+      mime_types[file_ext_string(format)] = mime_type
+    end
+
+    def mime_types
+      @mime_types ||= Rack::Mime::MIME_TYPES.dup
     end
 
     def mime_type_for(format)
-      registered_mime_types[file_ext_string(format)]
+      mime_types[file_ext_string(format)] || fallback_mime_type
     end
 
     def response_headers
       @response_headers ||= {}
     end
-    configuration_method :response_headers
 
     def define_url(&block)
       @url_proc = block
     end
-    configuration_method :define_url
 
     def url_for(job, opts={})
       if @url_proc
@@ -132,69 +213,35 @@ module Dragonfly
       raise NotImplementedError, "The datastore doesn't support serving content directly - #{datastore.inspect}"
     end
 
-    def define_macro(mod, macro_name)
-      already_extended = (class << mod; self; end).included_modules.include?(ActiveModelExtensions)
-      mod.extend(ActiveModelExtensions) unless already_extended
-      mod.register_dragonfly_app(macro_name, self)
-    end
-
-    def define_macro_on_include(mod, macro_name)
-      app = self
-      name = self.name
-      (class << mod; self; end).class_eval do
-        alias_method "included_without_dragonfly_#{name}_#{macro_name}", :included
-        define_method "included_with_dragonfly_#{name}_#{macro_name}" do |mod|
-          send "included_without_dragonfly_#{name}_#{macro_name}", mod
-          app.define_macro(mod, macro_name)
-        end
-        alias_method :included, "included_with_dragonfly_#{name}_#{macro_name}"
-      end
-    end
-    
     # Reflection
     def processor_methods
-      processor.functions.keys
+      processors.names
     end
-    
+
     def generator_methods
-      generator.functions.keys
+      generators.names
     end
-    
+
     def analyser_methods
-      analyser.analysis_method_names
+      analysers.names
     end
-    
-    def job_methods
-      job_definitions.definition_names
-    end
-    
+
     def inspect
       "<#{self.class.name} name=#{name.inspect} >"
     end
-    
-    # Deprecated methods
-    def url_path_prefix=(thing)
-      raise NoMethodError, "url_path_prefix is deprecated - please use url_format, e.g. url_format = '/media/:job/:basename.:format' - see docs for more details"
-    end
-    configuration_method :url_path_prefix=
 
-    def url_suffix=(thing)
-      raise NoMethodError, "url_suffix is deprecated - please use url_format, e.g. url_format = '/media/:job/:basename.:format' - see docs for more details"
+    def fallback_mime_type
+      'application/octet-stream'
     end
-    configuration_method :url_suffix=
 
-    def infer_mime_type_from_file_ext=(bool)
-      raise NoMethodError, "infer_mime_type_from_file_ext is deprecated - please use trust_file_extensions = #{bool.inspect} instead"
+    def secret
+      @secret ||= 'secret yo'
     end
-    configuration_method :infer_mime_type_from_file_ext=
+    attr_writer :secret
+
+    attr_accessor :allow_legacy_urls, :log_shell
 
     private
-
-    attr_accessor :get_remote_url
-
-    def saved_configs
-      self.class.saved_configs
-    end
 
     def file_ext_string(format)
       '.' + format.to_s.downcase.sub(/^.*\./,'')

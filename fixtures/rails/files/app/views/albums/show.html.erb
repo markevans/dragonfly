@@ -1,6 +1,0 @@
-<%= flash[:notice] %>
-<%= @album.name %>
-Look at this cover image!
-<%= image_tag @album.cover_image.thumb('200x100!').url %>
-<%= image_tag @album.cover_image.remote_url %>
-<%= link_to 'Index', albums_path %>

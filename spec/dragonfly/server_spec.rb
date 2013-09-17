@@ -113,19 +113,12 @@ describe Dragonfly::Server do
       end
 
       it "should return a 404 when the url is a well-encoded but bad array" do
-        url = "/media/#{Dragonfly::Serializer.json_encode([['egg', {'some' => 'args'}]])}"
+        url = "/media/#{Dragonfly::Serializer.json_b64_encode([['egg', {'some' => 'args'}]])}"
         response = request(@server, url)
         response.status.should == 404
         response.body.should == 'Not found'
         response.content_type.should == 'text/plain'
         response.headers['X-Cascade'].should be_nil
-      end
-
-      it "should return a 403 Forbidden when someone uses fetch_file" do
-        response = request(@server, "/media/#{@app.fetch_file('/some/file.txt').serialize}")
-        response.status.should == 403
-        response.body.should == 'Forbidden'
-        response.content_type.should == 'text/plain'
       end
 
       it "should return a 403 Forbidden when someone uses fetch_url" do
@@ -136,6 +129,44 @@ describe Dragonfly::Server do
       end
     end
 
+    describe "whitelists" do
+      def assert_ok(job)
+        response = request(@server, "/media/#{job.serialize}")
+        response.status.should == 200
+      end
+
+      def assert_forbidden(job)
+        response = request(@server, "/media/#{job.serialize}")
+        response.status.should == 403
+        response.body.should == 'Forbidden'
+        response.content_type.should == 'text/plain'
+      end
+
+      describe "fetch_file" do
+        it "should return a 403 Forbidden when someone uses fetch_file " do
+          assert_forbidden @app.fetch_file('samples/egg.png')
+        end
+
+        it "returns OK when on whitelist (using full path)" do
+          @server.fetch_file_whitelist = [File.expand_path('samples/egg.png')]
+          assert_ok @app.fetch_file('samples/egg.png')
+        end
+      end
+
+      describe "fetch_url" do
+        let (:url) {'some.org/path:3000/boogie?yes=please'}
+
+        it "should return a 403 Forbidden when someone uses fetch_url " do
+          assert_forbidden @app.fetch_url(url)
+        end
+
+        it "returns OK when on whitelist (using full url)" do
+          stub_request(:get, url).to_return(:status => 200)
+          @server.fetch_url_whitelist = ["http://#{url}"]
+          assert_ok @app.fetch_url(url)
+        end
+      end
+    end
   end
 
   describe "dragonfly response" do
@@ -164,52 +195,102 @@ describe Dragonfly::Server do
 
   describe "urls" do
 
-    before(:each) do
-      @app = test_app
-      @server = Dragonfly::Server.new(@app)
-      @server.url_format = '/media/:job/:basename.:format'
-      @job = @app.fetch('some_uid')
+    let (:app) { test_app }
+    let (:server) { Dragonfly::Server.new(app) }
+    let (:job) { app.fetch("some_uid") }
+
+    describe "params" do
+      before(:each) do
+        server.url_format = '/media/:job/:zoo'
+      end
+      it "substitutes the relevant params" do
+        server.url_for(job).should == "/media/#{job.serialize}"
+      end
+      it "adds given params" do
+        server.url_for(job, :zoo => 'jokes', :on => 'me').should == "/media/#{job.serialize}/jokes?on=me"
+      end
+      it "uses the url_attr if it exists" do
+        job.url_attrs.zoo = 'hair'
+        server.url_for(job).should == "/media/#{job.serialize}/hair"
+      end
+      it "doesn't add any url_attrs that aren't needed" do
+        job.url_attrs.gump = 'flub'
+        server.url_for(job).should == "/media/#{job.serialize}"
+      end
+      it "overrides if a param is passed in" do
+        job.url_attrs.zoo = 'hair'
+        server.url_for(job, :zoo => 'dare').should == "/media/#{job.serialize}/dare"
+      end
+
+      describe "basename" do
+        before(:each) do
+          server.url_format = '/:job/:basename'
+        end
+        it "should use the name" do
+          job.url_attrs.name = 'hello.egg'
+          server.url_for(job).should == "/#{job.serialize}/hello"
+        end
+        it "should not set if neither exist" do
+          server.url_for(job).should == "/#{job.serialize}"
+        end
+      end
+
+      describe "ext" do
+        before(:each) do
+          server.url_format = '/:job.:ext'
+        end
+        it "should use the name" do
+          job.url_attrs.name = 'hello.egg'
+          server.url_for(job).should == "/#{job.serialize}.egg"
+        end
+        it "should not set if neither exist" do
+          server.url_for(job).should == "/#{job.serialize}"
+        end
+      end
     end
 
-    it "should generate the correct url when no basename/format" do
-      @server.url_for(@job).should == "/media/#{@job.serialize}"
+    describe "host" do
+      it "should add the host to the url if configured" do
+        server.url_host = 'http://some.server:4000'
+        server.url_for(job).should == "http://some.server:4000/#{job.serialize}"
+      end
+
+      it "should add the host to the url if passed in" do
+        server.url_for(job, :host => 'https://bungle.com').should == "https://bungle.com/#{job.serialize}"
+      end
+
+      it "should favour the passed in host" do
+        server.url_host = 'http://some.server:4000'
+        server.url_for(job, :host => 'https://smeedy').should == "https://smeedy/#{job.serialize}"
+      end
     end
 
-    it "should generate the correct url when there is a basename and no format" do
-      @server.url_for(@job, :basename => 'hello').should == "/media/#{@job.serialize}/hello"
-    end
+    describe "path_prefix" do
+      before do
+        server.url_format = '/media/:job'
+      end
 
-    it "should generate the correct url when there is a basename and different format" do
-      @server.url_for(@job, :basename => 'hello', :format => 'gif').should == "/media/#{@job.serialize}/hello.gif"
-    end
+      it "adds the path_prefix to the url if configured" do
+        server.url_path_prefix = '/logs'
+        server.url_for(job).should == "/logs/media/#{job.serialize}"
+      end
 
-    it "should add extra params to the url query string" do
-      @server.url_for(@job, :a => 'thing', :b => 'nuther').should match_url "/media/#{@job.serialize}?a=thing&b=nuther"
-    end
+      it "favours the passed in path_prefix" do
+        server.url_path_prefix = '/logs'
+        server.url_for(job, :path_prefix => '/bugs').should == "/bugs/media/#{job.serialize}"
+      end
 
-    it "should add the host to the url if configured" do
-      @server.url_host = 'http://some.server:4000'
-      @server.url_for(@job).should == "http://some.server:4000/media/#{@job.serialize}"
-    end
-
-    it "should add the host to the url if passed in" do
-      @server.url_for(@job, :host => 'https://bungle.com').should == "https://bungle.com/media/#{@job.serialize}"
-    end
-
-    it "should favour the passed in host" do
-      @server.url_host = 'http://some.server:4000'
-      @server.url_for(@job, :host => 'https://smeedy').should == "https://smeedy/media/#{@job.serialize}"
+      it "goes after the host" do
+        server.url_for(job, :path_prefix => '/bugs', :host => 'http://wassup').should == "http://wassup/bugs/media/#{job.serialize}"
+      end
     end
 
     describe "Denial of Service protection" do
       before(:each) do
-        @app = test_app
-        @server = Dragonfly::Server.new(@app)
-        @server.protect_from_dos_attacks = true
-        @job = @app.fetch('some_uid')
+        server.protect_from_dos_attacks = true
       end
       it "should generate the correct url" do
-        @server.url_for(@job).should == "/#{@job.serialize}?sha=#{@job.sha}"
+        server.url_for(job).should == "/#{job.serialize}?sha=#{job.sha}"
       end
     end
 
@@ -219,7 +300,7 @@ describe Dragonfly::Server do
 
     before(:each) do
       @app = test_app
-      @app.generator.add(:test){ "TEST" }
+      @app.add_generator(:test){|content| content.update("TEST") }
       @server = Dragonfly::Server.new(@app)
       @job = @app.generate(:test)
     end
@@ -258,7 +339,7 @@ describe Dragonfly::Server do
       end
 
       it "should not apply the job if not asked to" do
-        @app.generator.should_not_receive(:generate)
+        @app.generators.get(:test).should_not_receive(:call)
         response = request(@server, "/#{@job.serialize}")
       end
     end

@@ -1,10 +1,15 @@
 require 'tempfile'
 require 'uri'
+require 'rack'
 
 module Dragonfly
   module Utils
 
     module_function
+
+    def blank?(obj)
+      obj.respond_to?(:empty?) ? obj.empty? : !obj
+    end
 
     def new_tempfile(ext=nil, content=nil)
       tempfile = ext ? Tempfile.new(['dragonfly', ".#{ext}"]) : Tempfile.new('dragonfly')
@@ -17,6 +22,13 @@ module Dragonfly
     def symbolize_keys(hash)
       hash.inject({}) do |new_hash, (key, value)|
         new_hash[key.to_sym] = value
+        new_hash
+      end
+    end
+
+    def stringify_keys(hash)
+      hash.inject({}) do |new_hash, (key, value)|
+        new_hash[key.to_s] = value
         new_hash
       end
     end

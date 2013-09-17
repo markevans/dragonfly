@@ -2,18 +2,17 @@ def string_matching(regexp)
   Spec::Mocks::ArgumentMatchers::RegexpMatcher.new(regexp)
 end
 
-class TempObjectArgumentMatcher
-  def initialize(data, opts)
+class ContentArgumentMatcher
+  def initialize(data)
     @data = data
-    @opts = opts
   end
   def ==(actual)
-    actual.is_a?(Dragonfly::TempObject) &&
-      actual.data == @data &&
-      @opts.all?{|k,v| actual.send(k) == v }
+    actual.is_a?(Dragonfly::Content) &&
+      actual.data == @data
   end
 end
 
-def a_temp_object_with_data(data, opts={})
-  TempObjectArgumentMatcher.new(data, opts)
+def content_with_data(data)
+  ContentArgumentMatcher.new(data)
 end
+

@@ -6,7 +6,7 @@ require 'spec_helper'
 describe "Dragonfly::JobEndpoint Rack::Lint tests" do
   before(:each) do
     @app = test_app
-    @app.generator.add(:test_data){ "Test Data" }
+    @app.add_generator(:test_data){|content| content.update("Test Data") }
     @job = @app.generate(:test_data)
     @endpoint = Rack::Lint.new(Dragonfly::JobEndpoint.new(@job))
   end
@@ -37,13 +37,14 @@ describe Dragonfly::JobEndpoint do
   def make_request(job, opts={})
     endpoint = Dragonfly::JobEndpoint.new(job)
     method = (opts.delete(:method) || :get).to_s.upcase
-    Rack::MockRequest.new(endpoint).request(method, '', opts)
+    uri = opts[:path] || ""
+    Rack::MockRequest.new(endpoint).request(method, uri, opts)
   end
 
   before(:each) do
     @app = test_app
-    @app.datastore.stub!(:retrieve).with('egg').and_return(["GUNGLE", {:name => 'gung.txt'}])
-    @job = @app.new_job.fetch('egg')
+    uid = @app.store("GUNGLE", 'name' => 'gung.txt')
+    @job = @app.fetch(uid)
   end
 
   it "should return a correct response to a successful GET request" do
@@ -75,21 +76,29 @@ describe Dragonfly::JobEndpoint do
       response.status.should == 405
       response['Allow'].should == "GET, HEAD"
       response['Content-Type'].should == 'text/plain'
-      response.body.should == "#{method} method not allowed"
+      response.body.should == "method not allowed"
     end
 
   end
 
-  it "should return 404 if the datastore raises data not found" do
-    @job.should_receive(:apply).and_raise(Dragonfly::DataStorage::DataNotFound)
+  it "should return 404 if the datastore throws not_found" do
+    @job.should_receive(:apply).and_throw(:not_found, 'some/uid')
     response = make_request(@job)
     response.status.should == 404
   end
 
-  it "should return a 404 if the datastore raises bad uid" do
-    @job.should_receive(:apply).and_raise(Dragonfly::DataStorage::BadUID)
+  it "returns a 500 for any runtime error" do
+    @job.should_receive(:apply).and_raise(RuntimeError, "oh dear")
+    Dragonfly.should_receive(:warn).with(/oh dear/)
     response = make_request(@job)
-    response.status.should == 404
+    response.status.should == 500
+  end
+
+  describe "logging" do
+    it "logs successful requests" do
+      Dragonfly.should_receive(:info).with("GET /something?great 200")
+      make_request(@job, :path => '/something?great')
+    end
   end
 
   describe "ETag" do
@@ -120,62 +129,6 @@ describe Dragonfly::JobEndpoint do
     end
   end
 
-  describe "Content Disposition" do
-    before(:each) do
-      @app.encoder.add{|temp_object, format| temp_object }
-    end
-
-    describe "filename" do
-      it "should return the original name" do
-        response = make_request(@job)
-        response['Content-Disposition'].should == 'filename="gung.txt"'
-      end
-      it "should return a filename with a different extension if it's been encoded" do
-        response = make_request(@job.encode(:doogs))
-        response['Content-Disposition'].should == 'filename="gung.doogs"'
-      end
-      it "should not have the filename if name doesn't exist" do
-        response = make_request(@app.new_job("ADFSDF"))
-        response['Content-Disposition'].should be_nil
-      end
-      it "should cope with filenames with no ext" do
-        response = make_request(@app.new_job("ASDF", :name => 'asdf'))
-        response['Content-Disposition'].should == 'filename="asdf"'
-      end
-      it "should uri encode funny characters" do
-        response = make_request(@app.new_job("ASDF", :name => '£@$£ `'))
-        response['Content-Disposition'].should == 'filename="%C2%A3@$%C2%A3%20%60"'
-      end
-      it "should allow for setting the filename using a block" do
-        @app.content_filename = proc{|job, request|
-          job.basename.reverse.upcase + request['a']
-        }
-        response = make_request(@job, 'QUERY_STRING' => 'a=egg')
-        response['Content-Disposition'].should == 'filename="GNUGegg"'
-      end
-      it "should not include the filename if configured to be nil" do
-        @app.content_filename = nil
-        response = make_request(@job)
-        response['Content-Disposition'].should be_nil
-      end
-    end
-
-    describe "content disposition" do
-      it "should use the app's configured content-disposition" do
-        @app.content_disposition = :attachment
-        response = make_request(@job)
-        response['Content-Disposition'].should == 'attachment; filename="gung.txt"'
-      end
-      it "should allow using a block to set the content disposition" do
-        @app.content_disposition = proc{|job, request|
-          job.basename + request['blah']
-        }
-        response = make_request(@job, 'QUERY_STRING' => 'blah=yo')
-        response['Content-Disposition'].should == 'gungyo; filename="gung.txt"'
-      end
-    end
-  end
-
   describe "custom headers" do
     before(:each) do
       @app.configure{|c| c.response_headers['This-is'] = 'brill' }
@@ -191,17 +144,21 @@ describe Dragonfly::JobEndpoint do
       make_request(@job).headers['Cache-Control'].should == 'try me'
     end
     it "should allow giving a proc" do
-      @app.response_headers['Cache-Control'] = proc{|job, request|
-        job.basename.reverse.upcase + request['a']
+      @app.response_headers['Cache-Control'] = proc{|job, request, headers|
+        [job.basename.reverse.upcase, request['a'], headers['Cache-Control'].chars.first].join(',')
       }
       response = make_request(@job, 'QUERY_STRING' => 'a=egg')
-      response['Cache-Control'].should == 'GNUGegg'
+      response['Cache-Control'].should == 'GNUG,egg,p'
+    end
+    it "should allow removing by setting to nil" do
+      @app.response_headers['Cache-Control'] = nil
+      make_request(@job).headers.should_not have_key('Cache-Control')
     end
   end
 
   describe "setting the job in the env for communicating with other rack middlewares" do
     before(:each) do
-      @app.generator.add(:test_data){ "TEST DATA" }
+      @app.add_generator(:test_data){ "TEST DATA" }
       @job = @app.generate(:test_data)
       @endpoint = Dragonfly::JobEndpoint.new(@job)
       @middleware = Class.new do

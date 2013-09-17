@@ -12,15 +12,17 @@ describe "urls" do
     end.and_return(mock('response', :to_response => [200, {'Content-Type' => 'text/plain'}, ["OK"]]))
   end
 
-  let (:app) { test_app }
+  let (:app) { test_app.configure{ processor(:thumb){} } }
 
   it "works with old marshalled urls (including with tildes in them)" do
+    app.allow_legacy_urls = true
     url = "/BAhbBlsHOgZmSSIIPD4~BjoGRVQ"
     job_should_match [["f", "<>?"]]
     response = request(app, url)
   end
 
   it "blows up if it detects bad objects" do
+    app.allow_legacy_urls = true
     url = "/BAhvOhpEcmFnb25mbHk6OlRlbXBPYmplY3QIOgpAZGF0YUkiCWJsYWgGOgZFVDoXQG9yaWdpbmFsX2ZpbGVuYW1lMDoKQG1ldGF7AA"
     Dragonfly::Job.should_not_receive(:from_a)
     response = request(app, url)
@@ -40,7 +42,7 @@ describe "urls" do
   end
 
   it "works with potentially tricky url characters for the url" do
-    url = app.fetch('uid []=~/+').url(:basename => 'name []=~/+')
+    url = app.fetch('uid []=~/+').url(:name => 'name []=~/+')
     url.should =~ %r(^/[\w%]+/name%20%5B%5D%3D%7E%2F%2B$)
     job_should_match [["f", "uid []=~/+"]]
     response = request(app, url)

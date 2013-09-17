@@ -1,0 +1,19 @@
+#!env ruby
+dir = ARGV[0]
+
+unless dir
+  puts "Usage:"
+  puts "\t#{$0} DESTINATION"
+  exit
+end
+
+run = proc{|command|
+  puts "\n*** Running: #{command} ***\n"
+  system command
+}
+
+template_path = File.expand_path('../rails_template.rb', __FILE__)
+
+run["rm -rf #{dir}"]
+run["rails new #{dir} -m #{template_path} -J -T"]
+

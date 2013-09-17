@@ -1,10 +1,11 @@
-require 'dragonfly'
-require 'rails'
+require 'dragonfly/cookie_monster'
 
-module Dragonfly
-  class Railtie < ::Rails::Railtie
-    initializer "dragonfly.railtie.initializer" do |app|
-      app.middleware.insert 3, Dragonfly::CookieMonster
+if defined?(Rails::Railtie)
+  module Dragonfly
+    class Railtie < ::Rails::Railtie
+      initializer "dragonfly.railtie.initializer" do |app|
+        app.middleware.insert 3, Dragonfly::CookieMonster
+      end
     end
   end
 end

@@ -1,30 +1,27 @@
+require 'ostruct'
+require 'dragonfly/has_filename'
+require 'dragonfly/utils'
+
 module Dragonfly
-  
-  # UrlAttributes is like a normal hash, but treats
-  # :name, :ext and :basename specially -
-  # updating ext/basename also updates the name
-  class UrlAttributes < Hash
+  class UrlAttributes < OpenStruct
+    include HasFilename # Updating ext / basename also updates the name
 
-    SPECIAL_KEYS = [:name, :basename, :ext]
-
-    include HasFilename
-
-    def name
-      self[:name]
+    def empty?
+      @table.reject{|k, v| v.nil? }.empty?
     end
-    
-    def name=(name)
-      self[:name] = name
+
+    # Hack so we can use .send('format') and it not call the private Kernel method
+    def format
+      @table[:format]
     end
-    
-    def slice(*keys)
-      keys.inject({}) do |hash, key|
-        key = key.to_sym
-        hash[key] = SPECIAL_KEYS.include?(key) ? send(key) : self[key]
-        hash
+
+    def extract(keys)
+      keys.inject({}) do |attrs, key|
+        value = send(key)
+        attrs[key] = value unless Utils.blank?(value)
+        attrs
       end
     end
-    
   end
-
 end
+

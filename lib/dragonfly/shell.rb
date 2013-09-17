@@ -1,40 +1,28 @@
 require 'shellwords'
+require 'open3'
+require 'dragonfly'
 
 module Dragonfly
-  module Shell
-    
-    include Configurable
-    configurable_attr :log_commands, false
+  class Shell
 
     # Exceptions
     class CommandFailed < RuntimeError; end
 
-    def run(command, args="")
-      full_command = "#{command} #{escape_args(args)}"
-      log.debug("Running command: #{full_command}") if log_commands
-      begin
-        result = `#{full_command}`
-      rescue Errno::ENOENT
-        raise_shell_command_failed(full_command)
+    def run(command, opts={})
+      command = escape_args(command) unless opts[:escape] == false
+      Open3.popen3 command do |stdin, stdout, stderr, wait_thread|
+        status = wait_thread.value
+        raise CommandFailed, "Command failed (#{command}) with exit status #{status.exitstatus} and stderr #{stderr.read}" unless status.success?
+        stdout.read
       end
-      if $?.exitstatus == 1
-        throw :unable_to_handle
-      elsif !$?.success?
-        raise_shell_command_failed(full_command)
-      end
-      result
     end
-  
-    def raise_shell_command_failed(command)
-      raise CommandFailed, "Command failed (#{command}) with exit status #{$?.exitstatus}"
-    end
-    
+
     def escape_args(args)
       args.shellsplit.map do |arg|
         quote arg.gsub(/\\?'/, %q('\\\\''))
       end.join(' ')
     end
-    
+
     def quote(string)
       q = Dragonfly.running_on_windows? ? '"' : "'"
       q + string + q

@@ -1,8 +1,12 @@
 require 'forwardable'
 require 'digest/sha1'
-require 'base64'
+require 'uri'
 require 'open-uri'
 require 'pathname'
+require 'dragonfly/serializer'
+require 'dragonfly/content'
+require 'dragonfly/url_attributes'
+require 'dragonfly/job_endpoint'
 
 module Dragonfly
   class Job
@@ -10,9 +14,7 @@ module Dragonfly
     # Exceptions
     class AppDoesNotMatch < StandardError; end
     class JobAlreadyApplied < StandardError; end
-    class NoContent < StandardError; end
     class NothingToProcess < StandardError; end
-    class NothingToEncode < StandardError; end
     class InvalidArray < StandardError; end
     class NoSHAGiven < StandardError; end
     class IncorrectSHA < StandardError; end
@@ -20,9 +22,9 @@ module Dragonfly
     extend Forwardable
     def_delegators :result,
                    :data, :file, :tempfile, :path, :to_file, :size, :each,
-                   :meta, :meta=, :name, :name=, :basename, :basename=, :ext, :ext=
-    def_delegator :app,
-                  :server
+                   :meta, :meta=, :add_meta, :name, :name=, :basename, :basename=, :ext, :ext=, :mime_type,
+                   :analyse, :store,
+                   :b64_data
 
     class Step
 
@@ -51,6 +53,10 @@ module Dragonfly
 
       attr_reader :job, :args
 
+      def app
+        job.app
+      end
+
       def to_a
         [self.class.abbreviation, *args]
       end
@@ -65,53 +71,53 @@ module Dragonfly
       def uid
         args.first
       end
+
       def apply
-        content, meta = job.app.datastore.retrieve(uid)
-        job.update(content, meta)
+        app.datastore.read(job.content, uid)
       end
     end
 
     class Process < Step
+      def init
+        processor.update_url(job.url_attrs, *arguments) if processor.respond_to?(:update_url)
+      end
+
       def name
         args.first.to_sym
       end
-      def arguments
-        args[1..-1]
-      end
-      def apply
-        raise NothingToProcess, "Can't process because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        content, meta = job.app.processor.process(job.temp_object, name, *arguments)
-        job.update(content, meta)
-      end
-    end
 
-    class Encode < Step
-      def init
-        job.url_attrs[:format] = format
-      end
-      def format
-        args.first.to_sym
-      end
       def arguments
         args[1..-1]
       end
+
+      def processor
+        @processor ||= app.get_processor(name)
+      end
+
       def apply
-        raise NothingToEncode, "Can't encode because temp object has not been initialized. Need to fetch first?" unless job.temp_object
-        content, meta = job.app.encoder.encode(job.temp_object, format, *arguments)
-        job.update(content, (meta || {}).merge(:format => format))
+        processor.call(job.content, *arguments)
       end
     end
 
     class Generate < Step
-      def name
-        args.first.to_sym
+      def init
+        generator.update_url(job.url_attrs, *arguments) if generator.respond_to?(:update_url)
       end
+
+      def name
+        args.first
+      end
+
+      def generator
+        @generator ||= app.get_generator(name)
+      end
+
       def arguments
         args[1..-1]
       end
+
       def apply
-        content, meta = job.app.generator.generate(name, *arguments)
-        job.update(content, meta)
+        generator.call(job.content, *arguments)
       end
     end
 
@@ -120,35 +126,54 @@ module Dragonfly
         super(job, path.to_s)
       end
       def init
-        job.url_attrs[:name] = filename
+        job.url_attrs.name = filename
       end
+
       def path
         @path ||= File.expand_path(args.first)
       end
+
       def filename
         @filename ||= File.basename(path)
       end
+
       def apply
-        job.update(Pathname.new(path), :name => filename)
+        job.content.update(Pathname.new(path), 'name' => filename)
       end
     end
 
     class FetchUrl < Step
-      def init
-        job.url_attrs[:name] = filename
+      class ErrorResponse < RuntimeError
+        def initialize(status, body)
+          @status, @body = status, body
+        end
+        attr_reader :status, :body
       end
+
+      def init
+        job.url_attrs.name = filename
+      end
+
       def url
         @url ||= URI.escape((args.first[%r<^\w+://>] ? args.first : "http://#{args.first}"))
       end
+
       def path
         @path ||= URI.parse(url).path
       end
+
       def filename
         @filename ||= File.basename(path) if path[/[^\/]$/]
       end
+
       def apply
-        open(url) do |f|
-          job.update(f.read, :name => filename)
+        begin
+          open(url) do |f|
+            job.content.update(f.read, 'name' => filename)
+          end
+        rescue OpenURI::HTTPError => e
+          status, message = e.io.status
+          raise ErrorResponse.new(status.to_i, e.io.read)
         end
       end
     end
@@ -156,7 +181,6 @@ module Dragonfly
     STEPS = [
       Fetch,
       Process,
-      Encode,
       Generate,
       FetchFile,
       FetchUrl
@@ -180,10 +204,10 @@ module Dragonfly
 
       def deserialize(string, app)
         array = begin
-          Serializer.json_decode(string)
+          Serializer.json_b64_decode(string)
         rescue Serializer::BadString
           if app.allow_legacy_urls
-            Serializer.marshal_decode(string, :check_malicious => true) # legacy strings
+            Serializer.marshal_b64_decode(string, :check_malicious => true) # legacy strings
           else
             raise
           end
@@ -201,54 +225,24 @@ module Dragonfly
 
     end
 
-    ####### Instance methods #######
-
-    # This is needed because we need a way of overriding
-    # the methods added to Job objects by the analyser and by
-    # the job shortcuts like 'thumb', etc.
-    # If we had traits/classboxes in ruby maybe this wouldn't be needed
-    # Think of it as like a normal instance method but with a css-like !important after it
-    module OverrideInstanceMethods
-
-      def format
-        apply
-        meta[:format] || (ext.to_sym if ext && app.trust_file_extensions) || analyse(:format)
-      end
-
-      def mime_type
-        app.mime_type_for(format) || analyse(:mime_type) || app.fallback_mime_type
-      end
-
-      def to_s
-        super.sub(/#<Class:\w+>/, 'Extended Dragonfly::Job')
-      end
-
-    end
-
-    def initialize(app, content=nil, meta={}, url_attrs={})
+    def initialize(app, content="", meta={})
       @app = app
-      @steps = []
       @next_step_index = 0
-      @previous_temp_objects = []
-      update(content, meta) if content
-      self.url_attrs = url_attrs
+      @steps = []
+      @content = Content.new(app, content, meta)
+      @url_attrs = UrlAttributes.new
     end
 
     # Used by 'dup' and 'clone'
     def initialize_copy(other)
-      self.url_attrs = other.url_attrs.dup
-      self.steps = other.steps.map do |step|
+      @steps = other.steps.map do |step|
         step.class.new(self, *step.args)
       end
+      @content = other.content.dup
+      @url_attrs = other.url_attrs.dup
     end
 
-    attr_reader :app, :steps
-    attr_reader :temp_object
-
-    def temp_object=(temp_object)
-      previous_temp_objects.push(@temp_object) if @temp_object
-      @temp_object = temp_object
-    end
+    attr_reader :app, :steps, :content
 
     # define fetch(), fetch!(), process(), etc.
     STEPS.each do |step_class|
@@ -264,10 +258,6 @@ module Dragonfly
           self
         end
       )
-    end
-
-    def analyse(method, *args)
-      analyser.analyse(result, method, *args)
     end
 
     # Applying, etc.
@@ -301,7 +291,7 @@ module Dragonfly
     end
 
     def serialize
-      Serializer.json_encode(to_a)
+      Serializer.json_b64_encode(to_a)
     end
 
     def unique_signature
@@ -326,17 +316,15 @@ module Dragonfly
     # URLs, etc.
 
     def url(opts={})
-      app.url_for(self, attributes_for_url.merge(opts)) unless steps.empty?
-    end
-
-    def url_attrs=(hash)
-      @url_attrs = UrlAttributes[hash]
+      app.url_for(self, opts) unless steps.empty?
     end
 
     attr_reader :url_attrs
 
-    def b64_data
-      "data:#{mime_type};base64,#{Base64.encode64(data)}"
+    def update_url_attrs(hash)
+      hash.each do |key, value|
+        url_attrs.send("#{key}=", value)
+      end
     end
 
     # to_stuff...
@@ -350,7 +338,8 @@ module Dragonfly
     end
 
     def to_fetched_job(uid)
-      new_job = self.class.new(app, temp_object, meta, url_attrs)
+      new_job = dup
+      new_job.steps = []
       new_job.fetch!(uid)
       new_job.next_step_index = 1
       new_job
@@ -383,36 +372,14 @@ module Dragonfly
       steps.select{|s| s.is_a?(Process) }
     end
 
-    def encode_step
-      last_step_of_type(Encode)
-    end
-
     def step_types
       steps.map{|s| s.class.step_name }
     end
 
     # Misc
 
-    def store(opts={})
-      temp_object = result
-      app.store(temp_object, opts_for_store.merge(opts).merge(:meta => temp_object.meta))
-    end
-
     def inspect
-      "<Dragonfly::Job app=#{app.name.inspect}, steps=#{steps.inspect}, temp_object=#{temp_object.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >"
-    end
-
-    def update(content, new_meta)
-      if new_meta
-        new_meta.merge!(new_meta.delete(:meta)) if new_meta[:meta] # legacy data etc. may have nested meta hash - deprecate gracefully here
-      end
-      old_meta = temp_object ? temp_object.meta : {}
-      self.temp_object = TempObject.new(content, old_meta.merge(new_meta || {}))
-    end
-
-    def close
-      previous_temp_objects.each{|temp_object| temp_object.close }
-      temp_object.close if temp_object
+      "<Dragonfly::Job app=#{app.name.inspect}, steps=#{steps.inspect}, content=#{content.inspect}, steps applied:#{applied_steps.length}/#{steps.length} >"
     end
 
     protected
@@ -424,24 +391,11 @@ module Dragonfly
 
     def result
       apply
-      temp_object || raise(NoContent, "Job has not been initialized with content. Need to fetch first?")
+      content
     end
-
-    def attributes_for_url
-      attrs = url_attrs.slice(*server.params_in_url)
-      attrs[:format] = (attrs[:format] || (url_attrs.ext if app.trust_file_extensions)).to_s if server.params_in_url.include?('format')
-      attrs.delete_if{|k, v| v.blank? }
-      attrs
-    end
-
-    attr_reader :previous_temp_objects
 
     def last_step_of_type(type)
       steps.select{|s| s.is_a?(type) }.last
-    end
-
-    def opts_for_store
-      {:mime_type => mime_type}
     end
 
   end

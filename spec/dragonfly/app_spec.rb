@@ -19,8 +19,12 @@ describe Dragonfly::App do
       Dragonfly::App.instance(:images).should == app
     end
 
-    it "should also work using square brackets" do
-      Dragonfly[:images].should == Dragonfly::App.instance(:images)
+    it "has a default instance" do
+      Dragonfly::App.instance.should be_a(Dragonfly::App)
+    end
+
+    it "returns the default instance if passed nil" do
+      Dragonfly::App.instance(nil).should == Dragonfly::App.instance
     end
 
   end
@@ -30,6 +34,16 @@ describe Dragonfly::App do
       lambda{
         Dragonfly::App.new
       }.should raise_error(NoMethodError)
+    end
+  end
+
+  describe "destroy_apps" do
+    it "destroys the dragonfly apps" do
+      Dragonfly::App.instance(:gug)
+      Dragonfly::App.instance(:blug)
+      Dragonfly::App.apps.length.should == 2
+      Dragonfly::App.destroy_apps
+      Dragonfly::App.apps.length.should == 0
     end
   end
 
@@ -50,21 +64,21 @@ describe Dragonfly::App do
       it "should work with a dot" do
         @app.mime_type_for('.png').should == 'image/png'
       end
-      it "should return nil if not known" do
-        @app.mime_type_for(:mark).should be_nil
+      it "should return the fallback if not known" do
+        @app.mime_type_for(:mark).should == 'application/octet-stream'
       end
       it "should allow for configuring extra mime types" do
-        @app.register_mime_type 'mark', 'application/mark'
+        @app.add_mime_type 'mark', 'application/mark'
         @app.mime_type_for(:mark).should == 'application/mark'
       end
       it "should override existing mime types when registered" do
-        @app.register_mime_type :png, 'ping/pong'
+        @app.add_mime_type :png, 'ping/pong'
         @app.mime_type_for(:png).should == 'ping/pong'
       end
       it "should have a per-app mime-type configuration" do
-        other_app = Dragonfly[:other_app]
-        @app.register_mime_type(:mark, 'first/one')
-        other_app.register_mime_type(:mark, 'second/one')
+        other_app = Dragonfly.app(:other_app)
+        @app.add_mime_type(:mark, 'first/one')
+        other_app.add_mime_type(:mark, 'second/one')
         @app.mime_type_for(:mark).should == 'first/one'
         other_app.mime_type_for(:mark).should == 'second/one'
       end
@@ -88,86 +102,197 @@ describe Dragonfly::App do
   end
 
   describe "#store" do
-    before(:each) do
-      @app = test_app
-    end
+    let (:app) { test_app }
+
     it "should allow just storing content" do
-      @app.datastore.should_receive(:store).with(a_temp_object_with_data("HELLO"), {})
-      @app.store("HELLO")
-    end
-    it "should allow storing using a TempObject" do
-      temp_object = Dragonfly::TempObject.new("HELLO")
-      @app.datastore.should_receive(:store).with(temp_object, {})
-      @app.store(temp_object)
-    end
-    it "should allow storing with extra stuff" do
-      @app.datastore.should_receive(:store).with do |temp_object, opts|
-        temp_object.data.should == 'HELLO'
-        temp_object.meta.should == {:egg => :head}
-        opts[:option].should == :blarney
+      app.datastore.should_receive(:write).with do |content, opts|
+        content.data.should == "HELLO"
       end
-      @app.store("HELLO", :meta => {:egg => :head}, :option => :blarney)
+      app.store("HELLO")
     end
-    it "should still pass in meta in the opts arg, for deprecated use of meta" do
-      @app.datastore.should_receive(:store).with do |temp_object, opts|
-        opts[:meta].should == {:egg => :head}
+
+    it "passes meta and options through too" do
+      app.datastore.should_receive(:write).with do |content, opts|
+        content.data.should == "HELLO"
+        content.meta.should == {'d' => 3}
+        opts.should == {:a => :b}
       end
-      @app.store("HELLO", :meta => {:egg => :head}, :option => :blarney)
+      app.store("HELLO", {'d' => 3}, {:a => :b})
     end
   end
 
   describe "url_for" do
-    before(:each) do
-      @app = test_app
-      @job = @app.fetch('eggs')
-    end
+    let (:app) { test_app }
+    let (:job) { app.fetch('eggs') }
+
     it "should give the server url by default" do
-      @app.url_for(@job).should =~ %r{^/\w+$}
+      app.url_for(job).should =~ %r{^/\w+$}
     end
     it "should allow configuring" do
-      @app.configure do |c|
-        c.define_url do |app, job, opts|
+      app.configure do
+        define_url do |app, job, opts|
           "doogies"
         end
       end
-      @app.url_for(@job).should == 'doogies'
+      app.url_for(job).should == 'doogies'
     end
     it "should yield the correct dooberries" do
-      @app.define_url do |app, job, opts|
+      app.define_url do |app, job, opts|
         [app, job, opts]
       end
-      @app.url_for(@job, {'chuddies' => 'margate'}).should == [@app, @job, {'chuddies' => 'margate'}]
+      app.url_for(job, {'chuddies' => 'margate'}).should == [app, job, {'chuddies' => 'margate'}]
     end
   end
 
-  describe "reflection methods" do
+  describe "adding generators" do
     before(:each) do
-      @app = test_app.configure do |c|
-        c.processor.add(:milk){}
-        c.generator.add(:butter){}
-        c.analyser.add(:cheese){}
-        c.job(:bacon){}
+      @app = test_app.configure do
+        generator(:butter){ "BUTTER" }
       end
-      
-    end
-    it "should return processor methods" do
-      @app.processor_methods.should == [:milk]
     end
     it "should return generator methods" do
       @app.generator_methods.should == [:butter]
     end
-    it "should return analyser methods" do
-      @app.analyser_methods.should == [:cheese]
+  end
+
+  describe "adding processors" do
+    before(:each) do
+      @app = test_app.configure do
+        processor(:double){}
+      end
     end
-    it "should return job methods" do
-      @app.job_methods.should == [:bacon]
+    it "should add a method" do
+      job1 = @app.create("bunga")
+      job2 = job1.double
+      job1.should_not == job2
+      job1.to_a.should == []
+      job2.to_a.should == [['p', :double]]
+    end
+    it "should add a bang method" do
+      job = @app.create("bunga")
+      job.double!.should == job
+      job.to_a.should == [['p', :double]]
+    end
+    it "should return processor methods" do
+      @app.processor_methods.should == [:double]
+    end
+  end
+
+  describe "adding analysers" do
+    before(:each) do
+      @app = test_app.configure do
+        analyser(:length){|content| content.size }
+      end
+    end
+    it "should add a method" do
+      @app.create('123').length.should == 3
+    end
+    it "should return analyser methods" do
+      @app.analyser_methods.should == [:length]
     end
   end
 
   describe "inspect" do
     it "should give a neat output" do
-      Dragonfly[:hello].inspect.should == "<Dragonfly::App name=:hello >"
+      Dragonfly.app(:hello).inspect.should == "<Dragonfly::App name=:hello >"
+    end
+  end
+
+  describe "configuration" do
+
+    let(:app){ test_app }
+
+    describe "datastore" do
+      it "sets the datastore" do
+        store = mock('datastore')
+        app.configure{ datastore store }
+        app.datastore.should == store
+      end
+
+      {
+        :file => Dragonfly::FileDataStore,
+        :memory => Dragonfly::MemoryDataStore
+      }.each do |symbol, klass|
+        it "recognises the #{symbol.inspect} shortcut for S3DataStore" do
+          app.configure{ datastore symbol }
+          app.datastore.should be_a(klass)
+        end
+      end
+    end
+
+    it "raises an error if it doesn't know the symbol" do
+      expect{
+        app.configure{ datastore :hello }
+      }.to raise_error(Dragonfly::App::UnregisteredDataStore)
+    end
+
+    it "passes args through to the initializer if a symbol is given" do
+      app.configure{ datastore :file, :root_path => '/some/path' }
+      app.datastore.root_path.should == '/some/path'
+    end
+
+    it "complains if extra args are given but first is not a symbol" do
+      store = mock('datastore')
+      expect{
+        app.configure{ datastore store, :some => 'args' }
+      }.to raise_error(ArgumentError)
+    end
+
+  end
+
+  describe "define" do
+    let(:app){ test_app }
+
+    before :each do
+      app.define :exclaim do |n|
+        data.upcase + "!"*n
+      end
+    end
+
+    it "allows defining methods on jobs" do
+      app.create("snowman").exclaim(3).should == 'SNOWMAN!!!'
+    end
+  end
+
+  describe "shell" do
+    let(:app){ test_app }
+
+    it "has a shell" do
+      app.shell.should be_a(Dragonfly::Shell)
+    end
+  end
+
+  describe "env" do
+    let(:app){ test_app }
+
+    it "stores environment variables" do
+      app.env.should == {}
+      app.env[:doogie] = 'blisto'
+      app.env[:doogie].should == 'blisto'
+    end
+  end
+
+  describe "deprecations" do
+    it "raises a message when using App#[]" do
+      expect {
+        Dragonfly::App[:images]
+      }.to raise_error(/Dragonfly::App\[:images\] .* Dragonfly\.app /)
+    end
+
+    it "raises a message when configuring with an old datastore" do
+      expect {
+        Dragonfly.app.use_datastore(mock("datastore", :store => "asdf", :retrieve => "ASDF", :destroy => nil))
+      }.to raise_error(/read/)
+    end
+
+    it "raises a messages when configuring with a bad parameter" do
+      expect {
+        Dragonfly.app.configure do |c|
+          c.url_format = '/media/:job'
+        end
+      }.to raise_error(/no method.*changed.*docs/)
     end
   end
 
 end
+

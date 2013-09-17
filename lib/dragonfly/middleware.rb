@@ -1,14 +1,15 @@
+require 'dragonfly'
+
 module Dragonfly
   class Middleware
 
-    def initialize(app, dragonfly_app_name, deprecated_arg=nil)
-      raise ArgumentError, "mounting Dragonfly::Middleware with a mount point is deprecated - just use Dragonfly::Middleware, #{dragonfly_app_name.inspect}" if deprecated_arg
+    def initialize(app, dragonfly_app_name=nil)
       @app = app
       @dragonfly_app_name = dragonfly_app_name
     end
 
     def call(env)
-      response = Dragonfly[@dragonfly_app_name].call(env)
+      response = Dragonfly.app(@dragonfly_app_name).call(env)
       if response[1]['X-Cascade'] == 'pass'
         @app.call(env)
       else
@@ -18,3 +19,4 @@ module Dragonfly
 
   end
 end
+

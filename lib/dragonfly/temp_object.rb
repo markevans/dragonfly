@@ -1,11 +1,12 @@
 require 'stringio'
 require 'tempfile'
 require 'pathname'
+require 'fileutils'
 
 module Dragonfly
 
   # A TempObject is used for HOLDING DATA.
-  # It's the thing that is passed between the datastore, the processor and the encoder, and is useful
+  # It's the thing that is passed between the datastore and the processor, and is useful
   # for separating how the data was created and how it is later accessed.
   #
   # You can initialize it various ways:
@@ -32,14 +33,12 @@ module Dragonfly
   #
   class TempObject
 
-    include HasFilename
-
     # Exceptions
     class Closed < RuntimeError; end
 
     # Instance Methods
 
-    def initialize(obj, meta={})
+    def initialize(obj)
       if obj.is_a? TempObject
         @data = obj.get_data
         @tempfile = obj.get_tempfile
@@ -57,9 +56,9 @@ module Dragonfly
       elsif obj.respond_to?(:path) # e.g. Rack::Test::UploadedFile
         @pathname = Pathname.new(obj.path)
       else
-        raise ArgumentError, "#{self.class.name} must be initialized with a String, a Pathname, a File, a Tempfile, another TempObject, something that responds to .tempfile, or something that responds to .path"
+        raise ArgumentError, "#{self.class.name} must be initialized with a String, a Pathname, a File, a Tempfile, another TempObject, something that responds to .tempfile, or something that responds to .path - you gave #{obj.inspect}"
       end
-      
+
       @tempfile.close if @tempfile
 
       # Original filename
@@ -68,39 +67,18 @@ module Dragonfly
       elsif @pathname
         @pathname.basename.to_s
       end
-      
-      # Meta
-      @meta = meta
-      @meta[:name] ||= @original_filename if @original_filename
     end
-    
+
     attr_reader :original_filename
-    attr_accessor :meta
-    
-    def name
-      meta[:name]
-    end
-    
-    def name=(name)
-      meta[:name] = name
+
+    def ext
+      name = original_filename
+      name.split('.').last if name
     end
 
     def data
       raise Closed, "can't read data as TempObject has been closed" if closed?
       @data ||= file{|f| f.read }
-    end
-
-    def tempfile
-      raise Closed, "can't read from tempfile as TempObject has been closed" if closed?
-      @tempfile ||= begin
-        case
-        when @data
-          @tempfile = new_tempfile(@data)
-        when @pathname
-          @tempfile = copy_to_tempfile(@pathname.expand_path)
-        end
-        @tempfile
-      end
     end
 
     def file(&block)
@@ -143,6 +121,12 @@ module Dragonfly
       File.new(path, 'rb')
     end
 
+    def to_tempfile
+      tempfile = copy_to_tempfile(path)
+      tempfile.open
+      tempfile
+    end
+
     def to_io(&block)
       @data ? StringIO.open(@data, 'rb', &block) : file(&block)
     end
@@ -168,42 +152,43 @@ module Dragonfly
       "<#{self.class.name} #{content_string} >"
     end
 
-    def unique_id
-      @unique_id ||= "#{object_id}#{rand(1000000)}"
-    end
-
     protected
 
     # We don't use normal accessors here because #data etc. do more than just return the instance var
     def get_data
       @data
     end
-    
+
     def get_pathname
       @pathname
     end
-    
+
     def get_tempfile
       @tempfile
     end
 
     private
 
+    def tempfile
+      raise Closed, "can't read from tempfile as TempObject has been closed" if closed?
+      @tempfile ||= begin
+        case
+        when @data
+          @tempfile = Utils.new_tempfile(ext, @data)
+        when @pathname
+          @tempfile = copy_to_tempfile(@pathname.expand_path)
+        end
+        @tempfile
+      end
+    end
+
     def block_size
       8192
     end
 
     def copy_to_tempfile(path)
-      tempfile = new_tempfile
+      tempfile = Utils.new_tempfile(ext)
       FileUtils.cp path, tempfile.path
-      tempfile
-    end
-
-    def new_tempfile(content=nil)
-      tempfile = ext ? Tempfile.new(['dragonfly', ".#{ext}"]) : Tempfile.new('dragonfly')
-      tempfile.binmode
-      tempfile.write(content) if content
-      tempfile.close
       tempfile
     end
 

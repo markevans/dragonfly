@@ -1,3 +1,6 @@
+require 'rack'
+require 'dragonfly/utils'
+
 module Dragonfly
   class UrlMapper
 

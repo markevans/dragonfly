@@ -88,20 +88,8 @@ and display a thumbnail (on the upload form) with
 ...etc.
 ```
 
-The above relies on imagemagick being installed. Dragonfly doesn't depend on it per se, but the default configuration `'dragonfly/rails/images'`
+The above relies on imagemagick being installed. Dragonfly doesn't depend on it per se, but the `:imagemagick` configuration
 uses it. For alternative configurations, see below.
-
-If using Capistrano with the above, you probably will want to keep the cache between deploys, so in deploy.rb:
-
-```ruby
-namespace :dragonfly do
-  desc "Symlink the Rack::Cache files"
-  task :symlink, :roles => [:app] do
-    run "mkdir -p #{shared_path}/tmp/dragonfly && ln -nfs #{shared_path}/tmp/dragonfly #{release_path}/tmp/dragonfly"
-  end
-end
-after 'deploy:update_code', 'dragonfly:symlink'
-```
 
 Sinatra, CouchDB, Mongo, Rack, S3, custom storage, processing, and more...
 --------------------------------------------------------------------------

@@ -92,16 +92,6 @@ describe Dragonfly::TempObject do
         end
       end
 
-      describe "tempfile" do
-        it "should create a closed tempfile" do
-          @temp_object.tempfile.should be_a(Tempfile)
-          @temp_object.tempfile.should be_closed
-        end
-        it "should contain the correct data" do
-          @temp_object.tempfile.open.read.should == 'HELLO'
-        end
-      end
-
       describe "path" do
         it "should return an absolute file path" do
           if Dragonfly.running_on_windows?
@@ -159,6 +149,15 @@ describe Dragonfly::TempObject do
         end
       end
 
+      describe "to_tempfile" do
+        it "returns a new open tempfile" do
+          tempfile = @temp_object.to_tempfile
+          tempfile.should be_a(Tempfile)
+          tempfile.path.should_not == @temp_object.path
+          tempfile.read.should == @temp_object.data
+          tempfile.should_not be_closed
+        end
+      end
     end
 
     describe "each" do
@@ -171,19 +170,12 @@ describe Dragonfly::TempObject do
         parts.last.bytesize.should <= 8192
       end
     end
-    
+
     describe "closing" do
       before(:each) do
         @temp_object = new_temp_object("wassup")
       end
-      it "should delete its tempfile" do
-        tempfile = @temp_object.tempfile
-        path = tempfile.path
-        path.should_not be_empty
-        @temp_object.close
-        File.exist?(path).should be_false
-      end
-      %w(tempfile file data).each do |method|
+      %w(file data).each do |method|
         it "should raise error when calling #{method}" do
           @temp_object.close
           expect{
@@ -215,17 +207,21 @@ describe Dragonfly::TempObject do
       temp_object.should_not_receive(:tempfile)
       temp_object.each{}
     end
-    
-    it "should use set the file extension in path from the name" do
-      temp_object = Dragonfly::TempObject.new("hi", :name => 'dark.cloud')
-      temp_object.path.should =~ /\.cloud$/
+
+    it "should delete its internal tempfile on close" do
+      temp_object = new_temp_object("HELLO")
+      path = temp_object.path
+      File.exist?(path).should be_true
+      temp_object.close
+      File.exist?(path).should be_false
     end
-  end
+
+ end
 
   describe "initializing from a tempfile" do
 
     def initialization_object(data)
-      new_tempfile(data)
+      @tempfile = new_tempfile(data)
     end
 
     it_should_behave_like "common behaviour"
@@ -238,7 +234,15 @@ describe Dragonfly::TempObject do
 
     it "should return the tempfile's path" do
       temp_object = new_temp_object('HELLO')
-      temp_object.path.should == temp_object.tempfile.path
+      temp_object.path.should == @tempfile.path
+    end
+
+    it "should delete its internal tempfile on close" do
+      temp_object = new_temp_object("HELLO")
+      path = temp_object.path
+      File.exist?(path).should be_true
+      temp_object.close
+      File.exist?(path).should be_false
     end
   end
 
@@ -261,7 +265,7 @@ describe Dragonfly::TempObject do
       temp_object = Dragonfly::TempObject.new(file)
       temp_object.path.should == File.expand_path(file.path)
     end
-    
+
     it "should return an absolute path even if the file wasn't instantiated like that" do
       file = new_file('HELLO', 'tmp/bongo')
       temp_object = Dragonfly::TempObject.new(file)
@@ -272,6 +276,12 @@ describe Dragonfly::TempObject do
       end
       file.close
       FileUtils.rm(file.path)
+    end
+
+    it "doesn't remove the file on close" do
+      temp_object = new_temp_object("HELLO")
+      temp_object.close
+      File.exist?(temp_object.path).should be_true
     end
   end
 
@@ -294,7 +304,7 @@ describe Dragonfly::TempObject do
       temp_object = Dragonfly::TempObject.new(pathname)
       temp_object.path.should == File.expand_path(pathname.to_s)
     end
-    
+
     it "should return an absolute path even if the pathname is relative" do
       pathname = new_pathname('HELLO', 'tmp/bingo')
       temp_object = Dragonfly::TempObject.new(pathname)
@@ -305,21 +315,28 @@ describe Dragonfly::TempObject do
       end
       pathname.delete
     end
+
+    it "doesn't remove the file on close" do
+      temp_object = new_temp_object("HELLO")
+      temp_object.close
+      File.exist?(temp_object.path).should be_true
+    end
+
   end
 
   describe "initializing from another temp object" do
-    
+
     def initialization_object(data)
       Dragonfly::TempObject.new(data)
     end
-    
+
     before(:each) do
       @temp_object1 = Dragonfly::TempObject.new(new_tempfile('hello'))
       @temp_object2 = Dragonfly::TempObject.new(@temp_object1)
     end
-    
+
     it_should_behave_like "common behaviour"
-    
+
     it "should not be the same object" do
       @temp_object1.should_not == @temp_object2
     end
@@ -352,91 +369,49 @@ describe Dragonfly::TempObject do
   end
 
   describe "original_filename" do
+
     before(:each) do
       @obj = new_tempfile
     end
+
     it "should set the original_filename if the initial object responds to 'original filename'" do
       def @obj.original_filename
         'jimmy.page'
       end
       Dragonfly::TempObject.new(@obj).original_filename.should == 'jimmy.page'
     end
+
     it "should not set the name if the initial object doesn't respond to 'original filename'" do
       Dragonfly::TempObject.new(@obj).original_filename.should be_nil
     end
+
     it "should set the name if the initial object is a file object" do
       file = File.new(SAMPLES_DIR.join('round.gif'))
       temp_object = Dragonfly::TempObject.new(file)
       temp_object.original_filename.should == 'round.gif'
     end
+
     it "should set the name if the initial object is a pathname" do
       pathname = Pathname.new(SAMPLES_DIR + '/round.gif')
       temp_object = Dragonfly::TempObject.new(pathname)
       temp_object.original_filename.should == 'round.gif'
     end
-  end
-  
-  describe "meta" do
-    it "should default to an empty hash" do
-      Dragonfly::TempObject.new('sdf').meta.should == {}
-    end
-    it "should allow setting on initialize" do
-      Dragonfly::TempObject.new('sdf', :dub => 'wub').meta.should == {:dub => 'wub'}
-    end
-    it "should allow setting" do
-      temp_object = Dragonfly::TempObject.new('boo')
-      temp_object.meta = {:far => 'gone'}
-      temp_object.meta.should == {:far => 'gone'}
-    end
+
   end
 
-  describe "name" do
-    it "should default to nil" do
-      Dragonfly::TempObject.new("HELLO").name.should be_nil
+  describe "ext" do
+
+    let(:temp_object) { Dragonfly::TempObject.new("stuff") }
+
+    it "defaults to nil" do
+      temp_object.ext.should be_nil
     end
-    it "should allow setting the name via the meta" do
-      Dragonfly::TempObject.new("HELLO", :name => 'gosh.pig').name.should == "gosh.pig"
+
+    it "uses original_filename if present" do
+      temp_object.should_receive(:original_filename).and_return('some.thing.yo')
+      temp_object.ext.should == 'yo'
     end
-    it "should fallback to the original filename if not set" do
-      content = "HELLO"
-      content.should_receive(:original_filename).and_return("some.egg")
-      temp_object = Dragonfly::TempObject.new(content)
-      temp_object.name.should == "some.egg"
-    end
-    it "should prefer the specified name to the original filename" do
-      content = "HELLO"
-      content.stub!(:original_filename).and_return("brase.nose")
-      temp_object = Dragonfly::TempObject.new("HELLO", :name => 'some.gug')
-      temp_object.name.should == "some.gug"
-    end
-    it "should allow setting with a setter" do
-      temp_object = Dragonfly::TempObject.new("HELLO")
-      temp_object.name = 'bugs'
-      temp_object.name.should == "bugs"
-    end
-  end
-  
-  describe "sanity check for using HasFilename" do
-    it "should act like Dragonfly::HasFilename" do
-      temp_object = Dragonfly::TempObject.new('h', :name => 'one.big.park')
-      temp_object.ext = 'smeagol'
-      temp_object.name.should == 'one.big.smeagol'
-    end
-  end
-  
-  describe "unique_id" do
-    before(:each) do
-      @temp_object = Dragonfly::TempObject.new('hello')
-    end
-    it "should return a unique id" do
-      @temp_object.unique_id.should =~ /^\d+$/
-    end
-    it "should be unique" do
-      @temp_object.unique_id.should_not == Dragonfly::TempObject.new('hello').unique_id
-    end
-    it "should not change" do
-      @temp_object.unique_id.should == @temp_object.unique_id
-    end
+
   end
 
 end

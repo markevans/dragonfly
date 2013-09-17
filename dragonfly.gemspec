@@ -24,28 +24,18 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency("rack", [">= 0"])
   spec.add_runtime_dependency("multi_json", ["~> 1.0"])
 
-  spec.add_development_dependency("capybara", [">= 0"])
-  spec.add_development_dependency("cucumber", ["~> 1.2.1"])
-  spec.add_development_dependency("cucumber-rails", ["~> 1.3.0"])
-  spec.add_development_dependency("database_cleaner", [">= 0"])
-  spec.add_development_dependency("fog", [">= 0"])
-  spec.add_development_dependency("github-markup", [">= 0"])
-  spec.add_development_dependency("mongo", [">= 0"])
+  spec.add_development_dependency("activemodel", [">= 0"])
   spec.add_development_dependency("couchrest", ["~> 1.0"])
+  spec.add_development_dependency("fog", [">= 0"])
+  spec.add_development_dependency("mongo", [">= 0"])
+  spec.add_development_dependency("pry", [">= 0"])
   spec.add_development_dependency("rack-cache", [">= 0"])
-  spec.add_development_dependency("rails", ["~> 3.2.0"])
   spec.add_development_dependency("rspec", ["~> 2.5"])
   spec.add_development_dependency("webmock", [">= 0"])
-  spec.add_development_dependency("yard", [">= 0"])
   if RUBY_PLATFORM == "java"
-    spec.add_development_dependency("jdbc-sqlite3", [">= 0"])
-    spec.add_development_dependency("activerecord-jdbcsqlite3-adapter", [">= 0"])
     spec.add_development_dependency("jruby-openssl", [">= 0"])
   else
-    spec.add_development_dependency("redcarpet", ["~> 1.0"])
-    spec.add_development_dependency("bluecloth", [">= 0"])
     spec.add_development_dependency("bson_ext", [">= 0"])
-    spec.add_development_dependency("sqlite3", [">= 0"])
   end
-
 end
+

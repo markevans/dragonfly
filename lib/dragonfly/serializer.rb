@@ -1,6 +1,7 @@
 # encoding: utf-8
 require 'base64'
 require 'multi_json'
+require 'dragonfly/utils'
 
 module Dragonfly
   module Serializer
@@ -21,11 +22,11 @@ module Dragonfly
       Base64.decode64(string + '=' * padding_length)
     end
 
-    def marshal_encode(object)
+    def marshal_b64_encode(object)
       b64_encode(Marshal.dump(object))
     end
 
-    def marshal_decode(string, opts={})
+    def marshal_b64_decode(string, opts={})
       marshal_string = b64_decode(string)
       raise MaliciousString, "potentially malicious marshal string #{marshal_string.inspect}" if opts[:check_malicious] && marshal_string[/@[a-z_]/i]
       Marshal.load(marshal_string)
@@ -34,13 +35,22 @@ module Dragonfly
     end
 
     def json_encode(object)
-      b64_encode(MultiJson.encode(object))
+      MultiJson.encode(object)
     end
 
-    def json_decode(string, opts={})
-      MultiJson.decode(b64_decode(string), :symbolize_keys => opts[:symbolize_keys])
+    def json_decode(string)
+      raise BadString, "can't decode blank string" if Utils.blank?(string)
+      MultiJson.decode(string)
     rescue MultiJson::DecodeError => e
       raise BadString, "couldn't decode #{string} - got #{e}"
+    end
+
+    def json_b64_encode(object)
+      b64_encode(json_encode(object))
+    end
+
+    def json_b64_decode(string)
+      json_decode(b64_decode(string))
     end
 
   end

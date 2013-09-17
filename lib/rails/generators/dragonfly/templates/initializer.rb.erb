@@ -1,0 +1,26 @@
+require 'dragonfly'
+
+# Configure
+Dragonfly.app.configure do
+  plugin :imagemagick
+
+  protect_from_dos_attacks true
+  secret "<%= generate_secret %>"
+
+  url_format "/media/:job/:name"
+
+  datastore :file,
+    <%= hash_key(:root_path) %> Rails.root.join('public/system/dragonfly', Rails.env),
+    <%= hash_key(:server_root) %> Rails.root.join('public')
+end
+
+# Logger
+Dragonfly.logger = Rails.logger
+
+# Mount as middleware
+Rails.application.middleware.use Dragonfly::Middleware
+
+# Add model functionality
+if defined?(ActiveRecord::Base)
+  ActiveRecord::Base.extend Dragonfly::Model
+end

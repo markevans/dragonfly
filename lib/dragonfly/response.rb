@@ -1,11 +1,8 @@
 require 'uri'
+require 'rack'
 
 module Dragonfly
   class Response
-
-    DEFAULT_FILENAME = proc do |job, request|
-      [job.basename, job.format].compact.join('.') if job.basename
-    end
 
     def initialize(job, env)
       @job, @env = job, env
@@ -13,22 +10,34 @@ module Dragonfly
     end
 
     def to_response
-      if !(request.head? || request.get?)
-        [405, method_not_allowed_headers, ["#{request.request_method} method not allowed"]]
-      elsif etag_matches?
-        [304, cache_headers, []]
-      elsif request.head?
-        job.apply
-        env['dragonfly.job'] = job
-        [200, success_headers, []]
-      elsif request.get?
-        job.apply
-        env['dragonfly.job'] = job
-        [200, success_headers, job]
+      response = begin
+        if !(request.head? || request.get?)
+          [405, method_not_allowed_headers, ["method not allowed"]]
+        elsif etag_matches?
+          [304, cache_headers, []]
+        else
+          not_found_uid = catch(:not_found) {
+            job.apply
+            nil
+          }
+          if not_found_uid
+            Dragonfly.warn("uid #{not_found_uid} not found")
+            [404, {"Content-Type" => "text/plain"}, ["Not found"]]
+          else
+            env['dragonfly.job'] = job
+            [
+              200,
+              success_headers,
+              (request.head? ? [] : job)
+            ]
+          end
+        end
+      rescue RuntimeError => e
+        Dragonfly.warn("caught error - #{e.message}")
+        [500, {"Content-Type" => "text/plain"}, ["Internal Server Error"]]
       end
-    rescue DataStorage::DataNotFound, DataStorage::BadUID => e
-      app.log.warn(e.message)
-      [404, {"Content-Type" => 'text/plain'}, ['Not found']]
+      log_response(response)
+      response
     end
 
     def will_be_served?
@@ -43,11 +52,9 @@ module Dragonfly
       @request ||= Rack::Request.new(env)
     end
 
-    def cache_headers
-      {
-        "Cache-Control" => "public, max-age=#{app.cache_duration}",
-        "ETag" => %("#{job.unique_signature}")
-      }
+    def log_response(response)
+      r = request
+      Dragonfly.info [r.request_method, r.fullpath, response[0]].join(' ')
     end
 
     def etag_matches?
@@ -61,22 +68,6 @@ module Dragonfly
       end
     end
 
-    def success_headers
-      {
-        "Content-Type" => job.mime_type,
-        "Content-Length" => job.size.to_s
-      }.merge(content_disposition_header).
-        merge(cache_headers).
-        merge(custom_headers)
-    end
-
-    def content_disposition_header
-      parts = []
-      parts << content_disposition if content_disposition
-      parts << %(filename="#{URI.encode(filename)}") if filename
-      parts.any? ? {"Content-Disposition" => parts.join('; ')} : {}
-    end
-    
     def method_not_allowed_headers
       {
         'Content-Type' => 'text/plain',
@@ -84,24 +75,33 @@ module Dragonfly
       }
     end
 
-    def content_disposition
-      @content_disposition ||= evaluate(app.content_disposition)
+    def success_headers
+      headers = standard_headers.merge(cache_headers)
+      customize_headers(headers)
+      headers.delete_if{|k, v| v.nil? }
     end
 
-    def filename
-      @filename ||= evaluate(app.content_filename)
+    def standard_headers
+      {
+        "Content-Type" => job.mime_type,
+        "Content-Length" => job.size.to_s,
+        "Content-Disposition" => (%(filename="#{URI.encode(job.name)}") if job.name)
+      }
     end
 
-    def custom_headers
-      @custom_headers ||= app.response_headers.inject({}) do |headers, (k, v)|
-        headers[k] = evaluate(v)
-        headers
+    def cache_headers
+      {
+        "Cache-Control" => "public, max-age=31536000", # (1 year)
+        "ETag" => %("#{job.unique_signature}")
+      }
+    end
+
+    def customize_headers(headers)
+      app.response_headers.each do |k, v|
+        headers[k] = v.respond_to?(:call) ? v.call(job, request, headers) : v
       end
-    end
-
-    def evaluate(attribute)
-      attribute.respond_to?(:call) ? attribute.call(job, request) : attribute
     end
 
   end
 end
+
