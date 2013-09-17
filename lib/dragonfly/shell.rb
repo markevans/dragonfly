@@ -1,4 +1,5 @@
 require 'shellwords'
+require 'open3'
 require 'dragonfly'
 
 module Dragonfly
@@ -9,9 +10,11 @@ module Dragonfly
 
     def run(command, opts={})
       command = escape_args(command) unless opts[:escape] == false
-      result = `#{command}`
-      raise CommandFailed, "Command failed (#{command}) with exit status #{$?.exitstatus}" unless $?.success?
-      result
+      Open3.popen3 command do |stdin, stdout, stderr, wait_thread|
+        status = wait_thread.value
+        raise CommandFailed, "Command failed (#{command}) with exit status #{status.exitstatus} and stderr #{stderr.read}" unless status.success?
+        stdout.read
+      end
     end
 
     def escape_args(args)
