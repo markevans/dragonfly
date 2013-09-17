@@ -4,9 +4,19 @@ module Dragonfly
       class Plasma
 
         def call(content, width, height, opts={})
-          format = opts['format'] || 'png'
+          format = extract_format(opts)
           content.generate!(:convert, "-size #{width}x#{height} plasma:fractal", format)
           content.add_meta('format' => format, 'name' => "plasma.#{format}")
+        end
+
+        def update_url(url_attrs, width, height, opts={})
+          url_attrs.name = "plasma.#{extract_format(opts)}"
+        end
+
+        private
+
+        def extract_format(opts)
+          opts['format'] || 'png'
         end
 
       end

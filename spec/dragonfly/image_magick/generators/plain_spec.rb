@@ -39,5 +39,12 @@ describe Dragonfly::ImageMagick::Generators::Plain do
     end
   end
 
-end
+  describe "urls" do
+    it "updates the url" do
+      url_attrs = Dragonfly::UrlAttributes.new
+      generator.update_url(url_attrs, 1, 1, 'format' => 'gif')
+      url_attrs.name.should == 'plain.gif'
+    end
+  end
 
+end

@@ -39,10 +39,14 @@ module Dragonfly
           '900'     => 900
         }
 
+        def update_url(url_attrs, string, opts={})
+          url_attrs.name = "text.#{extract_format(opts)}"
+        end
+
         def call(content, string, opts={})
           opts = HashWithCssStyleKeys[opts]
           args = []
-          format = (opts['format'] || 'png')
+          format = extract_format(opts)
           background = opts['background_color'] || 'none'
           font_size = (opts['font_size'] || 12).to_i
           escaped_string = "\"#{string.gsub(/"/, '\"')}\""
@@ -88,6 +92,10 @@ module Dragonfly
         end
 
         private
+
+        def extract_format(opts)
+          opts['format'] || 'png'
+        end
 
         # Use css-style padding declaration, i.e.
         # 10        (all sides)

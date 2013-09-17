@@ -66,5 +66,12 @@ describe Dragonfly::ImageMagick::Generators::Text do
       }.should raise_error(ArgumentError)
     end
   end
-end
 
+  describe "urls" do
+    it "updates the url" do
+      url_attrs = Dragonfly::UrlAttributes.new
+      generator.update_url(url_attrs, "mmm", 'format' => 'gif')
+      url_attrs.name.should == 'text.gif'
+    end
+  end
+end
