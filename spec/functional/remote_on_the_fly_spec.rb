@@ -21,7 +21,7 @@ describe "remote on-the-fly urls" do
           app.server.url_for(job)
         end
       end
-      datastore Dragonfly::DataStorage::FileDataStore.new(
+      datastore Dragonfly::FileDataStore.new(
         :root_path => 'tmp/dragonfly_test_urls',
         :server_root => 'tmp'
       )

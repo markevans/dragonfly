@@ -4,7 +4,7 @@ require 'dragonfly/register'
 require 'dragonfly/server'
 require 'dragonfly/shell'
 require 'dragonfly/configurable'
-require 'dragonfly/data_storage/file_data_store'
+require 'dragonfly/file_data_store'
 require 'dragonfly/routed_endpoint'
 require 'dragonfly/job_endpoint'
 require 'dragonfly/job'
@@ -96,7 +96,7 @@ module Dragonfly
     attr_reader :server
 
     def datastore
-      @datastore ||= DataStorage::FileDataStore.new
+      @datastore ||= FileDataStore.new
     end
     attr_writer :datastore
 

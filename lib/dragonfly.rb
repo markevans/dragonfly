@@ -6,7 +6,7 @@ require 'dragonfly/core_ext/array'
 require 'dragonfly/core_ext/hash'
 require 'dragonfly/app'
 require 'dragonfly/image_magick/plugin'
-require 'dragonfly/data_storage/file_data_store'
+require 'dragonfly/file_data_store'
 require 'dragonfly/data_storage/memory_data_store'
 require 'dragonfly/model'
 require 'dragonfly/middleware'
@@ -52,7 +52,7 @@ module Dragonfly
     # Dragonfly.app.configure do
     #   datastore :file
     # end
-    App.register_datastore(:file){ DataStorage::FileDataStore }
+    App.register_datastore(:file){ FileDataStore }
     App.register_datastore(:memory){ DataStorage::MemoryDataStore }
 
   end

@@ -210,7 +210,7 @@ describe Dragonfly::App do
       end
 
       {
-        :file => Dragonfly::DataStorage::FileDataStore,
+        :file => Dragonfly::FileDataStore,
         :memory => Dragonfly::DataStorage::MemoryDataStore
       }.each do |symbol, klass|
         it "recognises the #{symbol.inspect} shortcut for S3DataStore" do

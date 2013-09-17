@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'dragonfly/spec/data_store_examples'
 
-describe Dragonfly::DataStorage::FileDataStore do
+describe Dragonfly::FileDataStore do
 
   def touch_file(filename)
     FileUtils.mkdir_p(File.dirname(filename))
@@ -23,7 +23,7 @@ describe Dragonfly::DataStorage::FileDataStore do
   describe "with a given root path" do
 
     before(:each) do
-      @data_store = Dragonfly::DataStorage::FileDataStore.new(:root_path => 'tmp/file_data_store_test')
+      @data_store = Dragonfly::FileDataStore.new(:root_path => 'tmp/file_data_store_test')
     end
 
     after(:each) do
@@ -144,7 +144,7 @@ describe Dragonfly::DataStorage::FileDataStore do
       it "should raise if the file path has ../ in it" do
         expect{
           @data_store.read(new_content, 'jelly_beans/../are/good')
-        }.to raise_error(Dragonfly::DataStorage::FileDataStore::BadUID)
+        }.to raise_error(Dragonfly::FileDataStore::BadUID)
       end
 
       it "should not raise if the file path has .. but not ../ in it" do
@@ -170,7 +170,7 @@ describe Dragonfly::DataStorage::FileDataStore do
       it "should raise if the file path has ../ in it" do
         expect{
           @data_store.destroy('jelly_beans/../are/good')
-        }.to raise_error(Dragonfly::DataStorage::FileDataStore::BadUID)
+        }.to raise_error(Dragonfly::FileDataStore::BadUID)
       end
     end
 
@@ -182,7 +182,7 @@ describe Dragonfly::DataStorage::FileDataStore do
     end
 
     describe "relative paths" do
-      let(:store) { Dragonfly::DataStorage::FileDataStore.new }
+      let(:store) { Dragonfly::FileDataStore.new }
       let(:relative_path) { "2011/02/11/picture.jpg" }
       let(:absolute_path) { "#{root_path}#{relative_path}" }
       let(:root_path) { "/path/to/file/" }
@@ -248,7 +248,7 @@ describe Dragonfly::DataStorage::FileDataStore do
       it "should raise an error if called without configuring" do
         expect{
           @data_store.url_for(@uid)
-        }.to raise_error(Dragonfly::DataStorage::FileDataStore::UnableToFormUrl)
+        }.to raise_error(Dragonfly::FileDataStore::UnableToFormUrl)
       end
 
       it "should work as expected when the the server root is above the root path" do
@@ -275,21 +275,21 @@ describe Dragonfly::DataStorage::FileDataStore do
         @data_store.server_root = '/var/blimey/eggs'
         expect{
           @data_store.url_for(@uid)
-        }.to raise_error(Dragonfly::DataStorage::FileDataStore::UnableToFormUrl)
+        }.to raise_error(Dragonfly::FileDataStore::UnableToFormUrl)
       end
 
       it "should raise an error when the server root doesn't coincide with the uid" do
         @data_store.server_root = '/var/tmp/eggs/some/gooney'
         expect{
           @data_store.url_for(@uid)
-        }.to raise_error(Dragonfly::DataStorage::FileDataStore::UnableToFormUrl)
+        }.to raise_error(Dragonfly::FileDataStore::UnableToFormUrl)
       end
     end
 
   end
 
   describe "deprecated meta" do
-    let(:data_store){ Dragonfly::DataStorage::FileDataStore.new(:root_path => 'spec/fixtures/deprecated_stored_content')}
+    let(:data_store){ Dragonfly::FileDataStore.new(:root_path => 'spec/fixtures/deprecated_stored_content')}
 
     it "still works with old-style meta" do
       data_store.read(new_content, 'eggs.bonus')
