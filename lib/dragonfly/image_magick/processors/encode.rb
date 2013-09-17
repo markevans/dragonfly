@@ -8,7 +8,7 @@ module Dragonfly
         end
 
         def call(content, format, args="")
-          content.process!(:convert, args, format)
+          content.process!(:convert, args, 'format' => format)
         end
 
       end

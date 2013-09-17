@@ -20,11 +20,12 @@ module Dragonfly
         CROPPED_RESIZE_GEOMETRY = /^(\d+)x(\d+)#(\w{1,2})?$/ # e.g. '20x50#ne'
         CROP_GEOMETRY           = /^(\d+)x(\d+)([+-]\d+)?([+-]\d+)?(\w{1,2})?$/ # e.g. '30x30+10+10'
 
-        def update_url(url_attrs, geometry, format=nil)
+        def update_url(url_attrs, geometry, opts={})
+          format = opts['format']
           url_attrs.ext = format if format
         end
 
-        def call(content, geometry, format=nil)
+        def call(content, geometry, opts={})
           args = case geometry
           when RESIZE_GEOMETRY
             resize_args(geometry)
@@ -40,7 +41,7 @@ module Dragonfly
             )
           else raise ArgumentError, "Didn't recognise the geometry string #{geometry}"
           end
-          content.process!(:convert, args, format)
+          content.process!(:convert, args, opts)
         end
 
         private

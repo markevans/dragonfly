@@ -13,7 +13,7 @@ describe Dragonfly::ImageMagick::Processors::Convert do
   end
 
   it "should allow for general convert commands with added format" do
-    processor.call(image, '-scale 56x71', :gif)
+    processor.call(image, '-scale 56x71', 'format' => 'gif')
     image.should have_width(56)
     image.should have_height(71)
     image.should have_format('gif')
@@ -29,6 +29,12 @@ describe Dragonfly::ImageMagick::Processors::Convert do
     image = Dragonfly::Content.new(app, SAMPLES_DIR.join('white pixel.png'))
     processor.call(image, "-resize 2x2!")
     image.should have_width(2)
+  end
+
+  it "updates the url with format if given" do
+    url_attrs = Dragonfly::UrlAttributes.new
+    processor.update_url(url_attrs, '-scale 56x71', 'format' => 'gif')
+    url_attrs.ext.should == 'gif'
   end
 
 end

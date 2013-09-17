@@ -74,7 +74,7 @@ describe "a configured imagemagick app" do
 
     describe "convert" do
       it "sanity check with format" do
-        thumb = image.convert('-resize 1x1!', 'jpg')
+        thumb = image.convert('-resize 1x1!', 'format' => 'jpg')
         thumb.url.should =~ /^\/beach\.jpg\?job=\w+/
         thumb.width.should == 1
         thumb.format.should == 'jpeg'
