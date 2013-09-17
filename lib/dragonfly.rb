@@ -23,6 +23,10 @@ module Dragonfly
       App.instance(name)
     end
 
+    def [](name)
+      App[name]
+    end
+
     def running_on_windows?
       !!(RbConfig::CONFIG['host_os'] =~ %r!(msdos|mswin|djgpp|mingw)!)
     end
@@ -57,4 +61,3 @@ module Dragonfly
 
   end
 end
-

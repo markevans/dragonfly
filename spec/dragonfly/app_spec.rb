@@ -272,5 +272,27 @@ describe Dragonfly::App do
     end
   end
 
+  describe "deprecations" do
+    it "raises a message when using App#[]" do
+      expect {
+        Dragonfly::App[:images]
+      }.to raise_error(/Dragonfly::App\[:images\] .* Dragonfly\.app /)
+    end
+
+    it "raises a message when configuring with an old datastore" do
+      expect {
+        Dragonfly.app.use_datastore(mock("datastore", :store => "asdf", :retrieve => "ASDF", :destroy => nil))
+      }.to raise_error(/read/)
+    end
+
+    it "raises a messages when configuring with a bad parameter" do
+      expect {
+        Dragonfly.app.configure do |c|
+          c.url_format = '/media/:job'
+        end
+      }.to raise_error(/no method.*changed.*docs/)
+    end
+  end
+
 end
 

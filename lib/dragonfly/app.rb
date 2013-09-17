@@ -27,6 +27,10 @@ module Dragonfly
         apps[name] ||= new(name)
       end
 
+      def [](name)
+        raise "Dragonfly::App[#{name.inspect}] is deprecated - use Dragonfly.app (for the default app) or Dragonfly.app(#{name.inspect}) (for extra named apps) instead. See docs at http://markevans.github.io/dragonfly for details"
+      end
+
       def apps
         @apps ||= {}
       end
@@ -88,6 +92,10 @@ module Dragonfly
       writer :fetch_file_whitelist, :fetch_url_whitelist, :dragonfly_url, :protect_from_dos_attacks, :url_format, :url_host, :url_path_prefix,
              :for => :server
       meth :before_serve, :for => :server
+
+      def method_missing(meth, *args)
+        raise NoMethodError, "no method #{meth} for App configuration - but the configuration API has changed! see docs at http://markevans.github.io/dragonfly for details"
+      end
     end
 
     attr_reader :analysers
@@ -100,16 +108,17 @@ module Dragonfly
     end
     attr_writer :datastore
 
-    def use_datastore(datastore, *args)
-      self.datastore = if datastore.is_a?(Symbol)
-        get_klass = self.class.available_datastores[datastore]
-        raise UnregisteredDataStore, "the datastore '#{datastore}' is not registered" unless get_klass
+    def use_datastore(store, *args)
+      self.datastore = if store.is_a?(Symbol)
+        get_klass = self.class.available_datastores[store]
+        raise UnregisteredDataStore, "the datastore '#{store}' is not registered" unless get_klass
         klass = get_klass.call
         klass.new(*args)
       else
         raise ArgumentError, "datastore only takes 1 argument unless you use a symbol" if args.any?
-        datastore
+        store
       end
+      raise "datastores have a new interface (read/write/destroy) - see docs at http://markevans.github.io/dragonfly for details" if datastore.respond_to?(:store) && !datastore.respond_to?(:write)
     end
 
     def add_generator(*args, &block)
