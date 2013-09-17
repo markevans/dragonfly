@@ -38,7 +38,7 @@ end
 def test_app(name=nil)
   time = Time.now
   app = Dragonfly::App.instance(name)
-  app.datastore = Dragonfly::DataStorage::MemoryDataStore.new
+  app.datastore = Dragonfly::MemoryDataStore.new
   app
 end
 

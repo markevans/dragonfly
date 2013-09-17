@@ -1,10 +1,10 @@
 require 'spec_helper'
 require 'dragonfly/spec/data_store_examples'
 
-describe Dragonfly::DataStorage::MemoryDataStore do
+describe Dragonfly::MemoryDataStore do
 
   before(:each) do
-    @data_store = Dragonfly::DataStorage::MemoryDataStore.new
+    @data_store = Dragonfly::MemoryDataStore.new
   end
 
   it_should_behave_like 'data_store'
