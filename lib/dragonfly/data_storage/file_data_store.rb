@@ -188,11 +188,10 @@ module Dragonfly
       end
 
       def validate_path!(uid)
-        raise BadUID, uid if uid.blank? || uid['../']
+        raise BadUID, uid if Utils.blank?(uid) || uid['../']
       end
 
     end
 
   end
 end
-

@@ -1,5 +1,6 @@
 require 'dragonfly'
 require 'dragonfly/serializer'
+require 'dragonfly/utils'
 require 'dragonfly/model/attachment'
 
 module Dragonfly
@@ -46,7 +47,7 @@ module Dragonfly
 
         # Define the URL setter
         define_method "#{attribute}_url=" do |url|
-          unless url.blank?
+          unless Utils.blank?(url)
             dragonfly_attachments[attribute].assign(app.fetch_url(url))
           end
         end
@@ -69,7 +70,7 @@ module Dragonfly
 
         # Define the retained setter
         define_method "retained_#{attribute}=" do |string|
-          unless string.blank?
+          unless Utils.blank?(string)
             begin
               dragonfly_attachments[attribute].retained_attrs = Serializer.json_b64_decode(string)
             rescue Serializer::BadString => e

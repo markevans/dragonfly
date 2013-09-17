@@ -7,6 +7,10 @@ module Dragonfly
 
     module_function
 
+    def blank?(obj)
+      obj.respond_to?(:empty?) ? obj.empty? : !obj
+    end
+
     def new_tempfile(ext=nil, content=nil)
       tempfile = ext ? Tempfile.new(['dragonfly', ".#{ext}"]) : Tempfile.new('dragonfly')
       tempfile.binmode

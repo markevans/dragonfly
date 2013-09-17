@@ -1,5 +1,6 @@
 require 'ostruct'
 require 'dragonfly/has_filename'
+require 'dragonfly/utils'
 
 module Dragonfly
   class UrlAttributes < OpenStruct
@@ -17,7 +18,7 @@ module Dragonfly
     def extract(keys)
       keys.inject({}) do |attrs, key|
         value = send(key)
-        attrs[key] = value unless value.blank?
+        attrs[key] = value unless Utils.blank?(value)
         attrs
       end
     end
