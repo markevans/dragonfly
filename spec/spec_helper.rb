@@ -49,13 +49,3 @@ def test_imagemagick_app
     analyser :identify, Dragonfly::ImageMagick::Analysers::Identify.new
   end
 end
-
-def suppressing_stderr
-  original_stderr = $stderr.dup
-  tempfile = Tempfile.new('stderr')
-  $stderr.reopen(tempfile) rescue
-  yield
-ensure
-  tempfile.close!
-  $stderr.reopen(original_stderr)
-end

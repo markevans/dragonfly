@@ -9,19 +9,15 @@ describe Dragonfly::Shell do
   end
 
   it "should raise an error if the command isn't found" do
-    suppressing_stderr do
-      lambda{
-        shell.run "non-existent-command"
-      }.should raise_error(Dragonfly::Shell::CommandFailed)
-    end
+    lambda{
+      shell.run "non-existent-command"
+    }.should raise_error(Dragonfly::Shell::CommandFailed)
   end
 
   it "should raise an error if the command fails" do
-    suppressing_stderr do
-      lambda{
-        shell.run "ls -j"
-      }.should raise_error(Dragonfly::Shell::CommandFailed)
-    end
+    lambda{
+      shell.run "ls -j"
+    }.should raise_error(Dragonfly::Shell::CommandFailed)
   end
 
   unless Dragonfly.running_on_windows?

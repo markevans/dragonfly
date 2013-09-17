@@ -58,9 +58,7 @@ describe "a configured imagemagick app" do
     end
 
     it "should say if it's not an image" do
-      suppressing_stderr do
-        app.create("blah").image?.should be_false
-      end
+      app.create("blah").image?.should be_false
     end
 
     it "should return false for pdfs" do
