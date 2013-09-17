@@ -37,12 +37,10 @@ module Dragonfly
     end
     attr_writer :logger
 
-    def warn(message)
-      log.warn("DRAGONFLY: #{message}")
-    end
-
-    def info(message)
-      log.info("DRAGONFLY: #{message}")
+    [:debug, :warn, :info].each do |method|
+      define_method method do |message|
+        logger.send(method, "DRAGONFLY: #{message}")
+      end
     end
 
     # Register plugins so we can do e.g.
