@@ -15,7 +15,7 @@ Dragonfly.app.configure do
 end
 
 # Logger
-Dragonfly.log = Rails.logger
+Dragonfly.logger = Rails.logger
 
 # Mount as middleware
 Rails.application.middleware.use Dragonfly::Middleware

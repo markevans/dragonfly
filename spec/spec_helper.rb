@@ -27,7 +27,7 @@ end
 require 'logger'
 LOG_FILE = 'tmp/test.log' unless defined?(LOG_FILE)
 FileUtils.rm_rf(LOG_FILE)
-Dragonfly.log = Logger.new(LOG_FILE)
+Dragonfly.logger = Logger.new(LOG_FILE)
 
 RSpec.configure do |c|
   c.after(:each) do

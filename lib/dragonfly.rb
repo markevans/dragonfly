@@ -32,10 +32,10 @@ module Dragonfly
     end
 
     # Logging
-    def log
-      @log ||= Logger.new('dragonfly.log')
+    def logger
+      @logger ||= Logger.new('dragonfly.log')
     end
-    attr_writer :log
+    attr_writer :logger
 
     def warn(message)
       log.warn("DRAGONFLY: #{message}")
