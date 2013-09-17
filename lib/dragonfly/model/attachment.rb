@@ -66,6 +66,10 @@ module Dragonfly
         !!@changed
       end
 
+      def stored?
+        uid?
+      end
+
       def destroy!
         destroy_previous!
         destroy_content(uid) if uid?

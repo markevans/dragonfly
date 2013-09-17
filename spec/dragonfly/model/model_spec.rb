@@ -1213,6 +1213,30 @@ describe "models" do
 
   end
 
+  describe "xxx_stored?" do
+    before do
+      item_class = new_model_class('Item', :photo_uid) do
+        dragonfly_accessor :photo
+      end
+      @item = item_class.new
+    end
+
+    it "returns false if unassigned" do
+      @item.photo_stored?.should be_false
+    end
+
+    it "returns false if assigned but not stored" do
+      @item.photo = "Asdf"
+      @item.photo_stored?.should be_false
+    end
+
+    it "returns true if stored" do
+      @item.photo = "Asdf"
+      @item.save!
+      @item.photo_stored?.should be_true
+    end
+  end
+
   describe "inspect" do
     before(:each) do
       @item_class = new_model_class('Item', :preview_image_uid) do
