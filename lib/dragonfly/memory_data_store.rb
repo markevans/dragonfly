@@ -2,7 +2,7 @@ module Dragonfly
   class MemoryDataStore
 
     def initialize
-      @content_store = Hash.new{|hash, key| throw :not_found, key }
+      @content_store = {}
     end
 
     def write(content, opts={})
@@ -11,9 +11,9 @@ module Dragonfly
       uid
     end
 
-    def read(content, uid)
+    def read(uid)
       data = content_store[uid]
-      content.update(data[:content], data[:meta])
+      [data[:content], data[:meta]] if data
     end
 
     def destroy(uid)

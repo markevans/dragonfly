@@ -16,22 +16,17 @@ module Dragonfly
         elsif etag_matches?
           [304, cache_headers, []]
         else
-          not_found_uid = catch(:not_found) {
-            job.apply
-            nil
-          }
-          if not_found_uid
-            Dragonfly.warn("uid #{not_found_uid} not found")
-            [404, {"Content-Type" => "text/plain"}, ["Not found"]]
-          else
-            env['dragonfly.job'] = job
-            [
-              200,
-              success_headers,
-              (request.head? ? [] : job)
-            ]
-          end
+          job.apply
+          env['dragonfly.job'] = job
+          [
+            200,
+            success_headers,
+            (request.head? ? [] : job)
+          ]
         end
+      rescue Job::Fetch::NotFound => e
+        Dragonfly.warn(e.message)
+        [404, {"Content-Type" => "text/plain"}, ["Not found"]]
       rescue RuntimeError => e
         Dragonfly.warn("caught error - #{e.message}")
         [500, {"Content-Type" => "text/plain"}, ["Internal Server Error"]]

@@ -61,8 +61,15 @@ describe Dragonfly::Job do
     it { job.steps.should match_steps([Dragonfly::Job::Fetch]) }
 
     it "should read from the app's datastore when applied" do
-      app.datastore.should_receive(:read).with(job.content, 'some_uid')
+      app.datastore.should_receive(:read).with('some_uid').and_return ["", {}]
       job.apply
+    end
+
+    it "raises NotFound if the datastore returns nil" do
+      app.datastore.should_receive(:read).and_return(nil)
+      expect {
+        job.apply
+      }.to raise_error(Dragonfly::Job::Fetch::NotFound)
     end
   end
 
@@ -321,7 +328,7 @@ describe Dragonfly::Job do
     end
     it "should return true when applied" do
       job = app.fetch('eggs')
-      app.datastore.should_receive(:read).with(job.content, 'eggs')
+      app.datastore.should_receive(:read).with('eggs').and_return ["", {}]
       job.apply
       job.should be_applied
     end

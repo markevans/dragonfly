@@ -81,8 +81,8 @@ describe Dragonfly::JobEndpoint do
 
   end
 
-  it "should return 404 if the datastore throws not_found" do
-    @job.should_receive(:apply).and_throw(:not_found, 'some/uid')
+  it "should return 404 if the datastore raises NotFound" do
+    @job.should_receive(:apply).and_raise(Dragonfly::Job::Fetch::NotFound)
     response = make_request(@job)
     response.status.should == 404
   end

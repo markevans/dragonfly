@@ -110,16 +110,19 @@ module Dragonfly
       relative(path)
     end
 
-    def read(content, relative_path)
+    def read(relative_path)
       validate_path!(relative_path)
       path = absolute(relative_path)
       pathname = Pathname.new(path)
-      throw :not_found, relative_path unless pathname.exist?
-      content.update(pathname)
-      if store_meta?
-        meta = meta_store.read(path) || deprecated_meta_store.read(path) || {}
-        content.add_meta(meta)
-      end
+      return nil unless pathname.exist?
+      [
+        pathname,
+        (
+          if store_meta?
+            meta_store.read(path) || deprecated_meta_store.read(path) || {}
+          end
+        )
+      ]
     end
 
     def destroy(relative_path)

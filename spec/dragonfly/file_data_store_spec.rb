@@ -136,20 +136,20 @@ describe Dragonfly::FileDataStore do
       it "should be able to read any file, stored or not (and without meta data)" do
         FileUtils.mkdir_p("#{@data_store.root_path}/jelly_beans/are")
         File.open("#{@data_store.root_path}/jelly_beans/are/good", 'w'){|f| f.write('hey dog') }
-        @data_store.read(new_content, "jelly_beans/are/good")
+        new_content.update(*@data_store.read("jelly_beans/are/good"))
         new_content.data.should == 'hey dog'
         new_content.meta.should == {'name' => 'good'}
       end
 
       it "should raise if the file path has ../ in it" do
         expect{
-          @data_store.read(new_content, 'jelly_beans/../are/good')
+          @data_store.read('jelly_beans/../are/good')
         }.to raise_error(Dragonfly::FileDataStore::BadUID)
       end
 
       it "should not raise if the file path has .. but not ../ in it" do
         @data_store.write(content, :path => 'jelly_beans..good')
-        @data_store.read(new_content, 'jelly_beans..good')
+        new_content.update(*@data_store.read('jelly_beans..good'))
         new_content.data.should == 'goobydoo'
       end
     end
@@ -219,7 +219,7 @@ describe Dragonfly::FileDataStore do
 
       it "should return an empty hash on read" do
         uid = @data_store.write(content)
-        @data_store.read(new_content, uid)
+        new_content.update(*@data_store.read(uid))
         new_content.meta['bitrate'].should be_nil
       end
 
@@ -292,7 +292,7 @@ describe Dragonfly::FileDataStore do
     let(:data_store){ Dragonfly::FileDataStore.new(:root_path => 'spec/fixtures/deprecated_stored_content')}
 
     it "still works with old-style meta" do
-      data_store.read(new_content, 'eggs.bonus')
+      new_content.update(*data_store.read('eggs.bonus'))
       new_content.data.should == "Barnicle"
       new_content.meta.should == {'name' => 'eggs.bonus', 'some' => 'meta', 'number' => 5}
     end
