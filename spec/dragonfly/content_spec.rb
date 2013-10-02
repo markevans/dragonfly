@@ -349,5 +349,10 @@ describe Dragonfly::Content do
     end
   end
 
-end
+  describe "inspect" do
+    it "returns a string" do
+      content.inspect.should =~ /Content/
+    end
+  end
 
+end

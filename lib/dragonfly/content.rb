@@ -106,6 +106,10 @@ module Dragonfly
       temp_object.close
     end
 
+    def inspect
+      "<#{self.class.name} temp_object=#{temp_object.inspect}>"
+    end
+
     private
 
     attr_reader :previous_temp_objects
