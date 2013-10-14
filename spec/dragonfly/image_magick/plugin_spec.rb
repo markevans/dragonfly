@@ -121,18 +121,6 @@ describe "a configured imagemagick app" do
         image.width.should == 355
         image.height.should == 280
       end
-
-      it "should not rotate given a larger height and the '>' qualifier" do
-        image.rotate!(90, 'qualifier' => '>')
-        image.width.should == 280
-        image.height.should == 355
-      end
-
-      it "should rotate given a larger height and the '<' qualifier" do
-        image.rotate!(90, 'qualifier' => '<')
-        image.width.should == 355
-        image.height.should == 280
-      end
     end
 
   end
