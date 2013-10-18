@@ -1237,6 +1237,24 @@ describe "models" do
     end
   end
 
+  describe "misc properties" do
+    before(:each) do
+      @item_class = new_model_class('Item', :photo_uid) do
+        dragonfly_accessor :photo
+      end
+      @item = @item_class.new :photo => 'blug'
+    end
+
+    it "returns the b64_data" do
+      @item.photo.b64_data.should =~ /^data:/
+    end
+
+    it "returns the mime_type" do
+      @item.photo.ext = 'txt'
+      @item.photo.mime_type.should == 'text/plain'
+    end
+  end
+
   describe "inspect" do
     before(:each) do
       @item_class = new_model_class('Item', :preview_image_uid) do
