@@ -131,7 +131,7 @@ describe Dragonfly::JobEndpoint do
 
   describe "custom headers" do
     before(:each) do
-      @app.configure{|c| c.response_headers['This-is'] = 'brill' }
+      @app.configure{ response_header 'This-is', 'brill' }
     end
     it "should allow specifying custom headers" do
       make_request(@job).headers['This-is'].should == 'brill'

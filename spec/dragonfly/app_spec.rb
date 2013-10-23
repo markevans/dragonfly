@@ -192,6 +192,24 @@ describe Dragonfly::App do
     end
   end
 
+  describe "response headers" do
+    let (:app) {test_app}
+
+    it "adds a response header" do
+      app.response_header 'Cache-Control', "private"
+      app.response_headers["Cache-Control"].should == 'private'
+    end
+
+    it "adds a response header using a block" do
+      app.response_header 'Cache-Control' do "private" end
+      app.response_headers["Cache-Control"].should be_a(Proc)
+    end
+
+    it "allows calling through the config" do
+      app.configure{ response_header 'Cache-Control', "private" }
+    end
+  end
+
   describe "inspect" do
     it "should give a neat output" do
       Dragonfly.app(:hello).inspect.should == "<Dragonfly::App name=:hello >"

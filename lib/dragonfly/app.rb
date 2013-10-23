@@ -71,7 +71,7 @@ module Dragonfly
 
     set_up_config do
       writer :secret, :allow_legacy_urls, :log_shell
-      meth :add_mime_type, :response_headers, :define_url
+      meth :add_mime_type, :response_header, :define_url
 
       def processor(*args, &block)
         obj.add_processor(*args, &block)
@@ -189,6 +189,10 @@ module Dragonfly
 
     def mime_type_for(format)
       mime_types[file_ext_string(format)] || fallback_mime_type
+    end
+
+    def response_header(key, value=nil, &block)
+      response_headers[key] = value || block
     end
 
     def response_headers
