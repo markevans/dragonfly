@@ -2,35 +2,32 @@ require 'spec_helper'
 
 describe "remote on-the-fly urls" do
 
-  THUMBS = {}
-
   before(:each) do
+    @thumbs = thumbs = {}
     @app = test_app.configure do
       generator :test do |content|
         content.update("TEST")
       end
       before_serve do |job, env|
         uid = job.store(:path => 'yay.txt')
-        THUMBS[job.serialize] = uid
+        thumbs[job.serialize] = uid
       end
       define_url do |app, job, opts|
-        uid = THUMBS[job.serialize]
+        uid = thumbs[job.serialize]
         if uid
           app.datastore.url_for(uid)
         else
           app.server.url_for(job)
         end
       end
-      datastore Dragonfly::FileDataStore.new(
+      datastore :file,
         :root_path => 'tmp/dragonfly_test_urls',
         :server_root => 'tmp'
-      )
     end
     @job = @app.generate(:test)
   end
 
   after(:each) do
-    THUMBS.delete_if{true}
     FileUtils.rm_f('tmp/dragonfly_test_urls/yay.txt')
   end
 
