@@ -114,7 +114,7 @@ describe Dragonfly::JobEndpoint do
       '*'
     ].each do |header|
       it "should return a 304 if the correct ETag is specified in HTTP_IF_NONE_MATCH header e.g. #{header}" do
-        @job.should_receive(:unique_signature).at_least(:once).and_return('dingle')
+        @job.should_receive(:signature).at_least(:once).and_return('dingle')
         response = make_request(@job, 'HTTP_IF_NONE_MATCH' => header)
         response.status.should == 304
         response['ETag'].should == '"dingle"'
@@ -124,7 +124,7 @@ describe Dragonfly::JobEndpoint do
     end
 
     it "should not have applied any steps if the correct ETag is specified in HTTP_IF_NONE_MATCH header" do
-      response = make_request(@job, 'HTTP_IF_NONE_MATCH' => @job.unique_signature)
+      response = make_request(@job, 'HTTP_IF_NONE_MATCH' => @job.signature)
       @job.applied_steps.should be_empty
     end
   end

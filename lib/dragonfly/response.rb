@@ -57,7 +57,7 @@ module Dragonfly
       if_none_match = env['HTTP_IF_NONE_MATCH']
       @etag_matches = if if_none_match
         if_none_match.tr!('"','')
-        if_none_match.split(',').include?(job.unique_signature) || if_none_match == '*'
+        if_none_match.split(',').include?(job.signature) || if_none_match == '*'
       else
         false
       end
@@ -87,7 +87,7 @@ module Dragonfly
     def cache_headers
       {
         "Cache-Control" => "public, max-age=31536000", # (1 year)
-        "ETag" => %("#{job.unique_signature}")
+        "ETag" => %("#{job.signature}")
       }
     end
 

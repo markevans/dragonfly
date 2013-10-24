@@ -298,7 +298,7 @@ module Dragonfly
       Serializer.json_b64_encode(to_a)
     end
 
-    def unique_signature
+    def signature
       Digest::SHA1.hexdigest(to_unique_s)
     end
 
