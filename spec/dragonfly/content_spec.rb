@@ -288,18 +288,6 @@ describe Dragonfly::Content do
       end
     end
 
-    describe "logging" do
-      it "doesn't log by default" do
-        Dragonfly.should_not_receive(:info)
-        content.shell_eval{|p| "wc -l #{p}" }
-      end
-
-      it "allows logging with log_shell" do
-        app.log_shell = true
-        Dragonfly.should_receive(:info).with{|m| m.should =~ /^Running Command: wc -l '.+'$/ }
-        content.shell_eval{|p| "wc -l #{p}" }
-      end
-    end
   end
 
   describe "store" do

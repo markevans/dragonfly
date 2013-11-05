@@ -70,7 +70,7 @@ module Dragonfly
     extend Configurable
 
     set_up_config do
-      writer :secret, :allow_legacy_urls, :log_shell
+      writer :secret, :allow_legacy_urls
       meth :add_mime_type, :response_header, :define_url
 
       def processor(*args, &block)
@@ -243,7 +243,7 @@ module Dragonfly
     end
     attr_writer :secret
 
-    attr_accessor :allow_legacy_urls, :log_shell
+    attr_accessor :allow_legacy_urls
 
     private
 

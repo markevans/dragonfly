@@ -123,10 +123,8 @@ module Dragonfly
     end
 
     def run(command, opts)
-      Dragonfly.info("Running Command: #{command}") if app.log_shell
       shell.run(command, opts)
     end
 
   end
 end
-
