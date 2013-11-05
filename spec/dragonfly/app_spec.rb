@@ -82,6 +82,10 @@ describe Dragonfly::App do
         @app.mime_type_for(:mark).should == 'first/one'
         other_app.mime_type_for(:mark).should == 'second/one'
       end
+      it "can be added via configure" do
+        @app.configure{ mime_type 'mark', 'application/mark' }
+        @app.mime_type_for(:mark).should == 'application/mark'
+      end
     end
   end
 

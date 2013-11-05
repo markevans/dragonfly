@@ -71,7 +71,7 @@ module Dragonfly
 
     set_up_config do
       writer :secret, :allow_legacy_urls
-      meth :add_mime_type, :response_header, :define_url
+      meth :response_header, :define_url
 
       def processor(*args, &block)
         obj.add_processor(*args, &block)
@@ -87,6 +87,10 @@ module Dragonfly
 
       def datastore(*args)
         obj.use_datastore(*args)
+      end
+
+      def mime_type(*args)
+        obj.add_mime_type(*args)
       end
 
       writer :fetch_file_whitelist, :fetch_url_whitelist, :dragonfly_url, :protect_from_dos_attacks, :url_format, :url_host, :url_path_prefix,
