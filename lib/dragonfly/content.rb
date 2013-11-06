@@ -5,6 +5,16 @@ require 'dragonfly/temp_object'
 require 'dragonfly/utils'
 
 module Dragonfly
+
+  # A Dragonfly::Content object is responsible for holding
+  # 1. content (in the form of a data string, file, tempfile, or path)
+  # 2. metadata about the content (i.e. name, etc.)
+  # Furthermore, it belongs to a Dragonfly app, so has access to its already registered generators, processors, analysers and datastore.
+  # It provides convenience methods for updating its content, and though the original data may have been in the form of a String, or a Pathname, etc.
+  # methods like "path", "data" and "file" will always work regardless.
+  #
+  # It is acted upon in generator, processor, analyser and datastore methods and provides a standard interface for updating content,
+  # no matter how that content first got there (whether in the form of a String/Pathname/File/etc.)
   class Content
 
     include HasFilename
@@ -22,9 +32,31 @@ module Dragonfly
                    :analyser, :generator, :processor, :shell, :datastore, :env
 
     attr_reader :temp_object
+
+    # @return [Hash]
     attr_accessor :meta
+
+    # @!method data
+    #   @return [String] the content data as a string (even if it was initialized with a file)
+    # @!method file
+    #   @example
+    #     content.file
+    #   @example With a block (it closes the file at the end)
+    #     content.file do |f|
+    #       # do something with f
+    #     end
+    #   @return [File] the content as a readable file (even if it was initialized with data)
+    # @!method path
+    #   @return [String] a file path for the content (even if it was initialized with data)
+    # @!method size
+    #   @return [Fixnum] the size in bytes
+    # @!method to_file
+    #   @param [String] path
+    #   @return [File] a new file
+    # @!method to_tempfile
+    #   @return [Tempfile] a new tempfile
     def_delegators :temp_object,
-                   :data, :file, :path, :to_file, :size, :each, :to_file, :to_tempfile
+                   :data, :file, :path, :size, :each, :to_file, :to_tempfile
 
     # @example "beach.jpg"
     # @return [String]
@@ -142,6 +174,9 @@ module Dragonfly
       datastore.write(self, opts)
     end
 
+    # @example
+    # "data:image/jpeg;base64,IGSsdhfsoi..."
+    # @return [String] A data url representation of the data
     def b64_data
       "data:#{mime_type};base64,#{Base64.encode64(data)}"
     end
