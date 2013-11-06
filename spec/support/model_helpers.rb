@@ -49,7 +49,7 @@ class MyModel
   end
 
   def save
-    _run_save_callbacks {
+    run_save_callbacks {
       self.id ||= rand(1000)
       self.class.instances[id] = self.to_hash
     }
@@ -60,7 +60,25 @@ class MyModel
   end
 
   def destroy
-    _run_destroy_callbacks {}
+    run_destroy_callbacks {}
+  end
+
+  private
+
+  def run_save_callbacks(&block)
+    if respond_to?(:run_callbacks) # Rails 4
+      run_callbacks :save, &block
+    else
+      _run_save_callbacks(&block)
+    end
+  end
+
+  def run_destroy_callbacks(&block)
+    if respond_to?(:run_callbacks) # Rails 4
+      run_callbacks :destroy, &block
+    else
+      _run_destroy_callbacks(&block)
+    end
   end
 end
 
