@@ -8,7 +8,6 @@ require 'rspec'
 require 'dragonfly'
 require 'fileutils'
 require 'tempfile'
-require 'pry'
 require 'webmock/rspec'
 
 # Requires supporting files with custom matchers and macros, etc,
