@@ -20,7 +20,7 @@ describe Dragonfly::CookieMonster do
   end
 
   it "should delete the set-cookie header from the response if the response comes from dragonfly" do
-    response = Rack::MockRequest.new(app('dragonfly.job' => mock)).get('')
+    response = Rack::MockRequest.new(app('dragonfly.job' => double)).get('')
     response.status.should == 200
     response.body.should == "body here"
     response.headers["Set-Cookie"].should be_nil

@@ -221,7 +221,7 @@ describe "models" do
       describe "when something new is assigned" do
         before(:each) do
           @item.preview_image = "ANEWDATASTRING"
-          @app.datastore.stub!(:write).and_return('some_uid')
+          @app.datastore.stub(:write).and_return('some_uid')
         end
         it "should set the uid to nil" do
           @item.preview_image_uid.should be_nil
@@ -440,7 +440,7 @@ describe "models" do
 
       it "should store the original file name if it exists" do
         data = 'jasdlkf sadjl'
-        data.stub!(:original_filename).and_return('hello.png')
+        data.stub(:original_filename).and_return('hello.png')
         @item.preview_image = data
         @item.preview_image_name.should == 'hello.png'
       end

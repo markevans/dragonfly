@@ -226,7 +226,7 @@ describe Dragonfly::App do
 
     describe "datastore" do
       it "sets the datastore" do
-        store = mock('datastore')
+        store = double('datastore')
         app.configure{ datastore store }
         app.datastore.should == store
       end
@@ -254,7 +254,7 @@ describe Dragonfly::App do
     end
 
     it "complains if extra args are given but first is not a symbol" do
-      store = mock('datastore')
+      store = double('datastore')
       expect{
         app.configure{ datastore store, :some => 'args' }
       }.to raise_error(ArgumentError)
@@ -303,7 +303,7 @@ describe Dragonfly::App do
 
     it "raises a message when configuring with an old datastore" do
       expect {
-        Dragonfly.app.use_datastore(mock("datastore", :store => "asdf", :retrieve => "ASDF", :destroy => nil))
+        Dragonfly.app.use_datastore(double("datastore", :store => "asdf", :retrieve => "ASDF", :destroy => nil))
       }.to raise_error(/read/)
     end
 

@@ -7,7 +7,7 @@ describe "model urls" do
     tempfile = Tempfile.new('test')
     tempfile.write(data)
     tempfile.rewind
-    tempfile.stub!(:original_filename).and_return(filename)
+    tempfile.stub(:original_filename).and_return(filename)
     tempfile
   end
 

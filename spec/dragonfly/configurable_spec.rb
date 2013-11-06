@@ -53,7 +53,7 @@ describe Dragonfly::Configurable do
       configurer = Dragonfly::Configurable::Configurer.new do
         writer :colour, :for => :egg
       end
-      egg = mock('egg')
+      egg = double('egg')
       obj.should_receive(:egg).and_return(egg)
       egg.should_receive(:colour=).with('pink')
       configurer.configure(obj) do
@@ -77,7 +77,7 @@ describe Dragonfly::Configurable do
       configurer = Dragonfly::Configurable::Configurer.new do
         meth :jobby, :for => :egg
       end
-      egg = mock('egg')
+      egg = double('egg')
       obj.should_receive(:egg).and_return(egg)
       egg.should_receive(:jobby).with('beans', :make => 5)
       configurer.configure(obj) do
@@ -92,7 +92,7 @@ describe Dragonfly::Configurable do
     let (:obj) { Object.new }
 
     it "provides 'plugin' for using plugins" do
-      pluggy = mock('plugin')
+      pluggy = double('plugin')
       pluggy.should_receive(:call).with(obj, :a, 'few' => ['args'])
       configurer.configure(obj) do
         plugin pluggy, :a, 'few' => ['args']
@@ -100,7 +100,7 @@ describe Dragonfly::Configurable do
     end
 
     it "allows using 'plugin' with symbols" do
-      pluggy = mock('plugin')
+      pluggy = double('plugin')
       pluggy.should_receive(:call).with(obj, :a, 'few' => ['args'])
       configurer.register_plugin(:pluggy){ pluggy }
       configurer.configure(obj) do

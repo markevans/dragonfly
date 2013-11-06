@@ -355,9 +355,9 @@ describe Dragonfly::TempObject do
       #
       # We can't just check if it is_a?(Rack::Test::UploadedFile) because that
       # class may not always be present.
-      uploaded_file = mock("mock_uploadedfile")
-      uploaded_file.stub!(:path).and_return File.expand_path('tmp/test_file')
-      uploaded_file.stub!(:original_filename).and_return('foo.jpg')
+      uploaded_file = double("mock_uploadedfile")
+      uploaded_file.stub(:path).and_return File.expand_path('tmp/test_file')
+      uploaded_file.stub(:original_filename).and_return('foo.jpg')
 
       # Create a real file with the contents required at the correct path
       new_file(data, 'tmp/test_file')
