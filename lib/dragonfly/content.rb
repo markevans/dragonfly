@@ -26,32 +26,54 @@ module Dragonfly
     def_delegators :temp_object,
                    :data, :file, :path, :to_file, :size, :each, :to_file, :to_tempfile
 
+    # @example "beach.jpg"
+    # @return [String]
     def name
       meta["name"] || temp_object.original_filename
     end
 
+    # @example
+    #   content.name = "beach.jpg"
     def name=(name)
       meta["name"] = name
     end
 
+    # The mime-type taken from the name's file extension
+    # @example "image/jpeg"
+    # @return [String]
     def mime_type
       app.mime_type_for(ext)
     end
 
+    # Set the content using a pre-registered generator
+    # @example
+    #   content.generate!(:text, "some text")
+    # @return [Content] self
     def generate!(name, *args)
       app.get_generator(name).call(self, *args)
       self
     end
 
+    # Update the content using a pre-registered processor
+    # @example
+    #   content.process!(:convert, "-resize 300x300")
+    # @return [Content] self
     def process!(name, *args)
       app.get_processor(name).call(self, *args)
       self
     end
 
+    # Analyse the content using a pre-registered analyser
+    # @example
+    #   content.analyse(:width)  # ===> 280
     def analyse(name)
       analyser_cache[name.to_s] ||= app.get_analyser(name).call(self)
     end
 
+    # Update the content
+    # @param obj [String, Pathname, Tempfile, File, Content, TempObject] can be any of these types
+    # @param meta [Hash] - should be json-like, i.e. contain no types other than String, Number, Boolean
+    # @return [Content] self
     def update(obj, meta=nil)
       self.temp_object = TempObject.new(obj)
       original_filename = temp_object.original_filename
@@ -61,17 +83,33 @@ module Dragonfly
       self
     end
 
+    # Add to the meta (merge)
+    # @param meta [Hash] - should be json-like, i.e. contain no types other than String, Number, Boolean
     def add_meta(meta)
       self.meta.merge!(meta)
       self
     end
 
+    # Analyse the content using a shell command
+    # @param opts [Hash] passing :escape => false doesn't shell-escape each word
+    # @example
+    #   content.shell_eval do |path|
+    #     "file --mime-type #{path}"
+    #   end
+    #   # ===> "beach.jpg: image/jpeg"
     def shell_eval(opts={})
       should_escape = opts[:escape] != false
       command = yield(should_escape ? shell.quote(path) : path)
       run command, :escape => should_escape
     end
 
+    # Set the content using a shell command
+    # @param opts [Hash] passing :escape => false doesn't shell-escape each word
+    # @example
+    #   content.shell_generate do |path|
+    #     "/usr/local/bin/generate_text gumfry -o #{path}"
+    #   end
+    # @return [Content] self
     def shell_generate(opts={})
       ext = opts[:ext] || self.ext
       should_escape = opts[:escape] != false
@@ -82,6 +120,13 @@ module Dragonfly
       update(tempfile)
     end
 
+    # Update the content using a shell command
+    # @param opts [Hash] passing :escape => false doesn't shell-escape each word
+    # @example
+    #   content.shell_update do |old_path, new_path|
+    #     "convert -resize 20x10 #{old_path} #{new_path}"
+    #   end
+    # @return [Content] self
     def shell_update(opts={})
       ext = opts[:ext] || self.ext
       should_escape = opts[:escape] != false
