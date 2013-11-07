@@ -1,4 +1,4 @@
-require 'dragonfly/image_magick/analysers/identify'
+require 'dragonfly/image_magick/analysers/image_properties'
 require 'dragonfly/image_magick/generators/convert'
 require 'dragonfly/image_magick/generators/plain'
 require 'dragonfly/image_magick/generators/plasma'
@@ -20,22 +20,22 @@ module Dragonfly
         app.env[:identify_command] = opts[:identify_command] || 'identify'
 
         # Analysers
-        app.add_analyser :identify, ImageMagick::Analysers::Identify.new
+        app.add_analyser :image_properties, ImageMagick::Analysers::ImageProperties.new
         app.add_analyser :width do |content|
-          content.analyse(:identify)['width']
+          content.analyse(:image_properties)['width']
         end
         app.add_analyser :height do |content|
-          content.analyse(:identify)['height']
+          content.analyse(:image_properties)['height']
         end
         app.add_analyser :format do |content|
-          content.analyse(:identify)['format']
+          content.analyse(:image_properties)['format']
         end
         app.add_analyser :aspect_ratio do |content|
-          attrs = content.analyse(:identify)
+          attrs = content.analyse(:image_properties)
           attrs['width'].to_f / attrs['height']
         end
         app.add_analyser :portrait do |content|
-          attrs = content.analyse(:identify)
+          attrs = content.analyse(:image_properties)
           attrs['width'] <= attrs['height']
         end
         app.add_analyser :landscape do |content|
@@ -43,7 +43,7 @@ module Dragonfly
         end
         app.add_analyser :image do |content|
           begin
-            content.analyse(:identify)['format'] != 'pdf'
+            content.analyse(:image_properties)['format'] != 'pdf'
           rescue Shell::CommandFailed
             false
           end

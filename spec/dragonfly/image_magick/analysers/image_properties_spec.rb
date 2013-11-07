@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Dragonfly::ImageMagick::Analysers::Identify do
+describe Dragonfly::ImageMagick::Analysers::ImageProperties do
 
   let(:app) { test_imagemagick_app }
-  let(:analyser) { Dragonfly::ImageMagick::Analysers::Identify.new }
+  let(:analyser) { Dragonfly::ImageMagick::Analysers::ImageProperties.new }
   let(:content) { Dragonfly::Content.new(app, SAMPLES_DIR.join('beach.png')) } # 280x355
 
   describe "call" do

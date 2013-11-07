@@ -1,7 +1,7 @@
 module Dragonfly
   module ImageMagick
     module Analysers
-      class Identify
+      class ImageProperties
 
         def call(content)
           identify_command = content.env[:identify_command] || 'identify'
