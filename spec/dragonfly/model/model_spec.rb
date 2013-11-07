@@ -1268,4 +1268,23 @@ describe "models" do
     end
   end
 
+  describe 'overwriting instance methods' do
+    let(:klass) do
+      new_model_class('Item', :foo_uid) do
+        dragonfly_accessor :foo
+
+        def foo
+          super
+        end
+      end
+    end
+
+    let(:item) { klass.new }
+
+    it 'works as expected when calling super' do
+      item.foo.should be_nil
+      item.foo = 'DATASTRING'
+      item.foo.should be_a(Dragonfly::Model::Attachment)
+    end
+  end
 end
