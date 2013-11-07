@@ -17,7 +17,7 @@ describe Dragonfly::Shell do
   it "should raise an error if the command fails" do
     lambda{
       shell.run "ls -j"
-    }.should raise_error(Dragonfly::Shell::CommandFailed, /illegal option/)
+    }.should raise_error(Dragonfly::Shell::CommandFailed, /option/)
   end
 
   unless Dragonfly.running_on_windows?

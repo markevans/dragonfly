@@ -111,7 +111,7 @@ describe "a configured imagemagick app" do
       it "should allow for extra args" do
         image.encode!('jpg', '-quality 1')
         image.format.should == 'jpeg'
-        image.size.should == 1445
+        image.size.should < 2000
       end
     end
 
