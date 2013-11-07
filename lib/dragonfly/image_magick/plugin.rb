@@ -68,6 +68,13 @@ module Dragonfly
           content.process!(:convert, "-rotate #{amount}")
         end
 
+        # Extra methods
+        app.define :identify do |args=""|
+          shell_eval do |path|
+            "#{app.env[:identify_command]} #{args} #{path}"
+          end
+        end
+
       end
 
     end

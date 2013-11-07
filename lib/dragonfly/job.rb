@@ -23,7 +23,7 @@ module Dragonfly
     def_delegators :result,
                    :data, :file, :tempfile, :path, :to_file, :size, :each,
                    :meta, :meta=, :add_meta, :name, :name=, :basename, :basename=, :ext, :ext=, :mime_type,
-                   :analyse, :store,
+                   :analyse, :shell_eval, :store,
                    :b64_data
 
     class Step

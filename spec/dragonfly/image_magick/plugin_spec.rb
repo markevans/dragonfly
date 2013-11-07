@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe "a configured imagemagick app" do
 
-  let(:app){ test_app }
+  let(:app){ test_app.configure_with(:imagemagick) }
+  let(:image){ app.fetch_file(SAMPLES_DIR.join('beach.png')) }
 
   describe "env variables" do
+    let(:app){ test_app }
 
     it "allows setting the convert command" do
       app.configure do
@@ -19,13 +21,9 @@ describe "a configured imagemagick app" do
       end
       app.env[:identify_command].should == '/bin/identify'
     end
-
   end
 
   describe "analysers" do
-    let(:app){ test_app.configure_with(:imagemagick) }
-    let(:image){ app.fetch_file(SAMPLES_DIR.join('beach.png')) }
-
     it "should return the width" do
       image.width.should == 280
     end
@@ -67,8 +65,9 @@ describe "a configured imagemagick app" do
   end
 
   describe "processors that change the url" do
-    let(:app){ test_app.configure_with(:imagemagick).configure{ url_format '/:name' } }
-    let(:image){ app.fetch_file(SAMPLES_DIR.join('beach.png')) }
+    before do
+      app.configure{ url_format '/:name' }
+    end
 
     describe "convert" do
       it "sanity check with format" do
@@ -99,9 +98,6 @@ describe "a configured imagemagick app" do
   end
 
   describe "other processors" do
-    let(:app){ test_app.configure_with(:imagemagick) }
-    let(:image){ app.fetch_file(SAMPLES_DIR.join('beach.png')) }
-
     describe "encode" do
       it "should encode the image to the correct format" do
         image.encode!('gif')
@@ -123,6 +119,13 @@ describe "a configured imagemagick app" do
       end
     end
 
+  end
+
+  describe "identify" do
+    it "gives the output of the command line" do
+      image.identify.should =~ /280/
+      image.identify("-format %h").should == "355\n"
+    end
   end
 
 end

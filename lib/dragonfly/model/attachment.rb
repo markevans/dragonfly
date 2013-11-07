@@ -14,7 +14,7 @@ module Dragonfly
       def_delegators :job,
         :to_file, :file, :tempfile, :path,
         :data, :b64_data, :mime_type,
-        :process, :analyse,
+        :process, :analyse, :shell_eval,
         :meta, :meta=,
         :name, :size,
         :url
