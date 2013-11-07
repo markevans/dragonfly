@@ -35,63 +35,69 @@ module Dragonfly
         # Register the new attribute
         dragonfly_attachment_classes << new_dragonfly_attachment_class(attribute, app, config_block)
 
-        # Define the setter for the attribute
-        define_method "#{attribute}=" do |value|
-          dragonfly_attachments[attribute].assign(value)
-        end
-
-        # Define the getter for the attribute
-        define_method attribute do
-          dragonfly_attachments[attribute].to_value
-        end
-
-        # Define the xxx_stored? method
-        define_method "#{attribute}_stored?" do
-          dragonfly_attachments[attribute].stored?
-        end
-
-        # Define the URL setter
-        define_method "#{attribute}_url=" do |url|
-          unless Utils.blank?(url)
-            dragonfly_attachments[attribute].assign(app.fetch_url(url))
+        # Define an anonymous module for all of the attribute-specific instance
+        # methods.
+        instance_methods = Module.new do
+          # Define the setter for the attribute
+          define_method "#{attribute}=" do |value|
+            dragonfly_attachments[attribute].assign(value)
           end
-        end
 
-        # Define the URL getter
-        define_method "#{attribute}_url" do
-          nil
-        end
-
-        # Define the remove setter
-        define_method "remove_#{attribute}=" do |value|
-          unless [0, "0", false, "false", "", nil].include?(value)
-            dragonfly_attachments[attribute].assign(nil)
-            instance_variable_set("@remove_#{attribute}", true)
+          # Define the getter for the attribute
+          define_method attribute do
+            dragonfly_attachments[attribute].to_value
           end
-        end
 
-        # Define the remove getter
-        attr_reader "remove_#{attribute}"
+          # Define the xxx_stored? method
+          define_method "#{attribute}_stored?" do
+            dragonfly_attachments[attribute].stored?
+          end
 
-        # Define the retained setter
-        define_method "retained_#{attribute}=" do |string|
-          unless Utils.blank?(string)
-            begin
-              dragonfly_attachments[attribute].retained_attrs = Serializer.json_b64_decode(string)
-            rescue Serializer::BadString => e
-              Dragonfly.warn("couldn't update attachment with serialized retained_#{attribute} string #{string.inspect}")
+          # Define the URL setter
+          define_method "#{attribute}_url=" do |url|
+            unless Utils.blank?(url)
+              dragonfly_attachments[attribute].assign(app.fetch_url(url))
             end
           end
-          dragonfly_attachments[attribute].should_retain = true
-          dragonfly_attachments[attribute].retain!
-          string
+
+          # Define the URL getter
+          define_method "#{attribute}_url" do
+            nil
+          end
+
+          # Define the remove setter
+          define_method "remove_#{attribute}=" do |value|
+            unless [0, "0", false, "false", "", nil].include?(value)
+              dragonfly_attachments[attribute].assign(nil)
+              instance_variable_set("@remove_#{attribute}", true)
+            end
+          end
+
+          # Define the remove getter
+          attr_reader "remove_#{attribute}"
+
+          # Define the retained setter
+          define_method "retained_#{attribute}=" do |string|
+            unless Utils.blank?(string)
+              begin
+                dragonfly_attachments[attribute].retained_attrs = Serializer.json_b64_decode(string)
+              rescue Serializer::BadString => e
+                Dragonfly.warn("couldn't update attachment with serialized retained_#{attribute} string #{string.inspect}")
+              end
+            end
+            dragonfly_attachments[attribute].should_retain = true
+            dragonfly_attachments[attribute].retain!
+            string
+          end
+
+          # Define the retained getter
+          define_method "retained_#{attribute}" do
+            attrs = dragonfly_attachments[attribute].retained_attrs
+            Serializer.json_b64_encode(attrs) if attrs
+          end
         end
 
-        # Define the retained getter
-        define_method "retained_#{attribute}" do
-          attrs = dragonfly_attachments[attribute].retained_attrs
-          Serializer.json_b64_encode(attrs) if attrs
-        end
+        include instance_methods
       end
 
       def new_dragonfly_attachment_class(attribute, app, config_block)

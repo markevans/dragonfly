@@ -13,7 +13,7 @@ require 'webmock/rspec'
 # Requires supporting files with custom matchers and macros, etc,
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
-SAMPLES_DIR = Pathname.new(File.expand_path(File.dirname(__FILE__) + '/../samples')) unless defined?(SAMPLES_DIR)
+SAMPLES_DIR = Pathname.new(File.expand_path('../../samples', __FILE__))
 
 RSpec.configure do |c|
   c.include ModelHelpers
@@ -24,7 +24,7 @@ def todo
 end
 
 require 'logger'
-LOG_FILE = 'tmp/test.log' unless defined?(LOG_FILE)
+LOG_FILE = 'tmp/test.log'
 FileUtils.rm_rf(LOG_FILE)
 Dragonfly.logger = Logger.new(LOG_FILE)
 
@@ -35,7 +35,6 @@ RSpec.configure do |c|
 end
 
 def test_app(name=nil)
-  time = Time.now
   app = Dragonfly::App.instance(name)
   app.datastore = Dragonfly::MemoryDataStore.new
   app
