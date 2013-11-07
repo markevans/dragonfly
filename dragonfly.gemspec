@@ -24,11 +24,11 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency("rack", [">= 0"])
   spec.add_runtime_dependency("multi_json", ["~> 1.0"])
 
-  spec.add_development_dependency("activemodel", [">= 0"])
+  spec.add_development_dependency("activemodel")
   spec.add_development_dependency("rspec", ["~> 2.5"])
-  spec.add_development_dependency("webmock", [">= 0"])
+  spec.add_development_dependency("webmock")
   if RUBY_PLATFORM == "java"
-    spec.add_development_dependency("jruby-openssl", [">= 0"])
+    spec.add_development_dependency("jruby-openssl")
   end
 end
 
