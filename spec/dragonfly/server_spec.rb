@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'rack/mock'
-require 'rack/cache'
 
 def request(app, path)
   Rack::MockRequest.new(app).get(path)
@@ -53,13 +52,9 @@ describe Dragonfly::Server do
 
       it "should return a cacheable response" do
         url = "/media/#{@job.serialize}"
-        cache = Rack::Cache.new(@server, :entitystore => 'heap:/')
-        response = request(cache, url)
+        response = request(@server, url)
         response.status.should == 200
-        response.headers['X-Rack-Cache'].should == "miss, store"
-        response = request(cache, url)
-        response.status.should == 200
-        response.headers['X-Rack-Cache'].should == "fresh"
+        response.headers['Cache-Control'].should == "public, max-age=31536000"
       end
 
       it "should return successfully even if the job is in the query string" do

@@ -25,7 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency("multi_json", ["~> 1.0"])
 
   spec.add_development_dependency("activemodel", [">= 0"])
-  spec.add_development_dependency("rack-cache", [">= 0"])
   spec.add_development_dependency("rspec", ["~> 2.5"])
   spec.add_development_dependency("webmock", [">= 0"])
   if RUBY_PLATFORM == "java"
