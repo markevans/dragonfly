@@ -205,15 +205,15 @@ describe Dragonfly::Server do
         server.url_for(job, :zoo => 'jokes', :on => 'me').should == "/media/#{job.serialize}/jokes?on=me"
       end
       it "uses the url_attr if it exists" do
-        job.url_attrs.zoo = 'hair'
+        job.url_attributes.zoo = 'hair'
         server.url_for(job).should == "/media/#{job.serialize}/hair"
       end
-      it "doesn't add any url_attrs that aren't needed" do
-        job.url_attrs.gump = 'flub'
+      it "doesn't add any url_attributes that aren't needed" do
+        job.url_attributes.gump = 'flub'
         server.url_for(job).should == "/media/#{job.serialize}"
       end
       it "overrides if a param is passed in" do
-        job.url_attrs.zoo = 'hair'
+        job.url_attributes.zoo = 'hair'
         server.url_for(job, :zoo => 'dare').should == "/media/#{job.serialize}/dare"
       end
 
@@ -222,7 +222,7 @@ describe Dragonfly::Server do
           server.url_format = '/:job/:basename'
         end
         it "should use the name" do
-          job.url_attrs.name = 'hello.egg'
+          job.url_attributes.name = 'hello.egg'
           server.url_for(job).should == "/#{job.serialize}/hello"
         end
         it "should not set if neither exist" do
@@ -235,7 +235,7 @@ describe Dragonfly::Server do
           server.url_format = '/:job.:ext'
         end
         it "should use the name" do
-          job.url_attrs.name = 'hello.egg'
+          job.url_attributes.name = 'hello.egg'
           server.url_for(job).should == "/#{job.serialize}.egg"
         end
         it "should not set if neither exist" do

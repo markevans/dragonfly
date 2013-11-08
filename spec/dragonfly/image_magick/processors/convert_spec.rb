@@ -32,9 +32,9 @@ describe Dragonfly::ImageMagick::Processors::Convert do
   end
 
   it "updates the url with format if given" do
-    url_attrs = Dragonfly::UrlAttributes.new
-    processor.update_url(url_attrs, '-scale 56x71', 'format' => 'gif')
-    url_attrs.ext.should == 'gif'
+    url_attributes = Dragonfly::UrlAttributes.new
+    processor.update_url(url_attributes, '-scale 56x71', 'format' => 'gif')
+    url_attributes.ext.should == 'gif'
   end
 
 end

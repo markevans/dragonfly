@@ -69,9 +69,9 @@ describe Dragonfly::ImageMagick::Generators::Text do
 
   describe "urls" do
     it "updates the url" do
-      url_attrs = Dragonfly::UrlAttributes.new
-      generator.update_url(url_attrs, "mmm", 'format' => 'gif')
-      url_attrs.name.should == 'text.gif'
+      url_attributes = Dragonfly::UrlAttributes.new
+      generator.update_url(url_attributes, "mmm", 'format' => 'gif')
+      url_attributes.name.should == 'text.gif'
     end
   end
 end

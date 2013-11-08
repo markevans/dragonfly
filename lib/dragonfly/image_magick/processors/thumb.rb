@@ -20,9 +20,9 @@ module Dragonfly
         CROPPED_RESIZE_GEOMETRY = /^(\d+)x(\d+)#(\w{1,2})?$/ # e.g. '20x50#ne'
         CROP_GEOMETRY           = /^(\d+)x(\d+)([+-]\d+)?([+-]\d+)?(\w{1,2})?$/ # e.g. '30x30+10+10'
 
-        def update_url(url_attrs, geometry, opts={})
+        def update_url(url_attributes, geometry, opts={})
           format = opts['format']
-          url_attrs.ext = format if format
+          url_attributes.ext = format if format
         end
 
         def call(content, geometry, opts={})

@@ -9,8 +9,8 @@ module Dragonfly
           content.add_meta('format' => format, 'name' => "plasma.#{format}")
         end
 
-        def update_url(url_attrs, width, height, opts={})
-          url_attrs.name = "plasma.#{extract_format(opts)}"
+        def update_url(url_attributes, width, height, opts={})
+          url_attributes.name = "plasma.#{extract_format(opts)}"
         end
 
         private

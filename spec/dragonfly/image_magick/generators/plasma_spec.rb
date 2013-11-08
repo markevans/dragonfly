@@ -23,9 +23,9 @@ describe Dragonfly::ImageMagick::Generators::Plasma do
 
   describe "urls" do
     it "updates the url" do
-      url_attrs = Dragonfly::UrlAttributes.new
-      generator.update_url(url_attrs, 1, 1, 'format' => 'jpg')
-      url_attrs.name.should == 'plasma.jpg'
+      url_attributes = Dragonfly::UrlAttributes.new
+      generator.update_url(url_attributes, 1, 1, 'format' => 'jpg')
+      url_attributes.name.should == 'plasma.jpg'
     end
   end
 end

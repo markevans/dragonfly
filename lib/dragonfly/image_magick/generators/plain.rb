@@ -10,8 +10,8 @@ module Dragonfly
           content.add_meta('format' => format, 'name' => "plain.#{format}")
         end
 
-        def update_url(url_attrs, width, height, opts={})
-          url_attrs.name = "plain.#{extract_format(opts)}"
+        def update_url(url_attributes, width, height, opts={})
+          url_attributes.name = "plain.#{extract_format(opts)}"
         end
 
         private

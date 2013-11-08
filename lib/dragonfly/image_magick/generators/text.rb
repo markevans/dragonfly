@@ -39,8 +39,8 @@ module Dragonfly
           '900'     => 900
         }
 
-        def update_url(url_attrs, string, opts={})
-          url_attrs.name = "text.#{extract_format(opts)}"
+        def update_url(url_attributes, string, opts={})
+          url_attributes.name = "text.#{extract_format(opts)}"
         end
 
         def call(content, string, opts={})

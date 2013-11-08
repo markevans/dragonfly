@@ -90,7 +90,7 @@ describe Dragonfly::Job do
     end
 
     it "updates the url if method exists" do
-      app.get_generator(:plasma).should_receive(:update_url).with(job.url_attrs, 20)
+      app.get_generator(:plasma).should_receive(:update_url).with(job.url_attributes, 20)
       job.generate!(:plasma, 20)
     end
   end
@@ -106,8 +106,8 @@ describe Dragonfly::Job do
       job.size.should == 62664
     end
 
-    it "should set the url_attrs" do
-      job.url_attrs.name.should == 'egg.png'
+    it "should set the url_attributes" do
+      job.url_attributes.name.should == 'egg.png'
     end
 
     it "should set the name" do
@@ -148,7 +148,7 @@ describe Dragonfly::Job do
 
     it "should set the name url_attr if there is one" do
       job.fetch_url!('some.place.com/dung.beetle')
-      job.url_attrs.name.should == 'dung.beetle'
+      job.url_attributes.name.should == 'dung.beetle'
     end
 
     it "should raise an error if not found" do
@@ -185,7 +185,7 @@ describe Dragonfly::Job do
 
       it "should not set the name url_attr if there isn't one, e.g. #{url}" do
         job.fetch_url!(url)
-        job.url_attrs.name.should be_nil
+        job.url_attributes.name.should be_nil
       end
     end
   end
@@ -212,8 +212,8 @@ describe Dragonfly::Job do
       job.apply
     end
 
-    it "should call update_url immediately with the url_attrs" do
-      app.get_processor(:resize).should_receive(:update_url).with(job.url_attrs, '20x30')
+    it "should call update_url immediately with the url_attributes" do
+      app.get_processor(:resize).should_receive(:update_url).with(job.url_attributes, '20x30')
       job.process!(:resize, '20x30')
     end
   end
@@ -477,31 +477,31 @@ describe Dragonfly::Job do
     end
   end
 
-  describe "update_url_attrs" do
+  describe "update_url_attributes" do
     before(:each) do
       @app = test_app
       @job = Dragonfly::Job.new(:app)
-      @job.url_attrs.hello = 'goose'
+      @job.url_attributes.hello = 'goose'
     end
-    it "updates the url_attrs" do
-      @job.update_url_attrs(:jimmy => 'cricket')
-      @job.url_attrs.hello.should == 'goose'
-      @job.url_attrs.jimmy.should == 'cricket'
+    it "updates the url_attributes" do
+      @job.update_url_attributes(:jimmy => 'cricket')
+      @job.url_attributes.hello.should == 'goose'
+      @job.url_attributes.jimmy.should == 'cricket'
     end
     it "overrides keys" do
-      @job.update_url_attrs(:hello => 'cricket')
-      @job.url_attrs.hello.should == 'cricket'
+      @job.update_url_attributes(:hello => 'cricket')
+      @job.url_attributes.hello.should == 'cricket'
     end
   end
 
-  describe "url_attrs" do
+  describe "url_attributes" do
     it "doesn't interfere with other jobs' attributes" do
-      job.url_attrs.zoo = 'hair'
+      job.url_attributes.zoo = 'hair'
       job2 = job.dup
-      job2.url_attrs.zoo = 'dare'
+      job2.url_attributes.zoo = 'dare'
 
-      job.url_attrs.zoo.should == 'hair'
-      job2.url_attrs.zoo.should == 'dare'
+      job.url_attributes.zoo.should == 'hair'
+      job2.url_attributes.zoo.should == 'dare'
     end
   end
 
@@ -526,7 +526,7 @@ describe Dragonfly::Job do
 
     before :each do
       job.content.update "bugs", "bug" => "bear"
-      job.update_url_attrs "boog" => "bar"
+      job.update_url_attributes "boog" => "bar"
     end
 
     it "updates the steps" do
@@ -541,10 +541,10 @@ describe Dragonfly::Job do
       job.content.update("dogs")
       fetched_job.data.should == "bugs" # still
     end
-    it "maintains the url_attrs (but different object)" do
-      fetched_job.url_attrs.boog.should == "bar"
-      job.update_url_attrs "boog" => "dogs"
-      fetched_job.url_attrs.boog.should == "bar" # still
+    it "maintains the url_attributes (but different object)" do
+      fetched_job.url_attributes.boog.should == "bar"
+      job.update_url_attributes "boog" => "dogs"
+      fetched_job.url_attributes.boog.should == "bar" # still
     end
   end
 

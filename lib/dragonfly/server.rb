@@ -80,7 +80,7 @@ module Dragonfly
       opts = opts.dup
       host = opts.delete(:host) || url_host
       path_prefix = opts.delete(:path_prefix) || url_path_prefix
-      params = job.url_attrs.extract(url_mapper.params_in_url)
+      params = job.url_attributes.extract(url_mapper.params_in_url)
       params.merge!(stringify_keys(opts))
       params['job'] = job.serialize
       params['sha'] = job.sha if protect_from_dos_attacks

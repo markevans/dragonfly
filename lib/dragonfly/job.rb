@@ -83,7 +83,7 @@ module Dragonfly
 
     class Process < Step
       def init
-        processor.update_url(job.url_attrs, *arguments) if processor.respond_to?(:update_url)
+        processor.update_url(job.url_attributes, *arguments) if processor.respond_to?(:update_url)
       end
 
       def name
@@ -105,7 +105,7 @@ module Dragonfly
 
     class Generate < Step
       def init
-        generator.update_url(job.url_attrs, *arguments) if generator.respond_to?(:update_url)
+        generator.update_url(job.url_attributes, *arguments) if generator.respond_to?(:update_url)
       end
 
       def name
@@ -130,7 +130,7 @@ module Dragonfly
         super(job, path.to_s)
       end
       def init
-        job.url_attrs.name = filename
+        job.url_attributes.name = filename
       end
 
       def path
@@ -155,7 +155,7 @@ module Dragonfly
       end
 
       def init
-        job.url_attrs.name = filename
+        job.url_attributes.name = filename
       end
 
       def url
@@ -234,7 +234,7 @@ module Dragonfly
       @next_step_index = 0
       @steps = []
       @content = Content.new(app, content, meta)
-      @url_attrs = UrlAttributes.new
+      @url_attributes = UrlAttributes.new
     end
 
     # Used by 'dup' and 'clone'
@@ -243,7 +243,7 @@ module Dragonfly
         step.class.new(self, *step.args)
       end
       @content = other.content.dup
-      @url_attrs = other.url_attrs.dup
+      @url_attributes = other.url_attributes.dup
     end
 
     attr_reader :app, :steps, :content
@@ -323,11 +323,11 @@ module Dragonfly
       app.url_for(self, opts) unless steps.empty?
     end
 
-    attr_reader :url_attrs
+    attr_reader :url_attributes
 
-    def update_url_attrs(hash)
+    def update_url_attributes(hash)
       hash.each do |key, value|
-        url_attrs.send("#{key}=", value)
+        url_attributes.send("#{key}=", value)
       end
     end
 

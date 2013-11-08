@@ -54,7 +54,7 @@ module Dragonfly
           else app.new_job(value)
           end
           set_magic_attributes
-          job.update_url_attrs(magic_attributes_hash)
+          job.update_url_attributes(magic_attributes_hash)
           meta.merge!(standard_meta_attributes)
           self.class.run_callbacks(:after_assign, model, self) if should_run_callbacks?
           retain! if should_retain?
@@ -287,7 +287,7 @@ module Dragonfly
 
       def set_job_from_uid
         self.job = app.fetch(uid)
-        job.update_url_attrs(magic_attributes_hash)
+        job.update_url_attributes(magic_attributes_hash)
       end
 
     end

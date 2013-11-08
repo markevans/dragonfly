@@ -147,7 +147,7 @@ describe Dragonfly::ImageMagick::Processors::Thumb do
   end
 
   describe "format" do
-    let (:url_attrs) { OpenStruct.new }
+    let (:url_attributes) { OpenStruct.new }
 
     it "changes the format if passed in" do
       processor.call(image, '2x2', 'format' => 'jpeg')
@@ -160,13 +160,13 @@ describe Dragonfly::ImageMagick::Processors::Thumb do
     end
 
     it "updates the url ext if passed in" do
-      processor.update_url(url_attrs, '2x2', 'format' => 'png')
-      url_attrs.ext.should == 'png'
+      processor.update_url(url_attributes, '2x2', 'format' => 'png')
+      url_attributes.ext.should == 'png'
     end
 
     it "doesn't update the url ext if not passed in" do
-      processor.update_url(url_attrs, '2x2')
-      url_attrs.ext.should be_nil
+      processor.update_url(url_attributes, '2x2')
+      url_attributes.ext.should be_nil
     end
   end
 
