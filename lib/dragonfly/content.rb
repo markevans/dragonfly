@@ -136,7 +136,7 @@ module Dragonfly
     end
 
     # Set the content using a shell command
-    # @param opts [Hash] passing :escape => false doesn't shell-escape each word
+    # @param opts [Hash] :ext sets the file extension of the new path and :escape => false doesn't shell-escape each word
     # @example
     #   content.shell_generate do |path|
     #     "/usr/local/bin/generate_text gumfry -o #{path}"
@@ -153,7 +153,7 @@ module Dragonfly
     end
 
     # Update the content using a shell command
-    # @param opts [Hash] passing :escape => false doesn't shell-escape each word
+    # @param opts [Hash] :ext sets the file extension of the new path and :escape => false doesn't shell-escape each word
     # @example
     #   content.shell_update do |old_path, new_path|
     #     "convert -resize 20x10 #{old_path} #{new_path}"
