@@ -47,8 +47,8 @@ module Dragonfly
     # Dragonfly.app.configure do
     #   plugin :imagemagick
     # end
-    App.configurer.register_plugin(:imagemagick){ ImageMagick::Plugin.new }
-    App.configurer.register_plugin(:image_magick){ ImageMagick::Plugin.new }
+    App.register_plugin(:imagemagick){ ImageMagick::Plugin.new }
+    App.register_plugin(:image_magick){ ImageMagick::Plugin.new }
 
     # Register saved datastores so we can do e.g.
     # Dragonfly.app.configure do

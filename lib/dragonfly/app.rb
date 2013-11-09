@@ -18,6 +18,8 @@ module Dragonfly
     DEFAULT_NAME = :default
 
     class << self
+      extend Forwardable
+      def_delegator :configurer, :register_plugin
 
       private :new # Hide 'new' - need to use 'instance'
 
