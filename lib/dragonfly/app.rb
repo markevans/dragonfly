@@ -100,7 +100,7 @@ module Dragonfly
       meth :before_serve, :for => :server
 
       def method_missing(meth, *args)
-        raise NoMethodError, "no method #{meth} for App configuration - but the configuration API has changed! see docs at http://markevans.github.io/dragonfly for details"
+        raise NoMethodError, "no method '#{meth}' for App configuration - but the configuration API has changed! see docs at http://markevans.github.io/dragonfly for details"
       end
     end
 
