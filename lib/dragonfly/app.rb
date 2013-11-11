@@ -73,7 +73,7 @@ module Dragonfly
 
     set_up_config do
       writer :secret, :allow_legacy_urls
-      meth :response_header, :define_url
+      meth :response_header, :define_url, :define
 
       def processor(*args, &block)
         obj.add_processor(*args, &block)

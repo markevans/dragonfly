@@ -274,6 +274,11 @@ describe Dragonfly::App do
     it "allows defining methods on jobs" do
       app.create("snowman").exclaim(3).should == 'SNOWMAN!!!'
     end
+
+    it "can be added through configure" do
+      app.configure{ define(:googie){} }
+      app.create("snowman").googie.should be_nil
+    end
   end
 
   describe "shell" do
