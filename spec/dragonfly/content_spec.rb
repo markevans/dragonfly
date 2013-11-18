@@ -130,6 +130,13 @@ describe Dragonfly::Content do
       content.update('abc').should == content
     end
 
+    it "can be updated with another content" do
+      content2 = Dragonfly::Content.new(app, "a", "b" => "c")
+      content.update(content2)
+      content.data.should == 'a'
+      content.meta['b'].should == 'c'
+    end
+
     describe "meta name" do
       let (:object) { "HI EVERYONE" }
       let (:object_with_original_filename) {

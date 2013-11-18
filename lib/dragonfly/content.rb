@@ -111,6 +111,7 @@ module Dragonfly
       original_filename = temp_object.original_filename
       self.meta['name'] ||= original_filename if original_filename
       self.meta.delete("analyser_cache")
+      add_meta(obj.meta) if obj.respond_to?(:meta)
       add_meta(meta) if meta
       self
     end
