@@ -89,6 +89,35 @@ describe Dragonfly::App do
     end
   end
 
+  describe "create" do
+    let (:app) { test_app }
+
+    it "creates a new job with the specified data/meta" do
+      job = app.create("hello", 'a' => 'b')
+      job.should be_a(Dragonfly::Job)
+      job.data.should == 'hello'
+      job.meta['a'].should == 'b'
+    end
+
+    it "accepts other jobs" do
+      job2 = app.create("other", 'c' => 'd')
+      job = app.create(job2)
+      job.data.should == 'other'
+      job.meta['c'].should == 'd'
+    end
+
+    it "accepts Attachments" do
+      Car = new_model_class('Car', :make_uid) do
+        dragonfly_accessor :make
+      end
+      car = Car.new(:make => 'jaguar')
+      car.make.meta['a'] = 'b'
+      job = app.create(car.make)
+      job.data.should == 'jaguar'
+      job.meta['a'].should == 'b'
+    end
+  end
+
   describe "remote_url_for" do
     before(:each) do
       @app = test_app

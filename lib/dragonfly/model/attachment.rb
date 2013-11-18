@@ -48,11 +48,7 @@ module Dragonfly
           reset_magic_attributes
           self.class.run_callbacks(:after_unassign, model, self) if should_run_callbacks?
         else
-          self.job = case value
-          when Job then value.dup
-          when Attachment then value.job.dup
-          else app.new_job(value)
-          end
+          self.job = app.new_job(value)
           set_magic_attributes
           job.update_url_attributes(magic_attributes_hash)
           meta.merge!(standard_meta_attributes)
