@@ -65,7 +65,7 @@ module Dragonfly
     extend Forwardable
     def_delegator :datastore, :destroy
     def_delegators :new_job, :fetch, :generate, :fetch_file, :fetch_url
-    def_delegators :server, :call
+    def_delegators :server, :call, :fetch_file_whitelist, :fetch_url_whitelist
 
     # Configuration
 

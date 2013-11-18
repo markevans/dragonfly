@@ -30,7 +30,7 @@ module Dragonfly
           end
 
           def default(path)
-            spec.default_path = path
+            spec.default_path = path.to_s
           end
 
           def storage_options(opts=nil, &block)
@@ -62,8 +62,12 @@ module Dragonfly
           self
         end
 
-        attr_reader :model_class, :attribute, :app, :config_block
-        attr_accessor :default_path
+        attr_reader :model_class, :attribute, :app, :config_block, :default_path
+
+        def default_path=(path)
+          @default_path = path
+          app.fetch_file_whitelist.push(path)
+        end
 
         def default_job
           app.fetch_file(default_path) if default_path

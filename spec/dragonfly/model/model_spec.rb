@@ -926,6 +926,11 @@ describe "models" do
       @item.image = "asdf"
       @item.image.data.should == "asdf"
     end
+
+    it "adds to the path whitelist" do
+      path = SAMPLES_DIR.join('beach.jpg')
+      @app.fetch_file_whitelist.should include File.expand_path(path)
+    end
   end
 
   describe "unknown config method" do
