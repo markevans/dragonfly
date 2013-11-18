@@ -837,12 +837,12 @@ describe "models" do
 
   end
 
-  describe "storage_opts" do
+  describe "storage_options" do
 
-    def set_storage_opts(*args, &block)
+    def set_storage_options(*args, &block)
       @item_class.class_eval do
         dragonfly_accessor :preview_image do
-          storage_opts(*args, &block)
+          storage_options(*args, &block)
         end
       end
     end
@@ -853,28 +853,28 @@ describe "models" do
     end
 
     it "should send the specified options to the datastore on store" do
-      set_storage_opts :egg => 'head'
+      set_storage_options :egg => 'head'
       item = @item_class.new :preview_image => 'hello'
       @app.datastore.should_receive(:write).with(anything, hash_including(:egg => 'head'))
       item.save!
     end
 
     it "should allow putting in a proc" do
-      set_storage_opts{ {:egg => 'numb'} }
+      set_storage_options{ {:egg => 'numb'} }
       item = @item_class.new :preview_image => 'hello'
       @app.datastore.should_receive(:write).with(anything, hash_including(:egg => 'numb'))
       item.save!
     end
 
     it "should yield the attachment and exec in model context" do
-      set_storage_opts{|a| {:egg => (a.data + title)} }
+      set_storage_options{|a| {:egg => (a.data + title)} }
       item = @item_class.new :title => 'lump', :preview_image => 'hello'
       @app.datastore.should_receive(:write).with(anything, hash_including(:egg => 'hellolump'))
       item.save!
     end
 
     it "should allow giving it a method symbol" do
-      set_storage_opts :special_ops
+      set_storage_options :special_ops
       item = @item_class.new :preview_image => 'hello'
       def item.special_ops; {:a => 1}; end
       @app.datastore.should_receive(:write).with(anything, hash_including(:a => 1))
@@ -884,8 +884,8 @@ describe "models" do
     it "should allow setting more than once" do
       @item_class.class_eval do
         dragonfly_accessor :preview_image do
-          storage_opts{{ :a => title, :b => 'dumple' }}
-          storage_opts{{ :b => title.upcase, :c => 'digby' }}
+          storage_options{{ :a => title, :b => 'dumple' }}
+          storage_options{{ :b => title.upcase, :c => 'digby' }}
         end
       end
       item = @item_class.new :title => 'lump', :preview_image => 'hello'

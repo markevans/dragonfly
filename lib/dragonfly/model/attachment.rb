@@ -177,7 +177,7 @@ module Dragonfly
       end
 
       def store_job!
-        opts = self.class.evaluate_storage_opts(model, self)
+        opts = self.class.evaluate_storage_options(model, self)
         set_uid_and_model_uid job.store(opts)
         self.job = job.to_fetched_job(uid)
       end

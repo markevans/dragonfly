@@ -29,17 +29,17 @@ module Dragonfly
             after_unassign{|a| self.send("#{accessor}=", nil) }
           end
 
-          def storage_opts(opts=nil, &block)
-            spec.storage_opts_specs << (opts || block)
+          def storage_options(opts=nil, &block)
+            spec.storage_options_specs << (opts || block)
           end
 
           def storage_opt(key, value, &block)
             if value.is_a? Symbol
-              storage_opts{|a| {key => send(value)} }
+              storage_options{|a| {key => send(value)} }
             elsif block_given?
-              storage_opts{|a| {key => instance_exec(a, &block)} }
+              storage_options{|a| {key => instance_exec(a, &block)} }
             else
-              storage_opts{|a| {key => value} }
+              storage_options{|a| {key => value} }
             end
           end
 
@@ -115,12 +115,12 @@ module Dragonfly
         end
 
         # Storage options
-        def storage_opts_specs
-          @storage_opts_specs ||= []
+        def storage_options_specs
+          @storage_options_specs ||= []
         end
 
-        def evaluate_storage_opts(model, attachment)
-          storage_opts_specs.inject({}) do |opts, spec|
+        def evaluate_storage_options(model, attachment)
+          storage_options_specs.inject({}) do |opts, spec|
             options = case spec
             when Proc then model.instance_exec(attachment, &spec)
             when Symbol then model.send(spec)
