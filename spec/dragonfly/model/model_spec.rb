@@ -894,66 +894,15 @@ describe "models" do
       ))
       item.save!
     end
-  end
 
-  describe "storage_path, etc." do
-
-    def set_storage_path(path=nil, &block)
-      @item_class.class_eval do
-        dragonfly_accessor :preview_image do
-          storage_path(path, &block)
+    it "gives a deprecation warning for storage_xxx methods" do
+      expect {
+        @item_class.class_eval do
+          dragonfly_accessor :preview_image do
+            storage_egg :fried
+          end
         end
-        def monkey
-          "mr/#{title}/monkey"
-        end
-      end
-    end
-
-    before(:each) do
-      @app = test_app
-      @item_class = new_model_class('Item', :preview_image_uid, :title)
-    end
-
-    it "should allow setting as a string" do
-      set_storage_path 'always/the/same'
-      item = @item_class.new :preview_image => 'bilbo'
-      @app.datastore.should_receive(:write).with(anything, hash_including(
-        :path => 'always/the/same'
-      ))
-      item.save!
-    end
-
-    it "should allow setting as a symbol" do
-      set_storage_path :monkey
-      item = @item_class.new :title => 'billy'
-      item.preview_image = 'bilbo'
-      @app.datastore.should_receive(:write).with(anything, hash_including(
-        :path => 'mr/billy/monkey'
-      ))
-      item.save!
-    end
-
-    it "should allow setting as a block" do
-      set_storage_path{|a| "#{a.data}/megs/#{title}" }
-      item = @item_class.new :title => 'billy'
-      item.preview_image = 'bilbo'
-      @app.datastore.should_receive(:write).with(anything, hash_including(
-        :path => 'bilbo/megs/billy'
-      ))
-      item.save!
-    end
-
-    it "should work for other storage_xxx declarations" do
-      @item_class.class_eval do
-        dragonfly_accessor :preview_image do
-          storage_eggs 23
-        end
-      end
-      item = @item_class.new :preview_image => 'bilbo'
-      @app.datastore.should_receive(:write).with(anything, hash_including(
-        :eggs => 23
-      ))
-      item.save!
+      }.to raise_error(/deprecated/)
     end
   end
 
