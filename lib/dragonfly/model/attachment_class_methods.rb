@@ -29,18 +29,12 @@ module Dragonfly
             after_unassign{|a| self.send("#{accessor}=", nil) }
           end
 
-          def storage_options(opts=nil, &block)
-            spec.storage_options_specs << (opts || block)
+          def default(path)
+            spec.default_path = path
           end
 
-          def storage_opt(key, value, &block)
-            if value.is_a? Symbol
-              storage_options{|a| {key => send(value)} }
-            elsif block_given?
-              storage_options{|a| {key => instance_exec(a, &block)} }
-            else
-              storage_options{|a| {key => value} }
-            end
+          def storage_options(opts=nil, &block)
+            spec.storage_options_specs << (opts || block)
           end
 
           def add_callbacks(name, *callbacks, &block)
@@ -69,6 +63,11 @@ module Dragonfly
         end
 
         attr_reader :model_class, :attribute, :app, :config_block
+        attr_accessor :default_path
+
+        def default_job
+          app.fetch_file(default_path) if default_path
+        end
 
         # Callbacks
         def callbacks

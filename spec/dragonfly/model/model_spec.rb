@@ -906,6 +906,28 @@ describe "models" do
     end
   end
 
+  describe "default" do
+    before do
+      @app = test_app
+      @item_class = new_model_class('Item', :image_uid) do
+        dragonfly_accessor :image do
+          default SAMPLES_DIR.join('beach.jpg')
+        end
+      end
+      @item = @item_class.new
+    end
+
+    it "gives a default image when not set" do
+      @item.image.name.should == 'beach.jpg'
+      @item.image.size.should == 25932
+    end
+
+    it "acts as normal otherwise" do
+      @item.image = "asdf"
+      @item.image.data.should == "asdf"
+    end
+  end
+
   describe "unknown config method" do
     it "should raise an error" do
       item_class = new_model_class('Item', :preview_image_uid)

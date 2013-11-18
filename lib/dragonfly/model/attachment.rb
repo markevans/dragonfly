@@ -81,7 +81,7 @@ module Dragonfly
       end
 
       def to_value
-        self if job
+        (self if job) || self.class.default_job
       end
 
       def name=(name)
