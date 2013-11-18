@@ -19,5 +19,12 @@ describe Dragonfly::Whitelist do
     Dragonfly::Whitelist.new(%w(a b)).include?("c").should be_false
     Dragonfly::Whitelist.new(%w(a b c)).include?("c").should be_true
   end
+
+  it "allows pushing" do
+    whitelist = Dragonfly::Whitelist.new(["platipus"])
+    whitelist.push("duck")
+    whitelist.should include "platipus"
+    whitelist.should include "duck"
+  end
 end
 
