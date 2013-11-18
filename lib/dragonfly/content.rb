@@ -56,7 +56,7 @@ module Dragonfly
     # @!method to_tempfile
     #   @return [Tempfile] a new tempfile
     def_delegators :temp_object,
-                   :data, :file, :path, :size, :each, :to_file, :to_tempfile
+                   :data, :file, :tempfile, :path, :size, :each, :to_file, :to_tempfile
 
     # @example "beach.jpg"
     # @return [String]
