@@ -1,3 +1,51 @@
+1.0.0 (2013-11-xx)
+===================
+Changes
+-------
+- configuration
+  - `Dragonfly[:images]` -> `Dragonfly.app` and `Dragonfly.app(:named_app)`
+  - configuration block DSL overhaul
+  - Rails is set up using a generator, not by requiring the file "dragonfly/rails/images"
+  - Rack::Cache is not inserted by Dragonfly - this is up to the user
+- data store spec
+  - `store`/`retrieve` -> `read`/`write`
+  - `write` takes a `Content`, not a `TempObject` (though the interface is much the same)
+  - return nil on `read` to signify not found instead of raising
+- S3, Couch and Mongo data stores extracted into separate gems
+- models
+  - easier and simpler to include in custom models using `Dragonfly::Model`
+  - `image_accessor`, `asset_accessor`, `xxx_accessor`, etc. -> single `dragonfly_accessor`
+  - user needs to extend `Dragonfly::Model::Validations` manually to use dragonfly validations
+- Custom processors, datastores, generators and analysers are made easier by `Content` object which has convenience methods
+- Removed "encoders" - these are covered by processors now
+- Removed "job" shortcuts - they are not needed as processors can invoke other processors
+- No "smart" determination of mime-type - just use file extension (anything more than that can be done by the user)
+- metadata is required to be serializable to/from JSON
+- removed `allow_fetch_file` and `allow_fetch_url` in favour of more fine-control with `fetch_file_whitelist` and `fetch_url_whitelist`
+- switch off dealing with legacy urls by default
+- proper requires throughout the code instead of autoloading
+- simple 500 response for unknown errors
+
+Features
+--------
+- `define` for creating custom methods on `Job`/`Attachment` objects
+- `thumb` takes format option
+- `url_path_prefix` for when mounted in Rack with a "SCRIPT_NAME"
+- when customizing response headers, ability to remove headers by setting to `nil`
+- better logging
+  - for each response
+  - for shell commands
+- `Attachment#xxx_stored`, e.g. `my_model.my_attachment_stored?` (`my_attachment` here being the attachment name)
+- model attachment default (by specifying a path to a e.g. a default image)
+
+Fixes
+-----
+- inserting CookieMonster doesn't depend on existence of `ActionDispatch::Cookies`
+- `image?` returns false for pdfs
+- `fetch_url` raises more useful `ErrorResponse` on error
+- shell commands don't print warnings to stderr
+- ability to assign attachment/job from other app
+
 0.9.15 (2013-05-04)
 ===================
 Features
@@ -171,7 +219,7 @@ Fixes
 - Improved performance of `resize_and_crop` method, using imagemagick built-in '^' operator
 - Improved server security validations
 - Deal with Excon::Errors::SocketError: EOFError errors which get thrown sometimes from S3 connection
-- Allow files with '..' (but not '../') in the middle of their name in file data store 
+- Allow files with '..' (but not '../') in the middle of their name in file data store
 
 0.9.0 (2011-04-27)
 ==================
@@ -258,7 +306,7 @@ Features
 --------
 - New ImageMagick generator, processor, encoder and analyser, which are now defaults
   (thanks to Henry Phan for work on this)
-  
+
 Fixes
 -----
 - Works with Rails 3.0.2 uploaded files (which has a changed API)
