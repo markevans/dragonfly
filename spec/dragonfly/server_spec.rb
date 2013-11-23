@@ -143,7 +143,7 @@ describe Dragonfly::Server do
         end
 
         it "returns OK when on whitelist (using full path)" do
-          @server.fetch_file_whitelist = [File.expand_path('samples/egg.png')]
+          @server.add_to_fetch_file_whitelist [File.expand_path('samples/egg.png')]
           assert_ok @app.fetch_file('samples/egg.png')
         end
       end
@@ -157,7 +157,7 @@ describe Dragonfly::Server do
 
         it "returns OK when on whitelist (using full url)" do
           stub_request(:get, url).to_return(:status => 200)
-          @server.fetch_url_whitelist = ["http://#{url}"]
+          @server.add_to_fetch_url_whitelist ["http://#{url}"]
           assert_ok @app.fetch_url(url)
         end
       end

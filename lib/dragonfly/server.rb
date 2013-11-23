@@ -18,20 +18,20 @@ module Dragonfly
       @app = app
       @dragonfly_url = '/dragonfly'
       self.url_format = '/:job/:name'
-      @fetch_file_whitelist = []
-      @fetch_url_whitelist = []
+      @fetch_file_whitelist = Whitelist.new
+      @fetch_url_whitelist = Whitelist.new
     end
 
     attr_accessor :protect_from_dos_attacks, :url_host, :url_path_prefix, :dragonfly_url
 
     attr_reader :url_format, :fetch_file_whitelist, :fetch_url_whitelist
 
-    def fetch_file_whitelist=(patterns)
-      @fetch_file_whitelist = Whitelist.new(patterns)
+    def add_to_fetch_file_whitelist(patterns)
+      fetch_file_whitelist.push *patterns
     end
 
-    def fetch_url_whitelist=(patterns)
-      @fetch_url_whitelist = Whitelist.new(patterns)
+    def add_to_fetch_url_whitelist(patterns)
+      fetch_url_whitelist.push *patterns
     end
 
     def url_format=(url_format)

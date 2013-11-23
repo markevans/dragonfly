@@ -5,7 +5,7 @@ module Dragonfly
     extend Forwardable
     def_delegators :patterns, :push
 
-    def initialize(patterns)
+    def initialize(patterns=[])
       @patterns = patterns
     end
 

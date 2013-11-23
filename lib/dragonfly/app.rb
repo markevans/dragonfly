@@ -95,7 +95,15 @@ module Dragonfly
         obj.add_mime_type(*args)
       end
 
-      writer :fetch_file_whitelist, :fetch_url_whitelist, :dragonfly_url, :protect_from_dos_attacks, :url_format, :url_host, :url_path_prefix,
+      def fetch_file_whitelist(patterns)
+        obj.server.add_to_fetch_file_whitelist(patterns)
+      end
+
+      def fetch_url_whitelist(patterns)
+        obj.server.add_to_fetch_url_whitelist(patterns)
+      end
+
+      writer :dragonfly_url, :protect_from_dos_attacks, :url_format, :url_host, :url_path_prefix,
              :for => :server
       meth :before_serve, :for => :server
 
