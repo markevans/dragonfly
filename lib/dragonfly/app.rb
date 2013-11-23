@@ -206,6 +206,7 @@ module Dragonfly
     end
 
     def ext_for(mime_type)
+      return 'txt' if mime_type == 'text/plain'
       ext = mime_types.key(mime_type)
       ext.tr('.', '') if ext
     end

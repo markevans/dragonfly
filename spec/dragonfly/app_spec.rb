@@ -95,6 +95,10 @@ describe Dragonfly::App do
       it "returns nil if non-existent" do
         app.ext_for('big/bum').should be_nil
       end
+
+      it "returns txt for text/plain" do
+        app.ext_for('text/plain').should == 'txt'
+      end
     end
   end
 
