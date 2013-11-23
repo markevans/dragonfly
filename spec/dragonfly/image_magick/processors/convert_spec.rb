@@ -2,8 +2,12 @@ require 'spec_helper'
 
 describe Dragonfly::ImageMagick::Processors::Convert do
 
+  def sample_content(name)
+    Dragonfly::Content.new(app, SAMPLES_DIR.join(name))
+  end
+
   let(:app){ test_app }
-  let(:image){ Dragonfly::Content.new(app, SAMPLES_DIR.join('beach.png')) } # 280x355
+  let(:image){ sample_content('beach.png') } # 280x355
   let(:processor){ Dragonfly::ImageMagick::Processors::Convert.new }
 
   it "should allow for general convert commands" do
@@ -35,6 +39,18 @@ describe Dragonfly::ImageMagick::Processors::Convert do
     url_attributes = Dragonfly::UrlAttributes.new
     processor.update_url(url_attributes, '-scale 56x71', 'format' => 'gif')
     url_attributes.ext.should == 'gif'
+  end
+
+  it "allows converting specific frames" do
+    gif = sample_content('gif.gif')
+    processor.call(gif, '-resize 50x50')
+    all_frames_size = gif.size
+
+    gif = sample_content('gif.gif')
+    processor.call(gif, '-resize 50x50', 'frame' => 0)
+    one_frame_size = gif.size
+
+    one_frame_size.should < all_frames_size
   end
 
 end
