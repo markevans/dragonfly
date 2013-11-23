@@ -28,16 +28,16 @@ Changes
 
 Features
 --------
+- model attachment default (by specifying a path to a e.g. a default image)
+- `convert` and `thumb` processors take a `'frame'` option
+- `thumb` takes a `'format'` option
+- `Attachment#xxx_stored`, e.g. `my_model.my_attachment_stored?` (`my_attachment` here being the attachment name)
 - `define` for creating custom methods on `Job`/`Attachment` objects
 - `url_path_prefix` for when mounted in Rack with a "SCRIPT_NAME"
 - when customizing response headers, ability to remove headers by setting to `nil`
 - better logging
   - for each response
   - for shell commands
-- `Attachment#xxx_stored`, e.g. `my_model.my_attachment_stored?` (`my_attachment` here being the attachment name)
-- model attachment default (by specifying a path to a e.g. a default image)
-- `convert` and `thumb` processors take a `'frame'` option
-- `thumb` takes a `'format'` option
 
 Fixes
 -----
