@@ -48,43 +48,52 @@ describe Dragonfly::App do
   end
 
   describe "mime types" do
+    let(:app) { test_app }
+
     describe "#mime_type_for" do
-      before(:each) do
-        @app = test_app
-      end
       it "should return the correct mime type for a symbol" do
-        @app.mime_type_for(:png).should == 'image/png'
+        app.mime_type_for(:png).should == 'image/png'
       end
       it "should work for strings" do
-        @app.mime_type_for('png').should == 'image/png'
+        app.mime_type_for('png').should == 'image/png'
       end
       it "should work with uppercase strings" do
-        @app.mime_type_for('PNG').should == 'image/png'
+        app.mime_type_for('PNG').should == 'image/png'
       end
       it "should work with a dot" do
-        @app.mime_type_for('.png').should == 'image/png'
+        app.mime_type_for('.png').should == 'image/png'
       end
       it "should return the fallback if not known" do
-        @app.mime_type_for(:mark).should == 'application/octet-stream'
+        app.mime_type_for(:mark).should == 'application/octet-stream'
       end
       it "should allow for configuring extra mime types" do
-        @app.add_mime_type 'mark', 'application/mark'
-        @app.mime_type_for(:mark).should == 'application/mark'
+        app.add_mime_type 'mark', 'application/mark'
+        app.mime_type_for(:mark).should == 'application/mark'
       end
       it "should override existing mime types when registered" do
-        @app.add_mime_type :png, 'ping/pong'
-        @app.mime_type_for(:png).should == 'ping/pong'
+        app.add_mime_type :png, 'ping/pong'
+        app.mime_type_for(:png).should == 'ping/pong'
       end
       it "should have a per-app mime-type configuration" do
         other_app = Dragonfly.app(:other_app)
-        @app.add_mime_type(:mark, 'first/one')
+        app.add_mime_type(:mark, 'first/one')
         other_app.add_mime_type(:mark, 'second/one')
-        @app.mime_type_for(:mark).should == 'first/one'
+        app.mime_type_for(:mark).should == 'first/one'
         other_app.mime_type_for(:mark).should == 'second/one'
       end
       it "can be added via configure" do
-        @app.configure{ mime_type 'mark', 'application/mark' }
-        @app.mime_type_for(:mark).should == 'application/mark'
+        app.configure{ mime_type 'mark', 'application/mark' }
+        app.mime_type_for(:mark).should == 'application/mark'
+      end
+    end
+
+    describe "#ext_for" do
+      it "returns the ext corresponding to a mime_type" do
+        app.ext_for('image/png').should == 'png'
+      end
+
+      it "returns nil if non-existent" do
+        app.ext_for('big/bum').should be_nil
       end
     end
   end

@@ -205,6 +205,11 @@ module Dragonfly
       mime_types[file_ext_string(format)] || fallback_mime_type
     end
 
+    def ext_for(mime_type)
+      ext = mime_types.key(mime_type)
+      ext.tr('.', '') if ext
+    end
+
     def response_header(key, value=nil, &block)
       response_headers[key] = value || block
     end
