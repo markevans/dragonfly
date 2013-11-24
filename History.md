@@ -31,6 +31,7 @@ Features
 - model attachment default (by specifying a path to a e.g. a default image)
 - `convert` and `thumb` processors take a `'frame'` option
 - `thumb` takes a `'format'` option
+- `fetch_file` and `model.attachment_url=` accept a data uri string
 - `Attachment#xxx_stored`, e.g. `my_model.my_attachment_stored?` (`my_attachment` here being the attachment name)
 - `define` for creating custom methods on `Job`/`Attachment` objects
 - `url_path_prefix` for when mounted in Rack with a "SCRIPT_NAME"
