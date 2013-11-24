@@ -1,10 +1,7 @@
-.yardoc
-doc
 pkg
 spec
 tmp
 fixtures
 .bundle
-.s3_spec.yml
 Gemfile.lock
 .DS_Store
