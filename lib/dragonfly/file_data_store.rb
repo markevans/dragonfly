@@ -177,8 +177,7 @@ module Dragonfly
 
     def relative_path_for(filename)
       time = Time.now
-      msec = time.usec / 1000
-      "#{time.strftime '%Y/%m/%d/%H_%M_%S'}_#{msec}_#{filename.gsub(/[^\w.]+/,'_')}"
+      "#{time.strftime '%Y/%m/%d/%H_%M_%S'}_#{time.usec.to_s(36)}_#{filename.gsub(/[^\w.]+/,'_')}"
     end
 
     def purge_empty_directories(path)
