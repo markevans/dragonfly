@@ -45,6 +45,16 @@ Installation
 
     gem install dragonfly
 
+or in your Gemfile
+```ruby
+gem 'dragonfly', '~> 1.0.0'
+```
+
+Require with
+```ruby
+require 'dragonfly'
+```
+
 Plugins and Add-ons
 ===================
 See [the Add-ons wiki](http://github.com/markevans/dragonfly/wiki/Dragonfly-add-ons).
