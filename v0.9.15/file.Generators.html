@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: Generators
+  
+    &mdash; Documentation by YARD 0.8.7
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
+  </head>
+  <body>
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.9.15)</div>
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+    </div>
+
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <div id='filecontents'><h1>Generators</h1>
+
+<p>Unlike processors and encoders, generators create content out of nothing, rather than modifying already existing content, for example text image generation.</p>
+
+<p>You can register as many generators as you like.</p>
+
+<p>Given a Dragonfly app</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+</code></pre>
+
+<p>we can get generated content using</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:some_method</span><span class='comma token'>,</span> <span class='symbol val'>:some</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:args</span><span class='rparen token'>)</span>
+</code></pre>
+
+<p>where <code>:some_method</code> is added by the configured generators.</p>
+
+<h2>ImageMagick Generator</h2>
+
+<p>See <a href="file.ImageMagick.html" title="ImageMagick">ImageMagick</a>.</p>
+
+<h2>Custom Generators</h2>
+
+<p>To register a single custom generator:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generator identifier id'>generator</span><span class='dot token'>.</span><span class='rubyid_add identifier id'>add</span> <span class='symbol val'>:triangle</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_height identifier id'>height</span><span class='bitor op'>|</span>
+  <span class='rubyid_SomeLibrary constant id'>SomeLibrary</span><span class='dot token'>.</span><span class='rubyid_create_triangle identifier id'>create_triangle</span><span class='lparen token'>(</span><span class='rubyid_height identifier id'>height</span><span class='rparen token'>)</span>     <span class='comment val'># return a String, Pathname, File or Tempfile</span>
+<span class='rubyid_end end kw'>end</span>
+
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:triangle</span><span class='comma token'>,</span> <span class='integer val'>10</span><span class='rparen token'>)</span>      <span class='comment val'># =&gt; &#39;Job&#39; object which we can get data, etc.</span>
+</code></pre>
+
+<p>Or create a class like the ImageMagick one above, in which case all public methods will be counted as generator methods.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_RoundedCornerGenerator constant id'>RoundedCornerGenerator</span>
+
+  <span class='rubyid_def def kw'>def</span> <span class='rubyid_top_left_corner identifier id'>top_left_corner</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+    <span class='rubyid_SomeLib constant id'>SomeLib</span><span class='dot token'>.</span><span class='rubyid_tlc identifier id'>tlc</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+
+  <span class='rubyid_def def kw'>def</span> <span class='rubyid_bottom_right_corner identifier id'>bottom_right_corner</span><span class='lparen token'>(</span><span class='rubyid_opts identifier id'>opts</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+    <span class='rubyid_tempfile identifier id'>tempfile</span> <span class='assign token'>=</span> <span class='rubyid_Tempfile constant id'>Tempfile</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&#39;brc&#39;</span><span class='rparen token'>)</span>
+    <span class='dxstring node'>`some_command -c #{opts[:colour]} -o #{tempfile.path}`</span>
+    <span class='rubyid_tempfile identifier id'>tempfile</span>
+  <span class='rubyid_end end kw'>end</span>
+
+  <span class='comment val'># ...</span>
+
+  <span class='rubyid_private identifier id'>private</span>
+
+  <span class='rubyid_def def kw'>def</span> <span class='rubyid_my_helper_method identifier id'>my_helper_method</span>
+    <span class='comment val'># do stuff</span>
+  <span class='rubyid_end end kw'>end</span>
+
+<span class='rubyid_end end kw'>end</span>
+
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generator identifier id'>generator</span><span class='dot token'>.</span><span class='rubyid_register identifier id'>register</span><span class='lparen token'>(</span><span class='rubyid_RoundedCornerGenerator constant id'>RoundedCornerGenerator</span><span class='rparen token'>)</span>
+
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:top_left_corner</span><span class='comma token'>,</span> <span class='symbol val'>:colour</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&#39;green&#39;</span><span class='rparen token'>)</span>
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:bottom_right_corner</span><span class='comma token'>,</span> <span class='symbol val'>:colour</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&#39;mauve&#39;</span><span class='rparen token'>)</span>
+</code></pre>
+
+<p>You can also return meta data like name and format if you return an array from the generator</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generator identifier id'>generator</span><span class='dot token'>.</span><span class='rubyid_add identifier id'>add</span> <span class='symbol val'>:triangle</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_height identifier id'>height</span><span class='bitor op'>|</span>
+  <span class='lbrack token'>[</span>
+    <span class='rubyid_SomeLibrary constant id'>SomeLibrary</span><span class='dot token'>.</span><span class='rubyid_create_triangle identifier id'>create_triangle</span><span class='lparen token'>(</span><span class='rubyid_height identifier id'>height</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+    <span class='lbrace token'>{</span><span class='symbol val'>:name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&#39;triangle.png&#39;</span><span class='comma token'>,</span> <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:png</span><span class='rbrace token'>}</span>
+  <span class='rbrack token'>]</span>
+<span class='rubyid_end end kw'>end</span>
+</code></pre>
+</div>
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models">Models</a></li><li><a href="file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.Couch.html" title="Couch">Couch</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="footer">
+  Generated on Tue Sep 17 18:07:02 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7 (ruby-2.0.0).
+</div>
+
+  </body>
+</html>

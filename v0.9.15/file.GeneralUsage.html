@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: GeneralUsage
+  
+    &mdash; Documentation by YARD 0.8.7
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
+  </head>
+  <body>
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.9.15)</div>
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+    </div>
+
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <div id='filecontents'><h1>General Usage</h1>
+
+<p>You can have multiple dragonfly apps, each with their own configuration.
+Each app has a name, and is referred to by that name.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>    <span class='comment val'># ===&gt; Creates an app called &#39;images&#39;</span>
+<span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>    <span class='comment val'># ===&gt; Refers to the already created app &#39;images&#39;</span>
+
+<span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+</code></pre>
+
+<h2>Getting/generating content</h2>
+
+<p>A number of methods can be used to get content:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>&#39;some_uid&#39;</span><span class='rparen token'>)</span>                   <span class='comment val'># Fetch from datastore (default filesystem)</span>
+
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch_file identifier id'>fetch_file</span><span class='lparen token'>(</span><span class='string val'>&#39;~/path/to/file.png&#39;</span><span class='rparen token'>)</span>    <span class='comment val'># Fetch from a local file</span>
+
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch_url identifier id'>fetch_url</span><span class='lparen token'>(</span><span class='string val'>&#39;somewhere.com/img.png&#39;</span><span class='rparen token'>)</span>  <span class='comment val'># Fetch from a url (will work with http, https)</span>
+
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_generate identifier id'>generate</span><span class='lparen token'>(</span><span class='symbol val'>:plasma</span><span class='comma token'>,</span> <span class='integer val'>400</span><span class='comma token'>,</span> <span class='integer val'>300</span><span class='rparen token'>)</span>         <span class='comment val'># Generates using a method from the configured</span>
+                                        <span class='comment val'># generator (in this case a plasma image)</span>
+
+<span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_create identifier id'>create</span><span class='lparen token'>(</span><span class='string val'>&quot;CONTENT&quot;</span><span class='rparen token'>)</span>                   <span class='comment val'># Can pass in a String, Pathname, File or Tempfile</span>
+</code></pre>
+
+<p>These all return <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> objects. These objects are lazy - they don't do any fetching/generating until
+some other method is called on them.</p>
+
+<h2>Using the content</h2>
+
+<p>Once we have a <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>&#39;some_uid&#39;</span><span class='rparen token'>)</span>
+</code></pre>
+
+<p>We can get the data a number of ways...</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_data identifier id'>data</span>                           <span class='comment val'># =&gt; &quot;\377???JFIF\000\...&quot;</span>
+<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_to_file identifier id'>to_file</span><span class='lparen token'>(</span><span class='string val'>&#39;out.png&#39;</span><span class='rparen token'>)</span>             <span class='comment val'># writes to file &#39;out.png&#39; and returns a readable file object</span>
+<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_tempfile identifier id'>tempfile</span>                       <span class='comment val'># =&gt; #&lt;File:/var/folders/st/strHv74sH044JPabSiODz... a closed Tempfile object</span>
+<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_file identifier id'>file</span>                           <span class='comment val'># =&gt; #&lt;File:/var/folders/st/strHv74sH044JPabSiODz... a readable (open) File object</span>
+<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_file identifier id'>file</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span>                    <span class='comment val'># Yields an open file object, returns the return value of</span>
+  <span class='rubyid_data identifier id'>data</span> <span class='assign token'>=</span> <span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='lparen token'>(</span><span class='integer val'>256</span><span class='rparen token'>)</span>                 <span class='comment val'>#  the block, and closes the file object</span>
+<span class='rubyid_end end kw'>end</span>
+<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_path identifier id'>path</span>                           <span class='comment val'># =&gt; &#39;/var/folders/st/strHv74sH044JPabSiODz...&#39; i.e. the path of the tempfile</span>
+<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_size identifier id'>size</span>                           <span class='comment val'># =&gt; 134507 (size in bytes)</span>
+</code></pre>
+
+<p>We can get its url...</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>                            <span class='comment val'># =&gt; &quot;/media/BAhbBlsHOgZmIg9hc...&quot;</span>
+                                     <span class='comment val'># this won&#39;t work if we&#39;ve used create to get the content</span>
+</code></pre>
+
+<p>We can analyse it (see <a href="file.Analysers.html" title="Analysers">Analysers</a> for more info) ...</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_width identifier id'>width</span>                          <span class='comment val'># =&gt; 280</span>
+</code></pre>
+
+<p>We can process it (see <a href="file.Processing.html" title="Processing">Processing</a> for more info) ...</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_new_image identifier id'>new_image</span> <span class='assign token'>=</span> <span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>&#39;40x30&#39;</span><span class='rparen token'>)</span>    <span class='comment val'># returns another &#39;Job&#39; object</span>
+</code></pre>
+
+<p>We can encode it (see <a href="file.Encoding.html" title="Encoding">Encoding</a> for more info) ...</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_new_image identifier id'>new_image</span> <span class='assign token'>=</span> <span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>                <span class='comment val'># returns another &#39;Job&#39; object</span>
+</code></pre>
+
+<h2>Chaining</h2>
+
+<p>Because the methods <code>fetch</code>, <code>fetch_file</code>, <code>fetch_url</code>, <code>generate</code>, <code>create</code>, <code>process</code> and <code>encode</code>
+all return <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> objects, we can chain them as much as we want...</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>&#39;some_uid&#39;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>&#39;40x20#&#39;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>
+</code></pre>
+
+<p>... and because they're lazy, we don't actually do any processing/encoding until either <code>apply</code> is called</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_apply identifier id'>apply</span>              <span class='comment val'># actually &#39;does&#39; the processing and returns self</span>
+</code></pre>
+
+<p>... or a method is called like <code>data</code>, <code>to_file</code>, etc.</p>
+
+<p>This means we can cheaply generate urls for processed data without doing any fetching or processing:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_url identifier id'>url</span> <span class='assign token'>=</span> <span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>&#39;some_uid&#39;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>&#39;40x20#&#39;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>
+</code></pre>
+
+<p>and then visit that url in a browser to get the actual processed image.</p>
+
+<h2>Shortcuts</h2>
+
+<p>Commonly used processing/encoding steps can be shortened, so instead of</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>&#39;some_uid&#39;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>&#39;40x20#&#39;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:jpg</span><span class='rparen token'>)</span>
+</code></pre>
+
+<p>we could use something like</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>&#39;some_uid&#39;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_grey identifier id'>grey</span><span class='lparen token'>(</span><span class='string val'>&#39;40x20#&#39;</span><span class='rparen token'>)</span>
+</code></pre>
+
+<p>This does exactly the same, returning a <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object.</p>
+
+<p>To define this shortcut:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_configure identifier id'>configure</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_c identifier id'>c</span><span class='bitor op'>|</span>
+  <span class='rubyid_c identifier id'>c</span><span class='dot token'>.</span><span class='rubyid_job identifier id'>job</span> <span class='symbol val'>:grey</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_size identifier id'>size</span><span class='bitor op'>|</span>
+    <span class='rubyid_process identifier id'>process</span> <span class='symbol val'>:greyscale</span>
+    <span class='rubyid_process identifier id'>process</span> <span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='rubyid_size identifier id'>size</span>
+    <span class='rubyid_encode identifier id'>encode</span> <span class='symbol val'>:jpg</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='comment val'># ...</span>
+<span class='rubyid_end end kw'>end</span>
+</code></pre>
+</div>
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models">Models</a></li><li><a href="file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.Couch.html" title="Couch">Couch</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="footer">
+  Generated on Tue Sep 17 18:07:01 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7 (ruby-2.0.0).
+</div>
+
+  </body>
+</html>

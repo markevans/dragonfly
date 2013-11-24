@@ -1,0 +1,1037 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Documentation by YARD 0.8.7
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
+  </head>
+  <body>
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.9.15)</div>
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+    </div>
+
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <h1 class="noborder title">Documentation by YARD 0.8.7</h1>
+<div id="listing">
+  <h1 class="alphaindex">Alphabetic Index</h1>
+  
+  <h2>File Listing</h2>
+  <ul id="files" class="index_inline_list">
+  
+  
+    <li class="r1"><a href="index.html" title="Index">Index</a></li>
+    
+  
+    <li class="r2"><a href="file.README.html" title="README">README</a></li>
+    
+  
+    <li class="r1"><a href="file.GeneralUsage.html" title="GeneralUsage">GeneralUsage</a></li>
+    
+  
+    <li class="r2"><a href="file.Rails2.html" title="Rails2">Rails2</a></li>
+    
+  
+    <li class="r1"><a href="file.Rails3.html" title="Rails3">Rails3</a></li>
+    
+  
+    <li class="r2"><a href="file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li>
+    
+  
+    <li class="r1"><a href="file.Rack.html" title="Rack">Rack</a></li>
+    
+  
+    <li class="r2"><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li>
+    
+  
+    <li class="r1"><a href="file.Heroku.html" title="Heroku">Heroku</a></li>
+    
+  
+    <li class="r2"><a href="file.Mongo.html" title="Mongo">Mongo</a></li>
+    
+  
+    <li class="r1"><a href="file.Couch.html" title="Couch">Couch</a></li>
+    
+  
+    <li class="r2"><a href="file.Models.html" title="Models">Models</a></li>
+    
+  
+    <li class="r1"><a href="file.DataStorage.html" title="DataStorage">DataStorage</a></li>
+    
+  
+    <li class="r2"><a href="file.Analysers.html" title="Analysers">Analysers</a></li>
+    
+  
+    <li class="r1"><a href="file.Processing.html" title="Processing">Processing</a></li>
+    
+  
+    <li class="r2"><a href="file.Encoding.html" title="Encoding">Encoding</a></li>
+    
+  
+    <li class="r1"><a href="file.Generators.html" title="Generators">Generators</a></li>
+    
+  
+    <li class="r2"><a href="file.Configuration.html" title="Configuration">Configuration</a></li>
+    
+  
+    <li class="r1"><a href="file.URLs.html" title="URLs">URLs</a></li>
+    
+  
+    <li class="r2"><a href="file.MimeTypes.html" title="MimeTypes">MimeTypes</a></li>
+    
+  
+    <li class="r1"><a href="file.Caching.html" title="Caching">Caching</a></li>
+    
+  
+    <li class="r2"><a href="file.ServingRemotely.html" title="ServingRemotely">ServingRemotely</a></li>
+    
+  
+    <li class="r1"><a href="file.ExampleUseCases.html" title="ExampleUseCases">ExampleUseCases</a></li>
+    
+  
+    <li class="r2"><a href="file.LICENSE.html" title="LICENSE">LICENSE</a></li>
+    
+  
+    <li class="r1"><a href="file.History.html" title="History">History</a></li>
+    
+  
+  </ul>
+
+<div class="clear"></div>
+<h2>Namespace Listing A-Z</h2>
+
+
+
+
+<table>
+  <tr>
+    <td valign='top' width="33%">
+      
+        
+        <ul id="alpha_A" class="alpha">
+          <li class="letter">A</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/ActiveModelExtensions.html" title="Dragonfly::ActiveModelExtensions (module)">ActiveModelExtensions</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Analyser.html" title="Dragonfly::Analyser (class)">Analyser</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/ImageMagick/Analyser.html" title="Dragonfly::ImageMagick::Analyser (class)">Analyser</a></span>
+                
+                  <small>(Dragonfly::ImageMagick)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Analysis.html" title="Dragonfly::Analysis (module)">Analysis</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/App.html" title="Dragonfly::App (class)">App</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/AppDoesNotMatch.html" title="Dragonfly::Job::AppDoesNotMatch (class)">AppDoesNotMatch</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Array.html" title="Array (class)">Array</a></span>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/ActiveModelExtensions/Attachment.html" title="Dragonfly::ActiveModelExtensions::Attachment (class)">Attachment</a></span>
+                
+                  <small>(Dragonfly::ActiveModelExtensions)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_B" class="alpha">
+          <li class="letter">B</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/ActiveModelExtensions/Attachment/BadAssignmentKey.html" title="Dragonfly::ActiveModelExtensions::Attachment::BadAssignmentKey (class)">BadAssignmentKey</a></span>
+                
+                  <small>(Dragonfly::ActiveModelExtensions::Attachment)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Configurable/BadConfigAttribute.html" title="Dragonfly::Configurable::BadConfigAttribute (class)">BadConfigAttribute</a></span>
+                
+                  <small>(Dragonfly::Configurable)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Serializer/BadString.html" title="Dragonfly::Serializer::BadString (class)">BadString</a></span>
+                
+                  <small>(Dragonfly::Serializer)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/DataStorage/BadUID.html" title="Dragonfly::DataStorage::BadUID (class)">BadUID</a></span>
+                
+                  <small>(Dragonfly::DataStorage)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/UrlMapper/BadUrlFormat.html" title="Dragonfly::UrlMapper::BadUrlFormat (class)">BadUrlFormat</a></span>
+                
+                  <small>(Dragonfly::UrlMapper)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_C" class="alpha">
+          <li class="letter">C</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/ActiveModelExtensions/ClassMethods.html" title="Dragonfly::ActiveModelExtensions::ClassMethods (module)">ClassMethods</a></span>
+                
+                  <small>(Dragonfly::ActiveModelExtensions)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Configurable/ClassMethods.html" title="Dragonfly::Configurable::ClassMethods (module)">ClassMethods</a></span>
+                
+                  <small>(Dragonfly::Configurable)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/TempObject/Closed.html" title="Dragonfly::TempObject::Closed (class)">Closed</a></span>
+                
+                  <small>(Dragonfly::TempObject)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Shell/CommandFailed.html" title="Dragonfly::Shell::CommandFailed (class)">CommandFailed</a></span>
+                
+                  <small>(Dragonfly::Shell)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/ImageMagick/Config.html" title="Dragonfly::ImageMagick::Config (module)">Config</a></span>
+                
+                  <small>(Dragonfly::ImageMagick)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Config.html" title="Dragonfly::Config (module)">Config</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/ActiveModelExtensions/Attachment/ConfigProxy.html" title="Dragonfly::ActiveModelExtensions::Attachment::ConfigProxy (class)">ConfigProxy</a></span>
+                
+                  <small>(Dragonfly::ActiveModelExtensions::Attachment)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Configurable.html" title="Dragonfly::Configurable (module)">Configurable</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Configurable/ConfigurationProxy.html" title="Dragonfly::Configurable::ConfigurationProxy (class)">ConfigurationProxy</a></span>
+                
+                  <small>(Dragonfly::Configurable)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/CookieMonster.html" title="Dragonfly::CookieMonster (class)">CookieMonster</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/DataStorage/CouchDataStore.html" title="Dragonfly::DataStorage::CouchDataStore (class)">CouchDataStore</a></span>
+                
+                  <small>(Dragonfly::DataStorage)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_D" class="alpha">
+          <li class="letter">D</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/DataStorage/DataNotFound.html" title="Dragonfly::DataStorage::DataNotFound (class)">DataNotFound</a></span>
+                
+                  <small>(Dragonfly::DataStorage)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/DataStorage.html" title="Dragonfly::DataStorage (module)">DataStorage</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Configurable/DeferredBlock.html" title="Dragonfly::Configurable::DeferredBlock (class)">DeferredBlock</a></span>
+                
+                  <small>(Dragonfly::Configurable)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/DataStorage/DestroyError.html" title="Dragonfly::DataStorage::DestroyError (class)">DestroyError</a></span>
+                
+                  <small>(Dragonfly::DataStorage)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_E" class="alpha">
+          <li class="letter">E</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/Encode.html" title="Dragonfly::Job::Encode (class)">Encode</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/ImageMagick/Encoder.html" title="Dragonfly::ImageMagick::Encoder (class)">Encoder</a></span>
+                
+                  <small>(Dragonfly::ImageMagick)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Encoder.html" title="Dragonfly::Encoder (class)">Encoder</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Encoding.html" title="Dragonfly::Encoding (module)">Encoding</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_F" class="alpha">
+          <li class="letter">F</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/Fetch.html" title="Dragonfly::Job::Fetch (class)">Fetch</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/FetchFile.html" title="Dragonfly::Job::FetchFile (class)">FetchFile</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/FetchUrl.html" title="Dragonfly::Job::FetchUrl (class)">FetchUrl</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Analysis/FileCommandAnalyser.html" title="Dragonfly::Analysis::FileCommandAnalyser (class)">FileCommandAnalyser</a></span>
+                
+                  <small>(Dragonfly::Analysis)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/DataStorage/FileDataStore.html" title="Dragonfly::DataStorage::FileDataStore (class)">FileDataStore</a></span>
+                
+                  <small>(Dragonfly::DataStorage)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/FunctionManager.html" title="Dragonfly::FunctionManager (class)">FunctionManager</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_G" class="alpha">
+          <li class="letter">G</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/Generate.html" title="Dragonfly::Job::Generate (class)">Generate</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Generation.html" title="Dragonfly::Generation (module)">Generation</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/ImageMagick/Generator.html" title="Dragonfly::ImageMagick::Generator (class)">Generator</a></span>
+                
+                  <small>(Dragonfly::ImageMagick)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Generator.html" title="Dragonfly::Generator (class)">Generator</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+          </td><td valign='top' width="33%">
+          
+        
+        <ul id="alpha_H" class="alpha">
+          <li class="letter">H</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/HasFilename.html" title="Dragonfly::HasFilename (module)">HasFilename</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Hash.html" title="Hash (class)">Hash</a></span>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/HashWithCssStyleKeys.html" title="Dragonfly::HashWithCssStyleKeys (class)">HashWithCssStyleKeys</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Config/Heroku.html" title="Dragonfly::Config::Heroku (module)">Heroku</a></span>
+                
+                  <small>(Dragonfly::Config)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_I" class="alpha">
+          <li class="letter">I</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/ImageMagick.html" title="Dragonfly::ImageMagick (module)">ImageMagick</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/IncorrectSHA.html" title="Dragonfly::Job::IncorrectSHA (class)">IncorrectSHA</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Configurable/InstanceMethods.html" title="Dragonfly::Configurable::InstanceMethods (module)">InstanceMethods</a></span>
+                
+                  <small>(Dragonfly::Configurable)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/ActiveModelExtensions/InstanceMethods.html" title="Dragonfly::ActiveModelExtensions::InstanceMethods (module)">InstanceMethods</a></span>
+                
+                  <small>(Dragonfly::ActiveModelExtensions)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/InvalidArray.html" title="Dragonfly::Job::InvalidArray (class)">InvalidArray</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_J" class="alpha">
+          <li class="letter">J</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/JobAlreadyApplied.html" title="Dragonfly::Job::JobAlreadyApplied (class)">JobAlreadyApplied</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/JobBuilder.html" title="Dragonfly::JobBuilder (class)">JobBuilder</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/JobDefinitions.html" title="Dragonfly::JobDefinitions (class)">JobDefinitions</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/JobEndpoint.html" title="Dragonfly::JobEndpoint (class)">JobEndpoint</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Server/JobNotAllowed.html" title="Dragonfly::Server::JobNotAllowed (class)">JobNotAllowed</a></span>
+                
+                  <small>(Dragonfly::Server)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_L" class="alpha">
+          <li class="letter">L</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Loggable.html" title="Dragonfly::Loggable (module)">Loggable</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_M" class="alpha">
+          <li class="letter">M</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Serializer/MaliciousString.html" title="Dragonfly::Serializer::MaliciousString (class)">MaliciousString</a></span>
+                
+                  <small>(Dragonfly::Serializer)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Middleware.html" title="Dragonfly::Middleware (class)">Middleware</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/DataStorage/MongoDataStore.html" title="Dragonfly::DataStorage::MongoDataStore (class)">MongoDataStore</a></span>
+                
+                  <small>(Dragonfly::DataStorage)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_N" class="alpha">
+          <li class="letter">N</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/NoContent.html" title="Dragonfly::Job::NoContent (class)">NoContent</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/RoutedEndpoint/NoRoutingParams.html" title="Dragonfly::RoutedEndpoint::NoRoutingParams (class)">NoRoutingParams</a></span>
+                
+                  <small>(Dragonfly::RoutedEndpoint)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/NoSHAGiven.html" title="Dragonfly::Job::NoSHAGiven (class)">NoSHAGiven</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Configurable/NotConfigured.html" title="Dragonfly::Configurable::NotConfigured (class)">NotConfigured</a></span>
+                
+                  <small>(Dragonfly::Configurable)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/FunctionManager/NotDefined.html" title="Dragonfly::FunctionManager::NotDefined (class)">NotDefined</a></span>
+                
+                  <small>(Dragonfly::FunctionManager)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/NothingToEncode.html" title="Dragonfly::Job::NothingToEncode (class)">NothingToEncode</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/NothingToProcess.html" title="Dragonfly::Job::NothingToProcess (class)">NothingToProcess</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_O" class="alpha">
+          <li class="letter">O</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/OverrideInstanceMethods.html" title="Dragonfly::Job::OverrideInstanceMethods (module)">OverrideInstanceMethods</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_P" class="alpha">
+          <li class="letter">P</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/Process.html" title="Dragonfly::Job::Process (class)">Process</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Processing.html" title="Dragonfly::Processing (module)">Processing</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/ImageMagick/Processor.html" title="Dragonfly::ImageMagick::Processor (class)">Processor</a></span>
+                
+                  <small>(Dragonfly::ImageMagick)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Processor.html" title="Dragonfly::Processor (class)">Processor</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/ActiveModelExtensions/Validations/PropertyValidator.html" title="Dragonfly::ActiveModelExtensions::Validations::PropertyValidator (class)">PropertyValidator</a></span>
+                
+                  <small>(Dragonfly::ActiveModelExtensions::Validations)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+          </td><td valign='top' width="33%">
+          
+        
+        <ul id="alpha_R" class="alpha">
+          <li class="letter">R</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Config/Rails.html" title="Dragonfly::Config::Rails (module)">Rails</a></span>
+                
+                  <small>(Dragonfly::Config)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Railtie.html" title="Dragonfly::Railtie (class)">Railtie</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Response.html" title="Dragonfly::Response (class)">Response</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/RoutedEndpoint.html" title="Dragonfly::RoutedEndpoint (class)">RoutedEndpoint</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_S" class="alpha">
+          <li class="letter">S</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/DataStorage/S3DataStore.html" title="Dragonfly::DataStorage::S3DataStore (class)">S3DataStore</a></span>
+                
+                  <small>(Dragonfly::DataStorage)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/UrlMapper/Segment.html" title="Dragonfly::UrlMapper::Segment (class)">Segment</a></span>
+                
+                  <small>(Dragonfly::UrlMapper)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Serializer.html" title="Dragonfly::Serializer (module)">Serializer</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Server.html" title="Dragonfly::Server (class)">Server</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Shell.html" title="Dragonfly::Shell (module)">Shell</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/SimpleCache.html" title="Dragonfly::SimpleCache (class)">SimpleCache</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Job/Step.html" title="Dragonfly::Job::Step (class)">Step</a></span>
+                
+                  <small>(Dragonfly::Job)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_T" class="alpha">
+          <li class="letter">T</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/TempObject.html" title="Dragonfly::TempObject (class)">TempObject</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_U" class="alpha">
+          <li class="letter">U</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/DataStorage/FileDataStore/UnableToFormUrl.html" title="Dragonfly::DataStorage::FileDataStore::UnableToFormUrl (class)">UnableToFormUrl</a></span>
+                
+                  <small>(Dragonfly::DataStorage::FileDataStore)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/FunctionManager/UnableToHandle.html" title="Dragonfly::FunctionManager::UnableToHandle (class)">UnableToHandle</a></span>
+                
+                  <small>(Dragonfly::FunctionManager)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/DataStorage/UnableToStore.html" title="Dragonfly::DataStorage::UnableToStore (class)">UnableToStore</a></span>
+                
+                  <small>(Dragonfly::DataStorage)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/UrlAttributes.html" title="Dragonfly::UrlAttributes (class)">UrlAttributes</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/UrlMapper.html" title="Dragonfly::UrlMapper (class)">UrlMapper</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/ImageMagick/Utils.html" title="Dragonfly::ImageMagick::Utils (module)">Utils</a></span>
+                
+                  <small>(Dragonfly::ImageMagick)</small>
+                
+              </li>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/Utils.html" title="Dragonfly::Utils (module)">Utils</a></span>
+                
+                  <small>(Dragonfly)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+        
+        <ul id="alpha_V" class="alpha">
+          <li class="letter">V</li>
+          <ul>
+            
+              <li>
+                <span class='object_link'><a href="Dragonfly/ActiveModelExtensions/Validations.html" title="Dragonfly::ActiveModelExtensions::Validations (module)">Validations</a></span>
+                
+                  <small>(Dragonfly::ActiveModelExtensions)</small>
+                
+              </li>
+            
+          </ul>
+        </ul>
+      
+    </td>
+  </tr>
+</table>
+
+</div>
+
+
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models">Models</a></li><li><a href="file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.Couch.html" title="Couch">Couch</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="footer">
+  Generated on Tue Sep 17 18:07:01 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7 (ruby-2.0.0).
+</div>
+
+  </body>
+</html>

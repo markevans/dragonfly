@@ -1,0 +1,587 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: Models
+  
+    &mdash; Documentation by YARD 0.8.7
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans">
+    <script type="text/javascript" charset="utf-8">
+      (function($){
+        // YARD automatically creates a table of contents
+        // Let's place it inside .col1, instead of #content
+        $(document).ready(function(){
+          $('#toc').prependTo($('.col1'));
+          
+        });
+      })(jQuery);
+    </script>
+  </head>
+  <body>
+    <!-- GOOGLE ANALYTICS -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16382932-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- *************** -->
+
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="header" class="clearfix">
+      
+      <div id="logo">DRAGONFLY (v 0.9.15)</div>
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+    </div>
+
+    <div>
+      <iframe id="search_frame"></iframe>
+    </div>
+
+    <div id="content" class="clearfix">
+      <div class="col1">
+        <div id='filecontents'><h1>Using with Models</h1>
+
+<p>You can extend ActiveModel-compatible models to make working with content such as images
+as easy as working with strings or numbers!</p>
+
+<p>The examples below assume an initialized Dragonfly app, e.g.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span> <span class='assign token'>=</span> <span class='rubyid_Dragonfly constant id'>Dragonfly</span><span class='lbrack token'>[</span><span class='symbol val'>:images</span><span class='rbrack token'>]</span>
+</code></pre>
+
+<h2>ActiveRecord</h2>
+
+<p>If you've required 'dragonfly/rails/images', then the following step will be already done for you.
+Otherwise:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='rubyid_ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
+</code></pre>
+
+<p>defines the macro <code>image_accessor</code> on any ActiveRecord models.</p>
+
+<h2>Mongoid</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_define_macro_on_include identifier id'>define_macro_on_include</span><span class='lparen token'>(</span><span class='rubyid_Mongoid constant id'>Mongoid</span><span class='colon2 op'>::</span><span class='rubyid_Document constant id'>Document</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
+</code></pre>
+
+<p>defines the macro <code>image_accessor</code> on any models that include <code>Mongoid::Document</code></p>
+
+<h2>CouchRest::Model</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='rubyid_CouchRest constant id'>CouchRest</span><span class='colon2 op'>::</span><span class='rubyid_Model constant id'>Model</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
+</code></pre>
+
+<p>defines the macro <code>image_accessor</code> on any models inherited from <code>CouchRest::Model::Base</code>.</p>
+
+<h2>Adding accessors</h2>
+
+<p>Now we have the method <code>image_accessor</code> available in our model classes, which we can use as many times as we like</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Album constant id'>Album</span>
+  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:cover_image</span>
+  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:band_photo</span>  <span class='comment val'># Note: this is a different image altogether, not a thumbnail of cover_image</span>
+<span class='rubyid_end end kw'>end</span>
+</code></pre>
+
+<p>Each accessor (e.g. <code>cover_image</code>) depends on a string field to actually hold the datastore uid,
+named by appending the suffix <code>_uid</code> (e.g. <code>cover_image_uid</code>).</p>
+
+<p>For example, ActiveRecord models need a migration such as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_MyMigration constant id'>MyMigration</span> <span class='lt op'>&lt;</span> <span class='rubyid_ActiveRecord constant id'>ActiveRecord</span><span class='colon2 op'>::</span><span class='rubyid_Migration constant id'>Migration</span>
+
+  <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_up identifier id'>up</span>
+    <span class='rubyid_add_column identifier id'>add_column</span> <span class='symbol val'>:albums</span><span class='comma token'>,</span> <span class='symbol val'>:cover_image_uid</span><span class='comma token'>,</span> <span class='symbol val'>:string</span>
+    <span class='rubyid_add_column identifier id'>add_column</span> <span class='symbol val'>:albums</span><span class='comma token'>,</span> <span class='symbol val'>:band_photo_uid</span><span class='comma token'>,</span> <span class='symbol val'>:string</span>
+  <span class='rubyid_end end kw'>end</span>
+
+  <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_down identifier id'>down</span>
+    <span class='rubyid_remove_column identifier id'>remove_column</span> <span class='symbol val'>:albums</span><span class='comma token'>,</span> <span class='symbol val'>:cover_image_uid</span>
+    <span class='rubyid_remove_column identifier id'>remove_column</span> <span class='symbol val'>:albums</span><span class='comma token'>,</span> <span class='symbol val'>:band_photo_uid</span>
+  <span class='rubyid_end end kw'>end</span>
+
+<span class='rubyid_end end kw'>end</span>
+</code></pre>
+
+<h2>Using the accessors</h2>
+
+<p>We can use the attribute much like other other model attributes:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_@album ivar id'>@album</span> <span class='assign token'>=</span> <span class='rubyid_Album constant id'>Album</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='string val'>&quot;\377???JFIF\000\...&quot;</span>             <span class='comment val'># can assign as a string...</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&#39;path/to/my_image.png&#39;</span><span class='rparen token'>)</span>  <span class='comment val'># ... or as a file...</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='rubyid_some_tempfile identifier id'>some_tempfile</span>                     <span class='comment val'># ... or as a tempfile...</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='rubyid_Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&#39;some/path.gif&#39;</span><span class='rparen token'>)</span>     <span class='comment val'># ... or as a pathname...</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_band_photo identifier id'>band_photo</span>                 <span class='comment val'># ... or as another Dragonfly attachment</span>
+
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span>          <span class='comment val'># =&gt; #&lt;Dragonfly::ActiveModelExtensions::Attachment:0x103ef6128...</span>
+
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span>          <span class='comment val'># =&gt; nil</span>
+</code></pre>
+
+<p>We can inspect properties of the attribute</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_width identifier id'>width</span>                          <span class='comment val'># =&gt; 280</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_height identifier id'>height</span>                         <span class='comment val'># =&gt; 140</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_number_of_colours identifier id'>number_of_colours</span>              <span class='comment val'># =&gt; 34703</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_mime_type identifier id'>mime_type</span>                      <span class='comment val'># =&gt; &#39;image/png&#39;</span>
+</code></pre>
+
+<p>The properties available (i.e. 'width', etc.) come from the app's registered analysers - see <a href="file.Analysers.html" title="Analysers">Analysers</a>.</p>
+
+<p>We can play around with the data</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_data identifier id'>data</span>                           <span class='comment val'># =&gt; &quot;\377???JFIF\000\...&quot;</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_to_file identifier id'>to_file</span><span class='lparen token'>(</span><span class='string val'>&#39;out.png&#39;</span><span class='rparen token'>)</span>             <span class='comment val'># writes to file &#39;out.png&#39; and returns a readable file object</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_to_file identifier id'>to_file</span><span class='lparen token'>(</span><span class='string val'>&#39;out.png&#39;</span><span class='comma token'>,</span>
+  <span class='symbol val'>:mode</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0600</span><span class='comma token'>,</span>
+  <span class='symbol val'>:mkdirs</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_false false kw'>false</span>
+<span class='rparen token'>)</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_tempfile identifier id'>tempfile</span>                       <span class='comment val'># =&gt; #&lt;File:/var/folders/st/strHv74sH044JPabSiODz... a closed Tempfile object</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_file identifier id'>file</span>                           <span class='comment val'># =&gt; #&lt;File:/var/folders/st/strHv74sH044JPabSiODz... a readable (open) File object</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_file identifier id'>file</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span>                    <span class='comment val'># Yields an open file object, returns the return value of</span>
+  <span class='rubyid_data identifier id'>data</span> <span class='assign token'>=</span> <span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='lparen token'>(</span><span class='integer val'>256</span><span class='rparen token'>)</span>                              <span class='comment val'>#  the block, and closes the file object</span>
+<span class='rubyid_end end kw'>end</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_path identifier id'>path</span>                           <span class='comment val'># =&gt; &#39;/var/folders/st/strHv74sH044JPabSiODz...&#39; i.e. the path of the tempfile</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_size identifier id'>size</span>                           <span class='comment val'># =&gt; 134507 (size in bytes)</span>
+</code></pre>
+
+<p>We can process the data</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:thumb</span><span class='comma token'>,</span> <span class='string val'>&#39;20x20&#39;</span><span class='rparen token'>)</span>   <span class='comment val'># returns a &#39;Job&#39; object, with similar properties</span>
+<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_width identifier id'>width</span>                                          <span class='comment val'># =&gt; 20</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_width identifier id'>width</span>                              <span class='comment val'># =&gt; 280 (no change)</span>
+</code></pre>
+
+<p>The available processing methods available (i.e. 'thumb', etc.) come from the <span class='object_link'><a href="Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span> app's registered processors - see <a href="file.Processing.html" title="Processing">Processing</a></p>
+
+<p>We can encode the data</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_image identifier id'>image</span> <span class='assign token'>=</span> <span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:gif</span><span class='rparen token'>)</span>   <span class='comment val'># returns a &#39;Job&#39; object, with similar properties</span>
+<span class='rubyid_image identifier id'>image</span><span class='dot token'>.</span><span class='rubyid_format identifier id'>format</span>                              <span class='comment val'># =&gt; :gif</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_format identifier id'>format</span>                 <span class='comment val'># =&gt; :png (no change)</span>
+</code></pre>
+
+<p>The encoding is implemented by the <span class='object_link'><a href="Dragonfly.html" title="Dragonfly (module)">Dragonfly</a></span> app's registered encoders (which will usually just be one) - see <a href="file.Encoding.html" title="Encoding">Encoding</a></p>
+
+<p>We can use configured shortcuts for processing/encoding, and chain them:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>&#39;300x200#ne&#39;</span><span class='rparen token'>)</span>     <span class='comment val'># =&gt; returns a &#39;Job&#39; object, with similar properties</span>
+</code></pre>
+
+<p>We can chain all these things much like ActiveRecord scopes:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_png identifier id'>png</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>&#39;300x200#ne&#39;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_encode identifier id'>encode</span><span class='lparen token'>(</span><span class='symbol val'>:tiff</span><span class='rparen token'>)</span>
+</code></pre>
+
+<p>Because the processing/encoding methods are lazy, no actual processing or encoding is done until a method like <code>data</code>, <code>file</code>, <code>to_file</code>, <code>width</code>, etc. is called.
+You can force the processing to be done if you must by then calling <code>apply</code>.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_apply identifier id'>apply</span>
+</code></pre>
+
+<h2>Assigning from a url</h2>
+
+<p>Dragonfly provides an accessor for assigning directly from a url:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image_url identifier id'>cover_image_url</span> <span class='assign token'>=</span> <span class='string val'>&#39;http://some.url/file.jpg&#39;</span>
+</code></pre>
+
+<p>You can put this in a form view, e.g. in rails erb:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='lt op'>&lt;</span><span class='string val'>% form_for </span><span class='rubyid_@album ivar id'>@album</span><span class='comma token'>,</span> <span class='symbol val'>:html</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:multipart</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='rbrace token'>}</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span> <span class='string val'>%&gt;
+  ...
+  &lt;%= f.text_field :cover_image_url %&gt;</span>
+  <span class='dot3 op'>...</span>
+<span class='lt op'>&lt;</span><span class='string val'>% end </span><span class='mod op'>%</span><span class='gt op'>&gt;</span>
+</code></pre>
+
+<h2>Removing an attachment via a form</h2>
+
+<p>Normally unassignment of an attachment is done like any other attribute, by setting to nil</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>
+</code></pre>
+
+<p>but this can't be done via a form - instead <code>remove_&lt;attachment_name&gt;</code> is provided, which can be used with a checkbox:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='lt op'>&lt;</span><span class='string val'>%= f.check_box :remove_cover_image %&gt;
+</span></code></pre>
+
+<h2>Retaining across form redisplays</h2>
+
+<p>When a model fails validation, you don't normally want to have to upload your attachment again, so you can avoid having to do this by
+including a hidden field in your form <code>retained_&lt;attribute_name&gt;</code>, e.g.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='lt op'>&lt;</span><span class='string val'>% form_for </span><span class='rubyid_@album ivar id'>@album</span><span class='comma token'>,</span> <span class='symbol val'>:html</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:multipart</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='rbrace token'>}</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span> <span class='string val'>%&gt;
+  ...
+  &lt;%= f.file_field :cover_image %&gt;</span>
+  <span class='lt op'>&lt;</span><span class='string val'>%= f.hidden_field :retained_cover_image %&gt;
+  ...
+&lt;% end %&gt;
+</span></code></pre>
+
+<h2>Persisting</h2>
+
+<p>When the model is saved, a before_save callback persists the data to the <span class='object_link'><a href="Dragonfly/App.html" title="Dragonfly::App (class)">App</a></span>'s configured datastore (see <a href="file.DataStorage.html" title="DataStorage">DataStorage</a>)
+The uid column is then filled in.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_@album ivar id'>@album</span> <span class='assign token'>=</span> <span class='rubyid_Album constant id'>Album</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image_uid identifier id'>cover_image_uid</span>                                   <span class='comment val'># =&gt; nil</span>
+
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&#39;path/to/my_image.png&#39;</span><span class='rparen token'>)</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image_uid identifier id'>cover_image_uid</span>                                   <span class='comment val'># =&gt; nil</span>
+
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_save identifier id'>save</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image_uid identifier id'>cover_image_uid</span>                                   <span class='comment val'># =&gt; &#39;2009/12/05/file.png&#39; (some unique uid, used by the datastore)</span>
+</code></pre>
+
+<h2>URLs</h2>
+
+<p>Once the model is saved, we can get a url for the image (which is served by the Dragonfly <span class='object_link'><a href="Dragonfly/App.html" title="Dragonfly::App (class)">App</a></span> itself), and for its processed/encoded versions:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>                           <span class='comment val'># =&gt; &#39;/media/BAhbBlsHOgZmIhgy...&#39;</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>&#39;300x200#nw&#39;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>       <span class='comment val'># =&gt; &#39;/media/BAhbB1sYusgZhgyM...&#39;</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_process identifier id'>process</span><span class='lparen token'>(</span><span class='symbol val'>:greyscale</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_jpg identifier id'>jpg</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span>   <span class='comment val'># =&gt; &#39;/media/BnA6CnRodW1iIg8z...&#39;</span>
+</code></pre>
+
+<p>Because the processing/encoding methods (including shortcuts like <code>thumb</code> and <code>jpg</code>) are lazy, no processing or encoding is actually done.</p>
+
+<h2>Validations</h2>
+
+<p><code>validates_presence_of</code> and <code>validates_size_of</code> work out of the box, and Dragonfly also provides <code>validates_property</code>.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Album constant id'>Album</span>
+
+  <span class='rubyid_validates_presence_of identifier id'>validates_presence_of</span> <span class='symbol val'>:cover_image</span>
+  <span class='rubyid_validates_size_of identifier id'>validates_size_of</span> <span class='symbol val'>:cover_image</span><span class='comma token'>,</span> <span class='symbol val'>:maximum</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='float val'>500</span><span class='dot token'>.</span><span class='rubyid_kilobytes identifier id'>kilobytes</span>
+
+  <span class='rubyid_validates_property identifier id'>validates_property</span> <span class='symbol val'>:format</span><span class='comma token'>,</span> <span class='symbol val'>:of</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:cover_image</span><span class='comma token'>,</span> <span class='symbol val'>:in</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:jpeg</span><span class='comma token'>,</span> <span class='symbol val'>:png</span><span class='comma token'>,</span> <span class='symbol val'>:gif</span><span class='rbrack token'>]</span>
+  <span class='comment val'># ..or..</span>
+  <span class='rubyid_validates_property identifier id'>validates_property</span> <span class='symbol val'>:mime_type</span><span class='comma token'>,</span> <span class='symbol val'>:of</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:cover_image</span><span class='comma token'>,</span> <span class='symbol val'>:as</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&#39;image/jpeg&#39;</span><span class='comma token'>,</span> <span class='symbol val'>:case_sensitive</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_false false kw'>false</span>
+
+  <span class='rubyid_validates_property identifier id'>validates_property</span> <span class='symbol val'>:width</span><span class='comma token'>,</span> <span class='symbol val'>:of</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:cover_image</span><span class='comma token'>,</span> <span class='symbol val'>:in</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='integer val'>0</span><span class='dot2 op'>..</span><span class='integer val'>400</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:message</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;é demais cara!&quot;</span>
+
+  <span class='comment val'># ...</span>
+<span class='rubyid_end end kw'>end</span>
+</code></pre>
+
+<p>The property argument of <code>validates_property</code> will generally be one of the registered analyser properties as described in <a href="file.Analysers.html" title="Analysers">Analysers</a>.
+However it would actually work for arbitrary properties, including those of non-dragonfly model attributes.</p>
+
+<p><code>validates_property</code> can also take a proc for the message, yielding the actual value and the model</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_validates_property identifier id'>validates_property</span> <span class='symbol val'>:width</span><span class='comma token'>,</span> <span class='symbol val'>:of</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:cover_image</span><span class='comma token'>,</span> <span class='symbol val'>:in</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='integer val'>0</span><span class='dot2 op'>..</span><span class='integer val'>400</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+                           <span class='symbol val'>:message</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_proc identifier id'>proc</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_actual identifier id'>actual</span><span class='comma token'>,</span> <span class='rubyid_model identifier id'>model</span><span class='bitor op'>|</span> <span class='dstring node'>&quot;Unlucky #{model.title} - was #{actual}&quot;</span> <span class='rbrace token'>}</span>
+</code></pre>
+
+<h2>Name and extension</h2>
+
+<p>If the object assigned is a file, or responds to <code>original_filename</code> (as is the case with file uploads in Rails, etc.), then <code>name</code> will be set.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&#39;path/to/my_image.png&#39;</span><span class='rparen token'>)</span>
+
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span>    <span class='comment val'># =&gt; &#39;my_image.png&#39;</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_ext identifier id'>ext</span>     <span class='comment val'># =&gt; &#39;png&#39;</span>
+</code></pre>
+
+<h2>Meta data</h2>
+
+<p>You can store metadata along with the content data of your attachment:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&#39;path/to/my_image.png&#39;</span><span class='rparen token'>)</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_meta identifier id'>meta</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:taken</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_Date constant id'>Date</span><span class='dot token'>.</span><span class='rubyid_yesterday identifier id'>yesterday</span><span class='rbrace token'>}</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_save! fid id'>save!</span>
+
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_meta identifier id'>meta</span>      <span class='comment val'># =&gt; {:model_class=&gt;&quot;Album&quot;,</span>
+                             <span class='comment val'>#     :model_attachment=&gt;:cover_image,</span>
+                             <span class='comment val'>#     :taken=&gt;Sat, 11 Sep 2010}</span>
+</code></pre>
+
+<p>As you can see, a couple of things are added by the model. You can also access this directly on the <span class='object_link'><a href="Dragonfly/Job.html" title="Dragonfly::Job (class)">Job</a></span> object.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image_uid identifier id'>cover_image_uid</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_meta identifier id'>meta</span>     <span class='comment val'># =&gt; {:model_class=&gt;&quot;Album&quot;, ...}</span>
+</code></pre>
+
+<p>Meta data can be useful because at the time that Dragonfly serves content, it doesn't have access to your model, but it does
+have access to the meta data that was stored alongside the content, so you could use it to provide custom response headers, etc.
+(see <a href="file.Configuration.html" title="Configuration">Configuration</a>).</p>
+
+<h2>Callbacks</h2>
+
+<p><strong>after_assign</strong></p>
+
+<p><code>after_assign</code> can be used to do something every time content is assigned:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Person constant id'>Person</span>
+  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_after_assign identifier id'>after_assign</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_a identifier id'>a</span><span class='bitor op'>|</span> <span class='rubyid_a identifier id'>a</span><span class='dot token'>.</span><span class='rubyid_process! fid id'>process!</span><span class='lparen token'>(</span><span class='symbol val'>:rotate</span><span class='comma token'>,</span> <span class='integer val'>90</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>  <span class='comment val'># &#39;a&#39; is the attachment itself</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+
+<span class='rubyid_person identifier id'>person</span><span class='dot token'>.</span><span class='rubyid_mugshot identifier id'>mugshot</span> <span class='assign token'>=</span> <span class='rubyid_Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&#39;some/path.png&#39;</span><span class='rparen token'>)</span>  <span class='comment val'># after_assign callback is called</span>
+<span class='rubyid_person identifier id'>person</span><span class='dot token'>.</span><span class='rubyid_mugshot identifier id'>mugshot</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>                            <span class='comment val'># after_assign callback is NOT called</span>
+</code></pre>
+
+<p>Inside the block, you can call methods on the model instance directly (<code>self</code> is the model):</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Person constant id'>Person</span>
+  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_after_assign identifier id'>after_assign</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_a identifier id'>a</span><span class='bitor op'>|</span> <span class='rubyid_a identifier id'>a</span><span class='dot token'>.</span><span class='rubyid_process! fid id'>process!</span><span class='lparen token'>(</span><span class='symbol val'>:rotate</span><span class='comma token'>,</span> <span class='rubyid_angle identifier id'>angle</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='rubyid_end end kw'>end</span>
+
+  <span class='rubyid_def def kw'>def</span> <span class='rubyid_angle identifier id'>angle</span>
+    <span class='integer val'>90</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</code></pre>
+
+<p>Alternatively you can pass in a symbol, corresponding to a model instance method:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Person constant id'>Person</span>
+  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_after_assign identifier id'>after_assign</span> <span class='symbol val'>:rotate_it</span>
+  <span class='rubyid_end end kw'>end</span>
+
+  <span class='rubyid_def def kw'>def</span> <span class='rubyid_rotate_it identifier id'>rotate_it</span>
+    <span class='rubyid_mugshot identifier id'>mugshot</span><span class='dot token'>.</span><span class='rubyid_process! fid id'>process!</span><span class='lparen token'>(</span><span class='symbol val'>:rotate</span><span class='comma token'>,</span> <span class='integer val'>90</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</code></pre>
+
+<p>You can register more than one <code>after_assign</code> callback.</p>
+
+<p><strong>after_unassign</strong></p>
+
+<p><code>after_unassign</code> is similar to <code>after_assign</code>, but is only called when the attachment is unassigned</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_person identifier id'>person</span><span class='dot token'>.</span><span class='rubyid_mugshot identifier id'>mugshot</span> <span class='assign token'>=</span> <span class='rubyid_Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&#39;some/path.png&#39;</span><span class='rparen token'>)</span>  <span class='comment val'># after_unassign callback is NOT called</span>
+<span class='rubyid_person identifier id'>person</span><span class='dot token'>.</span><span class='rubyid_mugshot identifier id'>mugshot</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>                            <span class='comment val'># after_unassign callback is called</span>
+</code></pre>
+
+<h2>Up-front thumbnailing</h2>
+
+<p>The best way to create different versions of content such as thumbnails is generally on-the-fly, however if you <em>must</em>
+create another version <em>on-upload</em>, then you could create another accessor and automatically copy to it using <code>copy_to</code>.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Person constant id'>Person</span>
+  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_copy_to identifier id'>copy_to</span><span class='lparen token'>(</span><span class='symbol val'>:smaller_mugshot</span><span class='rparen token'>)</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_a identifier id'>a</span><span class='bitor op'>|</span> <span class='rubyid_a identifier id'>a</span><span class='dot token'>.</span><span class='rubyid_thumb identifier id'>thumb</span><span class='lparen token'>(</span><span class='string val'>&#39;200x200#&#39;</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:smaller_mugshot</span>
+<span class='rubyid_end end kw'>end</span>
+
+<span class='rubyid_person identifier id'>person</span><span class='dot token'>.</span><span class='rubyid_mugshot identifier id'>mugshot</span> <span class='assign token'>=</span> <span class='rubyid_Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&#39;some/400x300/image.png&#39;</span><span class='rparen token'>)</span>
+
+<span class='rubyid_person identifier id'>person</span><span class='dot token'>.</span><span class='rubyid_mugshot identifier id'>mugshot</span>            <span class='comment val'># ---&gt; 400x300 image</span>
+<span class='rubyid_person identifier id'>person</span><span class='dot token'>.</span><span class='rubyid_smaller_mugshot identifier id'>smaller_mugshot</span>    <span class='comment val'># ---&gt; 200x200 image</span>
+</code></pre>
+
+<p>In the above example you would need both a <code>mugshot_uid</code> field and a <code>smaller_mugshot_uid</code> field on your model.</p>
+
+<h2>Storage options</h2>
+
+<p>Some datastores take options when calling <code>store</code> - you can pass these through using <code>storage_xxx</code> methods, e.g.</p>
+
+<p><strong>storage_path</strong></p>
+
+<p>The <span class='object_link'><a href="Dragonfly/DataStorage/FileDataStore.html" title="Dragonfly::DataStorage::FileDataStore (class)">FileDataStore</a></span> and <span class='object_link'><a href="Dragonfly/DataStorage/S3DataStore.html" title="Dragonfly::DataStorage::S3DataStore (class)">S3DataStore</a></span> both
+can take a <code>:path</code> option to specify where to store the content (which will also become the uid for that content)</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Person constant id'>Person</span>
+  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_storage_path identifier id'>storage_path</span><span class='lbrace token'>{</span> <span class='dstring node'>&quot;some/path/#{first_name}/#{rand(100)}&quot;</span> <span class='rbrace token'>}</span>  <span class='comment val'># You can call model instance methods (like &#39;first_name&#39;) directly</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</code></pre>
+
+<p>or</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Person constant id'>Person</span>
+  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_storage_path identifier id'>storage_path</span> <span class='symbol val'>:path_for_mugshot</span>
+  <span class='rubyid_end end kw'>end</span>
+
+  <span class='rubyid_def def kw'>def</span> <span class='rubyid_path_for_mugshot identifier id'>path_for_mugshot</span>
+    <span class='dstring node'>&quot;some/path/#{first_name}/#{rand(100)}&quot;</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</code></pre>
+
+<p>or you can also yield the attachment itself</p>
+
+<pre class="code ruby"><code class="ruby">    <span class='rubyid_storage_path identifier id'>storage_path</span><span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_a identifier id'>a</span><span class='bitor op'>|</span> <span class='dstring node'>&quot;some/path/#{a.width}x#{a.height}.#{a.format}&quot;</span> <span class='rbrace token'>}</span>
+</code></pre>
+
+<p><strong>BEWARE!!!!</strong> you must make sure the path (which will become the uid for the content) is unique and changes each time the content
+is changed, otherwise you could have caching problems, as the generated urls will be the same for the same uid.</p>
+
+<p><strong>BEWARE No. 2!!!!</strong> using <code>id</code> in the <code>storage_path</code> won't generally work on create, because Dragonfly stores the content in a call to <code>before_save</code>,
+at which point the <code>id</code> won't yet exist.</p>
+
+<p>You can pass any options through to the datastore using <code>storage_xxx</code> methods, or all at once using <code>storage_opts</code>:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Person constant id'>Person</span>
+  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:mugshot</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_storage_opts identifier id'>storage_opts</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_a identifier id'>a</span><span class='bitor op'>|</span>
+      <span class='lbrace token'>{</span>
+        <span class='symbol val'>:path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>&quot;some/path/#{id}/#{rand(100)}&quot;</span><span class='comma token'>,</span>
+        <span class='symbol val'>:other</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&#39;option&#39;</span>
+      <span class='rbrace token'>}</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</code></pre>
+
+<h2>&quot;Magic&quot; Attributes</h2>
+
+<p>An accessor like <code>cover_image</code> only relies on the accessor <code>cover_image_uid</code> to work.
+However, in some cases you may want to record some other properties, whether it be for using in queries, or
+for caching an attribute for performance reasons, etc.</p>
+
+<p>For the properties <code>name</code>, <code>ext</code>, <code>size</code> and any of the registered analysis methods (e.g. <code>width</code>, etc. in the examples above),
+this is done automatically for you, if the corresponding accessor exists.</p>
+
+<p>For example - with ActiveRecord, given the migration:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_add_column identifier id'>add_column</span> <span class='symbol val'>:albums</span><span class='comma token'>,</span> <span class='symbol val'>:cover_image_width</span><span class='comma token'>,</span> <span class='symbol val'>:integer</span>
+</code></pre>
+
+<p>This will automatically be set when assigned:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span> <span class='assign token'>=</span> <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&#39;path/to/my_image.png&#39;</span><span class='rparen token'>)</span>
+
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image_width identifier id'>cover_image_width</span>  <span class='comment val'># =&gt; 280</span>
+</code></pre>
+
+<p>They can be used to avoid retrieving data from the datastore for analysis</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_@album ivar id'>@album</span> <span class='assign token'>=</span> <span class='rubyid_Album constant id'>Album</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span>
+
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_width identifier id'>width</span>     <span class='comment val'># =&gt; 280    - no need to retrieve data - takes it from `cover_image_width`</span>
+<span class='rubyid_@album ivar id'>@album</span><span class='dot token'>.</span><span class='rubyid_cover_image identifier id'>cover_image</span><span class='dot token'>.</span><span class='rubyid_size identifier id'>size</span>      <span class='comment val'># =&gt; 134507 - but this needs to retrieve data from the data store, then analyse</span>
+</code></pre>
+
+<p>Furthermore, any magic attributes you add a field for will be added to the meta data for that attachment (and so can be used when Dragonfly serves the content
+for e.g. setting custom response headers based on that meta - see <a href="file.Configuration.html" title="Configuration">Configuration</a>).</p>
+
+<h2>Custom Model</h2>
+
+<p>The accessors only require that your model class implements <code>before_save</code>, <code>before_destroy</code> and <code>validates_each</code>
+(if using validations), as well as of course the <code>..._uid</code> field for storing the datastore uid.</p>
+
+<p>Here is an example of a minimal ActiveModel <code>Album</code> model:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_CustomModel constant id'>CustomModel</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span>
+
+  <span class='rubyid_extend identifier id'>extend</span> <span class='rubyid_ActiveModel constant id'>ActiveModel</span><span class='colon2 op'>::</span><span class='rubyid_Callbacks constant id'>Callbacks</span>
+  <span class='rubyid_define_model_callbacks identifier id'>define_model_callbacks</span> <span class='symbol val'>:save</span><span class='comma token'>,</span> <span class='symbol val'>:destroy</span>
+
+  <span class='rubyid_include identifier id'>include</span> <span class='rubyid_ActiveModel constant id'>ActiveModel</span><span class='colon2 op'>::</span><span class='rubyid_Validations constant id'>Validations</span>   <span class='comment val'># if needed</span>
+
+  <span class='rubyid_def def kw'>def</span> <span class='rubyid_save identifier id'>save</span>
+    <span class='rubyid__run_save_callbacks identifier id'>_run_save_callbacks</span> <span class='lbrace token'>{</span>
+      <span class='comment val'># do some saving!</span>
+    <span class='rbrace token'>}</span>
+  <span class='rubyid_end end kw'>end</span>
+
+  <span class='rubyid_def def kw'>def</span> <span class='rubyid_destroy identifier id'>destroy</span>
+    <span class='rubyid__run_destroy_callbacks identifier id'>_run_destroy_callbacks</span> <span class='lbrace token'>{</span>
+      <span class='comment val'># do some destroying!</span>
+    <span class='rbrace token'>}</span>
+  <span class='rubyid_end end kw'>end</span>
+
+<span class='rubyid_end end kw'>end</span>
+</code></pre>
+
+<p>Define our <code>image_accessor</code> macro...</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_app identifier id'>app</span><span class='dot token'>.</span><span class='rubyid_define_macro identifier id'>define_macro</span><span class='lparen token'>(</span><span class='rubyid_CustomModel constant id'>CustomModel</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span><span class='comma token'>,</span> <span class='symbol val'>:image_accessor</span><span class='rparen token'>)</span>
+</code></pre>
+
+<p>...which is used by <code>Album</code>:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='rubyid_class class kw'>class</span> <span class='rubyid_Album constant id'>Album</span> <span class='lt op'>&lt;</span> <span class='rubyid_CustomModel constant id'>CustomModel</span><span class='colon2 op'>::</span><span class='rubyid_Base constant id'>Base</span>
+
+  <span class='rubyid_def def kw'>def</span> <span class='rubyid_cover_image_uid= identifier id'>cover_image_uid=</span>
+    <span class='comment val'># ...</span>
+  <span class='rubyid_end end kw'>end</span>
+
+  <span class='rubyid_def def kw'>def</span> <span class='rubyid_cover_image_uid identifier id'>cover_image_uid</span>
+    <span class='comment val'># ...</span>
+  <span class='rubyid_end end kw'>end</span>
+
+  <span class='rubyid_image_accessor identifier id'>image_accessor</span> <span class='symbol val'>:cover_image</span>
+
+<span class='rubyid_end end kw'>end</span>
+</code></pre>
+</div>
+      </div>
+      <div class="col2">
+        <ul class="main_files clearfix">
+          <li><a href="file.Index.html" title="Home">Home</a></li><li><a href="file.README.html" title="Quick start for Rails (README)">Quick start for Rails (README)</a></li><li><a href="file.GeneralUsage.html" title="General usage">General usage</a></li><li><a href="file.Rails2.html" title="Rails 2.3">Rails 2.3</a></li><li><a href="file.Rails3.html" title="Rails 3">Rails 3</a></li><li><a href="file.Models.html" title="Models">Models</a></li><li><a href="file.ImageMagick.html" title="ImageMagick">ImageMagick</a></li><li><a href="file.Rack.html" title="Rack">Rack</a></li><li><a href="file.Sinatra.html" title="Sinatra">Sinatra</a></li><li><a href="file.Heroku.html" title="Heroku">Heroku</a></li><li><a href="file.Mongo.html" title="Mongo">Mongo</a></li><li><a href="file.Couch.html" title="Couch">Couch</a></li><li><a href="file.DataStorage.html" title="Data Storage">Data Storage</a></li><li><a href="file.Analysers.html" title="Analysers">Analysers</a></li><li><a href="file.Processing.html" title="Processing">Processing</a></li><li><a href="file.Encoding.html" title="Encoding">Encoding</a></li><li><a href="file.Generators.html" title="Generators">Generators</a></li><li><a href="file.Configuration.html" title="Configuration">Configuration</a></li><li><a href="file.URLs.html" title="URLs / Endpoints">URLs / Endpoints</a></li><li><a href="file.MimeTypes.html" title="Mime Types">Mime Types</a></li><li><a href="file.Caching.html" title="Caching">Caching</a></li><li><a href="file.ServingRemotely.html" title="Serving Remotely">Serving Remotely</a></li><li><a href="file.ExampleUseCases.html" title="Example Use Cases">Example Use Cases</a></li><li><a href="file.History.html" title="History">History</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="footer">
+  Generated on Tue Sep 17 18:07:01 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7 (ruby-2.0.0).
+</div>
+
+  </body>
+</html>

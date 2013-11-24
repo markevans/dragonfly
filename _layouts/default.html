@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{{ page.title }}</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="{{ site.baseurl }}/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="{{ site.baseurl }}/css/styles.css">
+
+        <!-- JS -->
+        <script src="{{ site.baseurl }}/js/jquery-2.0.3.min.js"></script>
+        <script src="{{ site.baseurl }}/js/main.js"></script>
+    </head>
+    <body>
+
+        <div class="wrapper">
+          <header class="clearfix">
+            <div class="title-section">
+              <h1 class="title"><a href="{{ site.baseurl }}/">{{ site.name }}</a></h1>
+              <p>Image/asset management for winners</p>
+
+              <p class="github">
+                <img src="{{site.baseurl}}/images/octocat.png" /> <a href="https://github.com/markevans/dragonfly">GitHub Repository</a>
+              </p>
+            </div>
+
+            <div class="primary-nav">
+              <ul>
+                {% for post in site.posts reversed %}
+                {% if post.tags contains 'main' %}
+                <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+
+            <div class="secondary-nav">
+              <h3>Customization</h3>
+              <ul>
+                {% for post in site.posts reversed %}
+                {% if post.tags contains 'customization' %}
+                <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+
+          </header>
+
+          <div class="main">
+            <section>
+              {{ content }}
+            </section>
+
+            <div class="about">
+              <center>
+                Created and maintained by <a href="https://github.com/markevans">Mark Evans</a><br />
+                <small>Derived from theme by <a href="https://github.com/orderedlist">orderedlist</a></small>
+              </center>
+
+              <div class="left">
+                <a href="http://rubydoc.info/github/markevans/dragonfly/frames">RubyDoc</a> <br />
+                <a href="{{ site.baseurl }}/v0.9.15">Docs for version 0.9.x</a><br />
+                <a href="https://github.com/markevans/dragonfly/blob/master/History.md">ChangeLog</a> <br />
+              </div>
+
+              <div class="right">
+                <a href="https://github.com/markevans/dragonfly/graphs/contributors">Contributors</a><br />
+                <a href="http://github.com/markevans/dragonfly/issues">Issues</a> <br />
+                <a href="http://groups.google.com/group/dragonfly-users">Suggestions/Questions</a> <br />
+              </div>
+            </div>
+          </div>
+
+
+        </div> <!-- /wrapper -->
+
+    </body>
+</html>

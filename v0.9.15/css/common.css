@@ -1,0 +1,109 @@
+/* Overrides for yard documentation */
+
+/* Clearfix */
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
+ /************/
+
+body {
+  font-family: "PT Sans",Verdana,Arial,sans-serif;
+  font-size: 14px;
+}
+
+pre, code, .code,
+#filecontents pre.code,
+.docstring pre.code,
+.source_code pre {
+  font-family: Inconsolata,Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
+}
+
+pre.code, code {
+  background:#F5F5FF;
+  overflow-x: auto;
+}
+#filecontents pre.code {
+  margin:10px 0;
+  padding:5px 12px;
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border: 1px dotted #CCC;
+}
+
+code .val {
+  color:#036A07;
+}
+code .kw {
+  color:#0000FF;
+}
+code .symbol {
+  color:#C5060B;
+}
+
+ul.main_files {
+  list-style-type:none;
+  margin:0;
+  padding:0;
+  font-size:14px;
+}
+ul.main_files li {
+  margin:0;
+  padding:0;
+}
+
+ul.main_files li a {
+  margin: 0;
+  padding:3px 12px;
+  display:block;
+  cursor:pointer;
+}
+#content ul.main_files li a:hover {
+  background-color:#F4F9E4;
+}
+/* Layout */
+#header,
+#content,
+#footer {
+  margin:0 auto;
+  width:1000px;
+}
+#header #logo {
+  float:left;
+  width:50%;
+  font-size: 32px;
+  letter-spacing: -1px;
+  margin-top: 20px;
+}
+#header #search {
+  position:static;
+  float:right;
+}
+#content .col1 {
+  float:left;
+  width: 750px;
+}
+#content .col2 {
+  float:left;
+  margin: 0 0 0 20px;
+  padding: 0 0 0 20px;
+  width: 200px;
+  border-left: 1px dotted #D5D5D5;
+}
