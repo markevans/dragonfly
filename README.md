@@ -1,107 +1,55 @@
 Dragonfly
 ===========
+Hello!!
+Dragonfly is a highly customizable ruby gem for handling images and other attachments and is already in use on thousands of websites.
 
-Dragonfly is a <a href="http://rack.rubyforge.org">Rack</a> framework for on-the-fly image handling.
-
-Ideal for using with Ruby on Rails (2.3 and 3), Sinatra and all that gubbins.
-
-However, Dragonfly is NOT JUST FOR RAILS, and NOT JUST FOR IMAGES!!
-
-**IMPORTANT: if you're running a version between 0.7.0 and 0.9.12, please update to at least 0.9.14 for a security update [details here](https://groups.google.com/forum/?fromgroups=#!topic/dragonfly-users/3c3WIU3VQTo)**
-
-For the lazy Rails user...
---------------------------
-**Gemfile**:
-
+If you want to generate image thumbnails in Rails ...
 ```ruby
-gem 'rack-cache', :require => 'rack/cache'
-gem 'dragonfly', '~>0.9.15'
+class User < ActiveRecord::Base  # model
+  dragonfly_accessor :photo
+end
+```
+```erb
+<%= image_tag @user.photo.thumb('300x200#')  # view  %>
 ```
 
-**Initializer** (e.g. config/initializers/dragonfly.rb):
-
+... or generate text images on-demand in Sinatra ...
 ```ruby
-require 'dragonfly/rails/images'
-```
-
-**Migration**:
-
-```ruby
-add_column :albums, :cover_image_uid,  :string
-add_column :albums, :cover_image_name, :string  # Optional - only if you want urls
-                                                # to end with the original filename
-```
-
-**Model**:
-
-```ruby
-class Album < ActiveRecord::Base
-  image_accessor :cover_image            # 'image_accessor' is provided by Dragonfly
-                                         # this defines a reader/writer for cover_image
-  # ...
+get "/:text" do |text|
+  Dragonfly.app.generate(:text, text, "font-size" => 32).to_response(env)
 end
 ```
 
-**View** (for uploading via a file field):
+... or just generally manage attachments in your web app ...
+```ruby
+wav = Dragonfly.app.fetch_url("http://free.music/lard.wav")  # GET from t'interwebs
+mp3 = wav.to_mp3  # to_mp3 is a custom processor
+uid = mp3.store   # store in the configured datastore, e.g. S3
 
-```erb
-<% form_for @album, :html => {:multipart => true} do |f| %>
-  ...
-  <%= f.file_field :cover_image %>
-  ...
-<% end %>
+url = Dragonfly.app.remote_url_for(uid)  # ===> http://s3.amazon.com/my-stuff/lard.mp3
 ```
 
-NB: REMEMBER THE MULTIPART BIT!!!
+... then Dragonfly is for you! See [the documentation](http://markevans.github.io/dragonfly) to get started!
 
-You can avoid having to re-upload when validations fail with
+Documentation
+=============
+<a href="http://markevans.github.io/dragonfly"><big><strong>THE MAIN DOCUMENTATION IS HERE!!!</strong></big></a>
 
-```erb
-<%= f.hidden_field :retained_cover_image %>
-```
+<a href="http://rubydoc.info/github/markevans/dragonfly/frames">RDoc documentation is here</a>
 
-remove the attachment with
+Dragonfly has changed somewhat since version 0.9 - if for whatever reason you can't upgrade, then
+<a href="http://markevans.github.io/dragonfly/v0.9.15">the docs for version 0.9.x are here</a>.
 
-```erb
-<%= f.check_box :remove_cover_image %>
-```
+Installation
+============
 
-assign from some other url with
+    gem install dragonfly
 
-```erb
-<%= f.text_field :cover_image_url %>
-```
+Plugins and Add-ons
+===================
+See [the Add-ons wiki](http://github.com/markevans/dragonfly/wiki/Dragonfly-add-ons).
 
-and display a thumbnail (on the upload form) with
-
-```erb
-<%= image_tag @album.cover_image.thumb('100x100').url if @album.cover_image_uid %>
-```
-
-**View** (to display):
-
-```erb
-<%= image_tag @album.cover_image.url %>
-<%= image_tag @album.cover_image.thumb('400x200#').url %>
-<%= image_tag @album.cover_image.jpg.url %>
-<%= image_tag @album.cover_image.process(:greyscale).encode(:tiff).url %>
-...etc.
-```
-
-The above relies on imagemagick being installed. Dragonfly doesn't depend on it per se, but the `:imagemagick` configuration
-uses it. For alternative configurations, see below.
-
-Sinatra, CouchDB, Mongo, Rack, S3, custom storage, processing, and more...
---------------------------------------------------------------------------
-Dragonfly is not just for Rails - it's primarily a Rack app, so you can use it as a standalone app, or with Sinatra, Merb, etc.
-
-It's highly customizable, and works with any data type (not just images).
-
-For more info, consult the <a href="http://markevans.github.com/dragonfly"><big><strong>DOCUMENTATION</strong></big></a>
-
-Add-ons
-=======
-For third-party add-ons, see [the Add-ons wiki](http://github.com/markevans/dragonfly/wiki/Dragonfly-add-ons)
+Please feel free to contribute!!
 
 Issues
 ======
@@ -113,8 +61,5 @@ Suggestions/Questions
 
 Credits
 =======
-- [Mark Evans](http://github.com/markevans) (author)
-
-Copyright
-========
-Copyright (c) 2009-2010 Mark Evans. See LICENSE for details.
+[Mark Evans](http://github.com/markevans) (author) with awesome contributions from
+<a href="https://github.com/markevans/dragonfly/graphs/contributors">these guys</a>
