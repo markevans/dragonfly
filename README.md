@@ -59,7 +59,8 @@ Ruby Versions
 =============
 Dragonfly has been tested with ruby versions 1.8.7, 1.9.2, 1.9.3, 2.0.0, jruby (1.8 and 1.9 mode) and rubinius (1.8 and 1.9 mode)
 
-===================
+Plugins / add-ons
+=================
 See [the Add-ons wiki](http://github.com/markevans/dragonfly/wiki/Dragonfly-add-ons).
 
 Please feel free to contribute!!
