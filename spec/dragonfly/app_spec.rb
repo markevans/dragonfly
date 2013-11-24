@@ -361,6 +361,18 @@ describe Dragonfly::App do
         end
       }.to raise_error(/no method.*changed.*docs/)
     end
+
+    it "raises a message when calling App#define_macro" do
+      expect {
+        Dragonfly.app.define_macro(Object, :image_accessor)
+      }.to raise_error(/dragonfly_accessor/)
+    end
+
+    it "raises a message when calling App#define_macro_on_include" do
+      expect {
+        Dragonfly.app.define_macro_on_include(Module.new, :image_accessor)
+      }.to raise_error(/dragonfly_accessor/)
+    end
   end
 
 end

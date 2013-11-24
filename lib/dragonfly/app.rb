@@ -265,6 +265,14 @@ module Dragonfly
 
     attr_accessor :allow_legacy_urls
 
+    def define_macro(klass, name)
+      raise NoMethodError, "define_macro is deprecated - instead of defining #{name}, just extend #{klass.name} with Dragonfly::Model and use dragonfly_accessor"
+    end
+
+    def define_macro_on_include(mod, name)
+      raise NoMethodError, "define_macro_on_include is deprecated - instead of defining #{name}, just extend the relevant class with Dragonfly::Model and use dragonfly_accessor"
+    end
+
     private
 
     def file_ext_string(format)
