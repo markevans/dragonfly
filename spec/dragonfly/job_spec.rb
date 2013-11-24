@@ -117,7 +117,7 @@ describe Dragonfly::Job do
 
   describe "fetch_url" do
     before(:each) do
-      stub_request(:get, %r{http://some\.place\.com/.*}).to_return(:body => 'result!')
+      stub_request(:get, %r{http://place\.com/.*}).to_return(:body => 'result!')
     end
 
     it "adds a step" do
@@ -126,29 +126,54 @@ describe Dragonfly::Job do
     end
 
     it "should fetch the specified url when applied" do
-      job.fetch_url!('http://some.place.com')
+      job.fetch_url!('http://place.com')
       job.data.should == "result!"
     end
 
     it "should default to http" do
-      job.fetch_url!('some.place.com')
+      job.fetch_url!('place.com')
       job.data.should == "result!"
     end
 
     it "should also work with https" do
-      stub_request(:get, 'https://some.place.com').to_return(:body => 'secure result!')
-      job.fetch_url!('https://some.place.com')
+      stub_request(:get, 'https://place.com').to_return(:body => 'secure result!')
+      job.fetch_url!('https://place.com')
       job.data.should == "secure result!"
     end
 
-    it "should set the name if there is one" do
-      job.fetch_url!('some.place.com/dung.beetle')
-      job.name.should == 'dung.beetle'
+    [
+      "place.com",
+      "http://place.com",
+      "place.com/",
+      "place.com/stuff/",
+      "place.com/?things"
+    ].each do |url|
+      it "doesn't set the name if there isn't one, e.g. for #{url}" do
+        job.fetch_url!(url)
+        job.name.should be_nil
+      end
+
+      it "doesn't set the name url_attr if there isn't one, e.g. for #{url}" do
+        job.fetch_url!(url)
+        job.url_attributes.name.should be_nil
+      end
     end
 
-    it "should set the name url_attr if there is one" do
-      job.fetch_url!('some.place.com/dung.beetle')
-      job.url_attributes.name.should == 'dung.beetle'
+    [
+      "place.com/dung.beetle",
+      "http://place.com/dung.beetle",
+      "place.com/stuff/dung.beetle",
+      "place.com/dung.beetle?morethings"
+    ].each do |url|
+      it "sets the name if there is one, e.g. for #{url}" do
+        job.fetch_url!(url)
+        job.name.should == 'dung.beetle'
+      end
+
+      it "sets the name url_attr if there is one, e.g. for #{url}" do
+        job.fetch_url!(url)
+        job.url_attributes.name.should == 'dung.beetle'
+      end
     end
 
     it "should raise an error if not found" do
@@ -177,15 +202,18 @@ describe Dragonfly::Job do
       job.fetch_url('redirectme.com').data.should == 'OK!'
     end
 
-    ["some.place.com", "some.place.com/", "some.place.com/eggs/"].each do |url|
-      it "should not set the name if there isn't one, e.g. #{url}" do
-        job.fetch_url!(url)
-        job.name.should be_nil
+    describe "data uris" do
+      it "accepts standard base64 encoded data uris" do
+        job.fetch_url!("data:text/plain;base64,aGVsbG8=\n")
+        job.data.should == 'hello'
+        job.mime_type.should == 'text/plain'
+        job.ext.should == 'txt'
       end
 
-      it "should not set the name url_attr if there isn't one, e.g. #{url}" do
-        job.fetch_url!(url)
-        job.url_attributes.name.should be_nil
+      it "doesn't accept other data uris" do
+        expect {
+          job.fetch_url!("data:text/html;charset=utf-8,<stuff />").apply
+        }.to raise_error(Dragonfly::Job::FetchUrl::CannotHandle)
       end
     end
   end
