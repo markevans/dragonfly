@@ -11,13 +11,13 @@ describe Dragonfly::Shell do
   it "should raise an error if the command isn't found" do
     lambda{
       shell.run "non-existent-command"
-    }.should raise_error(Dragonfly::Shell::CommandFailed, /not found/)
+    }.should raise_error(Dragonfly::Shell::CommandFailed)
   end
 
   it "should raise an error if the command fails" do
     lambda{
       shell.run "ls -j"
-    }.should raise_error(Dragonfly::Shell::CommandFailed, /option/)
+    }.should raise_error(Dragonfly::Shell::CommandFailed)
   end
 
   unless Dragonfly.running_on_windows?
