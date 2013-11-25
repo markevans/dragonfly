@@ -207,7 +207,7 @@ module Dragonfly
 
     def ext_for(mime_type)
       return 'txt' if mime_type == 'text/plain'
-      ext = mime_types.key(mime_type)
+      ext = key_for(mime_types, mime_type)
       ext.tr('.', '') if ext
     end
 
@@ -277,6 +277,15 @@ module Dragonfly
 
     def file_ext_string(format)
       '.' + format.to_s.downcase.sub(/^.*\./,'')
+    end
+
+    def key_for(hash, value)
+      if hash.respond_to?(:key)
+        hash.key(value)
+      else
+        hash.each {|k, v| return k if v == value }
+        nil
+      end
     end
 
   end

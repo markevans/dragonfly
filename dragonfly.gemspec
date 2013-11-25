@@ -24,9 +24,13 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency("rack", [">= 0"])
   spec.add_runtime_dependency("multi_json", ["~> 1.0"])
 
-  spec.add_development_dependency("activemodel")
   spec.add_development_dependency("rspec", ["~> 2.5"])
   spec.add_development_dependency("webmock")
+  if RUBY_VERSION < '1.9.3'
+    spec.add_development_dependency("activemodel", '~> 3.2')
+  else
+    spec.add_development_dependency("activemodel")
+  end
   if RUBY_PLATFORM == "java"
     spec.add_development_dependency("jruby-openssl")
   end
@@ -37,7 +41,7 @@ Please check the documentation at <http://markevans.github.io/dragonfly/>.
 
 --------------------------------------------------------------------------------
 
-DEPRECATED: dragonfly/rails/images is now deprecated. 
+DEPRECATED: dragonfly/rails/images is now deprecated.
 Please refer to <http://markevans.github.io/dragonfly/rails/> for instructions to setup
 with Rails
 --------------------------------------------------------------------------------
