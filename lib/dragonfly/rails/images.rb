@@ -1,0 +1,1 @@
+raise LoadError, "\n*****\ndragonfly/rails/images no longer exists! Please use the rails generator instead\n\n\trails generate dragonfly\n\nsee the documentation at http://markevans.github.io/dragonfly/rails for more details\n*****\n"
