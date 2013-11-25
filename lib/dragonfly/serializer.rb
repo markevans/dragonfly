@@ -31,7 +31,7 @@ module Dragonfly
       raise MaliciousString, "potentially malicious marshal string #{marshal_string.inspect}" if opts[:check_malicious] && marshal_string[/@[a-z_]/i]
       Marshal.load(marshal_string)
     rescue TypeError, ArgumentError => e
-      raise BadString, "couldn't decode #{string} - got #{e}"
+      raise BadString, "couldn't marshal decode string - got #{e}"
     end
 
     def json_encode(object)
@@ -42,7 +42,7 @@ module Dragonfly
       raise BadString, "can't decode blank string" if Utils.blank?(string)
       MultiJson.decode(string)
     rescue MultiJson::DecodeError => e
-      raise BadString, "couldn't decode #{string} - got #{e}"
+      raise BadString, "couldn't json decode string - got #{e}"
     end
 
     def json_b64_encode(object)
