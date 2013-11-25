@@ -30,4 +30,16 @@ Gem::Specification.new do |spec|
   if RUBY_PLATFORM == "java"
     spec.add_development_dependency("jruby-openssl")
   end
+  spec.post_install_message =<<-POST_INSTALL_MESSAGE
+================================================================================
+
+Please check the documentation at <http://markevans.github.io/dragonfly/>.
+
+--------------------------------------------------------------------------------
+
+DEPRECATED: dragonfly/rails/images is now deprecated. 
+Please refer to <http://markevans.github.io/dragonfly/rails/> for instructions to setup
+with Rails
+--------------------------------------------------------------------------------
+POST_INSTALL_MESSAGE
 end
