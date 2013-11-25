@@ -57,7 +57,7 @@ require 'dragonfly'
 
 Ruby Versions
 =============
-Dragonfly has been tested with ruby versions 1.8.7, 1.9.2, 1.9.3, 2.0.0 and jruby 1.7.8 (1.8 and 1.9 mode).
+Dragonfly has been tested with ruby versions 1.8.7, 1.9.2, 1.9.3, 2.0.0 and jruby 1.7.8.
 
 Plugins / add-ons
 =================
