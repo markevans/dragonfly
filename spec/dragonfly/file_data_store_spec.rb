@@ -24,10 +24,10 @@ describe Dragonfly::FileDataStore do
 
     before(:each) do
       @data_store = Dragonfly::FileDataStore.new(:root_path => 'tmp/file_data_store_test')
+      FileUtils.rm_rf("#{@data_store.root_path}")
     end
 
     after(:each) do
-      # Clean up created files
       FileUtils.rm_rf("#{@data_store.root_path}")
     end
 
