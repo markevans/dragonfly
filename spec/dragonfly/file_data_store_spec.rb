@@ -16,6 +16,13 @@ describe Dragonfly::FileDataStore do
     File.exists?(path).should be_false
   end
 
+  def assert_contains(dir, filepattern)
+    entries = Dir["#{dir}/*"]
+    unless entries.any?{|f| filepattern === f}
+      raise "expected #{entries} to contain #{filepattern}"
+    end
+  end
+
   let (:app) { test_app }
   let (:content) { Dragonfly::Content.new(app, 'goobydoo') }
   let (:new_content) { Dragonfly::Content.new(app) }
@@ -38,56 +45,51 @@ describe Dragonfly::FileDataStore do
       before(:each) do
         # Set 'now' to a date in the past
         Time.stub(:now).and_return Time.mktime(1984,"may",4,14,28,1)
-        @file_pattern_prefix_without_root = '1984/05/04/14_28_01_0_'
-        @file_pattern_prefix = "#{@data_store.root_path}/#{@file_pattern_prefix_without_root}"
+        @dir = "#{@data_store.root_path}/1984/05/04"
       end
 
       it "should store the file in a folder based on date, with default filename" do
         @data_store.write(content)
-        assert_exists "#{@file_pattern_prefix}file"
+        assert_contains @dir, /file$/
       end
 
       it "should use the content name if it exists" do
         content.should_receive(:name).at_least(:once).and_return('hello.there')
         @data_store.write(content)
-        assert_exists "#{@file_pattern_prefix}hello.there"
+        assert_contains @dir, /hello\.there$/
       end
 
       it "should get rid of funny characters in the content name" do
         content.should_receive(:name).at_least(:once).and_return('A Picture with many spaces in its name (at 20:00 pm).png')
         @data_store.write(content)
-        assert_exists "#{@file_pattern_prefix}A_Picture_with_many_spaces_in_its_name_at_20_00_pm_.png"
+        assert_contains @dir, /A_Picture_with_many_spaces_in_its_name_at_20_00_pm_\.png$/
       end
 
       it "stores meta as YAML" do
         content.meta = {'wassup' => 'doc'}
-        @data_store.write(content)
-        File.read("#{@file_pattern_prefix}file.meta.yml").should =~ /---\s+wassup: doc/
+        uid = @data_store.write(content)
+        File.read("#{@data_store.root_path}/#{uid}.meta.yml").should =~ /---\s+wassup: doc/
       end
 
       describe "when the filename already exists" do
 
         it "should use a different filename" do
-          touch_file("#{@file_pattern_prefix}file")
-          @data_store.should_receive(:disambiguate).with("#{@file_pattern_prefix}file").and_return("#{@file_pattern_prefix}file_2")
-          @data_store.write(content)
-          assert_exists "#{@file_pattern_prefix}file_2"
-        end
-
-        it "should use a different filename taking into account the name and ext" do
-          content.should_receive(:name).at_least(:once).and_return('hello.png')
-          touch_file("#{@file_pattern_prefix}hello.png")
-          @data_store.should_receive(:disambiguate).with("#{@file_pattern_prefix}hello.png").and_return("#{@file_pattern_prefix}blah.png")
-          @data_store.write(content)
+          touch_file("#{@data_store.root_path}/blah")
+          @data_store.should_receive(:disambiguate).with(/blah/).and_return("#{@data_store.root_path}/blah2")
+          @data_store.write(content, :path => 'blah')
+          assert_exists "#{@data_store.root_path}/blah2"
         end
 
         it "should keep trying until it finds a free filename" do
-          touch_file("#{@file_pattern_prefix}file")
-          touch_file("#{@file_pattern_prefix}file_2")
-          @data_store.should_receive(:disambiguate).with("#{@file_pattern_prefix}file").and_return("#{@file_pattern_prefix}file_2")
-          @data_store.should_receive(:disambiguate).with("#{@file_pattern_prefix}file_2").and_return("#{@file_pattern_prefix}file_3")
-          @data_store.write(content)
-          assert_exists "#{@file_pattern_prefix}file_3"
+          path1 = "#{@data_store.root_path}/blah1"
+          path2 = "#{@data_store.root_path}/blah2"
+          path3 = "#{@data_store.root_path}/blah3"
+          touch_file(path1)
+          touch_file(path2)
+          @data_store.should_receive(:disambiguate).with(path1).and_return(path2)
+          @data_store.should_receive(:disambiguate).with(path2).and_return(path3)
+          @data_store.write(content, :path => 'blah1')
+          assert_exists path3
         end
 
         describe "specifying the uid" do
@@ -107,13 +109,8 @@ describe Dragonfly::FileDataStore do
 
       describe "return value" do
 
-        it "should return the filepath without the root of the stored file when a file name is not provided" do
-          @data_store.write(content).should == "#{@file_pattern_prefix_without_root}file"
-        end
-
-        it "should return the filepath without the root of the stored file when a file name is provided" do
-          content.should_receive(:name).at_least(:once).and_return('hello.you.png')
-          @data_store.write(content).should == "#{@file_pattern_prefix_without_root}hello.you.png"
+        it "should return the relative path" do
+          @data_store.write(content).should =~ /^1984\/05\/04\/\w+$/
         end
 
       end
