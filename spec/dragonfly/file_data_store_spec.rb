@@ -155,12 +155,14 @@ describe Dragonfly::FileDataStore do
       it "should prune empty directories when destroying" do
         uid = @data_store.write(content)
         @data_store.destroy(uid)
+        p Dir["#{@data_store.root_path}/*"]
         @data_store.root_path.should be_an_empty_directory
       end
 
       it "should not prune root_path directory when destroying file without directory prefix in path" do
         uid = @data_store.write(content, :path => 'mate.png')
         @data_store.destroy(uid)
+        p Dir["#{@data_store.root_path}/*"]
         @data_store.root_path.should be_an_empty_directory
       end
 
@@ -225,6 +227,7 @@ describe Dragonfly::FileDataStore do
         uid = @data_store.write(content)
         @data_store.store_meta = false
         @data_store.destroy(uid)
+        p Dir["#{@data_store.root_path}/*"]
         @data_store.root_path.should be_an_empty_directory
       end
 
@@ -232,6 +235,7 @@ describe Dragonfly::FileDataStore do
         uid = @data_store.write(content)
         @data_store.store_meta = true
         @data_store.destroy(uid)
+        p Dir["#{@data_store.root_path}/*"]
         @data_store.root_path.should be_an_empty_directory
       end
     end
