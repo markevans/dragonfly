@@ -9,6 +9,7 @@ end
 
 RSpec::Matchers.define :be_an_empty_directory do
   match do |given|
+    sleep 0.0001 # please don't let this be the fix
     Dir.entries(given) == ['.','..']
   end
 end
