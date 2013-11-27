@@ -91,6 +91,20 @@ describe Dragonfly::Job::FetchUrl do
     job.fetch_url('redirectme.com').data.should == 'OK!'
   end
 
+  it "follows redirects to https" do
+    stub_request(:get, "redirectme.com").to_return(:status => 302, :headers => {'Location' => 'https://ok.com'})
+    stub_request(:get, "https://ok.com").to_return(:body => "OK!")
+    job.fetch_url('redirectme.com').data.should == 'OK!'
+  end
+
+  it "raises if redirecting too many times" do
+    stub_request(:get, "redirectme.com").to_return(:status => 302, :headers => {'Location' => 'http://redirectme-back.com'})
+    stub_request(:get, "redirectme-back.com").to_return(:status => 302, :headers => {'Location' => 'http://redirectme.com'})
+    expect {
+      job.fetch_url('redirectme.com').apply
+    }.to raise_error(Dragonfly::Job::FetchUrl::TooManyRedirects)
+  end
+
   describe "data uris" do
     it "accepts standard base64 encoded data uris" do
       job.fetch_url!("data:text/plain;base64,aGVsbG8=\n")

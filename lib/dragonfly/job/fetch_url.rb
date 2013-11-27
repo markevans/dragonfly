@@ -1,5 +1,5 @@
 require 'uri'
-require 'open-uri'
+require 'net/http'
 require 'base64'
 require 'dragonfly/job/step'
 
@@ -14,6 +14,7 @@ module Dragonfly
         attr_reader :status, :body
       end
       class CannotHandle < RuntimeError; end
+      class TooManyRedirects < RuntimeError; end
 
       def init
         job.url_attributes.name = filename
@@ -40,13 +41,22 @@ module Dragonfly
         if data_uri?
           update_from_data_uri
         else
-          open(URI.escape(url)) do |f|
-            job.content.update(f.read, 'name' => filename)
-          end
+          data = get(URI.escape(url))
+          job.content.update(data, 'name' => filename)
         end
-      rescue OpenURI::HTTPError => e
-        status, message = e.io.status
-        raise ErrorResponse.new(status.to_i, e.io.read)
+      end
+
+      def get(url, redirect_limit=10)
+        raise TooManyRedirects, "url #{url} redirected too many times" if redirect_limit == 0
+        response = Net::HTTP.get_response(URI.parse(url))
+        case response
+        when Net::HTTPSuccess then response.body
+        when Net::HTTPRedirection then get(response['location'], redirect_limit-1)
+        else
+          response.error!
+        end
+      rescue Net::HTTPExceptions => e
+        raise ErrorResponse.new(e.response.code.to_i, e.response.body)
       end
 
       def update_from_data_uri
