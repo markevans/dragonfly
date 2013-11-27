@@ -14,12 +14,20 @@ module Dragonfly
 
     def call(env)
       params = Utils.symbolize_keys Rack::Request.new(env).params
-      job = @block.call(params.merge(routing_params(env)), @app)
-      Response.new(job, env).to_response
+      value = @block.call(params.merge(routing_params(env)), @app)
+      case value
+      when nil then plain_response(404, "Not Found")
+      when Job, Model::Attachment
+        job = value.is_a?(Model::Attachment) ? value.job : value
+        Response.new(job, env).to_response
+      else
+        Dragonfly.warn("can't handle return value from routed endpoint: #{value.inspect}")
+        plain_response(500, "Server Error")
+      end
     rescue Job::NoSHAGiven => e
-      [400, {"Content-Type" => 'text/plain'}, ["You need to give a SHA parameter"]]
+      plain_response(400, "You need to give a SHA parameter")
     rescue Job::IncorrectSHA => e
-      [400, {"Content-Type" => 'text/plain'}, ["The SHA parameter you gave (#{e}) is incorrect"]]
+      plain_response(400, "The SHA parameter you gave is incorrect")
     end
 
     def inspect
@@ -36,5 +44,8 @@ module Dragonfly
         raise(NoRoutingParams, "couldn't find any routing parameters in env #{env.inspect}")
     end
 
+    def plain_response(status, message)
+      [status, {"Content-Type" => "text/plain"}, [message]]
+    end
   end
 end
