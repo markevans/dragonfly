@@ -50,7 +50,7 @@ module Dragonfly
         raise TooManyRedirects, "url #{url} redirected too many times" if redirect_limit == 0
         response = Net::HTTP.get_response(URI.parse(url))
         case response
-        when Net::HTTPSuccess then response.body
+        when Net::HTTPSuccess then response.body || ""
         when Net::HTTPRedirection then get(response['location'], redirect_limit-1)
         else
           response.error!
