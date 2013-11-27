@@ -26,7 +26,6 @@ describe Dragonfly::RoutedEndpoint do
 
   {
     'Rails' => 'action_dispatch.request.path_parameters',
-    'Usher' => 'usher.params',
     'HTTP Router' => 'router.params',
     'Rack-Mount' => 'rack.routing_args',
     'Dragonfly' => 'dragonfly.params'

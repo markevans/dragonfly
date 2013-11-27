@@ -32,7 +32,6 @@ module Dragonfly
       env['rack.routing_args'] ||
         env['action_dispatch.request.path_parameters'] ||
         env['router.params'] ||
-        env['usher.params'] ||
         env['dragonfly.params'] ||
         raise(NoRoutingParams, "couldn't find any routing parameters in env #{env.inspect}")
     end
