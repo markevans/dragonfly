@@ -155,6 +155,7 @@ describe Dragonfly::FileDataStore do
       it "should prune empty directories when destroying" do
         uid = @data_store.write(content)
         @data_store.destroy(uid)
+        puts `find #{@data_store.root_path}`
         @data_store.root_path.should be_an_empty_directory
       end
 
