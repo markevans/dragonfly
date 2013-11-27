@@ -80,7 +80,7 @@ module Dragonfly
       {
         "Content-Type" => job.mime_type,
         "Content-Length" => job.size.to_s,
-        "Content-Disposition" => (%(filename="#{URI.encode(job.name)}") if job.name)
+        "Content-Disposition" => filename_string
       }
     end
 
@@ -97,6 +97,15 @@ module Dragonfly
       end
     end
 
+    def filename_string
+      return unless job.name
+      filename = request_from_msie? ? URI.encode(job.name) : job.name
+      %(filename="#{filename}")
+    end
+
+    def request_from_msie?
+      env["HTTP_USER_AGENT"] =~ /MSIE/
+    end
+
   end
 end
-

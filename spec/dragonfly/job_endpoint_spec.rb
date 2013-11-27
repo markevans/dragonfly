@@ -94,6 +94,23 @@ describe Dragonfly::JobEndpoint do
     response.status.should == 500
   end
 
+  describe "default content disposition file name" do
+    before do
+      uid = @app.store("GUNGLE", 'name' => 'güng.txt')
+      @job = @app.fetch(uid)
+    end
+
+    it "doesn't encode utf8 characters" do
+      response = make_request(@job)
+      response['Content-Disposition'].should == 'filename="güng.txt"'
+    end
+
+    it "does encode them if the request is from IE" do
+      response = make_request(@job, 'HTTP_USER_AGENT' => "Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; el-GR)")
+      response['Content-Disposition'].should == 'filename="g%C3%BCng.txt"'
+    end
+  end
+
   describe "logging" do
     it "logs successful requests" do
       Dragonfly.should_receive(:info).with("GET /something?great 200")
