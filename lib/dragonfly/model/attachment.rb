@@ -164,8 +164,6 @@ module Dragonfly
         "<Dragonfly Attachment uid=#{uid.inspect}, app=#{app.name.inspect}>"
       end
 
-      protected
-
       attr_reader :job
 
       private
