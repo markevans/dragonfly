@@ -25,7 +25,7 @@ describe Dragonfly::Job::FetchUrl do
   end
 
   it "should also work with https" do
-    stub_request(:get, 'https://place.com').to_return(:body => 'secure result!')
+    stub_request(:get, /place.com/).to_return(:body => 'secure result!')
     job.fetch_url!('https://place.com')
     job.data.should == "secure result!"
   end
@@ -93,7 +93,7 @@ describe Dragonfly::Job::FetchUrl do
 
   it "follows redirects to https" do
     stub_request(:get, "redirectme.com").to_return(:status => 302, :headers => {'Location' => 'https://ok.com'})
-    stub_request(:get, "https://ok.com").to_return(:body => "OK!")
+    stub_request(:get, /ok.com/).to_return(:body => "OK!")
     job.fetch_url('redirectme.com').data.should == 'OK!'
   end
 
