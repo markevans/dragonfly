@@ -1,3 +1,20 @@
+1.0.1 (2013-11-28)
+===================
+Changes
+-------
+- FileDataStore doesn't use hours_minutes_seconds in its path - it uses a random string instead (12_15_59_saf4fs_file.png -> sdf4c2G_file.png)
+
+Features
+--------
+- model attribute `xxx_changed?` method (useful e.g. in validations)
+
+Fixes
+-----
+- proper support for Ruby 1.8.7 and JRuby (version 1.7.8)
+- routed endpoints can deal with returned `Attachment` objects (rather than returned `Job` objects) and return 404 if the endpoint proc returns nil
+- default Content-Disposition header doesn't url-encode filename unless the request is from IE
+- `fetch_url` deals with urls that redirect to https (previously was blowing up)
+
 1.0.0 (2013-11-24)
 ===================
 Changes
