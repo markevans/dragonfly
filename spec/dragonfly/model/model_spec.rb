@@ -946,7 +946,7 @@ describe "models" do
     end
   end
 
-  describe "changed?" do
+  describe "xxx_changed?" do
     before(:each) do
       @item_class = new_model_class('Item', :preview_image_uid) do
         dragonfly_accessor :preview_image
@@ -955,21 +955,36 @@ describe "models" do
     end
 
     it "should be changed when assigned" do
+      expect( @item.preview_image_changed? ).to be_false
       @item.preview_image = 'ggg'
-      @item.preview_image.should be_changed
+      expect( @item.preview_image_changed? ).to be_true
     end
 
-    it "should not be changed when saved" do
-      @item.preview_image = 'ggg'
-      @item.save!
-      @item.preview_image.should_not be_changed
-    end
+    describe "after saving" do
+      before do
+        @item.preview_image = 'ggg'
+        @item.save!
+      end
 
-    it "should not be changed when reloaded" do
-      @item.preview_image = 'ggg'
-      @item.save!
-      item = @item_class.find(@item.id)
-      item.preview_image.should_not be_changed
+      it "should not be changed" do
+        expect( @item.preview_image_changed? ).to be_false
+      end
+
+      it "should be changed when set to nil" do
+        @item.preview_image = nil
+        expect( @item.preview_image_changed? ).to be_true
+      end
+
+      it "should be changed when changed" do
+        @item.preview_image = "asdf"
+        expect( @item.preview_image_changed? ).to be_true
+      end
+
+      it "should not be changed when reloaded" do
+        item = @item_class.find(@item.id)
+        expect( @item.preview_image_changed? ).to be_false
+      end
+
     end
   end
 

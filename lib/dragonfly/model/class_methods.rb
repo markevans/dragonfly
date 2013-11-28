@@ -53,6 +53,11 @@ module Dragonfly
             dragonfly_attachments[attribute].stored?
           end
 
+          # Define the xxx_changed? method
+          define_method "#{attribute}_changed?" do
+            dragonfly_attachments[attribute].changed?
+          end
+
           # Define the URL setter
           define_method "#{attribute}_url=" do |url|
             unless Utils.blank?(url)
