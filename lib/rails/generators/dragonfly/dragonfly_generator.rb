@@ -8,7 +8,7 @@ class DragonflyGenerator < Rails::Generators::Base
   private
 
   def generate_secret
-    SecureRandom.hex(36)
+    SecureRandom.hex(32)
   end
 
   if RUBY_VERSION > "1.9"
