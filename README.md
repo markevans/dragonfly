@@ -37,7 +37,14 @@ Documentation
 
 <a href="http://rubydoc.info/github/markevans/dragonfly/frames">RDoc documentation is here</a>
 
-Dragonfly has changed somewhat since version 0.9 - if for whatever reason you can't upgrade, then
+Upgrading from v0.9 to v1.0
+===========================
+Dragonfly has changed somewhat since version 0.9.
+See [the Upgrading wiki](http://github.com/markevans/dragonfly/wiki/Upgrading-from-0.9-to-1.0) for notes on changes, and feel free to add anything you come across while upgrading!
+
+Changes are listed in [History.md](https://github.com/markevans/dragonfly/blob/master/History.md)
+
+If for whatever reason you can't upgrade, then
 <a href="http://markevans.github.io/dragonfly/v0.9.15">the docs for version 0.9.x are here</a>.
 
 Installation
