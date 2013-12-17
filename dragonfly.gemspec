@@ -37,13 +37,12 @@ Gem::Specification.new do |spec|
   spec.post_install_message =<<-POST_INSTALL_MESSAGE
 ================================================================================
 
-Please check the documentation at <http://markevans.github.io/dragonfly/>.
+You've installed Dragonfly hooray!!
 
---------------------------------------------------------------------------------
+Quite a few things have changed since version 0.9.
+Please check the documentation at <http://markevans.github.io/dragonfly>
+and see upgrade notes at <https://github.com/markevans/dragonfly/wiki/Upgrading-from-0.9-to-1.0> if upgrading.
 
-DEPRECATED: dragonfly/rails/images is now deprecated.
-Please refer to <http://markevans.github.io/dragonfly/rails/> for instructions to setup
-with Rails
---------------------------------------------------------------------------------
+================================================================================
 POST_INSTALL_MESSAGE
 end
