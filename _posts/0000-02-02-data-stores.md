@@ -177,3 +177,21 @@ end
 {% endhighlight %}
 
 Note that the data store _class_ is registered with the symbol, not the instance. Any other args are passed straight to the data store's `initialize` method.
+
+### Testing with RSpec
+Dragonfly provides a shared rspec example group that you can use to test that your custom data store conforms to the basic spec. Here's a simple example spec file
+
+{% highlight ruby %}
+require 'spec_helper'
+require 'dragonfly/spec/data_store_examples'
+
+describe MyDataStore do
+
+  before(:each) do
+    @data_store = MyDataStore.new
+  end
+
+  it_should_behave_like 'data_store'
+
+end
+{% endhighlight %}
