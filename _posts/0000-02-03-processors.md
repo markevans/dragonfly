@@ -91,6 +91,18 @@ end
 
 The yielded `old_path` and `new_path` above will always exist.
 
+By default every argument is shell-escaped with single quotes (except on windows) so pipes, etc. won't work.
+You can avoid this with `escape: false`.
+
+Change the output extension with the `:ext` option.
+{% highlight ruby %}
+processor :shrink do |content|
+  content.shell_update ext: 'jpg', escape: false do |old_path, new_path|
+    "/usr/bin/shrink #{old_path} > #{new_path}"  # The command sent to the command line
+  end
+end
+{% endhighlight %}
+
 ### Using pre-registered processors
 To update using a pre-registered processor, use `Content#process!`
 
