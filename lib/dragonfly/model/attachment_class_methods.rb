@@ -46,8 +46,8 @@ module Dragonfly
           end
 
           def method_missing(meth, *args, &block)
-            if meth.to_s =~ /^storage_(.*)$/
-              raise NoMethodError, "#{meth} is deprecated - use storage_options instead"
+            if key = meth.to_s[/^storage_(.*)$/, 1]
+              raise NoMethodError, "#{meth} is deprecated - use storage_options{|a| {#{key}: ...} } instead"
             else
               super
             end
