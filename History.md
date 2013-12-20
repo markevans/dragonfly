@@ -1,3 +1,10 @@
+1.0.2 (2013-12-20)
+===================
+Fixes
+-----
+- more secure generation of secret in rails generator
+- ensure popen3 doesn't hang
+
 1.0.1 (2013-11-28)
 ===================
 Changes
