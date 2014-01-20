@@ -15,6 +15,21 @@ module Dragonfly
           [405, method_not_allowed_headers, ["method not allowed"]]
         elsif etag_matches?
           [304, cache_headers, []]
+        elsif partial_content?
+          job.apply
+          file_size = @job.size
+          #TODO: handle multiple ranges, for now (like Rack), we only handle the first
+          ranges = Rack::Utils.byte_ranges(env, file_size)
+          job.range = ranges.first if ranges
+          range_begin = (job.range && job.range.begin) ? job.range.first : 0  
+          range_end = (job.range && job.range.end) ? job.range.last : file_size - 1
+
+          env['dragonfly.job'] = job
+          [
+            206,
+            partial_content_headers(range_begin, range_end, file_size),
+            (request.head? ? [] : job)
+          ]
         else
           job.apply
           env['dragonfly.job'] = job
@@ -38,6 +53,7 @@ module Dragonfly
     def will_be_served?
       request.get? && !etag_matches?
     end
+
 
     private
 
@@ -63,10 +79,26 @@ module Dragonfly
       end
     end
 
+    def partial_content? 
+      ! env['HTTP_RANGE'].nil?
+    end
+
     def method_not_allowed_headers
       {
         'Content-Type' => 'text/plain',
         'Allow' => 'GET, HEAD'
+      }
+    end
+
+    def partial_content_headers(range_begin, range_end, file_size)
+      {
+        "Content-Type" => job.mime_type,
+        "Content-Disposition" => filename_string,
+        "Content-Length" => (range_end - range_begin + 1).to_s,
+        "Content-Range" => "bytes #{range_begin.to_s}-#{range_end.to_s}/#{file_size.to_s}",
+        "Cache-Control" => "public, must-revalidate, max-age=0",
+        "Pragma" => "no-cache",
+        "Accept-Ranges" =>  "bytes"
       }
     end
 

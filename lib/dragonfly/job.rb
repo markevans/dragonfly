@@ -20,7 +20,7 @@ module Dragonfly
     def_delegators :result,
                    :data, :file, :tempfile, :path, :to_file, :size, :each,
                    :meta, :meta=, :add_meta, :name, :name=, :basename, :basename=, :ext, :ext=, :mime_type,
-                   :analyse, :shell_eval, :store,
+                   :analyse, :shell_eval, :store, :range=, :range,
                    :b64_data
 
     require 'dragonfly/job/fetch'

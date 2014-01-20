@@ -81,14 +81,35 @@ module Dragonfly
       @data ||= file{|f| f.read }
     end
 
+    def range
+      @range ||= 0..(size - 1) 
+    end
+
+    def range=(range)
+      @range = range
+    end
+
     def file(&block)
       f = tempfile.open
       tempfile.binmode
+      f.seek(range.begin, IO::SEEK_CUR)
       if block_given?
         ret = yield f
         tempfile.close unless tempfile.closed?
       else
         ret = f
+      end
+      ret
+    end
+
+    def string_io(&block)
+      string_file = StringIO.new(@data, 'rb')
+      string_file.pos = range.begin
+      if block_given?
+        ret = yield string_file
+        string_file.close unless string_file.closed?
+      else
+        ret = string_file
       end
       ret
     end
@@ -128,7 +149,7 @@ module Dragonfly
     end
 
     def to_io(&block)
-      @data ? StringIO.open(@data, 'rb', &block) : file(&block)
+      @data ? string_io(&block) : file(&block)
     end
 
     def close
