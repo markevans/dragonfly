@@ -27,6 +27,12 @@ module Dragonfly
       update(obj, meta)
     end
 
+    # Used by 'dup' and 'clone'
+    def initialize_copy(other)
+      super
+      self.meta = meta.dup
+    end
+
     attr_reader :app
     def_delegators :app,
                    :analyser, :generator, :processor, :shell, :datastore, :env
