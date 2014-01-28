@@ -35,6 +35,15 @@ describe Dragonfly::Content do
       content.add_meta('wassup' => 'guys?').should == content
       content.meta.should == {'hello' => 'there', 'wassup' => 'guys?'}
     end
+
+    it "doesn't  interfere with other content meta" do
+      content.meta = {'test' => 'one'}
+      content2 = content.dup
+      content2.meta['test'] = 'two'
+
+      content.meta['test'].should == 'one'
+      content2.meta['test'].should == 'two'
+    end
   end
 
   describe "name" do
