@@ -29,7 +29,6 @@ module Dragonfly
 
     # Used by 'dup' and 'clone'
     def initialize_copy(other)
-      super
       self.meta = meta.dup
     end
 
