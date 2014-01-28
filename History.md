@@ -1,3 +1,9 @@
+1.0.3 (2014-01-28)
+===================
+Fixes
+-----
+- changing meta on a job (e.g. `fetch('blah').encode('jpg')`) was interfering with meta on its parent job (e.g. `fetch('blah')`)
+
 1.0.2 (2013-12-20)
 ===================
 Fixes
