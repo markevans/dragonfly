@@ -98,7 +98,9 @@ module Dragonfly
     end
 
     def size
-      @data ? @data.bytesize : File.size(path)
+      @tempfile && @tempfile.size ||
+      @data && @data.bytesize ||
+      File.size(path)
     end
 
     def each(&block)
