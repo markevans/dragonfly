@@ -633,6 +633,16 @@ describe "models" do
       @item.preview_image_url = 'http://some.url/yo.png'
       @item.preview_image.data.should == 'aaaaayo'
     end
+    it "should allow setting the escaped url" do
+      stub_request(:get, "http://some.url/foo%20bar.png").to_return(:body => "aaaaafoobar")
+      @item.preview_image_url = 'http://some.url/foo%20bar.png'
+      @item.preview_image.data.should == 'aaaaafoobar'
+    end
+    it "should not allow unescaped url" do
+      expect {
+        @item.preview_image_url = 'http://some.url/foo bar.png'
+      }.to raise_error(/bad.+uri/i)
+    end
     it "should return nil always for the reader" do
       @item.preview_image_url = 'http://some.url/yo.png'
       @item.preview_image_url.should be_nil
