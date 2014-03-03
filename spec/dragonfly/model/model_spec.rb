@@ -638,6 +638,11 @@ describe "models" do
       @item.preview_image_url = 'http://some.url/foo%20bar.png'
       @item.preview_image.data.should == 'aaaaafoobar'
     end
+    it "should not allow unescaped url" do
+      expect {
+        @item.preview_image_url = 'http://some.url/foo bar.png'
+      }.to raise_error(/bad.+uri/i)
+    end
     it "should return nil always for the reader" do
       @item.preview_image_url = 'http://some.url/yo.png'
       @item.preview_image_url.should be_nil
