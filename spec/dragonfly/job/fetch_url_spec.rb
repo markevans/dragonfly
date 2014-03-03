@@ -85,6 +85,11 @@ describe Dragonfly::Job::FetchUrl do
     }
   end
 
+  it "should works with escaped urls" do
+    stub_request(:get, "escapedurl.com/escaped%20url.jpg").to_return(:body => "OK!")
+    job.fetch_url('escapedurl.com/escaped%20url.jpg').data.should == 'OK!'
+  end
+
   it "should follow redirects" do
     stub_request(:get, "redirectme.com").to_return(:status => 302, :headers => {'Location' => 'http://ok.com'})
     stub_request(:get, "ok.com").to_return(:body => "OK!")
