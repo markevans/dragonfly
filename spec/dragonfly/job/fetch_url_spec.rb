@@ -85,9 +85,15 @@ describe Dragonfly::Job::FetchUrl do
     }
   end
 
-  it "should works with escaped urls" do
+  it "works with escaped urls" do
     stub_request(:get, "escapedurl.com/escaped%20url.jpg").to_return(:body => "OK!")
     job.fetch_url('escapedurl.com/escaped%20url.jpg').data.should == 'OK!'
+  end
+
+  it "doesn't work with bad urls" do
+    expect {
+      job.fetch_url('escapedurl.com/bad url.jpg').apply
+    }.to raise_error(URI::InvalidURIError)
   end
 
   it "should follow redirects" do
