@@ -41,7 +41,7 @@ module Dragonfly
         if data_uri?
           update_from_data_uri
         else
-          data = get(URI.escape(url))
+          data = get(URI.escape(URI.unescape(url)))
           job.content.update(data, 'name' => filename)
         end
       end
