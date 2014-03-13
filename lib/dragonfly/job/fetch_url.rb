@@ -15,6 +15,7 @@ module Dragonfly
       end
       class CannotHandle < RuntimeError; end
       class TooManyRedirects < RuntimeError; end
+      class BadURI < RuntimeError; end
 
       def init
         job.url_attributes.name = filename
@@ -30,7 +31,7 @@ module Dragonfly
 
       def filename
         return if data_uri?
-        @filename ||= URI.parse(url).path[/[^\/]+$/]
+        @filename ||= parse_url(url).path[/[^\/]+$/]
       end
 
       def data_uri?
@@ -46,9 +47,11 @@ module Dragonfly
         end
       end
 
+      private
+
       def get(url, redirect_limit=10)
         raise TooManyRedirects, "url #{url} redirected too many times" if redirect_limit == 0
-        response = Net::HTTP.get_response(URI.parse(url))
+        response = Net::HTTP.get_response(parse_url(url))
         case response
         when Net::HTTPSuccess then response.body || ""
         when Net::HTTPRedirection then get(response['location'], redirect_limit-1)
@@ -67,6 +70,16 @@ module Dragonfly
           job.content.update(data, 'name' => "file.#{ext}")
         else
           raise CannotHandle, "fetch_url can only deal with base64-encoded data uris with specified content type"
+        end
+      end
+
+      def parse_url(url)
+        URI.parse(url)
+      rescue URI::InvalidURIError
+        begin
+          URI.parse(URI.escape(url))
+        rescue URI::InvalidURIError => e
+          raise BadURI, e.message
         end
       end
 
