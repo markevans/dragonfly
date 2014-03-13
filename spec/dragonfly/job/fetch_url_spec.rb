@@ -67,6 +67,13 @@ describe Dragonfly::Job::FetchUrl do
     end
   end
 
+  it "works with domain:port" do
+    stub_request(:get, "localhost:8080").to_return(:body => "okay!")
+    thing = job.fetch_url('localhost:8080')
+    thing.name.should be_nil
+    thing.data.should == 'okay!'
+  end
+
   it "should raise an error if not found" do
     stub_request(:get, "notfound.com").to_return(:status => 404, :body => "BLAH")
     expect{

@@ -26,7 +26,7 @@ module Dragonfly
       end
 
       def url
-        @url ||= uri =~ /^\w+:/ ? uri : "http://#{uri}"
+        @url ||= uri =~ /^\w+:[^\d]/ ? uri : "http://#{uri}"
       end
 
       def filename
