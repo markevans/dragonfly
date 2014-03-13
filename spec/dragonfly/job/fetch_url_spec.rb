@@ -6,7 +6,7 @@ describe Dragonfly::Job::FetchUrl do
   let (:job) { Dragonfly::Job.new(app) }
 
   before(:each) do
-    stub_request(:get, %r{http://place\.com/.*}).to_return(:body => 'result!')
+    stub_request(:get, %r{http://place\.com.*}).to_return(:body => 'result!')
   end
 
   it "adds a step" do
@@ -35,7 +35,8 @@ describe Dragonfly::Job::FetchUrl do
     "http://place.com",
     "place.com/",
     "place.com/stuff/",
-    "place.com/?things"
+    "place.com/?things",
+    "place.com:8080"
   ].each do |url|
     it "doesn't set the name if there isn't one, e.g. for #{url}" do
       job.fetch_url!(url)
@@ -52,7 +53,8 @@ describe Dragonfly::Job::FetchUrl do
     "place.com/dung.beetle",
     "http://place.com/dung.beetle",
     "place.com/stuff/dung.beetle",
-    "place.com/dung.beetle?morethings"
+    "place.com/dung.beetle?morethings",
+    "place.com:8080/dung.beetle"
   ].each do |url|
     it "sets the name if there is one, e.g. for #{url}" do
       job.fetch_url!(url)
