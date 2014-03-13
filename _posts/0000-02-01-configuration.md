@@ -11,6 +11,9 @@ Configuration defaults should be fairly sensible, but there are a number of thin
 Dragonfly.app.configure do
 
   url_format '/images/:job.:ext'                   # defaults to '/:job/:name'
+                                                   # NOTE: if you're using models and you want
+                                                   # :name, :basename or :ext to appear
+                                                   # then you need a xxx_name column for your attachment
   url_host 'http://some.domain.com:4000'           # defaults to nil
   url_path_prefix '/assets'                        # defaults to nil, might be needed if app is mounted under a subdir
 
