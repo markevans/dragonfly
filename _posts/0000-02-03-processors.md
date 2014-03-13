@@ -112,7 +112,7 @@ processor :greyscale do |content|
 end
 {% endhighlight %}
 
-### Updating the url
+<h3 id="updating-the-url">Updating the url</h3>
 It is also possible for a processor to (optionally) update the url for a given job.
 For example, suppose we have a configured url format
 
