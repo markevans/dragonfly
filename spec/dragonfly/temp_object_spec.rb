@@ -244,6 +244,11 @@ describe Dragonfly::TempObject do
       temp_object.close
       File.exist?(path).should be_false
     end
+    
+    it "should define the original_filename attribute" do
+      temp_object = new_temp_object("HELLO")
+      temp_object.original_filename.should_not be_nil
+    end
   end
 
   describe "initializing from a file" do
@@ -379,10 +384,6 @@ describe Dragonfly::TempObject do
         'jimmy.page'
       end
       Dragonfly::TempObject.new(@obj).original_filename.should == 'jimmy.page'
-    end
-
-    it "should not set the name if the initial object doesn't respond to 'original filename'" do
-      Dragonfly::TempObject.new(@obj).original_filename.should be_nil
     end
 
     it "should set the name if the initial object is a file object" do
