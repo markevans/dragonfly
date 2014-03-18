@@ -47,6 +47,7 @@ module Dragonfly
         @data = obj
       elsif obj.is_a? Tempfile
         @tempfile = obj
+        @pathname = Pathname.new(obj.path) unless obj.respond_to?(:original_filename)
       elsif obj.is_a? File
         @pathname = Pathname.new(obj.path)
       elsif obj.is_a? Pathname
