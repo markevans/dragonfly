@@ -14,7 +14,7 @@ module Dragonfly
 
     def call(env)
       params = Utils.symbolize_keys Rack::Request.new(env).params
-      value = @block.call(params.merge(routing_params(env)), @app)
+      value = @block.call(params.merge(routing_params(env)), @app, env)
       case value
       when nil then plain_response(404, "Not Found")
       when Job, Model::Attachment
