@@ -2,6 +2,7 @@ require 'uri'
 require 'net/http'
 require 'base64'
 require 'dragonfly/job/step'
+require 'addressable/uri'
 
 module Dragonfly
   class Job
@@ -77,7 +78,10 @@ module Dragonfly
         URI.parse(url)
       rescue URI::InvalidURIError
         begin
-          URI.parse(URI.escape(url))
+          encoded_uri = Addressable::URI.parse(url).normalize.to_s
+          URI.parse(encoded_uri)
+        rescue Addressable::URI::InvalidURIError => e
+          raise BadURI, e.message
         rescue URI::InvalidURIError => e
           raise BadURI, e.message
         end
