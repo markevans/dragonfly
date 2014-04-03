@@ -96,15 +96,15 @@ describe Dragonfly::Job::FetchUrl do
 
   describe "escaping" do
     before do
-      stub_request(:get, "escapedurl.com/escaped%20url.jpg").to_return(:body => "OK!")
+      stub_request(:get, "escapedurl.com/escaped%20url%5B1%5D.jpg").to_return(:body => "OK!")
     end
 
     it "works with escaped urls" do
-      job.fetch_url('escapedurl.com/escaped%20url.jpg').data.should == 'OK!'
+      job.fetch_url('escapedurl.com/escaped%20url%5B1%5D.jpg').data.should == 'OK!'
     end
 
     it "tries to escape unescaped urls" do
-      job.fetch_url('escapedurl.com/escaped url.jpg').data.should == 'OK!'
+      job.fetch_url('escapedurl.com/escaped url[1].jpg').data.should == 'OK!'
     end
 
     it "still blows up with bad urls" do
