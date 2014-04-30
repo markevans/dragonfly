@@ -1,3 +1,9 @@
+1.0.4 (2014-04-11)
+===================
+Fixes
+-----
+- fetch_url is more forgiving - assume escaped, if not escape
+
 1.0.3 (2014-01-28)
 ===================
 Fixes
