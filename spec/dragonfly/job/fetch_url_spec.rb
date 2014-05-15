@@ -25,7 +25,7 @@ describe Dragonfly::Job::FetchUrl do
   end
 
   it "should also work with https" do
-    stub_request(:get, /place.com/).to_return(:body => 'secure result!')
+    stub_request(:get, 'https://place.com').to_return(:body => 'secure result!')
     job.fetch_url!('https://place.com')
     job.data.should == "secure result!"
   end
