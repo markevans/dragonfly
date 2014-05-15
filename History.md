@@ -1,3 +1,9 @@
+1.0.5 (2014-05-15)
+===================
+Fixes
+-----
+- fetch_url wasn't correctly getting https endpoints on Ruby approx < 2
+
 1.0.4 (2014-04-11)
 ===================
 Fixes
