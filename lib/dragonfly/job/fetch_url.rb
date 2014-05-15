@@ -42,27 +42,31 @@ module Dragonfly
         if data_uri?
           update_from_data_uri
         else
-          data = get(url)
+          data = get_following_redirects(url)
           job.content.update(data, 'name' => filename)
         end
       end
 
       private
 
-      def get(url, redirect_limit=10)
+      def get_following_redirects(url, redirect_limit=10)
         raise TooManyRedirects, "url #{url} redirected too many times" if redirect_limit == 0
-        url = parse_url(url)
-        http = Net::HTTP.new(url.host, url.port)
-        http.use_ssl = true if url.scheme == 'https'
-        response = http.get(url.request_uri)
+        response = get(url)
         case response
         when Net::HTTPSuccess then response.body || ""
-        when Net::HTTPRedirection then get(response['location'], redirect_limit-1)
+        when Net::HTTPRedirection then get_following_redirects(response['location'], redirect_limit-1)
         else
           response.error!
         end
       rescue Net::HTTPExceptions => e
         raise ErrorResponse.new(e.response.code.to_i, e.response.body)
+      end
+
+      def get(url)
+        url = parse_url(url)
+        http = Net::HTTP.new(url.host, url.port)
+        http.use_ssl = true if url.scheme == 'https'
+        response = http.get(url.request_uri)
       end
 
       def update_from_data_uri
