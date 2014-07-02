@@ -2,7 +2,7 @@ require "rubygems"
 require "bundler/setup"
 $:.unshift(File.expand_path('../../lib', __FILE__))
 require 'dragonfly'
-include Dragonfly::Serializer
+require 'pry'
 
 APP = Dragonfly.app.configure do
   plugin :imagemagick
