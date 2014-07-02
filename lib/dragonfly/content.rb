@@ -115,7 +115,7 @@ module Dragonfly
       self.temp_object = TempObject.new(obj)
       original_filename = temp_object.original_filename
       self.meta['name'] ||= original_filename if original_filename
-      self.meta.delete("analyser_cache")
+      clear_analyser_cache
       add_meta(obj.meta) if obj.respond_to?(:meta)
       add_meta(meta) if meta
       self
@@ -205,7 +205,11 @@ module Dragonfly
     end
 
     def analyser_cache
-      meta["analyser_cache"] ||= {}
+      @analyser_cache ||= {}
+    end
+
+    def clear_analyser_cache
+      analyser_cache.clear
     end
 
     def run(command, opts)

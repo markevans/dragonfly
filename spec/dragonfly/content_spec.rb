@@ -108,19 +108,10 @@ describe Dragonfly::Content do
       content.analyse(:len).should == 7
     end
 
-    it "caches it in the meta" do
-      content.meta["analyser_cache"].should be_nil
+    it "updates when updated (i.e. clears cache)" do
       content.analyse(:len).should == 7
-      content.meta["analyser_cache"].should == {"len" => 7}
-    end
-
-    it "empties the cache if updated" do
-      content.analyse(:len).should == 7
-      content.meta["analyser_cache"].should == {"len" => 7}
       content.update("something else")
-      content.meta["analyser_cache"].should be_nil
       content.analyse(:len).should == 14
-      content.meta["analyser_cache"].should == {"len" => 14}
     end
   end
 
