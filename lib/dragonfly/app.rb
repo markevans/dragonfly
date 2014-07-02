@@ -259,7 +259,8 @@ module Dragonfly
     end
 
     def secret
-      @secret ||= 'secret yo'
+      @secret or raise "A secret is required to sign and verify Dragonfly job requests. " \
+                       "Use `secret '...'` or disable `protect_from_dos_attacks` in your config."
     end
     attr_writer :secret
 
