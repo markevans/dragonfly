@@ -418,7 +418,7 @@ describe Dragonfly::Job do
 
     it "should raise error when secret is unspecified" do
       @app.secret = nil
-      lambda{ @app.fetch('figs').sha }.should raise_error
+      expect{ @app.fetch('figs').sha }.to raise_error(Dragonfly::Job::CannotGenerateSha)
     end
   end
 

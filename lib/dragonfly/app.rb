@@ -258,13 +258,7 @@ module Dragonfly
       'application/octet-stream'
     end
 
-    def secret
-      @secret or raise "A secret is required to sign and verify Dragonfly job requests. " \
-                       "Use `secret '...'` or disable `protect_from_dos_attacks` in your config."
-    end
-    attr_writer :secret
-
-    attr_accessor :allow_legacy_urls
+    attr_accessor :allow_legacy_urls, :secret
 
     def define_macro(klass, name)
       raise NoMethodError, "define_macro is deprecated - instead of defining #{name}, just extend #{klass.name} with Dragonfly::Model and use dragonfly_accessor"
