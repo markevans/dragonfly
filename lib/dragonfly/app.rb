@@ -233,7 +233,7 @@ module Dragonfly
 
     def remote_url_for(uid, opts={})
       datastore.url_for(uid, opts)
-    rescue NoMethodError => e
+    rescue NoMethodError
       raise NotImplementedError, "The datastore doesn't support serving content directly - #{datastore.inspect}"
     end
 
