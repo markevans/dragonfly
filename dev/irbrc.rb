@@ -16,6 +16,18 @@ class Model
   dragonfly_accessor :small_image
 end
 
+def reload
+  self.class.send(:remove_const, :APP)
+  Dragonfly.constants.each do |const|
+    Dragonfly.send(:remove_const, const)
+  end
+  $LOADED_FEATURES.grep(/dragonfly/).each do |path|
+    load path
+  end
+  nil
+end
+alias reload! reload
+
 puts "Loaded stuff from dragonfly irbrc"
 puts "\nAvailable sample images:\n"
 puts Dir['samples/*']
