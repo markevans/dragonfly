@@ -233,7 +233,7 @@ module Dragonfly
 
     def remote_url_for(uid, opts={})
       datastore.url_for(uid, opts)
-    rescue NoMethodError => e
+    rescue NoMethodError
       raise NotImplementedError, "The datastore doesn't support serving content directly - #{datastore.inspect}"
     end
 
@@ -258,12 +258,7 @@ module Dragonfly
       'application/octet-stream'
     end
 
-    def secret
-      @secret ||= 'secret yo'
-    end
-    attr_writer :secret
-
-    attr_accessor :allow_legacy_urls
+    attr_accessor :allow_legacy_urls, :secret
 
     def define_macro(klass, name)
       raise NoMethodError, "define_macro is deprecated - instead of defining #{name}, just extend #{klass.name} with Dragonfly::Model and use dragonfly_accessor"

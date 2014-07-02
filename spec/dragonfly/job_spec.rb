@@ -415,6 +415,11 @@ describe Dragonfly::Job do
     it "should be different for different jobs" do
       @app.fetch('figs').sha.should_not == @job.sha
     end
+
+    it "should raise error when secret is unspecified" do
+      @app.secret = nil
+      expect{ @app.fetch('figs').sha }.to raise_error(Dragonfly::Job::CannotGenerateSha)
+    end
   end
 
   describe "validate_sha!" do

@@ -124,7 +124,7 @@ describe "a configured imagemagick app" do
   describe "identify" do
     it "gives the output of the command line" do
       image.identify.should =~ /280/
-      image.identify("-format %h").should == "355\n"
+      image.identify("-format %h").chomp.should == "355"
     end
   end
 

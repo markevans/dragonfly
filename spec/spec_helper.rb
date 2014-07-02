@@ -9,7 +9,7 @@ require 'dragonfly'
 require 'fileutils'
 require 'tempfile'
 require 'webmock/rspec'
-require 'pry'
+require 'pry' if RUBY_VERSION >= '1.9'
 
 # Requires supporting files with custom matchers and macros, etc,
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
@@ -38,6 +38,7 @@ end
 def test_app(name=nil)
   app = Dragonfly::App.instance(name)
   app.datastore = Dragonfly::MemoryDataStore.new
+  app.secret = "test secret"
   app
 end
 
