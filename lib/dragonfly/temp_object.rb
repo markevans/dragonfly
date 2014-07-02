@@ -2,6 +2,7 @@ require 'stringio'
 require 'tempfile'
 require 'pathname'
 require 'fileutils'
+require 'dragonfly/core_ext/tempfile'
 
 module Dragonfly
 
