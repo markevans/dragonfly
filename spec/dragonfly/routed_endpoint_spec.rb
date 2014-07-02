@@ -11,6 +11,7 @@ describe Dragonfly::RoutedEndpoint do
   end
 
   let (:app) { test_app }
+  let (:uid) { app.store('wassup') }
 
   describe "endpoint returning a job" do
     let (:endpoint) {
@@ -18,10 +19,6 @@ describe Dragonfly::RoutedEndpoint do
         app.fetch(params[:uid])
       }
     }
-
-    before(:each) do
-      @uid = app.store('wassup')
-    end
 
     it "should raise an error when there are no routing parameters" do
       lambda{
@@ -37,19 +34,14 @@ describe Dragonfly::RoutedEndpoint do
     }.each do |name, key|
 
       it "should work with #{name} routing args" do
-        response = response_for endpoint.call(env_for('/blah', key => {:uid => @uid}))
-        response.body.should == 'wassup'
-      end
-
-      it "should work with #{name} routing args and ENV parameters" do
-        response = response_for endpoint.call(env_for('/blah', key => {:uid => @uid}))
+        response = response_for endpoint.call(env_for('/blah', key => {:uid => uid}))
         response.body.should == 'wassup'
       end
 
     end
 
     it "should merge with query parameters" do
-      env = Rack::MockRequest.env_for("/big/buns?uid=#{@uid}", 'dragonfly.params' => {:something => 'else'})
+      env = Rack::MockRequest.env_for("/big/buns?uid=#{uid}", 'dragonfly.params' => {:something => 'else'})
       response = response_for endpoint.call(env)
       response.body.should == 'wassup'
     end
@@ -59,21 +51,33 @@ describe Dragonfly::RoutedEndpoint do
      end
   end
 
+  describe "env argument" do
+    let (:endpoint) {
+      Dragonfly::RoutedEndpoint.new(app) {|params, app, env|
+        app.fetch(env['THE_UID'])
+      }
+    }
+
+    it "adds the env to the arguments" do
+      response = response_for endpoint.call(env_for('/blah', {"THE_UID" => uid, 'dragonfly.params' => {}}))
+      response.body.should == 'wassup'
+    end
+  end
+
   describe "endpoint returning other things" do
     let (:model_class) {
       Class.new do
         extend Dragonfly::Model
         dragonfly_accessor :image
-        dragonfly_accessor :secret
-        attr_accessor :image_uid, :secret_uid
+        attr_accessor :image_uid
       end
     }
     let (:model) {
       model_class.new
     }
     let (:endpoint) {
-      Dragonfly::RoutedEndpoint.new(app) {|params, app, env|
-        env['HTTP_X_TOKEN'] == "secret" ? model.secret : model.image
+      Dragonfly::RoutedEndpoint.new(app) {|params, app|
+        model.image
       }
     }
 
@@ -81,18 +85,6 @@ describe Dragonfly::RoutedEndpoint do
       model.image = "wassup"
       response = response_for endpoint.call(env_for('/blah', 'dragonfly.params' => {}))
       response.body.should == 'wassup'
-    end
-
-    it "acts like the job one with an invalid header token" do
-      model.image = "wassup"
-      response = response_for endpoint.call(env_for('/blah', { "HTTP_X_TOKEN" => "not-a-secret", 'dragonfly.params' => {} }))
-      response.body.should == 'wassup'
-    end
-
-    it "acts like the job one with a valid header token" do
-      model.secret = "test"
-      response = response_for endpoint.call(env_for('/blah', { "HTTP_X_TOKEN" => "secret", 'dragonfly.params' => {} }))
-      response.body.should == 'test'
     end
 
     it "returns 404 if nil is returned from the endpoint" do
