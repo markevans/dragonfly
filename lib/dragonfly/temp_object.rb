@@ -2,6 +2,7 @@ require 'stringio'
 require 'tempfile'
 require 'pathname'
 require 'fileutils'
+require 'dragonfly/core_ext/tempfile'
 
 module Dragonfly
 
@@ -98,7 +99,9 @@ module Dragonfly
     end
 
     def size
-      @data ? @data.bytesize : File.size(path)
+      @tempfile && @tempfile.size ||
+      @data && @data.bytesize ||
+      File.size(path)
     end
 
     def each(&block)
