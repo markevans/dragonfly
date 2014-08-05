@@ -8,10 +8,11 @@ module Dragonfly
           format = opts['format']
 
           input_args = opts['input_args'] if opts['input_args']
+          delegate_string = "#{opts['delegate']}:" if opts['delegate']
           frame_string = "[#{opts['frame']}]" if opts['frame']
 
           content.shell_update :ext => format do |old_path, new_path|
-            "#{convert_command} #{input_args} #{old_path}#{frame_string} #{args} #{new_path}"
+            "#{convert_command} #{input_args} #{delegate_string}#{old_path}#{frame_string} #{args} #{new_path}"
           end
 
           if format

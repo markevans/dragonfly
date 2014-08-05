@@ -62,4 +62,11 @@ describe Dragonfly::ImageMagick::Processors::Convert do
     pdf.should_not equal_image(pdf2)
   end
 
+  it "allows converting using specific delegates" do
+    mov = sample_content('movie.mp4')
+    movie_size = mov.size
+
+    processor.call(mov, '', 'format' => 'jpg', 'delegate' => 'mpeg', 'frame' => 1)
+    mov.ext.should == 'jpg'
+  end
 end
