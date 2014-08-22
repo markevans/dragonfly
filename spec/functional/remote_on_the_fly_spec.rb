@@ -32,17 +32,17 @@ describe "remote on-the-fly urls" do
   end
 
   it "should give the url for the server" do
-    @job.url.should == "/#{@job.serialize}"
+    @job.url.should == "/#{@job.serialize}?sha=#{@job.sha}"
   end
 
   it "should store the content when first called" do
     File.exist?('tmp/dragonfly_test_urls/yay.txt').should be_false
-    @app.server.call('PATH_INFO' => @job.url, 'REQUEST_METHOD' => 'GET')
+    request(@app, @job.url)
     File.read('tmp/dragonfly_test_urls/yay.txt').should == 'TEST'
   end
 
   it "should point to the external url the second time" do
-    @app.server.call('PATH_INFO' => @job.url, 'REQUEST_METHOD' => 'GET')
+    request(@app, @job.url)
     @job.url.should == '/dragonfly_test_urls/yay.txt'
   end
 

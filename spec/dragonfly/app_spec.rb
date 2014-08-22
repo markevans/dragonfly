@@ -1,10 +1,6 @@
 require 'spec_helper'
 require 'rack/mock'
 
-def request(app, path)
-  Rack::MockRequest.new(app).get(path)
-end
-
 describe Dragonfly::App do
 
   describe ".instance" do
@@ -172,7 +168,7 @@ describe Dragonfly::App do
     let (:job) { app.fetch('eggs') }
 
     it "should give the server url by default" do
-      app.url_for(job).should =~ %r{^/\w+$}
+      app.url_for(job).should =~ %r{^/\w+}
     end
     it "should allow configuring" do
       app.configure do

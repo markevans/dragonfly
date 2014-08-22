@@ -1110,7 +1110,7 @@ describe "models" do
 
     it "should give the correct url" do
       @item.retained_preview_image = @pending_string
-      @item.preview_image.url.should =~ %r{^/\w+/dog.biscuit$}
+      @item.preview_image.url.should =~ %r{^/\w+/dog.biscuit}
     end
 
     it "should raise an error if the pending string contains a non-magic attr method" do

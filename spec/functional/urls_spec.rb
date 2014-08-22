@@ -2,17 +2,18 @@ require 'spec_helper'
 
 describe "urls" do
 
-  def request(app, path)
-    Rack::MockRequest.new(app).get(path)
-  end
-
   def job_should_match(array)
     Dragonfly::Response.should_receive(:new).with do |job, env|
       job.to_a.should == array
     end.and_return(double('response', :to_response => [200, {'Content-Type' => 'text/plain'}, ["OK"]]))
   end
 
-  let (:app) { test_app.configure{ processor(:thumb){} } }
+  let (:app) {
+    test_app.configure{
+      processor(:thumb){}
+      verify_urls false
+    }
+  }
 
   it "works with old marshalled urls (including with tildes in them)" do
     app.allow_legacy_urls = true

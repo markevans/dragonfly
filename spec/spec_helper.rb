@@ -18,6 +18,7 @@ SAMPLES_DIR = Pathname.new(File.expand_path('../../samples', __FILE__))
 
 RSpec.configure do |c|
   c.include ModelHelpers
+  c.include RackHelpers
 end
 
 def todo

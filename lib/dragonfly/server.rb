@@ -20,9 +20,10 @@ module Dragonfly
       self.url_format = '/:job/:name'
       @fetch_file_whitelist = Whitelist.new
       @fetch_url_whitelist = Whitelist.new
+      @verify_urls = true
     end
 
-    attr_accessor :protect_from_dos_attacks, :url_host, :url_path_prefix, :dragonfly_url
+    attr_accessor :verify_urls, :url_host, :url_path_prefix, :dragonfly_url
 
     attr_reader :url_format, :fetch_file_whitelist, :fetch_url_whitelist
 
@@ -53,7 +54,7 @@ module Dragonfly
       elsif (params = url_mapper.params_for(env["PATH_INFO"], env["QUERY_STRING"])) && params['job']
         job = Job.deserialize(params['job'], app)
         validate_job!(job)
-        job.validate_sha!(params['sha']) if protect_from_dos_attacks
+        job.validate_sha!(params['sha']) if verify_urls
         response = Response.new(job, env)
         catch(:halt) do
           if before_serve_callback && response.will_be_served?
@@ -83,7 +84,7 @@ module Dragonfly
       params = job.url_attributes.extract(url_mapper.params_in_url)
       params.merge!(stringify_keys(opts))
       params['job'] = job.serialize
-      params['sha'] = job.sha if protect_from_dos_attacks
+      params['sha'] = job.sha if verify_urls
       url = url_mapper.url_for(params)
       "#{host}#{path_prefix}#{url}"
     end

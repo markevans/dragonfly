@@ -1,10 +1,6 @@
 require 'spec_helper'
 require 'rack/mock'
 
-def request(app, path)
-  Rack::MockRequest.new(app).get(path)
-end
-
 describe Dragonfly::Server do
 
   describe "responses" do
@@ -32,8 +28,8 @@ describe Dragonfly::Server do
         '/name.ext'
       ].each do |suffix|
 
-        it "should return successfully when given the url with suffix #{suffix.inspect}" do
-          url = "/media/#{@job.serialize}#{suffix}"
+        it "should return successfully when given the url with suffix #{suffix.inspect} and the correct sha parameter" do
+          url = "/media/#{@job.serialize}#{suffix}?sha=#{@job.sha}"
           response = request(@server, url)
           response.status.should == 200
           response.body.should == 'HELLO THERE'
@@ -42,16 +38,16 @@ describe Dragonfly::Server do
 
       end
 
-      it "should return successfully with the correct sha given and protection on" do
-        @server.protect_from_dos_attacks = true
-        url = "/media/#{@job.serialize}?sha=#{@job.sha}"
+      it "should return successfully without a sha if protection is off" do
+        @server.verify_urls = false
+        url = "/media/#{@job.serialize}"
         response = request(@server, url)
         response.status.should == 200
         response.body.should == 'HELLO THERE'
       end
 
       it "should return a cacheable response" do
-        url = "/media/#{@job.serialize}"
+        url = "/media/#{@job.serialize}?sha=#{@job.sha}"
         response = request(@server, url)
         response.status.should == 200
         response.headers['Cache-Control'].should == "public, max-age=31536000"
@@ -59,7 +55,7 @@ describe Dragonfly::Server do
 
       it "should return successfully even if the job is in the query string" do
         @server.url_format = '/'
-        url = "/?job=#{@job.serialize}"
+        url = "/?job=#{@job.serialize}&sha=#{@job.sha}"
         response = request(@server, url)
         response.status.should == 200
         response.body.should == 'HELLO THERE'
@@ -67,15 +63,13 @@ describe Dragonfly::Server do
     end
 
     describe "unsuccessful requests" do
-      it "should return a 400 if no sha given but protection on" do
-        @server.protect_from_dos_attacks = true
+      it "should return a 400 if no sha given" do
         url = "/media/#{@job.serialize}"
         response = request(@server, url)
         response.status.should == 400
       end
 
-      it "should return a 400 if wrong sha given and protection on" do
-        @server.protect_from_dos_attacks = true
+      it "should return a 400 if wrong sha given" do
         url = "/media/#{@job.serialize}?sha=asdfs"
         response = request(@server, url)
         response.status.should == 400
@@ -135,6 +129,10 @@ describe Dragonfly::Server do
         response.status.should == 403
         response.body.should == 'Forbidden'
         response.content_type.should == 'text/plain'
+      end
+
+      before do
+        @server.verify_urls = false
       end
 
       describe "fetch_file" do
@@ -197,6 +195,7 @@ describe Dragonfly::Server do
     describe "params" do
       before(:each) do
         server.url_format = '/media/:job/:zoo'
+        server.verify_urls = false
       end
       it "substitutes the relevant params" do
         server.url_for(job).should == "/media/#{job.serialize}"
@@ -220,6 +219,7 @@ describe Dragonfly::Server do
       describe "basename" do
         before(:each) do
           server.url_format = '/:job/:basename'
+          server.verify_urls = false
         end
         it "should use the name" do
           job.url_attributes.name = 'hello.egg'
@@ -233,6 +233,7 @@ describe Dragonfly::Server do
       describe "ext" do
         before(:each) do
           server.url_format = '/:job.:ext'
+          server.verify_urls = false
         end
         it "should use the name" do
           job.url_attributes.name = 'hello.egg'
@@ -245,6 +246,10 @@ describe Dragonfly::Server do
     end
 
     describe "host" do
+      before do
+        server.verify_urls = false
+      end
+
       it "should add the host to the url if configured" do
         server.url_host = 'http://some.server:4000'
         server.url_for(job).should == "http://some.server:4000/#{job.serialize}"
@@ -263,6 +268,7 @@ describe Dragonfly::Server do
     describe "path_prefix" do
       before do
         server.url_format = '/media/:job'
+        server.verify_urls = false
       end
 
       it "adds the path_prefix to the url if configured" do
@@ -280,11 +286,8 @@ describe Dragonfly::Server do
       end
     end
 
-    describe "Denial of Service protection" do
-      before(:each) do
-        server.protect_from_dos_attacks = true
-      end
-      it "should generate the correct url" do
+    describe "URL verification" do
+      it "should generate a URL with a sha parameter by default" do
         server.url_for(job).should == "/#{job.serialize}?sha=#{job.sha}"
       end
     end
@@ -309,7 +312,7 @@ describe Dragonfly::Server do
       end
 
       it "should be called before serving" do
-        response = request(@server, "/#{@job.serialize}")
+        response = request(@server, "/#{@job.serialize}?sha=#{@job.sha}")
         response.body.should == 'TEST'
         @x.should == 'TEST'
       end
@@ -326,6 +329,7 @@ describe Dragonfly::Server do
         @server.before_serve do |job, env|
           throw :halt, [200, {}, ['hello']]
         end
+        @server.verify_urls = false
       end
 
       it 'return the specified response instead of job.result' do

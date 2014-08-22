@@ -103,7 +103,7 @@ module Dragonfly
         obj.server.add_to_fetch_url_whitelist(patterns)
       end
 
-      writer :dragonfly_url, :protect_from_dos_attacks, :url_format, :url_host, :url_path_prefix,
+      writer :dragonfly_url, :verify_urls, :url_format, :url_host, :url_path_prefix,
              :for => :server
       meth :before_serve, :for => :server
 
