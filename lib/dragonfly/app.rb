@@ -107,6 +107,11 @@ module Dragonfly
              :for => :server
       meth :before_serve, :for => :server
 
+      def protect_from_dos_attacks(boolean)
+        verify_urls(boolean)
+        Dragonfly.warn("configuration option protect_from_dos_attacks is deprecated - use verify_urls instead")
+      end
+
       def method_missing(meth, *args)
         raise NoMethodError, "no method '#{meth}' for App configuration - but the configuration API has changed! see docs at http://markevans.github.io/dragonfly for details"
       end

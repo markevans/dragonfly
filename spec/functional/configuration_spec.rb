@@ -16,4 +16,16 @@ describe "configuration" do
     end
     app.fetch_url_whitelist.should include 'http://something'
   end
+
+  describe "deprecations" do
+    it "protect_from_dos_attacks" do
+      Dragonfly.should_receive(:warn).with(/deprecated/)
+      expect {
+        app.configure do
+          protect_from_dos_attacks false
+        end
+      }.to change(app.server, :verify_urls)
+    end
+  end
+
 end
