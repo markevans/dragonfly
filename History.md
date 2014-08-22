@@ -1,3 +1,10 @@
+1.?.? (2014-??-??)
+===================
+Changes
+--------
+- Job#sha uses better algorithm
+- renamed `protect_from_dos_attacks` -> `verify_urls` and turn on by default
+
 1.0.6 (2014-08-22)
 ===================
 Features
