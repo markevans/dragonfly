@@ -27,16 +27,16 @@ module Dragonfly
       end
 
       def url
-        @url ||= uri =~ /^\w+:[^\d]/ ? uri : "http://#{uri}"
+        @url ||= uri =~ /\A\w+:[^\d]/ ? uri : "http://#{uri}"
       end
 
       def filename
         return if data_uri?
-        @filename ||= parse_url(url).path[/[^\/]+$/]
+        @filename ||= parse_url(url).path[/[^\/]+\z/]
       end
 
       def data_uri?
-        uri =~ /^data:/
+        uri =~ /\Adata:/
       end
 
       def apply
@@ -71,7 +71,7 @@ module Dragonfly
       end
 
       def update_from_data_uri
-        mime_type, b64_data = uri.scan(/^data:([^;]+);base64,(.*)$/)[0]
+        mime_type, b64_data = uri.scan(/\Adata:([^;]+);base64,(.*)$/)[0]
         if mime_type && b64_data
           data = Base64.decode64(b64_data)
           ext = app.ext_for(mime_type)

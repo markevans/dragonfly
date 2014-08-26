@@ -16,9 +16,9 @@ module Dragonfly
         }
 
         # Geometry string patterns
-        RESIZE_GEOMETRY         = /^\d*x\d*[><%^!]?$|^\d+@$/ # e.g. '300x200!'
-        CROPPED_RESIZE_GEOMETRY = /^(\d+)x(\d+)#(\w{1,2})?$/ # e.g. '20x50#ne'
-        CROP_GEOMETRY           = /^(\d+)x(\d+)([+-]\d+)?([+-]\d+)?(\w{1,2})?$/ # e.g. '30x30+10+10'
+        RESIZE_GEOMETRY         = /\A\d*x\d*[><%^!]?\z|\A\d+@\z/ # e.g. '300x200!'
+        CROPPED_RESIZE_GEOMETRY = /\A(\d+)x(\d+)#(\w{1,2})?\z/ # e.g. '20x50#ne'
+        CROP_GEOMETRY           = /\A(\d+)x(\d+)([+-]\d+)?([+-]\d+)?(\w{1,2})?\z/ # e.g. '30x30+10+10'
 
         def update_url(url_attributes, geometry, opts={})
           format = opts['format']
@@ -57,9 +57,9 @@ module Dragonfly
           height  = opts['height']
           gravity = GRAVITIES[opts['gravity']]
           x       = "#{opts['x'] || 0}"
-          x = '+' + x unless x[/^[+-]/]
+          x = '+' + x unless x[/\A[+-]/]
           y       = "#{opts['y'] || 0}"
-          y = '+' + y unless y[/^[+-]/]
+          y = '+' + y unless y[/\A[+-]/]
 
           "#{"-gravity #{gravity} " if gravity}-crop #{width}x#{height}#{x}#{y} +repage"
         end

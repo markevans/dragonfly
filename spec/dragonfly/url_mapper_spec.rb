@@ -24,7 +24,7 @@ describe Dragonfly::UrlMapper do
   describe "url_regexp" do
     it "should return a regexp with non-greedy optional groups that include the preceding slash/dot/dash" do
       url_mapper = Dragonfly::UrlMapper.new('/media/:job/:basename-:size.:format')
-      url_mapper.url_regexp.should == %r{^/media(/[^\/\-\.]+?)?(/[^\/\-\.]+?)?(\-[^\/\-\.]+?)?(\.[^\/\-\.]+?)?$}
+      url_mapper.url_regexp.should == %r{\A/media(/[^\/\-\.]+?)?(/[^\/\-\.]+?)?(\-[^\/\-\.]+?)?(\.[^\/\-\.]+?)?\z}
     end
 
     it "should allow setting custom patterns in the url" do
@@ -33,12 +33,12 @@ describe Dragonfly::UrlMapper do
         :size => '\d',
         :format => '[^\.]'
       )
-      url_mapper.url_regexp.should == %r{^/media(/\w+?)?(\-\d+?)?(\.[^\.]+?)?$}
+      url_mapper.url_regexp.should == %r{\A/media(/\w+?)?(\-\d+?)?(\.[^\.]+?)?\z}
     end
 
     it "should make optional match patterns (ending in ?) apply to the whole group including the preceding seperator" do
       url_mapper = Dragonfly::UrlMapper.new('/media/:job', :job => '\w')
-      url_mapper.url_regexp.should == %r{^/media(/\w+?)?$}
+      url_mapper.url_regexp.should == %r{\A/media(/\w+?)?\z}
     end
   end
 

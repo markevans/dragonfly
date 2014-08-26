@@ -68,7 +68,7 @@ module Dragonfly
         i += 1
         segments[i].regexp_string
       end
-      @url_regexp = Regexp.new('^' + regexp_string + '$')
+      @url_regexp = Regexp.new('\A' + regexp_string + '\z')
     end
 
   end
