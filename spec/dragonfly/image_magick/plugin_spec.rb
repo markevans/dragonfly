@@ -72,7 +72,7 @@ describe "a configured imagemagick app" do
     describe "convert" do
       it "sanity check with format" do
         thumb = image.convert('-resize 1x1!', 'format' => 'jpg')
-        thumb.url.should =~ /^\/beach\.jpg\?job=\w+/
+        thumb.url.should =~ /^\/beach\.jpg\?.*job=\w+/
         thumb.width.should == 1
         thumb.format.should == 'jpeg'
         thumb.meta['format'].should == 'jpg'
@@ -80,7 +80,7 @@ describe "a configured imagemagick app" do
 
       it "sanity check without format" do
         thumb = image.convert('-resize 1x1!')
-        thumb.url.should =~ /^\/beach\.png\?job=\w+/
+        thumb.url.should =~ /^\/beach\.png\?.*job=\w+/
         thumb.width.should == 1
         thumb.format.should == 'png'
         thumb.meta['format'].should be_nil
@@ -90,7 +90,7 @@ describe "a configured imagemagick app" do
     describe "encode" do
       it "sanity check" do
         thumb = image.encode('jpg')
-        thumb.url.should =~ /^\/beach\.jpg\?job=\w+/
+        thumb.url.should =~ /^\/beach\.jpg\?.*job=\w+/
         thumb.format.should == 'jpeg'
         thumb.meta['format'].should == 'jpg'
       end
