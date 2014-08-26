@@ -54,7 +54,7 @@ Installation
 
 or in your Gemfile
 ```ruby
-gem 'dragonfly', '~> 1.0.6'
+gem 'dragonfly', '~> 1.0.7'
 ```
 
 Require with
