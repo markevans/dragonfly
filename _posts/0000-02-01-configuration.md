@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  "Configuration"
+title: "Configuration"
 tag: customization
 ---
 
@@ -17,8 +17,9 @@ Dragonfly.app.configure do
   url_host 'http://some.domain.com:4000'           # defaults to nil
   url_path_prefix '/assets'                        # defaults to nil, might be needed if app is mounted under a subdir
 
-  protect_from_dos_attacks true          # defaults to false - adds a SHA parameter on the end of urls
-  secret 'This is my secret yeh!!'       # used to generate the protective SHA
+  verify_urls true # enabled by default, use false to disable it - adds a SHA parameter on the end of urls
+
+  secret 'This is my secret yeh!!' # used to generate the protective SHA
 
   response_header 'Cache-Control', 'private'                    # You can set custom response headers
   response_header 'Cache-Control' do |job, request, headers|    # either directly or with a block
