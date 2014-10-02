@@ -881,6 +881,14 @@ describe "models" do
       item.save!
     end
 
+    it 'should pass the attachment object if the method allows' do
+      set_storage_options :special_ops
+      item = @item_class.new :title => 'lump', :preview_image => 'hello'
+      def item.special_ops(a); {:egg => (a.data + title)}; end
+      @app.datastore.should_receive(:write).with(anything, hash_including(:egg => 'hellolump'))
+      item.save!
+    end
+
     it "should allow setting more than once" do
       @item_class.class_eval do
         dragonfly_accessor :preview_image do
