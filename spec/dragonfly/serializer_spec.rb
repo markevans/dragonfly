@@ -13,10 +13,11 @@ describe Dragonfly::Serializer do
       '//..',
       'whats/up.egg.frog',
       '£ñçùí;',
-      '~'
+      '~',
+      '-umlaut_ö'
     ].each do |string|
-      it "should encode #{string.inspect} properly with no padding/line break" do
-        b64_encode(string).should_not =~ /\n|=/
+      it "should encode #{string.inspect} properly with no padding/line break or slash" do
+        b64_encode(string).should_not =~ /\n|=|\//
       end
       it "should correctly encode and decode #{string.inspect} to the same string" do
         str = b64_decode(b64_encode(string))
@@ -26,8 +27,9 @@ describe Dragonfly::Serializer do
     end
 
     describe "b64_decode" do
-      it "converts (deprecated) '~' characters to '/' characters" do
-        b64_decode('asdf~asdf').should == b64_decode('asdf/asdf')
+      it "converts (deprecated) '~' and '/' characters to '_' characters" do
+        b64_decode('LXVtbGF1dF~Dtg').should == b64_decode('LXVtbGF1dF/Dtg')
+        b64_decode('LXVtbGF1dF/Dtg').should == b64_decode('LXVtbGF1dF_Dtg')
       end
     end
 
