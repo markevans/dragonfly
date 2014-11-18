@@ -24,7 +24,7 @@ describe Dragonfly::UrlMapper do
   describe "url_regexp" do
     it "should return a regexp with non-greedy optional groups that include the preceding slash/dot/dash" do
       url_mapper = Dragonfly::UrlMapper.new('/media/:job/:basename-:size.:format')
-      url_mapper.url_regexp.should == %r{\A/media(/[^\/\-\.]+?)?(/[^\/\-\.]+?)?(\-[^\/\-\.]+?)?(\.[^\/\-\.]+?)?\z}
+      url_mapper.url_regexp.should == %r{\A/media(/[^\/\.]+?)?(/[^\/\-\.]+?)?(\-[^\/\-\.]+?)?(\.[^\/\-\.]+?)?\z}
     end
 
     it "should allow setting custom patterns in the url" do
@@ -98,6 +98,12 @@ describe Dragonfly::UrlMapper do
     it "should correctly url-unescape funny characters" do
       @url_mapper.params_for('/media/a%23c').should == {'job' => 'a#c'}
     end
+
+    it "should work with '-' character in url format" do
+      @url_mapper = Dragonfly::UrlMapper.new('/media/:job-:size.:format')
+      @url_mapper.params_for('/media/asdf-30x30.jpg').should == {'job' => 'asdf', 'size' => '30x30', 'format' => 'jpg'}
+      @url_mapper.params_for('/media/as-df-30x30.jpg').should == {'job' => 'as-df', 'size' => '30x30', 'format' => 'jpg'}
+    end
   end
 
   describe "matching urls with standard format /media/:job/:basename.:format" do
@@ -123,7 +129,7 @@ describe Dragonfly::UrlMapper do
       '/media/asdf/stuff/egg' => nil,
       '/media/asdf/stuff.dog.egg' => {'job' => 'asdf', 'basename' => 'stuff.dog', 'format' => 'egg'},
       '/media/asdf/s%3D2%2B-.d.e' => {'job' => 'asdf', 'basename' => 's=2+-.d', 'format' => 'e'},
-      '/media/asdf-40x40/stuff.egg' => nil,
+      '/media/asdf-40x40/stuff.egg' => {'job' => 'asdf-40x40', 'basename' => 'stuff', 'format' => 'egg'},
       '/media/a%23c' => {'job' => 'a#c', 'basename' => nil, 'format' => nil}
     }.each do |path, params|
 
