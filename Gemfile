@@ -3,7 +3,7 @@ source :rubygems
 # These gems are needed for development and testing
 group :development, :test, :cucumber do
   gem 'aws-s3'
-  gem 'capybara'
+  gem 'capybara', '~> 2.0.3' # later versions don't support Ruby 1.9.2
   gem 'cucumber'
   gem 'cucumber-rails'
   gem 'database_cleaner', '>= 0.5.0'
