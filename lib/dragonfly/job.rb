@@ -256,7 +256,11 @@ module Dragonfly
     end
 
     def sha
-      Digest::SHA1.hexdigest("#{to_unique_s}#{app.secret}")[0...8]
+      unless app.secret
+        raise CannotGenerateSha, "A secret is required to sign and verify Dragonfly job requests. "\
+                                 "Use `secret '...'` or disable `protect_from_dos_attacks` in your config."
+      end
+      OpenSSL::HMAC.hexdigest('SHA256', app.secret, to_unique_s)[0,16]
     end
 
     def validate_sha!(sha)
