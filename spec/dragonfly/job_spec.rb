@@ -630,7 +630,7 @@ describe Dragonfly::Job do
     end
     
     it "should be of the correct format" do
-      @job.sha.should =~ /^\w{8}$/
+      @job.sha.should =~ /^\w{16}$/
     end
     
     it "should be the same for the same job steps" do
