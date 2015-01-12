@@ -9,9 +9,13 @@ module Dragonfly
     class CommandFailed < RuntimeError; end
 
     def run(command, opts={})
-      command = escape_args(command) unless opts[:escape] == false
-      Dragonfly.debug("shell command: #{command}")
-      run_command(command)
+      Dragonfly.debug("shell command started: #{command}")
+      beginning_time = Time.now
+      result = run_command(command)
+      end_time = Time.now
+      time = (end_time - beginning_time) * 1000
+      Dragonfly.debug("shell command finished: #{time}ms")
+      result
     end
 
     def escape_args(args)
