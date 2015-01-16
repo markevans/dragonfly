@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
     "README.md"
   ]
 
-  spec.add_runtime_dependency("rack", [">= 0"])
+  spec.add_runtime_dependency("rack", [">= 1.3.0"])
   spec.add_runtime_dependency("multi_json", ["~> 1.0"])
   spec.add_runtime_dependency("addressable", ["~> 2.3"])
 
