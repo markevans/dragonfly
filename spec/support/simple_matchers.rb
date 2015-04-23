@@ -19,22 +19,6 @@ RSpec::Matchers.define :include_hash do |hash|
   end
 end
 
-def memory_usage
-  GC.start # Garbage collect
-  `ps -o rss= -p #{$$}`.strip.to_i
-end
-
-RSpec::Matchers.define :leak_memory do
-  match do |given|
-    memory_before = memory_usage
-    given.call
-    memory_after = memory_usage
-    result = memory_after > memory_before
-    puts "#{memory_after} > #{memory_before}" if result
-    result
-  end
-end
-
 RSpec::Matchers.define :match_attachment_classes do |classes|
   match do |given_classes|
     given_classes.length == classes.length &&
