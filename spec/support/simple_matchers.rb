@@ -47,3 +47,14 @@ RSpec::Matchers.define :match_steps do |steps|
     given.map{|step| step.class } == steps
   end
 end
+
+RSpec::Matchers.define :increase_num_tempfiles do
+  match do |block|
+    num_tempfiles_before = Dir.entries(Dir.tmpdir).size
+    block.call
+    num_tempfiles_after = Dir.entries(Dir.tmpdir).size
+    increased = num_tempfiles_after > num_tempfiles_before
+    puts "Num tempfiles increased: #{num_tempfiles_before} -> #{num_tempfiles_after}" if increased
+    increased
+  end
+end

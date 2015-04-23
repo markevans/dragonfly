@@ -22,7 +22,8 @@ module Dragonfly
                    :data, :file, :tempfile, :path, :to_file, :size, :each,
                    :meta, :meta=, :add_meta, :name, :name=, :basename, :basename=, :ext, :ext=, :mime_type,
                    :analyse, :shell_eval, :store,
-                   :b64_data
+                   :b64_data,
+                   :close
 
     require 'dragonfly/job/fetch'
     require 'dragonfly/job/fetch_file'
