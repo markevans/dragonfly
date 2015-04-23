@@ -36,7 +36,7 @@ describe "remote on-the-fly urls" do
   end
 
   it "should store the content when first called" do
-    File.exist?('tmp/dragonfly_test_urls/yay.txt').should be_false
+    File.exist?('tmp/dragonfly_test_urls/yay.txt').should be_falsey
     request(@app, @job.url)
     File.read('tmp/dragonfly_test_urls/yay.txt').should == 'TEST'
   end

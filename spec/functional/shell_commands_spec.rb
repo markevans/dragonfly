@@ -11,7 +11,7 @@ describe "using the shell" do
         app.generate(:plain, 10, 10, 'white').convert("-resize 5x5 ; touch tmp/stuff").apply
       rescue Dragonfly::Shell::CommandFailed
       end
-      File.exist?('tmp/stuff').should be_false
+      File.exist?('tmp/stuff').should be_falsey
     end
   end
 

@@ -5,18 +5,18 @@ describe Dragonfly::Whitelist do
     whitelist = Dragonfly::Whitelist.new([/platipus/])
     whitelist.include?("platipus").should be_truthy
     whitelist.include?("small platipus in the bath").should be_truthy
-    whitelist.include?("baloney").should be_false
+    whitelist.include?("baloney").should be_falsey
   end
 
   it "matches strings" do
     whitelist = Dragonfly::Whitelist.new(["platipus"])
     whitelist.include?("platipus").should be_truthy
-    whitelist.include?("small platipus in the bath").should be_false
-    whitelist.include?("baloney").should be_false
+    whitelist.include?("small platipus in the bath").should be_falsey
+    whitelist.include?("baloney").should be_falsey
   end
 
   it "only needs one match" do
-    Dragonfly::Whitelist.new(%w(a b)).include?("c").should be_false
+    Dragonfly::Whitelist.new(%w(a b)).include?("c").should be_falsey
     Dragonfly::Whitelist.new(%w(a b c)).include?("c").should be_truthy
   end
 

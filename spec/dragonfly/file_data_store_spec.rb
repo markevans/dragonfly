@@ -13,7 +13,7 @@ describe Dragonfly::FileDataStore do
   end
 
   def assert_does_not_exist(path)
-    File.exists?(path).should be_false
+    File.exists?(path).should be_falsey
   end
 
   def assert_contains(dir, filepattern)

@@ -213,7 +213,7 @@ describe Dragonfly::TempObject do
       path = temp_object.path
       File.exist?(path).should be_truthy
       temp_object.close
-      File.exist?(path).should be_false
+      File.exist?(path).should be_falsey
     end
 
  end
@@ -242,7 +242,7 @@ describe Dragonfly::TempObject do
       path = temp_object.path
       File.exist?(path).should be_truthy
       temp_object.close
-      File.exist?(path).should be_false
+      File.exist?(path).should be_falsey
     end
   end
 

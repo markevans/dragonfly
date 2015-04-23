@@ -24,7 +24,7 @@ describe Dragonfly::Utils do
       7.3
     ].each do |obj|
       it "returns false for #{obj.inspect}" do
-        obj.blank?.should be_false
+        obj.blank?.should be_falsey
       end
     end
   end

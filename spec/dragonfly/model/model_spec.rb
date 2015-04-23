@@ -692,12 +692,12 @@ describe "models" do
 
       it "should return false when called if set with #{value.inspect}" do
         @item.remove_preview_image = value
-        @item.remove_preview_image.should be_false
+        @item.remove_preview_image.should be_falsey
       end
     end
 
     it "should return false by default for the getter" do
-      @item.remove_preview_image.should be_false
+      @item.remove_preview_image.should be_falsey
     end
 
   end
@@ -955,7 +955,7 @@ describe "models" do
     end
 
     it "should be changed when assigned" do
-      expect( @item.preview_image_changed? ).to be_false
+      expect( @item.preview_image_changed? ).to be_falsey
       @item.preview_image = 'ggg'
       expect( @item.preview_image_changed? ).to be_truthy
     end
@@ -967,7 +967,7 @@ describe "models" do
       end
 
       it "should not be changed" do
-        expect( @item.preview_image_changed? ).to be_false
+        expect( @item.preview_image_changed? ).to be_falsey
       end
 
       it "should be changed when set to nil" do
@@ -982,7 +982,7 @@ describe "models" do
 
       it "should not be changed when reloaded" do
         item = @item_class.find(@item.id)
-        expect( @item.preview_image_changed? ).to be_false
+        expect( @item.preview_image_changed? ).to be_falsey
       end
 
     end
@@ -1213,12 +1213,12 @@ describe "models" do
     end
 
     it "returns false if unassigned" do
-      @item.photo_stored?.should be_false
+      @item.photo_stored?.should be_falsey
     end
 
     it "returns false if assigned but not stored" do
       @item.photo = "Asdf"
-      @item.photo_stored?.should be_false
+      @item.photo_stored?.should be_falsey
     end
 
     it "returns true if stored" do
