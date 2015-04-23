@@ -118,7 +118,7 @@ describe Dragonfly::TempObject do
         end
         it "should write to a file" do
           @temp_object.to_file(@filename)
-          File.exists?(@filename).should be_true
+          File.exists?(@filename).should be_truthy
         end
         it "should write the correct data to the file" do
           @temp_object.to_file(@filename)
@@ -140,7 +140,7 @@ describe Dragonfly::TempObject do
         it "should create intermediate subdirs" do
           filename = 'tmp/gog/mcgee'
           @temp_object.to_file(filename)
-          File.exists?(filename).should be_true
+          File.exists?(filename).should be_truthy
           FileUtils.rm_rf('tmp/gog')
         end
         it "should allow not creating intermediate subdirs" do
@@ -211,7 +211,7 @@ describe Dragonfly::TempObject do
     it "should delete its internal tempfile on close" do
       temp_object = new_temp_object("HELLO")
       path = temp_object.path
-      File.exist?(path).should be_true
+      File.exist?(path).should be_truthy
       temp_object.close
       File.exist?(path).should be_false
     end
@@ -240,7 +240,7 @@ describe Dragonfly::TempObject do
     it "should delete its internal tempfile on close" do
       temp_object = new_temp_object("HELLO")
       path = temp_object.path
-      File.exist?(path).should be_true
+      File.exist?(path).should be_truthy
       temp_object.close
       File.exist?(path).should be_false
     end
@@ -281,7 +281,7 @@ describe Dragonfly::TempObject do
     it "doesn't remove the file on close" do
       temp_object = new_temp_object("HELLO")
       temp_object.close
-      File.exist?(temp_object.path).should be_true
+      File.exist?(temp_object.path).should be_truthy
     end
   end
 
@@ -319,7 +319,7 @@ describe Dragonfly::TempObject do
     it "doesn't remove the file on close" do
       temp_object = new_temp_object("HELLO")
       temp_object.close
-      File.exist?(temp_object.path).should be_true
+      File.exist?(temp_object.path).should be_truthy
     end
 
   end

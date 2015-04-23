@@ -9,7 +9,7 @@ describe Dragonfly::FileDataStore do
   end
 
   def assert_exists(path)
-    File.exists?(path).should be_true
+    File.exists?(path).should be_truthy
   end
 
   def assert_does_not_exist(path)

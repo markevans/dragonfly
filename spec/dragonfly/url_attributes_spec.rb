@@ -6,7 +6,7 @@ describe Dragonfly::UrlAttributes do
 
   describe "empty" do
     it "returns true when empty" do
-      url_attributes.empty?.should be_true
+      url_attributes.empty?.should be_truthy
     end
 
     it "returns false when not empty" do
@@ -16,7 +16,7 @@ describe Dragonfly::UrlAttributes do
 
     it "returns true if all values are nil" do
       url_attributes.some = nil
-      url_attributes.empty?.should be_true
+      url_attributes.empty?.should be_truthy
     end
   end
 

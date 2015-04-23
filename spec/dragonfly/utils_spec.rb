@@ -11,7 +11,7 @@ describe Dragonfly::Utils do
       {}
     ].each do |obj|
       it "returns true for #{obj.inspect}" do
-        obj.blank?.should be_true
+        obj.blank?.should be_truthy
       end
     end
 

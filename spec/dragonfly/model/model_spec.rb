@@ -268,7 +268,7 @@ describe "models" do
         end
 
         it 'should mark the attribute as changed' do
-          @item.preview_image_uid_changed?.should be_true
+          @item.preview_image_uid_changed?.should be_truthy
         end
       end
 
@@ -293,7 +293,7 @@ describe "models" do
         end
 
         it 'should mark the attribute as changed' do
-          @item.preview_image_uid_changed?.should be_true
+          @item.preview_image_uid_changed?.should be_truthy
         end
 
       end
@@ -463,7 +463,7 @@ describe "models" do
         @item.preview_image.number_of_As.should == 2
       end
       it "should report that it responds to analyser methods" do
-        @item.preview_image.respond_to?(:number_of_As).should be_true
+        @item.preview_image.respond_to?(:number_of_As).should be_truthy
       end
       it "should include analyser methods in methods" do
         @item.preview_image.methods.map{|m| m.to_sym }.should include(:number_of_As)
@@ -673,7 +673,7 @@ describe "models" do
 
       it "should return true when called if set with #{value.inspect}" do
         @item.remove_preview_image = value
-        @item.remove_preview_image.should be_true
+        @item.remove_preview_image.should be_truthy
       end
     end
 
@@ -957,7 +957,7 @@ describe "models" do
     it "should be changed when assigned" do
       expect( @item.preview_image_changed? ).to be_false
       @item.preview_image = 'ggg'
-      expect( @item.preview_image_changed? ).to be_true
+      expect( @item.preview_image_changed? ).to be_truthy
     end
 
     describe "after saving" do
@@ -972,12 +972,12 @@ describe "models" do
 
       it "should be changed when set to nil" do
         @item.preview_image = nil
-        expect( @item.preview_image_changed? ).to be_true
+        expect( @item.preview_image_changed? ).to be_truthy
       end
 
       it "should be changed when changed" do
         @item.preview_image = "asdf"
-        expect( @item.preview_image_changed? ).to be_true
+        expect( @item.preview_image_changed? ).to be_truthy
       end
 
       it "should not be changed when reloaded" do
@@ -1224,7 +1224,7 @@ describe "models" do
     it "returns true if stored" do
       @item.photo = "Asdf"
       @item.save!
-      @item.photo_stored?.should be_true
+      @item.photo_stored?.should be_truthy
     end
   end
 
