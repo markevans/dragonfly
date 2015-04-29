@@ -57,6 +57,12 @@ See [the Articles wiki](http://github.com/markevans/dragonfly/wiki/Articles) for
 
 Please feel free to contribute!!
 
+Examples
+========
+See [the Wiki](http://github.com/markevans/dragonfly/wiki) and see the pages list for examples.
+
+Please feel free to contribute!!
+
 Plugins / add-ons
 =================
 See [the Add-ons wiki](http://github.com/markevans/dragonfly/wiki/Dragonfly-add-ons).
