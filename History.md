@@ -1,3 +1,9 @@
+1.0.9 (2015-04-29)
+===================
+Fixes
+--------
+- Remove sha parameter being echoed back on error for better security
+
 1.0.8 (2015-04-23)
 ===================
 Fixes
