@@ -6,10 +6,13 @@ module Dragonfly
         def call(content, args='', opts={})
           convert_command = content.env[:convert_command] || 'convert'
           format = opts['format']
-
+          
           frame_string = "[#{opts['frame']}]" if opts['frame']
+          
+          delegate_string = "#{opts['delegate']}:" if opts['delegate']
+          
           content.shell_update :ext => format do |old_path, new_path|
-            "#{convert_command} #{old_path}#{frame_string} #{args} #{new_path}"
+            "#{convert_command} #{delegate_string}#{old_path}#{frame_string} #{args} #{new_path}"
           end
 
           if format

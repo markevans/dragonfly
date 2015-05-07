@@ -53,4 +53,12 @@ describe Dragonfly::ImageMagick::Processors::Convert do
     one_frame_size.should < all_frames_size
   end
 
+
+  it "allows converting using specific delegates" do
+    mov = sample_content('movie.mp4')
+    movie_size = mov.size
+
+    processor.call(mov, '', 'format' => 'jpg', 'delegate' => 'mpeg', 'frame' => 1)
+    mov.ext.should == 'jpg'
+  end
 end
