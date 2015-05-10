@@ -9,7 +9,7 @@ module Dragonfly
 
           frame_string = "[#{opts['frame']}]" if opts['frame']
           content.shell_update :ext => format do |old_path, new_path|
-            "#{convert_command} #{old_path}#{frame_string} #{args} #{new_path}"
+            "#{convert_command} #{opts['initial_args']} #{old_path}#{frame_string} #{args} #{new_path}"
           end
 
           if format
