@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
     "README.md"
   ]
 
-  spec.add_runtime_dependency("rack", [">= 0"])
+  spec.add_runtime_dependency("rack", [">= 1.3.0"])
   spec.add_runtime_dependency("multi_json", ["~> 1.0"])
   spec.add_runtime_dependency("addressable", ["~> 2.3"])
 
@@ -29,6 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("webmock")
   if RUBY_VERSION < '1.9.3'
     spec.add_development_dependency("activemodel", '~> 3.2')
+    spec.add_development_dependency("i18n", '~> 0.6.11')
   else
     spec.add_development_dependency("activemodel")
   end

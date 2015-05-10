@@ -68,7 +68,7 @@ module Dragonfly
     rescue Job::NoSHAGiven => e
       [400, {"Content-Type" => 'text/plain'}, ["You need to give a SHA parameter"]]
     rescue Job::IncorrectSHA => e
-      [400, {"Content-Type" => 'text/plain'}, ["The SHA parameter you gave (#{e}) is incorrect"]]
+      [400, {"Content-Type" => 'text/plain'}, ["The SHA parameter you gave is incorrect"]]
     rescue JobNotAllowed => e
       Dragonfly.warn(e.message)
       [403, {"Content-Type" => 'text/plain'}, ["Forbidden"]]

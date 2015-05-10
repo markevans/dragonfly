@@ -19,22 +19,6 @@ RSpec::Matchers.define :include_hash do |hash|
   end
 end
 
-def memory_usage
-  GC.start # Garbage collect
-  `ps -o rss= -p #{$$}`.strip.to_i
-end
-
-RSpec::Matchers.define :leak_memory do
-  match do |given|
-    memory_before = memory_usage
-    given.call
-    memory_after = memory_usage
-    result = memory_after > memory_before
-    puts "#{memory_after} > #{memory_before}" if result
-    result
-  end
-end
-
 RSpec::Matchers.define :match_attachment_classes do |classes|
   match do |given_classes|
     given_classes.length == classes.length &&
@@ -61,5 +45,16 @@ end
 RSpec::Matchers.define :match_steps do |steps|
   match do |given|
     given.map{|step| step.class } == steps
+  end
+end
+
+RSpec::Matchers.define :increase_num_tempfiles do
+  match do |block|
+    num_tempfiles_before = Dir.entries(Dir.tmpdir).size
+    block.call
+    num_tempfiles_after = Dir.entries(Dir.tmpdir).size
+    increased = num_tempfiles_after > num_tempfiles_before
+    puts "Num tempfiles increased: #{num_tempfiles_before} -> #{num_tempfiles_after}" if increased
+    increased
   end
 end

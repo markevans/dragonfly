@@ -126,7 +126,9 @@ module Dragonfly
           storage_options_specs.inject({}) do |opts, spec|
             options = case spec
             when Proc then model.instance_exec(attachment, &spec)
-            when Symbol then model.send(spec)
+            when Symbol
+              meth = model.method(spec)
+              (1 === meth.arity) ? meth.call(attachment) : meth.call
             else spec
             end
             opts.merge!(options)

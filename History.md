@@ -1,3 +1,16 @@
+1.0.9 (2015-04-29)
+===================
+Fixes
+--------
+- Remove sha parameter being echoed back on error for better security
+
+1.0.8 (2015-04-23)
+===================
+Fixes
+--------
+- Job#close re-added, so that tempfiles are immediately removed after each request
+- Specs passing for 1.8.7, 1.9.2 (i18n gem version specified)
+
 1.0.7 (2014-08-26)
 ===================
 Changes

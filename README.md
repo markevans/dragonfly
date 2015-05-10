@@ -37,16 +37,6 @@ Documentation
 
 <a href="http://rubydoc.info/github/markevans/dragonfly/frames">RDoc documentation is here</a>
 
-Upgrading from v0.9 to v1.0
-===========================
-Dragonfly has changed somewhat since version 0.9.
-See [the Upgrading wiki](http://github.com/markevans/dragonfly/wiki/Upgrading-from-0.9-to-1.0) for notes on changes, and feel free to add anything you come across while upgrading!
-
-Changes are listed in [History.md](https://github.com/markevans/dragonfly/blob/master/History.md)
-
-If for whatever reason you can't upgrade, then
-<a href="http://markevans.github.io/dragonfly/v0.9.15">the docs for version 0.9.x are here</a>.
-
 Installation
 ============
 
@@ -54,17 +44,24 @@ Installation
 
 or in your Gemfile
 ```ruby
-gem 'dragonfly', '~> 1.0.7'
+gem 'dragonfly', '~> 1.0.9'
 ```
 
 Require with
 ```ruby
 require 'dragonfly'
 ```
+Articles
+========
+See [the Articles wiki](http://github.com/markevans/dragonfly/wiki/Articles) for articles and tutorials.
 
-Ruby Versions
-=============
-Dragonfly has been tested with ruby versions 1.8.7, 1.9.2, 1.9.3, 2.0.0, jruby 1.7.8 and rubinius 2.2.
+Please feel free to contribute!!
+
+Examples
+========
+See [the Wiki](http://github.com/markevans/dragonfly/wiki) and see the pages list for examples.
+
+Please feel free to contribute!!
 
 Plugins / add-ons
 =================
@@ -79,6 +76,20 @@ Please use the <a href="http://github.com/markevans/dragonfly/issues">github iss
 Suggestions/Questions
 =====================
 <a href="http://groups.google.com/group/dragonfly-users">Google group dragonfly-users</a>
+
+Ruby Versions
+=============
+Dragonfly has been tested with ruby versions 1.8.7, 1.9.2, 1.9.3, 2.0.0, 2.1.x, 2.2.x, jruby 1.7.8 and rubinius 2.2.
+
+Upgrading from v0.9 to v1.0
+===========================
+Dragonfly has changed somewhat since version 0.9.
+See [the Upgrading wiki](http://github.com/markevans/dragonfly/wiki/Upgrading-from-0.9-to-1.0) for notes on changes, and feel free to add anything you come across while upgrading!
+
+Changes are listed in [History.md](https://github.com/markevans/dragonfly/blob/master/History.md)
+
+If for whatever reason you can't upgrade, then
+<a href="http://markevans.github.io/dragonfly/v0.9.15">the docs for version 0.9.x are here</a>.
 
 Credits
 =======

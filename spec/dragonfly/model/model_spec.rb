@@ -268,7 +268,7 @@ describe "models" do
         end
 
         it 'should mark the attribute as changed' do
-          @item.preview_image_uid_changed?.should be_true
+          @item.preview_image_uid_changed?.should be_truthy
         end
       end
 
@@ -293,7 +293,7 @@ describe "models" do
         end
 
         it 'should mark the attribute as changed' do
-          @item.preview_image_uid_changed?.should be_true
+          @item.preview_image_uid_changed?.should be_truthy
         end
 
       end
@@ -463,7 +463,7 @@ describe "models" do
         @item.preview_image.number_of_As.should == 2
       end
       it "should report that it responds to analyser methods" do
-        @item.preview_image.respond_to?(:number_of_As).should be_true
+        @item.preview_image.respond_to?(:number_of_As).should be_truthy
       end
       it "should include analyser methods in methods" do
         @item.preview_image.methods.map{|m| m.to_sym }.should include(:number_of_As)
@@ -673,7 +673,7 @@ describe "models" do
 
       it "should return true when called if set with #{value.inspect}" do
         @item.remove_preview_image = value
-        @item.remove_preview_image.should be_true
+        @item.remove_preview_image.should be_truthy
       end
     end
 
@@ -692,12 +692,12 @@ describe "models" do
 
       it "should return false when called if set with #{value.inspect}" do
         @item.remove_preview_image = value
-        @item.remove_preview_image.should be_false
+        @item.remove_preview_image.should be_falsey
       end
     end
 
     it "should return false by default for the getter" do
-      @item.remove_preview_image.should be_false
+      @item.remove_preview_image.should be_falsey
     end
 
   end
@@ -881,6 +881,14 @@ describe "models" do
       item.save!
     end
 
+    it 'should pass the attachment object if the method allows' do
+      set_storage_options :special_ops
+      item = @item_class.new :title => 'lump', :preview_image => 'hello'
+      def item.special_ops(a); {:egg => (a.data + title)}; end
+      @app.datastore.should_receive(:write).with(anything, hash_including(:egg => 'hellolump'))
+      item.save!
+    end
+
     it "should allow setting more than once" do
       @item_class.class_eval do
         dragonfly_accessor :preview_image do
@@ -955,9 +963,9 @@ describe "models" do
     end
 
     it "should be changed when assigned" do
-      expect( @item.preview_image_changed? ).to be_false
+      expect( @item.preview_image_changed? ).to be_falsey
       @item.preview_image = 'ggg'
-      expect( @item.preview_image_changed? ).to be_true
+      expect( @item.preview_image_changed? ).to be_truthy
     end
 
     describe "after saving" do
@@ -967,22 +975,22 @@ describe "models" do
       end
 
       it "should not be changed" do
-        expect( @item.preview_image_changed? ).to be_false
+        expect( @item.preview_image_changed? ).to be_falsey
       end
 
       it "should be changed when set to nil" do
         @item.preview_image = nil
-        expect( @item.preview_image_changed? ).to be_true
+        expect( @item.preview_image_changed? ).to be_truthy
       end
 
       it "should be changed when changed" do
         @item.preview_image = "asdf"
-        expect( @item.preview_image_changed? ).to be_true
+        expect( @item.preview_image_changed? ).to be_truthy
       end
 
       it "should not be changed when reloaded" do
         item = @item_class.find(@item.id)
-        expect( @item.preview_image_changed? ).to be_false
+        expect( @item.preview_image_changed? ).to be_falsey
       end
 
     end
@@ -1213,18 +1221,18 @@ describe "models" do
     end
 
     it "returns false if unassigned" do
-      @item.photo_stored?.should be_false
+      @item.photo_stored?.should be_falsey
     end
 
     it "returns false if assigned but not stored" do
       @item.photo = "Asdf"
-      @item.photo_stored?.should be_false
+      @item.photo_stored?.should be_falsey
     end
 
     it "returns true if stored" do
       @item.photo = "Asdf"
       @item.save!
-      @item.photo_stored?.should be_true
+      @item.photo_stored?.should be_truthy
     end
   end
 

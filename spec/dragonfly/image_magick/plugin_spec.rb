@@ -37,13 +37,13 @@ describe "a configured imagemagick app" do
     end
 
     it "should say if it's portrait" do
-      image.portrait?.should be_true
-      image.portrait.should be_true # for using with magic attributes
+      image.portrait?.should be_truthy
+      image.portrait.should be_truthy # for using with magic attributes
     end
 
     it "should say if it's landscape" do
-      image.landscape?.should be_false
-      image.landscape.should be_false # for using with magic attributes
+      image.landscape?.should be_falsey
+      image.landscape.should be_falsey # for using with magic attributes
     end
 
     it "should return the format" do
@@ -51,16 +51,16 @@ describe "a configured imagemagick app" do
     end
 
     it "should say if it's an image" do
-      image.image?.should be_true
-      image.image.should be_true # for using with magic attributes
+      image.image?.should be_truthy
+      image.image.should be_truthy # for using with magic attributes
     end
 
     it "should say if it's not an image" do
-      app.create("blah").image?.should be_false
+      app.create("blah").image?.should be_falsey
     end
 
     it "should return false for pdfs" do
-      image.encode('pdf').image?.should be_false
+      image.encode('pdf').image?.should be_falsey
     end
   end
 

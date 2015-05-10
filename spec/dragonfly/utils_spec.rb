@@ -11,7 +11,7 @@ describe Dragonfly::Utils do
       {}
     ].each do |obj|
       it "returns true for #{obj.inspect}" do
-        obj.blank?.should be_true
+        obj.blank?.should be_truthy
       end
     end
 
@@ -24,7 +24,7 @@ describe Dragonfly::Utils do
       7.3
     ].each do |obj|
       it "returns false for #{obj.inspect}" do
-        obj.blank?.should be_false
+        obj.blank?.should be_falsey
       end
     end
   end
