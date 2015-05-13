@@ -7,11 +7,11 @@ module Dragonfly
           convert_command = content.env[:convert_command] || 'convert'
           format = opts['format']
 
-          early_args = opts['early_args'] if opts['early_args']
+          input_args = opts['input_args'] if opts['input_args']
           frame_string = "[#{opts['frame']}]" if opts['frame']
 
           content.shell_update :ext => format do |old_path, new_path|
-            "#{convert_command} #{early_args} #{old_path}#{frame_string} #{args} #{new_path}"
+            "#{convert_command} #{input_args} #{old_path}#{frame_string} #{args} #{new_path}"
           end
 
           if format

@@ -54,10 +54,10 @@ describe Dragonfly::ImageMagick::Processors::Convert do
     one_frame_size.should < all_frames_size
   end
 
-  it "accepts early arguments for convert commands" do
+  it "accepts input arguments for convert commands" do
     pdf2 = pdf.clone
     processor.call(pdf, '-scale 85x110', 'format' => 'png')
-    processor.call(pdf2, '-scale 85x110', 'format' => 'png', 'early_args' => '-density 150')
+    processor.call(pdf2, '-scale 85x110', 'format' => 'png', 'input_args' => '-density 150')
 
     pdf.should_not equal_image(pdf2)
   end
