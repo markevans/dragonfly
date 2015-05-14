@@ -1,3 +1,13 @@
+1.0.10 (2015-05-14)
+===================
+Features
+--------
+- Allow method signified by symbol in storage_options to take an attachment object
+- Allow passing in "input_args" to convert processor
+Fixes
+-----
+- correct Rack version
+
 1.0.9 (2015-04-29)
 ===================
 Fixes
