@@ -37,6 +37,14 @@ describe "model urls" do
     @item.preview_image.url.should =~ %r{^/media/\w+/hello\.txt}
   end
 
+  it "use the actual magic attribute name in the url" do
+    @item.preview_image = new_tempfile
+    @item.save!
+    @item.preview_image_name = 'renamed.txt'
+    @item.save!
+    @item.preview_image.url.should =~ %r{^/media/\w+/renamed\.txt}
+  end
+
   it "should still include the name in the url if it has the magic attribute on reload" do
     @item.preview_image = new_tempfile
     @item.save!
