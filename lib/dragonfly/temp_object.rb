@@ -39,7 +39,7 @@ module Dragonfly
 
     # Instance Methods
 
-    def initialize(obj)
+    def initialize(obj, name=nil)
       if obj.is_a? TempObject
         @data = obj.get_data
         @tempfile = obj.get_tempfile
@@ -62,19 +62,22 @@ module Dragonfly
 
       @tempfile.close if @tempfile
 
-      # Original filename
-      @original_filename = if obj.respond_to?(:original_filename)
+      # Name
+      @name = if name
+        name
+      elsif obj.respond_to?(:original_filename)
         obj.original_filename
       elsif @pathname
         @pathname.basename.to_s
       end
     end
 
-    attr_reader :original_filename
+    attr_reader :name
 
     def ext
-      name = original_filename
-      name.split('.').last if name
+      if n = name
+        n.split('.').last
+      end
     end
 
     def data

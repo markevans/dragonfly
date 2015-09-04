@@ -368,33 +368,37 @@ describe Dragonfly::TempObject do
     it_should_behave_like "common behaviour"
   end
 
-  describe "original_filename" do
+  describe "name" do
 
     before(:each) do
       @obj = new_tempfile
     end
 
-    it "should set the original_filename if the initial object responds to 'original filename'" do
+    it "should set the name from the arg passed in" do
+      Dragonfly::TempObject.new(@obj, 'goof.ball').name.should == 'goof.ball'
+    end
+
+    it "should set the name if the initial object responds to 'original filename'" do
       def @obj.original_filename
         'jimmy.page'
       end
-      Dragonfly::TempObject.new(@obj).original_filename.should == 'jimmy.page'
+      Dragonfly::TempObject.new(@obj).name.should == 'jimmy.page'
     end
 
     it "should not set the name if the initial object doesn't respond to 'original filename'" do
-      Dragonfly::TempObject.new(@obj).original_filename.should be_nil
+      Dragonfly::TempObject.new(@obj).name.should be_nil
     end
 
     it "should set the name if the initial object is a file object" do
       file = File.new(SAMPLES_DIR.join('round.gif'))
       temp_object = Dragonfly::TempObject.new(file)
-      temp_object.original_filename.should == 'round.gif'
+      temp_object.name.should == 'round.gif'
     end
 
     it "should set the name if the initial object is a pathname" do
       pathname = Pathname.new(SAMPLES_DIR + '/round.gif')
       temp_object = Dragonfly::TempObject.new(pathname)
-      temp_object.original_filename.should == 'round.gif'
+      temp_object.name.should == 'round.gif'
     end
 
   end
@@ -407,8 +411,8 @@ describe Dragonfly::TempObject do
       temp_object.ext.should be_nil
     end
 
-    it "uses original_filename if present" do
-      temp_object.should_receive(:original_filename).and_return('some.thing.yo')
+    it "uses name if present" do
+      temp_object.should_receive(:name).and_return('some.thing.yo')
       temp_object.ext.should == 'yo'
     end
 
