@@ -205,6 +205,13 @@ describe Dragonfly::Content do
       str.should == "asdf"
     end
 
+    describe "tempfile" do
+      it "uses the name for the file extension" do
+        content.update("ASDF", 'name' => 'asdf.txt')
+        expect(content.tempfile.path).to match(/\.txt$/)
+      end
+    end
+
   end
 
   describe "shell commands" do

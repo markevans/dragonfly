@@ -66,7 +66,7 @@ module Dragonfly
     # @example "beach.jpg"
     # @return [String]
     def name
-      meta["name"] || temp_object.original_filename
+      meta["name"]
     end
 
     # @example
@@ -112,12 +112,12 @@ module Dragonfly
     # @param meta [Hash] - should be json-like, i.e. contain no types other than String, Number, Boolean
     # @return [Content] self
     def update(obj, meta=nil)
-      self.temp_object = TempObject.new(obj)
-      original_filename = temp_object.original_filename
-      self.meta['name'] ||= original_filename if original_filename
+      meta ||= {}
+      self.temp_object = TempObject.new(obj, meta['name'])
+      self.meta['name'] ||= temp_object.name if temp_object.name
       clear_analyser_cache
       add_meta(obj.meta) if obj.respond_to?(:meta)
-      add_meta(meta) if meta
+      add_meta(meta)
       self
     end
 
