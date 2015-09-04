@@ -1,3 +1,9 @@
+1.0.11 (2015-09-04)
+===================
+Fixes
+-----
+- Make sure tempfiles are created with paths matching the meta name
+
 1.0.10 (2015-05-14)
 ===================
 Features
