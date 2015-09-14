@@ -55,7 +55,8 @@ module Dragonfly
         response = get(url)
         case response
         when Net::HTTPSuccess then response.body || ""
-        when Net::HTTPRedirection then get_following_redirects(response['location'], redirect_limit-1)
+        when Net::HTTPRedirection then
+          get_following_redirects(redirect_url(url, response['location']), redirect_limit-1)
         else
           response.error!
         end
@@ -94,6 +95,13 @@ module Dragonfly
         end
       end
 
+      def redirect_url(current_url, following_url)
+        redirect_url = URI.parse(following_url)
+        if redirect_url.relative?
+          redirect_url = URI::join(current_url, following_url)
+        end
+        redirect_url
+      end
     end
   end
 end
