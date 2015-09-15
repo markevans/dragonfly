@@ -13,7 +13,7 @@ class User < ActiveRecord::Base  # model
 end
 {% endhighlight %}
 {% highlight erb %}
-<%= image_tag @user.photo.thumb('300x200#')  # view  %>
+<%= image_tag @user.photo.thumb('300x200#').url  # view  %>
 {% endhighlight %}
 
 ... or generate text images on-demand in Sinatra ...
