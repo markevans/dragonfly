@@ -26,7 +26,11 @@ module Dragonfly
         end
 
         def call(content, geometry, opts={})
-          args = case geometry
+          content.process!(:convert, args_for_geometry(geometry), opts)
+        end
+
+        def args_for_geometry(geometry)
+          case geometry
           when RESIZE_GEOMETRY
             resize_args(geometry)
           when CROPPED_RESIZE_GEOMETRY
@@ -41,7 +45,6 @@ module Dragonfly
             )
           else raise ArgumentError, "Didn't recognise the geometry string #{geometry}"
           end
-          content.process!(:convert, args, opts)
         end
 
         private
