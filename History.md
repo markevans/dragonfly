@@ -1,3 +1,9 @@
+1.0.12 (2015-09-16)
+===================
+Features
+--------
+- Made thumb processor args for a specific geometry publicly accesible
+
 1.0.11 (2015-09-04)
 ===================
 Fixes
