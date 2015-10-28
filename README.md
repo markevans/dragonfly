@@ -73,6 +73,10 @@ Issues
 ======
 Please use the <a href="http://github.com/markevans/dragonfly/issues">github issue tracker</a> if you have any issues.
 
+Known Issues
+============
+There are known issues with the json gem version 1.5.2 which can potentially cause an "incorrect sha" error for files with non-ascii characters in the name. Please see (https://github.com/markevans/dragonfly/issues/387) for more information.
+
 Suggestions/Questions
 =====================
 <a href="http://groups.google.com/group/dragonfly-users">Google group dragonfly-users</a>
