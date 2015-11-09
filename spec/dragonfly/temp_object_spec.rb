@@ -147,6 +147,9 @@ describe Dragonfly::TempObject do
           filename = 'tmp/gog/mcgee'
           expect{ @temp_object.to_file(filename, :mkdirs => false) }.to raise_error()
         end
+        it "should return a File object" do
+          @temp_object.to_file(@filename).should be_a(File)
+        end
       end
 
       describe "to_tempfile" do
