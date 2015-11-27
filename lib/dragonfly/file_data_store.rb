@@ -93,15 +93,16 @@ module Dragonfly
     end
 
     def write(content, opts={})
-      relative_path = if opts[:path]
-        opts[:path]
+      filename = content.name || 'file'
+
+      relative_path = if (path = opts[:path])
+        path.is_a?(Proc) ? path.call(filename) : path
       else
-        filename = content.name || 'file'
-        relative_path = relative_path_for(filename)
+        relative_path_for(filename)
       end
 
       path = absolute(relative_path)
-      until !File.exist?(path)
+      while File.exist?(path)
         path = disambiguate(path)
       end
       content.to_file(path).close
