@@ -102,9 +102,13 @@ module Dragonfly
       end
 
       path = absolute(relative_path)
-      while File.exist?(path)
-        path = disambiguate(path)
+
+      unless opts[:force]
+        while File.exist?(path)
+          path = disambiguate(path)
+        end
       end
+
       content.to_file(path).close
       meta_store.write(path, content.meta) if store_meta?
 

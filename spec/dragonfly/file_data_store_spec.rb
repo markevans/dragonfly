@@ -72,6 +72,14 @@ describe Dragonfly::FileDataStore do
       end
 
       describe "when the filename already exists" do
+        context "and force option is true" do
+          it "should use the same name" do
+            touch_file("#{@data_store.root_path}/blah")
+            @data_store.should_not receive(:disambiguate)
+            @data_store.write(content, :path => 'blah', :force => true)
+            assert_exists "#{@data_store.root_path}/blah"
+          end
+        end
 
         it "should use a different filename" do
           touch_file("#{@data_store.root_path}/blah")
