@@ -98,7 +98,7 @@ module Dragonfly
       def redirect_url(current_url, following_url)
         redirect_url = URI.parse(following_url)
         if redirect_url.relative?
-          redirect_url = URI::join(current_url, following_url)
+          redirect_url = URI::join(current_url, following_url).to_s
         end
         redirect_url
       end
