@@ -65,9 +65,17 @@ module Dragonfly
 
       def get(url)
         url = parse_url(url)
+
         http = Net::HTTP.new(url.host, url.port)
         http.use_ssl = true if url.scheme == 'https'
-        response = http.get(url.request_uri)
+
+        request = Net::HTTP::Get.new(url.request_uri)
+
+        if url.user || url.password
+          request.basic_auth(url.user, url.password)
+        end
+
+        http.request(request)
       end
 
       def update_from_data_uri
