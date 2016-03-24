@@ -8,3 +8,5 @@ rvm:
   - "2.3"
   - "jruby"
 script: bundle exec rspec spec
+before_install:
+  - gem install bundler
