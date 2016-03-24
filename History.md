@@ -1,3 +1,9 @@
+1.1.0 (TBC)
+===================
+Changes
+--------
+- Dropped official support for Ruby 1.8.7 and Rubinius
+
 1.0.12 (2015-09-16)
 ===================
 Features

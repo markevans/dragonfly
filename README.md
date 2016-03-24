@@ -83,7 +83,7 @@ Suggestions/Questions
 
 Ruby Versions
 =============
-Dragonfly has been tested with ruby versions 1.8.7, 1.9.2, 1.9.3, 2.0.0, 2.1.x, 2.2.x, jruby 1.7.8 and rubinius 2.2.
+See [Travis-CI](https://travis-ci.org/markevans/dragonfly) for tested versions.
 
 Upgrading from v0.9 to v1.0
 ===========================
