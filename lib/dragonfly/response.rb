@@ -26,7 +26,7 @@ module Dragonfly
         end
       rescue Job::Fetch::NotFound => e
         Dragonfly.warn(e.message)
-        [404, {"Content-Type" => "text/plain"}, ["Not found"]]
+        [404, {"Content-Type" => "text/plain", "X-Cascade" => "pass"}, ["Not found"]]
       rescue RuntimeError => e
         Dragonfly.warn("caught error - #{e.message}")
         [500, {"Content-Type" => "text/plain"}, ["Internal Server Error"]]
