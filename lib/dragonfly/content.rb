@@ -79,7 +79,7 @@ module Dragonfly
     # @example "image/jpeg"
     # @return [String]
     def mime_type
-      app.mime_type_for(ext)
+      meta['mime_type'] || app.mime_type_for(ext)
     end
 
     # Set the content using a pre-registered generator
