@@ -50,13 +50,14 @@ module Dragonfly
 
       private
 
-      def get_following_redirects(url, redirect_limit=10)
+      def get_following_redirects(url, redirect_limit=10, cookie=nil)
         raise TooManyRedirects, "url #{url} redirected too many times" if redirect_limit == 0
-        response = get(url)
+        response = get(url, cookie)
         case response
         when Net::HTTPSuccess then [response.body || "", response.content_type ]
         when Net::HTTPRedirection then
-          get_following_redirects(redirect_url(url, response['location']), redirect_limit-1)
+          cookie = response.response['Set-Cookie'] || cookie
+          get_following_redirects(redirect_url(url, response['location']), redirect_limit-1, cookie)
         else
           [response.error!, nil]
         end
@@ -64,11 +65,13 @@ module Dragonfly
         raise ErrorResponse.new(e.response.code.to_i, e.response.body)
       end
 
-      def get(url)
+      def get(url, cookie = nil)
         url = parse_url(url)
         http = Net::HTTP.new(url.host, url.port)
+        headers = {}
+        headers['Cookie'] = cookie if cookie
         http.use_ssl = true if url.scheme == 'https'
-        response = http.get(url.request_uri)
+        response = http.get(url.request_uri, headers)
       end
 
       def update_from_data_uri
