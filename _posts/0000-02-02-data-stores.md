@@ -75,6 +75,10 @@ The following datastores previously in Dragonfly core are now in separate gems:
   - [Couch](https://github.com/markevans/dragonfly-couch_data_store)
   - [Mongo](https://github.com/markevans/dragonfly-mongo_data_store)
 
+Other maintainers have built the following stores:
+
+  - [ActiveRecord](https://github.com/mezis/dragonfly-activerecord)
+
 ## Building a custom data store
 Data stores need to implement three methods: `write`, `read` and `destroy`.
 {% highlight ruby %}
