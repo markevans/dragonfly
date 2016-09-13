@@ -10,11 +10,14 @@ route %(
 route "root :to => 'photos#index'"
 run "rm -rf public/index.html"
 
-inject_into_file 'app/models/photo.rb', :after => "class Photo < ActiveRecord::Base\n" do
-  %(
-    attr_accessible :image rescue nil
-    dragonfly_accessor :image
-  )
+possible_base_classes = ['ActiveRecord::Base', 'ApplicationRecord']
+possible_base_classes.each do |base_class|
+  inject_into_file 'app/models/photo.rb', :after => "class Photo < #{base_class}\n" do
+    %(
+      attr_accessible :image rescue nil
+      dragonfly_accessor :image
+    )
+  end
 end
 
 gsub_file 'app/views/photos/_form.html.erb', /^.*:image_.*$/, ''
@@ -35,4 +38,3 @@ gsub_file "app/controllers/photos_controller.rb", "permit(", "permit(:image, "
 append_file 'app/views/photos/show.html.erb', %(
  <%= image_tag @photo.image.thumb('300x300').url if @photo.image_uid? %>
 )
-
