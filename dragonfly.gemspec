@@ -42,16 +42,4 @@ Gem::Specification.new do |spec|
   if RUBY_PLATFORM == "java"
     spec.add_development_dependency("jruby-openssl")
   end
-
-  spec.post_install_message =<<-POST_INSTALL_MESSAGE
-================================================================================
-
-You've installed Dragonfly hooray!!
-
-Quite a few things have changed since version 0.9.
-Please check the documentation at <http://markevans.github.io/dragonfly>
-and see upgrade notes at <https://github.com/markevans/dragonfly/wiki/Upgrading-from-0.9-to-1.0> if upgrading.
-
-================================================================================
-POST_INSTALL_MESSAGE
 end
