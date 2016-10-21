@@ -31,7 +31,7 @@ describe Dragonfly::Job::FetchUrl do
   end
 
   it 'should also work with basic auth' do
-    stub_request(:get, 'http://user:pass@example.com').to_return(:body => 'basic auth')
+    stub_request(:get, 'http://example.com').with(basic_auth: ['user', 'pass']).to_return(:body => 'basic auth')
     job.fetch_url!('http://user:pass@example.com')
     job.data.should == 'basic auth'
   end
