@@ -147,18 +147,18 @@ describe Dragonfly::App do
     let (:app) { test_app }
 
     it "should allow just storing content" do
-      app.datastore.should_receive(:write).with do |content, opts|
-        content.data.should == "HELLO"
-      end
+      app.datastore.should_receive(:write).with(
+        satisfy{|content| content.data == 'HELLO'},
+        anything
+      )
       app.store("HELLO")
     end
 
     it "passes meta and options through too" do
-      app.datastore.should_receive(:write).with do |content, opts|
-        content.data.should == "HELLO"
-        content.meta.should == {'d' => 3}
-        opts.should == {:a => :b}
-      end
+      app.datastore.should_receive(:write).with(
+        satisfy{|content| content.data == 'HELLO' && content.meta == {'d' => 3} },
+        {a: :b}
+      )
       app.store("HELLO", {'d' => 3}, {:a => :b})
     end
   end

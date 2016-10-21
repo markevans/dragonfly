@@ -1031,9 +1031,10 @@ describe "models" do
     it "should return the saved stuff if assigned and retained" do
       @item.preview_image = 'hello'
       @item.preview_image.name = 'dog.biscuit'
-      @app.datastore.should_receive(:write).with do |content, opts|
-        content.data.should == 'hello'
-      end.and_return('new/uid')
+      @app.datastore.should_receive(:write).with(
+        satisfy{|content| content.data == 'hello' },
+        anything
+      ).and_return('new/uid')
       @item.preview_image.retain!
       Dragonfly::Serializer.json_b64_decode(@item.retained_preview_image).should == {
         'uid' => 'new/uid',

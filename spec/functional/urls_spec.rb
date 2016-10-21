@@ -3,9 +3,10 @@ require 'spec_helper'
 describe "urls" do
 
   def job_should_match(array)
-    Dragonfly::Response.should_receive(:new).with do |job, env|
-      job.to_a.should == array
-    end.and_return(double('response', :to_response => [200, {'Content-Type' => 'text/plain'}, ["OK"]]))
+    Dragonfly::Response.should_receive(:new).with(
+      satisfy{|job| job.to_a == array },
+      instance_of(Hash)
+    ).and_return(double('response', :to_response => [200, {'Content-Type' => 'text/plain'}, ["OK"]]))
   end
 
   let (:app) {

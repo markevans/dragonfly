@@ -57,4 +57,8 @@ RSpec::Matchers.define :increase_num_tempfiles do
     puts "Num tempfiles increased: #{num_tempfiles_before} -> #{num_tempfiles_after}" if increased
     increased
   end
+
+  def supports_block_expectations?
+    true
+  end
 end
