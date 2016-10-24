@@ -1,5 +1,5 @@
 name: Dragonfly
-markdown: kramdown
+markdown: redcarpet
 highlighter: rouge
 permalink: /:title
 baseurl: /dragonfly
