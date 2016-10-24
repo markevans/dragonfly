@@ -34,7 +34,7 @@ module Dragonfly
     end
 
     def uri_escape_segment(string)
-      Rack::Utils.escape_path(string)
+      URI.encode_www_form_component(string).gsub('+','%20')
     end
 
     def uri_unescape(string)
