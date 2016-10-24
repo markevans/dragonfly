@@ -1,8 +1,14 @@
-1.1.0 (TBC)
+1.1.0 (2016-10-24)
 ===================
+Fixes
+-----
+- Fetch a URL with basic auth if it's present in the URI (Ben Pickles)
+- Fix rack version problem for older rubies (rack 2.0 only works for ruby &gt;= 2.2.2)
+- Updated deprecated syntax in tests for WebMock, RSpec
+
 Changes
 --------
-- Dropped official support for Ruby 1.8.7 and Rubinius
+- Dropped official support for Ruby &lt;= 1.9.2 and Rubinius
 
 1.0.12 (2015-09-16)
 ===================
