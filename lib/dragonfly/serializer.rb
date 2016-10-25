@@ -24,14 +24,6 @@ module Dragonfly
       raise BadString, "couldn't b64_decode string - got #{e}"
     end
 
-    def urlunsafe_b64_encode(string)
-      Base64.encode64(string).tr("\n=",'')
-    end
-
-    def marshal_b64_encode(object)
-      urlunsafe_b64_encode(Marshal.dump(object))
-    end
-
     def marshal_b64_decode(string, opts={})
       marshal_string = b64_decode(string)
       raise MaliciousString, "potentially malicious marshal string #{marshal_string.inspect}" if opts[:check_malicious] && marshal_string[/@[a-z_]/i]
