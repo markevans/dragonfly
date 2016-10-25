@@ -13,17 +13,23 @@ module Dragonfly
     extend self # So we can do Serializer.b64_encode, etc.
 
     def b64_encode(string)
-      Base64.encode64(string).tr("\n=",'')
+      Base64.urlsafe_encode64(string).tr('=','')
     end
 
     def b64_decode(string)
-      padding_length = string.length % 4
-      string = string.tr('~', '/')
-      Base64.decode64(string + '=' * padding_length)
+      padding_length = (-(string.length % 4)) % 4
+      string = string.tr('+','-').tr('~/','_')
+      Base64.urlsafe_decode64(string + '=' * padding_length)
+    rescue ArgumentError => e
+      raise BadString, "couldn't b64_decode string - got #{e}"
+    end
+
+    def urlunsafe_b64_encode(string)
+      Base64.encode64(string).tr("\n=",'')
     end
 
     def marshal_b64_encode(object)
-      b64_encode(Marshal.dump(object))
+      urlunsafe_b64_encode(Marshal.dump(object))
     end
 
     def marshal_b64_decode(string, opts={})

@@ -54,10 +54,11 @@ module Dragonfly
     def init_segments(patterns)
       @segments = []
       url_format.scan(/([^\w_]):([\w_]+)/).each do |seperator, param|
+        param_sym = param.to_sym
         segments << Segment.new(
           param,
           seperator,
-          patterns[param.to_sym] || '[^\/\-\.]'
+          patterns[param_sym] || (param_sym == :job ? '[^\/\.]' : '[^\/\-\.]')
         )
       end
     end
