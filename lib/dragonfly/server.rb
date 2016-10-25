@@ -37,11 +37,7 @@ module Dragonfly
 
     def url_format=(url_format)
       @url_format = url_format
-      self.url_mapper = UrlMapper.new(url_format,
-        :basename => '[^\/]',
-        :name => '[^\/]',
-        :format => '[^\.]'
-      )
+      self.url_mapper = UrlMapper.new(url_format)
     end
 
     def before_serve(&block)

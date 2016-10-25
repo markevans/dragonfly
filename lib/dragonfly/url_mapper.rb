@@ -4,6 +4,15 @@ require 'dragonfly/utils'
 module Dragonfly
   class UrlMapper
 
+    PATTERNS = {
+      basename: '[^\/]',
+      name: '[^\/]',
+      ext: '[^\.]',
+      format: '[^\.]',
+      job: '[^\/\.]'
+    }
+    DEFAULT_PATTERN = '[^\/\-\.]'
+
     # Exceptions
     class BadUrlFormat < StandardError; end
 
@@ -13,10 +22,10 @@ module Dragonfly
       end
     end
 
-    def initialize(url_format, patterns={})
+    def initialize(url_format)
       @url_format = url_format
       raise BadUrlFormat, "bad url format #{url_format}" if url_format[/[\w_]:[\w_]/]
-      init_segments(patterns)
+      init_segments
       init_url_regexp
     end
 
@@ -51,14 +60,13 @@ module Dragonfly
 
     private
 
-    def init_segments(patterns)
+    def init_segments
       @segments = []
       url_format.scan(/([^\w_]):([\w_]+)/).each do |seperator, param|
-        param_sym = param.to_sym
         segments << Segment.new(
           param,
           seperator,
-          patterns[param_sym] || (param_sym == :job ? '[^\/\.]' : '[^\/\-\.]')
+          PATTERNS[param.to_sym] || DEFAULT_PATTERN
         )
       end
     end
