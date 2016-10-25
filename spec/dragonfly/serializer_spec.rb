@@ -46,18 +46,14 @@ describe Dragonfly::Serializer do
       }.should raise_error(Dragonfly::Serializer::BadString)
     end
     describe "potentially harmful strings" do
-      it "doesn't raise if not flagged to check for malicious strings" do
-        class C; end
-        marshal_b64_decode('BAhvOgZDBjoOQF9fc2VuZF9faQY').should be_a(C)
-      end
       ['_', 'hello', 'h2', '__send__', 'F'].each do |variable_name|
-        it "raises if flagged to check for malicious strings and finds one" do
+        it "raises if it finds a malicious string" do
           class C; end
           c = C.new
           c.instance_eval{ instance_variable_set("@#{variable_name}", 1) }
           string = Dragonfly::Serializer.b64_encode(Marshal.dump(c))
           lambda{
-            marshal_b64_decode(string, :check_malicious => true)
+            marshal_b64_decode(string)
           }.should raise_error(Dragonfly::Serializer::MaliciousString)
         end
       end

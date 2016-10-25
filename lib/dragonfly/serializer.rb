@@ -23,9 +23,9 @@ module Dragonfly
       raise BadString, "couldn't b64_decode string - got #{e}"
     end
 
-    def marshal_b64_decode(string, opts={})
+    def marshal_b64_decode(string)
       marshal_string = b64_decode(string)
-      raise MaliciousString, "potentially malicious marshal string #{marshal_string.inspect}" if opts[:check_malicious] && marshal_string[/@[a-z_]/i]
+      raise MaliciousString, "potentially malicious marshal string #{marshal_string.inspect}" if marshal_string[/@[a-z_]/i]
       Marshal.load(marshal_string)
     rescue TypeError, ArgumentError => e
       raise BadString, "couldn't marshal decode string - got #{e}"

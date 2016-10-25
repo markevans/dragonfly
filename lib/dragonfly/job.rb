@@ -60,7 +60,7 @@ module Dragonfly
           Serializer.json_b64_decode(string)
         rescue Serializer::BadString
           if app.allow_legacy_urls
-            Serializer.marshal_b64_decode(string, :check_malicious => true) # legacy strings
+            Serializer.marshal_b64_decode(string) # legacy strings
           else
             raise
           end
