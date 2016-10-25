@@ -27,6 +27,11 @@ describe Dragonfly::Serializer do
     end
 
     describe "b64_decode" do
+      it "raises an error if the string passed in is not base 64" do
+        expect {
+          b64_decode("eggs for breakfast")
+        }.to raise_error(Dragonfly::Serializer::BadString)
+      end
       it "converts (deprecated) '~' and '/' characters to '_' characters" do
         b64_decode('LXVtbGF1dF~Dtg').should == b64_decode('LXVtbGF1dF/Dtg')
         b64_decode('LXVtbGF1dF/Dtg').should == b64_decode('LXVtbGF1dF_Dtg')
