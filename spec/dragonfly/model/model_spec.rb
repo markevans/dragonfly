@@ -1136,7 +1136,11 @@ describe "models" do
       }.should raise_error(Dragonfly::Model::Attachment::BadAssignmentKey)
     end
 
-    [nil, ""].each do |value|
+    [
+      nil,
+      "",
+      "asdfsad" # assigning with rubbish shouldn't break it
+    ].each do |value|
       it "should do nothing if assigned with #{value}" do
         @item.retained_preview_image = value
         @item.preview_image_uid.should be_nil
