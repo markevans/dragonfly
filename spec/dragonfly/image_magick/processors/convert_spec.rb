@@ -63,8 +63,8 @@ describe Dragonfly::ImageMagick::Processors::Convert do
   end
 
   it "allows converting using specific delegates" do
-    movie = sample_content('movie.mp4')
-    processor.call(movie, '', 'format' => 'jpg', 'delegate' => 'mpeg', 'frame' => 1)
-    movie.should have_format('jpeg')
+    expect {
+      processor.call(image, '', 'format' => 'jpg', 'delegate' => 'png')
+    }.to call_shell_command %r{'convert' 'png:/[^']+?/beach\.png' '/[^']+?\.jpg'}
   end
 end

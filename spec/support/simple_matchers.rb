@@ -62,3 +62,15 @@ RSpec::Matchers.define :increase_num_tempfiles do
     true
   end
 end
+
+RSpec::Matchers.define :call_shell_command do |command|
+  match do |block|
+    allow(Open3).to receive(:popen3).and_call_original
+    block.call
+    expect(Open3).to have_received(:popen3).with(command)
+  end
+
+  def supports_block_expectations?
+    true
+  end
+end
