@@ -63,10 +63,8 @@ describe Dragonfly::ImageMagick::Processors::Convert do
   end
 
   it "allows converting using specific delegates" do
-    mov = sample_content('movie.mp4')
-    movie_size = mov.size
-
-    processor.call(mov, '', 'format' => 'jpg', 'delegate' => 'mpeg', 'frame' => 1)
-    mov.ext.should == 'jpg'
+    movie = sample_content('movie.mp4')
+    processor.call(movie, '', 'format' => 'jpg', 'delegate' => 'mpeg', 'frame' => 1)
+    movie.should have_format('jpeg')
   end
 end
