@@ -85,35 +85,35 @@ describe Dragonfly::UrlMapper do
       @url_mapper.params_for('/media/a%23c').should == {'job' => 'a#c'}
     end
 
-    it "should work with '-' character in url format" do
+    it "should work when the job contains the '-' character" do
       @url_mapper = Dragonfly::UrlMapper.new('/media/:job-:size.:format')
       @url_mapper.params_for('/media/asdf-30x30.jpg').should == {'job' => 'asdf', 'size' => '30x30', 'format' => 'jpg'}
       @url_mapper.params_for('/media/as-df-30x30.jpg').should == {'job' => 'as-df', 'size' => '30x30', 'format' => 'jpg'}
     end
   end
 
-  describe "matching urls with standard format /media/:job/:basename.:format" do
+  describe "matching urls with standard format /media/:job/:name" do
     before(:each) do
-      @url_mapper = Dragonfly::UrlMapper.new('/media/:job/:basename.:format')
+      @url_mapper = Dragonfly::UrlMapper.new('/media/:job/:name')
     end
 
     {
       '' => nil,
       '/' => nil,
-      '/media' => {'job' => nil, 'basename' => nil, 'format' => nil},
+      '/media' => {'job' => nil, 'name' => nil},
       '/media/' => nil,
       '/moodia/asdf' => nil,
       '/media/asdf/' => nil,
       '/mount/media/asdf' => nil,
-      '/media/asdf/stuff.egg' => {'job' => 'asdf', 'basename' => 'stuff', 'format' => 'egg'},
-      '/media/asdf' =>           {'job' => 'asdf', 'basename' => nil,     'format' => nil},
-      '/media/asdf/stuff' =>     {'job' => 'asdf', 'basename' => 'stuff', 'format' => nil},
-      '/media/asdf.egg' =>       {'job' => 'asdf', 'basename' => nil,     'format' => 'egg'},
+      '/media/asdf/stuff.egg' => {'job' => 'asdf', 'name' => 'stuff.egg'},
+      '/media/asdf' =>           {'job' => 'asdf', 'name' => nil},
+      '/media/asdf/stuff' =>     {'job' => 'asdf', 'name' => 'stuff'},
+      '/media/asdf.egg' =>       {'job' => nil, 'name' => 'asdf.egg'},
       '/media/asdf/stuff/egg' => nil,
-      '/media/asdf/stuff.dog.egg' => {'job' => 'asdf', 'basename' => 'stuff.dog', 'format' => 'egg'},
-      '/media/asdf/s%3D2%2B-.d.e' => {'job' => 'asdf', 'basename' => 's=2+-.d', 'format' => 'e'},
-      '/media/asdf-40x40/stuff.egg' => {'job' => 'asdf-40x40', 'basename' => 'stuff', 'format' => 'egg'},
-      '/media/a%23c' => {'job' => 'a#c', 'basename' => nil, 'format' => nil}
+      '/media/asdf/stuff.dog.egg' => {'job' => 'asdf', 'name' => 'stuff.dog.egg'},
+      '/media/asdf/s%3D2%2B-.d.e' => {'job' => 'asdf', 'name' => 's=2+-.d.e'},
+      '/media/asdf-40x40/stuff.egg' => {'job' => 'asdf-40x40', 'name' => 'stuff.egg'},
+      '/media/a%23c' => {'job' => 'a#c', 'name' => nil}
     }.each do |path, params|
 
       it "should turn the url #{path} into params #{params.inspect}" do
