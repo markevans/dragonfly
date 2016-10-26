@@ -87,6 +87,13 @@ As with `thumb`, you can specify the output format and frame
 image.convert('-sigmoidal-contrast 4,0%', 'format' => 'jpg', 'frame' => 12)
 {% endhighlight %}
 
+You can also specify the delegate if needed, e.g.
+{% highlight ruby %}
+movie = Dragonfly.app.fetch('some/movie')
+image = movie.convert('', 'delegate' => 'mpeg', 'format' => 'jpg', 'frame' => 1)
+{% endhighlight %}
+which would prepend `mpeg:` to the input path.
+
 ## Analysers
 The following methods are provided
 {% highlight ruby %}
