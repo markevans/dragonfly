@@ -11,14 +11,4 @@ class DragonflyGenerator < Rails::Generators::Base
     SecureRandom.hex(32)
   end
 
-  if RUBY_VERSION > "1.9"
-    def hash_key(key)
-      "#{key}:"
-    end
-  else
-    def hash_key(key)
-      ":#{key} =>"
-    end
-  end
 end
-

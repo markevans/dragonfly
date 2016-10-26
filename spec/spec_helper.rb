@@ -9,7 +9,7 @@ require 'dragonfly'
 require 'fileutils'
 require 'tempfile'
 require 'webmock/rspec'
-require 'pry' if RUBY_VERSION >= '1.9'
+require 'pry'
 
 # Requires supporting files with custom matchers and macros, etc,
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}

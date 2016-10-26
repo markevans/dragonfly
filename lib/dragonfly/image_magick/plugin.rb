@@ -69,8 +69,7 @@ module Dragonfly
         end
 
         # Extra methods
-        app.define :identify do |*args|
-          cli_args = args.first # because ruby 1.8.7 can't deal with default args in blocks
+        app.define :identify do |cli_args=nil|
           shell_eval do |path|
             "#{app.env[:identify_command]} #{cli_args} #{path}"
           end

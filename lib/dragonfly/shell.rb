@@ -27,10 +27,10 @@ module Dragonfly
 
     private
 
-    # Annoyingly, Open3 seems buggy on jruby/1.8.7:
+    # Annoyingly, Open3 seems buggy on jruby:
     # Some versions don't yield a wait_thread in the block and
     # you can't run sub-shells (if explicitly turning shell-escaping off)
-    if RUBY_PLATFORM == 'java' || RUBY_VERSION < '1.9'
+    if RUBY_PLATFORM == 'java'
 
       # Unfortunately we have no control over stderr this way
       def run_command(command)
