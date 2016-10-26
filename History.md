@@ -1,3 +1,18 @@
+1.1.1 (2016-10-26)
+===================
+Features
+--------
+- Added delegate option for imagemagick (Will Fisher)
+
+Fixes
+-----
+- Use `Base64.urlsafe_encode64` (Jan Raasch)
+  Note that this changes b64 encodings from '/' to `'_'` and '+' to '-' in URLs, which will change a very
+  small number of generated URLs (but shouldn't be enough to cause big recaching problems)
+  URLs are encoded now according to the URL safe base64 specification in RFC 4648.
+  Old URLs are still recognized so won't break.
+
+
 1.1.0 (2016-10-24)
 ===================
 Fixes
