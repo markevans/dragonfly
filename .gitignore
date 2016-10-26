@@ -6,3 +6,4 @@ fixtures
 Gemfile.lock
 .DS_Store
 _site
+dragonfly.log
