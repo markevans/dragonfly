@@ -65,6 +65,6 @@ describe Dragonfly::ImageMagick::Processors::Convert do
   it "allows converting using specific delegates" do
     expect {
       processor.call(image, '', 'format' => 'jpg', 'delegate' => 'png')
-    }.to call_shell_command %r{'convert' 'png:/[^']+?/beach\.png' '/[^']+?\.jpg'}
+    }.to call_command(app.shell, %r{'convert' 'png:/[^']+?/beach\.png' '/[^']+?\.jpg'})
   end
 end

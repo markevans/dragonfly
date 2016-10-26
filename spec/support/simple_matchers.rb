@@ -63,11 +63,12 @@ RSpec::Matchers.define :increase_num_tempfiles do
   end
 end
 
-RSpec::Matchers.define :call_shell_command do |command|
+RSpec::Matchers.define :call_command do |shell, command|
   match do |block|
-    allow(Open3).to receive(:popen3).and_call_original
+    # run_command is private so this is slightly naughty but it does the job
+    allow(shell).to receive(:run_command).and_call_original
     block.call
-    expect(Open3).to have_received(:popen3).with(command)
+    expect(shell).to have_received(:run_command).with(command)
   end
 
   def supports_block_expectations?
