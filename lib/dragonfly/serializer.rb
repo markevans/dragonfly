@@ -17,8 +17,9 @@ module Dragonfly
     end
 
     def b64_decode(string)
+      padding_length = (-(string.length % 4)) % 4
       string = string.tr('+','-').tr('~/','_')
-      Base64.urlsafe_decode64(string)
+      Base64.urlsafe_decode64(string + '=' * padding_length)
     rescue ArgumentError => e
       raise BadString, "couldn't b64_decode string - got #{e}"
     end
