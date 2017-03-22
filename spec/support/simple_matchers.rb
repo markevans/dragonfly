@@ -9,7 +9,7 @@ end
 
 RSpec::Matchers.define :be_an_empty_directory do
   match do |given|
-    !!ENV['TRAVIS'] || (Dir.entries(given) == ['.','..'])
+    !!ENV['TRAVIS'] || (Dir.entries(given).sort == ['.','..'].sort)
   end
 end
 
