@@ -140,6 +140,12 @@ describe Dragonfly::Job::FetchUrl do
         job.fetch_url('redirectme.com').apply
       }.to raise_error(Dragonfly::Job::FetchUrl::TooManyRedirects)
     end
+
+    it 'follows relative response ' do
+      stub_request(:get, "redirectme.com").to_return(:status => 302, :headers => {'Location' => 'relative-path.html'})
+      stub_request(:get, "redirectme.com/relative-path.html").to_return(:body => "OK!")
+      job.fetch_url('redirectme.com').data.should == 'OK!'
+    end
   end
 
   describe "data uris" do
