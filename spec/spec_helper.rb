@@ -1,5 +1,6 @@
 require "rubygems"
 require "bundler"
+require 'active_record'
 Bundler.setup(:default, :test)
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
@@ -49,4 +50,25 @@ def test_imagemagick_app
     processor :convert, Dragonfly::ImageMagick::Processors::Convert.new
     analyser :image_properties, Dragonfly::ImageMagick::Analysers::ImageProperties.new
   end
+end
+
+ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
+
+def setup_db
+  ActiveRecord::Schema.define(:version => 1) do
+    create_table :relational_dragonflies do |t|
+      t.binary :data
+      t.string :meta
+      t.timestamps
+    end
+  end
+end
+
+def teardown_db
+  ActiveRecord::Base.connection.tables.each do |table|
+    ActiveRecord::Base.connection.drop_table(table)
+  end
+end
+
+class RelationalDragonfly < ActiveRecord::Base
 end
