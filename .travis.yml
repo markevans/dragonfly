@@ -8,7 +8,7 @@ rvm:
   - "jruby"
 script: bundle exec rspec spec
 before_install:
-  - add-apt-repository -y ppa:moti-p/cc
-  - apt-get update
-  - apt-get -y --reinstall install imagemagick
+  - sudo add-apt-repository -y ppa:moti-p/cc
+  - sudo apt-get update
+  - sudo apt-get -y --reinstall install imagemagick
   - gem install bundler
