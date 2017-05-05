@@ -8,7 +8,6 @@ describe Dragonfly::ImageMagick::Processors::Convert do
 
   let(:app){ test_app }
   let(:image){ sample_content('beach.png') } # 280x355
-  let(:pdf){ sample_content('memo.pdf') }
   let(:processor){ Dragonfly::ImageMagick::Processors::Convert.new }
 
   it "should allow for general convert commands" do
@@ -55,11 +54,12 @@ describe Dragonfly::ImageMagick::Processors::Convert do
   end
 
   it "accepts input arguments for convert commands" do
-    pdf2 = pdf.clone
-    processor.call(pdf, '-scale 85x110', 'format' => 'png')
-    processor.call(pdf2, '-scale 85x110', 'format' => 'png', 'input_args' => '-density 150')
+    image2 = image.clone
+    processor.call(image, '')
+    processor.call(image2, '', 'input_args' => '-extract 50x50+10+10')
 
-    pdf.should_not equal_image(pdf2)
+    image.should_not equal_image(image2)
+    image2.should have_width(50)
   end
 
   it "allows converting using specific delegates" do
