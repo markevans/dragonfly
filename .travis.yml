@@ -1,15 +1,12 @@
 language: ruby
 rvm:
   - "1.9.3"
-  - "2.0.0"
+  - "2.0"
   - "2.1"
   - "2.2"
-  - "2.3.0"
-  - "2.4.0"
+  - "2.3"
+  - "2.4"
   - "jruby"
 script: bundle exec rspec spec
 before_install:
-  - sudo add-apt-repository -y ppa:moti-p/cc
-  - sudo apt-get update
-  - sudo apt-get -y --reinstall install imagemagick
   - gem install bundler
