@@ -168,7 +168,7 @@ module Dragonfly
     end
 
     def directory_empty?(path)
-      Dir.entries(path) == ['.','..']
+      Dir.entries(path).sort == ['.','..'].sort
     end
 
     def root_path?(dir)
