@@ -178,6 +178,38 @@ end
 
 Note that the data store _class_ is registered with the symbol, not the instance. Any other args are passed straight to the data store's `initialize` method.
 
+
+### Using multiple datastores
+You can use multiple datastores by creating multiple dragonfly apps and specifying which app to use for given `dragonfly_accessor`.
+
+First create multiple dragonfly apps
+{% highlight ruby %}
+Dragonfly.app.configure do
+  datastore :file
+  # ...
+end
+
+Dragonfly.app(:s3).configure do
+ datastore :s3
+ # ...
+end
+
+# Mount as middleware
+Rails.application.middleware.use Dragonfly::Middleware
+Rails.application.middleware.use Dragonfly::Middleware, :s3
+{% endhighlight %}
+
+First dragonfly app will be called :default, second one will be called :s3.
+
+When you need to use default app simply use `dragonfly_accessor` as you usually do.
+When you need to use s3 store, pass an `:app` option to `dragonfly_accessor` like this:
+{% highlight ruby %}
+dragonfly_accessor :file, app: :s3
+{% endhighlight %}
+
+Note that this is not limited to just data stores, your dragonfly apps can do a lot of different processing, each is different way.
+
+
 ### Testing with RSpec
 Dragonfly provides a shared rspec example group that you can use to test that your custom data store conforms to the basic spec. Here's a simple example spec file
 
