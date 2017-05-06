@@ -1,3 +1,12 @@
+1.1.2 (2017-05-06)
+===================
+Fixes
+-----
+- Allow relative redirect urls in `fetch_url` (zorec)
+- Fixed Forwardable deprecation warnings (neodude)
+- Fixed incorrect detection of empty directories in ruby 2.4 (yuszuv)
+- Store content type in meta if it's available so we don't lose information (Lukas Svoboda)
+
 1.1.1 (2016-10-26)
 ===================
 Features
