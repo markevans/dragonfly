@@ -43,8 +43,8 @@ module Dragonfly
         if data_uri?
           update_from_data_uri
         else
-          data = get_following_redirects(url)
-          job.content.update(data, 'name' => filename)
+          response = get_following_redirects(url)
+          job.content.update(response.body || "", 'name' => filename, 'mime_type' => response.content_type)
         end
       end
 
@@ -54,7 +54,7 @@ module Dragonfly
         raise TooManyRedirects, "url #{url} redirected too many times" if redirect_limit == 0
         response = get(url)
         case response
-        when Net::HTTPSuccess then response.body || ""
+        when Net::HTTPSuccess then response
         when Net::HTTPRedirection then
           get_following_redirects(redirect_url(url, response['location']), redirect_limit-1)
         else
@@ -84,7 +84,7 @@ module Dragonfly
         if mime_type && b64_data
           data = Base64.decode64(b64_data)
           ext = app.ext_for(mime_type)
-          job.content.update(data, 'name' => "file.#{ext}")
+          job.content.update(data, 'name' => "file.#{ext}", 'mime_type' => mime_type)
         else
           raise CannotHandle, "fetch_url can only deal with base64-encoded data uris with specified content type"
         end
