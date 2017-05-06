@@ -19,10 +19,10 @@ describe Dragonfly::Job::FetchUrl do
     job.data.should == "result!"
   end
 
-  it "should set mime_type when applied" do
-    job.fetch_url!('http://place.com')
-    job.data
-    job.content.meta.key?('mime_type').should be_true
+  it "should set the mime_type when returned by the request" do
+    stub_request(:get, %r{http://thing\.com.*}).to_return(:body => '<ok />', :headers => {'Content-Type' => 'text/html'})
+    expect(job.fetch_url('http://place.com').mime_type).to eq('application/octet-stream')
+    expect(job.fetch_url('http://thing.com').mime_type).to eq('text/html')
   end
 
   it "should default to http" do
@@ -147,7 +147,7 @@ describe Dragonfly::Job::FetchUrl do
       }.to raise_error(Dragonfly::Job::FetchUrl::TooManyRedirects)
     end
 
-    it 'follows relative response ' do
+    it "follows relative responses" do
       stub_request(:get, "redirectme.com").to_return(:status => 302, :headers => {'Location' => 'relative-path.html'})
       stub_request(:get, "redirectme.com/relative-path.html").to_return(:body => "OK!")
       job.fetch_url('redirectme.com').data.should == 'OK!'

@@ -43,8 +43,8 @@ module Dragonfly
         if data_uri?
           update_from_data_uri
         else
-          data, mime_type = get_following_redirects(url)
-          job.content.update(data, 'name' => filename, 'mime_type' => mime_type)
+          response = get_following_redirects(url)
+          job.content.update(response.body || "", 'name' => filename, 'mime_type' => response.content_type)
         end
       end
 
@@ -54,11 +54,11 @@ module Dragonfly
         raise TooManyRedirects, "url #{url} redirected too many times" if redirect_limit == 0
         response = get(url)
         case response
-        when Net::HTTPSuccess then [response.body || "", response.content_type ]
+        when Net::HTTPSuccess then response
         when Net::HTTPRedirection then
           get_following_redirects(redirect_url(url, response['location']), redirect_limit-1)
         else
-          [response.error!, nil]
+          response.error!
         end
       rescue Net::HTTPExceptions => e
         raise ErrorResponse.new(e.response.code.to_i, e.response.body)
