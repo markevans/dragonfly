@@ -67,11 +67,20 @@ describe Dragonfly::Content do
   end
 
   describe "mime_type" do
-    it "takes it from the extension" do
-      content.name = "thing"
-      content.mime_type.should == "application/octet-stream"
-      content.name = "thing.png"
-      content.mime_type.should == "image/png"
+    context "when mime_type is stored in meta" do
+      it "takes it form meta" do
+        content.name = "thing.png"
+        content.meta.update("mime_type" => "text/html")
+        content.mime_type.should == "text/html"
+      end
+    end
+    context "when mime_type is not stored in meta" do
+      it "takes it from the extension" do
+        content.name = "thing"
+        content.mime_type.should == "application/octet-stream"
+        content.name = "thing.png"
+        content.mime_type.should == "image/png"
+      end
     end
   end
 

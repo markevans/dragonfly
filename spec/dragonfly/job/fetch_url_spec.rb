@@ -19,6 +19,12 @@ describe Dragonfly::Job::FetchUrl do
     job.data.should == "result!"
   end
 
+  it "should set mime_type when applied" do
+    job.fetch_url!('http://place.com')
+    job.data
+    job.content.meta.key?('mime_type').should be_true
+  end
+
   it "should default to http" do
     job.fetch_url!('place.com')
     job.data.should == "result!"
