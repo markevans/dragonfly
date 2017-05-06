@@ -38,6 +38,11 @@ describe Dragonfly::RoutedEndpoint do
         response.body.should == 'wassup'
       end
 
+      it "should work with #{name} routing args and ENV parameters" do
+        response = response_for endpoint.call(env_for('/blah', key => {:uid => @uid}))
+        response.body.should == 'wassup'
+      end
+
     end
 
     it "should merge with query parameters" do
@@ -69,15 +74,16 @@ describe Dragonfly::RoutedEndpoint do
       Class.new do
         extend Dragonfly::Model
         dragonfly_accessor :image
-        attr_accessor :image_uid
+        dragonfly_accessor :secret
+        attr_accessor :image_uid, :secret_uid
       end
     }
     let (:model) {
       model_class.new
     }
     let (:endpoint) {
-      Dragonfly::RoutedEndpoint.new(app) {|params, app|
-        model.image
+      Dragonfly::RoutedEndpoint.new(app) {|params, app, env|
+        env['HTTP_X_TOKEN'] == "secret" ? model.secret : model.image
       }
     }
 
@@ -85,6 +91,18 @@ describe Dragonfly::RoutedEndpoint do
       model.image = "wassup"
       response = response_for endpoint.call(env_for('/blah', 'dragonfly.params' => {}))
       response.body.should == 'wassup'
+    end
+
+    it "acts like the job one with an invalid header token" do
+      model.image = "wassup"
+      response = response_for endpoint.call(env_for('/blah', { "HTTP_X_TOKEN" => "not-a-secret", 'dragonfly.params' => {} }))
+      response.body.should == 'wassup'
+    end
+
+    it "acts like the job one with a valid header token" do
+      model.secret = "test"
+      response = response_for endpoint.call(env_for('/blah', { "HTTP_X_TOKEN" => "secret", 'dragonfly.params' => {} }))
+      response.body.should == 'test'
     end
 
     it "returns 404 if nil is returned from the endpoint" do
