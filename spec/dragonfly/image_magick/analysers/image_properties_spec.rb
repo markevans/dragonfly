@@ -11,7 +11,8 @@ describe Dragonfly::ImageMagick::Analysers::ImageProperties do
       analyser.call(content).should == {
         'width' => 280,
         'height' => 355,
-        'format' => 'png'
+        'format' => 'png',
+        'density' => 72
       }
     end
   end

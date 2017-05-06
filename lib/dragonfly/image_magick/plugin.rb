@@ -30,6 +30,9 @@ module Dragonfly
         app.add_analyser :format do |content|
           content.analyse(:image_properties)['format']
         end
+        app.add_analyser :density do |content|
+          content.analyse(:image_properties)['density']
+        end
         app.add_analyser :aspect_ratio do |content|
           attrs = content.analyse(:image_properties)
           attrs['width'].to_f / attrs['height']
