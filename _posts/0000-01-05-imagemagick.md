@@ -187,7 +187,7 @@ On configure you can specify where to find the imagemagick commands
 {% highlight ruby %}
 Dragonfly.app.configure do
   plugin :imagemagick,
-    convert_command: "/opt/local/bin/convert"    # defaults to "convert"
+    convert_command: "/opt/local/bin/convert",   # defaults to "convert"
     identify_command: "/opt/local/bin/identify"  # defaults to "identify"
 end
 {% endhighlight %}
