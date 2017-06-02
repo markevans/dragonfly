@@ -18,6 +18,7 @@ module Dragonfly
           if format
             content.meta['format'] = format.to_s
             content.ext = format
+            content.meta['mime_type'] = nil # don't need it as we have ext now
           end
         end
 

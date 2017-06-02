@@ -67,4 +67,22 @@ describe Dragonfly::ImageMagick::Processors::Convert do
       processor.call(image, '', 'format' => 'jpg', 'delegate' => 'png')
     }.to call_command(app.shell, %r{'convert' 'png:/[^']+?/beach\.png' '/[^']+?\.jpg'})
   end
+
+  it "maintains the mime_type meta if it exists already" do
+    processor.call(image, '-resize 10x')
+    image.meta['mime_type'].should be_nil
+
+    image.add_meta('mime_type' => 'image/png')
+    processor.call(image, '-resize 5x')
+    image.meta['mime_type'].should == 'image/png'
+    image.mime_type.should == 'image/png' # sanity check
+  end
+
+  it "doesn't maintain the mime_type meta on format change" do
+    image.add_meta('mime_type' => 'image/png')
+    processor.call(image, '', 'format' => 'gif')
+    image.meta['mime_type'].should be_nil
+    image.mime_type.should == 'image/gif' # sanity check
+  end
+
 end
