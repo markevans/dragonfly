@@ -1,3 +1,9 @@
+1.1.3 (2017-06-02)
+===================
+Fixes
+-----
+- Make sure imagemagick convert processor updates mime_type correctly when format is changed
+
 1.1.2 (2017-05-06)
 ===================
 Fixes
