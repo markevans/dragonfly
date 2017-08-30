@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'base64'
 
 describe Dragonfly::Job::FetchUrl do
 
