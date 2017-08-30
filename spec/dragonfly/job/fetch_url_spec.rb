@@ -162,6 +162,18 @@ describe Dragonfly::Job::FetchUrl do
       job.ext.should == 'txt'
     end
 
+    it "accepts long base64 encoded data uris with newline" do
+      str = 'hello' * 10
+      job.fetch_url!("data:text/plain;base64,#{Base64.encode64(str)}")
+      job.data.should == str
+    end
+
+    it "accepts long base64 encoded data uris without newline" do
+      str = 'hello' * 10
+      job.fetch_url!("data:text/plain;base64,#{Base64.strict_encode64(str)}")
+      job.data.should == str
+    end
+
     it "doesn't accept other data uris" do
       expect {
         job.fetch_url!("data:text/html;charset=utf-8,<stuff />").apply
