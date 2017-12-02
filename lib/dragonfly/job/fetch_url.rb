@@ -44,6 +44,9 @@ module Dragonfly
           update_from_data_uri
         else
           response = get_following_redirects(url)
+          if _filename = response.header["content-disposition"].presence.try(:match, /filename="(.*)"/).try(:[], 1)
+            @filename = _filename
+          end
           job.content.update(response.body || "", 'name' => filename, 'mime_type' => response.content_type)
         end
       end
