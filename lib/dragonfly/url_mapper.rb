@@ -24,7 +24,7 @@ module Dragonfly
 
     def initialize(url_format)
       @url_format = url_format
-      raise BadUrlFormat, "bad url format #{url_format}" if url_format[/[\w_]:[\w_]/]
+      raise BadUrlFormat, "bad url format #{url_format}" if url_format[/[\w]:[\w]/]
       init_segments
       init_url_regexp
     end
@@ -43,7 +43,7 @@ module Dragonfly
     end
 
     def params_in_url
-      @params_in_url ||= url_format.scan(/\:[\w_]+/).map{|f| f.tr(':','') }
+      @params_in_url ||= url_format.scan(/\:[\w]+/).map{|f| f.tr(':','') }
     end
 
     def url_for(params)
@@ -51,7 +51,7 @@ module Dragonfly
       url = url_format.dup
       segments.each do |seg|
         value = params[seg.param]
-        value ? url.sub!(/:[\w_]+/, Utils.uri_escape_segment(value.to_s)) : url.sub!(/.:[\w_]+/, '')
+        value ? url.sub!(/:[\w]+/, Utils.uri_escape_segment(value.to_s)) : url.sub!(/.:[\w]+/, '')
         params.delete(seg.param)
       end
       url << "?#{Rack::Utils.build_query(params)}" if params.any?
@@ -62,7 +62,7 @@ module Dragonfly
 
     def init_segments
       @segments = []
-      url_format.scan(/([^\w_]):([\w_]+)/).each do |seperator, param|
+      url_format.scan(/([^\w]):([\w]+)/).each do |seperator, param|
         segments << Segment.new(
           param,
           seperator,
@@ -73,7 +73,7 @@ module Dragonfly
 
     def init_url_regexp
       i = -1
-      regexp_string = url_format.gsub(/[^\w_]:[\w_]+/) do
+      regexp_string = url_format.gsub(/[^\w]:[\w]+/) do
         i += 1
         segments[i].regexp_string
       end

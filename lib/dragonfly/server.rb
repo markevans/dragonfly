@@ -28,11 +28,11 @@ module Dragonfly
     attr_reader :url_format, :fetch_file_whitelist, :fetch_url_whitelist
 
     def add_to_fetch_file_whitelist(patterns)
-      fetch_file_whitelist.push *patterns
+      fetch_file_whitelist.push(*patterns)
     end
 
     def add_to_fetch_url_whitelist(patterns)
-      fetch_url_whitelist.push *patterns
+      fetch_url_whitelist.push(*patterns)
     end
 
     def url_format=(url_format)
