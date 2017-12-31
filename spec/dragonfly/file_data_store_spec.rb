@@ -72,6 +72,14 @@ describe Dragonfly::FileDataStore do
       end
 
       describe "when the filename already exists" do
+        context "and force option is true" do
+          it "should use the same name" do
+            touch_file("#{@data_store.root_path}/blah")
+            @data_store.should_not receive(:disambiguate)
+            @data_store.write(content, :path => 'blah', :force => true)
+            assert_exists "#{@data_store.root_path}/blah"
+          end
+        end
 
         it "should use a different filename" do
           touch_file("#{@data_store.root_path}/blah")
@@ -93,6 +101,19 @@ describe Dragonfly::FileDataStore do
         end
 
         describe "specifying the uid" do
+          context "when path is proc" do
+            let (:with_name) { Dragonfly::Content.new(app, 'goobydoo', 'name' => 'mate.png') }
+            let (:without_name) { Dragonfly::Content.new(app, 'goobydoo') }
+
+            it "should yield filename of content to path proc" do
+              @data_store.write(with_name, path: -> (filename) { "hello/there/#{filename}" })
+              @data_store.write(without_name, path: -> (filename) { "hello/there/#{filename}" })
+
+              assert_exists "#{@data_store.root_path}/hello/there/mate.png"
+              assert_exists "#{@data_store.root_path}/hello/there/file"
+            end
+          end
+
           it "should allow for specifying the path to use" do
             @data_store.write(content, :path => 'hello/there/mate.png')
             assert_exists "#{@data_store.root_path}/hello/there/mate.png"
