@@ -24,9 +24,9 @@ module Dragonfly
         Dragonfly.warn("can't handle return value from routed endpoint: #{value.inspect}")
         plain_response(500, "Server Error")
       end
-    rescue Job::NoSHAGiven => e
+    rescue Job::NoSHAGiven
       plain_response(400, "You need to give a SHA parameter")
-    rescue Job::IncorrectSHA => e
+    rescue Job::IncorrectSHA
       plain_response(400, "The SHA parameter you gave is incorrect")
     end
 
