@@ -1,5 +1,8 @@
 Dragonfly
 ===========
+
+[![Build Status](https://travis-ci.org/markevans/dragonfly.svg?branch=master)](https://travis-ci.org/markevans/dragonfly)
+
 Hello!!
 Dragonfly is a highly customizable ruby gem for handling images and other attachments and is already in use on thousands of websites.
 
