@@ -95,6 +95,8 @@ module Dragonfly
     def write(content, opts={})
       relative_path = if opts[:path]
         opts[:path]
+      elsif !content.meta[:path].blank?
+        relative_path = content.meta[:path]
       else
         filename = content.name || 'file'
         relative_path = relative_path_for(filename)
