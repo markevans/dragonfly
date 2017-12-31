@@ -1,3 +1,11 @@
+1.1.4 (2017-12-31)
+===================
+Fixes
+-----
+- Fixed data uris not working for long strings (reported dlibanori)
+- Removed syntax warnings (swamp09)
+- Correct ActiveRecord hook with `ActiveSupport.on_load` (efatsi)
+
 1.1.3 (2017-06-02)
 ===================
 Fixes
