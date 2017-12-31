@@ -10,9 +10,7 @@ class User < ActiveRecord::Base  # model
 end
 ```
 ```erb
-<% if @user.photo_stored? # append `_stored?` %>
-  <%= image_tag @user.photo.thumb('300x200#').url  # view  %>
-<% end %>
+<%= image_tag @user.photo.thumb('300x200#').url if @user.photo_stored? # view %>
 ```
 
 ... or generate text images on-demand in Sinatra ...
