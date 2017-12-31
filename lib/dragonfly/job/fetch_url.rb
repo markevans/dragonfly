@@ -80,7 +80,7 @@ module Dragonfly
       end
 
       def update_from_data_uri
-        mime_type, b64_data = uri.scan(/\Adata:([^;]+);base64,(.*)$/)[0]
+        mime_type, b64_data = uri.scan(/\Adata:([^;]+);base64,(.*)\Z/m)[0]
         if mime_type && b64_data
           data = Base64.decode64(b64_data)
           ext = app.ext_for(mime_type)
