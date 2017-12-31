@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'base64'
 
 describe Dragonfly::Job::FetchUrl do
 
@@ -160,6 +161,18 @@ describe Dragonfly::Job::FetchUrl do
       job.data.should == 'hello'
       job.mime_type.should == 'text/plain'
       job.ext.should == 'txt'
+    end
+
+    it "accepts long base64 encoded data uris with newline" do
+      str = 'hello' * 10
+      job.fetch_url!("data:text/plain;base64,#{Base64.encode64(str)}")
+      job.data.should == str
+    end
+
+    it "accepts long base64 encoded data uris without newline" do
+      str = 'hello' * 10
+      job.fetch_url!("data:text/plain;base64,#{Base64.strict_encode64(str)}")
+      job.data.should == str
     end
 
     it "doesn't accept other data uris" do
