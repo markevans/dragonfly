@@ -25,16 +25,16 @@ gsub_file 'app/views/photos/_form.html.erb', /^.*:image_.*$/, ''
 inject_into_file 'app/views/photos/_form.html.erb', :before => %(<div class="actions">\n) do
   %(
     <div class="field">
-      <%= f.label :image %><br>
-      <%= f.file_field :image %>
+      <%= form.label :image %><br>
+      <%= form.file_field :image %>
     </div>
 
-    <%= image_tag @photo.image.thumb('100x100').url if @photo.image_uid %>
+    <%= image_tag @photo.image.thumb('100x100').url if @photo.image_stored? %>
   )
 end
 
 gsub_file "app/controllers/photos_controller.rb", "permit(", "permit(:image, "
 
 append_file 'app/views/photos/show.html.erb', %(
- <%= image_tag @photo.image.thumb('300x300').url if @photo.image_uid? %>
+ <%= image_tag @photo.image.thumb('300x300').url if @photo.image_stored? %>
 )
