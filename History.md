@@ -1,3 +1,9 @@
+1.1.5 (2018-03-23)
+===================
+Fixes
+-----
+- Moved `destroy_dragonfly_attachments` into an `after_destroy` - issue #477 (eldotz)
+
 1.1.4 (2017-12-31)
 ===================
 Fixes
