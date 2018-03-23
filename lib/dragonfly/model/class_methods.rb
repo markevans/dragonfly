@@ -30,7 +30,7 @@ module Dragonfly
 
         # Add callbacks
         before_save :save_dragonfly_attachments if respond_to?(:before_save)
-        before_destroy :destroy_dragonfly_attachments if respond_to?(:before_destroy)
+        after_destroy :destroy_dragonfly_attachments if respond_to?(:after_destroy)
 
         # Register the new attribute
         dragonfly_attachment_classes << new_dragonfly_attachment_class(attribute, app, config_block)
