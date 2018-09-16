@@ -35,6 +35,12 @@ describe Dragonfly::ImageMagick::Processors::Convert do
     image.should have_width(2)
   end
 
+  it "should work for files with quote marks in the name" do
+    image = Dragonfly::Content.new(app, SAMPLES_DIR.join("whitepixel's.png"))
+    processor.call(image, "-resize 2x2!")
+    image.should have_width(2)
+  end
+
   it "updates the url with format if given" do
     url_attributes = Dragonfly::UrlAttributes.new
     processor.update_url(url_attributes, '-scale 56x71', 'format' => 'gif')
