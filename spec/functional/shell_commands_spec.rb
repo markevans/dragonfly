@@ -5,6 +5,10 @@ describe "using the shell" do
   let (:app) { test_app }
 
   describe "shell injection" do
+    before(:each) do
+      FileUtils.rm('tmp/stuff', force: true)
+    end
+
     it "should not allow it!" do
       app.configure_with(:imagemagick)
       begin
