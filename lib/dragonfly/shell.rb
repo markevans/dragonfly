@@ -8,9 +8,8 @@ module Dragonfly
     # Exceptions
     class CommandFailed < RuntimeError; end
 
-    def run(command, opts={})
-      command = escape_args(command) unless opts[:escape] == false
-      Dragonfly.debug("shell command: #{command}")
+    def run(command)
+      Dragonfly.debug("shell command: #{command.join(' ')}")
       run_command(command)
     end
 
