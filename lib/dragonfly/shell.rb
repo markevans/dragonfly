@@ -27,30 +27,13 @@ module Dragonfly
 
     private
 
-    # Annoyingly, Open3 seems buggy on jruby:
-    # Some versions don't yield a wait_thread in the block and
-    # you can't run sub-shells (if explicitly turning shell-escaping off)
-    if RUBY_PLATFORM == 'java'
-
-      # Unfortunately we have no control over stderr this way
-      def run_command(command)
-        result = `#{command}`
-        status = $?
-        raise CommandFailed, "Command failed (#{command}) with exit status #{status.exitstatus}" unless status.success?
-        result
+    def run_command(command)
+      Open3.popen3 command do |stdin, stdout, stderr, wait_thread|
+        stdin.close_write # make sure it doesn't hang
+        status = wait_thread.value
+        raise CommandFailed, "Command failed (#{command}) with exit status #{status.exitstatus} and stderr #{stderr.read}" unless status.success?
+        stdout.read
       end
-
-    else
-
-      def run_command(command)
-        Open3.popen3 command do |stdin, stdout, stderr, wait_thread|
-          stdin.close_write # make sure it doesn't hang
-          status = wait_thread.value
-          raise CommandFailed, "Command failed (#{command}) with exit status #{status.exitstatus} and stderr #{stderr.read}" unless status.success?
-          stdout.read
-        end
-      end
-
     end
 
   end
