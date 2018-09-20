@@ -129,50 +129,43 @@ module Dragonfly
     end
 
     # Analyse the content using a shell command
-    # @param opts [Hash] passing :escape => false doesn't shell-escape each word
     # @example
     #   content.shell_eval do |path|
-    #     "file --mime-type #{path}"
+    #     ['file --mime-type', path]
     #   end
     #   # ===> "beach.jpg: image/jpeg"
-    def shell_eval(opts={})
-      should_escape = opts[:escape] != false
-      command = yield(should_escape ? shell.quote(path) : path)
-      run command, :escape => should_escape
+    def shell_eval
+      command = yield(path)
+      run command
     end
 
     # Set the content using a shell command
-    # @param opts [Hash] :ext sets the file extension of the new path and :escape => false doesn't shell-escape each word
+    # @param opts [Hash] :ext sets the file extension of the new path
     # @example
     #   content.shell_generate do |path|
-    #     "/usr/local/bin/generate_text gumfry -o #{path}"
+    #     ['/usr/local/bin/generate_text gumfry -o', path]
     #   end
     # @return [Content] self
     def shell_generate(opts={})
       ext = opts[:ext] || self.ext
-      should_escape = opts[:escape] != false
       tempfile = Utils.new_tempfile(ext)
-      new_path = should_escape ? shell.quote(tempfile.path) : tempfile.path
-      command = yield(new_path)
-      run(command, :escape => should_escape)
+      command = yield(tempfile.path)
+      run(command)
       update(tempfile)
     end
 
     # Update the content using a shell command
-    # @param opts [Hash] :ext sets the file extension of the new path and :escape => false doesn't shell-escape each word
+    # @param opts [Hash] :ext sets the file extension of the new path
     # @example
     #   content.shell_update do |old_path, new_path|
-    #     "convert -resize 20x10 #{old_path} #{new_path}"
+    #     ['convert -resize 20x10', old_path, new_path]
     #   end
     # @return [Content] self
     def shell_update(opts={})
       ext = opts[:ext] || self.ext
-      should_escape = opts[:escape] != false
       tempfile = Utils.new_tempfile(ext)
-      old_path = should_escape ? shell.quote(path) : path
-      new_path = should_escape ? shell.quote(tempfile.path) : tempfile.path
-      command = yield(old_path, new_path)
-      run(command, :escape => should_escape)
+      command = yield(path, tempfile.path)
+      run(command)
       update(tempfile)
     end
 
@@ -212,8 +205,8 @@ module Dragonfly
       analyser_cache.clear
     end
 
-    def run(command, opts)
-      shell.run(command, opts)
+    def run(command)
+      shell.run(command)
     end
 
   end

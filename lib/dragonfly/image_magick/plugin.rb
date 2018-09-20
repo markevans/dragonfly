@@ -65,13 +65,13 @@ module Dragonfly
         app.add_processor :encode, Processors::Encode.new
         app.add_processor :thumb, Processors::Thumb.new
         app.add_processor :rotate do |content, amount|
-          content.process!(:convert, "-rotate #{amount}")
+          content.process!(:convert, ['-rotate', amount.to_s])
         end
 
         # Extra methods
         app.define :identify do |cli_args=nil|
           shell_eval do |path|
-            "#{app.env[:identify_command]} #{cli_args} #{path}"
+            [app.env[:identify_command], cli_args, path]
           end
         end
 

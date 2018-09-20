@@ -7,7 +7,7 @@ module Dragonfly
           attrs.ext = format.to_s
         end
 
-        def call(content, format, args="")
+        def call(content, format, args=nil)
           content.process!(:convert, args, 'format' => format)
         end
 

@@ -50,7 +50,7 @@ module Dragonfly
         private
 
         def resize_args(geometry)
-          "-resize #{geometry}"
+          ['-resize', geometry]
         end
 
         def crop_args(opts)
@@ -64,12 +64,12 @@ module Dragonfly
           y       = "#{opts['y'] || 0}"
           y = '+' + y unless y[/\A[+-]/]
 
-          "#{"-gravity #{gravity} " if gravity}-crop #{width}x#{height}#{x}#{y} +repage"
+          [(['-gravity', gravity] if gravity), '-crop', "#{width}x#{height}#{x}#{y}", '+repage']
         end
 
         def resize_and_crop_args(width, height, gravity)
           gravity = GRAVITIES[gravity || 'c']
-          "-resize #{width}x#{height}^^ -gravity #{gravity} -crop #{width}x#{height}+0+0 +repage"
+          ['-resize', "#{width}x#{height}^^", '-gravity', gravity, '-crop', "#{width}x#{height}+0+0", '+repage']
         end
 
       end

@@ -5,7 +5,7 @@ module Dragonfly
 
         def call(content, width, height, opts={})
           format = extract_format(opts)
-          content.generate!(:convert, "-size #{width}x#{height} plasma:fractal", format)
+          content.generate!(:convert, ['-size', "#{width}x#{height}", 'plasma:fractal'], format)
           content.add_meta('format' => format, 'name' => "plasma.#{format}")
         end
 

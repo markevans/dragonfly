@@ -7,7 +7,7 @@ module Dragonfly
           format = format.to_s
           convert_command = content.env[:convert_command] || 'convert'
           content.shell_generate :ext => format do |path|
-            "#{convert_command} #{args} #{path}"
+            [convert_command, args, path]
           end
           content.add_meta('format' => format)
         end

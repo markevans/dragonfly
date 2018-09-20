@@ -49,21 +49,20 @@ module Dragonfly
           format = extract_format(opts)
           background = opts['background_color'] || 'none'
           font_size = (opts['font_size'] || 12).to_i
-          escaped_string = "\"#{string.gsub(/"/, '\"')}\""
 
           # Settings
-          args.push("-gravity NorthWest")
-          args.push("-antialias")
-          args.push("-pointsize #{font_size}")
-          args.push("-font \"#{opts['font']}\"") if opts['font']
-          args.push("-family '#{opts['font_family']}'") if opts['font_family']
-          args.push("-fill #{opts['color']}") if opts['color']
-          args.push("-stroke #{opts['stroke_color']}") if opts['stroke_color']
-          args.push("-style #{FONT_STYLES[opts['font_style']]}") if opts['font_style']
-          args.push("-stretch #{FONT_STRETCHES[opts['font_stretch']]}") if opts['font_stretch']
-          args.push("-weight #{FONT_WEIGHTS[opts['font_weight']]}") if opts['font_weight']
-          args.push("-background #{background}")
-          args.push("label:#{escaped_string}")
+          args.push ['-gravity', 'NorthWest']
+          args.push '-antialias'
+          args.push ['-pointsize', font_size.to_s]
+          args.push ['-font', opts['font']] if opts['font']
+          args.push ['-family', opts['font_family']] if opts['font_family']
+          args.push ['-fill', opts['color']] if opts['color']
+          args.push ['-stroke', opts['stroke_color']] if opts['stroke_color']
+          args.push ['-style', FONT_STYLES[opts['font_style']]] if opts['font_style']
+          args.push ['-stretch', FONT_STRETCHES[opts['font_stretch']]] if opts['font_stretch']
+          args.push ['-weight', FONT_WEIGHTS[opts['font_weight']]] if opts['font_weight']
+          args.push ['-background', background]
+          args.push "label:#{string}"
 
           # Padding
           pt, pr, pb, pl = parse_padding_string(opts['padding']) if opts['padding']
@@ -72,7 +71,7 @@ module Dragonfly
           padding_bottom = (opts['padding_bottom'] || pb || 0)
           padding_left   = (opts['padding_left']   || pl || 0)
 
-          content.generate!(:convert, args.join(' '), format)
+          content.generate!(:convert, args, format)
 
           if (padding_top || padding_right || padding_bottom || padding_left)
             dimensions = content.analyse(:image_properties)
@@ -82,10 +81,10 @@ module Dragonfly
             height = padding_top  + text_height + padding_bottom
 
             args = args.slice(0, args.length - 2)
-            args.push("-size #{width}x#{height}")
-            args.push("xc:#{background}")
-            args.push("-annotate 0x0+#{padding_left}+#{padding_top} #{escaped_string}")
-            content.generate!(:convert, args.join(' '), format)
+            args.push ['-size', "#{width}x#{height}"]
+            args.push "xc:#{background}"
+            args.push ['-annotate', "0x0+#{padding_left}+#{padding_top}", string]
+            content.generate!(:convert, args, format)
           end
 
           content.add_meta('format' => format, 'name' => "text.#{format}")
