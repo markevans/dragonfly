@@ -71,7 +71,7 @@ describe "a configured imagemagick app" do
 
     describe "convert" do
       it "sanity check with format" do
-        thumb = image.convert('-resize 1x1!', 'format' => 'jpg')
+        thumb = image.convert(['-resize', '1x1!'], 'format' => 'jpg')
         thumb.url.should =~ /^\/beach\.jpg\?.*job=\w+/
         thumb.width.should == 1
         thumb.format.should == 'jpeg'
@@ -79,7 +79,7 @@ describe "a configured imagemagick app" do
       end
 
       it "sanity check without format" do
-        thumb = image.convert('-resize 1x1!')
+        thumb = image.convert(['-resize', '1x1!'])
         thumb.url.should =~ /^\/beach\.png\?.*job=\w+/
         thumb.width.should == 1
         thumb.format.should == 'png'
@@ -105,7 +105,7 @@ describe "a configured imagemagick app" do
       end
 
       it "should allow for extra args" do
-        image.encode!('jpg', '-quality 1')
+        image.encode!('jpg', ['-quality', '1'])
         image.format.should == 'jpeg'
         image.size.should < 2000
       end
@@ -124,7 +124,7 @@ describe "a configured imagemagick app" do
   describe "identify" do
     it "gives the output of the command line" do
       image.identify.should =~ /280/
-      image.identify("-format %h").chomp.should == "355"
+      image.identify(['-format', '%h']).chomp.should == "355"
     end
   end
 

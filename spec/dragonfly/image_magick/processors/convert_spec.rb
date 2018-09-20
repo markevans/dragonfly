@@ -11,13 +11,13 @@ describe Dragonfly::ImageMagick::Processors::Convert do
   let(:processor){ Dragonfly::ImageMagick::Processors::Convert.new }
 
   it "should allow for general convert commands" do
-    processor.call(image, '-scale 56x71')
+    processor.call(image, ['-scale', '56x71'])
     image.should have_width(56)
     image.should have_height(71)
   end
 
   it "should allow for general convert commands with added format" do
-    processor.call(image, '-scale 56x71', 'format' => 'gif')
+    processor.call(image, ['-scale', '56x71'], 'format' => 'gif')
     image.should have_width(56)
     image.should have_height(71)
     image.should have_format('gif')
@@ -25,19 +25,19 @@ describe Dragonfly::ImageMagick::Processors::Convert do
   end
 
   it "should work for commands with parenthesis" do
-    processor.call(image, "\\( +clone -sparse-color Barycentric '0,0 black 0,%[fx:h-1] white' -function polynomial 2,-2,0.5 \\) -compose Blur -set option:compose:args 15 -composite")
+    processor.call(image, ["\(", '+clone', '-sparse-color', 'Barycentric', "0,0 black 0,%[fx:h-1] white", '-function', 'polynomial', '2,-2,0.5', "\)", '-compose', 'Blur', '-set', 'option:compose:args', '15', '-composite'])
     image.should have_width(280)
   end
 
   it "should work for files with spaces in the name" do
     image = Dragonfly::Content.new(app, SAMPLES_DIR.join('white pixel.png'))
-    processor.call(image, "-resize 2x2!")
+    processor.call(image, ['-resize', '2x2!'])
     image.should have_width(2)
   end
 
-  it "should work for files with quote marks in the name" do
+  it "should work for files with unbalanced quote marks in the name" do
     image = Dragonfly::Content.new(app, SAMPLES_DIR.join("whitepixel's.png"))
-    processor.call(image, "-resize 2x2!")
+    processor.call(image, ['-resize', '2x2!'])
     image.should have_width(2)
   end
 
@@ -49,11 +49,11 @@ describe Dragonfly::ImageMagick::Processors::Convert do
 
   it "allows converting specific frames" do
     gif = sample_content('gif.gif')
-    processor.call(gif, '-resize 50x50')
+    processor.call(gif, ['-resize', '50x50'])
     all_frames_size = gif.size
 
     gif = sample_content('gif.gif')
-    processor.call(gif, '-resize 50x50', 'frame' => 0)
+    processor.call(gif, ['-resize', '50x50'], 'frame' => 0)
     one_frame_size = gif.size
 
     one_frame_size.should < all_frames_size
@@ -61,8 +61,8 @@ describe Dragonfly::ImageMagick::Processors::Convert do
 
   it "accepts input arguments for convert commands" do
     image2 = image.clone
-    processor.call(image, '')
-    processor.call(image2, '', 'input_args' => '-extract 50x50+10+10')
+    processor.call(image, nil)
+    processor.call(image2, nil, 'input_args' => ['-extract', '50x50+10+10'])
 
     image.should_not equal_image(image2)
     image2.should have_width(50)
@@ -70,23 +70,23 @@ describe Dragonfly::ImageMagick::Processors::Convert do
 
   it "allows converting using specific delegates" do
     expect {
-      processor.call(image, '', 'format' => 'jpg', 'delegate' => 'png')
-    }.to call_command(app.shell, %r{'convert' 'png:/[^']+?/beach\.png' '/[^']+?\.jpg'})
+      processor.call(image, nil, 'format' => 'jpg', 'delegate' => 'png')
+    }.to call_command(app.shell, ['convert', %r{png:/[^']+?/beach\.png}, %r{/[^']+?\.jpg}])
   end
 
   it "maintains the mime_type meta if it exists already" do
-    processor.call(image, '-resize 10x')
+    processor.call(image, ['-resize', '10x'])
     image.meta['mime_type'].should be_nil
 
     image.add_meta('mime_type' => 'image/png')
-    processor.call(image, '-resize 5x')
+    processor.call(image, ['-resize', '5x'])
     image.meta['mime_type'].should == 'image/png'
     image.mime_type.should == 'image/png' # sanity check
   end
 
   it "doesn't maintain the mime_type meta on format change" do
     image.add_meta('mime_type' => 'image/png')
-    processor.call(image, '', 'format' => 'gif')
+    processor.call(image, nil, 'format' => 'gif')
     image.meta['mime_type'].should be_nil
     image.mime_type.should == 'image/gif' # sanity check
   end

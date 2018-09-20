@@ -172,7 +172,7 @@ describe Dragonfly::ImageMagick::Processors::Thumb do
 
   describe "args_for_geometry" do
     it "returns the convert arguments used for a given geometry" do
-      expect(processor.args_for_geometry('30x40')).to eq('-resize 30x40')
+      expect(processor.args_for_geometry('30x40')).to eq(['-resize', '30x40'])
     end
   end
 

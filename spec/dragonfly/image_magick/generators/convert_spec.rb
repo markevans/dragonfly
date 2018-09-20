@@ -7,7 +7,7 @@ describe Dragonfly::ImageMagick::Generators::Convert do
 
   describe "calling convert" do
     before(:each) do
-      generator.call(image, "-size 1x1 xc:white", 'png')
+      generator.call(image, ['-size', '1x1', 'xc:white'], 'png')
     end
     it {image.should have_width(1)}
     it {image.should have_height(1)}
