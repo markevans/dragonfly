@@ -228,7 +228,7 @@ describe Dragonfly::Content do
 
     it "evalutes using the shell" do
       path = nil
-      content.shell_eval do |p|
+      content.shell_eval(:escape => false) do |p|
         path = p
         ['cat', path]
       end.should == "big\nstuff"
@@ -238,7 +238,7 @@ describe Dragonfly::Content do
       original_path = content.path
       old_path = nil
       new_path = nil
-      content.shell_update do |o, n|
+      content.shell_update(:escape => false) do |o, n|
         old_path = o
         new_path = n
         ['cp', o, n]
@@ -247,14 +247,14 @@ describe Dragonfly::Content do
     end
 
     it "defaults the extension to the same" do
-      content.shell_update do |old_path, new_path|
+      content.shell_update(:escape => false) do |old_path, new_path|
         ['cp', old_path, new_path]
       end
       content.path.should =~ /\.jpg$/
     end
 
     it "allows changing the new_path file extension" do
-      content.shell_update :ext => 'png' do |old_path, new_path|
+      content.shell_update(:ext => 'png', :escape => false) do |old_path, new_path|
         ['cp', old_path, new_path]
       end
       content.path.should =~ /\.png$/
@@ -264,14 +264,14 @@ describe Dragonfly::Content do
       let(:content_2) { Dragonfly::Content.new(app) }
 
       it "allows generating with the shell" do
-        content_2.shell_generate do |path|
+        content_2.shell_generate(:escape => false) do |path|
           ['cp', content.path, path]
         end.should == content_2
         content_2.data.should == "big\nstuff"
       end
 
       it "allows setting the ext on generate" do
-        content_2.shell_generate(:ext => 'txt') do |path|
+        content_2.shell_generate(:ext => 'txt', :escape => false) do |path|
           ['cp', content.path, path]
         end
         content_2.path.should =~ /\.txt$/

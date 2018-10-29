@@ -22,13 +22,13 @@ describe "using the shell," do
   describe "env variables with imagemagick" do
     it "allows configuring the convert path" do
       app.configure_with(:imagemagick, :convert_command => '/bin/convert')
-      app.shell.should_receive(:run).with(array_including('/bin/convert'))
+      app.shell.should_receive(:run).with(array_including('/bin/convert'), { :escape => false })
       app.create("").thumb('30x30').apply
     end
 
     it "allows configuring the identify path" do
       app.configure_with(:imagemagick, :identify_command => '/bin/identify')
-      app.shell.should_receive(:run).with(array_including('/bin/identify')).and_return("JPG 1 1")
+      app.shell.should_receive(:run).with(array_including('/bin/identify'), { :escape => false }).and_return("JPG 1 1")
       app.create("").width
     end
   end

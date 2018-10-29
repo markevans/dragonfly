@@ -8,12 +8,29 @@ module Dragonfly
     # Exceptions
     class CommandFailed < RuntimeError; end
 
-    def run(command)
-      command.flatten!
-      command.compact!
+    def run(command, opts={})
+      if command.is_a? Array
+        command.flatten!
+        command.compact!
+      else # Legacy string-based command support
+        warn '[DEPRECATION] String based commands are deprecated. Please pass commands as Arrays instead.'
+        command = escape_args(command) unless opts[:escape] == false
+        command = [command]
+      end
 
       Dragonfly.debug("shell command: #{command.join(' ')}")
       run_command(command)
+    end
+
+    def escape_args(args)
+      args.shellsplit.map do |arg|
+        quote arg.gsub(/\\?'/, %q('\\\\''))
+      end.join(' ')
+    end
+
+    def quote(string)
+      q = Dragonfly.running_on_windows? ? '"' : "'"
+      q + string + q
     end
 
     private

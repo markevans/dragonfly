@@ -5,7 +5,7 @@ module Dragonfly
 
         def call(content)
           identify_command = content.env[:identify_command] || 'identify'
-          details = content.shell_eval do |path|
+          details = content.shell_eval(:escape => false) do |path|
             [identify_command, '-ping', '-format', '%m %w %h', path]
           end
           format, width, height = details.split

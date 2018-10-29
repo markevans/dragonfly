@@ -134,9 +134,10 @@ module Dragonfly
     #     ['file --mime-type', path]
     #   end
     #   # ===> "beach.jpg: image/jpeg"
-    def shell_eval
-      command = yield(path)
-      run command
+    def shell_eval(opts={})
+      should_escape = opts[:escape] != false
+      command = yield(should_escape ? shell.quote(path) : path)
+      run command, :escape => should_escape
     end
 
     # Set the content using a shell command
@@ -148,9 +149,11 @@ module Dragonfly
     # @return [Content] self
     def shell_generate(opts={})
       ext = opts[:ext] || self.ext
+      should_escape = opts[:escape] != false
       tempfile = Utils.new_tempfile(ext)
-      command = yield(tempfile.path)
-      run(command)
+      new_path = should_escape ? shell.quote(tempfile.path) : tempfile.path
+      command = yield(new_path)
+      run(command, :escape => should_escape)
       update(tempfile)
     end
 
@@ -163,9 +166,12 @@ module Dragonfly
     # @return [Content] self
     def shell_update(opts={})
       ext = opts[:ext] || self.ext
+      should_escape = opts[:escape] != false
       tempfile = Utils.new_tempfile(ext)
-      command = yield(path, tempfile.path)
-      run(command)
+      old_path = should_escape ? shell.quote(path) : path
+      new_path = should_escape ? shell.quote(tempfile.path) : tempfile.path
+      command = yield(old_path, new_path)
+      run(command, :escape => should_escape)
       update(tempfile)
     end
 
@@ -205,8 +211,8 @@ module Dragonfly
       analyser_cache.clear
     end
 
-    def run(command)
-      shell.run(command)
+    def run(command, opts)
+      shell.run(command, opts)
     end
 
   end

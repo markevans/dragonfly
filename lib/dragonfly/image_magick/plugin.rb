@@ -70,7 +70,7 @@ module Dragonfly
 
         # Extra methods
         app.define :identify do |cli_args=nil|
-          shell_eval do |path|
+          shell_eval(:escape => false) do |path|
             [app.env[:identify_command], cli_args, path]
           end
         end

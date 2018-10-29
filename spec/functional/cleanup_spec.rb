@@ -5,7 +5,7 @@ describe "cleaning up tempfiles" do
   let (:app) {
     test_app.configure{
       processor :copy do |content|
-        content.shell_update do |old_path, new_path|
+        content.shell_update(:escape => false) do |old_path, new_path|
           ['cp', old_path, new_path]
         end
       end
