@@ -232,7 +232,7 @@ describe Dragonfly::Content do
         path = p
         "cat #{path}"
       end.should == "big\nstuff"
-      path.should == app.shell.quote(content.path)
+      path.should == app.shell.escape(content.path)
     end
 
     it "allows evaluating without escaping" do
@@ -253,8 +253,8 @@ describe Dragonfly::Content do
         new_path = n
         "cp #{o} #{n}"
       end.should == content
-      old_path.should == app.shell.quote(original_path)
-      new_path.should == app.shell.quote(content.path)
+      old_path.should == app.shell.escape(original_path)
+      new_path.should == app.shell.escape(content.path)
       content.data.should == "big\nstuff"
     end
 

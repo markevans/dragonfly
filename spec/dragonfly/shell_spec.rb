@@ -24,17 +24,17 @@ describe Dragonfly::Shell do
 
     describe "escaping args" do
       {
-        %q(hello) => %q('hello'),
-        %q("hello") => %q('hello'),
-        %q('hello') => %q('hello'),
-        %q(he\'llo) => %q('he'\''llo'),
-        %q('he'\''llo') => %q('he'\''llo'),
-        %q("he'llo") => %q('he'\''llo'),
-        %q(hel$(lo)) => %q('hel$(lo)'),
-        %q(hel\$(lo)) => %q('hel$(lo)'),
-        %q('hel\$(lo)') => %q('hel\$(lo)')
+        %q(hello there) => %q(hello there),
+        %q('hello' 'there') => %q(hello there),
+        %q(he\'llo there) => %q(he\'llo there),
+        %q(he\ llo there) => %q(he\ llo there),
+        %q("he'llo" there) => %q(he\'llo there),
+        %q(hel$(lo) there) => %q(hel\$\\(lo\\) there),
+        %q(hel\$(lo) > there) => %q(hel\$\\(lo\\) \> there),
+        %q('hel$(lo) > there') => %q(hel\$\\(lo\\)\ \>\ there),
+        %q(hello -there) => %q(hello -there),
       }.each do |args, escaped_args|
-        it "should escape #{args.inspect} -> #{escaped_args.inspect}" do
+        it "should escape #{args} -> #{escaped_args}" do
           shell.escape_args(args).should == escaped_args
         end
       end

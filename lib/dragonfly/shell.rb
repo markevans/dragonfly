@@ -15,14 +15,11 @@ module Dragonfly
     end
 
     def escape_args(args)
-      args.shellsplit.map do |arg|
-        quote arg.gsub(/\\?'/, %q('\\\\''))
-      end.join(' ')
+      args.shellsplit.map{|arg| escape(arg) }.join(' ')
     end
 
-    def quote(string)
-      q = Dragonfly.running_on_windows? ? '"' : "'"
-      q + string + q
+    def escape(string)
+      Shellwords.escape(string)
     end
 
     private
