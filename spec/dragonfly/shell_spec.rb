@@ -22,16 +22,18 @@ describe Dragonfly::Shell do
 
   unless Dragonfly.running_on_windows?
 
+    # NOTE: every \\ translates to a single \ on the command line
     describe "escaping args" do
       {
         %q(hello there) => %q(hello there),
         %q('hello' 'there') => %q(hello there),
-        %q(he\'llo there) => %q(he\'llo there),
-        %q(he\ llo there) => %q(he\ llo there),
-        %q("he'llo" there) => %q(he\'llo there),
-        %q(hel$(lo) there) => %q(hel\$\\(lo\\) there),
-        %q(hel\$(lo) > there) => %q(hel\$\\(lo\\) \> there),
-        %q('hel$(lo) > there') => %q(hel\$\\(lo\\)\ \>\ there),
+        %q(he\\'llo there) => %q(he\\'llo there),
+        %q(he\\ llo there) => %q(he\\ llo there),
+        %q("he'llo" there) => %q(he\\'llo there),
+        %q('he'\\''llo' there) => %q(he\\'llo there),
+        %q(hel$(lo) there) => %q(hel\\$\\(lo\\) there),
+        %q(hel\\$(lo) > there) => %q(hel\\$\\(lo\\) \\> there),
+        %q('hel$(lo) > there') => %q(hel\\$\\(lo\\)\\ \\>\\ there),
         %q(hello -there) => %q(hello -there),
       }.each do |args, escaped_args|
         it "should escape #{args} -> #{escaped_args}" do
