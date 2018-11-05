@@ -33,18 +33,30 @@ module Dragonfly
       def run_command(command)
         result = `#{command}`
         status = $?
-        raise CommandFailed, "Command failed (#{command}) with exit status #{status.exitstatus}" unless status.success?
+        raise_command_failed!(command, status.exitstatus) unless status.success?
         result
+      rescue Errno::ENOENT => e
+        raise_command_failed!(command, nil, e.message)
       end
 
     else
 
       def run_command(command)
         stdout_str, stderr_str, status = Open3.capture3(command)
-        raise CommandFailed, "Command failed (#{command}) with exit status #{status.exitstatus} and stderr #{stderr_str}" unless status.success?
+        raise_command_failed!(command, status.exitstatus, stderr_str) unless status.success?
         stdout_str
+      rescue Errno::ENOENT => e
+        raise_command_failed!(command, nil, e.message)
       end
 
+    end
+
+    def raise_command_failed!(command, status=nil, error=nil)
+      raise CommandFailed, [
+        "Command failed: #{command}",
+        ("exit status: #{status}" if status),
+        ("error: #{error}" if error),
+      ].join(', ')
     end
 
   end
