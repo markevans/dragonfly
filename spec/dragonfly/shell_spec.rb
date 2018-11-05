@@ -25,16 +25,16 @@ describe Dragonfly::Shell do
     # NOTE: every \\ translates to a single \ on the command line
     describe "escaping args" do
       {
-        %q(hello there) => %q(hello there),
-        %q('hello' 'there') => %q(hello there),
-        %q(he\\'llo there) => %q(he\\'llo there),
-        %q(he\\ llo there) => %q(he\\ llo there),
-        %q("he'llo" there) => %q(he\\'llo there),
-        %q('he'\\''llo' there) => %q(he\\'llo there),
-        %q(hel$(lo) there) => %q(hel\\$\\(lo\\) there),
-        %q(hel\\$(lo) > there) => %q(hel\\$\\(lo\\) \\> there),
-        %q('hel$(lo) > there') => %q(hel\\$\\(lo\\)\\ \\>\\ there),
-        %q(hello -there) => %q(hello -there),
+        %q(hello there) => %q('hello' 'there'),
+        %q('hello' 'there') => %q('hello' 'there'),
+        %q(he\\'llo there) => %q('he'\\''llo' 'there'),
+        %q(he\\ llo there) => %q('he llo' 'there'),
+        %q("he'llo" there) => %q('he'\\''llo' 'there'),
+        %q('he'\\''llo' there) => %q('he'\\''llo' 'there'),
+        %q(hel$(lo) there) => %q('hel$(lo)' 'there'),
+        %q(hel\\$(lo) > there) => %q('hel$(lo)' '>' 'there'),
+        %q('hel$(lo) > there') => %q('hel$(lo) > there'),
+        %q(hello -there) => %q('hello' '-there')
       }.each do |args, escaped_args|
         it "should escape #{args} -> #{escaped_args}" do
           shell.escape_args(args).should == escaped_args
