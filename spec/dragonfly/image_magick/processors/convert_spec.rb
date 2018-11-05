@@ -29,8 +29,8 @@ describe Dragonfly::ImageMagick::Processors::Convert do
     image.should have_width(280)
   end
 
-  it "should work for files with spaces in the name" do
-    image = Dragonfly::Content.new(app, SAMPLES_DIR.join('white pixel.png'))
+  it "should work for files with spaces/apostrophes in the name" do
+    image = Dragonfly::Content.new(app, SAMPLES_DIR.join("mevs' white pixel.png"))
     processor.call(image, "-resize 2x2!")
     image.should have_width(2)
   end
