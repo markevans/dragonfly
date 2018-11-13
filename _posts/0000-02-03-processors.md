@@ -91,7 +91,7 @@ end
 
 The yielded `old_path` and `new_path` above will always exist.
 
-By default every argument is shell-escaped with single quotes (except on windows) so pipes, etc. won't work.
+By default every argument is shell-escaped so pipes, etc. won't work.
 You can avoid this with `escape: false`.
 
 Change the output extension with the `:ext` option.
