@@ -1,3 +1,12 @@
+1.2.0 (2018-11-13)
+===================
+Fixes
+-----
+- Replaced `quote` with `escape` for escaping shell commands - works with paths with apostrophes
+Changes
+-----
+- Replaced Open3.popen3 with now recommended Open3.capture3 (tomasc)
+
 1.1.5 (2018-03-23)
 ===================
 Fixes
