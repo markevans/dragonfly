@@ -21,24 +21,15 @@ Gem::Specification.new do |spec|
     "README.md"
   ]
 
-  # Rack 2.0 only works with ruby >= 2.2.2
-  if RUBY_VERSION < "2.2.2"
-    rack_version = "~> 1.3"
-    activemodel_version = "~> 4.2"
-  else
-    rack_version = ">= 1.3"
-    activemodel_version = nil
-  end
-
   # Runtime dependencies
-  spec.add_runtime_dependency("rack", rack_version)
+  spec.add_runtime_dependency("rack", ">= 1.3")
   spec.add_runtime_dependency("multi_json", "~> 1.0")
   spec.add_runtime_dependency("addressable", "~> 2.3")
 
   # Development dependencies
   spec.add_development_dependency("rspec", "~> 2.5")
   spec.add_development_dependency("webmock")
-  spec.add_development_dependency("activemodel", activemodel_version)
+  spec.add_development_dependency("activemodel")
   if RUBY_PLATFORM == "java"
     spec.add_development_dependency("jruby-openssl")
   end
