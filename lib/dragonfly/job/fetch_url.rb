@@ -26,6 +26,14 @@ module Dragonfly
         args.first
       end
 
+      def arguments
+        args[1] || {}
+      end
+
+      def headers
+        arguments[:headers] || {}
+      end
+
       def url
         @url ||= uri =~ /\A\w+:[^\d]/ ? uri : "http://#{uri}"
       end
@@ -71,6 +79,7 @@ module Dragonfly
         http.use_ssl = true if url.scheme == 'https'
 
         request = Net::HTTP::Get.new(url.request_uri)
+        headers.each { |key, value| request[key] = value }
 
         if url.user || url.password
           request.basic_auth(url.user, url.password)
