@@ -12,7 +12,7 @@ describe Dragonfly do
   end
 
   describe "logging" do
-    context "when logger exists" do
+    context "logger exists" do
       before do
         Dragonfly.logger = Logger.new(StringIO.new)
       end
@@ -33,7 +33,7 @@ describe Dragonfly do
       end
     end
 
-    context "when logger is nil" do
+    context "logger is nil" do
       before do
         Dragonfly.logger = nil
       end
