@@ -35,23 +35,21 @@ describe Dragonfly do
 
     context "logger is nil" do
       before do
+        allow_message_expectations_on_nil
         Dragonfly.logger = nil
       end
 
       it "does not call debug" do
-        allow_message_expectations_on_nil
         Dragonfly.logger.should_not_receive(:debug)
         Dragonfly.debug("something")
       end
 
       it "does not warn" do
-        allow_message_expectations_on_nil
         Dragonfly.logger.should_not_receive(:warn)
         Dragonfly.warn("something")
       end
 
       it "does not show info" do
-        allow_message_expectations_on_nil
         Dragonfly.logger.should_not_receive(:info)
         Dragonfly.info("something")
       end
