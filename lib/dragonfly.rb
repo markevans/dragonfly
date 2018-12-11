@@ -33,12 +33,14 @@ module Dragonfly
 
     # Logging
     def logger
+      return nil if @logger.nil?
       @logger ||= Logger.new('dragonfly.log')
     end
     attr_writer :logger
 
     [:debug, :warn, :info].each do |method|
       define_method method do |message|
+        return unless logger
         logger.send(method, "DRAGONFLY: #{message}")
       end
     end
