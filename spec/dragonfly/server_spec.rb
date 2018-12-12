@@ -263,6 +263,13 @@ describe Dragonfly::Server do
         server.url_host = 'http://some.server:4000'
         server.url_for(job, :host => 'https://smeedy').should == "https://smeedy/#{job.serialize}"
       end
+
+      it "should support callable host objects" do
+        server.url_host = proc { |_| "https://#{SecureRandom.random_number}.example.com" }
+
+        server.url_for(job).should =~ /example\.com/
+        server.url_for(job).should_not =~ /Proc/
+      end
     end
 
     describe "path_prefix" do

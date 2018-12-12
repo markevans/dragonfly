@@ -23,7 +23,9 @@ module Dragonfly
       @verify_urls = true
     end
 
-    attr_accessor :verify_urls, :url_host, :url_path_prefix, :dragonfly_url
+    attr_accessor :verify_urls, :url_path_prefix, :dragonfly_url
+
+    attr_writer :url_host
 
     attr_reader :url_format, :fetch_file_whitelist, :fetch_url_whitelist
 
@@ -45,6 +47,8 @@ module Dragonfly
     end
 
     def call(env)
+      @request = Rack::Request.new(env)
+
       if dragonfly_url == env["PATH_INFO"]
         dragonfly_response
       elsif (params = url_mapper.params_for(env["PATH_INFO"], env["QUERY_STRING"])) && params['job']
@@ -71,6 +75,14 @@ module Dragonfly
     rescue Serializer::BadString, Serializer::MaliciousString, Job::InvalidArray => e
       Dragonfly.warn(e.message)
       [404, {'Content-Type' => 'text/plain'}, ['Not found']]
+    end
+
+    def url_host
+      if !@url_host.nil? && @url_host.respond_to?(:call)
+        @url_host.call(@request)
+      else
+        @url_host
+      end
     end
 
     def url_for(job, opts={})
@@ -140,4 +152,3 @@ module Dragonfly
     end
   end
 end
-
