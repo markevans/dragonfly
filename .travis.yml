@@ -9,4 +9,5 @@ rvm:
   - "jruby-9.1.9.0"
 script: bundle exec rspec spec
 before_install:
-  - gem install bundler
+  - gem uninstall -v '>= 2' -i $(rvm gemdir)@global -ax bundler || true
+  - gem install bundler -v '< 2'
