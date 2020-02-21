@@ -5,4 +5,5 @@ gemspec
 group :development do
   gem 'pry'
   gem 'rake'
+  gem 'terrapin'
 end
