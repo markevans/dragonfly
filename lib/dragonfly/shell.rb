@@ -19,7 +19,8 @@ module Dragonfly
     end
 
     def escape(string)
-      Shellwords.escape(string)
+      # Terrpain module to return escaped command input
+      Terrapin::CommandLine.new(string).command
     end
 
     private
