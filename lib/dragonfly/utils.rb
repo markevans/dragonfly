@@ -38,7 +38,7 @@ module Dragonfly
     end
 
     def uri_unescape(string)
-      URI.unescape(string)
+      URI::DEFAULT_PARSER.unescape(string)
     end
 
   end
