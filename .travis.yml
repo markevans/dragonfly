@@ -13,17 +13,10 @@ rvm:
 
 env:
   global:
-    - IMAGEMAGICK_CONFIG_DIR=$HOME/.config/ImageMagick
+    - SKIP_FLAKY_TESTS: true
 
 before_install:
   - sudo apt-get update
   - sudo apt-get install -y ghostscript
-  # Allow imagemagick to read/write PDF files - taken from https://github.com/ivoba/silverstripe-simple-pdf-preview
-  - echo $IMAGEMAGICK_CONFIG_DIR
-  - mkdir $IMAGEMAGICK_CONFIG_DIR
-  - echo '<policymap>' > $IMAGEMAGICK_CONFIG_DIR/policy.xml
-  - echo '<policy domain="coder" rights="read | write" pattern="PDF" />' >> $IMAGEMAGICK_CONFIG_DIR/policy.xml
-  - echo '</policymap>' >> $IMAGEMAGICK_CONFIG_DIR/policy.xml
-  - sudo rm /etc/ImageMagick-6/policy.xml
 
-script: bundle exec rspec spec
+script: bundle exec rspec spec --backtrace

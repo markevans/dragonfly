@@ -61,7 +61,7 @@ describe "a configured imagemagick app" do
 
     it "should return false for pdfs" do
       image.encode('pdf').image?.should be_falsey
-    end
+    end unless ENV['SKIP_FLAKY_TESTS']
   end
 
   describe "processors that change the url" do
