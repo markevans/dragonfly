@@ -11,15 +11,19 @@ rvm:
   - "2.7"
   - "jruby"
 
+env:
+  global:
+    - IMAGEMAGICK_CONFIG_DIR=$HOME/.config/ImageMagick
+
 before_install:
   - sudo apt-get update
   - sudo apt-get install -y ghostscript
   # Allow imagemagick to read/write PDF files - taken from https://github.com/ivoba/silverstripe-simple-pdf-preview
-  - echo $MAGICK_CONFIGURE_PATH
-  - mkdir $MAGICK_CONFIGURE_PATH
-  - echo '<policymap>' > $MAGICK_CONFIGURE_PATH/policy.xml
-  - echo '<policy domain="coder" rights="read | write" pattern="PDF" />' >> $MAGICK_CONFIGURE_PATH/policy.xml
-  - echo '</policymap>' >> $MAGICK_CONFIGURE_PATH/policy.xml
+  - echo $IMAGEMAGICK_CONFIG_DIR
+  - mkdir $IMAGEMAGICK_CONFIG_DIR
+  - echo '<policymap>' > $IMAGEMAGICK_CONFIG_DIR/policy.xml
+  - echo '<policy domain="coder" rights="read | write" pattern="PDF" />' >> $IMAGEMAGICK_CONFIG_DIR/policy.xml
+  - echo '</policymap>' >> $IMAGEMAGICK_CONFIG_DIR/policy.xml
   - sudo rm /etc/ImageMagick-6/policy.xml
 
 script: bundle exec rspec spec
