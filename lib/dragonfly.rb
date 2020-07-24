@@ -33,8 +33,8 @@ module Dragonfly
 
     # Logging
     def logger
-      return nil if @logger.nil?
-      @logger ||= Logger.new('dragonfly.log')
+      @logger = Logger.new('dragonfly.log') unless instance_variable_defined?(:@logger)
+      @logger
     end
     attr_writer :logger
 
