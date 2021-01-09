@@ -1,3 +1,10 @@
+# 1.2.2 (2021-01-09)
+
+## Fixes
+
+- Fixed losing attachment when transaction rolled back on destroy (dlibanori)
+- Fixed fetch_url edge case when redirect url includes special chars (thedanbob)
+
 # 1.2.1 (2020-07-24)
 
 ## Features
