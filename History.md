@@ -3,67 +3,53 @@
 ## Features
 
 - Allow having no logger (setting to `nil`) (kaimou1357)
-  Fixes
 
----
+## Fixes
 
 - Fix URI.unescape deprecation warning (alberto-mota)
 
-  # 1.2.0 (2018-11-13)
+# 1.2.0 (2018-11-13)
 
-  Fixes
-
----
+## Fixes
 
 - Replaced `quote` with `escape` for escaping shell commands - works with paths with apostrophes
-  Changes
 
----
+## Changes
 
 - Replaced Open3.popen3 with now recommended Open3.capture3 (tomasc)
 
-  # 1.1.5 (2018-03-23)
+# 1.1.5 (2018-03-23)
 
-  Fixes
-
----
+## Fixes
 
 - Moved `destroy_dragonfly_attachments` into an `after_destroy` - issue #477 (eldotz)
 
-  # 1.1.4 (2017-12-31)
+# 1.1.4 (2017-12-31)
 
-  Fixes
-
----
+## Fixes
 
 - Fixed data uris not working for long strings (reported dlibanori)
 - Removed syntax warnings (swamp09)
 - Correct ActiveRecord hook with `ActiveSupport.on_load` (efatsi)
 
-  # 1.1.3 (2017-06-02)
+# 1.1.3 (2017-06-02)
 
-  Fixes
-
----
+## Fixes
 
 - Make sure imagemagick convert processor updates mime_type correctly when format is changed
 
-  # 1.1.2 (2017-05-06)
+# 1.1.2 (2017-05-06)
 
-  Fixes
-
----
+## Fixes
 
 - Allow relative redirect urls in `fetch_url` (zorec)
 - Fixed Forwardable deprecation warnings (neodude)
 - Fixed incorrect detection of empty directories in ruby 2.4 (yuszuv)
 - Store content type in meta if it's available so we don't lose information (Lukas Svoboda)
 
-  # 1.1.1 (2016-10-26)
+# 1.1.1 (2016-10-26)
 
-  Features
-
----
+## Features
 
 - Added delegate option for imagemagick (Will Fisher)
 
@@ -87,67 +73,52 @@
 
 - Dropped official support for Ruby &lt;= 1.9.2 and Rubinius
 
-  # 1.0.12 (2015-09-16)
+# 1.0.12 (2015-09-16)
 
-  Features
-
----
+## Features
 
 - Made thumb processor args for a specific geometry publicly accesible
 
-  # 1.0.11 (2015-09-04)
+# 1.0.11 (2015-09-04)
 
-  Fixes
-
----
+## Fixes
 
 - Make sure tempfiles are created with paths matching the meta name
 
-  # 1.0.10 (2015-05-14)
+# 1.0.10 (2015-05-14)
 
-  Features
-
----
+## Features
 
 - Allow method signified by symbol in storage_options to take an attachment object
 - Allow passing in "input_args" to convert processor
-  Fixes
 
----
+## Fixes
 
 - correct Rack version
 
-  # 1.0.9 (2015-04-29)
+# 1.0.9 (2015-04-29)
 
-  Fixes
-
----
+## Fixes
 
 - Remove sha parameter being echoed back on error for better security
 
-  # 1.0.8 (2015-04-23)
+# 1.0.8 (2015-04-23)
 
-  Fixes
-
----
+## Fixes
 
 - Job#close re-added, so that tempfiles are immediately removed after each request
 - Specs passing for 1.8.7, 1.9.2 (i18n gem version specified)
 
-  # 1.0.7 (2014-08-26)
+# 1.0.7 (2014-08-26)
 
-  Changes
-
----
+## Changes
 
 - Job#sha uses better algorithm
 - renamed `protect_from_dos_attacks` -> `verify_urls` and turn on by default
 
-  # 1.0.6 (2014-08-22)
+# 1.0.6 (2014-08-22)
 
-  Features
-
----
+## Features
 
 - env can be accessed by routed endpoint blocks
 
@@ -157,44 +128,34 @@
 - removed default secret, forcing user to specify one explicitly
 - deal with "[" character problems in urls https://github.com/markevans/dragonfly/pull/337
 
-  # 1.0.5 (2014-05-15)
+# 1.0.5 (2014-05-15)
 
-  Fixes
-
----
+## Fixes
 
 - fetch_url wasn't correctly getting https endpoints on Ruby approx < 2
 
-  # 1.0.4 (2014-04-11)
+# 1.0.4 (2014-04-11)
 
-  Fixes
-
----
+## Fixes
 
 - fetch_url is more forgiving - assume escaped, if not escape
 
-  # 1.0.3 (2014-01-28)
+# 1.0.3 (2014-01-28)
 
-  Fixes
-
----
+## Fixes
 
 - changing meta on a job (e.g. `fetch('blah').encode('jpg')`) was interfering with meta on its parent job (e.g. `fetch('blah')`)
 
-  # 1.0.2 (2013-12-20)
+# 1.0.2 (2013-12-20)
 
-  Fixes
-
----
+## Fixes
 
 - more secure generation of secret in rails generator
 - ensure popen3 doesn't hang
 
-  # 1.0.1 (2013-11-28)
+# 1.0.1 (2013-11-28)
 
-  Changes
-
----
+## Changes
 
 - FileDataStore doesn't use hours_minutes_seconds in its path - it uses a random string instead (12_15_59_saf4fs_file.png -> sdf4c2G_file.png)
 
@@ -209,11 +170,9 @@
 - default Content-Disposition header doesn't url-encode filename unless the request is from IE
 - `fetch_url` deals with urls that redirect to https (previously was blowing up)
 
-  # 1.0.0 (2013-11-24)
+# 1.0.0 (2013-11-24)
 
-  Changes
-
----
+## Changes
 
 - configuration
   - `Dragonfly[:images]` -> `Dragonfly.app` and `Dragonfly.app(:named_app)`
@@ -261,11 +220,9 @@
 - shell commands don't print warnings to stderr
 - ability to assign attachment/job from other app
 
-  # 0.9.15 (2013-05-04)
+# 0.9.15 (2013-05-04)
 
-  Features
-
----
+## Features
 
 - Allow turning off support of legacy urls
 
@@ -274,11 +231,9 @@
 - More conservative URL escaping - back to Rack::Utils.escape_path
 - Don't check for malicious strings when deserializing from datastores (they're to be trusted)
 
-  # 0.9.14 (2013-02-13)
+# 0.9.14 (2013-02-13)
 
-  Features
-
----
+## Features
 
 - Attachment#b64_data
 
@@ -288,19 +243,15 @@
 - Support old-style deprecated urls (with a check for malicious ones)
 - Handle case where uid is an empty string
 
-  # 0.9.13 (2013-01-30)
+# 0.9.13 (2013-01-30)
 
-  Changes
-
----
+## Changes
 
 - URLS are encoded/decoded with JSON, not with Marshal
 
-  # 0.9.12 (2012-04-08)
+# 0.9.12 (2012-04-08)
 
-  Features
-
----
+## Features
 
 - Allow using a mongo replica set with mongo datastore
 
@@ -308,11 +259,9 @@
 
 - `define_macro_on_include` was giving a stack error with multiple accessors on same app
 
-  # 0.9.11 (2012-03-12)
+# 0.9.11 (2012-03-12)
 
-  Features
-
----
+## Features
 
 - Allow the S3 base URL to be customised with `url_host` (or per-request)
 - Added App#name (name as per `Dragonfly[:app_name]`)
@@ -329,19 +278,15 @@
 - Use fog's `sync_clock` to overcome potential S3 time skew problems
 - Using :name in urls was causing problems when filenames had dashes in them
 
-  # 0.9.10 (2012-01-11)
+# 0.9.10 (2012-01-11)
 
-  Fixes
-
----
+## Fixes
 
 - FileDataStore was causing errors when the storage path was flat (not in a directory structure)
 
-  # 0.9.9 (2011-12-30)
+# 0.9.9 (2011-12-30)
 
-  Features
-
----
+## Features
 
 - Created tempfiles use the original file extension if known
 - Added `:case_sensitive` option to `validates_property` for dealing with upper-case extensions and mime-types.
@@ -371,27 +316,21 @@
 - S3DataStore was breaking on bucket_exists? when using AWS IAM
 - Put CookieMonster before ActionDispatch::Cookies in rack middleware stack - that way Rack::Cache won't come between them and mess things up
 
-  # 0.9.8 (2011-09-08)
+# 0.9.8 (2011-09-08)
 
-  Fixes
-
----
+## Fixes
 
 - Regenerated gemspec again with ruby 1.8.7 - didn't seem to be fixed
 
-  # 0.9.7 (2011-09-08)
+# 0.9.7 (2011-09-08)
 
-  Fixes
-
----
+## Fixes
 
 - Regenerated gemspec to overcome annoying yaml issue (http://blog.rubygems.org/2011/08/31/shaving-the-yaml-yacc.html)
 
-  # 0.9.6 (2011-09-06)
+# 0.9.6 (2011-09-06)
 
-  Features
-
----
+## Features
 
 - Allow setting `content_type` when storing in Mongo GridFS
 
@@ -406,11 +345,9 @@
 - Tests working in Windows (except feature that uses FileCommandAnalyser)
 - Better shell quoting
 
-  # 0.9.5 (2011-07-27)
+# 0.9.5 (2011-07-27)
 
-  Features
-
----
+## Features
 
 - Added reflection method `app.analyser_methods`
 
@@ -419,30 +356,24 @@
 - Fixed `convert` and `identify` for files with spaces
 - Fixed size validations for Rails 3.0.7
 
-  # 0.9.4 (2011-06-10)
+# 0.9.4 (2011-06-10)
 
-  Fixes
-
----
+## Fixes
 
 - Made use of Rack calling `close` on the response body to clean up tempfiles.
   The response body is now the job, which delegates `each` to the temp_object.
 
-  # 0.9.3 (2011-06-03)
+# 0.9.3 (2011-06-03)
 
-  Fixes
-
----
+## Fixes
 
 - TempObject#to_file sets file permissions 644 - copying wasn't previously guaranteeing this
 - Added TempObject#close and closed?, which Rack uses to clean up tempfiles
 - replaced '/' characters with '~' in base64 encoded urls (they were confusing url recognition)
 
-  # 0.9.2 (2011-05-19)
+# 0.9.2 (2011-05-19)
 
-  Features
-
----
+## Features
 
 - Added env['dragonfly.job'] for use in other Rack middlewares
 - Added CookieMonster middleware for removing 'Set-Cookie' headers
@@ -451,11 +382,9 @@
 
 - Remove 'Set-Cookie' header from any requests coming from a rails route
 
-  # 0.9.1 (2011-05-11)
+# 0.9.1 (2011-05-11)
 
-  Features
-
----
+## Features
 
 - Added reflection methods `app.processor_methods`, `app.generator_methods` and `app.job_methods`
 
@@ -466,11 +395,9 @@
 - Deal with Excon::Errors::SocketError: EOFError errors which get thrown sometimes from S3 connection
 - Allow files with '..' (but not '../') in the middle of their name in file data store
 
-  # 0.9.0 (2011-04-27)
+# 0.9.0 (2011-04-27)
 
-  Features
-
----
+## Features
 
 - Model accessors are configurable
   - added `after_assign` callback
@@ -519,39 +446,31 @@
 
 - Performance tweaks regarding temp_objects model accessors and job objects
 
-  # 0.8.5 (2011-05-11)
+# 0.8.5 (2011-05-11)
 
-  Fixes
-
----
+## Fixes
 
 - Allow filenames that have '..' in them (but not '../') in the filedatastore
 - Better security for server
 
-  # 0.8.4 (2011-04-27)
+# 0.8.4 (2011-04-27)
 
-  Fixes
-
----
+## Fixes
 
 - Security fix for file data store
 
-  # 0.8.2 (2011-01-11)
+# 0.8.2 (2011-01-11)
 
-  Fixes
-
----
+## Fixes
 
 - Renamed ActiveModel methods like 'attachments' to avoid name clashes
 - Respond properly to HEAD, POST, PUT and DELETE requests
 - Got it working with jRuby and Rubinius
 - Made DOS protection SHA (and ETag) consistent
 
-  # 0.8.1 (2010-11-22)
+# 0.8.1 (2010-11-22)
 
-  Fixes
-
----
+## Fixes
 
 Removed runtime dependencies that Jeweler automatically takes from the Gemfile
 
@@ -607,35 +526,27 @@ Removed runtime dependencies that Jeweler automatically takes from the Gemfile
   They can be configured to use in-memory strings with the use_filesystem config option.
 - Upgraded support from Rails 3.0.0.rc -> Rails.3.0.0
 
-  # 0.7.4 (2010-08-28)
+# 0.7.4 (2010-08-28)
 
-  Features
-
----
+## Features
 
 - Gave model accessors bang methods process! and encode!
 
-  # 0.7.3 (2010-08-27)
+# 0.7.3 (2010-08-27)
 
-  Fixes
-
----
+## Fixes
 
 - Seems as though inserting after Rails' Rack::Lock was worth it after all
 
-  # 0.7.2 (2010-08-27)
+# 0.7.2 (2010-08-27)
 
-  Fixes
-
----
+## Fixes
 
 - S3DataStore was breaking if previous data hadn't stored meta
 
-  # 0.7.1 (2010-08-26)
+# 0.7.1 (2010-08-26)
 
-  Fixes
-
----
+## Fixes
 
 - SimpleEndpoint was modifying env path_info so wasn't creating proper cache keys
 - to_response accepts env, so can use if-not-modified, etc.
@@ -648,7 +559,7 @@ Removed runtime dependencies that Jeweler automatically takes from the Gemfile
 
 - ETags generated by hash of job.serialize - was getting a bit long
 
-  # 0.7.0 (2010-08-25)
+# 0.7.0 (2010-08-25)
 
 ## Features
 
@@ -702,15 +613,13 @@ Removed runtime dependencies that Jeweler automatically takes from the Gemfile
 
 - Added ability for custom error messages in validations
 
-  # 0.6.1 (2010-05-16)
+# 0.6.1 (2010-05-16)
 
-  Fixes
-
----
+## Fixes
 
 - STI was breaking when the model had a mixin too
 
-  # 0.6.0 (2010-05-11)
+# 0.6.0 (2010-05-11)
 
 ## Features
 
@@ -736,25 +645,25 @@ Removed runtime dependencies that Jeweler automatically takes from the Gemfile
 - Imagemagick errors in RMagick processor/analyser/encoder now throw unable_to_handle and log a warning
 - Removed Rails generators - better being more explicit with saved configurations which are more concise now
 
-  # 0.5.7 (2010-04-18)
+# 0.5.7 (2010-04-18)
 
 ## Fixes
 
 - Strip file command mime_type value because some versions of file command were appending a line-break
 
-  # 0.5.6 (2010-04-13)
+# 0.5.6 (2010-04-13)
 
 ## Fixes
 
 - Wasn't working properly with Single-Table Inheritance
 
-  # 0.5.5 (2010-04-13)
+# 0.5.5 (2010-04-13)
 
 ## Fixes
 
 - Rails 3 has changed 'metaclass' -> 'singleton_class' so adapt accordingly
 
-  # 0.5.4 (2010-04-12)
+# 0.5.4 (2010-04-12)
 
 ## Features
 
@@ -787,7 +696,7 @@ Removed runtime dependencies that Jeweler automatically takes from the Gemfile
 
 - Fixed 'broken pipe' errors in FileCommandAnalyser due to outputting loads of stuff to the command line stdin
 
-  # 0.5.0 (2010-02-20)
+# 0.5.0 (2010-02-20)
 
 ## Added support
 
