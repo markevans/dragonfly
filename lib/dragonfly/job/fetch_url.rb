@@ -91,7 +91,7 @@ module Dragonfly
       end
 
       def parse_url(url)
-        URI.parse(url)
+        URI.parse(url.to_s)
       rescue URI::InvalidURIError
         begin
           encoded_uri = Addressable::URI.parse(url).normalize.to_s
