@@ -30,9 +30,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("rspec", "~> 2.5")
   spec.add_development_dependency("webmock")
   spec.add_development_dependency("activemodel")
-  spec.add_development_dependency("activerecord")
-  spec.add_development_dependency("sqlite3")
   if RUBY_PLATFORM == "java"
     spec.add_development_dependency("jruby-openssl")
+  else
+    spec.add_development_dependency("activerecord")
+    spec.add_development_dependency("sqlite3", "~> 1.4.2")
   end
 end
