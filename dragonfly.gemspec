@@ -38,6 +38,6 @@ Gem::Specification.new do |spec|
   end
   if RUBY_VERSION < "2"
     # Annoyingly newer webmock > crack > rexml dependency assumes ruby 2
-    spec.add_development_dependency("rexml", "~> 3.1")
+    spec.add_development_dependency("rexml", "~> 3.1.9")
   end
 end
