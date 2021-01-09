@@ -2,6 +2,7 @@
 unless RUBY_PLATFORM == "java"
   require "spec_helper"
   require "active_record"
+  require "sqlite3"
 
   # ActiveRecord specific stuff goes here (there should be very little!)
   describe "ActiveRecord models" do

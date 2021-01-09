@@ -34,6 +34,6 @@ Gem::Specification.new do |spec|
     spec.add_development_dependency("jruby-openssl")
   else
     spec.add_development_dependency("activerecord")
-    spec.add_development_dependency("sqlite3", "~> 1.4.2")
+    spec.add_development_dependency("sqlite3")
   end
 end
