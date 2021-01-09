@@ -1,5 +1,5 @@
 # jruby has problems with installing sqlite3 - don't bother with these tests for jruby
-unless RUBY_PLATFORM != "java"
+unless RUBY_PLATFORM == "java"
   require "spec_helper"
   require "active_record"
 
