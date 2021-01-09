@@ -36,8 +36,4 @@ Gem::Specification.new do |spec|
     spec.add_development_dependency("activerecord")
     spec.add_development_dependency("sqlite3")
   end
-  if RUBY_VERSION < "2"
-    # Annoyingly newer webmock > crack > rexml dependency assumes ruby 2
-    spec.add_development_dependency("rexml", "3.1.7.3")
-  end
 end

@@ -1,4 +1,8 @@
-# 1.2.2 (2021-01-09)
+# 1.3.0 (2021-01-09)
+
+## Changes
+
+- Dropped official support for ruby < 2.2 - too annoying to maintain
 
 ## Fixes
 
