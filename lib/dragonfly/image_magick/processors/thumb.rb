@@ -69,7 +69,7 @@ module Dragonfly
 
         def resize_and_crop_args(width, height, gravity)
           gravity = GRAVITIES[gravity || 'c']
-          "-resize #{width}x#{height}^^ -gravity #{gravity} -crop #{width}x#{height}+0+0 +repage"
+          "-resize #{width}x#{height}^ -gravity #{gravity} -crop #{width}x#{height}+0+0 +repage"
         end
 
       end
