@@ -70,4 +70,20 @@ describe Dragonfly::ParamValidators do
       end
     end
   end
+
+  describe "is_words" do
+    ["hello there", "Hi", "  What is Up "].each do |val|
+      it "validates #{val.inspect}" do
+        validate!(val, &is_words)
+      end
+    end
+
+    ["", "hel%$lo", "What's up", "hel-lo", {}, []].each do |val|
+      it "validates #{val.inspect}" do
+        expect {
+          validate!(val, &is_words)
+        }.to raise_error(Dragonfly::ParamValidators::InvalidParameter)
+      end
+    end
+  end
 end

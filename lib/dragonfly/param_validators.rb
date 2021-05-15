@@ -12,8 +12,13 @@ module Dragonfly
       /\A\w+\z/ === param
     }
 
+    IS_WORDS = ->(param) {
+      /\A[\w ]+\z/ === param
+    }
+
     def is_number; IS_NUMBER; end
     def is_word; IS_WORD; end
+    def is_words; IS_WORDS; end
 
     def validate!(parameter, &validator)
       return if parameter.nil?
