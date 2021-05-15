@@ -5,6 +5,7 @@ require "dragonfly/image_magick/generators/text"
 require "dragonfly/image_magick/processors/encode"
 require "dragonfly/image_magick/processors/thumb"
 require "dragonfly/image_magick/commands"
+require "dragonfly/param_validators"
 
 module Dragonfly
   module ImageMagick
@@ -61,6 +62,7 @@ module Dragonfly
         app.add_processor :encode, Processors::Encode.new
         app.add_processor :thumb, Processors::Thumb.new
         app.add_processor :rotate do |content, amount|
+          ParamValidators.validate!(amount, &ParamValidators.is_number)
           Commands.convert(content, "-rotate #{amount}")
         end
 

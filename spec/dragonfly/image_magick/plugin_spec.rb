@@ -116,6 +116,12 @@ describe "a configured imagemagick app" do
         image.width.should == 355
         image.height.should == 280
       end
+
+      it "disallows bad parameters" do
+        expect {
+          image.rotate!("90 -write bad.png").apply
+        }.to raise_error(Dragonfly::ParamValidators::InvalidParameter)
+      end
     end
   end
 
