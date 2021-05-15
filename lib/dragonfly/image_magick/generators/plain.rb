@@ -1,11 +1,17 @@
 require "dragonfly/image_magick/commands"
+require "dragonfly/param_validators"
 
 module Dragonfly
   module ImageMagick
     module Generators
       class Plain
+        include ParamValidators
+
         def call(content, width, height, opts = {})
+          validate_all!([width, height], &is_number)
+          validate_all_keys!(opts, %w(colour color format), &is_word)
           format = extract_format(opts)
+
           colour = opts["colour"] || opts["color"] || "white"
           Commands.generate(content, "-size #{width}x#{height} xc:#{colour}", format)
           content.add_meta("format" => format, "name" => "plain.#{format}")
