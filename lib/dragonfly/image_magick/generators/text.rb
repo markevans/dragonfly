@@ -1,10 +1,13 @@
 require "dragonfly/hash_with_css_style_keys"
 require "dragonfly/image_magick/commands"
+require "dragonfly/param_validators"
 
 module Dragonfly
   module ImageMagick
     module Generators
       class Text
+        include ParamValidators
+
         FONT_STYLES = {
           "normal" => "normal",
           "italic" => "italic",
@@ -39,24 +42,32 @@ module Dragonfly
           "900" => 900,
         }
 
+        IS_COLOUR = ->(param) {
+          /\A(#\w+|rgba?\([\d\.,]+\)|\w+)\z/ === param
+        }
+
         def update_url(url_attributes, string, opts = {})
           url_attributes.name = "text.#{extract_format(opts)}"
         end
 
         def call(content, string, opts = {})
+          validate_all_keys!(opts, %w(font font_family), &is_words)
+          validate_all_keys!(opts, %w(color background_color stroke_color), &IS_COLOUR)
+          validate!(opts["format"], &is_word)
+
           opts = HashWithCssStyleKeys[opts]
           args = []
           format = extract_format(opts)
           background = opts["background_color"] || "none"
           font_size = (opts["font_size"] || 12).to_i
+          font_family = opts["font_family"] || opts["font"]
           escaped_string = "\"#{string.gsub(/"/, '\"')}\""
 
           # Settings
           args.push("-gravity NorthWest")
           args.push("-antialias")
           args.push("-pointsize #{font_size}")
-          args.push("-font \"#{opts["font"]}\"") if opts["font"]
-          args.push("-family '#{opts["font_family"]}'") if opts["font_family"]
+          args.push("-family '#{font_family}'") if font_family
           args.push("-fill #{opts["color"]}") if opts["color"]
           args.push("-stroke #{opts["stroke_color"]}") if opts["stroke_color"]
           args.push("-style #{FONT_STYLES[opts["font_style"]]}") if opts["font_style"]
@@ -67,10 +78,10 @@ module Dragonfly
 
           # Padding
           pt, pr, pb, pl = parse_padding_string(opts["padding"]) if opts["padding"]
-          padding_top = (opts["padding_top"] || pt || 0)
-          padding_right = (opts["padding_right"] || pr || 0)
-          padding_bottom = (opts["padding_bottom"] || pb || 0)
-          padding_left = (opts["padding_left"] || pl || 0)
+          padding_top = (opts["padding_top"]&.to_i || pt || 0)
+          padding_right = (opts["padding_right"]&.to_i || pr || 0)
+          padding_bottom = (opts["padding_bottom"]&.to_i || pb || 0)
+          padding_left = (opts["padding_left"]&.to_i || pl || 0)
 
           Commands.generate(content, args.join(" "), format)
 
