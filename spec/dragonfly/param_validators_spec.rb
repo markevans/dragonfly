@@ -29,17 +29,33 @@ describe Dragonfly::ParamValidators do
     end
   end
 
-  describe "IS_NUMBER" do
+  describe "is_number" do
     [3, 3.14, "3", "3.2"].each do |val|
       it "validates #{val.inspect}" do
         validate!(val, &is_number)
       end
     end
 
-    ["3 2", "hello4", {}, []].each do |val|
+    ["", "3 2", "hello4", {}, []].each do |val|
       it "validates #{val.inspect}" do
         expect {
           validate!(val, &is_number)
+        }.to raise_error(Dragonfly::ParamValidators::InvalidParameter)
+      end
+    end
+  end
+
+  describe "is_word" do
+    ["hello", "helLo", "HELLO"].each do |val|
+      it "validates #{val.inspect}" do
+        validate!(val, &is_word)
+      end
+    end
+
+    ["", "hel%$lo", "hel lo", "hel-lo", {}, []].each do |val|
+      it "validates #{val.inspect}" do
+        expect {
+          validate!(val, &is_word)
         }.to raise_error(Dragonfly::ParamValidators::InvalidParameter)
       end
     end
