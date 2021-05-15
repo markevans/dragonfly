@@ -4,6 +4,8 @@ module Dragonfly
   module ImageMagick
     module Processors
       class Thumb
+        include ParamValidators
+
         GRAVITIES = {
           "nw" => "NorthWest",
           "n" => "North",
@@ -27,7 +29,12 @@ module Dragonfly
         end
 
         def call(content, geometry, opts = {})
-          Commands.convert(content, args_for_geometry(geometry), opts)
+          validate!(opts["format"], &is_word)
+          validate!(opts["frame"], &is_number)
+          Commands.convert(content, args_for_geometry(geometry), {
+            "format" => opts["format"],
+            "frame" => opts["frame"],
+          })
         end
 
         def args_for_geometry(geometry)
