@@ -18,5 +18,12 @@ describe Dragonfly::ParamValidators do
     it "does nothing if the parameter is nil" do
       validate!(nil) { |t| t === "thing" }
     end
+
+    it "works with a regexp" do
+      validate!("thing", /thing/)
+      expect {
+        validate!("thing", /ting/)
+      }.to raise_error(Dragonfly::ParamValidators::InvalidParameter)
+    end
   end
 end

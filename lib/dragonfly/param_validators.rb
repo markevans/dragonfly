@@ -4,8 +4,10 @@ module Dragonfly
 
     module_function
 
-    def validate!(parameter, &validator)
-      raise InvalidParameter unless parameter.nil? || validator.(parameter)
+    def validate!(parameter, regexp = nil, &validator)
+      return if parameter.nil?
+      valid = regexp ? !!regexp.match(parameter) : validator.(parameter)
+      raise InvalidParameter unless valid
     end
   end
 end
