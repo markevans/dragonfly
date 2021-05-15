@@ -23,5 +23,10 @@ module Dragonfly
     def validate_all!(parameters, &validator)
       parameters.each { |p| validate!(p, &validator) }
     end
+
+    def validate_all_keys!(obj, keys, &validator)
+      parameters = keys.map { |key| obj[key] }
+      validate_all!(parameters, &validator)
+    end
   end
 end

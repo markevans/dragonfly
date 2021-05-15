@@ -29,6 +29,16 @@ describe Dragonfly::ParamValidators do
     end
   end
 
+  describe "validate_all_keys!" do
+    it "allows passing an array of parameters to validate" do
+      obj = { "a" => "A", "b" => "B" }
+      validate_all_keys!(obj, ["a", "b"]) { |p| /\w/ === p }
+      expect {
+        validate_all_keys!(obj, ["a", "b"]) { |p| /[a-z]/ === p }
+      }.to raise_error(Dragonfly::ParamValidators::InvalidParameter)
+    end
+  end
+
   describe "is_number" do
     [3, 3.14, "3", "3.2"].each do |val|
       it "validates #{val.inspect}" do
