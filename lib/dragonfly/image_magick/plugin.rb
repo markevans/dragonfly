@@ -1,5 +1,4 @@
 require "dragonfly/image_magick/analysers/image_properties"
-require "dragonfly/image_magick/generators/convert"
 require "dragonfly/image_magick/generators/plain"
 require "dragonfly/image_magick/generators/plasma"
 require "dragonfly/image_magick/generators/text"
@@ -54,7 +53,6 @@ module Dragonfly
         app.define(:image?) { image }
 
         # Generators
-        app.add_generator :convert, ImageMagick::Generators::Convert.new
         app.add_generator :plain, ImageMagick::Generators::Plain.new
         app.add_generator :plasma, ImageMagick::Generators::Plasma.new
         app.add_generator :text, ImageMagick::Generators::Text.new
