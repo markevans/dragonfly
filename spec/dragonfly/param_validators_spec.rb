@@ -26,4 +26,13 @@ describe Dragonfly::ParamValidators do
       }.to raise_error(Dragonfly::ParamValidators::InvalidParameter)
     end
   end
+
+  describe "validate_all!" do
+    it "allows passing an array of parameters to validate" do
+      validate_all!(["a", "b"], /\w/)
+      expect {
+        validate_all!(["a", " "], /\w/)
+      }.to raise_error(Dragonfly::ParamValidators::InvalidParameter)
+    end
+  end
 end

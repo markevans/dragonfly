@@ -9,5 +9,9 @@ module Dragonfly
       valid = regexp ? !!regexp.match(parameter) : validator.(parameter)
       raise InvalidParameter unless valid
     end
+
+    def validate_all!(parameters, regexp = nil, &validator)
+      parameters.each { |p| validate!(p, regexp, &validator) }
+    end
   end
 end
