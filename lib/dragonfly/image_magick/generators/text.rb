@@ -78,10 +78,10 @@ module Dragonfly
 
           # Padding
           pt, pr, pb, pl = parse_padding_string(opts["padding"]) if opts["padding"]
-          padding_top = (opts["padding_top"]&.to_i || pt || 0)
-          padding_right = (opts["padding_right"]&.to_i || pr || 0)
-          padding_bottom = (opts["padding_bottom"]&.to_i || pb || 0)
-          padding_left = (opts["padding_left"]&.to_i || pl || 0)
+          padding_top = (opts["padding_top"] || pt).to_i
+          padding_right = (opts["padding_right"] || pr).to_i
+          padding_bottom = (opts["padding_bottom"] || pb).to_i
+          padding_left = (opts["padding_left"] || pl).to_i
 
           Commands.generate(content, args.join(" "), format)
 
