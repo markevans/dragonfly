@@ -57,6 +57,9 @@ module Dragonfly
         app.add_generator :plain, ImageMagick::Generators::Plain.new
         app.add_generator :plasma, ImageMagick::Generators::Plasma.new
         app.add_generator :text, ImageMagick::Generators::Text.new
+        app.add_generator :convert do
+          raise "The convert generator is deprecated for better security - use Dragonfly::ImageMagick::Commands.generate(content, args, format) instead."
+        end
 
         # Processors
         app.add_processor :encode, Processors::Encode.new
@@ -64,6 +67,9 @@ module Dragonfly
         app.add_processor :rotate do |content, amount|
           ParamValidators.validate!(amount, &ParamValidators.is_number)
           Commands.convert(content, "-rotate #{amount}")
+        end
+        app.add_processor :convert do
+          raise "The convert processor is deprecated for better security - use Dragonfly::ImageMagick::Commands.convert(content, args, opts) instead."
         end
 
         # Extra methods

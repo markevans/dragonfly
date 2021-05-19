@@ -131,4 +131,18 @@ describe "a configured imagemagick app" do
       image.identify("-format %h").chomp.should == "355"
     end
   end
+
+  describe "deprecated convert commands" do
+    it "raises a deprecated message if using the convert processor" do
+      expect {
+        image.convert!("into something").apply
+      }.to raise_error(/deprecated/i)
+    end
+
+    it "raises a deprecated message if using the convert generator" do
+      expect {
+        image.generate!(:convert, "into something").apply
+      }.to raise_error(/deprecated/i)
+    end
+  end
 end
