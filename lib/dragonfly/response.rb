@@ -1,4 +1,4 @@
-require 'uri'
+require 'cgi'
 require 'rack'
 
 module Dragonfly
@@ -99,7 +99,7 @@ module Dragonfly
 
     def filename_string
       return unless job.name
-      filename = request_from_msie? ? URI.encode(job.name) : job.name
+      filename = request_from_msie? ? CGI.escape(job.name) : job.name
       %(filename="#{filename}")
     end
 
