@@ -64,7 +64,7 @@ If you're defining a new generator you can make use of the `generate` command in
 {% highlight ruby %}
 include Dragonfly::ImageMagick::Commands
 
-processor :fancy do |content|
+generator :fancy do |content|
   generate(content, '-size 100x100 gradient:blue', 'jpg')
 end
 {% endhighlight %}
