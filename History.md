@@ -1,3 +1,13 @@
+# 1.4.0 (2021-05-19)
+
+## Changes
+
+- Removed `convert` processor and generator (which were quite insecure), in favour of utility commands in `Dragonfly::ImageMagick::Commands`
+
+## Fixes
+
+- Better security for all job steps with parameter validations
+
 # 1.3.0 (2021-01-09)
 
 ## Changes
