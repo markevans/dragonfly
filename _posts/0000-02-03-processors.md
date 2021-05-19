@@ -171,4 +171,31 @@ job.shrink.url # ===> "/hello-shrunk.txt?job=W1siZiIsInNvbWVfdWlkIl1d"
 If the processor accepts extra arguments then these are also passed to `update_url`.
 
 ## ImageMagick
+
 The ImageMagick plugin adds a few processors - see [the doc]({{ site.baseurl }}{% post_url 0000-01-05-imagemagick %}) for more details.
+
+If you're defining a new processor you can make use of the `convert` command in `Dragonfly::ImageMagick::Commands`, e.g.
+
+{% highlight ruby %}
+include Dragonfly::ImageMagick::Commands
+
+processor :fancy do |content|
+  convert(content, '-sigmoidal-contrast 4,0%')
+end
+{% endhighlight %}
+
+which corresponds to the command-line
+
+    convert <original_path> -sigmoidal-contrast 4,0% <new_path>
+
+As with `thumb`, you can specify a few more options
+{% highlight ruby %}
+convert(
+  content,
+  '-sigmoidal-contrast 4,0%',
+  'format' => 'jpg',
+  'frame' => 12,
+  'delegate' => 'mpeg',
+  'input_args' => 'I go before the <original_path> arg'
+)
+{% endhighlight %}

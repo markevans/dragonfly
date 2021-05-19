@@ -56,4 +56,21 @@ end
 {% endhighlight %}
 
 ## ImageMagick
+
 The ImageMagick plugin adds a few generators - see [the doc]({{ site.baseurl }}{% post_url 0000-01-05-imagemagick %}) for more details.
+
+If you're defining a new generator you can make use of the `generate` command in `Dragonfly::ImageMagick::Commands`, e.g.
+
+{% highlight ruby %}
+include Dragonfly::ImageMagick::Commands
+
+processor :fancy do |content|
+  generate(content, '-size 100x100 gradient:blue', 'jpg')
+end
+{% endhighlight %}
+
+which corresponds to the command-line
+
+    convert -size 100x100 gradient:blue <path>
+
+where path has extension 'jpg' (optional argument).

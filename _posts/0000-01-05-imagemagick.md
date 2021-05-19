@@ -73,27 +73,6 @@ Rotate a number of degrees with
 image.rotate(90)
 {% endhighlight %}
 
-### Convert
-Perform an arbitrary imagemagick command using convert.
-{% highlight ruby %}
-image.convert('-sigmoidal-contrast 4,0%')
-{% endhighlight %}
-corresponds to the command-line
-
-    convert <original_path> -sigmoidal-contrast 4,0% <new_path>
-
-As with `thumb`, you can specify the output format and frame
-{% highlight ruby %}
-image.convert('-sigmoidal-contrast 4,0%', 'format' => 'jpg', 'frame' => 12)
-{% endhighlight %}
-
-You can also specify the delegate if needed, e.g.
-{% highlight ruby %}
-movie = Dragonfly.app.fetch('some/movie')
-image = movie.convert('', 'delegate' => 'mpeg', 'format' => 'jpg', 'frame' => 1)
-{% endhighlight %}
-which would prepend `mpeg:` to the input path.
-
 ## Analysers
 The following methods are provided
 {% highlight ruby %}
@@ -157,17 +136,6 @@ image = Dragonfly.app.generate(:plasma, 600, 400, 'format' => 'gif')
 {% endhighlight %}
 
 The format is optional (defaults to png).
-
-### Convert
-Perform an arbitrary imagemagick generation command using convert.
-{% highlight ruby %}
-image = Dragonfly.app.generate(:convert, '-size 100x100 gradient:blue', 'jpg')
-{% endhighlight %}
-corresponds to the command-line
-
-    convert -size 100x100 gradient:blue <path>
-
-where path has extension 'jpg' (optional argument).
 
 ## Extra methods
 ### Identify
