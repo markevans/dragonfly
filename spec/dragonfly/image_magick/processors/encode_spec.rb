@@ -21,6 +21,10 @@ describe Dragonfly::ImageMagick::Processors::Encode do
       processor.call(image, "jpeg", "-quality 10")
     end
 
+    it "allows flatten arg" do
+      processor.call(image, "jpeg", "-quality 10 -flatten")
+    end
+
     it "disallows bad args" do
       expect {
         processor.call(image, "jpeg", "-write bad.png")
