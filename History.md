@@ -6,7 +6,7 @@
 
 ## Fixes
 
-- Better security for all job steps with parameter validations
+- Better security for all job steps with parameter validations - addresses CVE-2021-33564
 
 # 1.3.0 (2021-01-09)
 

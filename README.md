@@ -47,7 +47,7 @@ Installation
 
 or in your Gemfile
 ```ruby
-gem 'dragonfly', '~> 1.2.2'
+gem 'dragonfly', '~> 1.4.0'
 ```
 
 Require with
@@ -69,6 +69,12 @@ Please feel free to contribute!!
 Plugins / add-ons
 =================
 See [the Add-ons wiki](http://github.com/markevans/dragonfly/wiki/Dragonfly-add-ons).
+
+Please feel free to contribute!!
+
+Security notice!
+=================
+If you have set `verify_urls` to `false` (which is **not** recommended) then you should upgrade to version `1.4.x` for a security fix ([CVE-2021-33564](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-33564).
 
 Please feel free to contribute!!
 
