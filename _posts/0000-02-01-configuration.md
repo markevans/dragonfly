@@ -17,7 +17,8 @@ Dragonfly.app.configure do
   url_host 'http://some.domain.com:4000'           # defaults to nil
   url_path_prefix '/assets'                        # defaults to nil, might be needed if app is mounted under a subdir
 
-  verify_urls true # enabled by default, use false to disable it - adds a SHA parameter on the end of urls
+  verify_urls true # true by default - adds a SHA parameter on the end of urls for security
+                   # NOT RECOMMENDED to set to false
 
   secret 'This is my secret yeh!!' # used to generate the protective SHA
 
