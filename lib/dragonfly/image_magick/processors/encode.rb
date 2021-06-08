@@ -6,7 +6,7 @@ module Dragonfly
       class Encode
         include ParamValidators
 
-        WHITELISTED_ARGS = %w(quality)
+        WHITELISTED_ARGS = %w(quality flatten)
 
         IS_IN_WHITELISTED_ARGS = ->(args_string) {
           args_string.scan(/-\w+/).all? { |arg|
