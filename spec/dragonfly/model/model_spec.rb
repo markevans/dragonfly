@@ -399,6 +399,10 @@ describe "models" do
         ) do
         dragonfly_accessor :preview_image
         dragonfly_accessor :other_image
+
+        def method_about_other_image_size
+          fail "This should not be called"
+        end
       end
       @item = @item_class.new
     end
