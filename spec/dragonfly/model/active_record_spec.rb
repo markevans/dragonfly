@@ -57,6 +57,16 @@ unless RUBY_PLATFORM == "java"
         expect(photo).to be_nil
         expect(data_exists(uid)).to eq(false)
       end
+
+      it "changes data store" do
+        uid = @photo.image_uid
+
+        expect {
+          @photo.destroy
+        }.to change {
+          data_exists(uid)
+        }.from(true).to(false)
+      end
     end
   end
 end
