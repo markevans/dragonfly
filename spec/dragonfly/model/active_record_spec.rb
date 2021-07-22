@@ -52,11 +52,20 @@ unless RUBY_PLATFORM == "java"
 
       it "should remove the attachment as per usual otherwise" do
         uid = @photo.image_uid
-        expect(data_exists(uid)).to eq(true)
         @photo.destroy
         photo = Photo.last
         expect(photo).to be_nil
         expect(data_exists(uid)).to eq(false)
+      end
+
+      it "changes data store" do
+        uid = @photo.image_uid
+
+        expect {
+          @photo.destroy
+        }.to change {
+          data_exists(uid)
+        }.from(true).to(false)
       end
     end
   end
