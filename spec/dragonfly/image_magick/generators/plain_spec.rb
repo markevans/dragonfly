@@ -33,6 +33,10 @@ describe Dragonfly::ImageMagick::Generators::Plain do
       generator.call(image, 1, 1, "color" => "red")
     end
 
+    it "works with Hex colors" do
+      generator.call(image, 1, 1, "color" => "#FF0000")
+    end
+
     it "blows up with a bad colour" do
       expect {
         generator.call(image, 1, 1, "colour" => "lardoin")

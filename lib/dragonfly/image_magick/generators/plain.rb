@@ -9,7 +9,8 @@ module Dragonfly
 
         def call(content, width, height, opts = {})
           validate_all!([width, height], &is_number)
-          validate_all_keys!(opts, %w(colour color format), &is_word)
+          validate!(opts["format"], &is_word)
+          validate_all_keys!(opts, %w(colour color), &is_colour)
           format = extract_format(opts)
 
           colour = opts["colour"] || opts["color"] || "white"

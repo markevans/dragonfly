@@ -71,6 +71,22 @@ describe Dragonfly::ParamValidators do
     end
   end
 
+  describe "is_colour" do
+    ["rgb(33,33,33)", "rgba(33,33,33,0.5)", "rgb(33.5,33.5,33.5)", "#fff", "#efefef", "blue"].each do |val|
+      it "validates #{val.inspect}" do
+        validate!(val, &is_colour)
+      end
+    end
+
+    ["rgb(33, 33, 33)", "something else", "blue:", "f#ff"].each do |val|
+      it "validates #{val.inspect}" do
+        expect {
+          validate!(val, &is_colour)
+        }.to raise_error(Dragonfly::ParamValidators::InvalidParameter)
+      end
+    end
+  end
+
   describe "is_words" do
     ["hello there", "Hi", "  What is Up "].each do |val|
       it "validates #{val.inspect}" do
