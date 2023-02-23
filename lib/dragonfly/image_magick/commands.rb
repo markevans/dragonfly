@@ -12,7 +12,7 @@ module Dragonfly
         frame_string = "[#{opts["frame"]}]" if opts["frame"]
 
         content.shell_update :ext => format do |old_path, new_path|
-          "#{convert_command} #{input_args} #{delegate_string}#{old_path}#{frame_string} #{args} #{new_path}"
+          "#{convert_command} -auto-orient #{input_args} #{delegate_string}#{old_path}#{frame_string} #{args} #{new_path}"
         end
 
         if format
