@@ -1,8 +1,8 @@
-require 'base64'
-require 'forwardable'
-require 'dragonfly/has_filename'
-require 'dragonfly/temp_object'
-require 'dragonfly/utils'
+require "base64"
+require "forwardable"
+require "dragonfly/has_filename"
+require "dragonfly/temp_object"
+require "dragonfly/utils"
 
 module Dragonfly
 
@@ -16,11 +16,10 @@ module Dragonfly
   # It is acted upon in generator, processor, analyser and datastore methods and provides a standard interface for updating content,
   # no matter how that content first got there (whether in the form of a String/Pathname/File/etc.)
   class Content
-
     include HasFilename
     extend Forwardable
 
-    def initialize(app, obj="", meta=nil)
+    def initialize(app, obj = "", meta = nil)
       @app = app
       @meta = {}
       @previous_temp_objects = []
@@ -79,7 +78,7 @@ module Dragonfly
     # @example "image/jpeg"
     # @return [String]
     def mime_type
-      meta['mime_type'] || app.mime_type_for(ext)
+      meta["mime_type"] || app.mime_type_for(ext)
     end
 
     # Set the content using a pre-registered generator
@@ -93,7 +92,7 @@ module Dragonfly
 
     # Update the content using a pre-registered processor
     # @example
-    #   content.process!(:convert, "-resize 300x300")
+    #   content.process!(:thumb, "300x300")
     # @return [Content] self
     def process!(name, *args)
       app.get_processor(name).call(self, *args)
@@ -111,10 +110,10 @@ module Dragonfly
     # @param obj [String, Pathname, Tempfile, File, Content, TempObject] can be any of these types
     # @param meta [Hash] - should be json-like, i.e. contain no types other than String, Number, Boolean
     # @return [Content] self
-    def update(obj, meta=nil)
+    def update(obj, meta = nil)
       meta ||= {}
-      self.temp_object = TempObject.new(obj, meta['name'])
-      self.meta['name'] ||= temp_object.name if temp_object.name
+      self.temp_object = TempObject.new(obj, meta["name"])
+      self.meta["name"] ||= temp_object.name if temp_object.name
       clear_analyser_cache
       add_meta(obj.meta) if obj.respond_to?(:meta)
       add_meta(meta)
@@ -135,7 +134,7 @@ module Dragonfly
     #     "file --mime-type #{path}"
     #   end
     #   # ===> "beach.jpg: image/jpeg"
-    def shell_eval(opts={})
+    def shell_eval(opts = {})
       should_escape = opts[:escape] != false
       command = yield(should_escape ? shell.escape(path) : path)
       run command, :escape => should_escape
@@ -148,7 +147,7 @@ module Dragonfly
     #     "/usr/local/bin/generate_text gumfry -o #{path}"
     #   end
     # @return [Content] self
-    def shell_generate(opts={})
+    def shell_generate(opts = {})
       ext = opts[:ext] || self.ext
       should_escape = opts[:escape] != false
       tempfile = Utils.new_tempfile(ext)
@@ -165,7 +164,7 @@ module Dragonfly
     #     "convert -resize 20x10 #{old_path} #{new_path}"
     #   end
     # @return [Content] self
-    def shell_update(opts={})
+    def shell_update(opts = {})
       ext = opts[:ext] || self.ext
       should_escape = opts[:escape] != false
       tempfile = Utils.new_tempfile(ext)
@@ -176,7 +175,7 @@ module Dragonfly
       update(tempfile)
     end
 
-    def store(opts={})
+    def store(opts = {})
       datastore.write(self, opts)
     end
 
@@ -188,7 +187,7 @@ module Dragonfly
     end
 
     def close
-      previous_temp_objects.each{|temp_object| temp_object.close }
+      previous_temp_objects.each { |temp_object| temp_object.close }
       temp_object.close
     end
 
@@ -199,6 +198,7 @@ module Dragonfly
     private
 
     attr_reader :previous_temp_objects
+
     def temp_object=(temp_object)
       previous_temp_objects.push(@temp_object) if @temp_object
       @temp_object = temp_object
@@ -215,6 +215,5 @@ module Dragonfly
     def run(command, opts)
       shell.run(command, opts)
     end
-
   end
 end

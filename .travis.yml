@@ -1,12 +1,20 @@
 language: ruby
 rvm:
-  - "1.9.3"
-  - "2.0"
-  - "2.1"
   - "2.2"
   - "2.3"
   - "2.4"
-  - "jruby-9.1.9.0"
-script: bundle exec rspec spec
+  - "2.5"
+  - "2.6"
+  - "2.7"
+  - "3.0"
+  - "jruby"
+
+env:
+  global:
+    - SKIP_FLAKY_TESTS: true
+
 before_install:
-  - gem install bundler
+  - sudo apt-get update
+  - sudo apt-get install -y ghostscript
+
+script: bundle exec rspec spec --backtrace

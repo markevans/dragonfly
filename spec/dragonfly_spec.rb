@@ -12,23 +12,47 @@ describe Dragonfly do
   end
 
   describe "logging" do
-    before do
-      Dragonfly.logger = Logger.new(StringIO.new)
+    context "logger exists" do
+      before do
+        Dragonfly.logger = Logger.new(StringIO.new)
+      end
+
+      it "debugs" do
+        Dragonfly.logger.should_receive(:debug).with(/something/)
+        Dragonfly.debug("something")
+      end
+
+      it "warns" do
+        Dragonfly.logger.should_receive(:warn).with(/something/)
+        Dragonfly.warn("something")
+      end
+
+      it "shows info" do
+        Dragonfly.logger.should_receive(:info).with(/something/)
+        Dragonfly.info("something")
+      end
     end
 
-    it "debugs" do
-      Dragonfly.logger.should_receive(:debug).with(/something/)
-      Dragonfly.debug("something")
-    end
+    context "logger is nil" do
+      before do
+        allow_message_expectations_on_nil
+        Dragonfly.logger = nil
+      end
 
-    it "warns" do
-      Dragonfly.logger.should_receive(:warn).with(/something/)
-      Dragonfly.warn("something")
-    end
+      it "does not call debug" do
+        Dragonfly.logger.should_not_receive(:debug)
+        Dragonfly.debug("something")
+      end
 
-    it "shows info" do
-      Dragonfly.logger.should_receive(:info).with(/something/)
-      Dragonfly.info("something")
+      it "does not warn" do
+        Dragonfly.logger.should_not_receive(:warn)
+        Dragonfly.warn("something")
+      end
+
+      it "does not show info" do
+        Dragonfly.logger.should_not_receive(:info)
+        Dragonfly.info("something")
+      end
     end
   end
 

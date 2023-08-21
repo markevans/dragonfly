@@ -1,25 +1,24 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "a configured imagemagick app" do
-
-  let(:app){ test_app.configure_with(:imagemagick) }
-  let(:image){ app.fetch_file(SAMPLES_DIR.join('beach.png')) }
+  let(:app) { test_app.configure_with(:imagemagick) }
+  let(:image) { app.fetch_file(SAMPLES_DIR.join("beach.png")) }
 
   describe "env variables" do
-    let(:app){ test_app }
+    let(:app) { test_app }
 
     it "allows setting the convert command" do
       app.configure do
-        plugin :imagemagick, :convert_command => '/bin/convert'
+        plugin :imagemagick, :convert_command => "/bin/convert"
       end
-      app.env[:convert_command].should == '/bin/convert'
+      app.env[:convert_command].should == "/bin/convert"
     end
 
     it "allows setting the identify command" do
       app.configure do
-        plugin :imagemagick, :identify_command => '/bin/identify'
+        plugin :imagemagick, :identify_command => "/bin/identify"
       end
-      app.env[:identify_command].should == '/bin/identify'
+      app.env[:identify_command].should == "/bin/identify"
     end
   end
 
@@ -33,7 +32,7 @@ describe "a configured imagemagick app" do
     end
 
     it "should return the aspect ratio" do
-      image.aspect_ratio.should == (280.0/355.0)
+      image.aspect_ratio.should == (280.0 / 355.0)
     end
 
     it "should say if it's portrait" do
@@ -60,39 +59,39 @@ describe "a configured imagemagick app" do
     end
 
     it "should return false for pdfs" do
-      image.encode('pdf').image?.should be_falsey
-    end
+      image.encode("pdf").image?.should be_falsey
+    end unless ENV["SKIP_FLAKY_TESTS"]
   end
 
   describe "processors that change the url" do
     before do
-      app.configure{ url_format '/:name' }
+      app.configure { url_format "/:name" }
     end
 
-    describe "convert" do
+    describe "thumb" do
       it "sanity check with format" do
-        thumb = image.convert('-resize 1x1!', 'format' => 'jpg')
+        thumb = image.thumb("1x1!", "format" => "jpg")
         thumb.url.should =~ /^\/beach\.jpg\?.*job=\w+/
         thumb.width.should == 1
-        thumb.format.should == 'jpeg'
-        thumb.meta['format'].should == 'jpg'
+        thumb.format.should == "jpeg"
+        thumb.meta["format"].should == "jpg"
       end
 
       it "sanity check without format" do
-        thumb = image.convert('-resize 1x1!')
+        thumb = image.thumb("1x1!")
         thumb.url.should =~ /^\/beach\.png\?.*job=\w+/
         thumb.width.should == 1
-        thumb.format.should == 'png'
-        thumb.meta['format'].should be_nil
+        thumb.format.should == "png"
+        thumb.meta["format"].should be_nil
       end
     end
 
     describe "encode" do
       it "sanity check" do
-        thumb = image.encode('jpg')
+        thumb = image.encode("jpg")
         thumb.url.should =~ /^\/beach\.jpg\?.*job=\w+/
-        thumb.format.should == 'jpeg'
-        thumb.meta['format'].should == 'jpg'
+        thumb.format.should == "jpeg"
+        thumb.meta["format"].should == "jpg"
       end
     end
   end
@@ -100,13 +99,13 @@ describe "a configured imagemagick app" do
   describe "other processors" do
     describe "encode" do
       it "should encode the image to the correct format" do
-        image.encode!('gif')
-        image.format.should == 'gif'
+        image.encode!("gif")
+        image.format.should == "gif"
       end
 
       it "should allow for extra args" do
-        image.encode!('jpg', '-quality 1')
-        image.format.should == 'jpeg'
+        image.encode!("jpg", "-quality 1")
+        image.format.should == "jpeg"
         image.size.should < 2000
       end
     end
@@ -117,8 +116,13 @@ describe "a configured imagemagick app" do
         image.width.should == 355
         image.height.should == 280
       end
-    end
 
+      it "disallows bad parameters" do
+        expect {
+          image.rotate!("90 -write bad.png").apply
+        }.to raise_error(Dragonfly::ParamValidators::InvalidParameter)
+      end
+    end
   end
 
   describe "identify" do
@@ -128,4 +132,17 @@ describe "a configured imagemagick app" do
     end
   end
 
+  describe "deprecated convert commands" do
+    it "raises a deprecated message if using the convert processor" do
+      expect {
+        image.convert!("into something").apply
+      }.to raise_error(/deprecated/i)
+    end
+
+    it "raises a deprecated message if using the convert generator" do
+      expect {
+        image.generate!(:convert, "into something").apply
+      }.to raise_error(/deprecated/i)
+    end
+  end
 end

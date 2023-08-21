@@ -7,7 +7,7 @@ describe Dragonfly::CookieMonster do
   def app(extra_env={})
     Rack::Builder.new do
       use Dragonfly::CookieMonster
-      run proc{|env| env.merge!(extra_env); [200, {"Set-Cookie" => "blah", "Something" => "else"}, ["body here"]] }
+      run proc{|env| env.merge!(extra_env); [200, {"Set-Cookie" => "blah=thing", "Something" => "else"}, ["body here"]] }
     end
   end
 
@@ -15,7 +15,7 @@ describe Dragonfly::CookieMonster do
     response = Rack::MockRequest.new(app).get('')
     response.status.should == 200
     response.body.should == "body here"
-    response.headers["Set-Cookie"].should == "blah"
+    response.headers["Set-Cookie"].should == "blah=thing"
     response.headers["Something"].should == "else"
   end
 

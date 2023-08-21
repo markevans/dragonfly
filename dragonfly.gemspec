@@ -1,7 +1,7 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'dragonfly/version'
+require "dragonfly/version"
 
 Gem::Specification.new do |spec|
   spec.name = "dragonfly"
@@ -13,33 +13,27 @@ Gem::Specification.new do |spec|
   spec.homepage = "http://github.com/markevans/dragonfly"
   spec.license = "MIT"
   spec.files = `git ls-files`.split($/)
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.executables = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
   spec.extra_rdoc_files = [
     "LICENSE",
-    "README.md"
+    "README.md",
   ]
 
-  # Rack 2.0 only works with ruby >= 2.2.2
-  if RUBY_VERSION < "2.2.2"
-    rack_version = "~> 1.3"
-    activemodel_version = "~> 4.2"
-  else
-    rack_version = ">= 1.3"
-    activemodel_version = nil
-  end
-
   # Runtime dependencies
-  spec.add_runtime_dependency("rack", rack_version)
+  spec.add_runtime_dependency("rack", ">= 1.3")
   spec.add_runtime_dependency("multi_json", "~> 1.0")
   spec.add_runtime_dependency("addressable", "~> 2.3")
 
   # Development dependencies
   spec.add_development_dependency("rspec", "~> 2.5")
   spec.add_development_dependency("webmock")
-  spec.add_development_dependency("activemodel", activemodel_version)
+  spec.add_development_dependency("activemodel")
   if RUBY_PLATFORM == "java"
     spec.add_development_dependency("jruby-openssl")
+  else
+    spec.add_development_dependency("activerecord")
+    spec.add_development_dependency("sqlite3")
   end
 end
