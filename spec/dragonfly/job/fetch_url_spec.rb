@@ -43,6 +43,15 @@ describe Dragonfly::Job::FetchUrl do
     job.data.should == 'basic auth'
   end
 
+  it 'should allow headers to be set' do
+    stub_request(:get, 'http://headers.com').
+      with(headers: { "Authorization" => "Bearer ABC123" }).
+      to_return(:body => 'header result!')
+
+    job.fetch_url!('http://headers.com', headers: { "Authorization" => "Bearer ABC123" })
+    job.data.should == "header result!"
+  end
+
   [
     "place.com",
     "http://place.com",
