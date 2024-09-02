@@ -81,7 +81,7 @@ describe Dragonfly::Server do
           response.status.should == 404
           response.body.should == 'Not found'
           response.content_type.should == 'text/plain'
-          response.headers['X-Cascade'].should == 'pass'
+          response.headers['x-cascade'].should == 'pass'
         end
       end
 
@@ -90,7 +90,7 @@ describe Dragonfly::Server do
         response.status.should == 404
         response.body.should == 'Not found'
         response.content_type.should == 'text/plain'
-        response.headers['X-Cascade'].should be_nil
+        response.headers['x-cascade'].should be_nil
       end
 
       it "should return a 404 when the url isn't known at all" do
@@ -98,7 +98,7 @@ describe Dragonfly::Server do
         response.status.should == 404
         response.body.should == 'Not found'
         response.content_type.should == 'text/plain'
-        response.headers['X-Cascade'].should == 'pass'
+        response.headers['x-cascade'].should == 'pass'
       end
 
       it "should return a 404 when the url is a well-encoded but bad array" do
@@ -107,7 +107,7 @@ describe Dragonfly::Server do
         response.status.should == 404
         response.body.should == 'Not found'
         response.content_type.should == 'text/plain'
-        response.headers['X-Cascade'].should be_nil
+        response.headers['x-cascade'].should be_nil
       end
 
       it "should return a 403 Forbidden when someone uses fetch_url" do

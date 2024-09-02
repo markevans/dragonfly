@@ -45,7 +45,7 @@ module Dragonfly
     end
 
     def plain_response(status, message)
-      [status, {"Content-Type" => "text/plain"}, [message]]
+      [status, {"content-type" => "text/plain"}, [message]]
     end
   end
 end

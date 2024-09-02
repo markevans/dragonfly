@@ -24,7 +24,7 @@ class App
     end
     [
       200,
-      {'Content-Type' => 'text/html'},
+      {'content-type' => 'text/html'},
       [%(
         <style>
           form, input {

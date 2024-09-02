@@ -6,7 +6,7 @@ describe "urls" do
     Dragonfly::Response.should_receive(:new).with(
       satisfy{|job| job.to_a == array },
       instance_of(Hash)
-    ).and_return(double('response', :to_response => [200, {'Content-Type' => 'text/plain'}, ["OK"]]))
+    ).and_return(double('response', :to_response => [200, {'content-type' => 'text/plain'}, ["OK"]]))
   end
 
   let (:app) {
