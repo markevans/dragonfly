@@ -138,7 +138,7 @@ describe Dragonfly::App do
       }.should raise_error(NotImplementedError)
     end
     it "should correctly call it if the datastore provides it" do
-      @app.datastore.should_receive(:url_for).with('some_uid', :some => :opts).and_return 'http://egg.head'
+      @app.datastore.should_receive(:url_for).with('some_uid', {:some => :opts}).and_return 'http://egg.head'
       @app.remote_url_for('some_uid', :some => :opts).should == 'http://egg.head'
     end
   end
