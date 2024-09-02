@@ -22,7 +22,7 @@ end
     match do |actual|
       value.should === image_properties(actual)[property]
     end
-    failure_message_for_should do |actual|
+    failure_message do |actual|
       "expected image to have #{property} #{value.inspect}, but it had #{image_properties(actual)[property].inspect}"
     end
   end

@@ -9,7 +9,7 @@ unless RUBY_PLATFORM == "java"
     let! :dragonfly_app do test_app(:test_ar) end
 
     before :all do
-      @connection = ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
+      ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
 
       ActiveRecord::Migration.verbose = false
 
@@ -27,7 +27,7 @@ unless RUBY_PLATFORM == "java"
 
     after :all do
       Photo.destroy_all
-      ActiveRecord::Base.remove_connection(@connection)
+      ActiveRecord::Base.remove_connection()
     end
 
     describe "destroying" do

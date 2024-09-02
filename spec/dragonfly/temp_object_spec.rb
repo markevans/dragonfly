@@ -145,7 +145,7 @@ describe Dragonfly::TempObject do
         end
         it "should allow not creating intermediate subdirs" do
           filename = 'tmp/gog/mcgee'
-          expect{ @temp_object.to_file(filename, :mkdirs => false) }.to raise_error()
+          expect{ @temp_object.to_file(filename, :mkdirs => false) }.to raise_error(/No such file or directory/)
         end
       end
 
