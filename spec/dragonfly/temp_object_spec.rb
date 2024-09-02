@@ -111,14 +111,14 @@ describe Dragonfly::TempObject do
       describe "to_file" do
         before(:each) do
           @filename = 'tmp/eggnog.txt'
-          FileUtils.rm_f(@filename) if File.exists?(@filename)
+          FileUtils.rm_f(@filename) if File.exist?(@filename)
         end
         after(:each) do
-          FileUtils.rm_f(@filename) if File.exists?(@filename)
+          FileUtils.rm_f(@filename) if File.exist?(@filename)
         end
         it "should write to a file" do
           @temp_object.to_file(@filename)
-          File.exists?(@filename).should be_truthy
+          File.exist?(@filename).should be_truthy
         end
         it "should write the correct data to the file" do
           @temp_object.to_file(@filename)
@@ -140,7 +140,7 @@ describe Dragonfly::TempObject do
         it "should create intermediate subdirs" do
           filename = 'tmp/gog/mcgee'
           @temp_object.to_file(filename)
-          File.exists?(filename).should be_truthy
+          File.exist?(filename).should be_truthy
           FileUtils.rm_rf('tmp/gog')
         end
         it "should allow not creating intermediate subdirs" do
