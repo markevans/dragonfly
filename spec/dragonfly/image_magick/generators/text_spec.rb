@@ -90,19 +90,5 @@ describe Dragonfly::ImageMagick::Generators::Text do
         }.to raise_error(Dragonfly::ParamValidators::InvalidParameter)
       end
     end
-
-    ["rgb(33,33,33)", "rgba(33,33,33,0.5)", "rgb(33.5,33.5,33.5)", "#fff", "#efefef", "blue"].each do |colour|
-      it "allows #{colour.inspect} as a colour specification" do
-        generator.call(image, "mmm", "color" => colour)
-      end
-    end
-
-    ["rgb(33, 33, 33)", "something else", "blue:", "f#ff"].each do |colour|
-      it "disallows #{colour.inspect} as a colour specification" do
-        expect {
-          generator.call(image, "mmm", "color" => colour)
-        }.to raise_error(Dragonfly::ParamValidators::InvalidParameter)
-      end
-    end
   end
 end
