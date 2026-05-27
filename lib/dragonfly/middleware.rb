@@ -10,7 +10,8 @@ module Dragonfly
 
     def call(env)
       response = Dragonfly.app(@dragonfly_app_name).call(env)
-      if response[1]['X-Cascade'] == 'pass'
+      headers = response[1].transform_keys(&:downcase)
+      if headers['x-cascade'] == 'pass'
         @app.call(env)
       else
         response

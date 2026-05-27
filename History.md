@@ -1,3 +1,9 @@
+# 1.4.1 (2025-01-03)
+
+## Fixes
+
+- Added ostruct dependency as Ruby 3.5 will remove it from stdlib
+
 # 1.4.0 (2021-05-19)
 
 ## Changes

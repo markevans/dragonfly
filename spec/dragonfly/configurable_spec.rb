@@ -65,7 +65,7 @@ describe Dragonfly::Configurable do
       configurer = Dragonfly::Configurable::Configurer.new do
         meth :jobby, :nobby
       end
-      obj.should_receive(:jobby).with('beans', :make => 5)
+      obj.should_receive(:jobby).with('beans', {:make => 5})
       obj.should_receive(:nobby).with(['nuts'])
       configurer.configure(obj) do
         jobby 'beans', :make => 5
@@ -79,7 +79,7 @@ describe Dragonfly::Configurable do
       end
       egg = double('egg')
       obj.should_receive(:egg).and_return(egg)
-      egg.should_receive(:jobby).with('beans', :make => 5)
+      egg.should_receive(:jobby).with('beans', {:make => 5})
       configurer.configure(obj) do
         jobby 'beans', :make => 5
       end
@@ -93,7 +93,7 @@ describe Dragonfly::Configurable do
 
     it "provides 'plugin' for using plugins" do
       pluggy = double('plugin')
-      pluggy.should_receive(:call).with(obj, :a, 'few' => ['args'])
+      pluggy.should_receive(:call).with(obj, :a, {'few' => ['args']})
       configurer.configure(obj) do
         plugin pluggy, :a, 'few' => ['args']
       end
@@ -101,7 +101,7 @@ describe Dragonfly::Configurable do
 
     it "allows using 'plugin' with symbols" do
       pluggy = double('plugin')
-      pluggy.should_receive(:call).with(obj, :a, 'few' => ['args'])
+      pluggy.should_receive(:call).with(obj, :a, {'few' => ['args']})
       configurer.register_plugin(:pluggy){ pluggy }
       configurer.configure(obj) do
         plugin :pluggy, :a, 'few' => ['args']

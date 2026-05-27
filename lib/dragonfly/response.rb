@@ -26,10 +26,10 @@ module Dragonfly
         end
       rescue Job::Fetch::NotFound => e
         Dragonfly.warn(e.message)
-        [404, {"Content-Type" => "text/plain"}, ["Not found"]]
+        [404, {"content-type" => "text/plain"}, ["Not found"]]
       rescue RuntimeError => e
         Dragonfly.warn("caught error - #{e.message}")
-        [500, {"Content-Type" => "text/plain"}, ["Internal Server Error"]]
+        [500, {"content-type" => "text/plain"}, ["Internal Server Error"]]
       end
       log_response(response)
       response
@@ -65,8 +65,8 @@ module Dragonfly
 
     def method_not_allowed_headers
       {
-        'Content-Type' => 'text/plain',
-        'Allow' => 'GET, HEAD'
+        'content-type' => 'text/plain',
+        'allow' => 'GET, HEAD'
       }
     end
 
@@ -78,16 +78,16 @@ module Dragonfly
 
     def standard_headers
       {
-        "Content-Type" => job.mime_type,
-        "Content-Length" => job.size.to_s,
-        "Content-Disposition" => filename_string
+        "content-type" => job.mime_type,
+        "content-length" => job.size.to_s,
+        "content-disposition" => filename_string
       }
     end
 
     def cache_headers
       {
-        "Cache-Control" => "public, max-age=31536000", # (1 year)
-        "ETag" => %("#{job.signature}")
+        "cache-control" => "public, max-age=31536000", # (1 year)
+        "etag" => %("#{job.signature}")
       }
     end
 

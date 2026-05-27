@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'rack'
 
 def dummy_rack_app
-  lambda{|env| [200, {"Content-Type" => "text/html"}, ["dummy_rack_app body"]] }
+  lambda{|env| [200, {"content-type" => "text/html"}, ["dummy_rack_app body"]] }
 end
 
 describe Dragonfly::Middleware do
@@ -19,9 +19,18 @@ describe Dragonfly::Middleware do
       end
     end
 
-    it "should pass through if the app returns X-Cascade: pass" do
+    it "should pass through if the app returns x-cascade: pass" do
       Dragonfly.app.should_receive(:call).and_return(
-        [404, {"Content-Type" => 'text/plain', 'X-Cascade' => 'pass'}, ['Not found']]
+        [404, {"content-type" => 'text/plain', 'x-cascade' => 'pass'}, ['Not found']]
+      )
+      response = make_request(@stack, '/media/hello.png?howare=you')
+      response.body.should == 'dummy_rack_app body'
+      response.status.should == 200
+    end
+
+    it "should still pass through using deprecated uppercase X-Cascade: pass" do
+      Dragonfly.app.should_receive(:call).and_return(
+        [404, {"content-type" => 'text/plain', 'X-Cascade' => 'pass'}, ['Not found']]
       )
       response = make_request(@stack, '/media/hello.png?howare=you')
       response.body.should == 'dummy_rack_app body'
@@ -30,7 +39,7 @@ describe Dragonfly::Middleware do
 
     it "should return a 404 if the app returns a 404" do
       Dragonfly.app.should_receive(:call).and_return(
-        [404, {"Content-Type" => 'text/plain'}, ['Not found']]
+        [404, {"content-type" => 'text/plain'}, ['Not found']]
       )
       response = make_request(@stack, '/media/hello.png?howare=you')
       response.status.should == 404
@@ -38,7 +47,7 @@ describe Dragonfly::Middleware do
 
     it "should return as per the dragonfly app if the app returns a 200" do
       Dragonfly.app.should_receive(:call).and_return(
-        [200, {"Content-Type" => 'text/plain'}, ['ABCD']]
+        [200, {"content-type" => 'text/plain'}, ['ABCD']]
       )
       response = make_request(@stack, '/media/hello.png?howare=you')
       response.status.should == 200
@@ -57,7 +66,7 @@ describe Dragonfly::Middleware do
     it "should use the specified dragonfly app" do
       Dragonfly.app.should_not_receive(:call)
       Dragonfly.app(:images).should_receive(:call).and_return([
-        200, {"Content-Type" => 'text/plain'}, ['booboo']
+        200, {"content-type" => 'text/plain'}, ['booboo']
       ])
       response = make_request(@stack, '/media/hello.png?howare=you')
       response.body.should == 'booboo'

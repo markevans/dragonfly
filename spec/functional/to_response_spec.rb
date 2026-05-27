@@ -15,7 +15,7 @@ describe "getting rack response directly" do
     response.should be_a(Array)
     response.length.should == 3
     response[0].should == 200
-    response[1]['Content-Type'].should == 'application/octet-stream'
+    response[1]['content-type'].should == 'application/octet-stream'
     response[2].data.should == 'bunheads'
   end
 
@@ -24,7 +24,7 @@ describe "getting rack response directly" do
     response.should be_a(Array)
     response.length.should == 3
     response[0].should == 405
-    response[1]['Content-Type'].should == 'text/plain'
+    response[1]['content-type'].should == 'text/plain'
     response[2].should == ["method not allowed"]
   end
 

@@ -21,7 +21,7 @@ describe Dragonfly::Job::FetchUrl do
   end
 
   it "should set the mime_type when returned by the request" do
-    stub_request(:get, %r{http://thing\.com.*}).to_return(:body => '<ok />', :headers => {'Content-Type' => 'text/html'})
+    stub_request(:get, %r{http://thing\.com.*}).to_return(:body => '<ok />', :headers => {'content-type' => 'text/html'})
     expect(job.fetch_url('http://place.com').mime_type).to eq('application/octet-stream')
     expect(job.fetch_url('http://thing.com').mime_type).to eq('text/html')
   end

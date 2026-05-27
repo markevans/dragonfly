@@ -9,11 +9,11 @@ describe Dragonfly::FileDataStore do
   end
 
   def assert_exists(path)
-    File.exists?(path).should be_truthy
+    File.exist?(path).should be_truthy
   end
 
   def assert_does_not_exist(path)
-    File.exists?(path).should be_falsey
+    File.exist?(path).should be_falsey
   end
 
   def assert_contains(dir, filepattern)

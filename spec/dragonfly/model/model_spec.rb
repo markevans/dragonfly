@@ -367,7 +367,7 @@ describe "models" do
     describe "remote_url" do
       it "should give the remote url if the uid is set" do
         @item.preview_image_uid = 'some/uid'
-        @app.should_receive(:remote_url_for).with('some/uid', :some => 'param').and_return('http://egg.nog')
+        @app.should_receive(:remote_url_for).with('some/uid', {:some => 'param'}).and_return('http://egg.nog')
         @item.preview_image.remote_url(:some => 'param').should == 'http://egg.nog'
       end
       it "should return nil if the content is not yet saved" do

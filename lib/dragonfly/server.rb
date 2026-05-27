@@ -59,18 +59,18 @@ module Dragonfly
           response.to_response
         end
       else
-        [404, {'Content-Type' => 'text/plain', 'X-Cascade' => 'pass'}, ['Not found']]
+        [404, {'content-type' => 'text/plain', 'x-cascade' => 'pass'}, ['Not found']]
       end
     rescue Job::NoSHAGiven => e
-      [400, {"Content-Type" => 'text/plain'}, ["You need to give a SHA parameter"]]
+      [400, {"content-type" => 'text/plain'}, ["You need to give a SHA parameter"]]
     rescue Job::IncorrectSHA => e
-      [400, {"Content-Type" => 'text/plain'}, ["The SHA parameter you gave is incorrect"]]
+      [400, {"content-type" => 'text/plain'}, ["The SHA parameter you gave is incorrect"]]
     rescue JobNotAllowed => e
       Dragonfly.warn(e.message)
-      [403, {"Content-Type" => 'text/plain'}, ["Forbidden"]]
+      [403, {"content-type" => 'text/plain'}, ["Forbidden"]]
     rescue Serializer::BadString, Serializer::MaliciousString, Job::InvalidArray => e
       Dragonfly.warn(e.message)
-      [404, {'Content-Type' => 'text/plain'}, ['Not found']]
+      [404, {'content-type' => 'text/plain'}, ['Not found']]
     end
 
     def url_for(job, opts={})
@@ -111,8 +111,8 @@ module Dragonfly
             V
       DRAGONFLY
       [200, {
-        'Content-Type' => 'text/plain',
-        'Content-Size' => body.bytesize.to_s
+        'content-type' => 'text/plain',
+        'content-size' => body.bytesize.to_s
         },
         [body]
       ]

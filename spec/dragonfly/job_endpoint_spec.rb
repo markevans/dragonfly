@@ -50,22 +50,22 @@ describe Dragonfly::JobEndpoint do
   it "should return a correct response to a successful GET request" do
     response = make_request(@job)
     response.status.should == 200
-    response['ETag'].should =~ /^"\w+"$/
-    response['Cache-Control'].should == "public, max-age=31536000"
-    response['Content-Type'].should == 'text/plain'
-    response['Content-Length'].should == '6'
-    response['Content-Disposition'].should == 'filename="gung.txt"'
+    response['etag'].should =~ /^"\w+"$/
+    response['cache-control'].should == "public, max-age=31536000"
+    response['content-type'].should == 'text/plain'
+    response['content-length'].should == '6'
+    response['content-disposition'].should == 'filename="gung.txt"'
     response.body.should == 'GUNGLE'
   end
 
   it "should return the correct headers and no content to a successful HEAD request" do
     response = make_request(@job, :method => :head)
     response.status.should == 200
-    response['ETag'].should =~ /^"\w+"$/
-    response['Cache-Control'].should == "public, max-age=31536000"
-    response['Content-Type'].should == 'text/plain'
-    response['Content-Length'].should == '6'
-    response['Content-Disposition'].should == 'filename="gung.txt"'
+    response['etag'].should =~ /^"\w+"$/
+    response['cache-control'].should == "public, max-age=31536000"
+    response['content-type'].should == 'text/plain'
+    response['content-length'].should == '6'
+    response['content-disposition'].should == 'filename="gung.txt"'
     response.body.should == ''
   end
 
@@ -74,8 +74,8 @@ describe Dragonfly::JobEndpoint do
     it "should return a 405 error for a #{method} request" do
       response = make_request(@job, :method => method)
       response.status.should == 405
-      response['Allow'].should == "GET, HEAD"
-      response['Content-Type'].should == 'text/plain'
+      response['allow'].should == "GET, HEAD"
+      response['content-type'].should == 'text/plain'
       response.body.should == "method not allowed"
     end
 
@@ -102,12 +102,12 @@ describe Dragonfly::JobEndpoint do
 
     it "doesn't encode utf8 characters" do
       response = make_request(@job)
-      response['Content-Disposition'].should == 'filename="güng.txt"'
+      response['content-disposition'].should == 'filename="güng.txt"'
     end
 
     it "does encode them if the request is from IE" do
       response = make_request(@job, 'HTTP_USER_AGENT' => "Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; el-GR)")
-      response['Content-Disposition'].should == 'filename="g%C3%BCng.txt"'
+      response['content-disposition'].should == 'filename="g%C3%BCng.txt"'
     end
   end
 
@@ -121,7 +121,7 @@ describe Dragonfly::JobEndpoint do
   describe "ETag" do
     it "should return an ETag" do
       response = make_request(@job)
-      response.headers['ETag'].should =~ /^"\w+"$/
+      response.headers['etag'].should =~ /^"\w+"$/
     end
 
     [
@@ -134,8 +134,8 @@ describe Dragonfly::JobEndpoint do
         @job.should_receive(:signature).at_least(:once).and_return('dingle')
         response = make_request(@job, 'HTTP_IF_NONE_MATCH' => header)
         response.status.should == 304
-        response['ETag'].should == '"dingle"'
-        response['Cache-Control'].should == "public, max-age=31536000"
+        response['etag'].should == '"dingle"'
+        response['cache-control'].should == "public, max-age=31536000"
         response.body.should be_empty
       end
     end
@@ -151,25 +151,25 @@ describe Dragonfly::JobEndpoint do
       @app.configure{ response_header 'This-is', 'brill' }
     end
     it "should allow specifying custom headers" do
-      make_request(@job).headers['This-is'].should == 'brill'
+      make_request(@job).headers['this-is'].should == 'brill'
     end
     it "should not interfere with other headers" do
-      make_request(@job).headers['Content-Length'].should == '6'
+      make_request(@job).headers['content-length'].should == '6'
     end
     it "should allow overridding other headers" do
-      @app.response_headers['Cache-Control'] = 'try me'
-      make_request(@job).headers['Cache-Control'].should == 'try me'
+      @app.response_headers['cache-control'] = 'try me'
+      make_request(@job).headers['cache-control'].should == 'try me'
     end
     it "should allow giving a proc" do
-      @app.response_headers['Cache-Control'] = proc{|job, request, headers|
-        [job.basename.reverse.upcase, request['a'], headers['Cache-Control'].chars.first].join(',')
+      @app.response_headers['cache-control'] = proc{|job, request, headers|
+        [job.basename.reverse.upcase, request.params['a'], headers['cache-control'].chars.first].join(',')
       }
       response = make_request(@job, 'QUERY_STRING' => 'a=egg')
-      response['Cache-Control'].should == 'GNUG,egg,p'
+      response['cache-control'].should == 'GNUG,egg,p'
     end
     it "should allow removing by setting to nil" do
-      @app.response_headers['Cache-Control'] = nil
-      make_request(@job).headers.should_not have_key('Cache-Control')
+      @app.response_headers['cache-control'] = nil
+      make_request(@job).headers.should_not have_key('cache-control')
     end
   end
 
