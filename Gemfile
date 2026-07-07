@@ -9,4 +9,6 @@ group :development do
   # (needed by rack/mock and activerecord respectively)
   gem 'cgi'
   gem 'benchmark'
+  # Needed by irb, and no longer a default gem as of ruby 4.0
+  gem 'rdoc'
 end
