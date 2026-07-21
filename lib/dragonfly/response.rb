@@ -99,7 +99,8 @@ module Dragonfly
 
     def filename_string
       return unless job.name
-      filename = request_from_msie? ? CGI.escape(job.name) : job.name
+      name = job.name.gsub(/[\r\n]/, "")
+      filename = request_from_msie? ? CGI.escape(name) : name
       %(filename="#{filename}")
     end
 

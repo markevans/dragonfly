@@ -109,6 +109,12 @@ describe Dragonfly::JobEndpoint do
       response = make_request(@job, 'HTTP_USER_AGENT' => "Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; el-GR)")
       response['content-disposition'].should == 'filename="g%C3%BCng.txt"'
     end
+
+    it "doesn't allow \\r or \\n characters" do
+      @job.name = "\nthis\nis\r\na\n\rbad\rone\r.txt"
+      response = make_request(@job)
+      response['content-disposition'].should == 'filename="thisisabadone.txt"'
+    end
   end
 
   describe "logging" do
