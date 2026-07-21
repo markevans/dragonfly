@@ -1,3 +1,9 @@
+# 1.4.2 (2026-07-21)
+
+## Fixes
+
+- Security fix for CRLF filename header injection in servers that don't sanitize
+
 # 1.4.1 (2025-01-03)
 
 ## Fixes
