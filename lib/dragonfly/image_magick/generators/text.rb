@@ -42,17 +42,13 @@ module Dragonfly
           "900" => 900,
         }
 
-        IS_COLOUR = ->(param) {
-          /\A(#\w+|rgba?\([\d\.,]+\)|\w+)\z/ === param
-        }
-
         def update_url(url_attributes, string, opts = {})
           url_attributes.name = "text.#{extract_format(opts)}"
         end
 
         def call(content, string, opts = {})
           validate_all_keys!(opts, %w(font font_family), &is_words)
-          validate_all_keys!(opts, %w(color background_color stroke_color), &IS_COLOUR)
+          validate_all_keys!(opts, %w(color background_color stroke_color), &is_colour)
           validate!(opts["format"], &is_word)
 
           opts = HashWithCssStyleKeys[opts]
