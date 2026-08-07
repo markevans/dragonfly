@@ -13,6 +13,8 @@ env:
   global:
     - SKIP_FLAKY_TESTS: true
 
+cache: bundler
+
 before_install:
   - sudo apt-get update
   - sudo apt-get install -y ghostscript
