@@ -98,8 +98,8 @@ module Dragonfly
           @magic_attributes ||= begin
             prefix = attribute.to_s + '_'
             model_class.public_instance_methods.inject([]) do |attrs, name|
-              _, __, suffix  = name.to_s.partition(prefix)
-              if !suffix.empty? && allowed_magic_attributes.include?(suffix.to_sym)
+              pre_prefix, __, suffix  = name.to_s.partition(prefix)
+              if !suffix.empty? && pre_prefix.empty? && allowed_magic_attributes.include?(suffix.to_sym)
                 attrs << suffix.to_sym
               end
               attrs
