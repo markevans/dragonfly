@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'base64'
-require 'multi_json'
+require 'json'
 require 'dragonfly/utils'
 
 module Dragonfly
@@ -33,13 +33,13 @@ module Dragonfly
     end
 
     def json_encode(object)
-      MultiJson.encode(object)
+      JSON.generate(object)
     end
 
     def json_decode(string)
       raise BadString, "can't decode blank string" if Utils.blank?(string)
-      MultiJson.decode(string)
-    rescue MultiJson::DecodeError => e
+      JSON.parse(string)
+    rescue JSON::ParserError => e
       raise BadString, "couldn't json decode string - got #{e}"
     end
 
