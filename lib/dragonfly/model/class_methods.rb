@@ -1,4 +1,3 @@
-require 'dragonfly'
 require 'dragonfly/serializer'
 require 'dragonfly/utils'
 require 'dragonfly/model/attachment'
