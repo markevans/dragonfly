@@ -23,7 +23,6 @@ Gem::Specification.new do |spec|
 
   # Runtime dependencies
   spec.add_runtime_dependency("rack", ">= 1.3")
-  spec.add_runtime_dependency("multi_json", "~> 1.0")
   spec.add_runtime_dependency("addressable", "~> 2.3")
   spec.add_runtime_dependency("ostruct", ">= 0.1")
 

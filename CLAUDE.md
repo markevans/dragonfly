@@ -29,7 +29,7 @@ bundle exec rspec spec/dragonfly/job_spec.rb  # single file
   params, `&.` (2.3+), etc.
 - When stdlib gems get unbundled in new Rubies, add them as dependencies (runtime in the
   gemspec, e.g. `ostruct`; dev-only in the `Gemfile`, e.g. `cgi`, `benchmark`, `rdoc`).
-- Runtime deps are deliberately minimal (`rack`, `multi_json`, `addressable`, `ostruct`).
+- Runtime deps are deliberately minimal (`rack`, `addressable`, `ostruct`).
   Don't add new ones without asking.
 - Public API changes need a deprecation path. `lib/dragonfly/spec/data_store_examples.rb` is
   shared examples that third-party data store gems (S3 etc.) run — treat it as public API.

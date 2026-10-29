@@ -4,6 +4,8 @@
 
 - Relaxed ostruct dependency from `~> 0.6.1` to `>= 0.1`
   Some versions were giving a problem as per https://github.com/markevans/dragonfly/issues/528
+- Replaced the multi_json dependency with Ruby's built-in `json`
+  multi_json 1.21 deprecated the `MultiJson` constant and `encode`/`decode`, so Dragonfly printed deprecation warnings
 
 # 1.4.2 (2026-07-21)
 
