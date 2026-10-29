@@ -1,3 +1,10 @@
+# Unreleased
+
+## Changes
+
+- Relaxed ostruct dependency from `~> 0.6.1` to `>= 0.1`
+  Some versions were giving a problem as per https://github.com/markevans/dragonfly/issues/528
+
 # 1.4.2 (2026-07-21)
 
 ## Fixes
