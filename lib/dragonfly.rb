@@ -1,6 +1,5 @@
-require 'rbconfig'
-require 'logger'
 require 'dragonfly/version'
+require 'dragonfly/core'
 require 'dragonfly/core_ext/object'
 require 'dragonfly/core_ext/array'
 require 'dragonfly/core_ext/hash'
@@ -18,32 +17,6 @@ end
 
 module Dragonfly
   class << self
-
-    def app(name=nil)
-      App.instance(name)
-    end
-
-    def [](name)
-      App[name]
-    end
-
-    def running_on_windows?
-      !!(RbConfig::CONFIG['host_os'] =~ %r!(msdos|mswin|djgpp|mingw)!)
-    end
-
-    # Logging
-    def logger
-      @logger = Logger.new('dragonfly.log') unless instance_variable_defined?(:@logger)
-      @logger
-    end
-    attr_writer :logger
-
-    [:debug, :warn, :info].each do |method|
-      define_method method do |message|
-        return unless logger
-        logger.send(method, "DRAGONFLY: #{message}")
-      end
-    end
 
     # Register plugins so we can do e.g.
     # Dragonfly.app.configure do

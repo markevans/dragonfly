@@ -1,5 +1,6 @@
 require 'shellwords'
 require 'open3'
+require 'dragonfly/core'
 
 module Dragonfly
   class Shell

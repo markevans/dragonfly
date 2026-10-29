@@ -1,3 +1,9 @@
+# Unreleased
+
+## Fixes
+
+- Removed circular requires that caused "loading in progress, circular require considered harmful" warnings with `ruby -w` (#505)
+
 # 1.4.2 (2026-07-21)
 
 ## Fixes
